@@ -7,7 +7,12 @@ QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief Provides data about scipts that are in scope for the currently selected Asset in the Designer.
+ *	\note This widget is much less useful now that we have th AboutElementBox.  We might think about
+ *	either removing it or updating it with the additional data available from the AssetDescriber.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class AssetInfoBox : public SearchableTextEdit
 {
     Q_OBJECT

@@ -11,11 +11,13 @@ namespace Picto {
 
 /*!	\brief The visual target used with a pixmap compositing surface.
  *
- *	This visual target work only with a PixmapCompositingSurface.  Like all 
- *	VisualTargets, it is responsible for drawing to the screen.  Since Pixmaps
+ *	This visual target works only with a PixmapCompositingSurface.  Like all 
+ *	VisualTargets, it is responsible for drawing to the screen.  Since Pixmaps are
  *	so easy to work with, this is a really simple target.  It holds 2 pixmap
  *	compositing surface, and flips back and forth between them (so that we never
  *	draw directly to the screen).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -34,6 +36,9 @@ public:
 	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
+	/*! \copydoc VisualTarget::latestFrameSuccesfullyRendered
+	 *	\details In the case of PixmapVisualTarget, QPixmaps are simple enough that we are just always returning true.
+	 */
 	bool latestFrameSuccesfullyRendered(){return true;};
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);

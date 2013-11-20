@@ -14,16 +14,15 @@
 
 namespace Picto {
 
-/*! \brief Controls the exit from a scene
+/*! \brief Triggers a result according to a logic test that runs each frame, thereby ending the execution of its parent State.
  *
- *	All Picto scenes must include a Control Element of some sort.  The control
- *	element determines when the scene ends.  During the scene's rendering loop,
- *	the isDone() function is called every frame (until it returns true).  Then the
- *	getResult() function is called to determine the result of the ControlElements
- *	execution(e.g. "Broke fixation", "Selected traget 3", etc)
- *
- *	To keep things simple, the behavior of a Target Controller is defined through a 
- *	set of properties stored in a property container.
+ *	All Picto State elements must include a Control Element of some sort.  The control
+ *	element determines when the State ends.  During the State element's rendering loop,
+ *	the isDone() function is called every frame until it returns true.  Then the
+ *	getResult() function is called to determine the result of the ControlElement's
+ *	execution(e.g. "Broke fixation", "Selected target", etc)
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -38,41 +37,50 @@ public:
 	ControlElement();
 	virtual ~ControlElement(){};
 
-	//isDone will return true if the ControlElement has completed.
+	/*! \brief isDone will return true if the ControlElement's logic determines that some condition has been met.*/
 	virtual bool isDone(QSharedPointer<Engine::PictoEngine> engine) {return true;};
 
 	using ResultContainer::getResult;
-	//getResult returns the result from a completed ControlElement
-	//if the ControlElement hasn't completed, this returns an empty result pointer
+	/*! \brief Returns the latest result after a ControlElement isDone().
+	 *	If the ControlElement is not done, this returns an empty result pointer.
+	 */
 	virtual QSharedPointer<Result> getResult() {return QSharedPointer<Result>();};
 
-	//called to start the controller running
+	/*! \brief Initializes the ControlElement.
+	 *	\details Should be called when a State is first entered.
+	 *	\note activateTargets() should be called by this function if ControlTarget elements will be used.  This will cause their
+	 *	bounding geometries to be highlighted in the operator view until they are deactivated.
+	 *	\sa ActivateTargets()
+	 */
 	virtual void start(QSharedPointer<Engine::PictoEngine> engine){};
+	/*! \brief Deinitializes the ControlElement
+	 *	\details Should be called when a state is about to exit.
+	 *	\note deactivateTargets() should be called by this function if ControlTarget elements will be used.  This will cause their
+	 *	bounding geometries to stop being highlighted.
+	 *	\sa deactivateTargets()
+	 */
 	virtual void stop(QSharedPointer<Engine::PictoEngine> engine){};
 
-	//Activates all Control Targets managed by this Control Element
+	/*! \brief Activates all Control Targets managed by this Control Element.
+	 *	\details This causes their bounding geometries to be highlighted in the operator view.
+	 *	\sa ControlTarget
+	 */
 	virtual void activateTargets(){};
+	/*! \brief Deactivates all Control Targets managed by this Control Element.
+	 *	\details This causes their bounding geometries to stop being highlighted in the operator view.
+	 *	\sa ControlTarget
+	 */
 	virtual void deactivateTargets(){};
 
-	//void setName(QString name) { propertyContainer_->setPropertyValue("Name", name); };
-
-	//QStringList getResultList() { return results_.keys(); };
-	//QSharedPointer<Result> getResult(QString name);
 	virtual QString getUITemplate(){return "ControlElement";};
 	virtual QString friendlyTypeName(){return "Control Element";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
-
-	//DataStore Functions
-	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter) = 0;
-	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader) = 0;
 
 protected:
 	virtual QString defaultTagName(){return "Control Element";};
 	//bool addResult(QSharedPointer<Result> result);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-	//QMap<QString,QSharedPointer<Result>> results_;
 
 	bool isDone_;
 

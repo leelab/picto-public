@@ -7,8 +7,9 @@
 
 namespace Picto {
 
-/*!	\brief A RectTarget is used by ChoiceController
- *	
+/*!	\brief A ControlTarget with a rectangular geometry.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -18,7 +19,9 @@ class RectTarget : public ControlTarget
 #endif
 {
 	Q_OBJECT
+	/*! \brief Sets/Gets the target's current width.*/
 	Q_PROPERTY(int width READ getWidth WRITE setWidth)
+	/*! \brief Sets/Gets the target's current width.*/
 	Q_PROPERTY(int height READ getHeight WRITE setHeight)
 public:
 	RectTarget();
@@ -29,8 +32,10 @@ public:
 	void draw();
 	virtual bool contains(int x, int y);
 
+	/*! \brief Gets the target's current width.*/
 	int getWidth() { return getBounds().width(); };
 	void setWidth(int width);
+	/*! \brief Gets the target's current height.*/
 	int getHeight() { return getBounds().height(); };
 	void setHeight(int height);
 	QPoint getPositionOffset();

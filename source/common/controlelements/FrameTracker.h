@@ -8,12 +8,7 @@ namespace Controller {
 
 namespace TimerUnits
 {
-	/*! \brief An enumerated type containing timing control options for PictoEngine objects
-	 *
-	 * PictoEngine objects can be set to have precise timing control, or to ignore frame intervals
-	 * (to catch up a playback, allow for fast forward and rewind behaviors, enable generation of movie
-	 * files, allow analysis of replayed data, etcetera).  PictoEngineTimingType enumerates the
-	 * valid timing options.
+	/*! \brief An enumerated type containing timing units
 	 * 
 	 */
 	typedef enum
@@ -24,6 +19,11 @@ namespace TimerUnits
 	} TimerUnits;
 }
 
+/*! \brief Stores frame timing information for use by FrameResolutionTimer objects.
+ *	The FrameTracker object used in a particular experiment is created by the FrameTimerFactory.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013	
+ */
 struct FrameTracker
 {
 	FrameTracker();

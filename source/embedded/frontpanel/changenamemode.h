@@ -5,9 +5,9 @@
 #include <QSharedPointer>
 #include "TextEditMode.h"
 
-/*!	\brief The front panel's ChangeNameMode interface
- *
- *	The front panel's ChangeNameMode interface is defined here.
+/*!	\brief A TextEditMode including functionality for the user to change the PictoBox's name
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class ChangeNameMode : public TextEditMode
 {

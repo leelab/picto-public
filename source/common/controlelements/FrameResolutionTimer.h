@@ -12,14 +12,14 @@
 namespace Picto {
 namespace Controller {
 
-/*! \brief A timer object used by ControlElements
+/*! \brief A timer object that returns times in single frame increments.
  *
- *	The controlElements require precise timing aligned with frame intervals.  This object serves that
- *	purpose.  The values that the timer returns are according to the time at which the latest first
- *	phosphor occured.
- *
- *	NOTE: At the moment, this timer is part of the ControlElement namespace, to
- *	indicate that it is designed for use with ControlElements only.
+ *	ControlElement objects and other sections of Picto require precise timing aligned with frame intervals.  This object serves that
+ *	purpose.  The timer always returns times according to the instant at which the latest first phosphor occured.
+ *	FrameResolutionTimer objects require an underlying FrameTracker object which provides frame timing information.
+ *	The FrameResolutionTimer is created by a FrameTimerFactory, and this factory provides the FrameTracker instance.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013	
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API FrameResolutionTimer
@@ -33,6 +33,7 @@ public:
 	~FrameResolutionTimer();
 
 	void start();
+	/*! \brief Restarts the timer.  Currently this is functionaly equivalent to start() */
 	void restart() { start(); };
 
 	int elapsedTime(Controller::TimerUnits::TimerUnits units);

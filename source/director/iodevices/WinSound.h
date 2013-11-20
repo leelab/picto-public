@@ -10,13 +10,19 @@
 namespace Picto {
 
 /*!	\brief WinSound is a windows api based object for playing sounds
- * Qt's multiplatform sound functionality requires a running event loop in order to work.
+ * \details Qt's multiplatform sound functionality requires a running event loop in order to work.
  * Due to older processor speeds, the Picto director was originally designed to run without
  * an event loop in order to avoid skipped frames and low latency effects.  This is probably
- * no longer necessary, but until we put in the effort to rewrite the Director in with and event 
+ * no longer necessary, but until we put in the effort to rewrite the Director with an event 
  * driven design, there is no event loop available to drive sound playback.  For this reason,
- * we are currently using the windows API to play sounds in the Director.  In the workstation
- * we can still use the QT audio framework since the workstation operates with an event loop.
+ * we are currently using the windows API to play sounds in the Director.  This is not a huge issue
+ * because we already are using DirectX in the director for for precise timing of display presentation,
+ * so it already doesn't support multiplatform operation.  In the workstation, though, there are no Windows
+ * dependencies and we can still use the QT audio framework (used by MultiplatformSound) since the workstation 
+ * operates with an event loop.
+ * \sa PreloadedSound::setSoundConstructor()
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class WinSound : public PreloadedSound
 {

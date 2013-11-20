@@ -12,20 +12,20 @@
 namespace Picto {
 
 /*!	\Brief Returns a result based on the region selected by the subject
- *
- *	A choice controller allows the experimenter to define multiple regions
- *	on the screen.  The controller will return when the subject has fixated
- *	on a single region for a fixed amount of time.
- *
- *	A choice controller has the following properties:
- *		SignalChannel: The name of the signal channel to use
- *		Shape: The shape of the target areas (Ellipse or Rectangle)
- *		TargetNameX: The name of target X
- *		TargetX: The area (as a rectangle) of Target X
- *		TimeUnits: Units in which times are stored
- *		TotalTime: The maximum time before a failure is returned
- *		FixationTime: The required fixation time for success to be returned
- *		AllowReentries: Is the subject allowed to leave a target without failing?
+ *	\details The Choice Controller, like the TargetController is used to check if the 
+ *	user has fixated on a ControlTarget.  In the case of the ChoiceController 
+ *	however, multiple targets can be defined using internal ControlTargetResult
+ *	elements and each one of these results creates a different possible result 
+ *	outcome from the Choice Controller.  Like in the case of a Target Controller,
+ *	any Control Target that is being actively considered will be marked to the 
+ *	operator with a green outline while this ChoiceController is active.  The 
+ *	possible results from a ChoiceController are Total Time Exceeded, Broke Fixation,
+ *	and of course the manually added ControlTargetResults.
+ *	\note The Choice Controller is essentially a convenience 
+ *	element.  Its operation can be fairly precisely simulated by simply using 
+ *	multiple Target Controllers.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -35,7 +35,9 @@ class ChoiceController : public ControlElement
 #endif
 {
 	Q_OBJECT
+	/*! \brief Sets/Gets the current value of the necessary 'FixationTime' considered successful fixation.*/
 	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime)
+	/*! \brief Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.*/
 	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime)
 public:
 	ChoiceController();
@@ -75,7 +77,6 @@ protected:
 private:
 	bool isDonePrivate(QSharedPointer<Engine::PictoEngine> engine);
 	QString insideTarget(QSharedPointer<Engine::PictoEngine> engine);
-	bool canUseUserTargetSlots();
 	//bool checkSingleTarget(QRect targetRect);
 
 	QSharedPointer<Controller::FrameResolutionTimer>  cumulativeTimer_;

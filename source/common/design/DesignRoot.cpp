@@ -13,6 +13,16 @@ DesignRoot::DesignRoot()
 	connect(&designRootText_,SIGNAL(undoAvailable(bool)),this,SIGNAL(undoAvailable(bool)));
 	connect(&designRootText_,SIGNAL(redoAvailable(bool)),this,SIGNAL(redoAvailable(bool)));
 }
+/*! \brief Rebuilds the Experimental Design from a saved xml string.
+ *	\details Returns true if the deserialization was successful, and false otherwise.  If false was returned,
+ *	the deserialization error can be checked with getLastError().  If deserialization was successful, there still
+ *	may be a warning message that the designer should see.  Check for this using hasWarning() and read it using
+ *	getLastWarning().
+ *
+ *	This function also has the capability to automatically upgrade the input design text.  If it does so, a warning
+ *	string will be available to that effect.  Obviously, the original design file remains untouched until the designer
+ *	saves these changes back out.
+ */
 bool DesignRoot::resetDesignRoot(QString DesignRootText)
 {
 	//Deserialize Design from DesignRootText
@@ -59,43 +69,14 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 	designRootText_.clearUndoRedoStacks();
 	designRootText_.setModified(false);
 
-	////Create Design Map
-	//QStringList pictoDataChildTags = pictoData_->getDefinedChildTags();
-	//foreach(QString childTag,pictoDataChildTags)
-	//{
-	//	QList<QSharedPointer<Asset>> children = pictoData_->getGeneratedChildren(childTag);
-	//	foreach(QSharedPointer<Asset> child,children)
-	//	{
-	//		if(!child->inherits("Picto::UIEnabled"))
-	//			continue;
-	//		QSharedPointer<Design> design(new Design());
-	//		design->resetRoot(child.staticCast<UIEnabled>());
-	//		designMap_[childTag].push_back(design);
-	//	}
-	//}
 	emit refreshedFromXml();
 	return true;
 }
-//QStringList DesignRoot::getDesignIdentifiers()
-//{
-//	return designMap_.keys();
-//}
-//int DesignRoot::getDesignCount(QString identifier)
-//{
-//	if(!designMap_.contains(identifier))
-//		return 0;
-//	return designMap_.value(identifier).size();
-//}
-//QSharedPointer<Design> DesignRoot::getDesign(QString identifier,int index)
-//{
-//	if(!designMap_.contains(identifier))
-//		return QSharedPointer<Design>();
-//	QVector<QSharedPointer<Design>> designList = designMap_.value(identifier);
-//	if(!(designList.size() > index))
-//		return QSharedPointer<Design>();
-//	return designList[index];
-//}
 
+/*! \brief Attempts to create an analysis based on the input design text and import it into the design.
+*	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns
+*	the imported analysis object.
+*/
 QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
 {
 	if(!pictoData_)
@@ -104,6 +85,12 @@ QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
 	return newAsset;
 }
 
+/*! \brief Removes the analysis with the input index from the design where index is a function of the creation/import order.
+ *	\details The removal is performed by marking the analysis as deleted.  This means that it will not
+ *	be serialized out with the rest of the design, so if you refreshFromXml() the analysis will
+ *	dissappear.  If you don't refreshFromXml() though, the analysis will remain until you do so.
+ *	/sa refreshFromXml(), getNumAnalyses(),getAnalysis()
+ */
 bool DesignRoot::removeAnalysis(int index)
 {
 	QSharedPointer<Asset> analysis = getAnalysis(index);
@@ -113,13 +100,17 @@ bool DesignRoot::removeAnalysis(int index)
 	return true;
 }
 
+/*! \brief Returns a shared pointer to this design's Experiment.
+ *	\note While a design may contain any number of Analyses, it contains only one Experiment.
+ */
 QSharedPointer<Asset> DesignRoot::getExperiment()
 {
 	if(!pictoData_)
 		return QSharedPointer<Asset>();
 	return pictoData_->getExperiment();
 }
-
+/*! \brief Returns the number of analyses currently included in this design
+*/
 int DesignRoot::getNumAnalyses()
 {
 	if(!pictoData_)
@@ -127,6 +118,7 @@ int DesignRoot::getNumAnalyses()
 	return pictoData_->getGeneratedChildren("Analysis").size();
 }
 
+/*! \brief Returns a pointer to attached analysis at the input index */
 QSharedPointer<Asset> DesignRoot::getAnalysis(int index)
 {
 	if(index >= getNumAnalyses() || index < 0)
@@ -134,6 +126,17 @@ QSharedPointer<Asset> DesignRoot::getAnalysis(int index)
 	return pictoData_->getGeneratedChildren("Analysis")[index];
 }
 
+/*! \brief Sets the current state of the design as an undo point.
+ *	\details This means that once the next change is made, if someone calls undo, the experiment
+ *	will return to the state that it was in when this function was called.
+ *	There are certainly vastly more efficient ways to handle undo than what we're doing here, but
+ *	in the interest of saving time, we are simply serializaing out the entire design every time 
+ *	this function is called, and changing an underlying QTextDocument (which knows how to handle
+ *	undo and redo) accordingly.  To perform an undo, we simply call undo on the QTextDocument and then
+ *	resetDesignRoot() from the new text.  Its incredibly inefficient, but it works, albeit slowly.
+ *	This would be a good thing to upgrade in the future.
+ *	\sa undo(), redo()
+ */
 void DesignRoot::setUndoPoint()
 {
 	if(!pictoData_)
@@ -156,6 +159,7 @@ void DesignRoot::setUndoPoint()
 	}
 }
 
+/*! \brief Returns a pointer to the asset that is set as the one open in the designer window or a null pointer if that asset couldn't be found.*/
 QSharedPointer<Asset> DesignRoot::getOpenAsset()
 {
 	QSharedPointer<Asset> experiment = getExperiment();
@@ -166,21 +170,36 @@ QSharedPointer<Asset> DesignRoot::getOpenAsset()
 	return experiment->getDesignConfig()->getAsset(uiData->getOpenAsset());
 }
 
+/*! \brief Sets the asset that will be considered open in the designer window.
+ *	\note This information will be saved along with the other UI information (element positions on the canvas) 
+ *	as part of a UIData category in the serialized xml design.
+ */
 void DesignRoot::setOpenAsset(QSharedPointer<Asset> asset)
 {
 	AssociateRootHost* expRootHost = dynamic_cast<AssociateRootHost*>(pictoData_->getExperiment().data());
 	QSharedPointer<UIData> uiData = expRootHost->getAssociateRoot("UIData").staticCast<UIData>();
 	uiData->setOpenAsset(asset->getAssetId());
 }
-
+/*! \brief Returns true if there is an undo available.
+ *	\sa setUndoPoint(), undo()
+ */
 bool DesignRoot::hasUndo()
 {
 	return designRootText_.isUndoAvailable();
 }
+/*! \brief Returns true if there is an undo available.
+ *	\sa setUndoPoint(), redo()
+ */
 bool DesignRoot::hasRedo()
 {
 	return designRootText_.isRedoAvailable();
 }
+/*! \brief Moves the state of the experiment back to what it was when setUndoPoint() was last called.
+ *	\details As described in the setUndoPoint() comments, what we actually do here is undo the serialized
+ *	design document, then refresh the entire experiment from the XML design code.  Its inefficient.  It
+ *	should be improved.  But it works, and it fit our schedule.
+ *	\sa setUndoPoint(), hasUndo()
+ */
 void DesignRoot::undo()
 {
 	if(!hasUndo())
@@ -188,6 +207,12 @@ void DesignRoot::undo()
 	designRootText_.undo();
 	refreshFromXml();
 }
+/*! \brief Moves the state of the experiment forward to what it was just before the latest undo() was called.
+ *	\details As described in the setUndoPoint() comments, what we actually do here is redo the serialized
+ *	design document, then refresh the entire experiment from the XML design code.  Its inefficient.  It
+ *	should be improved.  But it works, and it fit our schedule.
+ *	\sa setUndoPoint(), hasRedo()
+ */
 void DesignRoot::redo()
 {
 	if(!hasRedo())
@@ -195,7 +220,12 @@ void DesignRoot::redo()
 	designRootText_.redo();
 	refreshFromXml();
 }
-
+/*! \brief Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()).
+ *	\details Since currently, deleting assets just sets a deleted flag which causes them to not be serialized
+ *	out, truly deleting asset objects from a design means, setting their deleted flag, serializing the experiment
+ *	to xml, the reloading the experiment from that text.  At some point, this should be made more efficient, in
+ *	which case this function won't be necessary.
+ */
 void DesignRoot::refreshFromXml()
 {
 	QString text = designRootText_.toPlainText();
@@ -219,20 +249,46 @@ void DesignRoot::refreshFromXml()
 	setDesignName(pictoData_->getName());
 	emit refreshedFromXml();
 }
-
+/*! \brief Returns true if the design has been modified by the designer.
+ *	\sa setUndoPoint(), undo()
+ */
 bool DesignRoot::isModified()
 {
 	return designRootText_.isModified();
 }
+/*! \brief Sets the latest version of the design as unmodified
+ *	\details Calling setUnmodified() has the result of removing all
+ *	undo/redo points.
+ *	\sa setUndoPoint(), undo()
+ */
 void DesignRoot::setUnmodified()
 {
 	designRootText_.setModified(false);
 }
+/*! \brief Returns an xml serialized version of this experiment
+*/
 QString DesignRoot::getDesignRootText()
 {
 	setUndoPoint();
 	return designRootText_.toPlainText();
 }
+
+/*! \brief Returns true if the current Design succesfully compiles without errors (ie. has valid syntax).
+ *	\details If the function returns true, a descriptiong of the compilation errors will appear in the 
+ *	string pointed to by the errors input.
+ *
+ *	\note Rather than recompiling every time this function is called, a compiled_ flag is maintained
+ *	to mark if a new compiliation needs to occur or not.  The run time of this function is therefore
+ *	highly dependent on whether the design has been changed since the last time it was called.
+ *	It should also be pointed out that there is no need to actually "compile" Picto design code.  The
+ *	code is simply interpreted by Picto and turned into a design tree in RAM that is run to perform an
+ *	experiment.  Compiling is therefore simply checking for valid syntax.  If a design has valid
+ *	syntax we say that it compiles.  This does not preclude runtime errors in Javascript however.
+ *	Javascript is so flexible that it is notoriously hard to catch javascript syntax errors before run
+ *	time.  Any syntax errors that are catchable will be caught in this function; however, runtime errors
+ *	will not be exposed until the experiment is tested, and these will show up in the debug viewer
+ *	during the test run.
+ */
 bool DesignRoot::compiles(QString* errors)
 {
 	(*errors) = "";
@@ -248,12 +304,39 @@ bool DesignRoot::compiles(QString* errors)
 	return false;
 }
 
+/*! \brief Enables/Disables run mode for all assets in the design
+ *	\details Since every property has 3 underlying values, savedValue,
+ *	initValue and runValue, we need to set the operation mode
+ *	of the properties depending on what we are doing.  When we 
+ *	are designing the experiment, we can alter any of the values
+ *	that we want, by default we just set all 3 at once.  When we
+ *	are running an experiment, scripts update only the runValue
+ *	and parameter changes by the operator change the initValue 
+ *	which is then set to the runValue each time a property's parent
+ *	enters scope.  Depending on which runMode we are in, the standard
+ *	setValue function on Property objects functions differenlty, setting 
+ *	the appropriate underlying value, so we need to make sure to use 
+ *	this function to assure that our updates are going to the right place.
+ *  This is important because, for example, if we are building a Design and
+ *	testing it during the course of development, we want to make sure that
+ *	when we save the design out nothing that happened during a test will
+ *	affect the saved file.
+ *	\sa Property::setValue()
+ */
 void DesignRoot::enableRunMode(bool runMode)
 {
 	if(!pictoData_)
 		return;
 	pictoData_->enableRunModeForDescendants(runMode);
 }
+
+/*! \brief Marks this design as "not compiled".
+ *	\details This is called every time anything in the underlying design
+ *	is edited.  It sets the compiled_ flag to false so that the compiles()
+ *	function will not that it has to recheck the design syntax before it
+ *	can return true.
+ *	\sa compiles()
+ */
 void DesignRoot::designEdited()
 {
 	compiled_ = false;

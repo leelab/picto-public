@@ -11,9 +11,25 @@
 
 namespace Picto {
 
+/*! \addtogroup picto_compositor
+ * @{
+ */
+
 /*! \brief A Widget that contains a Visual Target
  *
- *	This object needs some explanation.  If we want to run an engine and place a
+ *	\note Joey: This object seems to have been created due to an incomplete understanding
+ *	of the QWidget system.  Whenever a QWidget is deleted, all of its descendant QWidgets are
+ *	automatically deleted as well.  For some reason, the RenderingTarget object is holding 
+ *	a shared pointer to its VisualTarget object which also automatically deletes the VisualTarget
+ *	when it is deleted.  Apparently, the idea behind this object is to never actually set a parent
+ *	to the VisualTarget in the QWidget system so that we can just use the QSharedPointer system to
+ *	delete it.  Probably, in practice we just should never be using QSharedPointer's on VisualTargets
+ *	and we should parent it within the QWidget system the way we are supposed to.  In practice though,
+ *	since the current system works, and we don't have time to fix it, we are going to leave it alone
+ *	for now.  If you want to fix it though, go for it.  The original notes on this class appear below
+ *	for your reference.
+ *	
+ *	\details This object needs some explanation.  If we want to run an engine and place a
  *	VisualTarget within another widget, the obvious approach would be:
  *		QSharedPointer<VisualTarget> visualTarget(new VisualTarget());
  *		....
@@ -33,6 +49,9 @@ namespace Picto {
  *	generally a bad idea to create QSharedPointer<QWidget>, because both QWidgets and
  *	QSharedPointers have lots of automatic calls to delete that occur behind the 
  *	scenes.
+ *	\note That was the end of the original notes
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -46,9 +65,12 @@ public:
 	VisualTargetHost();
 	virtual ~VisualTargetHost(){};
 
+
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
+	/*! \brief Returns the VisualTarget hosted by this VisualTargetHost*/
 	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
 signals:
+	/*! \brief Emitted with a click position whenever someone clicks within the VisualTargetHost widget*/
 	void clickDetected(QPoint pos);
 	 
 protected:
@@ -61,7 +83,7 @@ private slots:
 	void presented(double frameTime);
 };
 
-
+/*! @} */
 }; //namespace Picto
 
 #endif

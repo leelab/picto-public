@@ -23,7 +23,10 @@ bool DataUnit::fromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	bool returnVal = deserializeFromXml(xmlStreamReader);
 	return returnVal;
 }
-
+/*! \brief A convenience function for adding an error to the list returned by Serializable::getErrors().
+ *	\details This function simply calls Serializable::addErrorToList() after adding a new line to the
+ *	input errorMessage.
+ */
 void DataUnit::addError(QString errorMessage)
 {
 	addErrorToList(errorMessage + "\n");
@@ -58,11 +61,16 @@ qulonglong DataUnit::getDataID()
 	return dataID_;
 }
 
+/*! \brief Resets the data ID Generator such that the next generated data id will start at 1 again.
+*/
 void DataUnit::resetDataIDGenerator()
 {
 	lastDataID_ = 0;
 }
 
+/*! \brief Generates and returns a new data ID that is unique an ascending from one resetDataIDGenerator() call to the next.
+ *	\sa DataUnit
+ */
 qulonglong DataUnit::generateDataID()
 {
 	return ++lastDataID_;

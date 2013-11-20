@@ -3,6 +3,11 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
+/*! Constructs a new NumberEditMode object for a value named valName, whose value can
+ * have be anywhere between minValue and maxValue.  unitStr indicates the units of the 
+ * value, slowIncrement sets the increment per tick when the user is turning the input 
+ *knob slowly.  fastIncrement sets the increment when the user is turning the knob quickly.
+ */
 NumberEditMode::NumberEditMode(int maxValue,int minValue,QString valName,QString unitStr,int fastIncrement,int slowIncrement) :
 valName_(valName),
 maxValue_(maxValue),
@@ -27,7 +32,9 @@ numAtInit_(minValue)
 NumberEditMode::~NumberEditMode()
 {
 }
-
+/*!
+ * Sets up the object by getting the latest editable number, storing it and drawing it to display.
+ */
 void NumberEditMode::initMode()
 {
 	//Only reset the number value if the number received from
@@ -41,7 +48,10 @@ void NumberEditMode::initMode()
 	}
 	drawDisplay();
 }
-
+/*! 
+ * Handles user input by turning knob rotations into number increments/decrements and  
+ * knob presses into a message to accept the current value.
+ */
 PanelInfo::DisplayModeType NumberEditMode::handleUserInput(PanelInfo::InputType type)
 {
 	switch(type)
@@ -80,7 +90,8 @@ PanelInfo::DisplayModeType NumberEditMode::handleUserInput(PanelInfo::InputType 
 	drawDisplay();
 	return myModeType();
 }
-
+/*! Draws the current display including data name, data value and units.
+*/
 void NumberEditMode::drawDisplay()
 {
 	QString valText = QString::number(currNum_)+unitStr_;

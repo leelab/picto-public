@@ -14,6 +14,7 @@ needsUniqueChildNames_(true)
 {
 	assetId_ = 0;
 	propertyContainer_ = PropertyContainer::create("DataStore");
+	//If this Datastore was deleted, then it was also edited.
 	connect(this,SIGNAL(deleted()),this,SIGNAL(edited()));
 }
 
@@ -25,6 +26,39 @@ DataStore::~DataStore()
 }
 //Autoserialization Stuff-------------------------------------------------------------
 
+/*! \brief Serializes this DataStore along with descendants into a descriptive XML string using the input QXmlStreamWriter.
+ *	\details The serialization algorithm in Picto is fairly complex and took some time to develop,
+ *	so think twice before changing it.  One of the sources for the complexity, however, was the
+ *	desire for the XML code to look the same apart from a small change if we edit the design in
+ *	software and then reserialize it out.  We wanted to be able to maintain XML comments without
+ *	their getting deleted and to be sure that the order of the XML tags that was put into 
+ *	the deserializeFromXml() function would be the same as the order that was put out of the 
+ *	serializeAsXml() function.  These requirements are less important now than they once were since
+ *	we used to include an XML editor in the Workstation that allowed users to directly manipulate 
+ *	Design XML.  Now that we no longer use that, it is still nice to maintain these restrictions 
+ *	for the purposes of using file comparison tools to compare different versions of an experiment.
+ *	On the other hand, since no one ever touches the XML manually, things like maintaining
+ *	ordering in multiple versions of the code might come for free.  While you might consider
+ *	relaxing these restrictions in the future and thereby simplifying this function, an overview of 
+ *	its operation right now is as follows:
+ *		-# Start reading out the XML code that was saved during the course of deserializeFromXml().
+ *			This code includes the tag names of this DataStore and its immediate children.
+ *		-# Write out this DataStores tag name, updating the ID value if there is none or our 
+ *			AssetID has changed.
+ *		-# Loop through the XML code saved on input.  
+ *			- Each time a tag is encountered, move to 
+ *				the first child of its type and serialize it out. (If it was deleted, nothing will 
+ *				happen).
+ *			- If no child type matches the tag, the tag must be an XML comment, write it out.
+ *			- Continue the loop.
+ *		-# Loop through any child assets that were not yet serialized out.
+ *			- If the asset is both new and edited, write it out.
+ *			- Otherwise, skip the asset.  It was either new and undedited: a default asset 
+ *				(required and initialized to a default state), or it was edited and not new: 
+ *				a complicated condition discussed in comments below.
+ *				Only the new, edited version should be serialized.
+ *		-# Write out this DataStore's closing tag.
+ */
 bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	Q_ASSERT_X(tagText_ != "","DataStore::serializeAsXml","This datastore has no tag text, it was either not serialized in or not initialized to default values.");
@@ -145,6 +179,45 @@ bool DataStore::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeCurrentToken(*xmlReader);	
 	return returnVal;
 }
+
+/*! \brief Deserializes this DataStore along with descendants from the descriptive XML string input 
+*	in the QXmlStreamReader where the read pointer is at this DataStore's start tag.
+ *	\details The serialization/deserialization algorithm in Picto is fairly complex and took some time to develop,
+ *	so think twice before changing it.  One of the sources for the complexity, however, was the
+ *	desire for the XML code to look the same apart from a small change if we edit the design in
+ *	software and then reserialize it out.  We wanted to be able to maintain XML comments without
+ *	their getting deleted and to be sure that the order of the XML tags that was put into 
+ *	the deserializeFromXml() function would be the same as the order that was put out of the 
+ *	serializeAsXml() function.  These requirements are less important now than they once were since
+ *	we used to include an XML editor in the Workstation that allowed users to directly manipulate 
+ *	Design XML.  Now that we no longer use that, it is still nice to maintain these restrictions 
+ *	for the purposes of using file comparison tools to compare different versions of an experiment.
+ *	On the other hand, since no one ever touches the XML manually, things like maintaining
+ *	ordering in multiple versions of the code might come for free.  While you might consider
+ *	relaxing these restrictions in the future and thereby simplifying this function, an overview of 
+ *	its operation right now is as follows:
+ *		-# Create a QXMLStreamWriter to write each tag to a stored tagText_ string as we deserialize it.
+ *			Note that since we only ever look at the top level tag names of children, this will
+ *			will only contain this DataStore's tag and each immediate child tag.
+ *		-# Store this DataStores tag name, (since it may be different from the default tag name)
+ *			and store its AssetID from the 'id' tag property.
+ *		-# Loop through the input XML code until we reach the closing tag for this DataStore.
+ *			- Write everything that we read in to our stored tagText_ string
+ *			- Each time a start tag is encountered, try to create a child asset by looking for
+ *				an AssetFactory in our factories_ lookup table under the start tag's name.
+ *			- If we find the asset factory, try to create an Asset using the factory according
+ *				to the start tag's 'type' property.
+ *			- If we successfully created the child asset, add it to our children lists and
+ *				deserialize it, passing in the input QXMLStreamReader.
+ *			- When deserialization is complete, the QXMLStreamReader's read pointer will be at
+ *				the child assets closing tag.  Write the closing tag to our tagText_ string.
+ *		-# If any AssetFactory objects in our factories_ lookup require us to generate more 
+ *			children that were already generated, generate them from those factories, add
+ *			them to the children lists and initialize them to their default states.
+ *		-# Write this DataStore's closing tag to the tagText_ string.
+ *	\sa AssetFactory, AddDefinableObjectFactory(), AddDefinableProperty(), AddChild(), 
+ *	\sa Asset::initializeToDefault()
+ */
 bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Create XMLStreamWriter to store this DataStore's tag text in a string
@@ -310,6 +383,15 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	return returnVal;
 }
 
+/*! \brief Returns true if this asset and all of its children have valid syntax.
+ *	\details Calls validateTree on all immediate children, then all Associate Children,
+ *	then calls ValidateObject() on this DataStore.  If any of them return a false
+ *	value for valid syntax, this function returns false, otherwise it returns true.
+ *	\note Regardless of what this function returns, all children, associate children
+ *	and this object will have their validity checked such that we can expect all of them
+ *	to report errors that can be read from Serializable::getErrors().  Validation doesn't
+ *	stop after the first error.
+ */
 bool DataStore::validateTree()
 {
 	bool returnVal = true;
@@ -336,6 +418,16 @@ bool DataStore::validateTree()
 	return returnVal;
 }
 
+/*! \brief Emits the deleted() signal when called to inform interested parties that this asset needs to be removed from the design.  Calls setDeleted() on all children and associate children as well.
+ *	\details Since internally we connect deleted() to receivedDeletedSignal(), it also causes our deleted_ flag to be set so
+ *	that this object itself will know if it has been deleted_.
+ *	\note Currently in Picto, in order to delete an asset we just set it as deleted, then when the time comes for serialization,
+ *	we don't serialize out any of the "delete marked" assets.  Doing things this way helps us maintain a general order and structure in
+ *	xml design files from one serialization to the next to aid in comparison of different versions of a design file.
+ *	\attention Probably for the sake of future proofing, instead of directly emitting deleted(), this function should call
+ *	Asset::setDeleted() and let it do it.  I am not changing this now, but you probably should.
+ * \sa serializeAsXml()
+ */
 void DataStore::setDeleted()
 {
 	emit deleted();
@@ -364,6 +456,10 @@ void DataStore::postDeserialize()
 	Asset::postDeserialize();
 }
 
+/*! \copydoc Asset::validateObject()
+ *	\details In the case of the DataStore, this function checks for uniqueness of child names when
+ *	needsUniqueChildNames() and any child or associate child needsUniqueName()
+ */
 bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	QHash<QString,bool> nameMap;
@@ -422,11 +518,16 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
+/*! \brief In theory this just initializes all properties to default values.  In practice it just calls initializeToDefaults() to initialize the entire DataStore to its default values.
+*/
 void DataStore::initializePropertiesToDefaults()
 {
 	initializeToDefault();
 }
 
+/*! \brief Adds a required property to this DataStore with the input name and defaultValue of type defined by the input default value QVariant type.
+ *	\sa AddDefinableProperty(int,QString,QVariant,QMap<QString,QVariant>,int,int)
+ */
 void DataStore::AddDefinableProperty(
 		QString tagName, 
 		QVariant defaultValue
@@ -434,7 +535,12 @@ void DataStore::AddDefinableProperty(
 {
 	AddDefinableProperty(defaultValue.type(),tagName,defaultValue,QMap<QString,QVariant>(),1,1);
 }
-
+/*! \brief Adds a required property to this DataStore of the input type (a QVariant::Type) with the input name and defaultValue, plus a single 
+ *attribute with input singleAttributeName and singleAttributeValue
+ *	\note I don't think we ever use this function because if we require any attributes (ie. EnumProperty)
+ *	then we require more than one.
+ *	\sa AddDefinableProperty(int,QString,QVariant,QMap<QString,QVariant>,int,int)
+ */
 void DataStore::AddDefinableProperty(
 		int type,
 		QString tagName, 
@@ -448,17 +554,27 @@ void DataStore::AddDefinableProperty(
 	AddDefinableProperty(type,tagName,defaultValue,attributeMap,1,1);
 }
 
-//void DataStore::AddDefinableProperty(
-//		int type,
-//		QString tagName, 
-//		QVariant defaultValue,
-//		int minNumOfThisType, 
-//		int maxNumOfThisType
-//		)
-//{
-//	AddDefinableProperty(type,tagName,defaultValue,QMap<QString,QVariant>(),minNumOfThisType,maxNumOfThisType);
-//}
-
+/*! \brief Sets property generation rules for a property with the input type and tagName to this DataStore 
+ *	\details type distinguishes the type of property (ie. QVarant::Int, QVariant::Bool, QVariant::String), 
+ *	tagName is the name of this property, defaultValue is the value
+ *	that the property recieves automatically on generation, attributeMap is a map of attributes that will be
+ *	provided to the generated property (some properties require this like EnumProperty require this),
+ *	minNumOfThisType is the required number of properties of this kind (we can be sure that at least
+ *	this number of properties of this kind will be generated), maxNumOfThisType is the maximum allowable
+ *	number of properties of this type.
+ *	Typically, a DataStore calls some variant of AddDefinableProperty() severral times in its constructor 
+ *	to define the types of properties that it will include.  The order in which AddDefinableProperty() is
+ *	called defines the order in which properties will appear in the UI.
+ *	\note Internally, this function uses AddDefinableObjectFactory() to add a PropertyFactory to this
+ *	data store, so you can look at that function for more detail.
+ *	\attention In practice, we never use more than one property of a particular type, tagName combination.
+ *	In fact, if we ever used the same tagName for more than one property, it would probably cause a lot 
+ *	of things to break since we sometimes use property paths to identify properties, and adding two 
+ *	properties of the same name would cause two properties to have the same path.  The point is that this
+ *	function provides generality that should not actually be used.  Possibly we should just get rid of 
+ *  this generalization and remove the maxNumOfThisType parameter.
+ *	\sa AddDefinableObjectFactory(), PropertyFactory
+ */
 void DataStore::AddDefinableProperty(
 		int type,
 		QString tagName, 
@@ -481,12 +597,16 @@ void DataStore::AddDefinableProperty(
 	orderedPropList_.append(tagName);
 }
 
-//void DataStore::AddDefinableObject(QString tagName, QSharedPointer<Asset> object)
-//{
-//	QSharedPointer<AssetFactory> factory(new AssetFactory(object));
-//	AddDefinableObjectFactory(tagName,factory);
-//}
-
+/*! \brief Adds an AssetFactory to this DataStore for the input tagName XML tag.
+ *	\details This function adds the input AssetFactory to a lookup table.  When the deserialization 
+ *	system encounters an xml tag with the input tagName, the deserialization system uses it to find
+ *	this AssetFactory and uses the factory to generate an Asset.  Since it was looked up with
+ *	the corresponding XML tag, this Asset will be of the correct kind to match the XML tag's contents
+ *	and so the XML tag can be used to deserialize the newly generated Asset.  The various parameters
+ *	of the AssetFactory offer additional control including generating sub Asset types based on the 
+ *	XML tag's type property and enforcing minimum and maximum numbers of generated Assets for each
+ *	DataStore.
+ */
 void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory)
 {
 	bool factoryOverride = factories_.contains(tagName);
@@ -504,6 +624,12 @@ void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetF
 	factories_[tagName]=factory;
 }
 
+/*! \brief Adds the input child Asset to this DataStore's child list, under the tagName category (where tagName will also be the XML tag used to serialize the child)
+ *	\details This function provides the child with its shared pointer selfPtr, tells it who its parent is,
+ *	adds it to this DataStore's children_ lookup table under the tagName category, and connects up the
+ *	childs edited() signal to this DataStore's childEdited() slot.
+ *	\sa AddAssociateChild()
+ */
 void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
 {
 	child->setSelfPtr(child);
@@ -512,6 +638,9 @@ void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)
 	connect(child.data(),SIGNAL(edited()),this,SLOT(childEdited()));
 }
 
+/*! \brief Returns true if this DataStore contains the input SearchRequest in one of its searchable property fields
+ *	\sa SearchRequest
+ */
 bool DataStore::executeSearchAlgorithm(SearchRequest searchRequest)
 {
 	if(searchRequest.type == SearchRequest::EXISTS)
@@ -519,7 +648,14 @@ bool DataStore::executeSearchAlgorithm(SearchRequest searchRequest)
 	return false;
 }
 
-bool DataStore::AddAssociateChild(QUuid associateId, int parentId, QString tagName, QSharedPointer<Asset> child)\
+/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
+ *	with the input associateId.
+ *	\details If the parentId matches this DataStore's AssetId, it is added.  Otherwise, child elements' AddAssociateChild()
+ *	functions are called until on of them successfully adds the AssociateElement child.  If a match cannot be found for the
+ *	parentId, false is returned.  If a match is found, the function returns true.
+ *	\sa AddChild(), AddAssociateChild(QUuid, QString, QSharedPointer<Asset>)
+ */
+bool DataStore::AddAssociateChild(QUuid associateId, int parentId, QString tagName, QSharedPointer<Asset> child)
 {
 	//If the parent id matches mine, add the associate child
 	if(parentId == getAssetId())
@@ -543,6 +679,15 @@ bool DataStore::AddAssociateChild(QUuid associateId, int parentId, QString tagNa
 	return false;
 }
 
+/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
+ *	with the input associateId.
+ *	\details If the parentPath matches this DataStore's path, it is added.  Otherwise, child elements' AddAssociateChild()
+ *	functions are called until on of them successfully adds the AssociateElement child.  If a match cannot be found for the
+ *	parentPath, false is returned.  If a match is found, the function returns true.
+ *	\attention This function can be more efficient by checking if the parentPath starts with this DataStore's path and 
+ *	returning false if not.  If you have a few minutes, you can make this change.
+ *	\sa AddChild(), AddAssociateChild(QUuid, QString, QSharedPointer<Asset>)
+ */
 bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString tagName, QSharedPointer<Asset> child)
 {
 	//If the parent id matches mine, add the associate child
@@ -567,6 +712,14 @@ bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString
 	return false;
 }
 
+/*! \brief Adds the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
+ *	with the input associateId.
+ *	\details The child is added to a lookup table of lookup tables, under its associateId and tagName.  It's 
+ *	AssociateElement::linkToAsset() function is called to link it to this DataStore, its edited() signal is connected
+ *	to our associateChildEdited() slot, and childAddedAfterDeserialize() is emitted to let interested parties know what
+ *	happened.
+ *	\sa AddChild(), AssociateElement::linkToAsset()
+ */
 void DataStore::AddAssociateChild(QUuid associateId, QString tagName, QSharedPointer<Asset> child)
 {
 	associateChildrenByGuid_[associateId][tagName].push_back(child);
@@ -576,6 +729,9 @@ void DataStore::AddAssociateChild(QUuid associateId, QString tagName, QSharedPoi
 	emit childAddedAfterDeserialize(child);
 	connect(child.data(),SIGNAL(edited()),this,SIGNAL(associateChildEdited()));
 }
+
+/*! \brief Removes all AssociateElement children with the input associateId from this DataStore and all of this DataStore's descendants.
+ */
 void DataStore::ClearAssociateDescendants(QUuid associateId)
 {
 	ClearAssociateChildren(associateId);
@@ -592,6 +748,8 @@ void DataStore::ClearAssociateDescendants(QUuid associateId)
 	}
 }
 
+/*! \brief Removes all AssociateElement children from this DataStore and all of this DataStore's descendants.
+ */
 void DataStore::ClearAllAssociateDescendants()
 {
 	foreach(QUuid associateId,associateChildrenByGuid_.keys())
@@ -600,6 +758,8 @@ void DataStore::ClearAllAssociateDescendants()
 	}
 }
 
+/*! \brief Removes all AssociateElement children with the input associateId from this DataStore.
+ */
 void DataStore::ClearAssociateChildren(QUuid associateId)
 {
 	if(!associateChildrenByGuid_.contains(associateId))
@@ -616,6 +776,8 @@ void DataStore::ClearAssociateChildren(QUuid associateId)
 	associateChildrenByGuid_.remove(associateId);
 }
 
+/*! \brief Removes all AssociateElement children from this DataStore.
+ */
 void DataStore::ClearAllAssociateChildren()
 {
 	foreach(QUuid associateId,associateChildrenByGuid_.keys())
@@ -624,6 +786,13 @@ void DataStore::ClearAllAssociateChildren()
 	}
 }
 
+/*! \brief Sets properties of this DataStore and all of its descendants as Associates
+ *	\details Picto doesn't contain an AssociateProperty class, but we need to know sometimes if a Property belongs
+ *	to an experimental element or an AssociateElement in order to be able to tell if it is necessary in an experimental
+ *	run, etc.  For this reason we simply maintain a flag on each Property that stores whether it is an Associate or not.
+ *	This function sets all flags of all Property objects of all of its descendants to true
+ *	\sa Property::setAssociateProperty()
+ */
 void DataStore::setDescendantPropertiesAsAssociates()
 {
 	propertyContainer_->setPropertiesAsAssociates(true);
@@ -639,6 +808,9 @@ void DataStore::setDescendantPropertiesAsAssociates()
 	}
 }
 
+/*! \brief Returns a list of all child Assets that were generated under the input tagName XML tag / category
+ *	\sa deserializeFromXml(), AddChild()
+ */
 QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 {
 	if(!children_.contains(tagName))
@@ -646,6 +818,9 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
+/*! \brief Returns a list of all XML tags / categories under which AssociateElement children were added to this DataStore for the input AssociateRoot associateId.
+ *	\sa AddAssociateChild()
+ */
 QStringList DataStore::getAssociateChildTags(QUuid associateId)
 {
 	if(!associateChildrenByGuid_.contains(associateId))
@@ -653,6 +828,9 @@ QStringList DataStore::getAssociateChildTags(QUuid associateId)
 	return associateChildrenByGuid_.value(associateId).keys();
 }
 
+/*! \brief Returns a list of all Associate Element child Assets that were added under the input XML tag/category for the input AssociateRoot associateId.
+ *	\sa AddAssociateChild()
+ */
 QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, QString tagName)
 {
 	if(!associateChildrenByGuid_.contains(associateId) || !associateChildrenByGuid_.value(associateId).contains(tagName))
@@ -660,6 +838,10 @@ QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, 
 	return associateChildrenByGuid_[associateId][tagName];
 }
 
+/*! \brief Returns a list of all Associate Element Assets that were added to this DataStore and all of its descendants for the input AssociateRoot associateId.
+ *	\details Returned values are according to a Pre-Ordered Depth-First-Search
+ *	\sa AddAssociateChild()
+ */
 QList<QSharedPointer<Asset>> DataStore::getAssociateDescendants(QUuid associateId)
 {
 	QList<QSharedPointer<Asset>> returnVal;
@@ -682,22 +864,34 @@ QList<QSharedPointer<Asset>> DataStore::getAssociateDescendants(QUuid associateI
 	return returnVal;
 }
 
+/*! \brief Returns a list of all AssociateRoot AssociateId's for which Associate Element children have been added to this DataStore.
+ */
 QList<QUuid> DataStore::getAttachedAssociateIds()
 {
 	return associateChildrenByGuid_.keys();
 }
 
+/*! \brief Returns a list of all XML tags for which children have been or can be added to this DataStore.
+ */
 QStringList DataStore::getValidChildTags()
 {
 	return factories_.keys();
 }
 
+/*! \brief Returns the AssetFactory used by this DataStore to handle XML tags with the input tagName
+*/
 QSharedPointer<AssetFactory> DataStore::getAssetFactory(QString tagName)
 {
 	if(factories_.contains(tagName))
 		return factories_[tagName];
 	return QSharedPointer<AssetFactory>();
 }
+/*! \brief Creates a child asset with the input XML tag name and type property and returns it.
+ *	\details If the asset cannot be created, and empty QSharedPointer is returned and an error string explaining
+ *	the problem is set into the error parameter.  The created child Asset is added to this DataStore and initialized
+ *	to its default state.  childAddedAfterDeserialize() is emitted and this DataStore is setEdited().
+ *	\sa AddChild(), setEdited(), initializeToDefault()
+ */
 QSharedPointer<Asset> DataStore::createChildAsset(QString tagName,QString type,QString& error)
 {
 	QSharedPointer<Asset> newAsset;
@@ -724,6 +918,12 @@ QSharedPointer<Asset> DataStore::createChildAsset(QString tagName,QString type,Q
 	return newAsset;
 }
 
+/*! \brief Creates a child asset with the input XML details, adds it as a child and returns it.
+ *	\details This functions just like createChildAsset() except that instead of being initialized
+ *	to a default state, the child is initialized according to the passed in XML.  For more details, 
+ *	see createChildAsset().
+ *	\sa createChildAsset(), AddChild(), setEdited(), initializeToDefault()
+ */
 QSharedPointer<Asset> DataStore::importChildAsset(QString childXml,QString& error)
 {
 	//Get tag name and type from childXML
@@ -768,6 +968,9 @@ QSharedPointer<Asset> DataStore::importChildAsset(QString childXml,QString& erro
 	return newAsset;
 }
 
+/*! \brief The idea here is to return this DataStore() to a pre-deserialized() state so that deserializeFromXml() can be
+ *	be called again.  I don't think we ever used it, so don't put too much stock in it.
+ */
 void DataStore::clear()
 {
 	propertyContainer_->clear();
@@ -784,11 +987,17 @@ void DataStore::clear()
 	ClearAllAssociateChildren();
 }
 
+/*! \brief A convenience function equivalent to getting the property with propName and calling its Property::setRuntimeEditable() function.
+ *	See that function for more details.
+ */
 void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
 {
 	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
+/*! \brief Sets whether this DataStore and its Descendants should act as if they are in an experimental run or in a design environment.
+	\detail See DesignRoot::enableRunMode() for more detail.
+ */
 void DataStore::enableRunModeForDescendants(bool en)
 {
 	enableRunMode(en);
@@ -807,6 +1016,9 @@ void DataStore::enableRunModeForDescendants(bool en)
 	}
 }
 
+/*! \brief Returns all descendants that are runtime editable.
+ *	\details See isRuntimeEditable() for more detail.
+ */
 QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 {
 	QList<QSharedPointer<DataStore>> runtimeDesc;
@@ -828,6 +1040,10 @@ QList<QSharedPointer<DataStore>> DataStore::getRuntimeEditableDescendants()
 	}
 	return runtimeDesc;
 }
+/*! \brief Returns a list of all Property children of this DataStore and all of its descendants.
+ *	\details Returned values are according to a Pre-Ordered Depth-First-Search
+ *	\sa AddAssociateChild()
+ */
 QList<QSharedPointer<Property>> DataStore::getDescendantsProperties()
 {
 	QList<QSharedPointer<Property>> descendantProps;
@@ -856,16 +1072,23 @@ QList<QSharedPointer<Property>> DataStore::getDescendantsProperties()
 	return descendantProps;
 }
 
+/*! \brief Returns this DataStore's assetId.
+ */
 int DataStore::getAssetId()
 {
 	return assetId_;
 }
+/*! \brief Sets this DataStore's assetId and emits assetIdEdited() */
 void DataStore::setAssetId(int id)
 {
 	assetId_ = id;
 	emit assetIdEdited();
 }
 
+/*! copydoc Asset::upgradeVersion()
+ *	\details In the case of the DataStore, when called, upgradeVersion is called on all of its
+ *	descendants recursively as well.
+ */
 void DataStore::upgradeVersion(QString deserializedVersion)
 {
 	QMap<QString,QList<QSharedPointer<Asset>>> deserializedChildren = children_;
@@ -879,7 +1102,9 @@ void DataStore::upgradeVersion(QString deserializedVersion)
 	}
 }
 
-//Returns true if this object is part of the requested search (ie. It falls into the searchRequest's group
+/*! \brief Returns true if this object is part of the requested search (ie. It falls into the searchRequest's group)
+ *	\sa SearchRequest
+ */
 bool DataStore::isPartOfSearch(SearchRequest searchRequest)
 {
 	if(searchRequest.group & SearchRequest::EXPERIMENT)
@@ -887,12 +1112,17 @@ bool DataStore::isPartOfSearch(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief Returns true if the input SearchRequest applies to this DataStore and is found in one of its searchable properties.
+ */
 bool DataStore::searchForQuery(SearchRequest searchRequest)
 {
 	if(!isPartOfSearch(searchRequest))
 		return false;
 	return executeSearchAlgorithm(searchRequest);
 }
+/*! \brief Returns true if the input SearchRequest applies to this DataStore or one of its descendants and is found in one of it or its descendants' searchable properties.
+ *	\note AssociateElement descendants are searched as well
+ */
 bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
@@ -903,6 +1133,9 @@ bool DataStore::searchRecursivelyForQuery(SearchRequest searchRequest)
 		return true;
 	return false;
 }
+/*! \brief Returns true if the input SearchRequest applies one of this DataStore's children and is found in one their searchable properties.
+ *	\note AssociateElement children are searched as well
+ */
 bool DataStore::searchChildrenForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
@@ -936,6 +1169,9 @@ bool DataStore::searchChildrenForQuery(SearchRequest searchRequest)
 	}
 	return false;
 }
+/*! \brief Returns true if the input SearchRequest applies to this DataStore's descendants and is found in one of their searchable properties.
+ *	\note AssociateElement descendants are searched as well
+ */
 bool DataStore::searchChildrenRecursivelyForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
@@ -969,6 +1205,9 @@ bool DataStore::searchChildrenRecursivelyForQuery(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief Returns true if the input SearchRequest applies to this DataStore's parent or one of its parent's children and is found in one of their searchable properties.
+ *	\note AssociateElements are searched as well
+ */
 bool DataStore::searchParentForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
@@ -987,6 +1226,8 @@ bool DataStore::searchParentForQuery(SearchRequest searchRequest)
 		return true;
 	return false;
 }
+/*! \brief Returns true if the input SearchRequest applies to one of this DataStore's ancestors and is found in one of their searchable properties.
+ */
 bool DataStore::searchAncestorsForQuery(SearchRequest searchRequest)
 {
 	if(!searchRequest.enabled)
@@ -1007,6 +1248,8 @@ bool DataStore::searchAncestorsForQuery(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief This slot is called when a child is edited and causes this DataStore's edited() signal to be emitted as well.
+ */
 void DataStore::childEdited()
 {
 	emit edited();

@@ -9,8 +9,12 @@ class QWidget;
 class QtProperty;
 QT_END_NAMESPACE
 
-//! [0]
-// A Text editor widget for Picto Scripts
+/*! \brief A QTextEdit that is searchable by using a SearchRequest object.
+ *	\details When a SearchRequest is found in this QTextEdit, the strings
+ *	that are found will be highlighted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class SearchableTextEdit : public QTextEdit
 {
 	Q_OBJECT

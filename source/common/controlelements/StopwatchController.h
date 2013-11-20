@@ -10,9 +10,12 @@ namespace Picto {
 
 /*! \brief A time based controller
  *
- *	This controller ignores any and all inputs, and simply returns "Success"
- *	when a fixed amount of time has expired.  Since the time values are properties
- *	it is possible to change them at runtime through Javascript.
+ *	This is a simple timer controller that triggers its Success result as soon as its set timeout 
+ *	runs out. Please note that since time is checked only once per frame the time that the next 
+ *	frame from a state following this one will appear will be anywhere from one to two frames beyond 
+ *	the set 'Time'.  This is true of all time based conditions in ControlElement objects.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013	
  */
 
 #if defined WIN32 || defined WINCE
@@ -22,7 +25,8 @@ class StopwatchController : public ControlElement
 #endif
 {
 	Q_OBJECT
-	Q_PROPERTY(int timeout READ getTime() WRITE setTime());
+	/*! \brief Sets/Gets the current value of the Time property which defines the time at which 'Success' will be triggered*/
+	Q_PROPERTY(int timeout READ getTime() WRITE setTime())
 public:
 	StopwatchController();
 	virtual ~StopwatchController(){};
@@ -36,7 +40,9 @@ public:
 	void start(QSharedPointer<Engine::PictoEngine> engine);
 
 	void setTime(int time, Controller::TimerUnits::TimerUnits units);
+	/*! \brief Sets the current value of the Time property which defines the time at which 'Success' will be triggered*/
 	void setTime(int time){propertyContainer_->setPropertyValue("Time",time);};
+	/*! \brief Gets the current value of the Time property which defines the time at which 'Success' will be triggered*/
 	int getTime(){return propertyContainer_->getPropertyValue("Time").toInt();};
 
 	virtual QString getUITemplate(){return "StopwatchController";};

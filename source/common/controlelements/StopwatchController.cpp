@@ -9,35 +9,33 @@ StopwatchController::StopwatchController()
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"Time",5);
-	
-	//propertyContainer_->setPropertyValue("Type",ControllerType());
-
-	//QSharedPointer<Property> unitsEnumProperty = propertyContainer_->addProperty(PropertyContainer::enumTypeId(),"Units",0);
- //   unitList_ << "Sec" << "Ms" << "Us";
-	//unitsEnumProperty->setAttribute("enumNames", unitList_);
-
-	//propertyContainer_->addProperty(QVariant::Int,"Time",0);
 
 	//Make sure to update the list of results...
 	addRequiredResult("Success");
 }
 
-
+/*! \brief Creates and returns a pointer to a new StopwatchController*/
 ControlElement* StopwatchController::NewStopwatchController()
 {
 	return new StopwatchController;
 }
 
+/*! \brief Creates and returns a shared pointer to a new StopwatchController*/
 QSharedPointer<Asset> StopwatchController::Create()
 {
 	return QSharedPointer<Asset>(new StopwatchController());
 }
 
+/*! \brief Returns the name of this type of ControlElement.  Namely, "Stopwatch Controller".
+*/
 QString StopwatchController::ControllerType()
 {
 	return "Stopwatch Controller";
 }
 
+/*! \brief Sets values for the Time property along with the current time units
+ *	\sa setTime(int)
+*/
 void StopwatchController::setTime(int time, Controller::TimerUnits::TimerUnits units)
 {
 	int newUnit;
@@ -105,18 +103,6 @@ void StopwatchController::postDeserialize()
 
 	setPropertyRuntimeEditable("Time");
 }
-
-
-
-///*! \brief Turns the ControlElement into an XML fragment
-// *
-// * A serialized StopwatchController will look something like this:
-// *	<ControlElement type="StopwatchController" operatorVisible="true subjectVisible="false">
-// *		<Name>MyControlElement</Name>
-// *		<Time units="Ms">500</Time>
-// *	</ControlElement>
-// */
-////
 
 bool StopwatchController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {

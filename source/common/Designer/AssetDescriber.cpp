@@ -251,7 +251,7 @@ void AssetDescriber::setupDescriptions()
 	//Control Logic State Machine Elements
 	curr = addDescription("ChoiceController");
 	curr->setInherits(getAssetDescription("ControlElement"));
-	curr->setOverview("The Choice Controller, like the Target Controller is used to check if the user has fixated on a Control Target.  In the case of the Choice Controller however, multiple targets can be defined using internal Control Target Results and each one of these results creates a different possible result outcome from the Choice Controller.  Like in the case of a Target Controller, any Control Target that is being actively considered will be visible to the operator while this Choice Controller is active.  The possible results from a Choice Controller are hopefully self explanetory.  Please also note that the Choice Controller is essentially a convenience element.  Its operation can be fairly precisely simulated by simply using multipole Target Controllers.");
+	curr->setOverview("The Choice Controller, like the Target Controller is used to check if the user has fixated on a Control Target.  In the case of the Choice Controller however, multiple targets can be defined using internal Control Target Results and each one of these results creates a different possible result outcome from the Choice Controller.  Like in the case of a Target Controller, any Control Target that is being actively considered will be visible to the operator while this Choice Controller is active.  The possible results from a Choice Controller are hopefully self explanetory.  Please also note that the Choice Controller is essentially a convenience element.  Its operation can be fairly precisely simulated by simply using multiple Target Controllers.");
 	curr->addProp("SignalChannel","The signal channel used to check for entry/exit into the targets defined in this controller's Control Target Results.  Currently only 'Position' (default) and 'Diameter' are acceptable, and 'Diameter' would me somewhat cumbersome considering that it is not mapped into any x,y screen position.");
 	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the values in 'FixationTime' and 'TotalTime'.");
 	curr->addProp("FixationTime","The amount of time that the user must continuously fixate on a contained target before 'TotalTime' is reached in order for that target's Control Target Result to be triggered.");
@@ -464,14 +464,21 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("Used to embed audio data from a file into an experimental design.  The audio can be played by connecting an audio element to this parameter and calling its play() function.  Keep in mind that the selected file is embedded in the experiment such that modifications to a file after selecting it in the property window will not affect the experimental design unless the file is reselected.  Currently, only audio files in WAV format are supported.");
 
 	//Logic Elements
-	curr = addDescription("CircleTarget");
+	curr = addDescription("ControlTarget");
 	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setOverview("Defines a circular target area for monitoring fixation in Control Elements.  When this target is in scope and used with a Target Controller or Choice Controller, it will be used to define the region of acceptable fixation and be set visible while it is being tracked.");
+	curr->addProp("Outside","If true, the target location will be the region outside of this element's geometry.");
+	curr->addSProp("outside","Sets/Gets whether the target location is the region outside of this element's geometry.");
+	curr->addSFunc("getVisible()","Returns whether this ControlTarget is both set as visible and currently actively being monitored by a ControlElement.");
+
+	curr = addDescription("CircleTarget");
+	curr->setInherits(getAssetDescription("ControlTarget"));
 	curr->setOverview("Defines a circular target area for monitoring fixation in Control Elements.  When this target is in scope and used with a Target Controller or Choice Controller, it will be used to define the region of acceptable fixation and be set visible while it is being tracked.");
 	curr->addProp("Radius","The radius of the circle target.");
 	curr->addSProp("radius","Sets/Gets the circle target's current radius.");
 
 	curr = addDescription("RectTarget");
-	curr->setInherits(getAssetDescription("VisualElement"));
+	curr->setInherits(getAssetDescription("ControlTarget"));
 	curr->setOverview("Defines a rectangular target area for monitoring fixation in Control Elements.  When this target is in scope and used with a Target Controller or Choice Controller, it will be used to define the region of acceptable fixation and be set visible while it is being tracked.");
 	curr->addProp("Size","The size of the rectangle target.");
 	curr->addSProp("width","Sets/Gets the target's current width.");

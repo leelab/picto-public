@@ -63,7 +63,11 @@ QT_END_NAMESPACE
 
 class Arrow;
 
-//! [0]
+/*! \brief This is the base class for all graphical elements in the Picto Designer apart from transition arrows.
+ *	\details Objects of this class draw a rectangle on the Designer canvas.  They provide an option to set a
+ *	name and type for the rectangle that are drawn onto it.  The dimensions of the rectangle can be set and
+ *	\todo Finish documenting this class
+ */
 class DiagramItem : public QObject, public QGraphicsPolygonItem
 {
 	Q_OBJECT

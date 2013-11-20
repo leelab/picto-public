@@ -7,7 +7,7 @@
 #include "phidget21.h"
 #include "FrontPanelInfo.h"
 
-
+//These functions are used to interface with the Phidgets API
 int __stdcall TextLCDAttachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
 int __stdcall TextLCDDetachHandler(CPhidgetHandle hTextLCD, void * phidgetsObj);
 int __stdcall TextLCDErrorHandler(CPhidgetHandle hTextLCD, void * phidgetsObj, int ErrorCode, const char * Description);
@@ -24,11 +24,17 @@ int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle hEncoder, void 
 //int __stdcall ManagerDetachHandler(CPhidgetHandle phid, void * phidgetsObj);
 //int __stdcall ManagerErrorHandler(CPhidgetManagerHandle hManager, void * phidgetsObj, int Code, const char * Description);
 
-/*! \brief Interface to the Phidgets devices
- *
- *	The front panel deals with two different Phidgets devices: a 2-line LCD (1203)
- *	and a rotary encoder with push button (1052).  This object/collection of functions
- *	handles all of the I/O for these devices.
+/*! \brief Provides an interface to the Phidgets devices used by the FrontPanel Application
+ * \details The front panel deals with two different Phidgets devices: a 2-line LCD (1203)
+ * and a rotary encoder with push button (1052).  This object
+ * handles all of the I/O for these devices.  It does this by connecting to the Phidgets device API.
+ * This file includes a number of global callback functions that the Phidgets API calls whenever user 
+ * input events occur.  Internally, these functions call the Phidgets object which in turn sends messages
+ * to the FrontPanel application.  It should be noted that some threading issues had to be considered
+ * here since calls from the Phidgets API run in a seperate thread from the one used in the Front
+ * Panel application.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 
 class Phidgets : public QObject
@@ -42,6 +48,8 @@ public slots:
 	void turnOffBacklight();
 
 signals:
+	/*! \brief Emitted whenever an event of type PanelInfo::InputType occurs on the phidgets interface
+	*/
 	void userInputSignal(int type);
 
 

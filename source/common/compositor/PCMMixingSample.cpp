@@ -23,21 +23,41 @@ void PCMMixingSample::setSoundEffect(QSharedPointer<PreloadedSound> soundEffect)
 		volume_ = sound_->volume();
 }
 
+/*! \copydoc MixingSample::scheduleVolumeChange()
+ *	\details In the PCMMixingSample scheduled commands are implemented in the update() function.
+ */
 void PCMMixingSample::scheduleVolumeChange(float volume)
 {
 	volume_ = volume;
 }
-
+/*! \copydoc MixingSample::scheduleStart()
+ *	\details In the PCMMixingSample scheduled commands are implemented in the update() function.
+ */
 void PCMMixingSample::scheduleStart()
 {
 	command_ = PCMMixingSample::SHOULD_START;
 }
-
+/*! \copydoc MixingSample::scheduleStop()
+ *	\details In the PCMMixingSample scheduled commands are implemented in the update() function.
+ */
 void PCMMixingSample::scheduleStop()
 {
 	command_ = PCMMixingSample::SHOULD_STOP;
 }
 
+/*! \brief Implements the effects of the commands scheduled in scheduleStart(), scheduleStop() and 
+ *	scheduleVolumeChange().
+ * \details When called, this function calls the play(), stop(), setVolue(), etc. functions on the 
+ *	underlying PreloadedSound object.  This assures us that all changes to the sound occur synchronously
+ *	at a time defined by the experimental presentation system rather than at the particular time that
+ *	a user script makes a change.  At the time that the PreloadedSound is stopped or started, this
+ *	function emits either a stopping() or playing() signal including the type of this mixing sample
+ *	in order to provide feedback to other parties interested in the current state of the underlying
+ *	PreloadedSound object.
+ *	\note If this object's underlying PreloadedSound changes, calling update will stop the old sound and start
+ *	the new one.
+ *	\sa PreloadedSound
+ */
 void PCMMixingSample::update()
 {
 	if(!sound_)

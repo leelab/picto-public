@@ -5,9 +5,10 @@
 #include <QSharedPointer>
 #include "NumberEditMode.h"
 
-/*!	\brief The front panel's RewardDurMode interface
- *
- *	The front panel's RewardDurMode interface is defined here.
+/*!	\brief A NumberEditMode including functionality for the user to change the the duration
+ * of the default PictoBox reward.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class RewardDurMode : public NumberEditMode
 {

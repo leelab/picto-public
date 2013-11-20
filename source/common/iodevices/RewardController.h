@@ -36,7 +36,6 @@ namespace Picto {
  *
  * \note reward controllers are numbered from 1 to n
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardController : public QObject
 #else
@@ -56,21 +55,21 @@ public:
 
 
 public slots:
-	// \brief Appends a reward to the list of startable rewards.
+	/*! \brief Appends a reward to the list of startable rewards.*/
 	void addReward(unsigned int channel,int quantity, int minRewardPeriod);
-	// \brief Triggers any pending rewards to be given if possible.
+	/*! \brief Triggers any pending rewards to be given if possible.*/
 	void triggerRewards(bool appendToList);
-	// \brief returns true if there is a reward currently being supplied.
+	/*! \brief returns true if there is a reward currently being supplied.*/
 	bool rewardInProgress(unsigned int channel);
-	// \brief returns true if there are still rewards to send.
+	/*! \brief returns true if there are still rewards to send.*/
 	bool hasPendingRewards();
-	// \brief returns true if there are still rewards to send on the input channel.
+	/*! \brief returns true if there are still rewards to send on the input channel.*/
 	bool hasPendingRewards(unsigned int channel);
-	// \brief Flushes on the input channel for the input number of seconds.
+	/*! \brief Flushes on the input channel for the input number of seconds.*/
 	void flush(unsigned int channel, int seconds);
-	// \brief Returns true if there is a flush in progress on the input channel
+	/*! \brief Returns true if there is a flush in progress on the input channel*/
 	bool isFlushing(unsigned int channel);
-	// \brief Stops an active flush on the input channel
+	/*! \brief Stops an active flush on the input channel*/
 	void abortFlush(unsigned int channel);
 
 protected:

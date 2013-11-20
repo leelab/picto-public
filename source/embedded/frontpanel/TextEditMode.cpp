@@ -3,6 +3,12 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
+/*! Constructs a new TextEditMode object for a value named valName, whose value can
+ * have up to maxChars characters.  slowInc sets the number of letters to flip through
+ * per tick when the user is turning the input knob slowly.  fastInc sets the number of
+ * letters to flip through when the user is turning the knob quickly.
+ *
+ */
 TextEditMode::TextEditMode(int maxChars,QString valName,int slowInc,int fastInc) :
 currTextChar_(0),
 maxChars_(maxChars),
@@ -19,6 +25,9 @@ TextEditMode::~TextEditMode()
 {
 }
 
+/*!
+ * Sets up the object by getting the latest editable text, storing it and drawing it to display.
+ */
 void TextEditMode::initMode()
 {
 	QString latestText = getEditableText();
@@ -34,6 +43,12 @@ void TextEditMode::initMode()
 	drawDisplay();
 }
 
+/*! 
+ * Handles user input by turning knob rotations into letter/number flips through the alphabet and
+ * knob presses into a message to accept the current letter and move on to the next one if the cursor
+ * is inside the editable string, or a message to accept changes if the cursor is past the editable
+ * string.
+ */
 PanelInfo::DisplayModeType TextEditMode::handleUserInput(PanelInfo::InputType type)
 {
 	bool setTheVal = false;
@@ -105,6 +120,8 @@ PanelInfo::DisplayModeType TextEditMode::handleUserInput(PanelInfo::InputType ty
 	return myModeType();
 }
 
+/*! Draws the current display including data name, data value and cursor.
+*/
 void TextEditMode::drawDisplay()
 {
 	QString gap = QString(19-(valName_.size()+maxChars_),' ');

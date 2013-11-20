@@ -1,4 +1,7 @@
-/* ioapi.h -- IO base function header for compress/uncompress .zip
+/*! \file 
+	\brief ioapi.h -- IO base function header for compress/uncompress .zip
+	\attention Joey: We are not currently using this, however it may become useful in the future.
+   
    files using zlib + zip or unzip API
 
    Version 1.01e, February 12th, 2005

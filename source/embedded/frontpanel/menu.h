@@ -12,28 +12,14 @@
 #include "DirectorInterface.h"
 #include "DisplayMode.h"
 
-//The menu definition system deserves some disucssion here.
-//Every menu item has a name, a menu number, and an id.
-//The name is what is displayed on the screen, the menu number
-//declares which menu the item is associated with.
-
-//The menu system is organized by menu number.  The top level
-//menu is 0, but after that sub menus can be ordered in any way.
-//When the menu is displayed, on the 2 line LCD, the program
-//writes the name of the current menu item(currItem), and then
-//searches for the next menuItem in the list that has the same
-//menu number and displays that.  Then, to change into a sub-menu, 
-//all that is neccessary is to change currItem to a menuItem 
-//that has a different menu number and redraw the menus.
-
-//This setup makes moving through the menu a bit painful, since 
-//we are always searching for the next item in our menu, but
-//it makes keeping track of the menu really easy.
-
-
-/*!	\brief The front panel's menu interface
- *
- *	The front panel's menu interface is defined here.
+/*!	\brief The top level object for the front panel that creates all operable DisplayModes and connects them to the Phidgets interface.
+ * \details This is the top level object for the FrontPanel Application.  It creates all of the DisplayMode objects
+ * that can handle user interaction in this application and handles the process of switching between these modes.
+ * It also handles things like a set DisplayMode timeout after which if the user hasn't done anything, operation
+ * returns to the default StatusMode in addition to other minor housekeeping activities.
+ * If you are trying to understand the operation of the FrontPanel Application.  This is the place to start.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class Menu : public QObject
 {
@@ -55,9 +41,13 @@ private slots:
 	//void drawFlush();  //Since this is display "animated" it needs to be a slot
 
 signals:
+	/*! \brief Emitted when the output line of the LCD should be set to the output text where the top line is 1 and the bottom line is 2*/
 	void updateLCD(int line, QString text);
+	/*! \brief Emitted when LCD backlight's On/Off state should be toggled*/
 	void toggleBacklight();
+	/*! \brief Emitted when LCD's backlight should be turned On*/
 	void turnOnBacklight();
+	/*! \brief Emitted when LCD's backlight should be turned Off*/
 	void turnOffBacklight();
 
 private:

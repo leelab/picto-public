@@ -1,15 +1,11 @@
 /*! \file frontpanel/main.cpp
- *	\brief This application controls the front panle on PictoBox
+ *	\brief This application controls the front panel on PictoBox
  *
  *	The front panel on PictoBox consists of a 2 line LCD and a rotary encoder
  *	plus button input device (a PhidgetEncoder, part number 1052).  The application
  *	handles user input and communicates with the Picto engine via a simple TCP/IP
  *	connection.  
  *	
- *	It should be noted that as of August 31, 2010, the current incarnation of
- *	PictoDirector does not interact with the FrontPanel at all.  If you want to
- *	see how this functionality should eventually be implemented, check out 
- *	embedded/dumbEngine.
  */
 
 #include <QApplication>
@@ -28,7 +24,13 @@
 #include "FrontPanelInfo.h"
 
 
-
+/*! \brief The main method for the Picto Front Panel application.  
+ * \details This function initializes various Picto libraries, creates a Phidgets object
+ * which supplied the input from the Phidgets knob and an interface to the output LCD display
+ * and creates the Front Panel objects that handle the display and IO logic (Menu) and the
+ * connection between the front panel and the Picto Director application (FrontPanelInfo,
+ * EngineConnections), then it starts the application running
+ */
 int main(int argc, char *argv[])
 {
 	//This will cause memory leaks to print out on exit if they're enabled
@@ -44,7 +46,10 @@ int main(int argc, char *argv[])
 	Picto::InitializeLib(&app,localeLanguageCode);
 	Picto::InitializePorts(Picto::Names->frontPanelAppName);
 
-	//possibly reset our system number...
+	//Picto applications only communicate with other picto applications that have the same
+	//system number.  This is a patch that is used until someone has more time to optimize 
+	//the picto server such that it can handle multiple Picto systems simultaneously
+	//Here, we check if we need to reset our system number, and if so we do it
 	int sysNumArgIdx = app.arguments().indexOf("-systemNumber");
 	if(sysNumArgIdx > 0)
 	{
@@ -63,6 +68,8 @@ int main(int argc, char *argv[])
 	Menu M(panelInfo);
 	EngineConnections E(panelInfo);
 
+	//Connect the phidgets API signals to the Menu object in the Picto Front Panel Application so 
+	//that the phidgets LCD and knob can handle output and input
 	QObject::connect(&M, SIGNAL(updateLCD(int, QString)), &phidgets, SLOT(updateLCD(int, QString)));
 	QObject::connect(&M, SIGNAL(toggleBacklight()), &phidgets, SLOT(toggleBacklight()));
 	QObject::connect(&M, SIGNAL(turnOnBacklight()), &phidgets, SLOT(turnOnBacklight()));

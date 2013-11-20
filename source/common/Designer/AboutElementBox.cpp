@@ -5,7 +5,12 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+/*! \brief Constructs a new AboutElementBox with the input EditorState and parent widget.
+ *	\details This constructor creates a new AssetDescriber that is used to find documentation
+ *	on all input Assets.  It connects to editorState's EditorState::searchRequested() and
+ *	EditorState::insertionItemChanged() to get messages about when the requested serach
+ *	changes and when the user has selected a new insertion item from the Designer's Toolbox.
+ */
 AboutElementBox::AboutElementBox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 	SearchableTextEdit(parent),
 	editorState_(editorState),
@@ -22,6 +27,7 @@ AboutElementBox::AboutElementBox(QSharedPointer<EditorState> editorState,QWidget
 	connect(editorState_.data(),SIGNAL(insertionItemChanged(QString,QString)),this,SLOT(elementOfInterestChanged(QString,QString)));
 }
 
+/*! \brief A convenience function that extract's the input Asset object's className and friendlyName and then calls elementOfInterestChanged().*/
 void AboutElementBox::assetSelected(QSharedPointer<Asset> asset)
 {
 	if(asset.isNull())
@@ -32,6 +38,10 @@ void AboutElementBox::assetSelected(QSharedPointer<Asset> asset)
 	elementOfInterestChanged(className,asset->friendlyTypeName());
 }
 
+/*! \brief Causes the AboutElementBox to start display information about the class with the input className and friendlyName.
+ *	\details Information is read from the AssetDescriber object.  This function mainly just
+ *	takes this data, formats it and prints it out to the underlying SearchableTextEdit.
+ */
 void AboutElementBox::elementOfInterestChanged(QString className,QString friendlyName)
 {
 	if(className.isEmpty() || friendlyName.isEmpty())
@@ -101,6 +111,7 @@ void AboutElementBox::elementOfInterestChanged(QString className,QString friendl
 	}
 }
 
+/*! \brief Called whenever the requested search changes to update highlighted text in the Text box.*/
 void AboutElementBox::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)

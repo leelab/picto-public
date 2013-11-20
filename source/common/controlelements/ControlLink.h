@@ -7,10 +7,9 @@
 
 namespace Picto {
 
-/*!	\Brief A ControlLink between a control element and a state's result.
- *
- *	A ControlLink links a specific Result value from a specific ControlElement
- *	to a result in its parent state.  Everything is referenced by by name.
+/*!	\Brief UNUSED This used to essentially be a Transition for inside a State.  Now Elements inside a State just used Transition objects too.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE

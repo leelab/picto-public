@@ -3,6 +3,9 @@
 
 namespace Picto
 {
+/*! \brief Constructs an OutputSignalController with lowest pin number, minPin and highest pin number maxPin
+ * \details We assume here that all pins between minPin and maxPin are valid
+ */
 OutputSignalController::OutputSignalController(int minPin, int maxPin)
 :	maxPin_(maxPin),
 	minPin_(minPin)
@@ -19,6 +22,11 @@ OutputSignalController::~OutputSignalController()
 {
 }
 
+/*! \brief Enables the pin with id pinId.  Disabled pins have zero voltage.  Enabled pins have whatever voltage is stored
+ * for their value.
+ *	\details to enable/disable all pins at once, use pinId of -1.  Returns false if the input
+ *	pinId value is invalid.  Returns true otherwise.
+ */
 bool OutputSignalController::enablePin(bool enable, int pinId)
 {
 	if(pinId == -1)
@@ -45,6 +53,13 @@ bool OutputSignalController::enablePin(bool enable, int pinId)
 	return true;
 }
 
+/*! \brief Sets the input value to the pin with id pinId.  
+ *	\details If the pin is -1, the input is interpreted as an int and the binary value is applied
+ *	to the group of pins in this port. ie. 0x5 would be interpreted as 0101 on a four pin port.
+ *  Returns false if the input pinId value is invalid.  Returns true otherwise.
+ *  \note Voltage isn't actually applied to pin until apply voltages is
+ *	called.
+ */
 bool OutputSignalController::setValue(int pinId, QVariant value)
 {
 	if(pinId == -1)
@@ -71,6 +86,8 @@ bool OutputSignalController::setValue(int pinId, QVariant value)
 	return true;
 }
 
+/*! \brief Applies the voltages set in setValue() to all pins.
+ */
 void OutputSignalController::updateValues()
 {
 	applyVoltages();

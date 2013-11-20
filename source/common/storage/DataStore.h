@@ -20,27 +20,41 @@
 
 namespace Picto {
 class AssetFactory;
-//class PropertyContainer;
-/*! \brief a base class for anything that needs to write itself out as XML
- *
- *	Since most stuff is stored as XML, this class is incredibly useful (and yet really 
- *	simple).  Any object that is going to store itself as XML needs to inheret from
- *	this class and implement the two virtual functions for serializing/deserializing
- *	itself.
- *
- *	The DataStore class actually has no real functionality (it's basically just an interface).
- *
- *	The object is responsible for serializing/desersialing a complete XML fragment.  For example
- *	a VisualElement object will need to generate the tags <VisualElement> </VisualElement>, and
- *	all of the content in between.  Likewise, when deserialize is called, the VisualElement 
- *	should expect to receive an XMLStreamWriter that has <VisualElement> as the current token, and
- *	then will return with the </VisualElement> tag as the current token.
- *
- *	NOTE: Many of the child classes were created for this object before I started.  As such, I am not
- *	always sure what their intended purpose was.  Also, I may not have used this base class enough.
- *	A number of the protocol commands/responses include XML data that is definide within the 
- *	command/response.  It may be worth going back and refactoring some of that code. -MattG Sept 2010
+
+/*! \brief A base class for all Asset objects that can have children
+ *	\details The DataStore is a powerful and vitally important class for the Picto experimental design system.
+ *	It provides the framework for parent-child relationships of all objects in the Design that can have children.
+ *	The DataStore also includes the Property Containment framework that is at the heart of Picto's data storage
+ *	and transfer system.  Every DataStore must be entirely defined by Property objects.  In otherwords, by looking
+ *	at the values of a DataStore descendant's Properties, we should always be able to determine exactly what is 
+ *	going on in a DataStore without needing access to any of the object's other member variables.  If this rule
+ *	is followed, then all we need to do to serialize out any DataStore is to serialize out its type, its children 
+ *	and its Property values.  Similarly, if we want to store the current state of any DataStore descendant, all we
+ *	need to know are its type and Property values.  The Picto Experimental Execution system makes use of this 
+ *	fact.  Apart from the various input signals and timing data, the Director needs to send only behavioral inputs 
+ *	Transition traversals and Property value changes to the Picto Server in order to give it a complete picture of 
+ *	what is happening in the experiment, and the RemoteViewer and ReplayViewer need only look at these transition
+ *	traversals and timing values, and property changes to get a complete picture of the experiment at any given
+ *	time and provide a framework for accurate analysis.
  *	
+ *	Beyond the Property and parent-child frameworks, the DataStore also provides a means of attaching 
+ *	AssociateElement children to itself.  AssociateElements are objects that are linked to an element that
+ *	is part of the Picto experiment design but are not necessary for it to actually run.  Currently, these
+ *	include UIData objects, which provides information about the positioning of elements' graphical 
+ *	representations in the Designer window and various Analysis elements (AnalysisVariable, AnalysisScriptHolder, 
+ *	etc) objects that are updated during the course of Session Database playback to perform analyses.  
+ *	AssociateElement objects are saved in a separate XML tree from the Experimental Design but still need to be
+ *	attached to these objects when they are Deserialized so that the experimental system can property update them.
+ *	This is handled in the DataStore.
+ *
+ *	Lastly, the DataStore provides a search interface that allows users to search DataStores in the Designer
+ *	for strings.  Not every field in a DataStore can or should be searched, but the framework that allows 
+ *	descendant classes to define what is searched as well as the interface to perform the search
+ *	are handled by the DataStore.
+ *
+ *	Edit the DataStore class with great care.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API DataStore : public Asset
@@ -59,7 +73,15 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool validateTree();
 	virtual void setDeleted();
+	/*! \brief Returns a QStringList off all XML child tags that are allowed inside the XML tag for this DataStore
+	 *	\details Since the DataStore stores child Asset objects according to tagName, this function can be used
+	 *	with getGeneratedChildren() to loop through all of this DataStores child Assets.
+	 */
 	QStringList getDefinedChildTags(){return factories_.keys();};
+	/*! \brief Returns a list of XML tag names for child Property objects ordered in the order that they should appear in the user interface.
+	 *	\note The list returned by this function will be a differently ordered subset of the result of 
+	 *	getDefinedChildTags().
+	 */
 	QStringList getOrderedPropertyList(){return orderedPropList_;};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName);
 	QStringList getAssociateChildTags(QUuid associateId);
@@ -68,6 +90,7 @@ public:
 	virtual QList<QUuid> getAttachedAssociateIds();
 	virtual QString identifier(){if(myTagName_ == "") {Q_ASSERT(defaultTagName() != "Default"); return defaultTagName();} return myTagName_;};
 	virtual QString friendlyTypeName(){return "DataStore";};
+	/*! \brief Returns the PropertyContainer object that stores this DataStore's properties.*/
 	QSharedPointer<PropertyContainer> getPropertyContainer(){return propertyContainer_;};
 	QStringList getValidChildTags();
 	QSharedPointer<AssetFactory> getAssetFactory(QString tagName);
@@ -78,6 +101,14 @@ public:
 	QList<QSharedPointer<DataStore>> getRuntimeEditableDescendants();
 	void enableRunModeForDescendants(bool en);
 	QList<QSharedPointer<Property>> getDescendantsProperties();
+	/*! \brief Returns true if this DataStore exposes properties whose InitValues should be editable during the course of a running experiment.
+	 *	\details During the course of a running experiment, any DataStore can set some of its properties to be editable.  This means that when
+	 *	the operator changes their values, the change will be stored in an InitValue field inside the property.  When the DataStore next enters
+	 *	scope, all of the Property runValues are reset to their initValues such that the operator's changes take effect.  This function tells
+	 *	the RemoteViewer which DataStore objects should have their properties exposed in the UI so that the operator will have the option to
+	 *	change them during the course of the experiment.
+	 *	\sa Property
+	 */
 	virtual bool isRuntimeEditable(){return false;};
 
 	virtual	int getAssetId();
@@ -108,7 +139,12 @@ public:
 	void setDescendantPropertiesAsAssociates();
 
 signals:
+	/*! \brief Emitted whenever a child is added to this DataStore after its Deserialize function has already run.
+	 *	\details The function is emitted when either Experimental or Associate children are added.
+	 */
 	void childAddedAfterDeserialize(QSharedPointer<Asset> newChild);
+	/*! \brief Emitted whenever one of this DataStore's Associate children is edited.
+	 */
 	void associateChildEdited();
 public slots:
 	void childEdited();
@@ -117,6 +153,12 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	//AutoSerialization Stuff---------------------------------
+	/*! \brief Returns the name of this DataStore's default XML tag.
+	 *	\note The one who determines a child's tag name is its parent however, since it
+	 *	is its parent that needs to understand which XML tags need to be deserialized in
+	 *	which types of Asset object.  See the OutputElementContainer::OutputElementContainer()
+	 *	constructor for an example of this.
+	 */
 	virtual QString defaultTagName(){return "Default";};
 	void initializePropertiesToDefaults();
 	void AddDefinableProperty(
@@ -130,13 +172,6 @@ protected:
 		QString singleAttributeName,
 		QVariant singleAttributeValue
 		);
-	//void AddDefinableProperty(
-	//	int type,
-	//	QString tagName, 
-	//	QVariant defaultValue,
-	//	int minNumOfThisType, 
-	//	int maxNumOfThisType
-	//	);
 	void AddDefinableProperty(
 		int type,
 		QString tagName, 
@@ -145,33 +180,35 @@ protected:
 		int minNumOfThisType = 1, 
 		int maxNumOfThisType = 1
 		);
-	//void AddDefinableObject(QString tagName, QSharedPointer<Asset> object);
 	void AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory);
 	void AddChild(QString tagName, QSharedPointer<Asset> child);
 
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+	/*! \brief Returns true if all children whose needsUniqueName() function returns true must in fact have unique names for syntax to be considered valid.
+	 */
 	bool needsUniqueChildNames(){return needsUniqueChildNames_;};
-	//Call this function to set whether children that want unique names must have unique names.
-	//Default if you don't call this function is true.
+	/*! \brief Call this function to set whether children that want unique names (ie. needsUniqueName() == true) must in fact have unique names for syntax to be considered valid.
+	 *	\details The default if you don't call this function is true, and needsUniqueName() children must have unique names.
+	 */
 	void requireUniqueChildNames(bool require = true){needsUniqueChildNames_ = require;};
 
-	QSharedPointer<PropertyContainer> propertyContainer_;
+	QSharedPointer<PropertyContainer> propertyContainer_;	//!< The property container managing this DataStore's properties.
 	//--------------------------------------------------------
 
 
 private:
 	
 	//AutoSerialization Stuff---------------------------------
-	QMap<QString,QList<QSharedPointer<Asset>>> children_;
-	QMap<QUuid,QMap<QString,QList<QSharedPointer<Asset>>>> associateChildrenByGuid_;
-	QMap<QString,QSharedPointer<AssetFactory>> factories_;
-	QStringList orderedPropList_;
-	QString tagText_;
+	QMap<QString,QList<QSharedPointer<Asset>>> children_;	//!< Stores lists of child Assets according to their XML tags
+	QMap<QUuid,QMap<QString,QList<QSharedPointer<Asset>>>> associateChildrenByGuid_;	//!< Stores XML tag based lookup tables of associate Children by their Associate ID GUID.
+	QMap<QString,QSharedPointer<AssetFactory>> factories_;	//!< Stores AssetFactories based on the XML tag of the Asset type that they create
+	QStringList orderedPropList_;							//!< Stores the XML tags of child properties in the order that they should appear in the UI
+	QString tagText_;										//!< Stores the XML tag contents which were deserialized into this DataStore.  Only child tags without their contents are stored here.
 	//--------------------------------------------------------
 
-	QString myTagName_;
-	bool needsUniqueChildNames_;
-	int assetId_;
+	QString myTagName_;										//!< Stores the XML tag under which this DataStore was deserialized.
+	bool needsUniqueChildNames_;							//!< Stores whether children of this DataStore that want their names to be unique, must indeed have unique names for design syntax to be valid.
+	int assetId_;											//!< Stores this DataStore's Asset ID
 
 };
 

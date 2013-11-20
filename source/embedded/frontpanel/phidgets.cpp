@@ -9,6 +9,9 @@
 #define CUMULATIVETICKSTHRESH 5
 #define TICKSPERSECTHRESH 150
 
+/*! \brief Constructs a new Phidgets object, initializes its data values and sets up its interaction with the Phidgets API
+ * 
+ */
 Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	textLCDSerialNumber(0),
 	encoderSerialNumber(0),
@@ -44,6 +47,7 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 		return;
 	}
 
+	//Set up custom characters that will be displayed in the LCD
 	//Custom character creator: http://www.phidgets.com/documentation/customchar.html
 	//CPhidgetTextLCD_setCustomCharacter(hTextLCD, 7, 23378, 276774); //picto not running character
 	CPhidgetTextLCD_setCustomCharacter(hTextLCD, 8, 214715, 395400); //milliseconds character
@@ -94,6 +98,8 @@ Phidgets::Phidgets(FrontPanelInfo *panelInfo) :
 	CPhidget_open((CPhidgetHandle) hIntKit, -1);
 }
 
+/*! \brief Deinitializes the Phidgets object by clearing the LCD display and closing the Phidgets API
+ */
 Phidgets::~Phidgets()
 {
 	CPhidgetTextLCD_setDisplayString(hTextLCD, 0, "");
@@ -107,7 +113,9 @@ Phidgets::~Phidgets()
 }
 
 
-
+/*! \brief Sets the input text to the input line of the LCD display
+ * \details Line1 is the top line of the display, Line 2 is the bottom line
+ */
 void Phidgets::updateLCD(int line, QString text)
 {
 	QTextStream outstream(stdout);
@@ -138,6 +146,8 @@ void Phidgets::updateLCD(int line, QString text)
 	return;
 }
 
+/*! \brief Toggles the on/off state of the LCD backlight
+ */
 void Phidgets::toggleBacklight()
 {
 	int backlightState;
@@ -150,21 +160,37 @@ void Phidgets::toggleBacklight()
 	CPhidgetTextLCD_setBacklight(hTextLCD,backlightState);
 
 }
+
+/*! \brief Turns the LCD backlight on
+ */
 void Phidgets::turnOnBacklight()
 {
 	CPhidgetTextLCD_setBacklight(hTextLCD,1);
 }
 
+/*! \brief Turns the LCD backlight off
+ */
 void Phidgets::turnOffBacklight()
 {
 	CPhidgetTextLCD_setBacklight(hTextLCD,0);
 }
 
+/*! \brief Called by the phidgets API whenever the knob is pressed and emits the buttonPush userInputSignal
+*/
 void Phidgets::buttonClicked()
 {
 	emit userInputSignal(PanelInfo::buttonPush);
 }
 
+/*! \brief Called by the phidgets API whenever the knob is turned left and emits the PanelInfo::rotateLeft or PanelInfo::rotateLeftFast userInputSignals
+ * \details This function is called from the phidgets thread.  The qt system only 
+ * actually triggers the emitted signals below once control returns to the
+ * qt thread.  We want to avoid having multiple userInputSignals for 
+ * turn events queued up so we set a turnWasTriggered bool before emitting the userInputSignal
+ * and unset it in a slot connected to that signal.  Each time this function
+ * is called, we just check if the bool, and if it's true we 
+ * don't emit a new turn signal.
+*/
 void Phidgets::dialTurnedLeft(bool fast)
 {
 	//This function is called from the phidgets thread.  The qt system only 
@@ -188,6 +214,9 @@ void Phidgets::dialTurnedLeft(bool fast)
 		emit userInputSignal(PanelInfo::rotateLeft);
 }
 
+/*! \brief Called by the phidgets API whenever the knob is turned right and emits the PanelInfo::rotateRight or PanelInfo::rotateRightFast userInputSignals
+ * \details See dialTurnedLeft() for more detail
+ */
 void Phidgets::dialTurnedRight(bool fast)
 {
 	bool doit = true;
@@ -204,6 +233,10 @@ void Phidgets::dialTurnedRight(bool fast)
 		emit userInputSignal(PanelInfo::rotateRight);
 }
 
+/*! \brief Called by the phidgets API whenever the reward or flush buttons are pressed and emits the PanelInfo::rewardButton or PanelInfo::flushButton userInputSignals accordingly
+ * \detail In the PictoBox, the reward button is connected to digital input 0 of the LCD display.  
+ * The flush button is connected to digital input 7.
+ */
 void Phidgets::externalButtonClick(int index)
 {
 	switch(index)
@@ -217,10 +250,13 @@ void Phidgets::externalButtonClick(int index)
 	}
 }
 
-//This gets called whenever a userInputSignal is triggered by the qt event loop.
-//By using the turnWasTriggered_ bool, we can be sure that we don't 
-//put multiple turn signals into the qt event queue before earlier ones were 
-//triggered.
+/*! \brief A function used internally to assure that multiple turn userInputSignals aren't emitted in a row before the FrontPanel Application can handle them
+ * \details This gets called whenever a userInputSignal is triggered by the qt event loop in the 
+ * FrontPanel Application thread, whereas we find out when the phidgets knob was turned from a separate
+ * phidgets thread. By using the turnWasTriggered_ bool, we can be sure that we don't 
+ * put multiple turn signals into the qt event queue before earlier ones were triggered.
+ * \sa dialTurnedLeft(), dialTurnedRight()
+ */
 void Phidgets::turnWasTriggered(int)
 {
 	mutex_.lock();
@@ -343,7 +379,7 @@ int __stdcall EncoderInputChangeHandler(CPhidgetEncoderHandle,
 
 	phidgets->prevClickState = state;
 
-	//kill the rotation counter and cumulative time on any button clicking
+	//kill the rotation counter and cumulative time whenever a button is clicked
 	phidgets->cumRot = 0;
 	phidgets->cumTime = 0;
 

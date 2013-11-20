@@ -5,7 +5,11 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+/*! \brief Constructs an AssetInfoBox with the input EditorState object and parent widget.
+ *	\details The constructor connects signals from the EditorState to this widget to let
+ *	it know when the selected Asset has changed and when a new search was requested.
+ *	\sa EditorState::selectedAssetChanged(), EditorState::searchRequested()
+ */
 AssetInfoBox::AssetInfoBox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 	SearchableTextEdit(parent),
 	editorState_(editorState)
@@ -19,7 +23,9 @@ AssetInfoBox::AssetInfoBox(QSharedPointer<EditorState> editorState,QWidget *pare
 	//Set up search
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
 }
-
+/*! \brief Updates the text in this AssetInfoBox to reflect the currently selected Asset.
+ *	\details Retrieves contextual information on the Asset from the Asset::getInfo() function.
+ */
 void AssetInfoBox::assetSelected(QSharedPointer<Asset> asset)
 {
 	if(asset.isNull())
@@ -33,7 +39,7 @@ void AssetInfoBox::assetSelected(QSharedPointer<Asset> asset)
 		searchRequested(searchRequest);
 	}
 }
-
+/*! \brief Called whenever the requested search changes to update highlighted text in the Text box.*/
 void AssetInfoBox::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)

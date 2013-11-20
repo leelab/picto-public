@@ -6,7 +6,9 @@
 #include "engineconnections.h"
 #include "eventchannelthread.h"
 #include "../../common/globals.h"
-
+/*! \brief Creates an EngineConnections object which creates a commandChannel and puts it into the input FrontPanelInfo object for communication
+ * with the director application.
+ */
 EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent) :
 	QObject(parent),
 	panelInfo(panelInfo)
@@ -19,6 +21,8 @@ EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent)
 
 	//Set up the event channel.  This is the connection used to send events from the 
 	//engine to the front panel (e.g. trial start, new block, etc)
+	//Joey - This is no longer used, but I have not yet taken it out.  It would probably be a good
+	//idea to do so, but this is not the time.
 	eventChannel = new QTcpServer(this);
 	eventChannel->listen(QHostAddress::LocalHost, Picto::portNums->getLCDEventPort());
 	connect(eventChannel, SIGNAL(newConnection()), this, SLOT(setupEventConnection()));
@@ -27,6 +31,8 @@ EngineConnections::EngineConnections(FrontPanelInfo *panelInfo, QObject* parent)
 
 }
 	
+/*! \brief Destroys the EngineConnections object, closing the FrontPanel->Director command channel in the process.
+ */
 EngineConnections::~EngineConnections()
 {
 	QTcpSocket *commandSocket = panelInfo->getCommandSocket();
@@ -45,7 +51,8 @@ EngineConnections::~EngineConnections()
 	eventChannel->deleteLater();
 }
 
-
+/*! \brief Attaches the commandChannel created by this object to the panelInfo object
+ */
 void EngineConnections::setupCommandConnection()
 {
 	QTcpSocket *clientConnection = commandChannel->nextPendingConnection();
@@ -56,6 +63,9 @@ void EngineConnections::setupCommandConnection()
 
 }
 
+/*! \brief We no longer use the objects that are set up in this function. It should probably be deleted
+ * sometime soon.
+ */
 void EngineConnections::setupEventConnection()
 {
 	QTextStream out(stdout);

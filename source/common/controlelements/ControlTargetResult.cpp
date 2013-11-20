@@ -6,19 +6,23 @@ ControlTargetResult::ControlTargetResult()
 {
 	AddDefinableProperty("ControlTarget","");
 }
-
+/*! \brief Creates and returns a shared pointer to a ControlTargetResult object*/
 QSharedPointer<Asset> ControlTargetResult::Create()
 {
 	return QSharedPointer<Asset>(new ControlTargetResult());
 }
-
+/*! \brief A convenience function that calls this object's underlying ControlTarget objects ControlTarget::contains() function.
+ *	\sa ControlTarget::contains()
+ */
 bool ControlTargetResult::contains(int x, int y)
 {
 	if(controlTarget_.isNull())
 		return false;
 	return controlTarget_.toStrongRef()->contains(x,y);
 }
-
+/*! \brief A convenience function that calls this object's underlying ControlTarget objects ControlTarget::setActive() function.
+ *	\sa ControlTarget::setActive()
+ */
 void ControlTargetResult::setActive(bool active)
 {
 	if(controlTarget_.isNull())

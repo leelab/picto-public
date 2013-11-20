@@ -9,13 +9,14 @@ using namespace Picto;
 
 PictoData::PictoData()
 {
+	//By default, a PictoData element's name is "Untitled" and "SyntaxVersion" is empty.
 	AddDefinableProperty("Name","Untitled");
 	AddDefinableProperty("SyntaxVersion","");
 	AddDefinableObjectFactory("Experiment",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Experiment::Create))));
 	AddDefinableObjectFactory("Analysis",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Analysis::Create))));
 	AddDefinableObjectFactory("UIData",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(UIData::Create))));
 	
-	//Add Obsolete Asset Factories
+	//Add Obsolete Asset Factories - These used to be part of the Picto tree but were deprecated and are now being removed
 	AddDefinableObjectFactory("AnalysisContainer",QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableObjectFactory("StateMachineEditorData",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
@@ -94,6 +95,12 @@ void PictoData::postDeserialize()
 	propertyContainer_->getProperty("SyntaxVersion")->setVisible(false);
 }
 
+/*! \brief Constructs a shared pointer to a new PictoData object and returns it.
+ *	\details Whereas in all other node of the Picto design tree, the parent sets
+ *	the childs DesignConfig pointer to be the same as its own, since we are at 
+ *	the top of the tree, we create the DesignConfig object here and set it to our
+ *	own pointer.
+ */
 QSharedPointer<Asset> PictoData::Create()
 {
 	QSharedPointer<Asset> newPictoData(new PictoData());
@@ -102,12 +109,18 @@ QSharedPointer<Asset> PictoData::Create()
 	return newPictoData;
 }
 
+/*! \brief Returns the Experiment child of this object.
+ *	\details Every PictoData object has one and only one Experiment child.
+ */
 QSharedPointer<Experiment> PictoData::getExperiment()
 {
 	QList<QSharedPointer<Asset>> expList = getGeneratedChildren("Experiment");
 	return expList.first().staticCast<Experiment>();
 }
 
+/*! \brief Returns a list of pointers to Analysis children.
+ *	\details PictoData objects can have any number (including zero) of Analysis children.
+ */
 QList<QSharedPointer<Analysis>> PictoData::getAnalyses()
 {
 	QList<QSharedPointer<Analysis>> returnVal;

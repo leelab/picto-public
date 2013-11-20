@@ -4,6 +4,10 @@
 #include "SearchableTextEdit.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a SearchableTextEdit with the input parent.
+ *	\details If singleLine is set true, the text edit will contain one
+ *	line, otherwise it will be a regular scrollable QTextEdit.
+ */
 SearchableTextEdit::SearchableTextEdit(bool singleLine,QWidget *parent) :
 QTextEdit(parent),
 singleLine_(singleLine)
@@ -19,6 +23,9 @@ singleLine_(singleLine)
 	}
 }
 
+/*! \brief Searches the QTextEdit for the input SearchRequest.  If found, strings matching the SearchRequest are
+ *	highlighted with the input highlightColor.
+ */
 void SearchableTextEdit::search(SearchRequest searchRequest, QColor highlightColor)
 {
     QList<ExtraSelection> extraSelections;
@@ -45,7 +52,9 @@ void SearchableTextEdit::search(SearchRequest searchRequest, QColor highlightCol
 	setTextCursor(startingPos);
 }
 
-//For the code that turns a QTextEdit into a QLineEdit that I used, see http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
+/*! \brief This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.
+ *	\details The code that turns a QTextEdit into a QLineEdit is from http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
+ */
 QSize SearchableTextEdit::sizeHint() const
 {
 	if(!singleLine_)
@@ -58,6 +67,9 @@ QSize SearchableTextEdit::sizeHint() const
 	return (style()->sizeFromContents(QStyle::CT_LineEdit, &opt, QSize(w, h).expandedTo(QApplication::globalStrut()), this));
 }
 
+/*! \brief This extends QTextEdit::keyPressEvent to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.
+ *	\details The code that turns a QTextEdit into a QLineEdit is from http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
+ */
 void SearchableTextEdit::keyPressEvent(QKeyEvent * e)
 {
 	if (singleLine_ && (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter))
@@ -66,6 +78,7 @@ void SearchableTextEdit::keyPressEvent(QKeyEvent * e)
 		QTextEdit::keyPressEvent(e);
 }
 
+/*! \brief This extends QTextEdit::event to disable tooltips. */
 bool SearchableTextEdit::event(QEvent* e)
 {
 	//Don't show tooltips.
@@ -74,7 +87,7 @@ bool SearchableTextEdit::event(QEvent* e)
 	return QTextEdit::event(e);
 }
 
-
+/*! \brief This extends QTextEdit::focusOutEvent() so that we can emit focusOut() as a signal whenever the QTextEdit loses focus.*/
 void SearchableTextEdit::focusOutEvent(QFocusEvent *e)
 {
 	QTextEdit::focusOutEvent(e);

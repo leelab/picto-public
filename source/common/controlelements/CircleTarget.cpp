@@ -10,7 +10,7 @@ active_(false)
 {
 	AddDefinableProperty(QVariant::Int,"Radius",1);
 }
-
+/*! \brief Creates and returns a shared pointer to a CircleTarget*/
 QSharedPointer<Asset> CircleTarget::Create()
 {
 	return QSharedPointer<Asset>(new CircleTarget());
@@ -55,12 +55,12 @@ QPoint CircleTarget::getPositionOffset()
 {
 	return posOffset_;
 }
-
+/*! \brief Gets the circle target's current radius*/
 int CircleTarget::getRadius()
 {
 	return propertyContainer_->getPropertyValue("Radius").toInt();
 }
-
+/*! \brief Sets the circle target's current radius*/
 void CircleTarget::setRadius(int radius)
 {
 	propertyContainer_->setPropertyValue("Radius",radius);

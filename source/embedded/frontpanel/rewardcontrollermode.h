@@ -5,9 +5,9 @@
 #include <QSharedPointer>
 #include "NumberEditMode.h"
 
-/*!	\brief The front panel's RewardControllerMode interface
- *
- *	The front panel's RewardControllerMode interface is defined here.
+/*!	\brief A NumberEditMode including functionality for the user to change the current Reward Controller.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class RewardControllerMode : public NumberEditMode
 {

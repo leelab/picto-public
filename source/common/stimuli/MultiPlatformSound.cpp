@@ -8,14 +8,6 @@ namespace Picto {
 
 MultiplatformSound::MultiplatformSound(QString path)
 {
-	//Check to see if the file is supported... there is no way to do this with QSound, but as a hack, we can use QMediaPlaylist
-	//audioDecoder_.setSourceFilename(path);
-	//if(audioDecoder_.error() != QAudioDecoder::NoError)
-	//	errorMsg_ = audioDecoder_.errorString();
-	//QAudioFormat invalidFormat;
-	//invalidFormat.setCodec("audio/pcm");
-	//audioDecoder_.setAudioFormat(invalidFormat);
-	//audioDecoder_.start();
 	sound_ = QSharedPointer<QSound>(new QSound(path));
 	soundStarted_ = false;
 }
@@ -23,13 +15,17 @@ MultiplatformSound::MultiplatformSound(QString path)
 void MultiplatformSound::play()
 {
 	sound_->play();
-	//QSound::play(sound_->fileName());
 	soundStarted_ = true;
 }
 void MultiplatformSound::stop()
 {
 	sound_->stop();
 }
+/*! \copydoc PreloadedSound::setVolume()
+ *	\attention Currently, the MultiplatformSound does not support
+ *	volume changes.  This is why we have not yet added a setVolume()
+ *	script function to the AudioElement class.
+ */
 void MultiplatformSound::setVolume(int percent)
 {
 
@@ -42,7 +38,12 @@ bool MultiplatformSound::playing()
 		soundStarted_ = false;
 	return soundStarted_;
 }
-
+/*! \copydoc PreloadedSound::volume()
+ *	\attention Currently, the MultiplatformSound does not support
+ *	volume changes.  This is why we have not yet added a setVolume()
+ *	script function to the AudioElement class.  This function will
+ *	always return 100%.
+ */
 int MultiplatformSound::volume()
 {
 	return 100;
@@ -50,28 +51,7 @@ int MultiplatformSound::volume()
 
 bool MultiplatformSound::isReady()
 {
-	//audioDecoder_.state();
-	//audioDecoder_.stop();
-	//if(!audioDecoder_.bufferAvailable())
-	//{
-	//	audioDecoder_.start();
-	//	return "Audio not yet loaded";
-	//}
-
-	//if(audioDecoder_.error() != QAudioDecoder::NoError)
-	//	errorMsg_ = audioDecoder_.errorString();
-	//audioDecoder_.stop();
-	//if(audioDecoder_.error() != QAudioDecoder::NoError)
-	//	errorMsg_ = audioDecoder_.errorString();
-	//QAudioFormat format = audioDecoder_.audioFormat();
-	//QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
-	//
-	//if (!info.supportedCodecs().contains(format.codec()) || !info.supportedByteOrders().contains(format.byteOrder())) 
-	//	qWarning()<<"raw audio format not supported by backend, cannot play audio.";
 	return isFileSupported(sound_->fileName());
-
-
-	return !sound_->fileName().isEmpty();
 }
 
 QString MultiplatformSound::errorString()
@@ -81,6 +61,9 @@ QString MultiplatformSound::errorString()
 	return "";
 }
 
+/*! \brief Creates a MultiplatformSound to play the audio file at the input path.
+ * \detail This function is meant to be used with PreloadedSound::setSoundConstructor()
+ */
 QSharedPointer<PreloadedSound> MultiplatformSound::createMultiplatformSound(QString path)
 {
 	return QSharedPointer<MultiplatformSound>(new MultiplatformSound(path));
@@ -122,7 +105,10 @@ struct CombinedHeader
     WAVEHeader  wave;
 };
 
-//Uses code from Qt Multimedia Spectrum app wavFile.cpp
+/*! \brief Checks if the file at the input path is supported by this PreloadedSound.
+ *	\details This function uses code from the Qt Multimedia Spectrum app's wavFile.cpp
+ * I didn't take a course in audio encoding protocols and work this all out on my own.
+ */
 bool MultiplatformSound::isFileSupported(QString path)
 {
 	QFile waveFile;
@@ -130,8 +116,6 @@ bool MultiplatformSound::isFileSupported(QString path)
 	waveFile.setFileName(path);
 	waveFile.open(QIODevice::ReadOnly);
 	waveFile.seek(0);
-
-
 
 
 	CombinedHeader header;

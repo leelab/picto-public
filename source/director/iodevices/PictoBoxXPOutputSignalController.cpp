@@ -21,7 +21,13 @@
 namespace Picto
 {
 
-//! Sets up the reward controller
+/*! \brief Cretes a new PictoBoxXpOutputSignalController on the input port.
+ *	\details Port 0 is Dev1/port0/line0:7 on the Nidaq, corresponding to the BNC0 port on a standard
+ *	Pictobox.
+ *	Port 1 is Dev1/port1/line0:7 on the Nidaq, corresponding to the PAR0 (parallel) port on a standard
+ *	Pictobox.
+ *
+ */
 PictoBoxXPOutputSignalController::PictoBoxXPOutputSignalController(int port)
 :	OutputSignalController(0,7),
 	outSigChans_(QString("Dev1/port%1/line0:7").arg(port)),
@@ -43,7 +49,11 @@ PictoBoxXPOutputSignalController::~PictoBoxXPOutputSignalController()
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
-
+/*! \copydoc OutputSignalController
+ *	\details In the case of the PictoBoxXPOutputSignalController, we control the physical output ports
+ *	by using a NiDaq task to write the digital data through the NiDaq API to the D/A card to the Physical
+ *	lines.
+ */
 void PictoBoxXPOutputSignalController::applyVoltages()
 {
 	int32 sampsPerChanWritten;

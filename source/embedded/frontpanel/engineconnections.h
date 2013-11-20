@@ -6,10 +6,13 @@
 
 
 /*!	\brief Sets up the connections between the engine and the front panel.
- *
- *	We're using a client/server arrangement to communicate between the engine and
- *	the front panel.  This isn't really easy to set up in Picto, and should be
- *	plenty fast, since we won't actually be using the network.
+ * \details This used to be a more important class than it is now.  The only
+ * thing that it does at this point is set up the socket used to send commands
+ * from the Front Panel application to the Director application, and set that
+ * socket into the FrontPanelInfo object.  It should probably be simplified, at 
+ * some point.  In particular, the eventChannel is no longer used.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class EngineConnections : public QObject
 {
@@ -22,6 +25,7 @@ private slots:
 	void setupCommandConnection();
 	void setupEventConnection();
 signals:
+	/*! \brief No Longer Used*/
 	void newEventRead();
 
 private:

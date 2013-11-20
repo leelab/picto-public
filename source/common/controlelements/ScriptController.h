@@ -6,11 +6,15 @@
 
 namespace Picto {
 
-/*! \brief A time based controller
- *
- *	This controller ignores any and all inputs, and simply returns "Success"
- *	when a fixed amount of time has expired.  Since the time values are properties
- *	it is possible to change them at runtime through Javascript.
+/*! \brief A general ControlElement with user definable logic and results
+ *	\details A ScriptController is a broad use controller in which the designer can 
+ *	create their own logical checks for whether to continue in a state or exit from it.  
+ *	Like in a SwitchElement, you can add multiple LogicResult elements to a ScriptController 
+ *	and trigger them by returning a string that is equal to one of the results's names.  In 
+ *	order to continue in the State without exiting, simply return any value that is not equal 
+ *	to a result name or nothing at all.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013	
  */
 
 #if defined WIN32 || defined WINCE

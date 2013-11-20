@@ -5,9 +5,11 @@
 #include <QSharedPointer>
 #include "DisplayMode.h"
 
-/*!	\brief The front panel's NumberEditMode interface
- *
- *	The front panel's NumberEditMode interface is defined here.
+/*!	\brief A DisplayMode including functionality for the user to edit numbers
+ * \details DisplayMode class that allows a user to change a number should
+ * extend this class.  It displays numbers that can be edited by turning the input knob.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class NumberEditMode : public DisplayMode
 {
@@ -20,7 +22,14 @@ public:
 
 protected:
 	virtual PanelInfo::DisplayModeType handleUserInput(PanelInfo::InputType type);
+	/*! Returns a number that the user can edit while this DisplayMode has control.
+	 */
 	virtual int getEditableNumber()=0;
+	/*! \brief Sets the input number value to the Picto director.  
+	 * \details This function is called by the NumberEditMode object whenever the number returned from getEditableNumber()
+	 * is edited by the user.  It returns true if the message is successfully set to the director, 
+	 * and false otherwise.
+	 */
 	virtual bool setValueToDirector(int val)=0;
 
 private:

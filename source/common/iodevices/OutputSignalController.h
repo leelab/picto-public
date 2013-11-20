@@ -9,8 +9,14 @@
 
 namespace Picto {
 
-/*! \brief This is the base class for the Output Signal controller
- *
+/*! \brief This is the base class for Output Voltage value controllers.  It is used to set voltage values to physical output pins.
+ *	\details This object can be used to set particular values to pins.  There is also an enable/disable capabaility, where
+ *	a pin can be disabled, in which case its voltage goes to zero, and then re-enabled, in which case its voltage goes back to the value it had
+ *	when not disabled.
+ *  This class should be inherited to handle interfaces to varying types of D/A cards and/or virtual outputs.
+ *	\sa OutputSignalWidget
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -24,30 +30,24 @@ public:
 	OutputSignalController(int minPin, int maxPin);
 	virtual ~OutputSignalController();
 
-	//Returns true if the command (enable/disable) was successfully applied.
-	//A disabled pin (if supported) has floating voltage.
-	//If pinId of -1 is passed in, all pins controlled by this port are effected
-	//ie. Returns false if the pin with that id doesn't exist
 	bool enablePin(bool enable, int pinId);
-	//Sets the value of the pin to the input quantity
-	//If the pin is -1, the input is interpreted as an int and the binary value is applied
-	//to the group of pins in this port.
-	//Returns false if pin doesn't exist.
-	//Note: Voltage isn't actually applied to pin until apply voltages is
-	//called.
 	bool setValue(int pinId,QVariant value);
-	//Applies the set voltages to all pins
 	void updateValues();
 
 protected:
+	/*! \brief Called by updateValues() to use the data in the pins_ vector to actually set the correct voltages to the physical pins.
+	 *  \details This function is implemented in each subclass to apply the voltages to the particular interface handled by that class.
+	 */
 	virtual void applyVoltages() = 0;
+	/*! A struct holding information about a pin managed by this OutputSignalController
+	 */
 	struct PinData
 	{
 		PinData(){value = false;changed = enabled = false;id=0;};
-		bool value;
-		bool changed;
-		bool enabled;
-		int id;
+		bool value;			//!< The current value of this pin
+		bool changed;		//!< This is true if the value or enabling of pin has changed in the last frame
+		bool enabled;		//!< Indicates whether the pin should be enabled or not.  Disabled pins always have zero volts, but when reenabled they recover the value that is in value.
+		int id;				//!< The index of the pin represented by this struct
 	};
 	QVector<PinData> pins_;
 private:

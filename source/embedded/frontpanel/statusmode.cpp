@@ -3,6 +3,10 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
+/*! \file
+ * \def UPDATEINTERVALMS
+ * \brief The interval at which the StatusMode DisplayMode repolls and redisplays status information
+ */
 #define UPDATEINTERVALMS 5000
 
 StatusMode::StatusMode(QSharedPointer<DirectorInterface> directorIf,FrontPanelInfo *panelInfo) :
@@ -17,13 +21,19 @@ panelInfo_(panelInfo)
 StatusMode::~StatusMode()
 {
 }
-
+/*!
+ * Initializes this MenuMode by drawing the status info to the LCD display and starting
+ * an updateTimer to repoll and redisplay status data every UPDATEINTERVALMS.
+ */
 void StatusMode::initMode()
 {
 	updateStatus();
 	updateTimer_.start();
 }
-
+/*! 
+ * Handles user input by turning knob rotations into up/down movements within the StatusMode display,
+ * and knob presses into commands to move to the MenuMode for other DisplayMode type selection.
+ */
 PanelInfo::DisplayModeType StatusMode::handleUserInput(PanelInfo::InputType type)
 {
 	switch(type)
@@ -51,13 +61,17 @@ PanelInfo::DisplayModeType StatusMode::handleUserInput(PanelInfo::InputType type
 	drawStatus();
 	return PanelInfo::StatusModeType;
 }
-
+/*!
+ * Draws the current status to the LCD display.
+ */
 void StatusMode::drawStatus()
 {
 	if(statusItems_.size() > (currTopItem_+1))
 		drawText(statusItems_[currTopItem_],statusItems_[currTopItem_+1]);
 }
-
+/*!
+ * Polls status information and displays it by calling drawStatus()
+ */
 void StatusMode::updateStatus()
 {
 	statusItems_.clear();

@@ -8,6 +8,10 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new PixmapVisualTarget
+ *	\details Calls VisualTarget::VisualTarget with the input values, then 
+ *	sets up the various data values used by this object
+ */
 PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height) :
 	VisualTarget(_bWindowed, _width, _height)
 {
@@ -106,7 +110,8 @@ void PixmapVisualTarget::present()
 	setFirstPhosphorTime();
 	repaint();
 }
-
+/*! brief Draws text overlayed over the rendered frame..
+ */
 void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
 {
 	QPainter painter(&pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_]);

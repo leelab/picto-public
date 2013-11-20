@@ -5,9 +5,12 @@
 #include <QSharedPointer>
 #include "DisplayMode.h"
 
-/*!	\brief The front panel's TextEditMode interface
- *
- *	The front panel's TextEditMode interface is defined here.
+/*!	\brief A DisplayMode including functionality for the user to edit text
+ * \details DisplayMode class that allows a user to change a text string should
+ * extend this class.  It displays text with a blinking cursor underneath the 
+ * letter to be edited and allows the user to edit the letter by turning the input knob.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class TextEditMode : public DisplayMode
 {
@@ -20,7 +23,14 @@ public:
 
 protected:
 	virtual PanelInfo::DisplayModeType handleUserInput(PanelInfo::InputType type);
+	/*! Returns a text string that the user can edit while this DisplayMode has control.
+	 */
 	virtual QString getEditableText()=0;
+	/*! \brief Sets the input text value to the Picto director.  
+	 * \details This function is called by the TextEditMode object whenever the text returned from getEditableText()
+	 * is edited by the user.  It returns true if the message is successfully set to the director, 
+	 * and false otherwise.
+	 */
 	virtual bool setValueToDirector(QString text)=0;
 
 private:

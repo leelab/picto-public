@@ -17,6 +17,8 @@ QString PixmapCompositingSurface::getTypeName()
 	return QString("Pixmap");
 }
 
+/*! \brief Returns the pixmap that was created in this CompositingSurface based on the QImage input in convertImage
+ */
 QPixmap PixmapCompositingSurface::getPixmap()
 {
 	return pixmap_;

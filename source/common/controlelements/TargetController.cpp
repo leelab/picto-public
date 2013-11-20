@@ -39,17 +39,17 @@ TargetController::TargetController()
 	addRequiredResult("Reaquistion Time Exceeded");
 }
 
-
+/*! \brief Constructs and returns the pointer to a new TargetController*/
 ControlElement* TargetController::NewTargetController()
 {
 	return new TargetController;
 }
-
+/*! \brief Constructs and returns a shared pointer to a new TargetController*/
 QSharedPointer<Asset> TargetController::Create()
 {
 	return QSharedPointer<Asset>(new TargetController());
 }
-
+/*! \brief Returns the name of this type of ControlElement: "Target Controller"*/
 QString TargetController::ControllerType()
 {
 	return "Target Controller";
@@ -149,22 +149,29 @@ QSharedPointer<Result> TargetController::getResult()
 {
 	return ResultContainer::getResult(result_);
 }
-
+/*! \brief Returns true if the user is currently fixating on the attached target.  Returns false otherwise.  
+ */
 bool TargetController::userOnTarget()
 {
 	return propertyContainer_->getPropertyValue("OnTarget").toBool();
 }
-
+/*! \brief Returns true if the user started fixating on the attached target during the previous frame, false otherwise*/
 bool TargetController::userEnteredTarget()
 {
 	return userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
 }
-
+/*! \brief Returns true if the user stopped fixating on the attached target during the previous frame, false otherwise*/
 bool TargetController::userExitedTarget()
 {
 	return !userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
 }
 
+/*! \brief Reconnects this object to its attached controlTarget_
+ *	\details This function is called whenever something changed in the scripting system
+ *	in this element's scope.  Since the change could be the name of the attached
+ *	ControlTarget, whenever this function is called we reconnect to the ControlTarget
+ *	based on its name.
+ */
 void TargetController::scriptableContainerWasReinitialized()
 {
 	ControlElement::scriptableContainerWasReinitialized();
@@ -200,6 +207,11 @@ bool TargetController::executeSearchAlgorithm(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief Returns true if the TargetController has found a result, false if it is still looking
+ *	\details This contains the meat of the logic that you would expect to find in the isDone()
+ *	function.  In the case of this class, this logic needed to be used in multiple places so it
+ *	was a good idea to move it into its own separate function.
+ */
 bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 {
 	Controller::TimerUnits::TimerUnits timeUnits;
@@ -334,7 +346,7 @@ bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 	return false;
 }
 
-/*!	\brief Returns true if the signalChannel coordinates are within the target area
+/*!	\brief Returns true if the signalChannel coordinates are within the attached ControlTarget bounds.
  */
 bool TargetController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -383,26 +395,6 @@ void TargetController::postDeserialize()
 
 }
 
-
-/*! \brief Turns the ControlElement into an XML fragment
- *
- * A serialized TargetController will look something like this:
- *	<ControlElement type="TargetController" operatorVisible="true subjectVisible="false">
- *		<Name>MyControlElement</Name>
- *		<SignalChannel>ChannelName</SignalChannel>
- *		<Shape>Rectangle</Shape>
- *		<Target x="400" y="800" width="100" height="100">
- *		<TotalTime units="Ms">10000</TotalTime>
- *		<FixationTime units="Ms">1000</FixationTime>
- *		<MinInitialAcquisitionTime units="Ms">200</MinInitialAcquisitionTime>
- *		<MaxInitialAcquisitionTime units="Ms">2000</MaxInitialAcquisitionTime>
- *		<MaxReacquisitionTime units="Ms">500</MaxReacquisitionTime>
- *		<ReacquisitionAllowed>Yes</ReacquisitionAllowed>
- *	</ControlElement>
- */
-////
-
-
 bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!ControlElement::validateObject(xmlStreamReader))
@@ -415,6 +407,11 @@ bool TargetController::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	return true;
 }
 
+/*! \brief Reattaches to the ControlTarget by calling scriptableContainerWasReinitialized()
+ *	\details This function is called whenever the designer changes the value in the ControlTarget
+ *	field.  When that value changes, it indicates that we need to update the attached ControlTarget
+ *	which is why we must reattach.
+ */
 void TargetController::controlTargetNameEdited()
 {
 	scriptableContainerWasReinitialized();

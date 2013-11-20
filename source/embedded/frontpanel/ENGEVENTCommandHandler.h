@@ -8,11 +8,14 @@
 
 #include "FrontPanelInfo.h"
 
-/*! \brief Handles ENGEVENT commands received.
+/*! \brief Handles ENGEVENT commands received. NO LONGER USED
  *
- *	ENGEVENT commands are sent from the PictoEngine to the front panel application 
- *	and generally result in some sort of text being desplayed on the front panel
- *	(e.g. "Trial start")
+ * This object used to allow the director to push data to the FrontPanel application.  It is no longer
+ * used. The front panel is now set up as the communications master handling both setting and polling 
+ * data.  At a more opportune time, this object should probably be deleted and references to it removed
+ * from other parts of the application.
+ * \author Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 struct ENGEVENTCommandHandler : Picto::ProtocolCommandHandler
 {

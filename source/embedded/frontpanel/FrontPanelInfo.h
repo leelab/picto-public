@@ -8,40 +8,58 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 
+/**
+ *	\brief A namespace containing enumerators used throughout the Front Panel control system
+ */
 namespace PanelInfo
 {
+	/**
+	 * A complete listing of the types of DisplayMode object used in the Front Panel System
+	 */
 	enum DisplayModeType{MenuModeType, StatusModeType, RewardDurModeType, RewardControllerModeType, 
 		FlushDurModeType, ChangeNameModeType};
-	enum SystemStatus{disconnected, connected, running};
+	/**
+	 * A complete listing of the types of user inputs that the DisplayMode objects can respond to.
+	 */
 	enum InputType{buttonPush, rotateLeft, rotateLeftFast, rotateRight, rotateRightFast,rewardButton,flushButton};
 }
 
-/*!	\brief Stores information about the front panel.
+/*!	\brief Stores the command socket used by the Front Panel to communicate with the director as well as the current reward controller being used.
  *
- *	FrontPanelInfo is an object used to store data about the current state of
- *	the front panel (reward duration, current display mode, etc).  The object
- *	is thread safe (since we will be accessing it from different threads as commands 
- *	come in).  QMutexLocker locks the mutex upon creation, and unlocks it when
- *	we the locker is destroyed (when we leave the function).
+ * This class used to be much more important.  It could probably be removed and have its parts incorporated
+ * in other locations.  In the meantime, it's still here.  Note that the eventSocket is no longer used.  The
+ * DirectorInterface is the chief user of the commandSocket and rewardController data stored here.
+ * \sa DirectorInterface
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
-//This is perhaps overly complicated...
-//When I built it, I was thinking that different parts of the front panel program 
-//were likely to be accessing this data simultaneously.  It is becoming clear that
-//this isn't really an issue, so I may want to clean this up...
-
 class FrontPanelInfo
 {
 public:
 	FrontPanelInfo();
 	virtual ~FrontPanelInfo() {};
 
+	/*! \brief Returns the index of the currently active local reward controller
+	 * \sa  DirectorInterface::DirectorInterface(), DirectorInterface::startReward()
+	 */
 	int getRewardController() { return rewardController; };
+	/*! \brief Sets the index of the currently active local reward controller
+	 * \sa  DirectorInterface::DirectorInterface(), DirectorInterface::startReward()
+	 */
 	void setRewardController(int controller) { rewardController = controller; };
 	
+	/*! \brief Returns the command socket that is used by the Front Panel Application to communicate with the Director.
+	 * \sa DirectorInterface
+	 */
 	QTcpSocket* getCommandSocket() { return commandSocket; }
+	/*! \brief Returns the command socket that is used by the Front Panel Application to communicate with the Director.
+	 * \sa DirectorInterface
+	 */
 	void setCommandSocket(QTcpSocket* socket) { commandSocket = socket; };
 
+	/*! \brief NO LONGER USED */
 	QTcpSocket* getEventSocket() { return eventSocket; }
+	/*! \brief NO LONGER USED */
 	void setEventSocket(QTcpSocket* socket) { eventSocket = socket; };
 
 

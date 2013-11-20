@@ -1,8 +1,3 @@
-/*! \file RenderingTarget.cpp
- * \ingroup picto_compositor
- * \brief
- */
-
 #include "RenderingTarget.h"
 #include "../stimuli/PictureGraphic.h"
 #include "../stimuli/TextGraphic.h"

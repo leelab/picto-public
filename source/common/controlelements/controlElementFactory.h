@@ -8,12 +8,19 @@
 
 namespace Picto {
 
-/*! \brief Factory class for generating specific ControlElement objects
+/*! \brief No Longer Used. Factory class for generating specific ControlElement objects
  *
- *	This factory class is used to generate ControlElements of specific
+ *	\note Joey: This class is no longer used in a meaningful way in Picto.  It should be removed
+ *	by someone who has time for this kind of thing.  In the meantime, it isn't doing any
+ *	harm. I have maintained the old documentation below for reference...
+ *
+ *	\details This factory class is used to generate ControlElements of specific
  *	type.  Before a ControlElement can be generated, it first needs to be 
  *	registered.  Registering a ControlElement requires a name for the 
  *	element and a pointer to the element's NewControlElement function.
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 

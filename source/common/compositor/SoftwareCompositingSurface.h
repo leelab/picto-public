@@ -7,10 +7,9 @@ namespace Picto {
 
 /*!	\brief Unimplemented.
  *
- *	I'm not sure what the intent of a software compositing surface was.  It's
- *	possible that you could use something this for generating videos, or maybe
- *	there was some other intent?  Ask Mark Hammond if you really want to know
- *	(markh@zonix.com).
+ *	Joey: Not sure what the intent of this way, but we didn't need it yet.   It should probably be deleted.
+ *	\author Mark Hammond
+ *	\date 2009
  */
 class SoftwareCompositingSurface
 {

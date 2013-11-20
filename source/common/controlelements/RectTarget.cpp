@@ -50,17 +50,20 @@ QSharedPointer<Asset> RectTarget::Create()
 	return QSharedPointer<Asset>(new RectTarget());
 }
 
+/*! \brief Returns the dimensions of this elements target rectangle.
+*/
 QRect RectTarget::getBounds()
 {
 	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
-
+/*! \brief Sets the target's current width.*/
 void RectTarget::setWidth(int width)
 {
 	QRect bounds = getBounds();
 	bounds.setRect(bounds.x(),bounds.y(),width,bounds.height());
 	setBounds(bounds);
 }
+/*! \brief Sets the target's current height.*/
 void RectTarget::setHeight(int height)
 {
 	QRect bounds = getBounds();
@@ -73,6 +76,8 @@ QPoint RectTarget::getPositionOffset()
 	return posOffset_;
 }
 
+/*! \brief Sets the dimensions of the target rectangle to those of the input bounds rectangle
+*/
 void RectTarget::setBounds(QRect bounds)
 {
 	propertyContainer_->setPropertyValue("Size",bounds.size());

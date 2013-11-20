@@ -8,7 +8,13 @@ QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief A searchable read-only text box that provides information about Picto Asset functionality.
+ *	\details This box is used in the picto Designer to provide desginers with contextual data
+ *	including an Overview, DataStore properties, Script properties, and Script functions for every
+ *	selected Asset.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class AboutElementBox : public SearchableTextEdit
 {
     Q_OBJECT

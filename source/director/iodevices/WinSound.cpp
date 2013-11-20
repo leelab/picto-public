@@ -33,7 +33,7 @@ WinSound::WinSound(QString path)
     hr = pGraph_->QueryInterface(IID_IMediaEvent, (void **)&pEvent_);
 	hr = pGraph_->QueryInterface(IID_IMediaPosition, (void **)&pPosition_);
 
-    // Build the graph. IMPORTANT: Change this string to a file on your system.
+    // Build the graph.
     hr = pGraph_->RenderFile(path.toStdWString().c_str(), NULL);
 	loadSuccess_ = SUCCEEDED(hr);
 }
@@ -60,6 +60,13 @@ void WinSound::stop()
 	pControl_->Stop();
 	pPosition_->put_CurrentPosition(0.0f);
 }
+/*! \copydoc PreloadedSound::setVolume()
+ *	\attention Currently, the WinSound does not support
+ *	volume changes.  We can probably figure out a way to do this, but
+ *	since MultiplatformSound doesn't support it there wasn't much point.
+ *	This is why we have not yet added a setVolume()
+ *	script function to the AudioElement class.
+ */
 void WinSound::setVolume(int percent)
 {
 
@@ -73,7 +80,14 @@ bool WinSound::playing()
 		return true;
 	return false;
 }
-
+/*! \copydoc PreloadedSound::volume()
+ *	\attention Currently, the WinSound does not support
+ *	volume changes.  We can probably figure out a way to do this, but
+ *	since MultiplatformSound doesn't support it there wasn't much point.
+ *	This is why we have not yet added a setVolume()
+ *	script function to the AudioElement class.  This function will
+ *	always return 100%.
+ */
 int WinSound::volume()
 {
 	return 100;
@@ -91,6 +105,9 @@ QString WinSound::errorString()
 	return "";
 }
 
+/*! \brief Creates a WinSound to play the audio file at the input path.
+ * \detail This function is meant to be used with PreloadedSound::setSoundConstructor()
+ */
 QSharedPointer<PreloadedSound> WinSound::createWinSound(QString path)
 {
 	return QSharedPointer<PreloadedSound>(new WinSound(path));

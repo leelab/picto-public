@@ -8,7 +8,13 @@ QT_BEGIN_NAMESPACE
 class QWidget;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief A Syntax Error widget used to display the output of the Picto Design Validation (ie. compilation) process.
+ *	\details The Picto design is checked using DesignRoot::compiles().  If the design syntax is invalid, this
+ *	can result in error messages.  These error messages are displayed in this widget.
+ *	\sa DesignRoot::compiles(), Asset::validateTree()
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class SyntaxErrorBox : public SearchableTextEdit
 {
     Q_OBJECT

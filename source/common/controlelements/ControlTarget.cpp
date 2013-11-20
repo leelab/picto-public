@@ -15,6 +15,9 @@ VisualElement(position,color)
 	AddDefinableProperty(QVariant::Bool,"Outside",false);
 }
 
+/*! \brief Sets whether this ControlTarget is currently being monitored by a ControlElement.
+ *	\note This function should only be called by ControlElements
+ */
 void ControlTarget::setActive(bool active)
 {
 	active_ = active;

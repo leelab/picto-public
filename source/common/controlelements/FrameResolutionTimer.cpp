@@ -4,6 +4,14 @@
 namespace Picto {
 namespace Controller {
 
+/*! \brief Constructs a timer, starting it running in the process
+ *	\details The passed in frameTracker is this Timer's source for frame timing.
+ *	This allows a single frameTracker to be updated by the Engine and provide frame
+ *	timing information to multiple FrameResolutionTimer objects.  Construction of
+ *	the FrameTracker instance and generation of the FrameResolutionTimers is handled 
+ *	by the FrameTimerFactory.
+ */
+ 
 FrameResolutionTimer::FrameResolutionTimer(QSharedPointer<FrameTracker> frameTracker)
 {
 	frameTracker_ = frameTracker;
@@ -14,11 +22,17 @@ FrameResolutionTimer::~FrameResolutionTimer()
 {
 }
 
+/*! \brief Resets the "zero time" of the timer to the latest first phosphor time.
+ *	\details Future returned times will be with respect to this start time.
+ */
 void FrameResolutionTimer::start()
 {
 	startTime_ = frameTracker_->lastFrameTime_;
 }
 
+/*! \brief Returns the time that has passed from the first phophor of the frame before the latest call to start() to the first phophor of the latest frame.
+ *	\details Returned time is according to the passed in units value.
+*/
 int FrameResolutionTimer::elapsedTime(Controller::TimerUnits::TimerUnits units)
 {
 	//Start time can never be before the first frame.  At that point the user has had no

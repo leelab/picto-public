@@ -6,9 +6,12 @@
 #include <QTimer>
 #include "DisplayMode.h"
 
-/*!	\brief The front panel's StatusMode interface
- *
- *	The front panel's StatusMode interface is defined here.
+/*!	\brief A DisplayMode that allows the user to monitor the current status of the Front Panel application
+ * \details Displayed information includes Pictobox Name, ServerDisconnected/ServerConnected/Stopped/Running
+ * status symbol, Reward duration, Flush duration, Default Reward Controller Number, PictoBox IP address.  
+ * This data takes up three lines which the user navigates by turning the input knob.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class StatusMode : public DisplayMode
 {

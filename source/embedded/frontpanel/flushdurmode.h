@@ -5,9 +5,10 @@
 #include <QSharedPointer>
 #include "NumberEditMode.h"
 
-/*!	\brief The front panel's FlushDurMode interface
- *
- *	The front panel's FlushDurMode interface is defined here.
+/*!	\brief A NumberEditMode including functionality for the user to change the the duration
+ * of the default PictoBox flush.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class FlushDurMode : public NumberEditMode
 {

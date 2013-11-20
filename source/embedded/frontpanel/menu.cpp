@@ -16,6 +16,14 @@
 #include "RewardDurMode.h"
 #include "StatusMode.h"
 
+/*! \brief Constructs a new Menu object, taking in a panelInfo object that provides access to the Socket connecting to the Director application.
+ * \details Initializes various objects within the Menu object.  This includes an activityTimer 
+ * that allows a limited amount of time without user interaction before any non-status
+ * DisplayModes are aborted and the active DisplayMode returns to the StatusMode.  The DirectorInterface 
+ * is also set up here to use the Director Socket from the input panelInfo to control all communication with 
+ * the director.
+ * connectionTimer_ no longer has any significant effect and should probably be removed at some point.
+ */
 Menu::Menu(FrontPanelInfo *panelInfo) :
 	panelInfo(panelInfo),
 	wasConnected_(false)
@@ -42,6 +50,9 @@ Menu::~Menu()
 	//delete flushingTimer;
 }
 
+/*! \brief Initializes this object by creating all DisplayMode objects, turning on the LCD
+ * backlight and setting the active mode to StatusMode.
+ */
 void Menu::initMenu()
 {
 	loadMenus();
@@ -49,9 +60,13 @@ void Menu::initMenu()
 	emit turnOnBacklight();
 }
 
-//User input will be handled differently depeding on the current mode (eg
-//in menu mode, rotating the knob shanges the menu, while in other modes,
-//it might change the reward duration.)
+/*! \brief Accepts user input from the phidgets interface and routes it to the active DisplayMode or appropriate command.
+ * \details User input is handled differently depending on the current mode (eg in menu mode, 
+ * rotating the knob changes the menu selection, while in RewardDurMode modes, it changes the 
+ * reward duration.) Reward and Flush buttons on the other hand always have the same effect of 
+ * starting a reward or starting/stopping a flush regardless of the current DisplayMode.  This
+ * function routes all of this user inputs accordingly.
+ */
 void Menu::userInputSlot(int type)
 {
 	if((type == PanelInfo::rewardButton) || (type == PanelInfo::flushButton))
@@ -66,16 +81,25 @@ void Menu::userInputSlot(int type)
 		}
 		return;
 	}
+	//Stop the activity timer, since something happened.
 	activityTimer->stop();
 	QSharedPointer<DisplayMode> newMode;
+	//Route the user input into the current DisplayMode, get the next mode that should
+	//be activated and initialize it if it is not the same as the current one.
 	newMode = panelModes_[currMode_->userInputSlot(PanelInfo::InputType(type))];
 	if(newMode != currMode_)
 		newMode->initMode();
 	currMode_ = newMode;
+	//Restart the activity timer that brings control back to the StatusMode after a set time
+	//has passed without user interaction.  Since user interaction just happened, this is the
+	//time to start.
 	if(currMode_ != panelModes_[StatusModeType])
 		activityTimer->start(currMode_->activityTimeoutMs());
 }
 
+/*! \brief Deinitializes this application just before it closes, essentially by turning off
+ * the LCD display
+ */
 void Menu::aboutToQuit()
 {
 	directorIf_.clear();
@@ -84,7 +108,8 @@ void Menu::aboutToQuit()
 	emit updateLCD(2,"");
 }
 
-
+/*! \brief Creates and sets up all of the DisplayMode objects that the user can use in this panel.
+ */
 void Menu::loadMenus()
 {
 	panelModes_[PanelInfo::MenuModeType] = QSharedPointer<DisplayMode>(new MenuMode());
@@ -101,66 +126,12 @@ void Menu::loadMenus()
 		connect(mode.data(),SIGNAL(turnOnBacklight()),this,SIGNAL(turnOnBacklight()));
 	}
 
+	//The first DisplayMode should be the StatusMode
 	currMode_ = panelModes_[StatusModeType];
 }
 
-////This is the code used to draw the controller changing panel
-//void Menu::drawFlushDuration(bool firstTime)
-//{
-//	int controller = panelInfo->getRewardController();
-//	int duration = panelInfo->getFlushDuration();
-//	
-//	if(firstTime)
-//	{
-//		QString line1 = QString("Flush %1 Duration:").arg(controller);
-//		emit updateLCD(1,line1);
-//	}
-//	QString line2 = QString("   %1 secs").arg(duration);
-//	emit updateLCD(2,line2);
-//
-//}
-//
-//void Menu::initFlush()
-//{
-//	//start the timer
-//	flushingTimer->start();
-//
-//	if(!directorIf_->flush(panelInfo->getRewardController()))
-//	{
-//		doMessage("Flushing failed,","Try again");
-//	}	
-//
-//	panelInfo->setDispMode(PanelInfo::FlushingMode);
-//
-//	//drawFlush only draws the second line of the LCD,
-//	//so we have to draw the first line here.  (We can't use the "firstTime"
-//	//bool like with the other draw methods, since this one is a slot, and it
-//	//needs to be connected to a signal with no arguments).
-//	QString line1 = "Flushing.";
-//	emit updateLCD(1,line1);
-//}
-//
-//void Menu::drawFlush()
-//{
-//	flushingTimer->stop();
-//	//get the time remaining in the flush
-//	int timeRem = directorIf_->getFlushTimeRemaining(panelInfo->getRewardController());
-//	if(timeRem > 0)
-//	{
-//		emit toggleBacklight();
-//		QString line2 = QString("  %1 s").arg(timeRem);
-//		emit updateLCD(2,line2);
-//		flushingTimer->start();
-//	}
-//	else
-//	{
-//		//printf("endFlush\n");
-//		emit turnOnBacklight();
-//		panelInfo->setDispMode(PanelInfo::MenuModeType);
-//		drawMenu();
-//	}
-//}
-
+/*! \brief Should be removed.  No longer does anything.
+ */
 void Menu::checkConnections()
 {
 //	if(!directorIf_->isConnected())
@@ -181,6 +152,10 @@ void Menu::checkConnections()
 //	}
 }
 
+/*! \brief Returns the current DisplayMode to the StatusMode.
+ * \details This function is called after no user interaction occurs for a set period of time
+ * to return the LCD display output to its default StatusMode state.
+ */
 void Menu::returnToStatus()
 {
 	activityTimer->stop();

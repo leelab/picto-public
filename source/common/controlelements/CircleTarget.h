@@ -6,8 +6,9 @@
 
 namespace Picto {
 
-/*!	\brief A CircleTarget is used by ChoiceController
- *	
+/*!	\brief A ControlTarget with a circular geometry.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -17,6 +18,7 @@ class CircleTarget : public ControlTarget
 #endif
 {
 	Q_OBJECT
+	/*!	\brief Sets/Gets the circle target's current radius*/
 	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
 public:
 	CircleTarget();

@@ -47,17 +47,17 @@ ChoiceController::ChoiceController()
 	addRequiredResult("Total Time Exceeded");
 }
 
-
+/*! \brief Constructs and returns the pointer to a new ChoiceController*/
 ControlElement* ChoiceController::NewChoiceController()
 {
 	return new ChoiceController;
 }
-
+/*! \brief Constructs and returns a shared pointer to a new ChoiceController*/
 QSharedPointer<Asset> ChoiceController::Create()
 {
 	return QSharedPointer<Asset>(new ChoiceController());
 }
-
+/*! \brief Returns the name of this type of ControlElement: "Choice Controller"*/
 QString ChoiceController::ControllerType()
 {
 	return "Choice Controller";
@@ -149,7 +149,11 @@ bool ChoiceController::isDone(QSharedPointer<Engine::PictoEngine> engine)
 	frameCtr_++;
 	return isDonePrivate(engine);
 }
-
+/*! \brief Returns true if the ChoiceController has found a result, false if it is still looking
+ *	\details This contains the meat of the logic that you would expect to find in the isDone()
+ *	function.  In the case of this class, this logic needed to be used in multiple places so it
+ *	was a good idea to move it into its own separate function.
+ */
 bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//This property tells us if the user entered or exited the target this frame.  Initialize it to false.
@@ -254,9 +258,9 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 	return false;
 }
 
-/*! \Brief Returns the target name that we are currently inside.  
+/*! \Brief Returns the name of the ControlTarget that the subject is currently inside.  
  *
- *	If we aren't inside a target, this returns NotATarget(which is a reserved name).
+ *	If the subject isn't inside a target, this returns NotATarget (which is a reserved name).
  */
 QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -282,75 +286,26 @@ QString ChoiceController::insideTarget(QSharedPointer<Engine::PictoEngine> engin
 			return targetName;
 		}
 	}
-	//int numTargets = propertyContainer_->getPropertyList().filter("TargetName").length();
-	//for(int target=1; target<= numTargets; target++)
-	//{
-	//	QRect targetRect = propertyContainer_->getPropertyValue(QString("Target%1").arg(target)).toRect();
-	//	if(checkSingleTarget(targetRect))
-	//	{
-	//		QString targetName = propertyContainer_->getPropertyValue(QString("TargetName%1").arg(target)).toString();
-	//		return targetName;
-	//	}
-	//}
 
 	return "NotATarget";
 
 }
 
-
-////! \Brief checks a single target to determine if the subject's focus is inside it.
-//bool ChoiceController::checkSingleTarget(QRect targetRect)
-//{
-//	int x = signal_->peekValue("x");
-//	int y = signal_->peekValue("y");
-//
-//	if("Rectangle" == shapeList_.value(shapeIndex_))
-//	{
-//		if(targetRect.contains(x,y))
-//			return true;
-//		else
-//			return false;
-//	}
-//	else if("Ellipse" == shapeList_.value(shapeIndex_))
-//	{
-//		/*We're going to test this equation:
-//			(x-x0)^2     (y-0)^2
-//			--------  +  --------  <= 1
-//			 width^2     height^2
-//		*/
-//		double x0 = targetRect.x() + targetRect.width()/2;
-//		double y0 = targetRect.y() + targetRect.height()/2;
-//		double width = targetRect.width();
-//		double height = targetRect.height();
-//		double term1 = (x-x0)*(x-x0)/(width*width);
-//		double term2 = (y-y0)*(y-y0)/(height*height);
-//		if(term1 + term2 <= 1.0)
-//			return true;
-//		else
-//			return false;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//
-//}
-
 QSharedPointer<Result> ChoiceController::getResult()
 {
 	return ResultContainer::getResult(result_);
 }
-
+/*! \brief Returns true if the subject is currently fixating on a target, false otherwise*/
 bool ChoiceController::userOnTarget()
 {
 	return propertyContainer_->getPropertyValue("OnTarget").toBool();
 }
-
+/*! \brief Returns true if the user started fixating on a target during the previous frame, false otherwise*/
 bool ChoiceController::userEnteredTarget()
 {
 	return userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
 }
-
+/*! \brief Returns true if the user stopped fixating on a target during the previous frame, false otherwise*/
 bool ChoiceController::userExitedTarget()
 {
 	return !userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
@@ -384,22 +339,6 @@ void ChoiceController::postDeserialize()
 	setPropertyRuntimeEditable("FixationTime");
 	setPropertyRuntimeEditable("TotalTime");
 }
-
-///*! \Brief turns a choice controller into XML
-// *
-// *	The XML for a choice controller will look like this:
-// * 	<ControlElement type="ChoiceController" operatorVisible="true subjectVisible="false">
-// *		<Name>MyControlElement</Name>
-// *		<SignalChannel>ChannelName</SignalChannel>
-// *		<Shape>Rectangle</Shape>
-// *		<TotalTime units="Ms">10000</TotalTime>
-// *		<FixationTime units="Ms">1000</FixationTime>
-// *		<AllowReentries>Yes</AllowReentries>
-// *		<Target1 name="FirstTarget" x="400" y="800" width="100" height="100">
-// *		<Target2 name="SecondTarget" x="800" y="800" width="100" height="100">
-// *	</ControlElement>
-//
-// */
 
 bool ChoiceController::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {

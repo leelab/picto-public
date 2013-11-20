@@ -6,8 +6,12 @@
 
 namespace Picto
 {
-/*!	\brief An output signal controller for controlling output bnc pins on pictobox
- *
+/*!	\brief A virtual OutputSignalController that represents a virtual digital output port.
+ *	\details This port is used with the OutputSignalWidget to show current voltage states
+ *	to operators from the workstation during experiment testing and/or remote experiment
+ *	monitoring.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API VirtualOutputSignalController :  public OutputSignalController

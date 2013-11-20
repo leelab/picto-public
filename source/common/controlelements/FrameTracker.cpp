@@ -12,6 +12,8 @@ FrameTracker::FrameTracker()
 	firstFrameTime_ = -1;
 }
 
+/*! \brief Stores the latest frame time in this object.
+ */
 void FrameTracker::setLastFrameTime(double frameTime)
 {
 	if(firstFrameTime_ < 0)
@@ -19,11 +21,22 @@ void FrameTracker::setLastFrameTime(double frameTime)
 	lastFrameTime_ = frameTime;
 	
 }
+
+/*! \brief Sets the time of the next frame that will appear.
+ *	\details This is not available in live experiments, but during playback it can
+ *	be provided.
+ */
 void FrameTracker::setNextFrameTime(double frameTime)
 {
 	nextFrameTime_ = frameTime;
 }
 
+/*! \brief Returns the time that the next frame will occur relative to the beginning of the experiment.
+ *	\details If a live experiment is running, this time will be estimated as 16.666ms after the current time.
+ *	\note Currently, we are not actually using effectiveAbsoluteTime anywhere meaningful.  Think twice before 
+ *	starting to use this.
+ *	\sa FrameTimerFactory::effectiveAbsoluteTime()
+ */
 int FrameTracker::effectiveAbsoluteTime(TimerUnits::TimerUnits units)
 {
 	double returnTime = nextFrameTime_;
@@ -46,6 +59,8 @@ int FrameTracker::effectiveAbsoluteTime(TimerUnits::TimerUnits units)
 		
 }
 
+/*! \brief Resets all frame time values to their initial conditions.
+ */
 void FrameTracker::reset()
 {
 	lastFrameTime_ = -1;

@@ -4,9 +4,12 @@
 #include <QList>
 #include "DisplayMode.h"
 
-/*!	\brief The front panel's MenuMode interface
- *
- *	The front panel's MenuMode interface is defined here.
+/*!	\brief A DisplayMode that allows the user to move through a menu including 
+ * all of the DisplayModes available for view in the Front Panel system.
+ * \details Allows users to navigate through a list of other DisplayModes by
+ * turning the input knob and select one by pressing it.
+ * \author Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2013
  */
 class MenuMode : public DisplayMode
 {
@@ -24,6 +27,9 @@ protected:
 
 private:
 	void drawMenu();
+	/*!
+	 * A struct containing each PanelInfo::DisplayModeType along with a user friendly name.
+	 */
 	struct MenuItem
 	{
 		MenuItem(PanelInfo::DisplayModeType m,QString t){mode=m;text=t;};

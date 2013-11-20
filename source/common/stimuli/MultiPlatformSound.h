@@ -9,7 +9,22 @@
 
 namespace Picto {
 
-/*!	\brief Unimplemented. A Wave Sound class.
+/*!	\brief A simple PreloadedSound object that can be used over multiple platforms based on Qt's QSound object.
+ *	\details Qt's QSound object has a simple interface and works on multiple platforms.  On the otherhand,
+ *	experimentation has shown that it requires a working Qt event loop to work.  This means that it works fine
+ *	for the workstation, but doesn't work on the Director where there is currently no event loop.
+ *	\note The MultiplatformSound works with .wav files only, and not every type of sample
+ *	rate is necessarily supported.  Since the WinSound class, while not multiplatform is more versatile,
+ *	we have assumed that it can play anything that this class can.  This is
+ *	important, because we don't want to create a situation where everything is working in 
+ *	the workstation's TestViewer but the experiment won't function in an actual experiment.
+ *	The assumption hasn't been tested for every type of .wav file though, so it may 
+ *	not be perfect.  The real solution to this whole issue, is to reimplement the director 
+ *	with an event loop, since that would be a really good idea in any case for code complexity
+ *	and many other reasons, and then just use one kind of PreloadedSound.  I don't have time 
+ *	for that, but am happy to leave it to you :).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API MultiplatformSound : public PreloadedSound

@@ -11,20 +11,26 @@ ScriptController::ScriptController()
 	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableProperty(QVariant::String,"Script","");
 
+	//This will allow designers to create their own results
 	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 }
 
-
+/*! \brief Creates and returns a pointer to a new ScriptController object.
+*/
 ControlElement* ScriptController::NewScriptController()
 {
 	return new ScriptController;
 }
 
+/*! \brief Creates and returns a shared pointer to a new ScriptController object.
+*/
 QSharedPointer<Asset> ScriptController::Create()
 {
 	return QSharedPointer<Asset>(new ScriptController());
 }
 
+/*! \brief Returns the name of this type of ControlElement.  Namely, "Script Controller".
+*/
 QString ScriptController::ControllerType()
 {
 	return "Script Controller";

@@ -3,6 +3,9 @@
 #include <NIDAQmx.h>
 #include "../../common/memleakdetect.h"
 
+/*! A marcro used to check the output of DAQmx calls and trigger an appropriate assertion
+ * on failure
+ */
 #define DAQmxErrChk(rc) { if (rc) { \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
@@ -13,25 +16,38 @@
 							Q_ASSERT_X(!rc, "PictoBoxXPEventCodeGenerator", msg.toLatin1());\
 						 } }
 
-// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
-//		 where we have full hardware control.  If this is meant to run elsewhere, a more
-//		 generic RewardController will need to be written
+/*! The name of the Nidaq device handling reward triggering (it is the only Nidaq device in the Pictobox) 
+ * \note We hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
+ * where we have full hardware control.  If this is meant to run elsewhere, a more
+ * generic RewardController will need to be written
+ */
 #define DEVICE_NAME "Dev1"
 //#define PICTO_BOX_NIDAQ_5V_CHANNEL "Dev1/port0/line0"
 #define PICTO_BOX_NIDAQ_5V_CHANNEL "Dev1/ao1"
-//Note, currently, the reward enable line is on ao1, and the reward trigger is on a00.  If we increase
-//the NUMREWARDLINES, channel 2 will try to overwrite ao1, which won't work.  In order to use more lines
-//we are going to need to figure out how to use digital lines for our reward triggers.  This means using
-//seperate clocks for each reward trigger line from somewhere in the Nidaq card.  We are theoretically 
-//supposed to be able to configure the nidaq card so that digital lines can use clocks from other parts
-//of the card, but I have not yet figured out how to do this correctly.
+/*! \brief The number of reward lines on the Pictobox.  Currently only one is allowed.
+ * \details currently, the reward enable line is on ao1, and the reward trigger is on a00.  If we increase
+ * the NUMREWARDLINES, channel 2 will try to overwrite ao1, which won't work.  In order to use more lines
+ * we are going to need to figure out how to use digital lines for our reward triggers.  This means using
+ * seperate clocks for each reward trigger line from somewhere in the Nidaq card.  We are theoretically 
+ * supposed to be able to configure the nidaq card so that digital lines can use clocks from other parts
+ * of the card, but I have not yet figured out how to do this correctly.
+ */
 #define NUMREWARDLINES 1
 
 
 namespace Picto
 {
 
-//! Sets up the reward controller
+/*! \brief Sets up the reward controller
+ * \details Attempts to set the reward trigger and then reward enable lines high.  This way to provide a reward we need
+ * only set the reward trigger line low for the input reward duration.
+ * \note If the Nidaq reward tasks fail to start, this is not considered an error here. The reason for this is that the FrontPanelRewardController
+ * is built to work along side the Legacy Orion application so that there is still the option to run old Orion tasks on 
+ * PictoBox.  If Orion is running, it will be taking control of the reward lines whenever it needs to provide a reward,
+ * in which case this reward controller might be locked out of using them temporarily.  Either way, someone will be enabling
+ * the reward relays though, and so even when Orion is running Front Panel rewards can still be provided unless an Orion
+ * reward is already in progress (in which case we don't really care that the front panel reward won't work).
+ */
 FrontPanelRewardController::FrontPanelRewardController()
 : RewardController(NUMREWARDLINES)
 {
@@ -52,7 +68,7 @@ FrontPanelRewardController::FrontPanelRewardController()
 	{
 		DAQmxErrChk(DAQmxCreateTask("RewardTask",(TaskHandle*)&daqTaskHandle_[channel]));
 		DAQmxErrChk(DAQmxCreateAOVoltageChan(daqTaskHandle_[channel],QString("Dev1/ao%1").arg(channel-1).toLatin1(),"",0.0,5.0,DAQmx_Val_Volts,NULL));
-		//If the function fails on StartTask, don't trigger assertions because it might just be that another process
+		//If the function fails on StartTask, don't trigger assertions because it might just be that another process (ie. legacy Orion)
 		//is using the pin we want to control.  If there's an error here, just skip the task.
 		if(!DAQmxStartTask(daqTaskHandle_[channel]))
 			DAQmxErrChk(DAQmxWriteAnalogF64(daqTaskHandle_[channel],1,true,1,DAQmx_Val_GroupByChannel,data,&sampsPerChanWritten,NULL));
@@ -80,6 +96,9 @@ FrontPanelRewardController::FrontPanelRewardController()
 	DAQmxErrChk(DAQmxClearTask(rewardEnTask));
 }
 
+/*! This desructor doesn't need to bring the reward enable line back to zero.  Since it's an enable line,
+ * it will return to zero automatically as soon as things reset
+ */
 FrontPanelRewardController::~FrontPanelRewardController()
 {
 	if(!hasDevice_)
@@ -89,7 +108,16 @@ FrontPanelRewardController::~FrontPanelRewardController()
 	//as things reset.
 }
 
-
+/*! \brief Starts a reward an the input channel for the 'quantity' number of milliseconds
+ * \detail Due to the limited capabilities of our current version of the NiDaq card, the way 
+ * that rewards are precisely timed is that we start a clock with frequency equal to the input
+ * quantity.  We then start a task that switches the A0.0 pin to 0V, then 5V, then 0V, etc, (remember, active
+ * low logic) each time the clock triggers.  Since we make sure to call rewardWasSupplied() once every 16ms, we can
+ * be sure that the reward task will be shut off after the A0.0 pin goes to 5V so long as the reward duration is longer
+ * than 16ms.  Ideally we would set up the NiDaq task to simply bring the A0.0 pin to 0V, then back to 5V after
+ * quantity ms, but Nidaq doesn't support this, so we had to create a work around.
+ * \sa rewardWasSupplied()
+ */
 void FrontPanelRewardController::startReward(unsigned int channel,int quantity)
 {
 	if(!hasDevice_)
@@ -126,6 +154,10 @@ void FrontPanelRewardController::startReward(unsigned int channel,int quantity)
 	}
 }
 
+/*! \brief Returns true if the latest reward has been fully supplied, also turns off the reward task in this case if it is still active.
+ * \details This function should be called at least once every 16ms.
+ * \sa startReward()
+ */
 bool FrontPanelRewardController::rewardWasSupplied(unsigned int channel)
 {
 	if(channel > NUMREWARDLINES+1 || channel < 1)
@@ -141,6 +173,14 @@ bool FrontPanelRewardController::rewardWasSupplied(unsigned int channel)
 	daqTaskHandle_[channel] = 0;
 	return true;
 }
+
+/*! \brief Starts a flush on the input channel
+ * \details Since flush timing doesn't need to be precise, we don't bother ourselves with creating a clock and using
+ * it to control the reward trigger line (as in startReward()).  Here we simply turn the flush on, and the let the 
+ * call to stopFlush(), which the RewardController should handle, stop it.  Since the reward controller should be checking
+ * this at least once every 16ms, the resolution is fine as far as the flush is concerned.
+ * \sa stopFlush(), RewardController::triggerRewards()
+ */
 void FrontPanelRewardController::startFlush(unsigned int channel)
 {
 	if(!hasDevice_)
@@ -168,6 +208,9 @@ void FrontPanelRewardController::startFlush(unsigned int channel)
 	}
 
 }
+/*! \brief Stops an active flush by setting the A0.0 line back to high and then clearing the NiDaq task.
+ * \sa startFlush()
+ */
 void FrontPanelRewardController::stopFlush(unsigned int channel)
 {
 	if(!hasDevice_)
