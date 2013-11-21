@@ -8,7 +8,7 @@ Parameter::Parameter() :
 {
 }
 
-//void Parameter::reset()
+//void Parameter::enteredScope()
 //{
 //	setValue(propertyContainer_->getPropertyValue("Value"));
 //}

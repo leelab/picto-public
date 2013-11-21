@@ -414,13 +414,14 @@ QSharedPointer<Asset> TokenFactoryGraphic::Create()
 	return QSharedPointer<Asset>(new TokenFactoryGraphic());
 }
 
-void TokenFactoryGraphic::reset()
+void TokenFactoryGraphic::enteredScope()
 {
-	VisualElement::reset();
 	foreach(QString listName,listNames_)
 	{
 		propertyContainer_->setPropertyValue(listName,"");
 	}
+	updateListSizes();
+	VisualElement::enteredScope();
 	updateListSizes();
 }
 

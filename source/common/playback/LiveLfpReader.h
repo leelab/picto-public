@@ -27,7 +27,7 @@ public:
 	virtual double getLatestTime();
 	virtual double getLatestValue(int channel);
 	virtual double getNextTime();
-	virtual double getNextValue(QString channel);
+	virtual double getNextValue(int channel);
 	//Returns signal values for the input lfp channel with times > the input time.
 	virtual QVariantList getValuesSince(int channel,double time);
 	virtual QVariantList getValuesUntil(int channel,double time);

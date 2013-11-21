@@ -71,7 +71,7 @@ bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
  *	to their initial state.  This basically just reloads the PropertyContainer
  *	with the initial properties
  */
-void Scriptable::reset()
+void Scriptable::enteredScope()
 {
 	restoreProperties();
 }

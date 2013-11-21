@@ -38,7 +38,6 @@ public:
 	static QSharedPointer<Scene> createScene();
 
 	void render(QSharedPointer<Engine::PictoEngine> engine,int callerId);
-	void reset();
 	void setBackgroundColor(QColor color);
 	void addVisualElement(QSharedPointer<VisualElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);

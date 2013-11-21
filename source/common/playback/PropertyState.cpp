@@ -2,27 +2,47 @@
 #include "PlaybackData.h"
 using namespace Picto;
 
+PropertyState::PropertyState(bool forInitProperties) :
+forInitProperties_(forInitProperties)
+{
+
+}
+
 void PropertyState::setDatabase(QSqlDatabase session)
 {
 	runStart_ = runEnd_ = curr_ = -1;
 	session_ = session;
+	data_.clear();
 	query_ = QSharedPointer<QSqlQuery>(new QSqlQuery(session_));
-	query_->exec("SELECT COUNT(*) FROM properties");
+	if(forInitProperties_)
+		query_->exec("SELECT COUNT(*) FROM initproperties");
+	else
+		query_->exec("SELECT COUNT(*) FROM properties");
 	if(!query_->exec() || !query_->next())
 	{
-		Q_ASSERT(false);
+		Q_ASSERT(forInitProperties_);
 		return;
 	}
-	data_.clear();
 	data_.reserve(query_->value(0).toInt());
 	for(int i=0;i<query_->value(0).toInt();i++)
 	{
 		data_.append(PropertyData());
 	}
 
-	//Currently, we don't select properties with no parent (ie. Runtime parameters).
-	query_->exec("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
-		"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid ORDER BY p.dataid");
+	if(forInitProperties_)
+	{
+		query_->exec("SELECT f.time,p.dataid,p.assetid,p.value FROM initproperties p, propertylookup pl,frames f "
+			"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid ORDER BY p.dataid");
+	}
+	else
+	{
+		//We don't select properties with no parent (ie. This is how initproperties where handled before
+		//~2/2013 when they got their own list in the session file and were merged into the properties that
+		//they were connected to as a seperate initValue.  The original Ambiguity and BiasedMatchingPennies
+		//sessions were handled like this since they were run before the initproperties table existed).
+		query_->exec("SELECT f.time,p.dataid,p.assetid,p.value FROM properties p, propertylookup pl,frames f "
+			"WHERE p.assetid=pl.assetid AND pl.parent <> 0 AND f.dataid=p.frameid ORDER BY p.dataid");
+	}
 	if(!query_->exec())
 	{
 		Q_ASSERT(false);

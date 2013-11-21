@@ -102,6 +102,7 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
 
 	connect(sessionState_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyValueChanged(int,QString)));
+	connect(sessionState_.data(),SIGNAL(propertyInitValueChanged(int,QString)),this,SIGNAL(propertyInitValueChanged(int,QString)));
 	connect(sessionState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(sessionState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(sessionState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));

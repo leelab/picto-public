@@ -32,7 +32,7 @@ public:
 	static QSharedPointer<Asset> Create();
 
 	//Resets the OperatorInfoGraphic Object to its initial state.
-	virtual void reset();
+	virtual void enteredScope();
 	static const QString type;
 	virtual QString friendlyTypeName(){return "Operator Info";};
 	virtual QString getUITemplate(){return "OperatorInfoElement";};

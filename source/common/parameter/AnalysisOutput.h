@@ -31,7 +31,7 @@ public:
 	AnalysisOutput();
 	virtual ~AnalysisOutput();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	virtual QString getUITemplate(){return "AnalysisOutput";};
 	virtual QString getUIGroup(){return "Outputs";};

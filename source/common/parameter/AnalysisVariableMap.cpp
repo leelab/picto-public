@@ -16,9 +16,9 @@ QSharedPointer<Asset> AnalysisVariableMap::Create()
 	return QSharedPointer<Asset>(new AnalysisVariableMap());
 }
 
-void AnalysisVariableMap::reset()
+void AnalysisVariableMap::enteredScope()
 {
-	AnalysisVariable::reset();
+	AnalysisVariable::enteredScope();
 	map_.clear();
 }
 

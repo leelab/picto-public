@@ -65,7 +65,7 @@ double LiveLfpReader::getNextTime()
 {
 	return -1;
 }
-double LiveLfpReader::getNextValue(QString channel)
+double LiveLfpReader::getNextValue(int channel)
 {
 	return 0;
 }
@@ -89,7 +89,7 @@ QVariantList LiveLfpReader::getValuesSince(int channel,double time)
 	return returnVal;
 }
 
-QVariantList LiveLfpReader::getValuesUntil(int channel,double time)
+QVariantList LiveLfpReader::getValuesUntil(int,double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
@@ -112,7 +112,7 @@ QVariantList LiveLfpReader::getTimesSince(double time)
 	return returnVal;
 }
 
-QVariantList LiveLfpReader::getTimesUntil(double time)
+QVariantList LiveLfpReader::getTimesUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();

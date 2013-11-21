@@ -2,7 +2,8 @@
 using namespace Picto;
 
 SessionState::SessionState(bool enableLfp) :
-propState_(new PropertyState()),
+propState_(new PropertyState(false)),
+initPropState_(new PropertyState(true)),
 transState_(new TransitionState()),
 frameState_(new FrameState()),
 rewardState_(new RewardState()),
@@ -10,6 +11,7 @@ runNotesState_(new RunNotesState()),
 spikeState_(new SpikeState()),
 lfpState_(new LfpState(enableLfp))
 {
+	statesWithIds_.push_back(initPropState_);
 	statesWithIds_.push_back(propState_);
 	statesWithIds_.push_back(transState_);
 	statesWithIds_.push_back(frameState_);
@@ -19,6 +21,7 @@ lfpState_(new LfpState(enableLfp))
 	statesWithTimes_.push_back(lfpState_);
 
 	connect(propState_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyChanged(int,QString)));
+	connect(initPropState_.data(),SIGNAL(propertyChanged(int,QString)),this,SIGNAL(propertyInitValueChanged(int,QString)));
 	connect(transState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(frameState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(rewardState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
@@ -44,6 +47,7 @@ void SessionState::setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteA
 	lfpPercent_ = 100;
 	currRunStart_ = currRunEnd_ = -1;
 	propState_->setObsoleteAssets(obsoleteAssetIds);
+	initPropState_->setObsoleteAssets(obsoleteAssetIds);
 	transState_->setObsoleteAssets(obsoleteAssetIds);
 	foreach(QSharedPointer<DataState> state,statesWithIds_)
 	{
@@ -122,101 +126,6 @@ bool SessionState::lfpEnabled()
 		return false;
 	return lfpState_->getEnabled();
 }
-
-//bool SessionState::setPropertyValue(double time,qulonglong dataId,int propId,QString value)
-//{
-//	return propState_->setPropertyValue(time,dataId,propId,value);
-//}
-//
-//bool SessionState::setTransition(double time,qulonglong dataId,int transId)
-//{
-//	return transState_->setTransition(time,dataId,transId);
-//}
-//
-//bool SessionState::setFrame(qulonglong dataId,double frameTime)
-//{
-//	return frameState_->setFrame(dataId,frameTime);
-//}
-//
-//bool SessionState::setReward(double time,qulonglong dataId,int duration,int channel)
-//{
-//	return rewardState_->setReward(time,dataId,duration,channel);
-//}
-//
-//bool SessionState::setSignal(QString name,QStringList subChanNames,double time,qulonglong dataId,double sampPeriod,QByteArray data)
-//{
-//	addSignal(name,subChanNames,sampPeriod);	//Adds this signal to our hash if its not already there.
-//	return signalLookup_[name]->setSignal(time,dataId,sampPeriod,data);
-//}
-//
-//bool SessionState::setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data)
-//{
-//	addLfpChannel(channel,sampPeriod);	//Adds this channel to our hash if its not already there.
-//	return lfpLookup_[channel]->setLFP(dataId,startTime,channel,data);
-//}
-//
-//bool SessionState::setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform)
-//{
-//	return spikeState_->setSpike(dataId,spikeTime,channel,unit,waveform);
-//}
-//
-//void SessionState::setBehavioralBounds(double min,double max)
-//{
-//	propState_->setBoundTimes(min,max);
-//	transState_->setBoundTimes(min,max);
-//	frameState_->setBoundTimes(min,max);
-//	rewardState_->setBoundTimes(min,max);
-//	foreach(QSharedPointer<SignalState> sigState,signalLookup_)
-//		sigState->setBoundTimes(min,max);
-//}
-//
-//void SessionState::clearBehavioralData(double bound,bool before)
-//{
-//	if(before)
-//	{
-//		propState_->clearDataBefore(bound);
-//		transState_->clearDataBefore(bound);
-//		frameState_->clearDataBefore(bound);
-//		rewardState_->clearDataBefore(bound);
-//		foreach(QSharedPointer<SignalState> sigState,signalLookup_)
-//			sigState->clearDataBefore(bound);
-//	}
-//
-//}
-//
-//void SessionState::setBehavioralFinished()
-//{
-//	propState_->setFinishedLoading();
-//	transState_->setFinishedLoading();
-//	frameState_->setFinishedLoading();
-//	rewardState_->setFinishedLoading();
-//	foreach(QSharedPointer<SignalState> sigState,signalLookup_)
-//		sigState->setFinishedLoading();
-//}
-//
-//void SessionState::setNeuralBounds(double min,double max)
-//{
-//	spikeState_->setBoundTimes(min,max);
-//	foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
-//		lfpState->setBoundTimes(min,max);
-//}
-//
-//void SessionState::clearNeuralData(double bound,bool before)
-//{
-//	if(before)
-//	{
-//		spikeState_->clearDataBefore(bound);
-//		foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
-//			lfpState->clearDataBefore(bound);
-//	}
-//}
-//
-//void SessionState::setNeuralFinished()
-//{
-//	spikeState_->setFinishedLoading();
-//	foreach(QSharedPointer<LfpState> lfpState,lfpLookup_)
-//		lfpState->setFinishedLoading();
-//}
 
 QSharedPointer<PropertyReader> SessionState::getPropertyReader()
 {

@@ -10,9 +10,9 @@ ResultContainer::ResultContainer()
 	AddDefinableObjectFactory("Result",resultFactory_);
 }
 
-void ResultContainer::reset()
+void ResultContainer::enteredScope()
 {
-	ScriptableContainer::reset();
+	ScriptableContainer::enteredScope();
 	latestResult_ = "";
 }
 

@@ -38,6 +38,7 @@ public:
 
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
+	virtual void enteredScope();
 	virtual QString friendlyTypeName(){return "Pseudorandom Int";};
 	virtual QString getUITemplate(){return "PseudorandomInt";};
 

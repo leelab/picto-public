@@ -20,13 +20,13 @@ class FrameReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~FrameReader(){};
-	virtual double getPrevTime(){return 0;};
-	virtual double getLatestTime(){return 0;};
-	virtual double getNextTime(){return 0;};
+	virtual double getPrevTime()=0;
+	virtual double getLatestTime()=0;
+	virtual double getNextTime()=0;
 	//Returns a list of frame times that occured with times > the input time and <= the current time.  
-	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time)=0;
 	//Returns a list of values with times > the current time and <= the input time.  
-	virtual QVariantList getTimesUntil(double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time)=0;
 };
 
 #if defined WIN32 || defined WINCE
@@ -38,17 +38,17 @@ class LfpReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~LfpReader(){};
-	virtual QVariantList getChannels(){return QVariantList();};
-	virtual double getSamplePeriod(){return 0;};
-	virtual double getLatestTime(){return 0;};
-	virtual double getLatestValue(int channel){return 0;};
-	virtual double getNextTime(){return 0;};
-	virtual double getNextValue(int channel){return 0;};
+	virtual QVariantList getChannels()=0;
+	virtual double getSamplePeriod()=0;
+	virtual double getLatestTime()=0;
+	virtual double getLatestValue(int channel)=0;
+	virtual double getNextTime()=0;
+	virtual double getNextValue(int channel)=0;
 	//Returns lfp values for the input channel with times > the input time.
-	virtual QVariantList getValuesSince(int channel,double time){return QVariantList();};
-	virtual QVariantList getValuesUntil(int channel,double time){return QVariantList();};
-	virtual QVariantList getTimesSince(double time){return QVariantList();};
-	virtual QVariantList getTimesUntil(double time){return QVariantList();};
+	virtual QVariantList getValuesSince(int channel,double time)=0;
+	virtual QVariantList getValuesUntil(int channel,double time)=0;
+	virtual QVariantList getTimesSince(double time)=0;
+	virtual QVariantList getTimesUntil(double time)=0;
 };
 
 class PropertyReader : public QObject
@@ -82,24 +82,24 @@ class RewardReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~RewardReader(){};
-	virtual double getLatestTime(){return 0;};
-	virtual double getNextTime(){return 0;};
-	virtual int getLatestDuration(){return 0;};
-	virtual int getNextDuration(){return 0;};
+	virtual double getLatestTime()=0;
+	virtual double getNextTime()=0;
+	virtual int getLatestDuration()=0;
+	virtual int getNextDuration()=0;
 	//Returns a list of reward times that occured with times > the input time and <= the current time.
 	//From the input reward channel
-	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time)=0;
 	//Returns a list of reward times that occured with times > the current time and <= the input time.  
 	//From the input reward channel
-	virtual QVariantList getTimesUntil(double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time)=0;
 	//Returns a list of reward durations that occured with times > the input time and <= the current time.
 	//From the input reward channel.  There is a one to one matchup of values from this 
 	//function to times from the getTimesSince function.
-	virtual QVariantList getDurationsSince(double time){return QVariantList();};
+	virtual QVariantList getDurationsSince(double time)=0;
 	//Returns a list of reward durations that occured with times > the current time and <= the input time.  
 	//From the input reward channel.  There is a one to one matchup of values from this 
 	//function to times from the getTimesSince function.
-	virtual QVariantList getDurationsUntil(double time){return QVariantList();};
+	virtual QVariantList getDurationsUntil(double time)=0;
 
 };
 
@@ -112,11 +112,11 @@ class RunNotesReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~RunNotesReader(){};
-	virtual QString getName(){return "";};
-	virtual double getStartTime(){return 0;};
-	virtual double getEndTime(){return 0;};
-	virtual QString getNotes(){return "";};
-	virtual int getRunIndex(){return 0;};
+	virtual QString getName()=0;
+	virtual double getStartTime()=0;
+	virtual double getEndTime()=0;
+	virtual QString getNotes()=0;
+	virtual int getRunIndex()=0;
 };
 
 #if defined WIN32 || defined WINCE
@@ -129,30 +129,30 @@ class SignalReader : public QObject
 public:
 	virtual ~SignalReader(){};
 	//Returns the name of the signal handled by this signal reader
-	virtual QString getName(){return QString();};
+	virtual QString getName()=0;
 	//Returns the sub channels of this signal
-	virtual QStringList getComponentNames(){return QStringList();};
-	virtual double getSamplePeriod(){return 0;};
-	virtual double getLatestTime(){return 0;};
-	virtual double getLatestValue(QString channel){return 0;};
-	virtual double getNextTime(){return 0;};
-	virtual double getNextValue(QString channel){return 0;};
+	virtual QStringList getComponentNames()=0;
+	virtual double getSamplePeriod()=0;
+	virtual double getLatestTime()=0;
+	virtual double getLatestValue(QString channel)=0;
+	virtual double getNextTime()=0;
+	virtual double getNextValue(QString channel)=0;
 	//Returns a list of signal read times that occured > the input time and 
 	//<= the current time.  There is a one to one matchup of times
 	//from this function and values from getValuesSince(channel,time).
-	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time)=0;
 	//Returns a list of signal read times that occured > the current time and 
 	// <= the input time.  There is a one to one matchup of times
 	//from this function and values from getValuesUntil(channel,time).
-	virtual QVariantList getTimesUntil(double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time)=0;
 	//Returns signal values for the input sub channel with times > the input time and
 	//<= the current time.  There is a one to one matchup of times
 	//from this function and values from getTimesSince(channel,time).
-	virtual QVariantList getValuesSince(QString channel,double time){return QVariantList();};
+	virtual QVariantList getValuesSince(QString channel,double time)=0;
 	//Returns signal values for the input sub channel with times > the current time and
 	//<= the input time time.  There is a one to one matchup of times
 	//from this function and values from getTimesUntil(channel,time).
-	virtual QVariantList getValuesUntil(QString channel,double time){return QVariantList();};
+	virtual QVariantList getValuesUntil(QString channel,double time)=0;
 };
 
 #if defined WIN32 || defined WINCE
@@ -164,34 +164,34 @@ class SpikeReader : public QObject
 	Q_OBJECT
 public:
 	virtual ~SpikeReader(){};
-	virtual QVariantList getChannels(){return QVariantList();};
-	virtual QVariantList getUnits(int channel){return QVariantList();};
-	virtual double getSamplePeriod(){return 0;};
-	virtual double getLatestTime(){return 0;};
-	virtual int getLatestChannel(){return 0;};
-	virtual int getLatestUnit(){return 0;};
-	virtual QVariantList getLatestWaveform(){return QVariantList();};
-	virtual double getNextTime(){return 0;};
-	virtual int getNextChannel(){return 0;};
-	virtual int getNextUnit(){return 0;};
-	virtual QVariantList getNextWaveform(){return QVariantList();};
+	virtual QVariantList getChannels()=0;
+	virtual QVariantList getUnits(int channel)=0;
+	virtual double getSamplePeriod()=0;
+	virtual double getLatestTime()=0;
+	virtual int getLatestChannel()=0;
+	virtual int getLatestUnit()=0;
+	virtual QVariantList getLatestWaveform()=0;
+	virtual double getNextTime()=0;
+	virtual int getNextChannel()=0;
+	virtual int getNextUnit()=0;
+	virtual QVariantList getNextWaveform()=0;
 	
 	//Returns a list of spikes times when that occured with times > the input time and 
 	//<= the current time on all channels and units.  There is a one to one matchup of times
 	//from this function and channels from getChannelsSince(time), units from getUnitsSince(time)
 	//and waveforms from getWaveformsSince(time).
-	virtual QVariantList getTimesSince(double time){return QVariantList();};
+	virtual QVariantList getTimesSince(double time)=0;
 	//Returns a list of spikes times when that occured with times > the current time and 
 	// <= the input time on the all channels and units.  There is a one to one matchup of times
 	//from this function and channels from getChannelsUntil(time), units from getUnitsUntil(time)
 	//and waveforms from getWaveformsSince(time).
-	virtual QVariantList getTimesUntil(double time){return QVariantList();};
-	virtual QVariantList getChannelsSince(double time){return QVariantList();};
-	virtual QVariantList getChannelsUntil(double time){return QVariantList();};
-	virtual QVariantList getUnitsSince(double time){return QVariantList();};
-	virtual QVariantList getUnitsUntil(double time){return QVariantList();};
-	virtual QVariantList getWaveformsSince(double time){return QVariantList();};
-	virtual QVariantList getWaveformsUntil(double time){return QVariantList();};
+	virtual QVariantList getTimesUntil(double time)=0;
+	virtual QVariantList getChannelsSince(double time)=0;
+	virtual QVariantList getChannelsUntil(double time)=0;
+	virtual QVariantList getUnitsSince(double time)=0;
+	virtual QVariantList getUnitsUntil(double time)=0;
+	virtual QVariantList getWaveformsSince(double time)=0;
+	virtual QVariantList getWaveformsUntil(double time)=0;
 };
 
 class TransitionReader : public QObject

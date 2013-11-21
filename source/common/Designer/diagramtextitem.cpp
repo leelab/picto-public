@@ -46,7 +46,7 @@
 #include "../../common/memleakdetect.h"
 
 //! [0]
-DiagramTextItem::DiagramTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
+DiagramTextItem::DiagramTextItem(QGraphicsItem *parent, QGraphicsScene *)
     : QGraphicsTextItem(parent)
 {
     setFlag(QGraphicsItem::ItemIsMovable);

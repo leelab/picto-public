@@ -12,6 +12,7 @@ class PropertyState : public PropertyReader, public DataState
 {
 	Q_OBJECT
 public:
+	PropertyState(bool forInitProperties = false);
 	virtual void setDatabase(QSqlDatabase session);
 	virtual void startRun(double runStartTime,double runEndTime = -1);
 	virtual PlaybackIndex getCurrentIndex();
@@ -31,6 +32,7 @@ private:
 	int curr_;
 	QList<PropertyData> data_;
 	QHash<int,bool> obsoleteAssetIds_;
+	bool forInitProperties_;
 //
 //protected:
 //	virtual void triggerValueChange(bool reverse,bool last);

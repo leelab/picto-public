@@ -20,7 +20,7 @@ public:
 	AnalysisVariable();
 	virtual ~AnalysisVariable(){};
 
-	virtual void reset();
+	virtual void enteredScope();
 	virtual bool isPartOfSearch(SearchRequest searchRequest);
 	virtual QString getUITemplate(){return "Variable";};
 	virtual QString getUIGroup(){return "Variables";};

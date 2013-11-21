@@ -510,13 +510,14 @@ QSharedPointer<Asset> TokenTrayGraphic::Create()
 	return QSharedPointer<Asset>(new TokenTrayGraphic());
 }
 
-void TokenTrayGraphic::reset()
+void TokenTrayGraphic::enteredScope()
 {
-	VisualElement::reset();
 	foreach(QString listName,listNames_)
 	{
 		propertyContainer_->setPropertyValue(listName,"");
 	}
+	updateListSizes();
+	VisualElement::enteredScope();
 	updateListSizes();
 }
 

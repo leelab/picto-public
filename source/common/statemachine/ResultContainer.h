@@ -26,7 +26,7 @@ public:
 	ResultContainer();
 	virtual ~ResultContainer(){};
 
-	virtual void reset();
+	virtual void enteredScope();
 	QStringList getResultList();
 	QSharedPointer<Result> getResult(QString name);
 	virtual bool hasEditableDescendants();	

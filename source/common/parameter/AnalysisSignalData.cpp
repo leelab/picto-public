@@ -16,9 +16,9 @@ QSharedPointer<Asset> AnalysisSignalData::Create()
 	return QSharedPointer<Asset>(new AnalysisSignalData());
 }
 
-void AnalysisSignalData::reset()
+void AnalysisSignalData::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 	zeroLatestFrame();
 	signalReader_ = getDesignConfig()->getSignalReader(propertyContainer_->getPropertyValue("SignalName").toString());
 }

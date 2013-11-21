@@ -29,7 +29,7 @@ public:
 	//presents the information written into this AnalysisTool object.
 	//QPointer<AnalysisOutputWidget> getOutputWidget();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	virtual QString friendlyTypeName(){return "File Output";};
 

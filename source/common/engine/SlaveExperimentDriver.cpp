@@ -208,7 +208,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 		currState->runAnalysisFrameScripts();
 	}
 }
-void SlaveExperimentDriver::masterRewardSupplied(double time,int duration,int channel)
+void SlaveExperimentDriver::masterRewardSupplied(double,int duration,int channel)
 {
 	experiment_->getEngine()->giveReward(channel,duration,duration);
 }

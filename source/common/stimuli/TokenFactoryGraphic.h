@@ -30,7 +30,7 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
-	virtual void reset();
+	virtual void enteredScope();
 
 	QRect getTokenDimensions();
 	void setTokenDimensions(QRect dimensions);

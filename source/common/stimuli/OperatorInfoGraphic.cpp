@@ -63,11 +63,11 @@ QSharedPointer<Asset> OperatorInfoGraphic::Create()
 	return QSharedPointer<Asset>(new OperatorInfoGraphic());
 }
 
-void OperatorInfoGraphic::reset()
+void OperatorInfoGraphic::enteredScope()
 {
-	VisualElement::reset();
 	orderedFields_.clear();
 	infoMap_.clear();
+	VisualElement::enteredScope();
 }
 
 void OperatorInfoGraphic::setData(QString field, QVariant value)

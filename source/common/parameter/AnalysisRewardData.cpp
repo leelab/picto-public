@@ -15,9 +15,9 @@ QSharedPointer<Asset> AnalysisRewardData::Create()
 	return QSharedPointer<Asset>(new AnalysisRewardData());
 }
 
-void AnalysisRewardData::reset()
+void AnalysisRewardData::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 	zeroLatestFrame();
 }
 

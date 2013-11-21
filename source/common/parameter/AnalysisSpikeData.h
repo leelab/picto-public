@@ -25,7 +25,7 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	virtual QString friendlyTypeName(){return "Spike Data";};
 	virtual QString getUITemplate(){return "SpikeDataSource";};

@@ -51,7 +51,7 @@ void ArrowPortItem::updateDependantGraphics()
     }
 }
 
-void ArrowPortItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event)
+void ArrowPortItem::hoverEnterEvent ( QGraphicsSceneHoverEvent *)
 {
 	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
 	{

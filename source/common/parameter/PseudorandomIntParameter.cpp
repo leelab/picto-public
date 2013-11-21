@@ -76,6 +76,19 @@ void PseudorandomIntParameter::reshuffleLastValue()
 
 //Resets the object to its original state as if no values have yet been
 //randomized.
+void PseudorandomIntParameter::enteredScope()
+{
+	Parameter::enteredScope();
+	//Rebuild randomArray_ from scratch.  Setting invalid values to max_ and min_
+	//and calling checkForPropertyChanges() will assure that a property change is
+	//detected and that the randomArray_ will be rebuilt
+	max_ = -1;
+	min_ = -1;
+	checkForPropertyChanges();
+}
+
+//Resets the object to its original state as if no values have yet been
+//randomized.
 void PseudorandomIntParameter::reset()
 {
 	//First we reshuffle last value.  This has the effect of putting the

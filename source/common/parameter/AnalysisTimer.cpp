@@ -34,9 +34,9 @@ void AnalysisTimer::restart()
 	timer_->restart();
 }
 
-void AnalysisTimer::reset()
+void AnalysisTimer::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 	restart();
 }
 

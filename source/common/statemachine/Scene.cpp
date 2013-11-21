@@ -67,41 +67,6 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 	}
 }
 
-//! Resets the scene
-void Scene::reset()
-{
-	QMutexLocker locker(mutex_.data());
-	foreach(QSharedPointer<VisualElement> visualElement, visualElements_)
-	{
-		visualElement->reset();
-	}
-
-	foreach(QSharedPointer<VisualElement> visualElement, unaddedVisualElements_)
-	{
-		visualElement->reset();
-	}
-
-	foreach(QSharedPointer<OutputSignal> outputSignal, outputSignals_)
-	{
-		outputSignal->reset();
-	}
-
-	foreach(QSharedPointer<OutputSignal> outputSignal, unaddedOutputSignals_)
-	{
-		outputSignal->reset();
-	}
-
-	foreach(QSharedPointer<AudioElement> audioElement, audioElements_)
-	{
-		audioElement->reset();
-	}
-
-	foreach(QSharedPointer<AudioElement> audioElement, unaddedAudioElements_)
-	{
-		audioElement->reset();
-	}
-
-}
 void Scene::setBackgroundColor(QColor color)
 {
 	QMutexLocker locker(mutex_.data());

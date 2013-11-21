@@ -66,7 +66,7 @@ bool AudioFileParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void AudioFileParameter::fileDataUpdated(const QByteArray& data)
+void AudioFileParameter::fileDataUpdated(const QByteArray&)
 {
 	physicalFilePath_ = "";
 	QString filePath = getSoundsDir()+"/"+QUuid::createUuid().toString();

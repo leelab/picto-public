@@ -1003,7 +1003,7 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 		//sessionQ.finish();
 	}
 
-	double correlation = alignmentTool_->getCorrelationCoefficient();
+	//double correlation = alignmentTool_->getCorrelationCoefficient();
 	double resolution = data->getResolution();
 	qulonglong dataID = data->getDataID();
 	double fittedTimestamp = alignmentTool_->convertToBehavioralTimebase(neuralTimestamp);
@@ -1260,7 +1260,6 @@ QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 	//Don't just look for when DataID's are higher, because in the case
 	//of lfp blocks dataIDs might be out of order.
 	//If the afterDataID isn't found, just append everything.
-	bool startAppending = false;
 	for(iter = latestNeuralData_.end()-1;iter != latestNeuralData_.begin();iter--)
 	{
 		if((*iter).dataid == afterDataId)
@@ -1824,8 +1823,8 @@ void SessionInfo::alignTimeBases(bool realignAll)
 					//Check if the neural and behavioral align codes match
 					//Note: We compare the behavioral align event to only the bottom 7 digits of the neural align event.  This way
 					//systems can bind the top hardware bit to high if need be (ie. For -onesided mode) and it won't affect alignment
-					int neuralEventCode = (*nIt)[NEURAL_EVENT_CODE_COLUMN].toInt() & 0x7F;
-					int behavEventCode = (*bIt)[BEHAV_EVENT_CODE_COLUMN].toInt() & 0x7F;
+					//int neuralEventCode = (*nIt)[NEURAL_EVENT_CODE_COLUMN].toInt() & 0x7F;
+					//int behavEventCode = (*bIt)[BEHAV_EVENT_CODE_COLUMN].toInt() & 0x7F;
 					if(((*nIt)[NEURAL_EVENT_CODE_COLUMN].toInt() & 0x7F) == ((*bIt)[BEHAV_EVENT_CODE_COLUMN].toInt() & 0x7F))
 					{	//They Match!
 						//Set both alignment events' matched values

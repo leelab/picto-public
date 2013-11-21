@@ -24,7 +24,7 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	//Resets the AnalysisVariableList Object to its initial state.
 	virtual QString getUITemplate(){return "ListVariable";};

@@ -208,7 +208,7 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
  *	Since slaveRun(), and run() are so similar, they both just call into this private
  *	run function.  This saves us some serious code repetition.
  */
-QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave)
+QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool)
 {
 	resetScriptableValues();
 	path_.append(getName());

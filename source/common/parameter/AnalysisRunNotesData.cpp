@@ -14,9 +14,9 @@ QSharedPointer<Asset> AnalysisRunNotesData::Create()
 	return QSharedPointer<Asset>(new AnalysisRunNotesData());
 }
 
-void AnalysisRunNotesData::reset()
+void AnalysisRunNotesData::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 }
 
 QString AnalysisRunNotesData::getRunName()

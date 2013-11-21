@@ -27,8 +27,6 @@ void FrameState::setDatabase(QSqlDatabase session)
 		return;
 	}
 
-	double duration;
-	int channel;
 	int arrayIndex = 0;
 	while(query_->next())
 	{
@@ -79,9 +77,6 @@ void FrameState::moveToIndex(PlaybackIndex index)
 		emit framePresented(globalToRunIndex(data_[curr_]).time());
 		nextIndex = getNextIndex();
 	}
-	double newTime = getLatestTime();
-	int i=0;
-	i++;
 }
 
 double FrameState::getPrevTime()

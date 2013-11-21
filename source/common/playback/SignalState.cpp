@@ -42,7 +42,6 @@ void SignalState::setDatabase(QSqlDatabase session)
 		Q_ASSERT(false);
 		return;
 	}
-	int assetId;
 	PlaybackIndex index;
 	QString val;
 	int arrayIndex = 0;

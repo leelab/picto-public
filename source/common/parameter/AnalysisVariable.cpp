@@ -10,9 +10,9 @@ AnalysisVariable::AnalysisVariable()
 	EXP_LINK_FACTORY_CREATION
 }
 
-void AnalysisVariable::reset()
+void AnalysisVariable::enteredScope()
 {
-	Parameter::reset();
+	Parameter::enteredScope();
 }
 
 bool AnalysisVariable::isPartOfSearch(SearchRequest searchRequest)

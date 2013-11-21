@@ -15,9 +15,9 @@ QSharedPointer<Asset> AnalysisLfpData::Create()
 	return QSharedPointer<Asset>(new AnalysisLfpData());
 }
 
-void AnalysisLfpData::reset()
+void AnalysisLfpData::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 	zeroLatestFrame();
 	lfpReader_ = getDesignConfig()->getLfpReader();
 }

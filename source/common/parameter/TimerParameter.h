@@ -34,7 +34,7 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
 
-	virtual void reset();
+	virtual void enteredScope();
 	int getValue();
 	void setValue(int val){restart();time_ = val;};
 

@@ -29,9 +29,9 @@ void TimerParameter::restart()
 	timer_->restart();
 }
 
-void TimerParameter::reset()
+void TimerParameter::enteredScope()
 {
-	Parameter::reset();
+	Parameter::enteredScope();
 	restart();
 }
 

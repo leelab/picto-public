@@ -90,6 +90,7 @@ signals:
 	
 	//Synchronous Data Signals, triggered when values change
 	void propertyChanged(int propId, QString value);
+	void propertyInitValueChanged(int propId, QString value);
 	void transitionActivated(int transId);
 	void framePresented(double time);
 	void rewardSupplied(double time,int duration,int channel);
@@ -122,6 +123,7 @@ private:
 	void updatePercentLoaded();
 	//Lookup table of Property States indexed by PropId used for reversing and 
 	QSharedPointer<PropertyState> propState_;
+	QSharedPointer<PropertyState> initPropState_;
 	QSharedPointer<TransitionState> transState_;
 	QSharedPointer<FrameState> frameState_;
 	QSharedPointer<RewardState> rewardState_;

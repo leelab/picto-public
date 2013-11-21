@@ -49,7 +49,7 @@ void FileParameter::loadDataFromPropery()
 	fileDataUpdated(fileData_);
 }
 
-void FileParameter::filePathChanged(Property* prop,QVariant val)
+void FileParameter::filePathChanged(Property*,QVariant val)
 {
 	//Reentrant
 	if(updatingFile_)

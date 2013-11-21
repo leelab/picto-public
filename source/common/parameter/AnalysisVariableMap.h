@@ -24,7 +24,7 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	virtual QString getUITemplate(){return "MapVariable";};
 	virtual QString friendlyTypeName(){return "Variable Map";};

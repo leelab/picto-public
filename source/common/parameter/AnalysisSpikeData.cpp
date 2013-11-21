@@ -15,9 +15,9 @@ QSharedPointer<Asset> AnalysisSpikeData::Create()
 	return QSharedPointer<Asset>(new AnalysisSpikeData());
 }
 
-void AnalysisSpikeData::reset()
+void AnalysisSpikeData::enteredScope()
 {
-	AnalysisDataSource::reset();
+	AnalysisDataSource::enteredScope();
 	zeroLatestFrame();
 }
 

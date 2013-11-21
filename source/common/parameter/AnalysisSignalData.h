@@ -25,7 +25,7 @@ public:
 
 	static QSharedPointer<Asset> Create();
 
-	virtual void reset();
+	virtual void enteredScope();
 
 	virtual QString friendlyTypeName(){return "Signal Data";};
 	virtual QString getUITemplate(){return "SignalDataSource";};

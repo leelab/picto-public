@@ -194,7 +194,7 @@ void RunSelectorWidget::resetAllRunStatus()
 	foreach(QSharedPointer<RunInfo> runInfo,buttonIdRunLookup_.values())
 	{
 		runInfo->button_->setStyleSheet("");
-		runInfo->runStatus_ = RunStatus::IDLE;
+		runInfo->runStatus_ = RunSelectorWidget::IDLE;
 		runInfo->button_->setToolTip(runInfo->notes_);
 	}
 }

@@ -34,9 +34,9 @@ QSharedPointer<Asset> AnalysisFileOutput::Create()
 //	return qobject_cast<AnalysisOutputWidget*>(outputWidget);
 //}
 
-void AnalysisFileOutput::reset()
+void AnalysisFileOutput::enteredScope()
 {	
-	AnalysisOutput::reset();
+	AnalysisOutput::enteredScope();
 }
 
 void AnalysisFileOutput::writeLine(QString text)

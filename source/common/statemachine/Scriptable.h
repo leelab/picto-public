@@ -30,7 +30,7 @@ public:
 	virtual bool bindToScriptEngine(QScriptEngine &engine);
 	/*! \brief Resets this scriptables data fields to their original values.
 	 */
-	virtual void reset();
+	virtual void enteredScope();
 	virtual QString getUITemplate(){return "Scriptable";};
 	bool isUIEnabled(){return propertyContainer_->getPropertyValue("UIEnabled").toBool();};
 	int getUIOrder(){return propertyContainer_->getPropertyValue("UIOrder").toInt();};

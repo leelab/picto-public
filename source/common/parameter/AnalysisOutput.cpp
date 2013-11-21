@@ -25,9 +25,9 @@ AnalysisOutput::~AnalysisOutput()
 		outputsByRunId_.remove(latestRunId_);
 }
 
-void AnalysisOutput::reset()
+void AnalysisOutput::enteredScope()
 {	
-	AnalysisVariable::reset();
+	AnalysisVariable::enteredScope();
 	wasReset_ = true;
 	updateWidgetValidity();
 }

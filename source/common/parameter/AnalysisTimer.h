@@ -29,7 +29,7 @@ public:
 
 	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 		
-	virtual void reset();
+	virtual void enteredScope();
 	int getValue();
 	void setValue(int val){restart();time_ = val;};
 

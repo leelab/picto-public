@@ -385,7 +385,7 @@ QRectF DiagramItem::getRect()
 	return rect_;
 }
 
-void DiagramItem::editModeChanged(int mode)
+void DiagramItem::editModeChanged(int)
 {
 	//if(mode == EditorState::Select || mode == EditorState::MoveItem)
 	//{
