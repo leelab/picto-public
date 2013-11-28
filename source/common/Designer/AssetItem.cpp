@@ -4,6 +4,8 @@
 #include <QPen>
 #include <QBrush>
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new AssetItem for the input Asset.  Other parameters are passed to DiagramItem.
+ */
 AssetItem::AssetItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 DiagramItem(editorState,contextMenu),
 asset_(asset),
@@ -17,20 +19,6 @@ lastSvgIcon_(NULL)
 	invisiblePen.setWidth(0);
 	invisiblePen.setColor(QColor(0,0,0,0));
 	setPen(invisiblePen);
-
-	//QPen pen;
-	//pen.setWidth(1);
-	//pen.setColor(QColor(Qt::blue));
-	//setPen(pen);
-
-	//QLinearGradient grad(QPointF(0,-20),QPointF(0,20));
-	//grad.setColorAt(0,QColor(240,240,0));
-	//grad.setColorAt(1,QColor(180,180,0));
-	//QBrush brush(grad);
-	//setBrush(brush);
-	//setRect(QRectF(QPointF(-19,-19),QPointF(19,19)));
-	//setSvgIcon(QPixmap(":/icons/filenew.png"));
-
 
 	//Set up search functionality
 	//Set highlight colors for different groups of search
@@ -53,7 +41,11 @@ lastSvgIcon_(NULL)
 AssetItem::~AssetItem()
 {
 }
-
+/*! \brief Called when the underlying Asset is edited to update the displayed information accordingly.
+ *	\details The AssetItem shows the Asset's name, type, notes, and highlights the search string in
+ *	its name.  Most of these aspects can be changed during design development, so this needs to take 
+ *	care of updating the UI accordingly.
+ */
 void AssetItem::assetEdited()
 {
 	QString name = asset_->getName();
@@ -75,6 +67,9 @@ void AssetItem::assetEdited()
 	}
 }
 
+/*! \copydoc DiagramItem::positionChanged()
+ *	\details In the case of the AssetItem, this updates the saved UI position of the Asset when it is moved.
+ */
 void AssetItem::positionChanged(QPoint pos)
 {
 	if(asset_.isNull())
@@ -85,6 +80,9 @@ void AssetItem::positionChanged(QPoint pos)
 	posInitialized_ = true;
 }
 
+/*! \brief When the mouse button is released, if the position changed we need to make
+ *	the move undoable.  This handles that.
+ */
 void AssetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	if(posChanged_)
@@ -96,6 +94,8 @@ void AssetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	QGraphicsItem::mouseReleaseEvent(event);
 }
 
+/*! \brief Changes the edit mode to the EditorState::EditMode to MoveItem when the mouse enters this AssetItem's bounds.
+*/
 void AssetItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 {
 	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
@@ -104,7 +104,7 @@ void AssetItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 		//setCursor(Qt::SizeAllCursor);
 	}
 }
-
+/*! \brief Sets the AssetItem's graphic to the input SVG icon.*/
 void AssetItem::setSvgIcon(QGraphicsSvgItem* svgIcon)
 {
 	if(!svgIcon)
@@ -127,20 +127,25 @@ void AssetItem::setSvgIcon(QGraphicsSvgItem* svgIcon)
 	svgIcon->setZValue(0);
 }
 
+/*! \brief Sets the AssetItem's graphic to the SVG icon in the input file.*/
 void AssetItem::setSvgIcon(QString svgFile)
 {
 	if(svgFile.isEmpty())
 		return;
 	svgFileName_ = svgFile;
-	//Update everything now that we have a new file
+	//setRect causes setSvgIcon(QGraphicsSvgItem*) to get called with the SVG icon in the file.
 	setRect(getRect());
 }
 
+/*! \brief This does not appear to be used anymore.  We should probably get rid of it.
+*/
 void AssetItem::keepPixmapAspectRatio(bool keep)
 {
 	keepAspectRatio_ = keep;
 }
 
+/*! \brief Whenever the size of this AssetItem is changed, its SVG icon needs to be updated accordingly.  This takes care of that.
+ */
 void AssetItem::setRect(QRectF rect)
 {
 	DiagramItem::setRect(rect);
@@ -154,6 +159,10 @@ void AssetItem::setRect(QRectF rect)
 	setSvgIcon(getSvgItem());
 }
 
+/*! \brief Constructs and returns a QGraphicsSvgItem from the SVG Icon file set for this AssetItem in 
+ *	setSvgIcon(QString).
+ *	\details Returns a NULL pointer if no svgFileName_ has been set.
+ */
 QGraphicsSvgItem* AssetItem::getSvgItem()
 {
 	if(svgFileName_.isEmpty())
@@ -161,6 +170,9 @@ QGraphicsSvgItem* AssetItem::getSvgItem()
 	return new QGraphicsSvgItem(svgFileName_,this);
 }
 
+/*! \brief Called when a search has been requested to highlight the search string in the AssetItem's name and/or outline the
+ *	AssetItem if the searchRequest is found at a level underneath this asset.
+ */
 void AssetItem::searchRequested(SearchRequest searchRequest)
 {
 	//if(searchRequest.group == SearchRequest::ACTIVE_ANALYSES)

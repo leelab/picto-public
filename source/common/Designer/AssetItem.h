@@ -8,13 +8,18 @@
 #include "EditorState.h"
 using namespace Picto;
 
-//! [0]
+/*! \brief A DiagramItem used to display DataStores.... it should probably have been called DataStoreItem.
+ *	\details Represents a Diagram DataStore with a name, type and icon image.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class AssetItem : public DiagramItem
 {
 	Q_OBJECT
 public:
 	AssetItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset);
 	virtual ~AssetItem();
+	/*! \brief Returns the Asset that this DiagramItem represents.*/
 	QSharedPointer<Asset> getAsset(){return asset_;};
 	friend class DiagramItemFactory;
 
@@ -42,6 +47,6 @@ private slots:
 	void searchRequested(SearchRequest searchRequest);
 
 };
-//! [0]
+
 
 #endif

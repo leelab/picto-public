@@ -6,7 +6,11 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+/*! \brief Constructs a new ElementNotesWidget.
+ *	\details The EditorState needs to be passed in so that this widget knows when the selected Asset changes and
+ *	what the latest SearchRequest is.  The notes entered into this widget are also saved with the Design, so the
+ *	widget uses the EditorState to report EditorState::undoableActionPerformed().
+ */
 ElementNotesWidget::ElementNotesWidget(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
 	editorState_(editorState),
@@ -32,6 +36,9 @@ ElementNotesWidget::~ElementNotesWidget()
 {
 }
 
+/*! \brief Called when the Designer's selected Asset changes to update the contents of this widget
+ *	with that Asset's notes.
+ */
 void ElementNotesWidget::selectedAssetChanged(QSharedPointer<Asset> asset)
 {
 	if(asset && !asset->inherits("Picto::UIEnabled"))
@@ -45,9 +52,12 @@ void ElementNotesWidget::selectedAssetChanged(QSharedPointer<Asset> asset)
 	changingAsset_ = false;
 }
 
+/*! \brief Called when the text in the underlying SearchableTextEdit changes to updated the stored notes in the 
+ *	currently selected Asset and redo the current search.
+ */
 void ElementNotesWidget::notesWereEdited()
 {
-	//Don't do anything if the reason for the change was that we're chaging the selected asset
+	//Don't do anything if the reason for the change was that we're changing the selected asset
 	if(changingAsset_ || selectedAsset_.isNull())
 		return;
 
@@ -70,6 +80,8 @@ void ElementNotesWidget::notesWereEdited()
 	inNotesWereEdited_ = false;
 }
 
+/*! \brief Performs the input SearchRequest on the underlying SearchableTextEdit
+ */
 void ElementNotesWidget::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)
@@ -77,6 +89,13 @@ void ElementNotesWidget::searchRequested(SearchRequest searchRequest)
 	notesEditor_->search(searchRequest,QColor(255,0,0,100));
 }
 
+/*! \brief Called when the underlying SearchableTextEdit looses focus to tell the EditorState that
+ *	 an undoable action was performed.
+ *	\details It seemed like a good idea to undo actions in the ElementNotesWidget in blocks between 
+ *	getting and losing focus rather than making every single letter change undoable.  Due to Picto's
+ *	currently inefficient undo/redo system, making every letter undoable always takes a very long time as well.
+ *	\sa EditorState::undoableActionPerformed(), Designer::insertEditBlock
+ */
 void ElementNotesWidget::notesLostFocus()
 {
 	if(!needsUndo_)

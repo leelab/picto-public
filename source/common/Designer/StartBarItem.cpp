@@ -14,12 +14,17 @@ ArrowSourceItem(name,editorState,parent,windowAsset)
 	setWidth(20);
 	setHeight(4000);
 }
-
+/*! \brief The idea of this function was to define a point where the arrow should contact it.
+ *	in practice, this function is not used.
+ */
 QPointF StartBarItem::getContactPoint()
 {
 	return getRect().center()+QPointF(getRect().width()/2.0,0);
 }
 
+/*! \brief Wheneverr this item is repainted, we need to update the ScriptItemManager as to the current visible canvas region.
+ *	so that the scripts will all show up on screen.  This calls updateForViewportChanges() to do that.
+ */
 void StartBarItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 	//Set the script manager's rectangle according to the visible part of the scene in the view.
@@ -41,6 +46,9 @@ void StartBarItem::setRect(QRectF rect)
 	updateForViewportChanges();
 }
 
+/*! \brief Reads the position of the top and bottom areas of the displayed canvas and updates the ScriptItemManager accordingly so that
+ *	all scripts will appear on screen.
+ */
 void StartBarItem::updateForViewportChanges()
 {
 	//Set the script manager's rectangle according to the visible part of the scene in the view.

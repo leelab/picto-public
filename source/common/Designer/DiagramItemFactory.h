@@ -7,8 +7,14 @@
 #include <QMap>
 using namespace Picto;
 
-//! [0]
 struct IconDef;
+/*!	\brief Handles creation of DiagramItems for Design Assets in the Designer.
+ *	\details Implements a create() function that takes in an Asset pointer and returns a DiagramItem 
+ *	of the appropriate type with the approperiate size and icon.  Icons are compiled into the 
+ *	Pictolib library.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class DiagramItemFactory
 {
 public:
@@ -35,6 +41,6 @@ struct IconDef
 	float width_;
 	float height_;
 };
-//! [0]
+
 
 #endif

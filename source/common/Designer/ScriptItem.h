@@ -8,7 +8,12 @@
 #include "../property/Property.h"
 #include "ScriptSyntaxHighlighter.h"
 
-//! [0]
+/*! \brief A small box placed on arrow sources and destinations that represents a non-empty script.
+ *	\details The box can be colored according to its function (we use blue for experiment scripts and
+ *	yellow for analysis scripts, and is also outlinable if it contains a search string.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class ScriptItem : public DiagramItem
 {
 	Q_OBJECT
@@ -29,6 +34,6 @@ private slots:
 	void scriptPropEdited(Property* changedProp,QVariant newValue);
 	void searchRequested(SearchRequest searchRequest);
 };
-//! [0]
+
 
 #endif

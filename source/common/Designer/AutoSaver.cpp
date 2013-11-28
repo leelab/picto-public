@@ -8,8 +8,13 @@
 #define AUTOSAVEROOT "AutoSave"
 namespace Picto {
 
+/*! \brief We never need more than one AutoSaver, but we do need it to use signals and slots, so we implement it as a
+ *	singleton.
+ */
 QWeakPointer<AutoSaver> AutoSaver::singleton_ = QWeakPointer<AutoSaver>();
 
+/*! \brief Constructs a new AutoSaver.  Calls initAutoSaveDir() in the process.
+ */
 AutoSaver::AutoSaver()
 : QObject()
 {
@@ -17,7 +22,7 @@ AutoSaver::AutoSaver()
 	saveTimer_.stop();
 	connect(&saveTimer_,SIGNAL(timeout()),this,SLOT(saveDesignToFile()));
 }
-
+/*! \brief Returns the singleton instance of the AutoSaver object.*/
 QSharedPointer<AutoSaver> AutoSaver::getSingleton()
 {
 	QSharedPointer<AutoSaver> returnVal = singleton_.toStrongRef();
@@ -28,7 +33,11 @@ QSharedPointer<AutoSaver> AutoSaver::getSingleton()
 	}
 	return returnVal;
 }
-
+/*! \brief When the AutoSaver is deleted, we close our lockFile_ and designFile_ then remove the AutoSave subdirectory
+ *	for this workstation.
+ *	\details The idea here is that if the AutoSaver is being smoothly deleted, there is no need for the AutoSaved file.
+ *	It is only necessary in the event of a crash.
+ */
 AutoSaver::~AutoSaver()
 {
 	//If we created an autoSaveDirectory
@@ -51,23 +60,26 @@ AutoSaver::~AutoSaver()
 		subDir.rmdir(".");
 	}
 }
-
+/*! \brief Starts autosaving the current design to file every savePeriodMs.*/
 void AutoSaver::start(int savePeriodMs)
 {
 	saveTimer_.stop();
 	saveTimer_.setInterval(savePeriodMs);
 	saveTimer_.start();
 }
-
+/*! \brief Saves the design to file, then stops AutoSaving the current design at a periodic interval. */ 
 void AutoSaver::stop()
 {
 	saveTimer_.stop();
 	saveDesignToFile();	//This will pick up any last changes before stop was called.
 }
 
-//saveFirstVersion tells the AutoSaver to save the input designRoot right away and not
-//wait for changes to be made.  Otherwise, the design will only be saved after something
-//has changed.
+/*! \brief Sets the designRoot of the design that will be auto-saved to file.
+ *	\details The designRoot will be saved fo file each time saveDesignToFile() is called by the saveTimer_
+ *	so long as something about the design has changed.  The saveFirstVersion input tells the AutoSaver to 
+ *	save the input designRoot right away and not to wait for the next change to be made before saving the file
+ * for the first time
+ */
 void AutoSaver::setDesignRoot(QSharedPointer<DesignRoot> designRoot,bool saveFirstVersion)
 {
 	//If the designRoot_ hasn't changed, we're done
@@ -98,6 +110,9 @@ void AutoSaver::setDesignRoot(QSharedPointer<DesignRoot> designRoot,bool saveFir
 	}
 }
 
+/*! \brief Deletes the auto-saved file and updates the saved file text such that no auto-saved file will exist
+ *	until the next change is made to the design.
+ */
 void AutoSaver::removeFileUntilNextChange()
 {
 	//Set the latestDesignCode_ to the current code so that
@@ -110,11 +125,17 @@ void AutoSaver::removeFileUntilNextChange()
 	}
 }
 
- bool putPathsWithLatestFileNamesFirst(const QString &s1, const QString &s2)
- {
-     return QFileInfo(s1).fileName().toLower() > QFileInfo(s2).fileName().toLower();
- }
-
+/*! \brief This function is used with the Qt sorting algorithm to order file paths by alphabetical file name only.
+*/
+bool putPathsWithLatestFileNamesFirst(const QString &s1, const QString &s2)
+{
+	return QFileInfo(s1).fileName().toLower() > QFileInfo(s2).fileName().toLower();
+}
+/*! \brief Constructs and returns an AutoSaveDialog to allow the designer to restore an auto saved design file.
+ *	This function connects up the AutoSaveDialog signals such that the delete and restore operations requested
+ *	by the dialog will be properly performed.  If there are no auto-saved files available, the function returns
+ *	NULL.
+ */
 QDialog* AutoSaver::getDesignRestoreDialog(QWidget* parent)
 {
 	if(!savedDesignDirs_.size())
@@ -140,11 +161,23 @@ QDialog* AutoSaver::getDesignRestoreDialog(QWidget* parent)
 	return static_cast<QDialog*>(autoSaveDialog);
 }
 
+/*! \brief Returns the path where this AutoSaver's files should be saved (a sub-directory of [PictoInstallDir]/AutoSave).
+*/
 QString AutoSaver::getAutoSaveDir()
 {
 	return autoSaveDir_;
 }
 
+/*! \brief Gathers information from and initializes the AutoSave directory for auto-saving and restoring of previously auto-saved files.
+ *	\details The AutoSaver object creates a sub directory in [PictoInstallDir]/AutoSave to put its auto-saved design file in.  It
+ *	also creates a "lock file" in that directory which is removed along with the design file when the object is deleted on closing
+ *	the workstation.  When initAutoSaveDir is called, it checks all sub-directories of [PictoInstallDir]/AutoSave.  If any have lock 
+ *	files, it attempts to remove them.  If it succeeds that means that the workstation that created the lock file is no longer open and
+ *	using it, and that it crashed since otherwise that directory would no longer be there.  Therefore, once the LockFile removal has been
+ *	attempted, this object can go through all the AutoSave subdirectories and every file that is found in a directory with no lock file
+ *	is an auto-saved file that should be available for restoring.  Paths to all files of this kind are added to a list for usage in a
+ *	AutoSaveWidget.
+ */
 void AutoSaver::initAutoSaveDir()
 {
 	//Create a directory object and position it at the autosave root directory
@@ -194,6 +227,10 @@ void AutoSaver::initAutoSaveDir()
 	Q_ASSERT(rc);
 }
 
+/*! \brief This is a useful funciton for removing directories and all contents.  We created it before Qt 5.0 when
+ *	there was not Qt version of a function that would do this.  I believe that there is one now, so that can be 
+ *	used the next time this class is refactored.
+ */
 void AutoSaver::removeFilesThenDirectories(QDir container)
 {
 	QStringList files = container.entryList(QDir::Files);
@@ -216,13 +253,19 @@ void AutoSaver::removeFilesThenDirectories(QDir container)
 		}
 	}
 }
-
+/*! \brief Creates an automatic name for an autosaved design file by using the current 
+ *	date and time (yyyy_MM_dd__hh_mm_ss_)+designName+.xml.
+ *	\details This way, alphabetized auto-saved version can appear in the 
+ *	order of their creation.
+ */
 QString AutoSaver::buildDesignFileName(const QString designName)
 {
 	QDateTime dateTime = QDateTime::currentDateTime();
 	return dateTime.toString("yyyy_MM_dd__hh_mm_ss_") + designName + ".xml";
 }
 
+/*! \brief Saves the current version of the design to file if anything has changed since the last save.
+ */
 void AutoSaver::saveDesignToFile()
 {
 	//Make sure that there is a designRoot_ to save to file
@@ -280,6 +323,9 @@ void AutoSaver::saveDesignToFile()
 	}
 }
 
+/*! \brief Called when requested by the AutoSaveWidget to delete an auto-saved file at the input path and its 
+ *	[PictoInstallDir]/AutoSave sub-directory.
+ */
 void AutoSaver::deleteRestorableDesignFile(QString filePath)
 {
 	QFileInfo deleteFileInfo(filePath);
@@ -293,7 +339,11 @@ void AutoSaver::deleteRestorableDesignFile(QString filePath)
 	removeFilesThenDirectories(deleteFileDir);
 	deleteFileDir.rmdir(".");
 }
-
+/*! \brief Called when requested by the AutoSaveWidget to open the auto-saved file at the input path.
+ *	\note Once the design has been opened, the auto-saved file is deleted.  The designer must press save
+ *	to save this restored design; however, since the restored version will also be auto-saved there isn't
+ *	too much danger of losing the restored file if the designer forgets to save the restored version.
+ */
 void AutoSaver::restoreDesignFile(QString filePath)
 {
 	//Open the file, get it's contents and name, then close it

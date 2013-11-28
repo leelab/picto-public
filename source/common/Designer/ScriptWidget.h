@@ -7,11 +7,16 @@
 #include "ScriptTextEdit.h"
 #include "EditorState.h"
 
-//! [0]
-//Widget for managing and presenting ScriptTextEdit's as well as its interface with an underlying QtProperty
-//collapsible indicates that the script widget will be collapsed to its name only unless it has contents.
-//If it does have contents, it will be maximized and won't be minimizable until those contents are deleted
-//or whitespace only remains
+/*! \brief A widget for managing and presenting ScriptTextEdit widgets as well as interfacing them with an underlying QtProperty.
+ *	\details This widget is used with the PropertyEditorFactory to create a widget for updating Script Properties.  As such,
+ *	this widget needs to include interfacing with the QtPropertBrowser framework which we use to get some free automatic type
+ *	dependant widget creation and layout.  Changes to the widget text are set to an underlyiung QtProperty using its QtVariantPropertyManager.
+ *	Similarly, changes to the underlying QtProperty are reflected in the ScriptWidget text.  The ScriptWidget can include a single line
+ *	text box or a full fledged multi-line text editor.  Either way, due to this widgets use of an underlying ScriptTextEdit, the script text 
+ *	is syntax highlighted and searchable.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */	
 class ScriptWidget : public QWidget
 {
     Q_OBJECT
@@ -21,7 +26,10 @@ public:
    virtual ~ScriptWidget(){};
    void setReadOnly(bool readOnly);
 signals:
-   void textEdited(const QString &);
+   /*! \brief Emitted whenever the ScriptWidget's text is changed. text is the widget's new text*/
+   void textEdited(const QString & text);
+   /*! \brief Emitted whenever the text edit looses focus.  This is a better signal than textEdited() to connect to when it comes to defining undo blocks so
+    *	that not every letter is considered for undoing.*/
    void editingFinished();
 private:
 	QToolButton* createButton();
@@ -31,13 +39,13 @@ private:
 	QtProperty *property_;
 	QSharedPointer<EditorState> editorState_;
 	int lineStartTabs_;
-	bool collapsible_;
-	QToolButton* collapseButton_;
+	bool collapsible_;				//<! No longer used.  Remove.
+	QToolButton* collapseButton_;	//<! No longer used.  Remove.
 	bool inTextChangeDetected_;
 private slots:
 	void textChangeDetected();
 	void searchRequested(SearchRequest searchRequest);
 };
 
-//! [0]
+
 #endif

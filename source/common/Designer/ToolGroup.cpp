@@ -17,11 +17,15 @@ ToolGroup::ToolGroup(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	clearButtons();
 }
 
+/*! \brief Returns the number of buttons in this ToolGroup.*/
 int ToolGroup::numButtons()
 {
 	return buttonGroup_->buttons().size();
 }
-
+/*! \brief Adds a new button to this ToolGroup with the input label and icon.
+ *	\details The button may be set disabled if it can't currently be used by 
+ *	passing false into the enabled parameter.
+ */
 void ToolGroup::AddButton(const QString &label, QIcon icon, bool enabled)
 {
     QToolButton *button = new QToolButton;
@@ -54,7 +58,7 @@ void ToolGroup::AddButton(const QString &label, QIcon icon, bool enabled)
 		layout_->setColumnStretch(i,0);
 	layout_->setColumnStretch(maxRow+1,10);
 }
-
+/*! \brief Removes all buttons from this ToolGroup.*/
 void ToolGroup::clearButtons()
 {
 	foreach(QWidget *widget,widgets_)
@@ -67,7 +71,8 @@ void ToolGroup::clearButtons()
 	row_ = 0;
 	col_ = 0;
 }
-
+/*! \brief Returns a QPixmap of the icon used on the button with the input buttonId.
+ */
 QPixmap ToolGroup::getButtonPixmap(int buttonId)
 {
 	QAbstractButton* button = buttonGroup_->button(buttonId);
@@ -75,7 +80,11 @@ QPixmap ToolGroup::getButtonPixmap(int buttonId)
 		return QPixmap();
 	return button->icon().pixmap(button->iconSize());
 }
-
+/*! \brief A slot called to handle button click actions.
+ *	\details This is the function responsible for calling doButtonAction() or disableButtonActions()
+ *	when buttons are pressed or released.  Similarly it makes sure that no more than one button in the 
+ *	ToolGroup is ever pressed at a time.
+ */
 void ToolGroup::buttonGroupClicked(int)
 {
 	int id = buttonGroup_->checkedId();
@@ -91,6 +100,8 @@ void ToolGroup::buttonGroupClicked(int)
 		disableButtonActions();
 }
 
+/*! \brief Unchecks all buttons in this ToolGroup and calls disableButtonActions().
+*/
 void ToolGroup::disableAllButtons()
 {
 	QList<QAbstractButton *> buttons = buttonGroup_->buttons();

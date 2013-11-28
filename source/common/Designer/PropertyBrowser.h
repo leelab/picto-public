@@ -10,7 +10,17 @@ class QWidget;
 class QtProperty;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief This Widget contains all property widgets for setting/getting Property values of the currently selected Asset in the Designer.
+ *	\details The EditorState is passed into the constructor so that this widget can detect exactly
+ *	what has been selected in the Designer Canvas and display the correct Property widgets accordingly.  If the main body of the
+ *	AssetItem are selected, the Asset Property widgets are shown.  If the start bar of the AssetItem is selected, the Asset's Script
+ *	Property widgets are shown.  If a result bar of an asset item is selected, the particular selected result's script is shown.
+ *
+ *	This widget's job is essentially figuring out which property widgets need to be displayed.  It includes a PropertyGroupWidget
+ *	which takes care of actually creating and displaying those widgets.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class PropertyBrowser : public QWidget
 {
     Q_OBJECT
@@ -30,5 +40,5 @@ private slots:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 	void arrowPortSelected(QSharedPointer<Asset> asset);
 };
-//! [0]
+
 #endif

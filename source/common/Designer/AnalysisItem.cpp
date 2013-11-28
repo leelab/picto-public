@@ -1,5 +1,6 @@
 #include "AnalysisItem.h"
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new AnalysisItem.  Inputs are passed directly to the AssetItem::AssetItem.*/
 AnalysisItem::AnalysisItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 AssetItem(editorState,contextMenu,asset)
 {

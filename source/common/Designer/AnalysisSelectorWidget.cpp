@@ -5,7 +5,7 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+
 AnalysisSelectorWidget::AnalysisSelectorWidget(QWidget *parent) :
 	QWidget(parent)
 {
@@ -21,7 +21,7 @@ AnalysisSelectorWidget::AnalysisSelectorWidget(QWidget *parent) :
 	layout->addWidget(tabWidget_);
 	setLayout(layout);
 }
-
+/*! \brief Removes all local Analyses, displayed and not displayed, from this widget.*/
 void AnalysisSelectorWidget::clearLocalAnalyses()
 {
 	localAnalysisLookup_.clear();
@@ -29,6 +29,9 @@ void AnalysisSelectorWidget::clearLocalAnalyses()
 	updateLocalAnalysisList();
 }
 
+/*! \brief Adds the Analyses from the input DesignRoot to this widget for the input filePath.
+ *	\details To show these Analyses in the widget, just call setCurrentFile() with the input filePath.
+ */
 void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot)
 {
 	if(designRoot.isNull() || filePath.isEmpty())
@@ -49,6 +52,13 @@ void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<
 	localAnalysisLookup_[filePath] = localAnalysisList;
 }
 
+/*! \brief Like setLocalDesignRoot, except the Analyses are added directly for the input filePath.
+ *	\details In this function, the input analysisIds and analysisNames strings are matched up, line
+ *	by line to build up the local analysis display in the widget.  Essentially, setLocalDesignRoot()
+ *	is just extracting analysisIds and analysisNames automatically from its input DesignRoot and then
+ *	just doing what we are doing here.  Storing that information in a fileName lookup table for
+ *	display when setCurrentFIle() is called with the input fileName.
+ */
 void AnalysisSelectorWidget::setLocalDesignAnalyses(QString filePath,QList<QUuid> analysisIds,QStringList analysisNames)
 {
 	if(filePath.isEmpty())
@@ -68,6 +78,8 @@ void AnalysisSelectorWidget::setLocalDesignAnalyses(QString filePath,QList<QUuid
 	localAnalysisLookup_[filePath] = localAnalysisList;
 }
 
+/*! \brief Adds the Analyses from the input DesignRoot to this widget under the Import tab for possible import into another design file.
+ */
 void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot)
 {
 	analysesForImport_.clear();
@@ -87,12 +99,18 @@ void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> d
 	updateAnalysesForImportList();
 }
 
+/*! \brief Set the path of the design or session file current being used to display local Analyses for that file.
+ *	\details The Analyses for individual filepaths are entered by using setLocalDesignRoot() or 
+ * setLocalDesignAnalyses().
+ */
 void AnalysisSelectorWidget::setCurrentFile(QString filePath)
 {
 	currFilePath_ = filePath;
 	updateLocalAnalysisList();
 }
 
+/*! \brief Returns a list of the Associate Ids for the widget's currently selected local analyses.
+*/
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 {
 	QList<QUuid> returnVal;
@@ -109,7 +127,8 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 	}
 	return returnVal;
 }
-
+/*! \brief Returns a list of the Associate Ids for the widget's currently selected importable analyses.
+*/
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 {
 	QList<QUuid> returnVal;
@@ -125,18 +144,23 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 	return returnVal;
 }
 
+/*! \brief Enables/Disables all checkboxes in this widget.  By default they are enabled.
+*/
 void AnalysisSelectorWidget::enableCheckboxes(bool enable)
 {
 	analysesBox_->setEnabled(enable);
 	analysesForImportBox_->setEnabled(enable);
 }
 
+/*! \brief Returns true if something in the widget has been selected.*/
 bool AnalysisSelectorWidget::hasSelectedIds()
 {
 	return bool(getSelectedAnalysisIdsForImport().size()) || bool(getSelectedAnalysisIds().size());
 }
 
-
+/*! \brief Updates the contents displayed in the local analysis tab based on the latest changes to the widget.
+ *	\details This is called internally to update the widget when things like setCurrentFile() getting called happen.
+*/
 void AnalysisSelectorWidget::updateLocalAnalysisList()
 {
 	//Remove all old buttons from layout.  We do this in a roundabout but simple way.  Moving a widget's
@@ -163,6 +187,9 @@ void AnalysisSelectorWidget::updateLocalAnalysisList()
 	emit analysisWidgetChanged();
 }
 
+/*! \brief Updates the contents displayed in the import analysis tab based on the latest changes to the widget.
+ *	\details This is called internally to update the widget when things like setDesignRootForImport() getting called happen.
+ */
 void AnalysisSelectorWidget::updateAnalysesForImportList()
 {
 	//Remove old buttons from layout
@@ -184,6 +211,8 @@ void AnalysisSelectorWidget::updateAnalysesForImportList()
 	emit analysisWidgetChanged();
 }
 
+/*! \brief A slot that is emits the analysisWidgetChanged() signal whenever something happens to one of this widgets checkboxes.
+*/
 void AnalysisSelectorWidget::checkboxChanged(bool)
 {
 	emit analysisWidgetChanged();

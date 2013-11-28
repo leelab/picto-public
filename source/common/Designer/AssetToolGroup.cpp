@@ -6,7 +6,13 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-
+/*! \brief Constructs a new AssetToolGroup for a Designer with the input editorState and where the current Window Asset is input
+ * in asset.
+ *	\details parent is a parent widget.  displayedUIGroups is a QStringList of UIGroup names that may be displayed in this
+ *	AssetToolGroup.  Only child types for the input asset with a UIGroup found in displayedUIGroups will have a ToolButton 
+ *	displayed in this AssetToolGroup.
+ *	/sa AssetFactory::getUIGroup()
+ */
 AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList displayedUIGroups,QSharedPointer<Asset> asset, QWidget *parent) :
 	ToolGroup(editorState,parent)
 {
@@ -18,7 +24,8 @@ AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringLi
 
 	setAsset(asset);
 }
-
+/*! \brief Sets the current Window Asset within which any assets created using this AssetToolGroup will be added as children.
+ */
 void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 {
 	clearButtons();
@@ -32,12 +39,6 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 		QStringList types;
 		foreach(QString childTag,childTags)
 		{
-			////Don't show tranitions or UIInfo.  Transitions are added
-			////using wires.  UIInfo is added automatically.
-			//if(childTag == "Transition")
-			//	continue;
-			//if(childTag == "UIInfo")
-			//	continue;
 			assetFactory = dataStore->getAssetFactory(childTag);
 			if(!assetFactory.isNull() && assetFactory.dynamicCast<PropertyFactory>().isNull())
 			{
@@ -68,6 +69,7 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 	}
 }
 
+/*! \brief Returns true if this AssetToolGroup contains no buttons.*/
 bool AssetToolGroup::isEmpty()
 {
 	return (numButtons() <= 0);
@@ -86,6 +88,8 @@ void AssetToolGroup::doButtonAction(int buttonId)
 			className = elemInfo_[buttonId].assetFactory->getGeneratedAssetClassName(elemInfo_[buttonId].type);
 			friendlyName  = elemInfo_[buttonId].assetFactory->getGeneratedAssetTypeName(elemInfo_[buttonId].type);
 		}
+		//Tells the EditorState that the next time someone wants to insert something into the canvas, it should be an asset with
+		//this buttons className, icon, etc.
 		getEditorState()->setInsertionItem(className,friendlyName,elemInfo_[buttonId].tag,elemInfo_[buttonId].type,getButtonPixmap(buttonId));
 	}
 	else
@@ -104,7 +108,9 @@ bool AssetToolGroup::isEnabled(int buttonId)
 		return false;
 	return true;
 }
-
+/*! \brief Returns true if Assets with the input UIGroup name should be displayed in this AssetToolGroup.
+ *	\sa AssetToolGroup::AssetToolGroup()
+ */
 bool AssetToolGroup::isDisplayedGroup(QString UIGroup)
 {
 	return uIGroupMap_.contains(UIGroup);

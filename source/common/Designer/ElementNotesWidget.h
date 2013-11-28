@@ -9,7 +9,13 @@ class QWidget;
 class QtProperty;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief A widget used to enter notes that are saved with elements of the design.  This is how comments are entered in Picto Designs.
+ *	\details Obviously it is extremely important to comment code.  This is how we "comment code" in the Picto Design.  Text entered into
+ *	this widget is saved with the currently selected element and displayed in its tooltip.  It is also searched when a search string is
+ *	typed into the Picto search box.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class ElementNotesWidget : public QWidget
 {
     Q_OBJECT
@@ -31,5 +37,5 @@ private slots:
 	void searchRequested(SearchRequest searchRequest);
 	void notesLostFocus();
 };
-//! [0]
+
 #endif

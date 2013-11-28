@@ -11,7 +11,7 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+
 AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
 	editorState_(editorState),

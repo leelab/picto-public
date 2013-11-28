@@ -4,7 +4,14 @@
 #include "ArrowSourceItem.h"
 #include "ScriptItemManager.h"
 
-//! [0]
+/*! \brief This is a green bar that appears at the left side of the canvas to represent the starting position for
+ *	control flow within a StateMachine.
+ *	\details The StartBarItem includes a ScriptItemManager that handles ScriptItem boxes for each of the StateMachine
+ *	element's Scripts.  The StartBar also always makes sure to let its ScriptItemManager know about scrolling changes so
+ *	that all scripts will appear on screen regardless of the user's scroll position.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class StartBarItem : public ArrowSourceItem
 {
 	Q_OBJECT
@@ -20,6 +27,6 @@ private:
 	QRectF scriptRect_;
 	QSharedPointer<ScriptItemManager> scriptItemManager_;
 };
-//! [0]
+
 
 #endif

@@ -3,6 +3,13 @@
 #include "../storage/DataStore.h"
 #include "../parameter/AnalysisScriptHolder.h"
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new ScriptItemManager.
+ *	\details editorState is used to extract information about any current Analysis and in ScriptItem constructors.
+ *	scriptsParanet is the DiagramItem that will be the parent of the scripts created by this object.
+ *	asset is used to figure out which ScriptItems need to be created and to connect to various signals telling us 
+ *	if we need to change something about the ScriptItems in response to a change in the Asset.
+ *	horizontal lets us know if the ScriptItems will be positioned one after the other in a horizontal or vertical direction.
+ */
 ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QGraphicsItem *scriptsParent, QSharedPointer<Asset> asset, bool horizontal)
 : 
 	editorState_(editorState),
@@ -53,12 +60,19 @@ ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QG
 	}
 }
 
+/*! \brief Sets the bounding rectangle in which ScriptItems will be layed out.
+ *	\details Generally this is going to just be the shape of the parent DiagramItem.
+ */
 void ScriptItemManager::setScriptBoundingRect(QRectF rect)
 {
 	scriptBoundingRect_ = rect;
 	updateScriptItemDimensions();
 }
 
+/*! \brief Updates the positions and sizes of all ScriptItems managed by this object.
+ *	\details This is called if something changes that requires the ScriptItems to be redrawn.
+ *	(ie. scriptBoundingRect changes, a ScriptItems are added/deleted).
+ */
 void ScriptItemManager::updateScriptItemDimensions()
 {
 	float currPos = 0;
@@ -100,6 +114,13 @@ void ScriptItemManager::updateScriptItemDimensions()
 	}
 }
 
+/*! \brief Creates and lays out all ScriptItems.
+ *	\details This is called whenever something changes that causes ScriptItem objects to be added or removed.
+ *	This happens, for example, when we switch the Designer mode from Experimental design to Analysis design.
+ *	When that happens there are suddenly extra analysis scripts that need to appear within StartBars.  Also,
+ *	when a Script's text is emptied, corresponding ScriptItem objects are removed.
+ *	Layout is handled by calling updateScriptItemDimensions().
+ */
 void ScriptItemManager::updateScriptItems()
 {
 	QSharedPointer<PropertyContainer> propContainer;
@@ -147,6 +168,11 @@ void ScriptItemManager::updateScriptItems()
 	updateScriptItemDimensions();
 }
 
+/*! \brief Sets up a connection between newly added AnalysisScriptHolder objects and this manager so that changes in those elements will be tracked.
+ *	\details AnalysisScriptHolders' edited signals don't propegate up to the experimental assets to which they are connected.  This means that
+ *	if their contents are edited, this object won't find out about it unless we make sure to connect the AnalysisScriptHolder's edited() signal
+ *	itself to updateScriptItems().  That is what we do here.
+ */
 void ScriptItemManager::performAnalysisScriptHolderOps(QSharedPointer<Asset> assetChild)
 {
 	//If the input assetChild is not an AnalysisScriptHolder, we have nothing to do stop here.

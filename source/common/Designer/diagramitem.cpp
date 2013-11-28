@@ -1,51 +1,12 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include <QtWidgets>
 
 #include "diagramitem.h"
 #include "arrow.h"
 #include "../../common/memleakdetect.h"
 
-//! [0]
+/*! \brief Constructs a new DiagramItem with the input name and parent, that will interface with the input EditorState and display the input contextMenu when right clicked.
+ *	\sa EditorState, QMenu
+*/
 DiagramItem::DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name,
              QGraphicsItem *parent) : 
 QGraphicsPolygonItem(parent/*, scene*/)
@@ -70,6 +31,10 @@ QGraphicsPolygonItem(parent/*, scene*/)
 DiagramItem::~DiagramItem()
 {}
 
+/*! \brief Sets the name of this diagram item and the position at which to place it.
+ *	\details In practice, the pos input is not well supported in other parts of the 
+ *	DiagramItem since we never actually used it.
+ */
 void DiagramItem::setName(QString name,QPointF pos)
 {
 	name_ = name;
@@ -77,20 +42,24 @@ void DiagramItem::setName(QString name,QPointF pos)
 	if(pos != QPointF())
 		nameText_->setPos(pos);
 }
+/*! \brief Sets the type string for this DiagramItem that will be displayed on it.*/
 void DiagramItem::setType(QString type)
 {
 	type_ = type;
 	updateLabel();
 }
+/*! \brief Returns the name set in setName()*/
 QString DiagramItem::getName()
 {
 	return name_;
 }
+/*! \brief Returns the type set in setType()*/
 QString DiagramItem::getType()
 {
 	return type_;
 }
 
+/*! \brief Sets the width of the DiagramItem.*/
 void DiagramItem::setWidth(float width)
 {
 	QRectF newRect = getRect();
@@ -99,11 +68,12 @@ void DiagramItem::setWidth(float width)
 	setRect(newRect);
 }
 
+/*! \brief Returns the width of the DiagramItem.*/
 float DiagramItem::getWidth()
 {
 	return rect_.width();
 }
-
+/*! \brief Sets the height of the DiagramItem.*/
 void DiagramItem::setHeight(float height)
 {
 	QRectF newRect = getRect();
@@ -111,11 +81,14 @@ void DiagramItem::setHeight(float height)
 	setRect(newRect);
 }
 
+/*! \brief Returns the height of the DiagramItem.*/
 float DiagramItem::getHeight()
 {
 	return rect_.height();
 }
 
+/*! \brief Updates the name/type label on the DiagramItem based on the latest values set to setName() and setType()
+*/
 void DiagramItem::updateLabel()
 {
 	if(!nameText_)
@@ -181,17 +154,10 @@ void DiagramItem::updateLabel()
 	}
 	nameText_->setPos(rect_.topLeft());
 }
-//! [0]
 
-//! [1]
-
-//! [2]
-//! [3]
-
-
-//! [3]
-
-//! [4]
+/*! \brief Creates a QPixmap based on this DiagramItem's polygon.
+ *	\note This doesn't appear to be used
+ */
 QPixmap DiagramItem::image() const
 {
     QPixmap pixmap(250, 250);
@@ -204,6 +170,9 @@ QPixmap DiagramItem::image() const
     return pixmap;
 }
 
+/*! \brief Called by the QGraphicsItem system to paint this DiagramItem onto the QGraphicsScene.
+ *	\details Paints the DiagramItem shape and outline.  Text is handled by updateLabel().
+ */
 void DiagramItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 	QGraphicsPolygonItem::paint(painter,option,widget);
@@ -226,9 +195,10 @@ void DiagramItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * op
 	}
 	painter->setCompositionMode(currCompMode);
 }
-//! [4]
 
-//! [5]
+/*! \brief Called by the QGraphicsItem system when the context menu should be shown.  Shows the menu
+ *	ands sets this item as selected.
+ */
 void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
@@ -236,8 +206,11 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	if(myContextMenu)
 	   myContextMenu->exec(event->screenPos());
 }
-//! [5]
-//! [6]
+
+/*! \brief Called by the QGraphicsScene system to handle selection/position updates when something about this item changes.  Handles the change.
+ *	\details For position changes, we only accept significant changes so that double clicking will not
+ *	end up changing diagram position.
+ */
 QVariant DiagramItem::itemChange(GraphicsItemChange change,
                      const QVariant &value)
 {
@@ -314,7 +287,8 @@ QVariant DiagramItem::itemChange(GraphicsItemChange change,
 
     return inputVal;
 }
-
+/*! \brief Called when the user double clicks on this DiagramItem.  Causes this item to be selected as the Window Asset.
+*/
 void DiagramItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
 {
 	if(/*editorState_->getEditMode() == EditorState::Select && */mouseEvent->button() == Qt::LeftButton)
@@ -326,6 +300,7 @@ void DiagramItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent *mouseEvent )
 	}
 }
 
+/*! \brief Sets the dimensions of the DiagramItem to those of the input QRectF and updates contents accordingly.*/
 void DiagramItem::setRect(QRectF rect)
 {
 	QRectF textbound;
@@ -341,11 +316,17 @@ void DiagramItem::setRect(QRectF rect)
 	updateLabel();
 }
 
+/*! \brief Sets the highlight color for the input highlight index.
+ *	\sa SearchRequest, SearchRequest::getGroupTypeIndex()
+ */
 void DiagramItem::setHighlightColor(int highlightIndex,QColor color)
 {
 	highlightColors_[highlightIndex] = color;
 }
 
+/*! \brief Enables/disables display of this DigramItem's outline for the input highlightIndex.
+ *	\sa SearchRequest, SearchRequest::getGroupTypeIndex()
+ */
 void DiagramItem::enableOutline(int highlightIndex,bool enabled)
 {
 	//Loop through all enabled groups, and enable/disable outlines for each one according to the input
@@ -370,7 +351,9 @@ void DiagramItem::enableOutline(int highlightIndex,bool enabled)
 	}
 	update(getRect());
 }
-
+/*! \brief Highlights the input searchString if found in this DiagramItem's name according to caseSensitive and with the color 
+ *	set for highlightIndex by setHighlightColor()
+ */
 void DiagramItem::highlightNameChars(int highlightIndex, QString searchString, bool caseSensitive)
 {
 	searchString_ = searchString;
@@ -379,12 +362,16 @@ void DiagramItem::highlightNameChars(int highlightIndex, QString searchString, b
 	updateLabel();
 	update(getRect());
 }
-
+/*! \brief Returna QRectF with the dimensions of this DiagramItem
+ */
 QRectF DiagramItem::getRect()
 {
 	return rect_;
 }
 
+/*! \brief Doesn't do anything.
+ *	\todo We should probably remove DiagramItem::editModeChanged() because it appears to not do anything.
+ */
 void DiagramItem::editModeChanged(int)
 {
 	//if(mode == EditorState::Select || mode == EditorState::MoveItem)
@@ -396,4 +383,3 @@ void DiagramItem::editModeChanged(int)
 	//	setAcceptedMouseButtons(Qt::RightButton);
 	//}
 }
-//! [6]

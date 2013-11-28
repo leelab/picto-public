@@ -5,7 +5,7 @@
 //#include "../../common/memleakdetect.h"
 //using namespace Picto;
 //
-////! [0]
+//
 //DeletableWidget::DeletableWidget(QSharedPointer<EditorState> editorState, QtVariantPropertyManager* manager, QtProperty* property, QWidget* child, QWidget *parent) :
 //	editorState_(editorState),
 //	QWidget(parent),

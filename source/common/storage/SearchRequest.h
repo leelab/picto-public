@@ -3,7 +3,7 @@
 
 #include <QString>
 
-//! [0]
+
 struct SearchRequest
 {
 	//The group of elements to search, ie. Experimental elements, Analysis elements, Both.
@@ -27,6 +27,6 @@ struct SearchRequest
 	//This convenience function can be used to calculate a group type index based on input values
 	static int getGroupTypeIndex(SearchGroup g,SearchType t){return t|g;};
 };
-//! [0]
+
 
 #endif

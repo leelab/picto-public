@@ -10,6 +10,9 @@ ArrowPortItem("",editorState,parent,asset)
 	scriptItemManager_ = QSharedPointer<ScriptItemManager>(new ScriptItemManager(editorState,this,asset,false));
 }
 
+/*! \brief The idea of this function was to define a point where the arrow should contact it.
+ *	in practice, this function is not used.
+ */
 QPointF ArrowDestinationItem::getContactPoint()
 {
 	return getRect().center()-QPointF(getRect().width()/2.0,0);

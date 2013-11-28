@@ -10,6 +10,13 @@ using namespace Picto;
 
 class Arrow;
 
+/*! \brief An ExperimentItem that represents a StateMachineElement.  It is a "Wireable Item" in that it takes part in control
+ *	flow and can therefore have transitions wired to it.
+ *	\details WireableItem objects can include an attached start bar destination for arrows and functionality for adding result arrow sources
+ *	\sa ResultArrowSourceItem, ArrowDestinationItem
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class WireableItem : public ExperimentItem
 {
 	Q_OBJECT
@@ -30,6 +37,6 @@ private:
 	float maxArrowSourceWidth_;
 
 };
-//! [0]
+
 
 #endif

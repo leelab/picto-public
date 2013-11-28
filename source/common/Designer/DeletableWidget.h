@@ -1,3 +1,4 @@
+//! THIS FILE IS NOT LONGER USED.  REMOVE IT.
 //#ifndef DELETABLEWIDGET_H
 //#define DELETABLEWIDGET_H
 //#include "EditorState.h"
@@ -5,7 +6,7 @@
 //#include <QWidget>
 //#include <QtVariantProperty.h>
 //
-////! [0]
+//
 //class DeletableWidget : public QWidget
 //{
 //    Q_OBJECT
@@ -21,5 +22,5 @@
 //private slots:
 //	void triggered(int);
 //};
-////! [0]
+//
 //#endif

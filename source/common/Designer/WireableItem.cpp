@@ -6,6 +6,7 @@
 #include "arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new WireableItem.  By default no attached start bar is included.*/
 WireableItem::WireableItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 ExperimentItem(editorState,contextMenu,asset)
 {
@@ -17,6 +18,9 @@ WireableItem::~WireableItem()
 {
 }
 
+/*! \brief Adds a ResultArrowSourceItem hanging off of the bottom of this WireableItem to
+ *	represent a child result from which control flow can continue on to another element.
+ */
 void WireableItem::addResultArrowSource(QSharedPointer<Asset> sourceAsset)
 {
 	Q_ASSERT(sourceAsset);
@@ -30,6 +34,10 @@ void WireableItem::addResultArrowSource(QSharedPointer<Asset> sourceAsset)
 	updateArrowPortDimensions();
 }
 
+/*! \brief Adds an ArrowDestinationItem "start bar" to this Wireable item.
+ *	\details Most StateMachineElements require "start bars" but ControlElements,
+ *	for example, don't.
+ */
 void WireableItem::enableArrowDest()
 {
 	if(arrowDest_)
@@ -40,11 +48,14 @@ void WireableItem::enableArrowDest()
 	updateArrowPortDimensions();	
 }
 
+/*! \brief Returns all "arrow sources" in other words, all ResultArrowSourceItem objecs.
+*/
 QList<DiagramItem*> WireableItem::getArrowSources()
 {
 	return arrowSources_;
 }
 
+/*! \brief Returns this WireableItem's ArrowDestinationItem or NULL if it doesn't have one.*/
 DiagramItem* WireableItem::getArrowDest()
 {
 	return arrowDest_;
@@ -58,6 +69,9 @@ void WireableItem::setRect(QRectF rect)
 	updateArrowPortDimensions();
 }
 
+/*! \brief Updates the dimensions of all of the attached ArrowPortItem objects according 
+ *	to this WireableItem's current size.
+ */
 void WireableItem::updateArrowPortDimensions()
 {
 	float width = getWidth();

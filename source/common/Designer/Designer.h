@@ -1,44 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #ifndef DESIGNER_H
 #define DESIGNER_H
 
@@ -87,7 +46,37 @@ class QCheckBox;
 class QFrame;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analyses.
+ *	\details This is the top level widget of the Picto Graphical State Machine IDE for creating Picto designs.  
+ *	The Designer includes a central canvas where StateMachineElements, Variables, Stimuli, AnalysisElements, etc can be dragged and dropped and 
+ *	linked together with "Arrow" transitions.
+ *
+ *	On the right hand side is a PropertyBrowser that displays the properties defining the currently selected Asset.  
+ *
+ *	On the left hand side is a contextually aware Toolbox that provides drag-and-drop tools for creating all elements that are 
+ *	addable in the current designer context.
+ *
+ *	Underneath the Picto canvas is an information box including tabs to display the results of the latest compilation, information
+ *	about the currently selected element in the canvas or toolbox, and contextual scripting information listing all of the script
+ *	properties and functions available from the currently selected element.
+ *
+ *	Underneath the PropertyBrowser is an ElementNotesWidget that displays any notes that the user added describing the currently
+ *	selected experimental element (these note also appear in the element's tooltip).  
+ *
+ *	A Toolbar appears at the top of the screen providing copy/paste, undo/redo, search and compilation functionality.  Analyses can also 
+ *	be created/selected from this Toolbar and whether or not an Analysis is selected changes the Designer context as to whether 
+ *	Experimental elements are editable or not along with whether Experimental or Analysis elements appear in the left hand ToolBox.
+ *
+ *	Context menus are also provided for all elements that contain simple operations like copy/paste.
+ *
+ *	In the designer, the mouse is contextually aware.  When hovering over an elements body, clicking the mouse selects the element.  When
+ *	hovering over a result bar, clicking the mouse starts creating a transition, etc.
+ *	
+ *	In essence, the designer is a GUI for interacting with the DesignRoot loaded in loadDesign.  A design could be created entirely in a text
+ *	editor, but the UI makes things astronomically easier.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Designer : public QWidget
 #else
@@ -100,16 +89,11 @@ public:
 	Designer(QWidget *parent=0);
 	virtual ~Designer();
 
-	void loadDesign(QSharedPointer<DesignRoot> designRoot);  //Called just before displaying the viewer
-	void activate(bool enable); //Activates this designer for user input
+	void loadDesign(QSharedPointer<DesignRoot> designRoot);
+	void activate(bool enable);
 
 private slots:
-    //void updateEditModeButtons(int id);
-    //void itemInserted(DiagramItem *item);
-    //void textInserted(QGraphicsTextItem *item);
     void sceneScaleChanged(const QString &scale);
-	//void assetSelected(QSharedPointer<Asset> asset);
-    //void itemSelected(QGraphicsItem *item);
     void about();
 	void loadScene(DiagramScene* newScene);
 	void resetExperiment();
@@ -130,11 +114,8 @@ private:
 	bool resetEditor();
 	void updateEnabledActions();
 
-	//QSharedPointer<Design> design_;
 	QSharedPointer<DesignRoot> designRoot_;
 	QSharedPointer<EditorState> editorState_;
-	//QTextDocument designText_;
-	//QTextDocument openedAssetText_;
     DiagramScene *scene;
 	DiagramScene *topmostScene;
 	Toolbox *toolbox_;
@@ -170,7 +151,6 @@ private:
     QComboBox *sceneScaleCombo;
 
     QSharedPointer<QButtonGroup> buttonGroup;
-    //QSharedPointer<QButtonGroup> pointerTypeGroup;
     QSharedPointer<QButtonGroup> backgroundButtonGroup;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;
@@ -193,10 +173,8 @@ private slots:
 	void  redoAvailable(bool available);
 	void searchTextChanged(const QString& text);
 	void matchCaseChanged(int state);
-	//void analysisSelectedChanged(int index);
-	//void analysisSelectedTextChanged(const QString& text);
-	//void deleteCurrentAnalysis();
+
 };
-//! [0]
+
 
 #endif

@@ -8,7 +8,7 @@
 #include "../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+
 PropertyFrame::PropertyFrame(QWidget *parent) :
 	QScrollArea(parent),
 	mainWidget_(NULL)
@@ -16,6 +16,12 @@ PropertyFrame::PropertyFrame(QWidget *parent) :
 	setWidgetResizable(true);
 }
 
+/*! \brief Creates widgets for all RuntimeEditable Property object descendants of the input dataStore and lays them out, one after another, 
+ *	grouped according to their parent Design Elements.
+ *	\details The function goes through the input dataStore and searches for RuntimeEditable Property descendants.  When tney are found, they are grouped
+ *	by parent Design Element and added to a PropertyGroupWidget, which handles creating of the appropriate Property Widgets and laying them out in groups 
+ *	titled according to the DesignElement name.
+ */
 void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 {
 	if(mainWidget_)
@@ -79,6 +85,15 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	setFixedWidth((reqWidth<350)?reqWidth:350);
 }
 
+/*! \brief Loads a session at the input filename path and sets all of the final init property values from that
+ *	session to their corresponding RuntimeEditable Properties that are displayed in this PropertyFrame.
+ *	\details If any Properties end up having their initValues changed, the parameterMessageReady() signal is emitted.
+ *	If any Properties can't be found in the Session file at the input path, a pop-up is displayed listing the Properties
+ *	that could not be found.
+ *	\note We created this a long time ago and it didn't see much use.  It is probably not working and outdated.  In particular
+ *	it should be working with the Sessions "initproperties" table, but that didn't exist when this function was created.  It would
+ *	be worthwhile to go through this and fix it.
+ */
 void PropertyFrame::updatePropertiesFromFile(QString filename)
 {
 	if(filename.isEmpty())
@@ -163,6 +178,9 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 	}
 }
 
+/*! \brief Called whenever a Property is edited whose widget appears in this PropertyFrame.  Verifies that the new Property value is legal, 
+ *	then emits a parameterMessageReady() signal if it is.
+ */
 void PropertyFrame::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
 	setWidget(mainWidget_);

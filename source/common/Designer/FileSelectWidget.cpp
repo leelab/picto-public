@@ -2,7 +2,10 @@
 #include "FileSelectWidget.h"
 #include "../../common/memleakdetect.h"
 
-//! [0]
+/*! \brief Constructs a new FileSelectWidget. 
+ *	\details manager and property are used to set/get the value of the underlying file path property.  editorState was originally used to include
+ *	this property's contents in searches; however, it looks like we stopped supporting that, so we can probably remove it.
+ */
 FileSelectWidget::FileSelectWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
 	manager_(manager),
@@ -22,10 +25,12 @@ FileSelectWidget::FileSelectWidget(QtVariantPropertyManager* manager, QtProperty
 	else
 		selectButton_->setText(getFileName(filepath));
 
+	//IT LOOKS LIKE WE GOT RID OF searchRequested(), SO THIS NO LONGER DOES ANYTHING
 	//Set up search
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
 }
-
+/*! \brief Returns the file name part of the file path stored in this widget.
+*/
 QString FileSelectWidget::getFileName(QString filePath)
 {
 	int backslashLoc = filePath.lastIndexOf(QRegExp("[\\\\\\/]"));
@@ -33,6 +38,10 @@ QString FileSelectWidget::getFileName(QString filePath)
 	return fileName;
 }
 
+/*! \brief Called when the designer presses the button to display a FileDialog, get the file selection and set it into this widget's referenced property.
+ *	\details This function also resets the button label to the name part of the selected file path and emits the editingFinished() signal
+ *	to let anyone who is interested know that file selection is complete.
+ */
 void FileSelectWidget::selectFile()
 {
 	QString lastFilePath = manager_->value(property_).toString();
@@ -45,7 +54,7 @@ void FileSelectWidget::selectFile()
 	if(filepath.isEmpty())
 		return;
 	//If the file path hasn't changed, we want to reload the file.
-	//For this purpose, change the file path to an empty string and then bac'
+	//For this purpose, change the file path to an empty string and then back
 	//to the current file path so that connected objects will detect a change
 	//and reload the data
 	if(filepath == lastFilePath)
@@ -54,19 +63,3 @@ void FileSelectWidget::selectFile()
 	selectButton_->setText(getFileName(filepath));
 	emit editingFinished();
 }
-
-//void FileSelectWidget::searchRequested(SearchRequest searchRequest)
-//{
-//	if(searchRequest.type != SearchRequest::STRING)
-//		return;
-//	QPalette p = selectButton_->palette();
-//	if(selectButton_->text().contains(searchRequest.query,searchRequest.caseSensitive?Qt::CaseSensitive:Qt::CaseInsensitive))
-//	{
-//		p.setColor(QPalette::Button, QColor(255,0,0,100));
-//	}
-//	else
-//	{
-//		p.setColor(QPalette::Button, origButtonColor_);
-//	}
-//	selectButton_->setPalette(p);
-//}

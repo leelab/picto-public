@@ -46,7 +46,7 @@
 #include "../viewer.h"
 #include "../../common/Designer/Designer.h"
 using namespace Picto;
-//! [0]
+
 class StateEditViewer : public Viewer
 {
     Q_OBJECT
@@ -69,6 +69,6 @@ private:
 	QTimer autoSaveTimer_;
 	bool checkedAutoSave_;
 };
-//! [0]
+
 
 #endif

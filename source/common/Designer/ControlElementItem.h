@@ -5,7 +5,11 @@
 #include <QSharedPointer>
 using namespace Picto;
 
-//! [0]
+/*! \brief A WireableItem that represents a ControlElement.
+ *	\details Essentially this is just a WireableItem that has not start bar and has result bars for each of its results.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class ControlElementItem : public WireableItem
 {
 	Q_OBJECT
@@ -15,6 +19,6 @@ public:
 private:
 
 };
-//! [0]
+
 
 #endif
