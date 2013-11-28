@@ -3,7 +3,11 @@
 #include "ScriptWidget.h"
 #include "../../common/memleakdetect.h"
 
-//! [0]
+/*! \brief Constructs a new ScriptWidget
+ *	\details manager and property are used to copy/set the value of the underlying QtProperty to/from the underlying ScriptTextEdit.
+ *	editorState is used to support search functionality.  Single line indicates if this ScriptWidget should contain a single line
+ *	text box rather than a multi-line text editor.
+ */
 ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* property, QSharedPointer<EditorState> editorState, bool singleLine, QWidget *parent) :
 	QWidget(parent),
 	manager_(manager),
@@ -27,11 +31,15 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
 }
 
+/*! \brief Sets this ScriptWidget as readonly/editable depending on the bool readOnly input.*/
 void ScriptWidget::setReadOnly(bool readOnly)
 {
 	textEdit_->setReadOnly(readOnly);
 }
 
+/*! \brief Called when the underlying ScriptTextEdit's text changes.  Updates the underlying QtProperty value accordinly and emits the textEdited() signal
+ *	\details Search is also updated in case the latest change led to a search string match appearing/disappearing.
+ */
 void ScriptWidget::textChangeDetected()
 {
 	//Just in case the search is considered a text change for some reason, we make this function reentrant
@@ -53,6 +61,8 @@ void ScriptWidget::textChangeDetected()
 	inTextChangeDetected_ = false;
 }
 
+/*! \brief Called when a new SearchRequest is initiated in the EditorState to check the underlying ScriptTextEdit for the search string.
+ */
 void ScriptWidget::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)

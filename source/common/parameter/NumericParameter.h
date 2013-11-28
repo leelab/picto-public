@@ -7,14 +7,22 @@
 
 namespace Picto {
 
-/*!	\brief A parameter for containing numeric values.
+/*!	\brief A parameter for containing numeric integer values.
  *
- *	Given our experience with Picto, it seems reasonable to limit these
- *	parameters to integer values.  If a user requires a non-integer
- *	value (e.g. 0.135 seconds), they can usually get away with changing
- *	the units (e.g. 135 milliseconds).
+ *	We wanted to get rid of this parameter, because it is really just a RangeParameter with less options.  Since old 
+ *	Experiments use this Parameter though, the easiest way to support them in newer code without allowing this Parameter
+ *	into new designs was to keep it in Picto, but now let it show up in the Designer Toolbox, so that is what we have done.
+ *	This Parameter stores integer values.  It does the same thing that the RangeParameter
+ *	does except without the set range (ie. The range is just from INT_MIN to INT_MAX).
+ *	The Value Property is runtime editable and appears as a numeric "integer only" input widget
+ *	in the PropertyFrame.  The numeric value is accessible through the javascript "value" property as:
+ *	\code
+ 		NumericParameterName.value = 0.26;
+ 		var numVal = NumericParameterName.value;
+ 	\endcode
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API NumericParameter : public Parameter
 #else
@@ -22,10 +30,8 @@ class NumericParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	/*! \brief Sets/Gets the value of the Parameter.*/
 	Q_PROPERTY(int value READ getValue WRITE setValue)
-//public slots:
-//	void setValue(QVariant value);
-//	QVariant getValue() { return QVariant(value_); };
 
 public:
 	NumericParameter();
@@ -33,40 +39,36 @@ public:
 
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
-	//DataStore functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-
+	/*! \brief Units are no longer used in this Parameter.  This function should probably be deleted.
+	*/
 	void setUnits(QString units) { units_ = units; };
 
+	/*! \brief Units are no longer used in this Parameter.  This function should probably be deleted.
+	*/
 	QString getUnits() { return units_; };
 
+	/*! \brief Returns the current value of this Parameter.*/
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	/*! \brief Sets the current value of this Parameter to the input.*/
 	void setValue(int val){propertyContainer_->setPropertyValue("Value",val);};
 
 	virtual QString getUITemplate(){return "IntegerParameter";};
 	virtual QString friendlyTypeName(){return "Integer";};
 
-	//This is just the Integer range parameter but less so but old experiments use it so we can't get rid of it.  This way no one will be able to create it.
+	/*! \brief Since this NumericParameter is just the RangeParameter with less options, but we need to support it for old experiments, we can't just get rid of it.  
+	 *	By reimplementing Parameter::getUIGroup() to return an empty string, we cause this Parameter to not show up in the
+	 *	Designer Toolbox.  This way no one will be able to add it to new Designs but old Experiments will still work.
+	 */
 	virtual QString getUIGroup(){return "";};
-	//note that the lessThan & greaterThan functions aren't redefined, 
-	//so they will always return false
-	//bool greaterThan(Parameter& RHS);
-	//bool equalTo(Parameter& RHS);
-	//bool lessThan(Parameter& RHS);
-
-	//bool greaterThan(QVariant& RHS);
-	//bool equalTo(QVariant& RHS);
-	//bool lessThan(QVariant& RHS);
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	int value_;
-	QString units_;
+	int value_;		//!< We should get rid of this
+	QString units_;	//!< We should get rid of this
 };
 
 

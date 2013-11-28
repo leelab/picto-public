@@ -9,7 +9,19 @@
 #include "../design/DesignRoot.h"
 
 namespace Picto {
-/*! \brief Component of Picto Playback system that loads data into SessionState.
+/*! \brief A Component of the Picto Playback system that loads data from a Session file into a SessionState.
+ *	\details This class takes care of loading the session file, extracting various meta-data like task run
+ *	information and the types of input signals used in the experiment, and setting all of this data into a 
+ *	SessionState.
+ *
+ *	\note The most confusing part of what a FileSessionLoader does is the upgrade of the Design used in the session
+ *	file.  Since the Session might have been recorded when an older version of Picto was in use, when the Design
+ *	is loaded into this version of Picto, some Assets might be upgraded automatically.  Whenever this happens though,
+ *	there is a possibility that Assets that were not upgraded might have their Asset ids changed for various reasons.
+ *	This class uses a SessionVersionInterfacer to automatically fix the changed Asset IDs and extract the Asset IDs of
+ *	Assets that are now obsolete so that their Property values can be ignored.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FileSessionLoader : public QObject
@@ -35,16 +47,17 @@ signals:
 	void percentLoaded(double percent);
 
 protected:
+	/*! \brief Stores data about a particular Task Run.*/
 	struct RunData
 	{
-		qulonglong dataId_;
-		qulonglong startFrame_;
-		qulonglong endFrame_;
-		QString name_;
-		QString notes_;
-		bool saved_;
-		double startTime_;
-		double endTime_;
+		qulonglong dataId_;			//!< The Task Run's DataID
+		qulonglong startFrame_;		//!< The frame ID of the first frame in the run.
+		qulonglong endFrame_;		//!< The frame ID of the last frame in the run.
+		QString name_;				//!< The name of the run as set by the operator in the RemoteViewer
+		QString notes_;				//!< The notes for the run as set by the operator in the RemoteViewer
+		bool saved_;				//!< A boolean indicating if the Operator marked this run as Saved.
+		double startTime_;			//!< The time at which the run started (this is the time of the startFrame_)
+		double endTime_;			//!< The time at which the run ended (this is the time of the endFrame_)
 	};
 
 	virtual bool loadRunData();

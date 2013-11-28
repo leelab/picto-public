@@ -8,10 +8,17 @@
 
 namespace Picto {
 
-/*!	\brief A parameter for retrieving frame times.
- *
+/*!	\brief An AnalysisDataSource for gathering lfp data.
+ *	\details This object can be used to query local field potential values as well as
+ *	metadata (the channels that were recorded in the current run, the sample period
+ *	etc.)
+ *	\note For test runs in the testviewer, the data returned from this object will necessarily
+ *	be fake sample data.  For consistency's sake, any functions requesting 
+ *	future data will return meaningless values.
+ *	\note This class uses a FrameReader object as its main data source.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisLfpData : public AnalysisDataSource
 #else
@@ -32,55 +39,26 @@ public:
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:
-	//Sets the time of the latest frame to zero.  Lfp times will be returned with respect to
-	//this latest frame.
 	void zeroLatestFrame();
-	//Returns a list of active lfp channel numbers
 	virtual QVariantList getChannels();
-	//Returns the lfp sample period.
 	double getSamplePeriod();
-	//Returns the time of the latest lfp reading
 	double getLatestTime();
-	//Returns the latest value of the input lfp channel
 	double getLatestValue(int channel);
-	//Returns an array of the latest lfp values ordered according to the channel order returned from getChannels()
 	QVariantList getLatestValue();
-	//Returns the time of the next lfp reading
 	double getNextTime();
-	//Returns the next value that will be read for the input lfp channel
 	double getNextValue(int channel);
-	//Returns an array of the next lfp values to be read ordered according to the order returned from getChannels()
 	QVariantList getNextValue();
-	//Returns a list of lfp read times that occured with times > the input # sec before the latest frame and <= the latest frame time
 	QVariantList getPrevTimes(double secsPreceding);
-	//Returns a list of lfp read times that will occur with times > the latest frame time and <= the input # sec after the latest frame
 	QVariantList getNextTimes(double secsFollowing);
-	//Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesSince(double beyondTime);
-	//Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesUntil(double upToTime);
-	//Returns a list of lfp values for the input lfp channel that occured with times > the input # sec before the latest frame and <= the latest frame time
 	QVariantList getPrevValues(int channel,double secsPreceding);
-	//Returns a list of lfp values for the input lfp channel that will occur with times > the latest frame time and <= the input # sec after the latest frame
 	QVariantList getNextValues(int channel,double secsFollowing);
-	//Returns a list of signal values for all lfp channels (ordered like the result of getChannels())
-	//that will occur with times > the input # sec before the latest frame time and <= the latest 
-	//frame time. Returned value is a list of lists such that each index of the list contains a list of lfp channel values
-	//ordered like the result of getChannels().  Times for these values can be read in using getPrevTimes() with the same 
-	//input.
 	QVariantList getPrevValues(double secsPreceding);
-	//Returns a list of lfp values for all lfp channels that will occur with times > the latest frame 
-	//time and <= the input # sec after the latest frame. Returned value is a list of lists such that each 
-	//index of the list contains a list of lfp channel values ordered like the result of getChannels(). 
-	//Times for these values can be read in using getNextTimes() with the same input.
 	QVariantList getNextValues(double secsFollowing);
-	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getValuesSince(int channel,double beyondTime);
-	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getValuesUntil(int channel,double upToTime);
-	//Functions like getPrevValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getValuesSince(double beyondTime);
-	//Functions like getNextValues except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getValuesUntil(double upToTime);
 
 protected:
@@ -88,7 +66,6 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	//Returns the latest frame time with respect to the beginning of the run
 	double getLatestRunTime();
 	double zeroTime_;
 	QSharedPointer<LfpReader> lfpReader_;

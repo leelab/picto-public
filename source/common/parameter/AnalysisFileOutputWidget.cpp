@@ -6,6 +6,12 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+/*! \brief Creates a new AnalysisFileOutputWidget.
+ *	\details Sets up the widget layout including the main read only text edit and the
+ *	forward/back buttons.
+ *	linesPerPage is the number of lines of text that should be displayed per page within the
+ *	widget.
+ */
 AnalysisFileOutputWidget::AnalysisFileOutputWidget(unsigned int linesPerPage, QWidget* parent)
 : AnalysisOutputWidget(parent)
 {
@@ -36,6 +42,13 @@ AnalysisFileOutputWidget::~AnalysisFileOutputWidget()
 		file_->close();
 }
 
+/*! \brief Sets the file who's contents this widget will display.
+ *	\details This function also opens the file and starts a timer that
+ *	calls loadCurrPage() to refresh the contents of the file once every 3 seconds so
+ *	that the widget will be updated with new data as it comes in during an actively running
+ *	Analysis.
+ *	\note The input filename should be the full name including filepath.
+ */
 bool AnalysisFileOutputWidget::setFile(QString filename)
 {
 	pages_.clear();
@@ -63,6 +76,11 @@ bool AnalysisFileOutputWidget::setFile(QString filename)
 	return true;
 }
 
+/*! \brief Moves the currently displayed page backwards to the previous page.
+ *	\details Pages are defined by numbers of lines (linesPerPage input into the constructor).
+ *	\note Things can slow down pretty drastically in the GUI if there are no line breaks in the
+ *	file.  We should probably do something about this.
+ */
 void AnalysisFileOutputWidget::prevPage()
 {
 	if(currPage_ == 0)
@@ -71,6 +89,12 @@ void AnalysisFileOutputWidget::prevPage()
 	loadCurrPage();
 	textEdit_->setCursor(QCursor());
 }
+
+/*! \brief Moves the currently displayed page forwards to the next page.
+ *	\details Pages are defined by numbers of lines (linesPerPage input into the constructor).
+ *	\note Things can slow down pretty drastically in the GUI if there are no line breaks in the
+ *	file.  We should probably do something about this.
+ */
 
 void AnalysisFileOutputWidget::nextPage()
 {
@@ -83,7 +107,9 @@ bool AnalysisFileOutputWidget::isSaveable()
 {
 	return true;
 }
-
+/*! \brief Copies the underlying temporary data file to the input directory, returns true if successful, false otherwise.
+ *	\details If the copy operation fails, a message box pops up to that affect.
+*/
 bool AnalysisFileOutputWidget::saveOutputTo(QDir directory)
 {	
 	if(!file_)
@@ -107,15 +133,22 @@ bool AnalysisFileOutputWidget::saveOutputTo(QDir directory)
 	return result;
 }
 
-//There is some kind of Qt bug that makes the text stream stop functioning intermittently, possibly due to 
-//the text pointer reaching the end of the file stream.  In these cases, pos() returns -1.  To fix the issue
-//whenever this occurs, we recreate the QTextStream from scratch.
+/*! \brief Patches a QTextStream bug.
+ *	\details There is some kind of Qt bug that makes the text stream stop functioning intermittently, possibly due to 
+ *	the text pointer reaching the end of the file stream.  In these cases, pos() returns -1.  To fix the issue
+ *	whenever this occurs, we recreate the QTextStream from scratch.
+ */
 void AnalysisFileOutputWidget::patchQtTextStreamBug()
 {
 	if(outputFileStream_->pos() < 0)
 		outputFileStream_ = QSharedPointer<QTextStream>(new QTextStream(file_.data()));
 }
 
+/*! \brief Loads the current page of text into the widget's read-only text edit.
+ *	\details If new data is available in the underlying file, it will show up in the text edit.
+ *	If the forward or back buttons were pressed, the widget will show the next or previous page
+ *	of data if it exists.
+ */
 void AnalysisFileOutputWidget::loadCurrPage()
 {
 	//Disable previous and next buttons

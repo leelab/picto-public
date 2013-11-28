@@ -5,6 +5,9 @@
 namespace Picto
 {
 
+/*! \brief Constructs a NumericParameter
+ *	\details Adds a Double Property called Value to hold the current value.
+ */
 NumericParameter::NumericParameter()
 : 
   value_(0),
@@ -17,85 +20,20 @@ NumericParameter::NumericParameter()
 
 }
 
+/*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
+ *	Create() is now the function to use.
+ */
 Parameter* NumericParameter::NewParameter()
 {
 	return new NumericParameter;
 }
 
+/*! \brief Creates a new NumericParameter and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> NumericParameter::Create()
 {
 	return QSharedPointer<Asset>(new NumericParameter());
 }
-
-//void NumericParameter::setValue(QVariant value)
-//{
-//	bool ok;
-//	int testValue;
-//	testValue = value.toInt(&ok);
-//	if(ok)
-//		value_ = testValue;
-//}
-
-//note that the lessThan & greaterThan functions aren't redefined, 
-//so they will always return false
-//bool NumericParameter::greaterThan(Parameter& RHS)
-//{
-//	//first confirm that the Parameter is also numeric
-//	if(RHS.type() != "Numeric")
-//		return false;
-//
-//	return value_ > RHS.getValue().toInt();
-//}
-//bool NumericParameter::equalTo(Parameter& RHS)
-//{
-//	//first confirm that the Parameter is also numeric
-//	if(RHS.type() != "Numeric")
-//		return false;
-//
-//	return value_ == RHS.getValue().toInt();
-//}
-//bool NumericParameter::lessThan(Parameter& RHS)
-//{
-//	//first confirm that the Parameter is also numeric
-//	if(RHS.type() != "Numeric")
-//		return false;
-//
-//	return value_ < RHS.getValue().toInt();
-//}
-//
-//bool NumericParameter::greaterThan(QVariant& RHS)
-//{
-//	//first confirm that the Variant can be converted to an int
-//	int rhsValue;
-//	bool ok;
-//	rhsValue = RHS.toInt(&ok);
-//	if(!ok)
-//		return false;
-//	else
-//		return value_ > rhsValue;
-//}
-//bool NumericParameter::equalTo(QVariant& RHS)
-//{
-//	//first confirm that the Variant can be converted to an int
-//	int rhsValue;
-//	bool ok;
-//	rhsValue = RHS.toInt(&ok);
-//	if(!ok)
-//		return false;
-//	else
-//		return value_ == rhsValue;
-//}
-//bool NumericParameter::lessThan(QVariant& RHS)
-//{
-//	//first confirm that the Variant can be converted to an int
-//	int rhsValue;
-//	bool ok;
-//	rhsValue = RHS.toInt(&ok);
-//	if(!ok)
-//		return false;
-//	else
-//		return value_ < rhsValue;
-//}
 
 void NumericParameter::postDeserialize()
 {

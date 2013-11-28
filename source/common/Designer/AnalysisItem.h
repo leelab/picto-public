@@ -9,7 +9,12 @@
 
 using namespace Picto;
 
-//! [0]
+/*! \brief An AssetItem used to represent Analysis elements.
+ *	\details This is pretty much just an AssetItem that is colored yellowish to represent that
+ *	it is part of an Analysis.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class AnalysisItem : public AssetItem
 {
 	Q_OBJECT
@@ -21,6 +26,6 @@ protected:
 	virtual void setRect(QRectF rect);
 
 };
-//! [0]
+
 
 #endif

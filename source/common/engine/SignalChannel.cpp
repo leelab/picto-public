@@ -3,6 +3,12 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new SignalChannel with the input name and InputPort.
+ *	\details When using this constructor a default value of 1 reading per ms is used.
+ *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
+ *	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
+ *	as "Position."
+*/
 SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 {
 	name_ = name;
@@ -11,6 +17,11 @@ SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 	useScaleFactors_ = true;
 }
 
+/*! \brief Constructs a new SignalChannel with the input name, InputPort and msPerSample sample period.
+ *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
+ *	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
+ *	as "Position."
+*/
 SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<InputPort> port)
 {
 	name_ = name.toLower();
@@ -19,6 +30,11 @@ SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<Input
 	useScaleFactors_ = true;
 }
 
+/*! \brief Adds a subchannel for this SignalChannel.
+ *	\details Subchannels allow a signal to be broken into its sub components.  The position
+ *	signal for example includes two sub channels, x and y.  Each subchannel should be provided
+ *	with a name that is unique to this SignalChannel and a channelIndex that is unique to the InputPort.
+ */
 void SignalChannel::addSubchannel(QString subchannelName, int channelIndex)
 {
 	QVector<double> data;
@@ -45,12 +61,21 @@ void SignalChannel::addSubchannel(QString subchannelName, int channelIndex)
 
 }
 
+/*! \brief Sets the resolution at which this channel will be sampled.
+ *	\details All sub channels of a given signal channel will be sampled at the same rate.
+ */
 void SignalChannel::setSampleResolution(int msPerSample)
 {
 	Q_ASSERT(msPerSample != 0);
 	msPerSample_ = msPerSample;
 }
 
+/*! \brief This is a convenience function allowing calibration coefficients to be calculated from boundary conditions rather than
+ *	being set explicitly.
+ *	\details Input the min and max raw InputPort values and the min and max scaled values that should be output from this
+ *	SignalChannel.  The function will calculate A and B in output = A + B*Input such that the min raw input will produce
+ *	the min scaled output and the max raw input will produce the max raw output.
+ */
 void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue)
 {
 	if(!useScaleFactors_)
@@ -62,6 +87,12 @@ void SignalChannel::setCalibrationCoefficientsFromRange(QString subchannel, doub
 	scaleFactorsMap_[subchannel].centerVal = (maxScaledValue-minScaledValue)/2.0;
 }
 
+/*! \brief Sets the calibration coefficients that will be used to scale/translate raw data from the InputPort into clean SignalChannel output.
+ *	\details The value will be scaled like \code output=InputPortData*gain + offset \endcode
+ *	\details scaledCenterValue is used in case another sub-channel shears with respect to this channel.  The idea is that
+ *	that sub-channels shear coefficient will be multiplied by this sub-channel's scaled offset from its center value and the
+ *	result of that multiplication will be added to the other sub-channel value
+ */
 void SignalChannel::setCalibrationCoefficients(QString subchannel, double gain, int offset, double scaledCenterValue)
 {
 	if(!useScaleFactors_)
@@ -74,7 +105,10 @@ void SignalChannel::setCalibrationCoefficients(QString subchannel, double gain, 
 }
 
 /*!
- *	Each value is sheared after applying scale factors.  The new value x = x + shearFactor*asFuncOfSubChannel_Value
+ *	\brief Sets up shearing dependency for the input subchannel as a function of the input asFuncOfSubChannel with the input
+ *	shearFactor.
+ *	\details Note that values are sheared after applying regular linear scale factors such that the new value 
+ *	\code scaledShearedOutput = scaledOutput + shearFactor*asFuncOfSubChannel.value \endcode
  */
 void SignalChannel::setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor)
 {
@@ -86,6 +120,10 @@ void SignalChannel::setShear(QString subchannel, QString asFuncOfSubChannel, dou
 	scaleFactorsMap_[subchannel].shearFactor = shearFactor;
 }
 
+/*!	\brief Returns the offset from the time that the previous frame occured to the time that the first sample appears on the SignalChannel.
+ *	\note This will always be less than the sample rate.
+ *	\sa InputPort::getFrameToSampleOffset()
+ */
 double SignalChannel::latestUpdateEventOffset()
 {
 	if(!port_)
@@ -93,7 +131,10 @@ double SignalChannel::latestUpdateEventOffset()
 	return port_->getFrameToSampleOffset(channelIndexMap_.begin().value());
 }
 
-//! Grabs the most recent value from the subchannel, scales it, and returns it
+/*! \brief Gets the most recent value from the subchannel, scales it, and returns it.
+ *	\details This function does not cause data to be deleted.  The data returned by this
+ *	function will still be returned in the next call to getValues().
+ */
 double SignalChannel::peekValue(QString subchannel)
 {
 	getDataFromPort();
@@ -129,6 +170,8 @@ double SignalChannel::peekValue(QString subchannel)
 	return scaledValue;
 }
 
+/*! \brief Clears the latest data that was read in from the InputPort.
+ */
 void SignalChannel::clearValues()
 {
 	//clear out the raw data
@@ -144,6 +187,8 @@ void SignalChannel::clearValues()
 	}
 }
 
+/*! \brief Starts data capture for this SignalChannel.
+ */
 bool SignalChannel::start()
 {
 	if(!port_)
@@ -152,6 +197,8 @@ bool SignalChannel::start()
 	return true;
 }
 
+/*! \brief Stops data capture for this SignalChannel and clears out any remaining data in buffers.
+*/
 bool SignalChannel::stop()
 {
 	if(!port_)
@@ -161,6 +208,11 @@ bool SignalChannel::stop()
 	return true;
 }
 
+/*! \brief Returns a map of data sample vectors indexed by sub-channel name.
+ *	\details All returned data is scaled and sheared.
+ *	\note This function calls getRawValues() which has a side effect in that it clears out all read data such that the
+ *	next call to getValues() will return only the values read since the function was last called.
+ */
 QMap<QString, QVector<double> > SignalChannel::getValues()
 {
 	QMap<QString, QVector<double> > dataBuffer = getRawValues();
@@ -207,12 +259,19 @@ QMap<QString, QVector<double> > SignalChannel::getValues()
 	return dataBuffer;
 }
 
+/*! \brief Loads data into the underlying InputPort so that it will be available for the next call to getValues().
+ *	\details This function is pretty much just a wrapper for InputPort::updateDataBuffer()
+ */
 void SignalChannel::updateData(double currentTime)
 {
 	if(port_)
 		port_->updateDataBuffer(currentTime);
 }
 
+/*! \brief Gets data for this SignalChannel from the InputPort and returns it.
+ *	\note A side effect of this function is that it clears out all read data such that the
+ *	next call to getRawValues() will return only the values read since the function was last called.
+ */
 QMap<QString, QVector<double> > SignalChannel::getRawValues()
 {
 	getDataFromPort();
@@ -235,8 +294,9 @@ QMap<QString, QVector<double> > SignalChannel::getRawValues()
 }
 
 /*! \brief Gets Signal Channel data in the form of a BehavioralDataUnitPackage.
- *	This function internally calls getValues and therefore has the effect of clearing
- *	the value buffer.
+ *	\note This function internally calls getValues() and therefore has the side effect of clearing
+ *	the value buffer such that the next call to this function will return entirely new data
+ *	starting from when the function was last called.
  */
 QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 {
@@ -249,14 +309,24 @@ QSharedPointer<BehavioralDataUnitPackage> SignalChannel::getDataPackage()
 	return QSharedPointer<BehavioralDataUnitPackage>();
 }
 
-//When this is called, the passed in value is immediately added to the 
-//rawDataBuffer_.  Since real data is only added to the rawDataBuffer_
-//when updateDataBuffer is called, the inserted data is slightly out of
-//order.  This shouldn't be a big deal, since it is unlikely that we'll be 
-//inserting values at the same time as we're collecting real data.
-//Should this become an issue, we'll want to add timestamps.
+/*! \brief Adds a single input value to the input subchannel from an outside source.
+ *	\details This is useful for slave situations in which the data
+ *	is coming in from a master and not from an underlying InputPort.
+ *	\note It would probably be more logically consistent if we created
+ *	a SlaveInputPort that recieved data from the master or possibly a 
+ *	SlaveSignalChannel class that would reimplement some of this
+ *	class's functions since master data is prescaled.
+ *	For now, this is working even though it isn't too clean.
+ */
 void SignalChannel::insertValue(QString subchannel, double val)
 {
+	//When this is called, the passed in value is immediately added to the 
+	//rawDataBuffer_.  Since real data is only added to the rawDataBuffer_
+	//when updateDataBuffer is called, the inserted data is slightly out of
+	//order.  This shouldn't be a big deal, since it is unlikely that we'll be 
+	//inserting values at the same time as we're collecting real data.
+	//Should this become an issue, we'll want to add timestamps.
+	
 	Q_ASSERT(rawDataBuffer_.contains(subchannel));
 
 	//DELETE ME
@@ -269,6 +339,15 @@ void SignalChannel::insertValue(QString subchannel, double val)
 	
 }
 
+/*! \brief Adds data values to the input sub-channel from an outside source.
+ *	\details This is useful for slave situations in which the data
+ *	is coming in from a master and not from an underlying InputPort.
+ *	\note It would probably be more logically consistent if we created
+ *	a SlaveInputPort that recieved data from the master or possibly a 
+ *	SlaveSignalChannel class that would reimplement some of this
+ *	class's functions since master data is prescaled.
+ *	For now, this is working even though it isn't too clean.
+ */
 void SignalChannel::insertValues(QString subchannel, QVector<double> vals)
 {
 	if(rawDataBuffer_.contains(subchannel))
@@ -279,6 +358,9 @@ void SignalChannel::insertValues(QString subchannel, QVector<double> vals)
 	}
 }
 
+/*! \brief Copies data in from the InputPort to this SignalChannel for all sub-channels.
+ *	\details Internally, this calls InputPort::getData()
+ */
 void SignalChannel::getDataFromPort()
 {
 	if(!port_)

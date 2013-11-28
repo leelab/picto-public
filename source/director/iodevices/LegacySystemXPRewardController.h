@@ -7,7 +7,8 @@
 
 namespace Picto
 {
-/*!	\brief A reward controller for the LegacySystem used when running Windows XP
+/*!	\brief A reward controller for the LegacySystem (ie. an old Orion computer being used
+ *	as a Picto Director).
  *
  *	LegacySystem uses a National Instruments PCI-6503 data acquisition board
  *	to deliver rewards (the same board is used for triggering event codes).  

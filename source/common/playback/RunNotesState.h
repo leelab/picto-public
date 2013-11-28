@@ -7,7 +7,16 @@
 #include "PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Run Notes for use in Playback system.
+/*! \brief Implements the RunNotesReader classes to load a Picto Session database, 
+ *	extract the Run Notes data and implement functions for accessing it.
+ *
+ *	\note Since most of the functions here simply implement the RunNotesReader for
+ *	data read in from a Session Database, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding much function level documentation
+ *	for this class.
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class RunNotesState : public RunNotesReader
 {

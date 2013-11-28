@@ -17,10 +17,16 @@ namespace Picto {
  *
  *	Although a mouse signal channel is completely useless in an experiment (unless your 
  *	subject is capable of using a mouse), it is absolutely essential when testing an
- *	experiment.  When updateDataBuffer is called, the channel polls the mouse and
+ *	experiment.  When updateDataBuffer() is called, the channel polls the mouse and
  *	grabs the most recent coordinates.  This could potentially cause us to miss very
- *	quick movements (particularly if updateDataBuffer is called infrequently), but so
- *	far this hasn't been an issue.
+ *	quick movements but since Picto currently calls updateDataBuffer() once a frame, this
+ *	hasn't been an issue.  Since the polling timing is configured in the InputPort class,
+ *	we simulate the correct number of samples when updateDataBuffer() is called even though
+ *	 it is actually only read once.  To do this, we calculate the time since the last call to 
+ *	updateDataBuffer() and devide by the configured sample period for the number of samples
+ *	needed, then copy the mouse data that number of times and enter it into the data buffer.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API MouseInputPort : public InputPort

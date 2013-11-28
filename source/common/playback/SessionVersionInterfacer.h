@@ -9,7 +9,37 @@
 namespace Picto {
 
 struct SVIAssetNode;
-/*! \brief Holds Data State's Data.
+/*! \brief Resets the Asset ID values of an Experiment to those used in a Session file.
+ *	\details Since Session files could have been recorded at any time in the past, they may contain
+ *	Designs that use an old version of the Picto Design Syntax.  In those cases, the Designs will be
+ *	automatically upgraded, but this upgrade process can sometimes result in changes to Asset IDs of
+ *	some of the Design Assets.  
+ *
+ *	For an example of this, consider a case where a particular type of Asset has become obsolete, so it is deleted 
+ *	and the experiment is rebuilt from XML for an automatic upgrade.  While being rebuilt, there
+ *	may be a Property whose default value was never changed in the design but whose value does change as part of
+ *	the experimental run.  Since a new hole in the continous series of Asset IDs opened up due to the deletion
+ *	of the ObsoleteAsset, this Property, which is generated automatically and does not appear in the design file
+ *	since its value was never changed, takes on one of the Asset IDs of the freed up ObsoleteAsset.  Now, when 
+ *	the value of that Property changes in the session file, the Playback system will have no way to know which
+ *	Property was being referred to since the asset ID stored in the session file for the changed Property won't
+ *	match up to a real Property in the design.
+ *	
+ *	This class takes care of that problem.  We simply construct it with a passed in pointer to the Experiment that
+ *	we want to upgrade, then we add all Session Properties, Transitions, and Elements according to the data in the
+ *	Session tables.  This is used internally to build up an Asset tree, then that Asset tree is traversed alongside
+ *	the Experiment asset tree, and all of the Experiment Asset's AssetIDs are updated according to the corresponding ones from the
+ *	session.  Any Properties, Transitions or Elements from the session that cannot be identified in the Experiment
+ *	are added to an obsoleteAssets lookup table.  That lookup table contains all asset IDs for which no proper 
+ *	Experimental Element can be found and therefore when changes come in for assetIds in the obsoleteAssets table,
+ *	we know that we should just skip them before their corresponding Assets were found to be obsolete.  That table is
+ *	accessible from getObsoleteAssets().
+ *	
+ *	\note Theoretically, the situation could come up at some point where a Property value from an obsolete asset needs
+ *	to get mapped into a Property of a new Asset created to replace the obsolete one.  That hasn't come up yet, but when
+ *	it does we will have to come up with a solution for that scenario.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class SessionVersionInterfacer
 {

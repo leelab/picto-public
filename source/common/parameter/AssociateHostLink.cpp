@@ -4,6 +4,11 @@
 
 namespace Picto {
 
+/*! \brief Constructs an AssociateHostLink object
+ *	\details Creates two Property objects.
+ *	- ParentPath	- Holds a string with the path of the DataStore to which this object's owner will be an Associate child.
+ *	- ParentId		- Holds the AssetId of the DataStore to which this object's owner will be an Associate child.
+ */
 AssociateHostLink::AssociateHostLink()
 : DataStore()
 {
@@ -11,6 +16,8 @@ AssociateHostLink::AssociateHostLink()
 	AddDefinableProperty(QVariant::Int,"ParentId",0);
 }
 
+/*! \brief Creates a new AssociateHostLink and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> AssociateHostLink::Create()
 {
 	QSharedPointer<AssociateHostLink> newAssociateHostLink(new AssociateHostLink());
@@ -18,6 +25,11 @@ QSharedPointer<Asset> AssociateHostLink::Create()
 	return newAssociateHostLink;
 }
 
+/*! \brief Sets up this object to link to the input Asset.
+ *	Stores a pointer to the input Asset.  Connects to the input Asset's Asset::assetIdEdited() and UIEnabled::nameEdited() signals so that this object
+ *	will know when it has to change the values stored in its Properties, then calls updateLinkedAssetProperties() to
+ *	update those Property values for this new Asset and emits the linkedToAsset() signal to tell the world that the linked Asset changed.
+ */
 void AssociateHostLink::linkToAsset(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT(asset);
@@ -37,6 +49,12 @@ void AssociateHostLink::linkToAsset(QSharedPointer<Asset> asset)
 	emit linkedToAsset(asset);
 }
 
+/*! \brief Updates the current linked path value by searching for the input oldPrefix string at the beginning of the path and replacing
+ *	it with the newPrefix string.
+ *	\details This is useful when we are exporting and importing multiple AssociateElements from one element into another.  In those cases,
+ *	we want to maintain relative link paths for the different AssociateElements but change the overall location of the group.  This is equivalent
+ *	to updating the beginning of all of their paths in the same way.
+ */
 void AssociateHostLink::updateLinkPath(QString oldPrefix,QString newPrefix)
 {
 	//No one should be trying to update this objects link path if it's already linked to an asset
@@ -67,6 +85,8 @@ bool AssociateHostLink::validateObject(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
+/*! \brief Updates the values in the ParentPath and ParentId Properties to reflect the current stored linkedAsset_.
+*/
 void AssociateHostLink::updateLinkedAssetProperties()
 {
 	Q_ASSERT(!linkedAsset_.isNull());

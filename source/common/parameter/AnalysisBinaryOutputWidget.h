@@ -10,6 +10,13 @@
 
 namespace Picto {
 
+/*! \brief An AnalysisOutputWidget for displaying binary files.
+ *	\details At some point we may fill this in with something more meaningful.  Currently,
+ *	this simply shows a text box that says "Preview is not supported for binary files."
+ *	\sa AnalysisFileOutputWidget
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class AnalysisBinaryOutputWidget : public AnalysisOutputWidget
 {
 	Q_OBJECT

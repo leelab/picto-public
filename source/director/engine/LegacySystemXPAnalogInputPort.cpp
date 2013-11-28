@@ -4,7 +4,8 @@
 
 #include "../../common/timing/Timestamper.h"
 #include "../../common/memleakdetect.h"
-
+/*! \file */
+/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.*/
 #define DAQmxErrChk(rc) { if (rc) { \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
@@ -15,12 +16,13 @@
 							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputPort", msg.toLatin1()); \
 						} }
 						
-
+/*! \brief In the legacy system, device name for the PCI-MIO-16XE-50 should always be Dev2 because Orion wouldn't have worked otherwise.*/
 #define DEVICE_NAME "Dev2"
 #define TASK_NAME "SigChanCapture"
 #define BUFFER_SIZE_PER_CHAN 300
 using namespace Picto;
 
+/*! \brief Constructs a new LegacySystemXPAnalogInputPort.*/
 LegacySystemXPAnalogInputPort::LegacySystemXPAnalogInputPort()
 {
 	daqTaskHandle_ = 0;
@@ -28,11 +30,10 @@ LegacySystemXPAnalogInputPort::LegacySystemXPAnalogInputPort()
 	bufferSize_ = 0;
 }
 
-/*!	\brief Starts the DAQ collecting data.
- *
- *	This should be called as close to the point at which the data will actually
- *	be collected as possible.  Otherwise, data will pile up in the buffer.
- *	Also note that calling this clears out any existing data in the channel.
+/*!	\copydoc InputPort::startSampling()
+ *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and run it whenever we want to sample
+ *	input data (DAQmxStartTask()).
+ *	\details Sample rate is configured using DAQmxCfgSampClkTiming().
  */
 bool LegacySystemXPAnalogInputPort::startSampling()
 {
@@ -79,6 +80,7 @@ bool LegacySystemXPAnalogInputPort::startSampling()
 void LegacySystemXPAnalogInputPort::stopSampling()
 {
 	DAQmxErrChk (DAQmxStopTask(daqTaskHandle_));
+	//Since we created the dataBuffer_ during startSampling(), we delete it during stopSampling()
 	if(dataBuffer_)
 	{
 		delete[] dataBuffer_;
@@ -87,6 +89,11 @@ void LegacySystemXPAnalogInputPort::stopSampling()
 	return;
 }
 
+/*! \copydoc InputPort::updateDataBuffer()
+ *	\details The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16().  We estimate the precise
+ *	read time by storing the time just after that function is called.  That is the time that is returned from the
+ *	function,
+ */
 double LegacySystemXPAnalogInputPort::updateDataBuffer()
 {
 	long totalSampsRead = 0;

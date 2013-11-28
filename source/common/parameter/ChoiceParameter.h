@@ -13,7 +13,10 @@ struct ChoiceParameterOption
 	QVariant data;
 };
 
-/*!	\brief A parameter for choosing between multiple options (e.g. "fast", "medium" "slow")
+/*!	\brief This Parameter is not used or properly implemented.  It was developed when the Picto design paradigm looked very different and was meant to provide multiple 
+ *	options (e.g. "fast", "medium" "slow") that could show up as options in the PropertyFrame at runtime.
+ *
+ *	This would actually probably be a nice thing to have, but it needs to be properly implemented.  The original documentation appears below for your reference.
  *
  *	This parameter allows you to create a list of values and select between them.  Each value
  *	contains a string for naming the value and a Variant for the value itself.  You could, for
@@ -21,7 +24,6 @@ struct ChoiceParameterOption
  *	are clearly defined, but since there isn't an obvious way to implement them, the cmoparison
  *	operators (> and <) are undefined and will always return false.
  *
- *	This parameter is currently not available until I reimplement it correctly.
  */
 
 #if defined WIN32 || defined WINCE

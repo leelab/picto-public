@@ -3,6 +3,8 @@
 #include "Arrow.h"
 #include <QGraphicsScene>
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new ArrowPortItem associated with the input Asset.  Other parameters are passed directly to the DiagramItem constructor.
+*/
 ArrowPortItem::ArrowPortItem(QString name,QSharedPointer<EditorState> editorState, QGraphicsItem *parent,QSharedPointer<Asset> asset) :
 DiagramItem(editorState,NULL,name,parent)
 {
@@ -16,16 +18,21 @@ DiagramItem(editorState,NULL,name,parent)
 	//setCursor(Qt::ArrowCursor);
 }
 
+/*! \brief When an ArrowPortItem is deleted, all Arrows attached to it are deleted as well.*/
 ArrowPortItem::~ArrowPortItem()
 {
 	removeArrows();
 }
 
+/*! \brief Attached a new arrow to this ArrowPortItem.
+*/
 void ArrowPortItem::addArrow(Arrow *arrow)
 {
     arrows.append(arrow);
 }
 
+/*! \brief Removes an Arrow from this ArrowPortItem without deleting it.
+*/
 void ArrowPortItem::removeArrow(Arrow *arrow)
 {
     int index = arrows.indexOf(arrow);
@@ -34,6 +41,12 @@ void ArrowPortItem::removeArrow(Arrow *arrow)
         arrows.removeAt(index);
 }
 
+/*! \brief Deletes all arrows that were attached to this ArrowPortItem and removes them from
+ *	all other ArrowPortItems to which they were attached.
+ *	\note This function doesn't clear the arrows list after deleting all the Arrow objects.  This isn't a problem
+ *	since it is only ever called from the destructor anyway, but for the sake of future proofing
+ *	it probably should do that.
+ */
 void ArrowPortItem::removeArrows()
 {
     foreach (Arrow *arrow, arrows) {
@@ -43,6 +56,8 @@ void ArrowPortItem::removeArrows()
     }
 }
 
+/*! \brief Tells all attached Arrow objects to redraw themselves when this ArrowPortItem moves.
+*/
 void ArrowPortItem::updateDependantGraphics()
 {
     foreach (Arrow *arrow, arrows) 
@@ -51,6 +66,8 @@ void ArrowPortItem::updateDependantGraphics()
     }
 }
 
+/*! \brief Sets the EditorState::EditMode to Select mode when the mouse is over this ArrowPortItem.
+*/
 void ArrowPortItem::hoverEnterEvent ( QGraphicsSceneHoverEvent *)
 {
 	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))
@@ -60,6 +77,8 @@ void ArrowPortItem::hoverEnterEvent ( QGraphicsSceneHoverEvent *)
 	}
 }
 
+/*! \brief Sets the EditorState::EditMode to a logical mode when leaving this ArrowPortItem.
+*/
 void ArrowPortItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * )
 {
 	if((editorState_->getEditMode() != EditorState::DrawLine) && (editorState_->getEditMode() != EditorState::PlaceItem))

@@ -55,26 +55,50 @@ class QGraphicsSceneMouseEvent;
 class QPainterPath;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief An arrow diagram that represents a transition in the Experimental Design's StateMachine.
+ *	\details An arrow is a long line with an arrowhead on the end whose tail starts either at an
+ *	element's red result bar or at the current StateMachine canvas's left hand side StartBar.  It 
+ *	must start from a set point in the center of the right hand side of a result bar, but always
+ *	ends at the nearest vertical point on a StateMachineElement's start bar.  If the arrow starts 
+ *	on a canvas start bar, it's start position has the same vertical position as the top left corner
+ *	of the element that it points to.  Currently, arrows do not "path plan."  Arrows go straight
+ *	over other elements.  In the future, it would be nice to add some path planning that would
+ *	allow the arrows to navigate around other elements as much as possible and attempt to cross other
+ *	transitions at as large of an angle as possible.
+ *
+ *	Much of the code for the Arrow is lifted from an example in the Qt toolkit.  For this reason there
+ *	is some functionality that we don't use here.  The file has been significantly modified for our
+ *	purposes.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class Arrow : public QGraphicsLineItem
 {
 public:
+	/*! \brief Every QGraphicsItem must have its own unique type.  Our types are in the QGraphicsItem::UserType space*/
     enum { Type = UserType + 4 };
 	static Arrow* Create(QSharedPointer<EditorState> editorState, QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent);
 	static Arrow* Create(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent);
 	virtual ~Arrow();
+	/*! \brief Every QGraphicsItem must have its own unique type.  This returns our custom type.
+	 *	\sa QGraphicsItem::type(), QGraphicsItem::UserType
+	 */
     int type() const
         { return Type; }
     QRectF boundingRect() const;
     QPainterPath shape() const;
+	/*! \brief Sets the color of the arrow.  This is currently not used.*/
     void setColor(const QColor &color)
         { myColor = color; }
+	/*! \brief Returns the DiagramItem to which this arrow's tail is connected.*/
     DiagramItem *startItem() const
         { return myStartItem; }
+	/*! \brief Returns the DiagramItem to which this arrow's head is connected.*/
     DiagramItem *endItem() const
         { return myEndItem; }
+	/*! \brief Returns the Transition object that this Arrow represents.*/
 	QSharedPointer<Asset> getAsset(){return transition_;};
 
 
@@ -99,6 +123,6 @@ private:
     QPolygonF arrowHead;
 	QMenu *myContextMenu;
 };
-//! [0]
+
 
 #endif

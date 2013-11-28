@@ -5,8 +5,11 @@
 
 namespace Picto {
 
-//! \brief Unimplemented. Stores information about the rewarder setup being used.
-
+/*!	\brief Unimplemented.  This class should probably be removed.
+ *	The original documentation appears below:
+ *
+ *	Unimplemented. Stores information about the rewarder setup being used.
+ */
 class RewardEquipment
 {
 public:

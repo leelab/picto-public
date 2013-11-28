@@ -4,6 +4,9 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+/*! \brief Creates a new AnalysisOutputWidgetContainer object for the run with the input 
+ *	runName.
+ */
 AnalysisOutputWidgetContainer::AnalysisOutputWidgetContainer(QString runName, QWidget* parent)
 : QWidget(parent)
 {
@@ -20,6 +23,8 @@ AnalysisOutputWidgetContainer::~AnalysisOutputWidgetContainer()
 {
 }
 
+/*! \brief Returns true if at least one of this widget's child widgets is saveable.
+ */
 bool AnalysisOutputWidgetContainer::isSaveable()
 {
 	foreach(QUuid widgetId,widgetLookup_.keys())
@@ -34,6 +39,13 @@ bool AnalysisOutputWidgetContainer::isSaveable()
 	return false;
 }
 
+/*! \brief Saves all of the saveable output from this widgets AnalysisOutputWidgets
+ *	 to the input directory.
+ *	\details If separateRunDirs is true, the data will be saved to a sub-directory
+ *	of the input directory named according to the current run name.
+ *	Returns true on success, false on failure.  If a sub-directory needs to be
+ *	made but cannot, a messagebox will also pop-up to that effect.
+ */
 bool AnalysisOutputWidgetContainer::saveOutputTo(QDir directory, bool separateRunDirs)
 {
 	if(!isSaveable())
@@ -68,6 +80,14 @@ bool AnalysisOutputWidgetContainer::saveOutputTo(QDir directory, bool separateRu
 	return true;
 }
 
+/*! \brief Adds the input AnalysisOutputWidget to this AnalysisOutputWidgetContainer's layout.
+ *	\details The input widget pointer is stored under the input identifier so that it can be
+ *	accessed by using that identifier in other parts of this class.  The input identifier should
+ *	be unique over all added widgets.  
+ *	\note In practice, this is only called by AnalysisOutput.  The identifier is the value
+ *	returned from AnalysisOutput::getWidgetIdentifier() for the AnalysisOutput that created
+ *	the AnalysisOutputWidget.
+ */
 void AnalysisOutputWidgetContainer::addWidget(QUuid identifier, AnalysisOutputWidget* widget)
 {
 	widgetLookup_[identifier] = widget;
@@ -79,6 +99,10 @@ void AnalysisOutputWidgetContainer::addWidget(QUuid identifier, AnalysisOutputWi
 	widget->setVisible(false);
 }
 
+/*! \brief Called when the AnalysisOutput that created the widget stored under the input 
+ *	widgetIdentifier enters scope.  Enables that widget in the layout and emits detectedSaveable() if
+ *	it is saveable.
+ */
 void AnalysisOutputWidgetContainer::widgetIsValid(QUuid widgetIdentifier)
 {
 	if(!widgetLookup_.contains(widgetIdentifier))

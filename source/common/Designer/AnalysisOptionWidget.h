@@ -10,8 +10,16 @@
 #include "../parameter/Analysis.h"
 
 namespace Picto {
-//! [0]
-//Widget for selecting from a lit of available Analyses
+/*! \brief A drop down menu for selecting Analyses... currently not used.
+ *	\details When we started the final version of the analysis system, we used
+ *	this widget to allow users to choose which Analysis they wanted to run.
+ *	As time went on, features like selecting multiple Analyses and including
+ *	built-in and importable analyses in one widget became apparent and we have
+ *	now moved to using the AnalysisSelectorWidget.
+ *	\sa AnalysisSelectorWidget
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AnalysisOptionWidget : public QWidget
 #else
@@ -54,5 +62,5 @@ private slots:
 	void deleteSelectedAnalysis();
 };
 };
-//! [0]
+
 #endif

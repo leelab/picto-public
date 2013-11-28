@@ -5,12 +5,14 @@
 
 namespace Picto {
 
-/*!	\brief An empty event code generator
+/*!	\brief An empty event code generator for testing purposes
  *
  *	Since we aren't always running with access to a neural recording 
- *	device, we don't always need to generate event codes.  So, the
+ *	device, we don't always need to generate event codes.  The
  *	NullEventCodeGenerator serves this purpose.  When an event code
  *	is "generated", the null generator sinply outputs its value to the debug console.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE

@@ -10,7 +10,7 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+/*! \brief Constructs a new AutoSaveDialog that will display the files whose paths are entered in files.*/
 AutoSaveDialog::AutoSaveDialog(QStringList files,QWidget *parent) :
 	QDialog(parent,Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint),
 	deleteIcon_(":/icons/delete.png")
@@ -40,6 +40,11 @@ AutoSaveDialog::AutoSaveDialog(QStringList files,QWidget *parent) :
 	updateContents();
 }
 
+/*! \brief Draws the contents of the AutoSaveDialog based on the latest available information.
+ *	\details When a file is deleted from the widget for example, its path is removed from the
+ *	list of files.  updateContents() is then called to redraw the widget without the file that
+ *	was deleted.
+ */
 void AutoSaveDialog::updateContents()
 {
 	Q_ASSERT(files_.size());
@@ -84,10 +89,16 @@ void AutoSaveDialog::updateContents()
 	//layout->addStretch(1);
 }
 
+/*! \brief Called whenever one of the files' checkboxes is checked or unchecked.
+ *	\details Currently we are not doing anything in this function.
+ */
 void AutoSaveDialog::checkboxChanged(bool)
 {
 }
 
+/*! \brief Called whenever one of the files' delete buttons is pressed. 
+ *	details Emits a deleteFileRequest(), removes the file from the files_ list and schedules a call to updateContents()
+ */
 void AutoSaveDialog::deleteTriggered(int buttonIndex)
 {
 	Q_ASSERT(filePathLookup_.contains(buttonIndex));
@@ -104,6 +115,8 @@ void AutoSaveDialog::deleteTriggered(int buttonIndex)
 		done(0);
 }
 
+/*! \brief Called when the restore button is pressed. Emits restoreFileRequest() and closes the dialog.
+*/
 void AutoSaveDialog::restoreTriggered(bool)
 {
 	done(0);
@@ -114,7 +127,8 @@ void AutoSaveDialog::restoreTriggered(bool)
 		emit restoreFileRequest(filePathLookup_[selectedIndex]);
 	}
 }
-
+/*! \brief Called when the ignore button is pressed.  Closes the dialog.
+*/
 void AutoSaveDialog::ignoreTriggered(bool)
 {
 	done(0);

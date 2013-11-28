@@ -20,6 +20,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new Analysis object.
+ *	\details Sets up the various AssetFactories for creation of all of the Analysis elements.
+ */
 Analysis::Analysis()
 :	AssociateRoot(),
 	variableFactory_(new AssetFactory(0,-1)),
@@ -76,6 +79,7 @@ Analysis::Analysis()
 	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
+/*! \brief Creates a new Analysis object and returns a shared asset pointer to it.*/
 QSharedPointer<Asset> Analysis::Create()
 {
 	QSharedPointer<Analysis> newAnalysis(new Analysis());
@@ -83,6 +87,9 @@ QSharedPointer<Asset> Analysis::Create()
 	return newAnalysis;
 }
 
+/*! \brief Extends AssociateRoot::upgradeVersion() to fix a specific bug in Analysis serializations from before design syntax version 0.0.2
+ *	\details Before 0.0.2, a copy paste error led to all data sources being saved with the AnalysisScriptContainer tag.  See function code for more details.
+ */
 void Analysis::upgradeVersion(QString deserializedVersion)
 {
 	AssociateRoot::upgradeVersion(deserializedVersion);

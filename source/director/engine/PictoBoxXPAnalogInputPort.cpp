@@ -4,7 +4,8 @@
 
 #include "../../common/timing/Timestamper.h"
 #include "../../common/memleakdetect.h"
-
+/*! \file */
+/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.*/
 #define DAQmxErrChk(rc) { if (rc) { \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
@@ -15,7 +16,8 @@
 							Q_ASSERT_X(!rc, "PictoBoxXPAnalogInputPort", msg.toLatin1()); \
 						} }
 						
-
+/*! \brief The device name of the Pictobox's DAQ card.  This is the default since Pictobox includes only a single DAQ card.
+*/
 #define DEVICE_NAME "Dev1"
 #define TASK_NAME "SigChanCapture"
 #define BUFFER_SIZE_PER_CHAN 300
@@ -28,11 +30,10 @@ PictoBoxXPAnalogInputPort::PictoBoxXPAnalogInputPort()
 	bufferSize_ = 0;
 }
 
-/*!	\brief Starts the DAQ collecting data.
- *
- *	This should be called as close to the point at which the data will actually
- *	be collected as possible.  Otherwise, data will pile up in the buffer.
- *	Also note that calling this clears out any existing data in the channel.
+/*!	\copydoc InputPort::startSampling()
+ *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and run it whenever we want to sample
+ *	input data (DAQmxStartTask()).
+ *	\details Sample rate is configured using DAQmxCfgSampClkTiming().
  */
 bool PictoBoxXPAnalogInputPort::startSampling()
 {
@@ -79,6 +80,7 @@ bool PictoBoxXPAnalogInputPort::startSampling()
 void PictoBoxXPAnalogInputPort::stopSampling()
 {
 	DAQmxErrChk (DAQmxStopTask(daqTaskHandle_));
+	//Since we created the dataBuffer_ during startSampling(), we delete it during stopSampling()
 	if(dataBuffer_)
 	{
 		delete[] dataBuffer_;
@@ -87,6 +89,11 @@ void PictoBoxXPAnalogInputPort::stopSampling()
 	return;
 }
 
+/*! \copydoc InputPort::updateDataBuffer()
+ *	\details The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16().  We estimate the precise
+ *	read time by storing the time just after that function is called.  That is the time that is returned from the
+ *	function,
+ */
 double PictoBoxXPAnalogInputPort::updateDataBuffer()
 {
 	long totalSampsRead = 0;
@@ -121,22 +128,3 @@ double PictoBoxXPAnalogInputPort::updateDataBuffer()
 	}while(sampsPerChanRead == BUFFER_SIZE_PER_CHAN); //In case there are more data points than will fit in the buffer
 	return readTime;
 }
-
-//void PictoBoxXPAnalogInputPort::updateDataBuffer()
-//{
-//	port_->updateDataBuffer(/*PUT FIRST PHOSPHOR TIMESTAMP HERE*/);
-//	QMap<QString,int>::iterator iter = channelNumMap_.begin();
-//	int frameOffset = 0;
-//	for(;iter != channelNumMap_.end();iter++)
-//	{
-//		rawDataBuffer_[iter.key()] << port_->getData(iter.value());
-//	}
-//	int frameOffset = port_->getFrameToSampleOffset(iter.value());
-//	iter = channelNumMap_.begin();
-//	int i=0;
-//	while(rawDataBuffer_["time"].size() < rawDataBuffer_[iter.key()])
-//	{
-//		rawDataBuffer_["time"] << frameOffset+msPerSample_*i++;
-//	}
-//		
-//}

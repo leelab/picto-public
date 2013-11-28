@@ -88,6 +88,8 @@ void TransitionState::moveToIndex(PlaybackIndex index)
 	}
 }
 
+/*! \brief Returns the Asset Id of the first Transition in the current run.
+ */
 int TransitionState::getFirstTransIdInRun()
 {
 	if(firstLocationInRun_ < 0 || firstLocationInRun_ >= data_.size())

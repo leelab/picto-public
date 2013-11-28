@@ -10,6 +10,9 @@ using namespace Picto;
 
 QHash<QString,int> FileSessionLoader::connectionUsers_;
 
+/*! \brief Constructs a new FileSessionLoader.
+ *	\details The FileSessionLoader will load file data into the input SessionState.
+ */
 FileSessionLoader::FileSessionLoader(QSharedPointer<SessionState> sessState)
 : sessionState_(sessState),
 runIndex_(-1),
@@ -19,6 +22,8 @@ sessionDataLoaded_(false)
 		connect(sessionState_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
 }
 
+/*! \brief Removes the connection to the current database before this FileSessionLoader is deleted.
+*/
 FileSessionLoader::~FileSessionLoader()
 {
 	sessionState_.clear();
@@ -34,6 +39,8 @@ FileSessionLoader::~FileSessionLoader()
 	}
 }
 
+/*! \brief Sets the file path to the session file that will be loaded into the SessionState.
+ */
 bool FileSessionLoader::setFile(QString path)
 {
 	sessionDataLoaded_ = false;
@@ -74,11 +81,16 @@ bool FileSessionLoader::setFile(QString path)
 	return true;
 }
 
+/*! \brief Returns the DesignRoot for the Design loaded in loadDesignDefinition() when setFile() was called.
+ *	\details If no design was loaded, an empty DesignRoot shared pointer will be returned.
+ */
 QSharedPointer<DesignRoot> FileSessionLoader::getDesignRoot()
 {
 	return designRoot_;
 }
 
+/*! \brief Returns a list of names of runs that were loaded from the session file.
+*/
 QStringList FileSessionLoader::getRunNames()
 {
 	QStringList returnVal;
@@ -89,6 +101,9 @@ QStringList FileSessionLoader::getRunNames()
 	return returnVal;
 }
 
+/*! \brief Returns a list of the notes saved by the operator for runs that were loaded from the session file.
+ *	\details One entry appears for each name returned from getRunNames() and in the same order.
+*/
 QStringList FileSessionLoader::getRunNotes()
 {
 	QStringList returnVal;
@@ -99,6 +114,8 @@ QStringList FileSessionLoader::getRunNotes()
 	return returnVal;
 }
 
+/*! \brief Returns a list of the names of runs that were saved by the operator during the session.
+*/
 QStringList FileSessionLoader::getSavedRunNames()
 {
 	QStringList returnVal;
@@ -110,6 +127,14 @@ QStringList FileSessionLoader::getSavedRunNames()
 	return returnVal;
 }
 
+/*! \brief Loads the run at the input index (with respect to the list returned from getRunNames())
+ *	into the SessionState for playback.
+ *	\details Returns true if the run was successfully loaded, false otherwise.
+ *	\note The first time this is called after a Session file is loaded, SessionState::setSessionData() is called
+ *	which loads all session data (including every run) into the SessionState.  This will take a long time and lots of memory.
+ *	On subsequent calls to this function, that is no longer necessary, so we just change the currently
+ *	selected run.
+ */
 bool FileSessionLoader::loadRun(int index)
 {
 	if(runIndex_ == index)
@@ -138,6 +163,9 @@ bool FileSessionLoader::loadRun(int index)
 	return true;
 }
 
+/*! \brief Returns the duration (in seconds) of the run at the input index, where the index is with
+ *	respect to the list returned from getRunNames()
+ */
 double FileSessionLoader::runDuration(int index)
 {
 	if(index < 0 || index >= runs_.size())
@@ -145,17 +173,26 @@ double FileSessionLoader::runDuration(int index)
 	return runs_[index].endTime_-runs_[index].startTime_;
 }
 
+/*! \brief Returns the total duration of the currently loaded run.
+ *	\sa loadRun()
+ */
 double FileSessionLoader::currRunDuration()
 {
 	return runDuration(runIndex_);
 }
 
+/*! \brief Returns the name of the currently loaded run.
+ *	\sa loadRun()
+ */
 QString FileSessionLoader::currRunName()
 {
 	Q_ASSERT(runIndex_ >= 0 && runIndex_ < runs_.size());
 	return runs_[runIndex_].name_;
 }
 
+/*! \brief Loads data about this sessions runs into this classes runs_ data structure for report in functions like
+ *	getRunNames(), getRunNotes(), etc.
+ */
 bool FileSessionLoader::loadRunData()
 {
 	runs_.clear();
@@ -196,6 +233,8 @@ bool FileSessionLoader::loadRunData()
 	return true;
 }
 
+/*! \brief This function is no longer used and should be removed.  Its functionality is handled in loadRun().
+*/
 double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
 {
 	if(!getDatabase().isOpen())
@@ -213,6 +252,12 @@ double FileSessionLoader::loadNeuralData(double after,double to,double subtractT
 	return to;
 }
 
+/*! \brief Loads all information about which signals were used in the session and sets that data into the SessionState.
+ *	\details This tells the SessionState how many objects it needs to handle loading of the Session's signal data
+ *	and causes it to set them up properly.
+ *	\note The sigs_ vector added to here does not appear to be used anywhere and may be a memory leak.  It should probably
+ *	be removed.
+ */
 bool FileSessionLoader::getSignalInfo()
 {
 	QSqlQuery query(getDatabase());
@@ -245,6 +290,16 @@ bool FileSessionLoader::getSignalInfo()
 	return true;
 }
 
+/*! \brief Loads the DesignRoot used in the session file so that it can be returned from getDesignRoot().
+ *	\details This function needs to deal with interfacing different versions of Picto too.  When the DesignRoot
+ *	is loaded, some of its Assets might be considered obsolete and upgraded automatically.  This means that some Asset ID values
+ *	may change.  To be sure that the Asset ID values in the upgraded design match those in the session file, we use
+ *	a SessionVersionInterfacer which fixes the upgraded DesignRoot's tree so that the AssetIDs match up with the values
+ *	in the Session file.  The SessionVersionInterfacer also provides us with a list of "obsolete asset ids" which we can
+ *	send into the SessionState so that changes to values of Properties that are children of Obsolete Assets can be 
+ *	ignored.
+ *	\sa SessionVersionInterfacer, SessionState::setSessionData()
+ */
 bool FileSessionLoader::loadDesignDefinition()
 {
 	////////////////////////
@@ -340,6 +395,8 @@ bool FileSessionLoader::loadDesignDefinition()
 	return true;
 }
 
+/*! \brief Returns a QSqlDatabase object that can be used to query data from the Session file.
+*/
 QSqlDatabase FileSessionLoader::getDatabase()
 {
 	return QSqlDatabase::database(connectionName_);

@@ -22,7 +22,9 @@ AnalysisBinaryOutputWidget::AnalysisBinaryOutputWidget(QWidget* parent)
 AnalysisBinaryOutputWidget::~AnalysisBinaryOutputWidget()
 {
 }
-
+/*! \brief Sets the file who's contents this widget will display (once the widget actually starts to display binary contents)
+ *	\note The input filename should be the full name including filepath.
+ */
 bool AnalysisBinaryOutputWidget::setFile(QString filename)
 {
 	QString objName = filename.mid(filename.lastIndexOf("/")+1);
@@ -37,7 +39,9 @@ bool AnalysisBinaryOutputWidget::isSaveable()
 {
 	return true;
 }
-
+/*! \brief Copies the underlying temporary data file to the input directory, returns true if successful, false otherwise.
+ *	\details If the copy operation fails, a message box pops up to that affect.
+*/
 bool AnalysisBinaryOutputWidget::saveOutputTo(QDir directory)
 {	
 	if(!file_)

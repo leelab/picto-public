@@ -5,6 +5,8 @@
 #include "ArrowDestinationItem.h"
 #include "Arrow.h"
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new ScriptItem for the input scriptProperty with the input baseColor.  Other inputs are passed directly to the DiagramItem constructor.
+*/
 ScriptItem::ScriptItem(QSharedPointer<Property> scriptProperty, QColor baseColor, QSharedPointer<EditorState> editorState,QGraphicsItem *parent) :
 DiagramItem(editorState,NULL,"",parent)
 {
@@ -61,6 +63,9 @@ void ScriptItem::setRect(QRectF rect)
 	setBrush(brush);
 }
 
+/*! \brief Disables the itemChange function of DiagramItem since ScriptItems can't be independently
+ *	moved or become WindowAssets.
+ */
 QVariant ScriptItem::itemChange(GraphicsItemChange change, const QVariant & value)
 {
 	//QVariant returnVal = value;
@@ -74,7 +79,8 @@ QVariant ScriptItem::itemChange(GraphicsItemChange change, const QVariant & valu
 	return QGraphicsItem::itemChange(change, value);
 
 }
-
+/*! \brief Called when the script Property represented by this ScriptItem is edited to update its script contents tooltip and search highlighting.
+*/
 void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 {
 	latestText_ = newValue.toString();
@@ -94,6 +100,8 @@ void ScriptItem::scriptPropEdited(Property*,QVariant newValue)
 	}
 }
 
+/*! \brief Called when a search is requested to highlight the ScriptItem if its script contents match the search.
+*/
 void ScriptItem::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)

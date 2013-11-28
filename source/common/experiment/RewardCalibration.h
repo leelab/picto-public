@@ -10,7 +10,11 @@
 namespace Picto
 {
 
-/*! \brief Calibration tool for the reward controller
+/*! \brief This class is no longer used since Calibration is now handled in the form of a 
+ *	Reward calibration Task that designers may add to their experiments.  
+ *	The original documentation appears below:
+ *	
+ *	Calibration tool for the reward controller
  *
  *	The RewardCalibration object provides the framework for calibrating
  *	the reward controller.  The object allows for a fixed number of rewards

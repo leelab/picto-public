@@ -4,8 +4,11 @@
 #include "../common.h"
 
 namespace Picto {
-
-//! \brief Unimplemented. Stores information about the data source being used. (I'm not sure what is meant by this...)
+/*!	\brief Unimplemented.  This class should probably be removed.
+ *	The original documentation appears below:
+ *
+ *	Unimplemented. Stores information about the data source being used. (I'm not sure what is meant by this...)
+ */
 class DataSourceEquipment
 {
 public:

@@ -3,6 +3,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new AnalysisScriptHolder.
+ *	\details Adds three Properties, AnalysisEntryScript, AnalysisFrameScript, AnalysisExitScript
+ */
 AnalysisScriptHolder::AnalysisScriptHolder()
 : ScriptableContainer()
 {
@@ -15,11 +18,12 @@ AnalysisScriptHolder::AnalysisScriptHolder()
 	requireUniqueName(false);
 }
 
+/*! brief Creates a new AnalysisScriptHolder and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> AnalysisScriptHolder::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisScriptHolder());
 }
-
+/*! \brief Runs the input script type if it exists.*/
 void AnalysisScriptHolder::runScript(ScriptType type)
 {
 	//Monitor for changes in any Experimental properties during the running of the scripts below.
@@ -53,7 +57,7 @@ void AnalysisScriptHolder::runScript(ScriptType type)
 	}
 }
 
-//Returns true if this object contains a property of the input type, whether or not it is empty.
+/*! \brief Returns true if this object contains a Property of the input type, whether or not it is empty.*/
 bool AnalysisScriptHolder::hasScriptPropertyType(ScriptType type)
 {
 	switch(type)
@@ -85,6 +89,11 @@ bool AnalysisScriptHolder::isPartOfSearch(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief Emits a runtime error if an Analysis Script causes an Experimental Property value to change.
+ *	\details Analyses should not change Experimental Property values since it is analyzing, not affecting
+ *	the run.  If it does so then some kind of design error occured and the integrity of the Analysis output
+ *	may be compromised, so we emit a runtime error.
+*/
 QString AnalysisScriptHolder::getReturnValueError(QString scriptName,const QScriptValue& returnValue)
 {
 	QString resultError = "";
@@ -156,11 +165,12 @@ QMap<QString,QString> AnalysisScriptHolder::getScripts()
 	return scripts;
 }
 
-//Since this object gets created as soon as a script is written and sticks around even if that script
-//is deleted:
-//In the case where its scripts are all empty and a search for its simple existance comes through, 
-//it overloads the default behavior and returns false, since it might as well not exist and will
-//not be visible in the UI.
+/*!	\brief Extends the search algorithm so that we don't have false positives in certain types of searches.
+ *	\details Since this object gets created as soon as a script is written and sticks around even if that script
+ * is deleted, in cases where its scripts are all empty and a search for its simple existance comes through, 
+ * we need to overload the default behavior and return false. If all scripts are empty, this element might as well 
+ * not exist and should not be considered a relavent AnalysisElement in the UI.
+ */
 bool AnalysisScriptHolder::executeSearchAlgorithm(SearchRequest searchRequest)
 {
 	if(!hasScripts())
@@ -168,6 +178,10 @@ bool AnalysisScriptHolder::executeSearchAlgorithm(SearchRequest searchRequest)
 	return ScriptableContainer::executeSearchAlgorithm(searchRequest);
 }
 
+/*! \brief Creates an appropriate prefix for names of this elements scripts.
+ *	\details The prefix is something like "LinkedAssetNameAnalysis" meaning that an Exit script would have
+ *	the name "LinkedAssetNameAnalysisExit".
+ */
 QString AnalysisScriptHolder::getScriptNamePrefix()
 {
 	QSharedPointer<Asset> linkedAsset = getLinkedAsset();
@@ -175,6 +189,9 @@ QString AnalysisScriptHolder::getScriptNamePrefix()
 	return linkedAsset->getName().simplified().remove(' ')+"Analysis";
 }
 
+/*! \brief Called when this AssociateElement links to a design element.  Deletes the AnalysisFrameScript if this element
+ *	didn't attach to a State.
+ */
 void AnalysisScriptHolder::linkedToAsset(QSharedPointer<Asset> asset)
 {
 	//If this script container contains a frame script and is not linked to a state, erase

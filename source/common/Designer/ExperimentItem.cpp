@@ -1,5 +1,6 @@
 #include "ExperimentItem.h"
 #include "../../common/memleakdetect.h"
+/*! \brief Constructs a new ExperimentItem.  Inputs are passed directly to the AssetItem::AssetItem.*/
 ExperimentItem::ExperimentItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QSharedPointer<Asset> asset) :
 AssetItem(editorState,contextMenu,asset)
 {
@@ -15,6 +16,7 @@ void ExperimentItem::setRect(QRectF rect)
 	float stopPoint = (getIconRect().top()-getRect().top())/getRect().height();
 	QColor startColor("darkslategrey");
 	QColor stopColor("lightslategrey");
+	//Grey out this item if we're in "Analysis design" mode
 	if(!editorState_->getCurrentAnalysis().isNull())
 	{
 		startColor.setAlpha(100);
@@ -28,12 +30,20 @@ void ExperimentItem::setRect(QRectF rect)
 	AssetItem::setRect(rect);
 }
 
+/*! \brief Stops the AssetItem from handling hoverEnterEvents if we're in "Analysis Design" mode, when
+ *	experiment design operations are not allowed.
+ */
 void ExperimentItem::hoverEnterEvent ( QGraphicsSceneHoverEvent *event )
 {
 	if(editorState_->getCurrentAnalysis().isNull())
 		AssetItem::hoverEnterEvent(event);
 }
 
+/*! \brief Called when the current Analysis changes to enable/disable/alter certain DiagramItem characteristics based on
+ *	whether we are operating in "Analysis Design" or "ExperimentDesign" mode.
+ *	\note It seems like this should have been connected to the EditorState::currentAnalysisChanged() signal, but I am 
+ *	not going to change this now.  Its worth looking into though.
+ */
 void ExperimentItem::currentAnalysisChanged(QSharedPointer<Analysis> currAnalysis)
 {
 	setFlag(QGraphicsItem::ItemIsMovable,currAnalysis.isNull());
@@ -48,6 +58,8 @@ void ExperimentItem::currentAnalysisChanged(QSharedPointer<Analysis> currAnalysi
 	applyIconOpacity();
 }
 
+/*! \brief This function doesn't do anything and should probably be removed.
+*/
 void ExperimentItem::applyIconOpacity()
 {
 	////Make sure the opacity effect is installed on the svg icon

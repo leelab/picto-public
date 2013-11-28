@@ -1,8 +1,14 @@
 #include "AssetDescriber.h"
 
+/*! \brief Indicates whether documentation text has been fully loaded into the AssetDescriber
+ *	system.
+ */
 bool AssetDescriber::isSetup_ = false;
+/*! \brief A lookup table containing AssetDescription objects under className keys.*/
 QHash<QString,QSharedPointer<AssetDescription>> AssetDescriber::assetHash_;
 
+/*! \brief A helpful function used to remove duplicate entries in a pre-ordered stringlist
+*/
 void removeCopies(QStringList& stringList)
 {
 	for(QStringList::Iterator iter = stringList.begin();iter != stringList.end();iter++)
@@ -15,11 +21,16 @@ void removeCopies(QStringList& stringList)
 	}
 }
 
+/*! \brief Returns a text overview of the class represented by this AssetDescription.*/
 QString AssetDescription::getOverview()
 {
 	return overview;
 }
 
+/*! \brief Returns a list of properties that elements of the class represented by this AssetDescription contain.
+ *	\details Properties are the values that appear on the right hand side of the Designer that define each
+ *	element.
+*/
 QStringList AssetDescription::getProperties()
 {
 	QStringList returnVal;
@@ -31,6 +42,15 @@ QStringList AssetDescription::getProperties()
 	removeCopies(returnVal);
 	return returnVal;
 }
+
+/*! \brief Returns a list of script properties that elements of the class represented by this AssetDescription contain.
+ *	\details Script properties are properties that are usable in scripts in a set/get scenario such as: 
+ *	\code
+ *	boxGraphic.x = 132;
+ *	boxGraphic.red = 15;
+ *	boxTarget.x = boxGraphic.x;
+ *	\endcode
+*/
 QStringList AssetDescription::getScriptProperties()
 {
 	QStringList returnVal;
@@ -42,6 +62,15 @@ QStringList AssetDescription::getScriptProperties()
 	removeCopies(returnVal);
 	return returnVal;
 }
+/*! \brief Returns a list of script functions that elements of the class represented by this AssetDescription contain.
+ *	\details Script functions are functions that are usable in scripts to set or get data, ie.: 
+ *	\code
+ *	if(fixState.getLatestResult() == "Success")
+ *	{
+ *		fixGraphic.setPos(100,200);
+ *	}
+ *	\endcode
+*/
 QStringList AssetDescription::getScriptFunctions()
 {
 	QStringList returnVal;
@@ -53,6 +82,9 @@ QStringList AssetDescription::getScriptFunctions()
 	removeCopies(returnVal);
 	return returnVal;
 }
+/*! \brief Returns a text description of the Property with the input name. 
+ *	\sa getProperties()
+ */
 QString AssetDescription::getPropertyDescription(QString name)
 {
 	if(props.contains(name))
@@ -61,6 +93,9 @@ QString AssetDescription::getPropertyDescription(QString name)
 		return inherits->getPropertyDescription(name);
 	return "";
 }
+/*! \brief Returns a text description of the Script Property with the input name. 
+ *	\sa getScriptProperties()
+ */
 QString AssetDescription::getScriptPropertyDescription(QString name)
 {
 	if(scriptProps.contains(name))
@@ -69,6 +104,10 @@ QString AssetDescription::getScriptPropertyDescription(QString name)
 		return inherits->getScriptPropertyDescription(name);
 	return "";
 }
+
+/*! \brief Returns a text description of the Script Function with the input name. 
+ *	\sa getScriptFunctions()
+ */
 QString AssetDescription::getScriptFunctionDescription(QString name)
 {
 	if(scriptFunctions.contains(name))
@@ -78,6 +117,10 @@ QString AssetDescription::getScriptFunctionDescription(QString name)
 	return "";
 }
 
+/*! \brief Returns an AssetDescription object describing Assets of the input className.
+ *	\details If no information is found for the input className, an empty AssetDescription
+ *	QSharedPointer is returned.
+ */
 QSharedPointer<AssetDescription> AssetDescriber::getAssetDescription(QString className)
 {
 	if(!isSetup_)
@@ -90,6 +133,9 @@ QSharedPointer<AssetDescription> AssetDescriber::getAssetDescription(QString cla
 	return assetHash_.value(className);
 }
 
+/*! \brief Creates and AssetDescription for the input className, adds it to the className lookup table and returns it
+ *	so that it can be filled with descriptive text.
+ */
 QSharedPointer<AssetDescription> AssetDescriber::addDescription(QString className)
 {
 	QSharedPointer<AssetDescription> newDescription(new AssetDescription());
@@ -97,6 +143,16 @@ QSharedPointer<AssetDescription> AssetDescriber::addDescription(QString classNam
 	assetHash_[className] = newDescription;
 	return newDescription;
 }
+/*! \brief A giant function that loads all descriptive text into all AssetDescriptions for every
+ *	class used in the Picto Designer.
+ *	\details Putting all the text in this one big function is a somewhat clunky way to do things, 
+ *	but has some nice features such as allowing us to only load the documentation if we need it.  It
+ *	would be cleaner to store the documentation with the class being documented and we should probably
+ *	do this at some point.  There are a few things to think about if we do that though.  We want the 
+ *	documentation to be stored statically, not in every class instance.  We also want to be able to 
+ *	retreive inherited function, data descriptions, and it would be nice if we could set things up so
+ *	that no ducumnentation is stored if not necessary.
+ */
 void AssetDescriber::setupDescriptions()
 {
 	QSharedPointer<AssetDescription> curr;

@@ -9,7 +9,7 @@ AnalysisLfpData::AnalysisLfpData()
 {
 	zeroTime_ = 0;
 }
-
+/*! \brief Creates a new AnalysisLfpData object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> AnalysisLfpData::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisLfpData());
@@ -22,8 +22,8 @@ void AnalysisLfpData::enteredScope()
 	lfpReader_ = getDesignConfig()->getLfpReader();
 }
 
-//Sets the time of the latest frame to zero.  Reward times will be returned with respect to
-//this latest frame.
+/*! \brief Sets the time of the latest frame to zero.  LFP times will be returned with respect to this latest frame time.
+*/
 void AnalysisLfpData::zeroLatestFrame()
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -33,7 +33,8 @@ void AnalysisLfpData::zeroLatestFrame()
 	zeroTime_ = latestTime;
 }
 
-//Returns the sub channels of the signal
+/*! \brief Returns a list of the channels on which lfp data was captured during this run.
+*/
 QVariantList AnalysisLfpData::getChannels()
 {
 	if(!lfpReader_)
@@ -41,7 +42,8 @@ QVariantList AnalysisLfpData::getChannels()
 	return lfpReader_->getChannels();
 }
 
-//Returns the sample period for this signal.
+/*! \brief Returns the sample period for lfp data capture.
+*/
 double AnalysisLfpData::getSamplePeriod()
 {
 	if(!lfpReader_)
@@ -49,7 +51,8 @@ double AnalysisLfpData::getSamplePeriod()
 	return lfpReader_->getSamplePeriod();
 }
 
-//Returns the time of the latest reward to have been supplied
+/*! \brief Returns the time of the latest lfp data sample.
+*/
 double AnalysisLfpData::getLatestTime()
 {
 	if(!lfpReader_)
@@ -58,7 +61,8 @@ double AnalysisLfpData::getLatestTime()
 	return result;
 }
 
-//Returns the latest value of the input subchannel
+/*! \brief Returns the latest lfp value on the channel.
+*/
 double AnalysisLfpData::getLatestValue(int channel)
 {
 	if(!lfpReader_)
@@ -66,7 +70,8 @@ double AnalysisLfpData::getLatestValue(int channel)
 	return lfpReader_->getLatestValue(channel);
 }
 
-//Returns an array of the latest values ordered according to the sub channel order returned from getComponentNames()
+/*! \brief Returns an list of the latest values ordered according to the channel order returned from getChannels().
+*/
 QVariantList AnalysisLfpData::getLatestValue()
 {
 	if(!lfpReader_)
@@ -80,7 +85,9 @@ QVariantList AnalysisLfpData::getLatestValue()
 	return result;
 }
 
-//Returns the time of the next signal to have be read
+/*! \brief Returns the time at which the next signal will be read.
+ *	\note In a live test, this will not return a valid value.
+ */
 double AnalysisLfpData::getNextTime()
 {
 	if(!lfpReader_)
@@ -89,7 +96,9 @@ double AnalysisLfpData::getNextTime()
 	return result;
 }
 
-//Returns the next value that will be read for the input signal component
+/*! \brief Returns the next value that will be read for the input channel.
+ *	\note In a live test, this will not return a valid value.
+ */
 double AnalysisLfpData::getNextValue(int channel)
 {
 	if(!lfpReader_)
@@ -97,7 +106,9 @@ double AnalysisLfpData::getNextValue(int channel)
 	return lfpReader_->getNextValue(channel);
 }
 
-//Returns an array of the next values to be read ordered according to the sub channel order returned from getComponentNames()
+/*! \brief Returns a list of the next values to be read ordered according to the channel order returned from getChannels().
+ *	\note In a live test, this will not return valid values.
+ */
 QVariantList AnalysisLfpData::getNextValue()
 {
 	if(!lfpReader_)
@@ -111,7 +122,8 @@ QVariantList AnalysisLfpData::getNextValue()
 	return result;
 }
 
-//Returns a list of signal read times that occured with times > the input # sec before the latest frame and <= the latest frame time
+/*! \brief Returns a list of lfp sample times that occured with times > the input # sec before the latest frame and <= the latest frame time.
+*/
 QVariantList AnalysisLfpData::getPrevTimes(double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -130,7 +142,9 @@ QVariantList AnalysisLfpData::getPrevTimes(double secsPreceding)
 	return returnVal;
 }
 
-//Returns a list of signal valuesread times that will occur with times > the latest frame time and <= the input # sec after the latest frame
+/*! \brief Returns a list of lfp sample times that will occur with times > the latest frame time and <= the input # sec after the latest frame.
+ *	\note In a live test, this will not return valid values.
+ */
 QVariantList AnalysisLfpData::getNextTimes(double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -148,14 +162,16 @@ QVariantList AnalysisLfpData::getNextTimes(double secsFollowing)
 	}
 	return returnVal;
 }
-
+/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getTimesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevTimes(offsetTime);
 }
-
+/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getTimesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -163,7 +179,8 @@ QVariantList AnalysisLfpData::getTimesUntil(double upToTime)
 	return getNextTimes(offsetTime);
 }
 
-//Returns a list of signal values for the input sub channel that occured with times > the input # sec before the latest frame and <= the latest frame time
+/*! \brief Returns a list of lfp values for the input channel that occured with times > the input # sec before the latest frame and <= the latest frame time.
+*/
 QVariantList AnalysisLfpData::getPrevValues(int channel,double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -176,7 +193,8 @@ QVariantList AnalysisLfpData::getPrevValues(int channel,double secsPreceding)
 	QVariantList returnVal = lfpReader_->getValuesSince(channel,minRunTime);
 	return returnVal;
 }
-//Returns a list of signal values for the input sub channel that will occur with times > the latest frame time and <= the input # sec after the latest frame and <= the latest frame time
+/*! \brief Returns a list of lfp values for the input channel that will occur with times > the latest frame time and <= the input # sec after the latest frame and <= the latest frame time.
+*/
 QVariantList AnalysisLfpData::getNextValues(int channel,double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -189,25 +207,32 @@ QVariantList AnalysisLfpData::getNextValues(int channel,double secsFollowing)
 	QVariantList returnVal = lfpReader_->getValuesUntil(channel,maxRunTime);
 	return returnVal;
 }
-
+/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getValuesSince(int channel,double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(channel,offsetTime);
 }
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getValuesUntil(int channel,double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
 	double offsetTime = globalTime - getLatestRunTime();
 	return getNextValues(channel,offsetTime);
 }
+/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getValuesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(offsetTime);
 }
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisLfpData::getValuesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -215,10 +240,11 @@ QVariantList AnalysisLfpData::getValuesUntil(double upToTime)
 	return getNextValues(offsetTime);
 }
 
-//Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
-//that will occur with times > the input # sec before the latest frame time and <= the latest 
-//frame time. Times should be incremented by one getSamplePeriod() for every 
-//getComponentNames().length() entries.
+/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels())
+ *	that will occur with times > the input # sec before the latest frame time and <= the latest 
+ *	frame time. Times should be incremented by one getSamplePeriod() for every 
+ *	new entry in the outer list.
+ */
 QVariantList AnalysisLfpData::getPrevValues(double secsPreceding)
 {
 	QVariantList channels = getChannels();
@@ -254,10 +280,11 @@ QVariantList AnalysisLfpData::getPrevValues(double secsPreceding)
 	}
 	return result;
 }
-//Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
-//that will occur with times > the latest frame time and <= the input # sec after the latest frame 
-//and <= the latest frame time. Times should be incremented by one getSamplePeriod() for every 
-//getComponentNames().length() entries.
+/*! \brief Returns a list of lfp value lists (where sub lists are ordered like the result of getChannels())
+ *	that will occur with times > the latest frame time and <= the input # sec after the latest frame 
+ *	and > the latest frame time. Times should be incremented by one getSamplePeriod() for every 
+ *	new entry in the outer list.
+ */
 QVariantList AnalysisLfpData::getNextValues(double secsFollowing)
 {
 	QVariantList channels = getChannels();
@@ -306,6 +333,8 @@ bool AnalysisLfpData::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	return true;
 }
 
+/*! \brief Returns the latest frame time with respect to the beginning of the run.
+*/
 double AnalysisLfpData::getLatestRunTime()
 {
 	double latestTime = getDesignConfig()->getFrameReader()->getLatestTime();

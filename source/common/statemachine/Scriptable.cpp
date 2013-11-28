@@ -9,6 +9,8 @@ Scriptable::Scriptable()
 {
 }
 
+/*! \brief Returns true if something in this Scriptable can be used in a script engine (ie. a script property or script function)
+ */
 bool Scriptable::hasContentsForScriptEngine()
 {
 	//If the object has no Q_PROPERTIES OR local public slots, don't add it.
@@ -36,6 +38,8 @@ bool Scriptable::hasContentsForScriptEngine()
 	return true;
 }
 
+/*! \brief Binds this Scriptable to the input QScriptEngine so that it can be accessed by any scripts running in that QScriptEngine.
+ */
 bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 {
 	if(!hasContentsForScriptEngine())
@@ -65,32 +69,41 @@ bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 	return true;
 }
 
-/*!	\brief Resets the VisualElement
- *
- *	Since Scriptables can be modified by scripts, resetting them returns them
- *	to their initial state.  This basically just reloads the PropertyContainer
- *	with the initial properties
+/*!	\brief Called when this Scriptable enters Picto Scope (ie. Control flow reaches its parent element).
+ *	\details When a Scriptable enters scope, all of its Property run values are reset to their init values.
+ *	This function takes care of that by calling restoreProperties().
  */
 void Scriptable::enteredScope()
 {
 	restoreProperties();
 }
 
+/*! \brief Sets the Property with the input propName to be editable or not editable depending on the editable input.
+ *	\details Runtime Editable properties will have corresponding widgets that control their initValues show up in the TestViewer and RemoteViewer
+ *	when their parent is set as UIEnabled.
+ *	\sa isUIEnabled(), isRuntimeEditable(), getUIOrder()
+ */
 void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
 {
 	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
+/*! \brief Returns all of the script properties and script function for this Scriptable element.
+ *	\details We created this before we created the AssetDescriber which includes more complete documentation on
+ *	Picto element's scriptable properties and functions.  Possibly we should just use data from that
+ *	class here.  Alternatively, we can get rid of this all together along with the "Scripting Info" tab
+ *	in the Designer since it isn't really all that useful.
+ *	In case we do keep this around, it should be noted that since we don't want people to use the various signals 
+ *	and slots from Scriptable Superclasses, but we DO want to enable hierarchical scripting property/function 
+ *	definitions, when we print out the available scripts we ignore any properties and methods that are available in the
+ *	Scriptable class, leaving all of those in its subclasses.
+ *	Since these functions are all still technically available to anyone that wants to use them,
+ *	this is a clear application security risk.  For now, we're not going to worry about that though.
+ */
 QString Scriptable::getScriptingInfo()
 {
 	QString returnVal;
 
-	//Since we don't want people to use the various signals and slots from Scriptable Superclasses,
-	//but we DO want to enable hierarchical scripting property/function definitions, when we print
-	//out the available scripts we ignore any properties and methods that are available in the
-	//scriptable class, leaving all of those in its subclasses.
-	//Since these functions are all still technically available to anyone that wants to use them,
-	//this is a clear application security risk.  For now, we're not going to worry about that though.
 	int numScriptableClassProps = Scriptable::staticMetaObject.propertyCount();
 	int numScriptableClassFuncs = Scriptable::staticMetaObject.methodCount();
 
@@ -170,6 +183,7 @@ QString Scriptable::getInfo()
 }
 void Scriptable::postDeserialize()
 {
+	//Since we don't currently use UIOrder just make it not show up in the PropertyBrowser
 	propertyContainer_->getProperty("UIOrder")->setVisible(false);
 	// All property values are stored in an init property container.  This container
 	// is used to reset properties to their initial values whenever an state machine 
@@ -192,11 +206,13 @@ void Scriptable::postDeserialize()
 	UIEnabled::postDeserialize();
 }
 
+/*! \brief Verifies that, if the element has scripting elements, its name is valid for use in a script environment.
+*/
 bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
 		return false;
-	//Since a lot of things is scriptable now, this is an unreasonable requirement.  We're taking it out for now
+	//Since a lot of things are scriptable now, this is an unreasonable requirement.  We're taking it out for now
 	//and just not adding anything with no name or whitespace in its name to the scripting system.
 	//if(getName().contains(" "))
 	//{
@@ -224,10 +240,7 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
-/* \brief Relads the property container with the values backed up in backupProperties()
- *
- *	This basically iterates through the backed up properties and resets the values
- *	in the property container.
+/* \brief Copies initValues to runValues for all Properties in this element.
  */
 void Scriptable::restoreProperties()
 {

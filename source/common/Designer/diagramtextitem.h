@@ -52,7 +52,9 @@ class QGraphicsScene;
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
-//! [0]
+/*! \brief This class is not used in Picto and left over from the Qt Toolkit example used as a foundation
+ *	for the Picto Designer.  It should probably be removed.
+ */
 class DiagramTextItem : public QGraphicsTextItem
 {
     Q_OBJECT
@@ -75,6 +77,6 @@ protected:
     void focusOutEvent(QFocusEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 };
-//! [0]
+
 
 #endif

@@ -33,5 +33,5 @@ private:
 private slots:
 	void searchRequested(SearchRequest searchRequest);
 };
-//! [0]
+
 #endif

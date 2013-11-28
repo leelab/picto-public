@@ -13,6 +13,8 @@ RewardController::~RewardController()
 {
 }
 
+/*! \brief This doesn't appear to be used or have any effect and should be removed.
+ */
 bool RewardController::setRewardVolume(unsigned int channel, float volume)
 {
 	if(channel > 4 || channel < 1)
@@ -21,16 +23,29 @@ bool RewardController::setRewardVolume(unsigned int channel, float volume)
 	return true;
 }
 
+/*! \brief Set this to true if rewards that are queued up on a given channel, waiting for
+ *	the one in progress to finish should just be erased.
+ */
 void RewardController::discardOverlapingRewards(bool doIt)
 {
 	discardOverlap_ = doIt;
 }
-
+/*! \brief Appends a reward to the list of startable rewards for the input channel
+ *	and with the input quantity and minRewardPeriod (both in milliseconds).
+ *	\details minRewardPeriod is the minimum time between rewards.
+ */
 void RewardController::addReward(unsigned int channel,int quantity, int minRewardPeriod)
 {
 	rewardChannels_[channel].pendingRewards.append(RewardUnit(quantity,minRewardPeriod));
 }
 
+/*! \brief Triggers the next reward from addReward() if the previous one on its channel is done.
+ *	\details If discardOverlapingRewards() was set true and a previous reward on a channel
+ *	is in progress, all pending rewards on that channel will be removed.
+ *	If appendToList it true, every reward supplied will be added to a list
+ *	that is retrievable using getDeliveredRewards() this allows a record of
+ *	delivered rewards to be sent to the PictoServer from the Director.
+ */
 void RewardController::triggerRewards(bool appendToList)
 {
 	QHash<int,RewardChannel>::iterator it;
@@ -85,7 +100,8 @@ void RewardController::triggerRewards(bool appendToList)
 			appendDeliveredRewards(QSharedPointer<RewardDataUnit>(new RewardDataUnit(reward.quantity,it.key(),rewardTime)));
 	}
 }
-
+/*! \brief Returns true if there is a reward in progress on the input channel.
+*/
 bool RewardController::rewardInProgress(unsigned int channel)
 {
 	if(!rewardChannels_.contains(channel))
@@ -97,6 +113,7 @@ bool RewardController::rewardInProgress(unsigned int channel)
 	return false;
 }
 
+/*! \brief returns true if there are rewards waiting to be supplied on any channel.*/
 bool RewardController::hasPendingRewards()
 {
 	bool returnVal = false;
@@ -110,7 +127,7 @@ bool RewardController::hasPendingRewards()
 	}
 	return returnVal;
 }
-
+/*! \brief returns true if there are rewards waiting to be supplied on the input channel.*/
 bool RewardController::hasPendingRewards(unsigned int channel)
 {
 	if(!rewardChannels_.contains(channel))
@@ -120,6 +137,7 @@ bool RewardController::hasPendingRewards(unsigned int channel)
 	return false;
 }
 
+/*! \brief Flushes on the input channel for the input number of seconds.*/
 void RewardController::flush(unsigned int channel, int seconds)
 {
 	//Don't start a flush unless there are no flushes or rewards in progress or pending
@@ -127,7 +145,7 @@ void RewardController::flush(unsigned int channel, int seconds)
 		return;
 	rewardChannels_[channel].pendingRewards.append(RewardUnit(seconds*1000,seconds*1000,true));
 }
-
+/*! \brief Returns true if there is a flush in progress on the input channel*/
 bool RewardController::isFlushing(unsigned int channel)
 {
 	if(!rewardChannels_.contains(channel))
@@ -137,6 +155,7 @@ bool RewardController::isFlushing(unsigned int channel)
 	return false;
 }
 
+/*! \brief Stops any active flush on the input channel*/
 void RewardController::abortFlush(unsigned int channel)
 {
 	if(!rewardChannels_.contains(channel))
@@ -148,11 +167,17 @@ void RewardController::abortFlush(unsigned int channel)
 	rewardChannels_[channel].lastRewardPeriod = 0;
 }
 
+/*! \brief Used by triggerRewards() to append a reward that has been supplied to a list
+ * that is accessable from getDeliveredRewards()
+ */
 void RewardController::appendDeliveredRewards(QSharedPointer<RewardDataUnit> rewardUnit)
 {
 	deliveredRewards_.append(rewardUnit);
 }
 
+/*! \brief Returns a list of the latest rewards to have been supplied, clearing
+ *	it in the process.
+ */
 QList<QSharedPointer<RewardDataUnit>> RewardController::getDeliveredRewards()
 {
 	QList<QSharedPointer<RewardDataUnit>> returnVal;

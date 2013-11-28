@@ -2,6 +2,12 @@
 #include "PlaybackData.h"
 using namespace Picto;
 
+/*! \brief Constructs a new SignalState to track data from a single signal channel.
+ *	\details name is the name of the SignalChannel (ie. position).  tableName is the
+ *	name of the table containing the signal data (ie. signal_position).  subChanNames is a list of
+ *	the names of this channel's sub-channels (ie. "x","y").  sampPeriod is the time in milliseconds
+ *	between signal channel samples.
+ */
 SignalState::SignalState(QString name,QString tableName,QStringList subChanNames,double sampPeriod) :
 name_(name),
 tableName_(tableName),
@@ -129,6 +135,8 @@ void SignalState::moveToIndex(PlaybackIndex index)
 	}
 }
 
+/*! \brief Returns the name of the signal handled by this signal reader.
+*/
 QString SignalState::getName()
 {
 	return name_;

@@ -66,14 +66,22 @@ class Arrow;
 /*! \brief This is the base class for all graphical elements in the Picto Designer apart from transition arrows.
  *	\details Objects of this class draw a rectangle on the Designer canvas.  They provide an option to set a
  *	name and type for the rectangle that are drawn onto it.  The dimensions of the rectangle can be set and
- *	\todo Finish documenting this class
+ *	interfacing with the EditorState object that manages the current state of the Designer is handled automatically
+ *	(Double clicking a DiagramItem, for example, sets it as the window asset).  The DiagramItem also supports colored
+ *	oulines and highlighting of the DiagramItem name (which the Designer uses in searches).  DiagramItems also support
+ *	'right-click' context menus.
+ *	
+ *	The DiagramItem is loosely based on an item of that name from a Qt Toolkit example.
+ *	\sa DiagramScene, \sa Arrow
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class DiagramItem : public QObject, public QGraphicsPolygonItem
 {
 	Q_OBJECT
 public:
+	/*! \brief Every QGraphicsItem must have its own unique type.  Our types are in the QGraphicsItem::UserType space*/
     enum { Type = UserType + 15 };
-    enum DiagramType { Step, Conditional, StartEnd, Io, ArrowSource, ArrowDestination};
 
     DiagramItem(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QString name = "",
         QGraphicsItem *parent = 0);
@@ -91,6 +99,9 @@ public:
     QPixmap image() const;
 	virtual void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
+	/*! \brief Every QGraphicsItem must have its own unique type.  This returns our custom type.
+	 *	\sa QGraphicsItem::type(), QGraphicsItem::UserType
+	 */
     int type() const
         { return Type;}
 
@@ -98,7 +109,12 @@ protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
+	/*! \brief Called when something about the DiagramItem changes (ie. it moves) to
+	 *	let dependant sub-graphics know that they need to update themselves with respect to the changed DiagramItem.*/
 	virtual void updateDependantGraphics(){};
+	/*! \brief Called when the DiagramItem moves with its new position to let dependant sub-graphics know that they
+	 *	should update themselves accordingly.
+	 */
 	virtual void positionChanged(QPoint){};
 	virtual void setRect(QRectF rect);
 	void setHighlightColor(int highlightIndex,QColor color);
@@ -106,7 +122,11 @@ protected:
 	void highlightNameChars(int highlightIndex, QString searchString,bool caseSensitive);
 	QSharedPointer<EditorState> editorState_;
 	QRectF getRect();
+	/*! \brief Returns a QRectF object defining the appropriate position in this DiagramItem to place an Icon such that it
+	 *	doesn't blog the name or type strings.
+	 */
 	QRectF getIconRect(){return iconRect_;};
+	/*! \brief Returns the EditorState object that is being used with this DiagramItem*/
 	QSharedPointer<EditorState> getEditorState(){return editorState_;};
 	QMenu *myContextMenu;
 
@@ -126,6 +146,6 @@ private:
 private slots:
 	void editModeChanged(int mode);
 };
-//! [0]
+
 
 #endif

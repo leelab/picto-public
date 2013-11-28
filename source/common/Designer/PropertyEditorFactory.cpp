@@ -9,13 +9,17 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-//! [0]
+
 PropertyEditorFactory::PropertyEditorFactory(QWidget *parent) :
 	QtVariantEditorFactory(parent) 
 {
 
 }
 
+/*! \brief Constructs a new PropertyEditorFactory.
+ *	\details The EditorState is needed in the constructor of searchable widgets as well as in order
+ *	to detect whether there is an active analysis so that non-analysis Properties can be set as read-only.
+ */
 PropertyEditorFactory::PropertyEditorFactory(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QtVariantEditorFactory(parent),
 	editorState_(editorState) 
@@ -23,23 +27,32 @@ PropertyEditorFactory::PropertyEditorFactory(QSharedPointer<EditorState> editorS
 
 }
 
-//Sets the next property who's QtProperties will be requested in create editor
-//This should be called just before callind a propertybrowser's addProperty function
-//with a Property's QtProperty.  It tells this object which Property the next QtProperty
-//is associated with, allowing that property to be included in propertyEdited signals.
+/*! \brief Sets the next Property who's QtProperties will be requested in create editor.
+ *	\details This should be called just before callind a QtPropertyBrowser's addProperty function.  
+ *	It tells this object which Property the next QtProperty is associated with, allowing the PropertyEditorFactory 
+ *	to look up that Property when QtProperty values are edited by widgets so that the Property can be included in 
+ *	the propertyEdited() signal.
+ */
 void PropertyEditorFactory::setNextProperty(QSharedPointer<Picto::Property> nextProp)
 {
 	nextProp_ = nextProp;
 }
 
-//Clear should be called whenever creating more propertyWidgets if the previously created propertyWidgets
-//are no longer visible.
+/*! \brief Whenever we want to create more Property Widgets, if previously created Property Widgets are no longer visible, clear
+ *	should be called first to remove data tracked from previous widgets.
+ */
 void PropertyEditorFactory::clear()
 {
 	trackedPropManagers_.clear();
 	qtpropToPropMap_.clear();
 }
 
+/*! \brief Creates an editor widget for the input QtProperty that was created by the input manager.
+ *	\details This function extends the QtVariantEditorFactory::createEditor() function
+ *	to generate some specific widgets needed for Picto, configure generated widgets for the current Designer mode,
+ *	and store which Picto Property objects are related to which QtProperty objects.
+ *	\sa setNextProperty()
+ */
 QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager, QtProperty* property, QWidget* parent)
 {
 	//Check if this property needs to be read only
@@ -133,8 +146,10 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	return resultWidget;
 }
 
-//This is called whenever a QtProperty value changes.  It translates the message and emits
-//a signal indicating which property's value is supposed to be changed, and to what value.
+/*! \brief Called whenever a QtProperty value changes.  Looks up the Property represented by this QtProperty and emits propertyEdited with
+ *	that Property and the value to which is should be changed.
+ *	\sa setNextProperty()
+ */
 void PropertyEditorFactory::qtPropValueChanged(QtProperty* property,const QVariant& value)
 {
 	if(!qtpropToPropMap_.contains(property))

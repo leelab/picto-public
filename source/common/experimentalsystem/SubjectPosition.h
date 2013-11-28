@@ -5,8 +5,11 @@
 
 namespace Picto {
 
-//! \brief Unimplemented. Stores information about the subject's position.
-
+/*!	\brief Unimplemented.  This class should probably be removed.
+ *	The original documentation appears below:
+ *
+ *	Unimplemented. Stores information about the subject's position.
+ */
 class SubjectPosition
 {
 public:

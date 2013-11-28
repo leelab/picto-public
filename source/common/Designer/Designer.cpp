@@ -20,7 +20,10 @@
 
 const int InsertTextButton = 10;
 
-//! [0]
+/*! \brief Construts a new Designer widget with the input parent.
+ *	\details This function initializes the UI and all variables.  It also creates the EditorState object used throughout the designer
+ *	to maintain the current state and allow different components to communicate with one another.
+ */
 Designer::Designer(QWidget *parent) :
 	QWidget(parent),
 	editorState_(new EditorState())
@@ -94,7 +97,11 @@ Designer::Designer(QWidget *parent) :
 Designer::~Designer()
 {
 }
-//! [0]
+
+/*! \brief Called before displaying the Designer on screen to set the DesignRoot on which it will operate.
+ *	\details In essence, a Designer's entire purpose is to operate on a DesignRoot.  Call this function
+ *	to initialize it for operation with the input DesignRoot.
+ */
 void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 {
 	Q_ASSERT(designRoot);
@@ -124,6 +131,11 @@ void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 	resetEditor();
 }
 
+/*! \brief Use this function instead of setEnabled() to enable/disable the Designer.
+ *	\details This function not only enable/disables user interaction with the Designer like setEnabled() does,
+ *	it also disables some of the internal operations of the Designer such that editing of the Design from
+ *	other locations will not have undesirable side effects.
+ */
 void Designer::activate(bool enable)
 {
 	if(!enable)
@@ -136,42 +148,15 @@ void Designer::activate(bool enable)
 	setEnabled(enable);
 }
 
-//void Designer::deinit()
-//{
-//	if(pictoData_.isNull())
-//		return;
-//	insertEditBlock();
-//}
-
-//void Designer::aboutToSave()
-//{
-//	insertEditBlock();
-//}
-
-//void Designer::updateEditModeButtons(int id)
-//{
-//	pointerTypeGroup->button(id)->setChecked(true);
-//}
-
-//void Designer::itemInserted(DiagramItem *)
-//{
-//    //pointerTypeGroup->button(int(DiagramScene::Select))->setChecked(true);
-//    //editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
-//    
-//}
-//
-//void Designer::textInserted(QGraphicsTextItem *)
-//{
-//    //buttonGroup->button(InsertTextButton)->setChecked(false);
-//    //editorState_->setEditMode(EditorState::EditMode(pointerTypeGroup->checkedId()));
-//}
-
+/*! \brief Called when the zoom combo box is updated to change the zoom level of the designer canvas.*/
 void Designer::sceneScaleChanged(const QString &scale)
 {
     double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
 	editorState_->setZoom(newScale);
 }
 
+/*! \brief No longer used.  This used to present simple information about the StateMachineEditor, like... it exists.  It was unnecessary.
+ */
 void Designer::about()
 {
     QMessageBox::about(this, tr("About State Machine Editor"),
@@ -179,6 +164,12 @@ void Designer::about()
                           "to design Picto experiments."));
 }
 
+/*! \brief This is an initialization function that loads the input scene as the current Designer Scene.
+ *	\details Originally, the designer used to function differently with lots of different scenes being 
+ *	loaded back and forth depengin on which Element was the Window Asset.  Now we only use a single
+ *	scene that updates itself depending on th Window Asset.  This functions contents could probably
+ *	just be moved into a larger intialization function at some point.
+ */
 void Designer::loadScene(DiagramScene* newScene)
 {
 	if(scene == newScene)
@@ -206,18 +197,38 @@ void Designer::loadScene(DiagramScene* newScene)
 		this,SLOT(resetExperiment()));
 }
 
+/*! \brief Resets the associated DesignRoot from its XML code and then resets the Designer to function with the newly reset object.
+ *	\details This is useful because some operations currently require rebuildling the design from text.  For example, currently
+ *	deleting an element in Picto just sets a deleted flag on that element that tells it not to serialize itself out.  This helps
+ *	with maintaining the general serialized XML structure through changes to the design, but in order to actually make the
+ *	element disappear in the Designer we need to then rebuild the whole design from its XML text.  Obviously that is extremely inefficient
+ *	but this is the kind of tradeoff that sometimes sped up the Picto development schedule at the expense of runtime efficiency.  If you 
+ *	have time, please rework the system such that we won't need to use inefficient functions like this one.
+ */
 void Designer::resetExperiment()
 {
+	//Make sure the latest changes are included in the XML text.
 	insertEditBlock();
+	//Rebuild the design root from the latest XML text.
 	designRoot_->refreshFromXml();
+	//Reset the editor to work with the new objects in the DesignRoot.
 	resetEditor();
 }
-
+/*! \brief Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations.
+ *	\details We make undo/redo slow but easy to program by serializing the Design every time an important change
+ *	was made and copying it into a document who's operations are tracked for undo/redo purposes.  That way to undo/redo
+ *	we just undo/redo the document and reload the Design from that document.
+ */
 void Designer::insertEditBlock()
 {
 	designRoot_->setUndoPoint();
 }
 
+/*! \brief Undoes the last significant action in the Design.
+ *	\details Calls undo on the underlying XML document, rebuilds the designRoot based on that document and resets
+ *	this Designer to work with the new objects underlying the DesignRoot.
+ *	\sa insertEditBlock()
+ */
 void Designer::performUndoAction()
 {
 	if(!designRoot_->hasUndo())
@@ -225,6 +236,11 @@ void Designer::performUndoAction()
 	designRoot_->undo();
 	resetEditor();
 }
+/*! \brief Redoes a previously undone significant action in the Design.
+ *	\details Calls redo on the underlying XML document, rebuilds the designRoot based on that document and resets
+ *	this Designer to work with the new objects underlying the DesignRoot.
+ *	\sa insertEditBlock()
+ */
 void Designer::performRedoAction()
 {
 	if(!designRoot_->hasRedo())
@@ -233,22 +249,41 @@ void Designer::performRedoAction()
 	resetEditor();
 }
 
+/*! \brief Tells the DesignRoot which asset is currently open in the Designer so that this information can be saved out with the Design.
+ *	\details Along with the other UI specific information like Elements' canvas positions, we save the currently opened asset in the 
+ *	Design file.  This allows the Designer to open Designs to the last Window Asset that was open when they were saved.  It also helps
+ *	in Undo/Redo by moving us to the spot where we were before the last edit block occured (for undo) or after the next redo block occured (for redo).
+ */
 void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT(asset);
 	designRoot_->setOpenAsset(asset);
 }
 
+/*! \brief Called when the selected Asset in the Designer canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.
+ *	\note This would appear to be redundant with selectedItemChanged(), it might be worth looking into.
+*/
 void Designer::selectedAssetChanged(QSharedPointer<Asset>)
 {
 	updateEnabledActions();
 }
 
+/*! \brief Called when the selected Graphics Item in the Designer canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.
+ *	\note This would appear to be redundant with selectedAssetChanged(), it might be worth looking into.
+*/
 void Designer::selectedItemChanged(QGraphicsItem*)
 {
 	updateEnabledActions();
 }
 
+/*! \brief Called when the current Analysis changes to reload the window asset.
+ *	\details If we are switching Analyses or into or out of an Analysis mode, things are displayed differently on the
+ *	Designer canvas.  AnalysisElement specific to the current Analysis are shown.  If an Analysis is active, experimental
+ *	elements need to be grayed out.  This assures that the editorState redraws its window properly now that it knows
+ *	about the currently selected analysis.
+ *	\note This appears to just be helping the EditorState do its job.  Probably this functionality should be moved out of
+ *	this class and just happen automatically inside the EditorState when it emits the EditorState::currentAnalysisChanged() signal.
+ */
 void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
 {
 	//When current analysis changes, reload the window
@@ -258,7 +293,10 @@ void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
 	editorState_->setWindowAsset(openAsset,false);
 }
 
-//! Checks the syntax of the current XML to see if it is a legal experiment
+/*! Checks the syntax of the current XML to see if it is a legal experiment
+ *	\details In the process it sets the displayed tab in the InfoPane to the SyntaxErrorBox tab.
+ *	so that the designer can see the output.
+*/
 void Designer::checkSyntax()
 {
 	QString errors;
@@ -267,7 +305,8 @@ void Designer::checkSyntax()
 	syntaxErrorBox_->checkSyntax();
 }
 
-//! [23]
+/*! \brief Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc).
+*/
 void Designer::createActions()
 {
 	undoAction = new QAction(QIcon(""),
@@ -336,6 +375,8 @@ void Designer::createActions()
 	connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
 }
 
+/*! \brief Connects actions created in createActions() to the functionality that should occur when they are triggered.
+*/
 void Designer::connectActions()
 {
 	connect(undoAction, SIGNAL(triggered()),this, SLOT(performUndoAction()));
@@ -356,7 +397,8 @@ void Designer::connectActions()
 	connect(editorState_.data(),SIGNAL(currentAnalysisChanged(QSharedPointer<Analysis>)),this,SLOT(currentAnalysisChanged(QSharedPointer<Analysis>)));
 }
 
-//! [24]
+/*! \brief Creates context menus using actions created in createActions().
+*/
 void Designer::createMenus()
 {
     //fileMenu = menuBar()->addMenu(tr("&File"));
@@ -376,12 +418,13 @@ void Designer::createMenus()
     //aboutMenu = menuBar()->addMenu(tr("&Help"));
     //aboutMenu->addAction(aboutAction);
 }
-//! [24]
 
-//! [25]
+/*! \brief Creates the Designer's Toolbars using actions created in createActions() as well as other widgets
+ *	created here.
+ */
 void Designer::createToolbars()
 {
-//! [25]
+
     editToolBar = new QToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
 	editToolBar->addAction(copyAction);
@@ -407,9 +450,15 @@ void Designer::createToolbars()
 	pointerToolbar->addSeparator();
 	pointerToolbar->addAction(checkSyntaxAction_);
 	pointerToolbar->addWidget(analysisOption_);
-//! [27]
+
 }
 
+/*! \brief Resets the Designer based on the current DesignRoot.
+ *	\details There are a number of actions that result in the element objects contained in the DesignRoot
+ *	changing.  This function resets the Designer to work with whatever elements are contained in the 
+ *	currently loaded DesignRoot.
+ *	\sa loadDesign(), resetExperiment(), performUndoAction(), performRedoAction()
+ */
 bool Designer::resetEditor()
 {
 	//Reset the root of the experiment
@@ -426,6 +475,11 @@ bool Designer::resetEditor()
 	return true;
 }
 
+/*! \brief Updates the Designer actions that are enabled based on the currently Designer context.
+ *	\details Which actions are enabled depends on what element is currently selected as well
+ *	as whether the Designer is operating in Experiment or Analysis mode.  This updates the 
+ *	available actions accordingly.
+ */
 void Designer::updateEnabledActions()
 {
 	QSharedPointer<Asset> asset = editorState_->getSelectedAsset();
@@ -500,148 +554,30 @@ void Designer::updateEnabledActions()
 	}
 }
 
+/*! \brief Called when an undo is first available to enable the Designer's undo action.*/
 void  Designer::undoAvailable(bool available)
 {
 	undoAction->setEnabled(available);
 }
+/*! \brief Called when a redo is first available to enable the Designer's redo action.*/
 void  Designer::redoAvailable(bool available)
 {
 	redoAction->setEnabled(available);
 }
 
+/*! \brief Called when text in the search box changes to initiate a search for the input string.
+ *	\details Whenever the text in the searchbox is updated, a search is initiated within the Experimental and Active Analysis
+ *	assets.
+ */
 void Designer::searchTextChanged(const QString& text)
 {
 	editorState_->requestSearch(SearchRequest(SearchRequest::EXPERIMENT,SearchRequest::STRING,true,text,matchCase->isChecked()));
 	editorState_->requestSearch(SearchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING,true,text,matchCase->isChecked()));
 }
 
+/*! \brief Called when the matchCase checkbox changes to update the active search using searchTextChanged().*/
 void Designer::matchCaseChanged(int)
 {
 	if(!searchBox->text().isEmpty())
 		searchTextChanged(searchBox->text());
 }
-//
-//void Designer::analysisSelectedChanged(int index)
-//{
-//	if(index < 0)
-//		return;
-//	analysisSelector_->setEditable(false);
-//	bool newAnalysisCreated = false;
-//	switch(index)
-//	{
-//	case 0:
-//		if(editorState_)
-//		{
-//			editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
-//		}
-//		deleteAnalysisAction_->setEnabled(false);
-//		break;
-//	default:
-//		deleteAnalysisAction_->setEnabled(true);
-//		//Allow user to edit the current analysis name in the combobox.
-//		analysisSelector_->setEditable(true);
-//		if(editorState_)
-//		{
-//			//If we need to create a new analysis, do it
-//			newAnalysisCreated = (index == analysisSelector_->count()-1);
-//			if(newAnalysisCreated)
-//			{
-//				QSharedPointer<Asset> newAnalysis;
-//
-//				//Add a new Analysis Design to the designRoot
-//				newAnalysis = designRoot_->importAnalysis("<Analysis/>");
-//				//Create UI Data for the new Analysis and attach it
-//				AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
-//				Q_ASSERT(assocRootHost);
-//				QUuid hostId = assocRootHost->getHostId();
-//				QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
-//				QString feedback;
-//				newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
-//				Q_ASSERT(newAnalysis);
-//
-//				//Attempt to add the new analysis to the EditorState as current
-//				if(!editorState_->setCurrentAnalysis(newAnalysis.staticCast<Analysis>()))
-//				{
-//					//If the analysis couldn't be added as current, remove the Analysis and go back to the last selected
-//					//analysis.
-//					designRoot_->removeAnalysis(designRoot_->getNumAnalyses()-1);
-//					analysisSelector_->setCurrentIndex(selectedIndex_);
-//					return;
-//				}
-//
-//				//Add a new "New Analysis" item to the end of the analysisSelector
-//				analysisSelector_->addItem("New...");
-//
-//				//Set the combo boxes value to a default "untitled" string.  This will have the affect
-//				//of updating the analysis name as well.
-//				analysisSelector_->setItemText(index, "Untitled");
-//
-//				//Highlight the "untitled" name
-//				analysisSelector_->lineEdit()->selectAll();
-//			}
-//		}
-//		break;
-//	};
-//
-//	//Attempt to set the selected analysis as the current one, if it doesn't work, go back to the previous analysis.
-//	if(index > 0)
-//	{
-//		QSharedPointer<Asset> analysis = designRoot_->getAnalysis(index-1);
-//		Q_ASSERT(analysis);
-//		if(!editorState_->setCurrentAnalysis(analysis.staticCast<Analysis>()))
-//		{
-//			analysisSelector_->setCurrentIndex(selectedIndex_);
-//			return;
-//		}
-//	}
-//
-//	selectedIndex_ = index;
-//	//Reset the scene so that analysis stuff will come up.
-//	resetEditor();
-//
-//	if(newAnalysisCreated)
-//	{
-//		//Highlight the "untitled" name
-//		analysisSelector_->lineEdit()->selectAll();
-//	}
-//}
-//
-//void Designer::analysisSelectedTextChanged(const QString&)
-//{
-//	if(analysisSelector_->currentIndex() > 0 && editorState_ && editorState_->getCurrentAnalysis())
-//	{
-//		QString newName = analysisSelector_->currentText();
-//		analysisSelector_->setItemText(analysisSelector_->currentIndex(),newName);
-//		//This function can get called due to a change in selected index before analysisSelectedChange() is called.
-//		//This would mean that the editorState's currentAnalysis would not correspond to the analysisSelector_->currentIndex()
-//		//We avoid this issue by only resetting the analysis's name if it's index corresponds to the current
-//		//combobox index
-//		if(selectedIndex_ == analysisSelector_->currentIndex())
-//			editorState_->getCurrentAnalysis()->setName(newName);
-//	}
-//}
-//
-//void Designer::deleteCurrentAnalysis()
-//{
-//	if(!editorState_ || !editorState_->getCurrentAnalysis())
-//		return;
-//
-//	int ret = QMessageBox::warning(this, tr("Picto"),
-//                                QString("Are you sure you want to delete the %1 Analysis?").arg(editorState_->getCurrentAnalysis()->getName()),
-//                                QMessageBox::Yes | QMessageBox::Cancel,
-//                                QMessageBox::Cancel);
-//	if(ret != QMessageBox::Yes)
-//		return;
-//	//Detach analysis from experiment
-//	QUuid currAnalsisId = editorState_->getCurrentAnalysis()->getAssociateId();
-//	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalsisId);
-//	
-//	//Remove analysis from design
-//	int anaIndexInComboBox = analysisSelector_->currentIndex();
-//	if(!designRoot_->removeAnalysis(anaIndexInComboBox-1))
-//		Q_ASSERT(false);
-//
-//	//Remove analysis name from combobox and set current analysis to none.
-//	analysisSelector_->setCurrentIndex(0);
-//	analysisSelector_->removeItem(anaIndexInComboBox);
-//}

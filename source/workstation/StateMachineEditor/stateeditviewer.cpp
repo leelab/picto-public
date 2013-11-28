@@ -47,7 +47,7 @@
 #include "stateeditviewer.h"
 #include "../../common/memleakdetect.h"
 #define AUTOSAVEINTERVALMS 30000	//auto save every 30 seconds
-//! [0]
+
 StateEditViewer::StateEditViewer(QWidget *parent) :
 	Viewer(parent),
 	expDesigner_(new Designer()),
@@ -63,7 +63,7 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 StateEditViewer::~StateEditViewer()
 {
 }
-//! [0]
+
 void StateEditViewer::init()
 {
 	designRoot_->enableRunMode(false);

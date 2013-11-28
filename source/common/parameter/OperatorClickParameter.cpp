@@ -5,6 +5,12 @@ namespace Picto {
 
 QList<QWeakPointer<OperatorClickParameter>> OperatorClickParameter::params_;
 
+/*! \brief Constructs an OperatorClickParameter
+ *	\details Adds two Properties that will be set invisible in postDeserialize():
+ *		- "Pos" - Stores the latest Operator click position
+ *		- "NewClick" - Is set to true whenever the Operator performs a click and set false by experimental code that uses
+ *			the click infomration.
+ */
 OperatorClickParameter::OperatorClickParameter()
 : Parameter()
 {
@@ -12,6 +18,11 @@ OperatorClickParameter::OperatorClickParameter()
 	AddDefinableProperty(QVariant::Bool,"NewClick",false);
 }
 
+/*! \brief Creates a new OperatorClickParameter and returns a shared Asset pointer to it.
+*	\details Also adds the new OperatorClickParameter to the static params_ list of OperatorClickParameters.
+*	This is important so that operator clicks can be sent to all OperatorClickParameters at once.  See
+*	the main OperatorClickParameter documentation for more detail on this.
+*/
 QSharedPointer<Asset> OperatorClickParameter::Create()
 {
 	QSharedPointer<Asset> newParam(new OperatorClickParameter());
@@ -20,7 +31,12 @@ QSharedPointer<Asset> OperatorClickParameter::Create()
 	return newParam;
 }
 
-//Used to add an operator click to the system.
+/*! \brief Adds a new operator click to all OperatorClickParameters.
+ *	\details Calls setLastClick() on all OperatorClickParameter objects currently loaded in Picto with
+ *	the input click point.
+ *	\note Using a static function for this isn't ideal and we should probably fix it.  See the main 
+ *	OperatorClickParameter documentation for more details.
+ */
 void OperatorClickParameter::addClick(QPoint point)
 {
 	QList<QSharedPointer<Property>> affectedProps;
@@ -38,7 +54,10 @@ void OperatorClickParameter::addClick(QPoint point)
 	}
 }
 
-//Sets the parameters to reflect a new click
+/*! \brief Sets this objects Parameters to reflect a new click at the input position.
+ *	\details "Pos" is set to the new click point.
+ *	"NewClick" is set to true.
+ */
 void OperatorClickParameter::setLastClick(QPoint point)
 {
 	propertyContainer_->setPropertyValue("Pos",point);

@@ -1,44 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include <QtWidgets>
 #include <QGraphicsOpacityEffect>
 
@@ -54,7 +13,13 @@
 
 const qreal Pi = 3.14;
 
-//! [0]
+/*! \brief Constructs a new Arrow that represents the input transition, starts at startItem and ends at endItem.
+ *	\details The input contextMenu will be displayed when the transition is "right clicked".  editorState
+ *	is used to retrieve various information about the current state of the designer system.
+ *	This constructor is private because Arrows should be created with the create() functions.
+ *	\note Arrow's are always drawn with a ZValue that is higher than both of the DiagramItems to which it is
+ *	attached so that it will always be visible on top of them.
+ */
 Arrow::Arrow(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> transition, DiagramItem *startItem, DiagramItem *endItem, QMenu *contextMenu,
          QGraphicsItem *parent)
     : QGraphicsLineItem(parent)
@@ -77,13 +42,20 @@ Arrow::Arrow(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> tran
 	qobject_cast<QGraphicsOpacityEffect*>(graphicsEffect())->setOpacity(1.0);
 }
 
+/*! \brief When the Arrow is deleted, it needs to be removed from the QGraphicsScene.  This takes care of that.
+*/
 Arrow::~Arrow()
 {
 	QGraphicsScene* scenePtr = scene();
 	if(scenePtr)
 		scenePtr->removeItem(this);
 }
-
+/*! \brief Creates a new arrow representing a transition from one StateMachineElement to another within the current
+	*	windowAsset.  startItem and endItem must be passed in because the Design assets don't have pointers to their
+	*	corresponding UI elements or the transitions to which they are connected.
+	*	The contextMenu passed in here is the one that will be displayed if the arrow is "right clicked."
+	* \sa DiagramScene::insertTransition()
+	*/
 Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Transition> transition, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent)
 {
@@ -94,6 +66,11 @@ Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Tra
 	return new Arrow(editorState, transition,startItem,endItem,contextMenu,parent);
 }
 
+/*! \brief Creates a new arrow representing a transition from the current windowAsset's start bar to an element within the 
+ *	windowAsset.
+ *	The contextMenu passed in here is the one that will be displayed if the arrow is "right clicked."
+ * \sa DiagramScene::insertTransition()
+ */
 Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Asset> windowAsset, DiagramItem *startItem, DiagramItem *endItem, 
 		QMenu *contextMenu, QGraphicsItem *parent)
 {
@@ -119,9 +96,8 @@ Arrow* Arrow::Create(QSharedPointer<EditorState> editorState, QSharedPointer<Ass
 		return NULL;
 	return new Arrow(editorState, newTrans,startItem,endItem,contextMenu,parent);
 }
-//! [0]
 
-//! [1]
+/*! \brief Returns a QRectF that contains this Arrow's dimensions within its bounds.*/
 QRectF Arrow::boundingRect() const
 {
     qreal extra = (pen().width() + 20) / 2.0;
@@ -131,26 +107,34 @@ QRectF Arrow::boundingRect() const
         .normalized()
         .adjusted(-extra, -extra, extra, extra);
 }
-//! [1]
 
-//! [2]
+/*! \brief Returns the shape of this Arrow as a QPainterPath in local coordinates. 
+ *	\details The shape is used by the QGraphicsItem system for many things, including 
+ *	collision detection, hit tests, and for the QGraphicsScene::items() functions.
+ */
 QPainterPath Arrow::shape() const
 {
     QPainterPath path = QGraphicsLineItem::shape();
     path.addPolygon(arrowHead);
     return path;
 }
-//! [2]
 
-//! [3]
+/*! \brief Updates the line according to the current position of the start and end DiagramItem objects
+ *	to which it is attached.*/
 void Arrow::updatePosition()
 {
     QLineF line(mapFromItem(myStartItem, 0, 0), mapFromItem(myEndItem, 0, 0));
     setLine(line);
 }
-//! [3]
 
-//! [4]
+/*! \brief Draws the Arrow on screen from its start DiagramItem to its end DiagramItem.
+ *	\details This function includes all of the detailed calculations to figure out where
+ *	exactly on the start DiagramItem the arrow should start, where on the end DiagramItem
+ *	the arrow should end, how to draw the arrow head at the necessary angle, etc.  It is
+ *	called by the Qt QGraphicsItem system whenever the arrow needs to be redrawn.
+ *	\note It is this code that creates the arrow's sliding effect causing it to be able to
+ *	slide up and down the DiagramItem of its destination element and its canvas start bar.
+ */
 void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
           QWidget *)
 {
@@ -197,7 +181,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     qreal arrowSize = 20;
     painter->setPen(myPen);
     painter->setBrush(finalColor);
-//! [4] //! [5]
+
 
     QLineF centerLine(startPos, endPos);
     QPolygonF endPolygon = myEndItem->polygon();
@@ -221,7 +205,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 	}
 
     setLine(QLineF(intersectPoint, startPos));
-//! [5] //! [6]
+
 
     double angle = ::acos(line().dx() / line().length());
     if (line().dy() >= 0)
@@ -234,7 +218,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 
         arrowHead.clear();
         arrowHead << line().p1() << arrowP1 << arrowP2;
-//! [6] //! [7]
+
         painter->drawLine(line());
         painter->drawPolygon(arrowHead);
         if (isSelected()) {
@@ -247,14 +231,21 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     }
 }
 
+/*! \brief Shows the context menu passed into the constructor whenever this Arrow is right clicked.
+*/
 void Arrow::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
     setSelected(true);
     myContextMenu->exec(event->screenPos());
 }
-//! [7]
 
+/*! \brief Reimplements various selection funtionality.
+ *	\details If multiple items are selected at once in the scene, for example, the last one
+ *	selected ends up being the one whos properties are shown in the right hand property widget.
+ *	If this arrow is the last one selected, we reset the "selected item" to NULL, so that the
+ *	WindowAsset's information will be displayed.
+ */
 QVariant Arrow::itemChange(GraphicsItemChange change,
                      const QVariant &value)
 {
@@ -276,7 +267,11 @@ QVariant Arrow::itemChange(GraphicsItemChange change,
     return inputVal;
 }
 
-
+/*! \brief Returns the Asset associated with the input DiagramItem.
+ *	\details Since the arrow isn't terminated at AssetItems but at ArrowPort items,
+ *	this function allows us to retrieve the Asset objects associated with the Asset Items
+ *	containing the ArrowPort items to which this arrow is attached.
+ */
 QSharedPointer<Asset> Arrow::getAssetAncestor(DiagramItem* item)
 {
 	QGraphicsItem* parent = item;

@@ -18,7 +18,10 @@
 namespace Picto
 {
 
-/*! \brief Calibration tool for the eye tracker
+/*! \brief This class is no longer used since Calibration is now handled in the form of a Task 
+ *	that is automatically added to every new experiment.  The original documentation appears below:
+ *	
+ *	Calibration tool for the eye tracker
  *
  *	The EyeTrackerCalibration object provides the framework for calibrating
  *	the eyetracker.  There are two different calibration modes provided.

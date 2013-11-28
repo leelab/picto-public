@@ -3,6 +3,10 @@
 #include "../storage/DataStore.h"
 using namespace Picto;
 
+/*! \brief Constructs a new SessionVersionInterfacer object.
+ *	\details The input Experiment is the one who's tree will have its Asset IDs corrected according
+ *	to the values input in the addSessionProperty(), addSessionTransition(), and addSessionElement() functions.
+ */
 SessionVersionInterfacer::SessionVersionInterfacer(QSharedPointer<Experiment> initializedExperiment)
 :experiment_(initializedExperiment)
 {
@@ -12,6 +16,10 @@ SessionVersionInterfacer::~SessionVersionInterfacer()
 {
 }
 
+/*! \brief Adds a Property from the current Session file which will be used to correct the asset id
+ *	of the corresponding Property in the Experiment handled by this SessionVersionInterfacer.
+ * Returns an empty string on success and an error message on failure.
+ */
 QString SessionVersionInterfacer::addSessionProperty(QString name, int assetId, int parentAssetId)
 {
 	if(nodesById_.contains(assetId))
@@ -20,13 +28,12 @@ QString SessionVersionInterfacer::addSessionProperty(QString name, int assetId, 
 	return "";
 }
 
+/*! \brief Adds a Transition from the current Session file which will be used to correct the asset id
+ *	of the corresponding Transition in the Experiment handled by this SessionVersionInterfacer.
+ * Returns an empty string on success and an error message on failure.
+ */
 QString SessionVersionInterfacer::addSessionTransition(QString source, QString sourceResult, int assetId, int parentAssetId)
 {
-	if(assetId == 4623)
-	{
-		int i=0;
-		i++;
-	}
 	if(nodesById_.contains(assetId))
 		return QString("More than one asset has the same id:%1").arg(assetId);
 	QSharedPointer<SVIAssetNode> newNode = QSharedPointer<SVIAssetNode>(new SVIAssetNode("",assetId,parentAssetId,""));
@@ -37,6 +44,12 @@ QString SessionVersionInterfacer::addSessionTransition(QString source, QString s
 	return "";
 }
 
+/*! \brief Adds an Experimental Element from the current Session file which will be used to correct the asset id
+ *	of the corresponding Experimental Element in the Experiment handled by this SessionVersionInterfacer.
+ *	\details An Experimental Element is anything that is not a Property or a Transition but is part of the Experiment
+ *	design, ie. StateMachineElements, Variables, Parameters, etc.
+ * Returns an empty string on success and an error message on failure.
+ */
 QString SessionVersionInterfacer::addSessionElement(int assetId, QString path)
 {
 	if(nodesById_.contains(assetId))
@@ -51,6 +64,13 @@ QString SessionVersionInterfacer::addSessionElement(int assetId, QString path)
 	return "";
 }
 
+/*! \brief Updates all of the Asset ID values in the Experiment handled by this SessionVersionInterfacer to be equal
+ *	to the Asset IDs of assets input in the addSessionProperty(), addSessionTransition(), and addSessionElement() functions.
+ *	\details Any Session Assets input through the various functions that can't be matched up to an Experimental Asset 
+ *	will be considered to be Obsolete Assets, a list of their Asset IDs can be returned from getObsoleteAssets()
+ *	so that changes to their values or their descendnants Property values can be ignored.
+ * Returns an empty string on success and an error message on failure.
+ */
 QString SessionVersionInterfacer::updateSessionConfigFromSessionAssets()
 {
 	////////////////////////////////////////////////
@@ -180,11 +200,23 @@ foreach(QWeakPointer<Asset> weakAsset,assets)
 	return "";
 }
 
+/*! \brief Returns a lookup table of AssetIDs from the Session.
+ *	\details Assets that were added through the addSessionProperty(), addSessionTransition(), and addSessionElement() functions
+ *	that could not be identified in the Experiment handled by this SessionVersionInterfacer must have been removed due to an 
+ *	Experiment version upgrade.  Use this lookup table to identify these Assets so that changes in their values can be ignored.
+ */
 QHash<int,bool> SessionVersionInterfacer::getObsoleteAssets()
 {
 	return obsoleteAssets_;
 }
 
+/*! \brief A recursive function used to reset the Asset ID the input asset from that of the input node and do
+ *	the same for all child Assets of the input asset and node.
+ *	\details If no matching Asset is found for any SVIAssetNode, that SVIAssetNode's asset ID along with any
+ *	Asset IDs of its children are added to the obsoleteAssets_ table that can be accessed with getObsoleteAssets().
+ *	recurseAddObsoleteAssets() is used for this purpose.
+ *	Returns an empty string on success and an error message on failure.
+ */
 QString SessionVersionInterfacer::recurseResetAssetIds(QSharedPointer<Asset> asset,QSharedPointer<SVIAssetNode> node)
 {
 	asset->setAssetId(node->assetId);
@@ -240,6 +272,9 @@ QString SessionVersionInterfacer::recurseResetAssetIds(QSharedPointer<Asset> ass
 	return "";
 }
 
+/*! \brief Adds the input assetId to the obsoleteAssets_ lookup.  Then recurses to add all descendant Asset IDs to the
+ *	lookup table as well.
+ */
 void SessionVersionInterfacer::recurseAddObsoleteAssets(int assetId)
 {
 	obsoleteAssets_[assetId] = true;

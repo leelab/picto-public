@@ -10,6 +10,8 @@ AnalysisRewardData::AnalysisRewardData()
 	zeroTime_ = 0;
 }
 
+/*! \brief Creates a new AnalysisRewardData object and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> AnalysisRewardData::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisRewardData());
@@ -21,8 +23,9 @@ void AnalysisRewardData::enteredScope()
 	zeroLatestFrame();
 }
 
-//Sets the time of the latest frame to zero.  Reward times will be returned with respect to
-//this latest frame.
+/*! \brief Sets the time of the latest frame to zero.  Reward times will be returned with respect to
+ *	this latest frame.
+ */
 void AnalysisRewardData::zeroLatestFrame()
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -32,7 +35,8 @@ void AnalysisRewardData::zeroLatestFrame()
 	zeroTime_ = latestTime;
 }
 
-//Returns the time of the latest reward to have been supplied
+/*! \brief Returns the time of the latest reward to have been supplied.
+ */
 double AnalysisRewardData::getLatestTime()
 {
 	Q_ASSERT(!getDesignConfig()->getRewardReader().isNull());
@@ -42,7 +46,9 @@ double AnalysisRewardData::getLatestTime()
 	return result;
 }
 
-//Returns the time of the next reward to be supplied.
+/*! \brief Returns the time of the next reward to be supplied.
+ *	\note In a live test, this will not return a valid value.
+ */
 double AnalysisRewardData::getNextTime()
 {
 	Q_ASSERT(!getDesignConfig()->getRewardReader().isNull());
@@ -52,7 +58,8 @@ double AnalysisRewardData::getNextTime()
 	return result;
 }
 
-//Returns the duration of the latest reward to have been supplied
+/*! \brief Returns the duration of the latest reward to have been supplied.
+*/
 int AnalysisRewardData::getLatestDuration()
 {
 	Q_ASSERT(!getDesignConfig()->getRewardReader().isNull());
@@ -61,7 +68,9 @@ int AnalysisRewardData::getLatestDuration()
 	return getDesignConfig()->getRewardReader()->getLatestDuration();
 }
 
-//Returns the duration of the next reward to be supplied.
+/*! \brief Returns the duration of the next reward to be supplied.
+ *	\note In a live test, this will not return a valid value.
+ */
 int AnalysisRewardData::getNextDuration()
 {
 	Q_ASSERT(!getDesignConfig()->getRewardReader().isNull());
@@ -69,7 +78,8 @@ int AnalysisRewardData::getNextDuration()
 		return -1;
 	return getDesignConfig()->getRewardReader()->getNextDuration();
 }
-
+/*! \brief Returns a list of reward times that occured with times > the input # sec before the latest frame and <= the latest frame time.
+*/
 QVariantList AnalysisRewardData::getPrevTimes(double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -87,7 +97,9 @@ QVariantList AnalysisRewardData::getPrevTimes(double secsPreceding)
 	}
 	return returnVal;
 }
-
+/*! \brief Returns a list of reward times that occured with times <= the input # sec after the latest frame and > the latest frame time.
+ *	\note In a live test, this will not return a valid value.
+ */
 QVariantList AnalysisRewardData::getNextTimes(double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -106,13 +118,16 @@ QVariantList AnalysisRewardData::getNextTimes(double secsFollowing)
 	return returnVal;
 }
 
+/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisRewardData::getTimesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevTimes(offsetTime);
 }
-
+/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisRewardData::getTimesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -120,7 +135,8 @@ QVariantList AnalysisRewardData::getTimesUntil(double upToTime)
 	return getNextTimes(offsetTime);
 }
 
-//Returns a list of reward durations that occured with times > the input # sec before the latest frame and <= the latest frame time.
+/*! \brief Returns a list of reward durations that occured with times > the input # sec before the latest frame and <= the latest frame time.
+*/
 QVariantList AnalysisRewardData::getPrevDurations(double secsPreceding)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -134,7 +150,9 @@ QVariantList AnalysisRewardData::getPrevDurations(double secsPreceding)
 	return returnVal;
 }
 
-//Returns a list of reward durations that occured with times <= the input # sec after the latest frame and > the latest frame time.
+/*! \brief Returns a list of reward durations that occured with times <= the input # sec after the latest frame and > the latest frame time.
+ *	\note In a live test, this will not return a valid value.
+*/
 QVariantList AnalysisRewardData::getNextDurations(double secsFollowing)
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -147,13 +165,16 @@ QVariantList AnalysisRewardData::getNextDurations(double secsFollowing)
 	QVariantList returnVal = getDesignConfig()->getRewardReader()->getDurationsUntil(maxRunTime);
 	return returnVal;
 }
-
+/*! \brief Functions like getPrevDurations() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+*/
 QVariantList AnalysisRewardData::getDurationsSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevDurations(offsetTime);
 }
+/*! \brief Functions like getNextDurations() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+ */
 QVariantList AnalysisRewardData::getDurationsUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -173,6 +194,8 @@ bool AnalysisRewardData::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
+/*! \brief Returns the latest frame time with respect to the beginning of the run.
+*/
 double AnalysisRewardData::getLatestRunTime()
 {
 	double latestTime = getDesignConfig()->getFrameReader()->getLatestTime();

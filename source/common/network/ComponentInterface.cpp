@@ -19,6 +19,13 @@
 #include "../common/protocol/StopResponseHandler.h"
 #include "../memleakdetect.h"
 using namespace Picto;
+
+/*! \brief Creates a new ComponentInterface with the input type name (ie. "Director")
+ *	\details This constructor also automatically creates a config file in the config directory
+ *	according to the type string and stores this ComponentInterface objects ComponentID (a unique
+ *	ID identifying this component device) inside.
+ *	
+*/
 ComponentInterface::ComponentInterface(QString type)
 :componentType_(type)
 {
@@ -51,15 +58,27 @@ ComponentInterface::ComponentInterface(QString type)
 	componentId_ = QUuid(query.value(0).toString());
 }
 
+/*! \brief Closes this ComponentInterface object's config database before this object is destroyed.
+*/
 ComponentInterface::~ComponentInterface()
 {
 	configDb_.close();
 }
-
+/*! \brief Returns a string describing this type of ComponentInterface (it was passed into the constructor).
+*/
 QString ComponentInterface::componentType()
 {
 	return componentType_;
 }
+/*! \brief Called to activate this component and run this component.
+ *	\details Calls openDevice() to initialize and devices and objects used by this component interface.
+ *	Adds default ProtocolResponseHandler objects to this object's data CommandChannel to handle responding to standard ProtocolResponse types that
+ *	may come in from the server.
+ *	Runs the ComponentInterface by calling CommandChannel::processResponses() with input of -1.  This is essentially the application's event loop.  It causes the 
+ *	CommandChannel to loop endlessly listening for commands within Server responses, handle those responses, and periodically call update on the statusManager_.  The
+ *	function only returns when the escape key is pressed.  See CommandChannel::processResponses() for more detail.
+ *	\sa CommandChannel::processResponses()
+ */
 int ComponentInterface::activate()
 {
 	//while(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection() )
@@ -85,6 +104,9 @@ int ComponentInterface::activate()
 
 	return 0;
 }
+/*! \brief Deactivates the component interface to prepare it for closing.
+ *	\details Calls closeDevice() to deinitialize any devices and objects used by the component and sets the ComponentStatusManager status to idle.
+ */
 int ComponentInterface::deActivate()
 {
 	if(deviceOpened_)

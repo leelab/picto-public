@@ -8,8 +8,17 @@
 
 namespace Picto {
 
-/*! \brief An analysis variable parameter.
- *
+/*! \brief A simple AnalysisOutput object used for writing text or binary data to files.
+ *	\details This object will take any text or binary data written through its writeLine(), 
+ *	writeText() or writeBinary() functions and write it to a file.  The filename is the same
+ *	as the current run name, and the file suffix is settable as a Property.  The file can be 
+ *	set as a text file or a binary file, with both big-endian and little-endian binary options.
+ *	
+ *	For in Picto viewing of output data, this object returns an AnalysisFileWidget or 
+ *	AnalysisBinaryWidget from createWidget depending on the file type.
+ *	\sa AnalysisFileOutputWidget, AnalysisOutputWidgetContainer
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisFileOutput : public AnalysisOutput
@@ -36,13 +45,6 @@ public:
 public slots:
 	void writeLine(QString text);
 	void writeText(QString text);
-	/*! \brief Writes data out to file as binary values (ie. short, int, double)
-	 *  @param csvData a comma separated series of values.
-	 *  @param csvTypes a comma separated series of types to use for the csvData.
-	 *	Valid types are short,int,long,float,double.  If more values appear in the
-	 *	csvData than there are types in csvTypes, the last type will be used for
-	 *	all remaining values.
-	 */
 	void writeBinary(QString csvData,QString csvTypes);
 
 protected:
@@ -55,7 +57,9 @@ protected slots:
 
 private:
 	void openFile();
+	/*! \brief Sets whether the file associated with this object is open and ready for data.*/
 	void setValid(bool isValid){valid_ = isValid;};
+	/*! \brief Returns whether the file associated with this object is open and ready for data.*/
 	bool isValid(){return valid_;};
 	unsigned int charsWritten_;
 	QStringList typeList_; 

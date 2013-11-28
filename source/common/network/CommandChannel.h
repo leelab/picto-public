@@ -22,57 +22,51 @@ namespace Picto {
 
 
 /*!	\brief A channel for sending/receiving commands/responses over the network
+ *	\details This discussion needs to start with a warning.  Warning! This is a very messy class.  This class
+ *	has a lot of history and its design has suffered significantly from that history... it needs to be fixed.  I will
+ *	write more about this at the end.  But now, getting back to the description:
+ *
  *	The CommandChannel object abstracts the communication between any 
  *  two devices which communicate via network protocols.  For example,
- *  PictoDirector would use a CommandChannel to send commands to PictoServer.
+ *  PictoDirector would use a CommandChannel to send ProtocolCommand objects with behavioral data to the PictoServer.
  *
  *	The channel is bidirectional, but is intended to be used by the client in 
- *	a client/server pair.  The channel can send protocolCommands and receive
- *	ProtocolResponses.
+ *	a client/server pair.  The channel can send ProtocolCommand objects and receive
+ *	ProtocolResponse objects.
  *
  *	The CommandChannel can be connected to a server in multiple ways:
- *		1. The CommandChannel can be passed a host address and port in the constructor
- *		2. The connectToServer slot can be used.  (This is particularly useful if it's connected
- *		   to the serverDiscoverers foundServer signal).
+ *		- The CommandChannel can be passed a host address and port in the constructor - Currently never used
+ *		- The assureConnection() function can be used (which internally calls discoverServer() to detect a
+ *			Picto Server and connect to it.
  *
- *	The CommandChannel is designed to be used mostly by the engine, so it doesn't
- *  take advantage of the event driven nature of Qt (If you decide you want to do this, an 
- *	earlier version of the object exists that uses signals and slots, and this can be found in
- *	the SVN archive).
- *
- *  To use the object, the owner calls the incomingResponsesWaiting function.  This 
+ *  To use the object, the owner calls the incomingResponsesWaiting() function.  This 
  *  checks the command socket for any incoming data, and then reports back the
- *	number of responses queed up for processing.  Then the readResponse 
- *	function can be called for each item in the queue. The advantage of this approach is
- *	that the calling object maintains nearly full control of the CPU.  The disadvantage
- *	is that it will burn cycles if there aren't any incoming responses, and it requires
- *	extra coding.  For outgoing commands, the sendCommandfunction is called directly.
+ *	number of responses queed up for processing.  The readResponse() 
+ *	function can then be called for each item in the queue. For outgoing commands, the sendCommand() function is called directly.
  *
- *	The registered functions are a special subset of the send/receive functions. These are used
- *	if you need to keep track of which commands have received responses.
+ *	The sendRegisteredCommand() function can be used to keep track of which commands have been recieved and processed by the server.  
+ *	Registered commands for which responses were not received can be resent with resendPendingCommands().  This system is currently
+ *	used by ComponentInterface objects.
  *
- *	NOTE: An earlier version of this object allowed true bidirection communication (you could receive
- *	commands and send responses.  If this functionality is desired, it can be dug out of the SVN archives.
+ *  The CommandChannel suffers significantly since it uses QTcpSockets to send commands over a network while for historical
+ *	reasons, the heaviest users of the CommandChannel, ComponentInterface objects don't use the Qt Event Loop which is really required for
+ *	QTcpSockets to run smoothly.  For this reason, there is a lot of general code complexity and round about function based processing for things like assuring a 
+ *	network connection ( assureConnection() ), discovering a Picto Server IP Address and Port ( discoverServer() ) and making sure server
+ *	ProtocolResponse messages are correctly handled ( processResponses() ).  This also leads to interfaces to components like ProtocolResponseHander objects and
+ *	ComponentStatusManager objects that the CommandChannel should really know nothing about.  In an ideal world, all of
+ *	these types of things would be handled by signals and slots that would be managed from the Qt Event Loop.  For more detail on this issue, see the functions
+ *	mentioned above, particularly processResponses().
  *
- *	!!!!!!   WARNING    !!!!!!
- *	The command channel has a weird "feature" (err bug).  Since we call proccess events in the
- *	waitForResponse function, it is entirely possible to get responses out of order.  Here's an
- *	example:
- *		1. The following code is executed:
- *				sendCommand(commandA)
- *				waitForResponse(1000)
- *		2. While waiting, some event occurs that results in this code being executed:
- *				sendCommand(commandB)
- *				waitForResponse(1000)
- *		3. Response A then arrives and gets processed by the function that sent command B
- *		4. Program crashes.
- *	To fix this, I'm going to stop making calls to QCoreApplication::processEvents().  However,
- *	this is DANGEROUS.  I seem to recall that these calls were essential for working with sockets
- *	if there isn't a real event loop, but everything seems to be working now, so who knows...
- *	(I did rerun the unit tests, and everything passed.)
+ *	Refactoring of the Picto experimental run system to use the Qt Event loop and cleaning up this class accordingly should be considered a Priority.
+ *	Until that happens, we can easily point to using the assureConnection(), sendCommand(), waitForResponse(), pendingResponses(), numIncomingResponses(), and
+ *	getResponse() functions to send a ProtocolCommand, wait for, and get a returned ProtocolResponse.  Things start getting complicated pretty fast though, and its best at this 
+ *	point to just look at an existing example of CommandChannel usage in the Picto Code, like the RemoteViewer.  ComponentInterface objects use the CommandChannel in
+ *	a particularly central and complex fashion.  It is for ComponentInterface objects that the CommandChannel needs to include pointers to ProtocolResponseHandler and 
+ *	ComponentStatusManager objects.  For further incite into what is going on here, look at the processResponses() documentation.
+ *	\sa processResponses(), ComponentStatusManager, ProtocolResponseHandler, Engine::PictoEngine
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API CommandChannel : public QObject
 #else
@@ -96,26 +90,37 @@ public:
 	void addResponseHandler(QSharedPointer<ProtocolResponseHandler> responseHandler, bool replaceExisting = true);
 	bool processResponses(int timeoutMs);
 	
-	
+	/*! \brief Returns the number of ProtocolResponse objects that were recieved over the socket but not yet processed.
+	*/
 	int numIncomingResponses(){return incomingResponseQueue_.size();};
 
 	bool waitForResponse(int timeout=0);
 
-	int pendingResponses() { return pendingCommands_.size(); };  //! Returns the number of responses we are waiting for
+	/*! \brief Every time we send a registered command, we keep it in a lookup table until a matching response
+	 *	comes in indicating that it was received and processed.  This function returns the number of commands of
+	 *	this type that are waiting for responses.
+	*/
+	int pendingResponses() { return pendingCommands_.size(); }; 
 	QDateTime resendPendingCommands();
 
 	void setSessionId(QUuid sessionId);
+	/*! \brief Returns the Session Id of the session making use of this CommandChannel.
+	*/
 	QUuid getSessionId(){return sessionId_;};
 	void clearSessionId();
-
+	/*! \brief The current status of this channel
+	*/
 	typedef enum
 	{
-		connected, disconnected
+		connected,	//!<	This channel is currently connected to the server
+		disconnected	//!< This channel is not currently connected to the server
 	} ChannelStatus;
 
-	//!Check channel status_
+	/*! \brief Returns the current ChannelStatus of this channel.
+	*/
 	ChannelStatus getChannelStatus() { return status_; };
 
+	/*! \brief Returns true if this channel is currently connected to the server (ie. getChannelStatus() returns connected.*/
 	bool isConnected() { return status_ == connected; };
 	bool assureConnection(int acceptableTimeoutMs = 0);
 
@@ -125,8 +130,11 @@ public slots:
 	void connectToServer();
 
 signals:
+	/*! \brief Emitted when an attempt to connect to the server fails.*/
 	void connectAttemptFailed();
+	/*! \brief Emitted whenever the connection to the server is disconnected, whether by intention or not.*/
 	void channelDisconnected();
+	/*! \brief This signal is currently never emitted and should probably be removed.*/
 	void channelConnected();
 
 private slots:

@@ -3,7 +3,11 @@
 
 namespace Picto
 {
-
+/*! \brief Constructs a DoubleParameter
+ *	\details Adds a Double Property called Value to hold the current value.
+ *	Adds a Double Property called Min to hold the minimum allowed value.
+ *	Adds a Double Property called Max to hold the maximum allowed value.
+ */
 DoubleParameter::DoubleParameter()
 : 
   Parameter()
@@ -14,21 +18,30 @@ DoubleParameter::DoubleParameter()
 
 }
 
+/*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
+ *	Create() is now the function to use.
+ */
 Parameter* DoubleParameter::NewParameter()
 {
 	return new DoubleParameter;
 }
 
+/*! \brief Creates a new DoubleParameter and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> DoubleParameter::Create()
 {
 	return QSharedPointer<Asset>(new DoubleParameter());
 }
 
+/*! \brief Returns the current value of this Parameter.
+*/
 double DoubleParameter::getValue()
 {
 	return propertyContainer_->getPropertyValue("Value").toDouble();
 }
 
+/*! \brief Sets the current value of this Parameter to the input.
+*/
 void DoubleParameter::setValue(double val)
 {
 	propertyContainer_->setPropertyValue("Value",val);
@@ -40,6 +53,9 @@ void DoubleParameter::postDeserialize()
 	setPropertyRuntimeEditable("Value");
 }
 
+/*! \brief Extends Parameter::validateObject() to verify that the Min parameter is less than or equal to
+ *	the Max Parameter.
+ */
 bool DoubleParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!Parameter::validateObject(xmlStreamReader))

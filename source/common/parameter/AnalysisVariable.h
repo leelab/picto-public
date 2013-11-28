@@ -8,6 +8,12 @@
 
 namespace Picto {
 
+/*! \brief The base class of all variables that can be used in an Analysis.
+ *	\details Works exactly like a Parameter with the exception that it is part of an Analysis.
+ *	\sa Parameter
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisVariable : public Parameter, public AssociateElement
 #else

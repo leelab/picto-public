@@ -4,8 +4,11 @@
 #include "../common.h"
 
 namespace Picto {
-
-//! \brief Unimplemented. Stores information about the behavioral input setup being used (eye tracker, joystick, etc).
+/*!	\brief Unimplemented.  This class should probably be removed.
+ *	The original documentation appears below:
+ *
+ *	Unimplemented. Stores information about the behavioral input setup being used (eye tracker, joystick, etc).
+ */
 class BehavioralInputEquipment
 {
 public:

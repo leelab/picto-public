@@ -1,6 +1,9 @@
 #include "RunNotesState.h"
 using namespace Picto;
 
+/*! \brief Sets the input Sql Database to this RunNotesState so that it can load all of the 
+ *	data relevant to it into RAM for quick access.
+ */
 void RunNotesState::setDatabase(QSqlDatabase session)
 {
 	session_ = session;
@@ -25,6 +28,10 @@ void RunNotesState::setDatabase(QSqlDatabase session)
 	currRun_ = -1;
 }
 
+/*! \brief Informs this RunNotesState that a new run is starting along with the time
+ *	that the run is starting.  The run start time is used to select the current run
+ *	so that the correct run data will be available to Analyses.
+ */
 void RunNotesState::startRun(double runStartTime,double)
 {
 	Q_ASSERT(session_.isOpen());

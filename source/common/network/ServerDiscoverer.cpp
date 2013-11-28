@@ -25,6 +25,7 @@ ServerDiscoverer::ServerDiscoverer(QObject *parent) :
 	connect(&timeoutTimer_,SIGNAL(timeout()),this,SLOT(timeout()));
 }
 
+/*! \brief Returns the Picto Server's IP Address, if it has been discovered or an empty QHostAddress otherwise.*/
 QHostAddress ServerDiscoverer::getAddress()
 {
 	if(!bFoundServer_)
@@ -38,7 +39,7 @@ QHostAddress ServerDiscoverer::getAddress()
 		return pictoServerAddress_;
 	}
 }
-
+/*! \brief Returns the port on which communication to the Picto Server should occur, or zero otherwise.*/
 quint16 ServerDiscoverer::getPort()
 {
 	if(!bFoundServer_)
@@ -51,6 +52,13 @@ quint16 ServerDiscoverer::getPort()
 	}
 }
 
+/*! \brief Begins the server disocver process.
+ *	\details This function will return right away and requires the Qt event loop to be functioning to operate or for 
+ *	waitForDiscovered() to be called (which creates an event loop internally).
+ *
+ *	If the server is discovered within the input timeout (in milliseconds), the foundServer() signal will be emitted.
+ *	If the server is not discovered in time, discoverFailed() will be emitted.
+ */
 void ServerDiscoverer::discover(int timeout)
 {
 	bFoundServer_ = false;
@@ -69,6 +77,8 @@ void ServerDiscoverer::discover(int timeout)
 	timeoutTimer_.start();
 }
 
+/*! \brief Called by a timeout timer if the Server isn't discovered within a set time of discover() begin called.  Emits discoverFailed().
+*/
 void ServerDiscoverer::timeout()
 {
 	emit discoverFailed();
@@ -76,6 +86,9 @@ void ServerDiscoverer::timeout()
 	waitingEventLoop_.exit();
 }
 
+/*! \brief Called when the udpSocket recieves a datagram.  
+ *	\details Reads the data.  If the data is a server ip address/port report, the function extracts the relevant data and emits foundServer.S
+ */
 void ServerDiscoverer::processPendingDatagrams()
 {
     while (udpSocket_.hasPendingDatagrams())
@@ -125,6 +138,12 @@ void ServerDiscoverer::processPendingDatagrams()
 	}
 }
 
+/*! \brief If this object is not running within a Qt Event Loop, this function may be used to create an event loop internally and allow this 
+ *	server discoverer to operate.
+ *	\details The input timeout is time that will pass in this function before it exits.  If used with the discover() function, the procedure
+ *	would be to connect to the foundServer() and discoverFailed() signals, then call discover() with a timeout input, then call waitForDiscovered() with
+ *	the same timeout input or higher.
+ */
 bool ServerDiscoverer::waitForDiscovered(int timeout)
 {
 	if(bRunning_)

@@ -2,6 +2,12 @@
 #include "PlaybackData.h"
 using namespace Picto;
 
+/*! \brief Constructs a new PropertyState.
+ *	\details forInitProperties Indicates whether this PropertyState will track regular Property value 
+ *	changes or Property initValue changes (initValues are the values that Property values are set to when
+ *	their parent first enters scope.  These are the values that are changed by parameters on the left
+ *	side of the remote viewer window.
+ */
 PropertyState::PropertyState(bool forInitProperties) :
 forInitProperties_(forInitProperties)
 {

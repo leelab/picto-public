@@ -17,6 +17,7 @@ class NumberVariable : public Variable
 #endif
 {
 	Q_OBJECT
+	/*! \brief A script property used to read and write this NumberVariable's value.*/
 	Q_PROPERTY(double value READ getValue WRITE setValue)
 
 public:

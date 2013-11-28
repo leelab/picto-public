@@ -4,6 +4,11 @@
 
 using namespace Picto;
 #define FRAMEMS 16
+/*! \brief Constructs a SlaveExperimentDriver.
+ *	\details The updater provides State/Transition/Input data from the Session master, be it a remotely running
+ *	instance of the Picto Director or simply a session file being played back in the Playback viewer.  Data provided
+ *	from the updater is sent into the exp Experiment and rendered on screen.
+ */
 SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSharedPointer<StateUpdater> updater)
 {
 	experiment_ = exp;
@@ -38,6 +43,12 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	}
 }
 
+/*! \brief Renders the current frame by calling State::slaveRenderFrame().
+ *	\details Note that in slave mode, the Picto Experiment is working with the Qt Event loop which
+ *	is why we are calling slaveRenderFrame from an outside class.  In master experiment execution,
+ *	the experiment is one giant loop of code that doesn't make use of the Qt Event loop.  In that case
+ *	frame rendering is handled as part of running a State/PausePoint.
+ */
 void SlaveExperimentDriver::renderFrame()
 {
 	if(!currElement_)
@@ -58,6 +69,15 @@ void SlaveExperimentDriver::renderFrame()
 	frameTimer_.restart();
 }
 
+/*! \brief Handles the appropriate response to each input SlaveEvent.
+ *	\details When a PROP_VAL_CHANGE or INIT_PROP_VAL_CHANGE comes in, we change the value of our local Property.
+ *	When a TRANS_ACTIVATED comes in, we move control to the appropriate StateMachineElement and call whatever
+ *	Analysis scripts need to be called in the process.
+ *	\note Rather than handling each different type of event as it comes in from the StateUpdater, we
+ *	queue them up at handle each frame all at once.  This gives us the flexibility to know all data about the frame
+ *	before it is actually presented to the display.  It should be noted, however, that we are not taking advantage of
+ *	this capability to any significant extent at this point.
+*/
 void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 {
 	switch(event.type)
@@ -122,7 +142,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 				currTask_ = currTask;
 				emit taskChanged(currTask_);
 			}
-			//Set is as the current element
+			//Set it as the current element
 			//Reset its values to initial conditions
 			//run its AnalysisEntryScripts
 			//start it up
@@ -136,6 +156,9 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 	}
 }
 
+/*! \brief Called when a new Run starts.  Handles various initializations that need to occur at the beginning of a new run.
+ *	\details As part of this function, the taskChanged() signal is emitted.
+*/
 void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 {
 	experiment_->getDesignConfig()->getFrameTimerFactory()->resetAllTimers();
@@ -155,6 +178,9 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
 }
+
+/*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
+*/
 void SlaveExperimentDriver::masterRunEnding()
 {
 	if(currTask_.isEmpty())
@@ -165,18 +191,25 @@ void SlaveExperimentDriver::masterRunEnding()
 	designConfig_->markRunEnd();
 	eventQueue_.reset();
 }
+
+/*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.*/
 void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
 	eventQueue_.addPropChange(propId,value);
 }
+/*! \brief Called when a Property initValue changes in the master.  Adds a corresponding event to the event queue.*/
 void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
 {
 	eventQueue_.addInitPropChange(propId,value);
 }
+/*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.*/
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
 	eventQueue_.addTransActivation(transId);
 }
+/*! \brief Called when a frame is presented in the master.  Goes through event queue handling events one by one.  Updates FrameResolutionTimer objects,
+ *	renders the frame and calls the current AnalysisFrameScript.
+ */
 void SlaveExperimentDriver::masterFramePresented(double time)
 {
 	//Report the time of the frame following all the property and transition updates that are
@@ -208,10 +241,14 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 		currState->runAnalysisFrameScripts();
 	}
 }
+/*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine  to be supplied when the next frame is rendered.*/
 void SlaveExperimentDriver::masterRewardSupplied(double,int duration,int channel)
 {
 	experiment_->getEngine()->giveReward(channel,duration,duration);
 }
+/*! \brief Called when a list of ne signal values comes in from the master.  Adds the values to the SignalChannel.
+ *	\sa SignalChannel::insertValue()
+ */
 void SlaveExperimentDriver::masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals)
 {
 	int numSubChans = subChanNames.size();
@@ -223,6 +260,11 @@ void SlaveExperimentDriver::masterSignalChanged(QString name,QStringList subChan
 		sigChan->insertValue(subChanNames[i%numSubChans],vals[i]);
 	}
 }
+/*! \brief Disables/Enables rendering of frames to the RenderingTarget.
+ *	\details This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to actually see
+ *	every frame on screen.  Even though the frames aren't rendered, however, all other logic operates exactly the same whether rendering
+ *	is enabled or disabled.
+ */
 void SlaveExperimentDriver::disableRendering(bool disable)
 {
 	bool shouldRenderFrame = !disable && !renderingEnabled_;

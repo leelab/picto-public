@@ -7,6 +7,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new AssociateRoot.
+ *	\details Adds "AssociateId", "LinkedHostId" and "LinkedHostName" Properties.
+ */
 AssociateRoot::AssociateRoot()
 :	variableFactory_(new AssetFactory(0,-1)),
 	outputFactory_(new AssetFactory(0,-1)),
@@ -21,13 +24,17 @@ AssociateRoot::AssociateRoot()
 	requireUniqueName(false);
 }
 
-//Links this AssociateRoot to the input Asset.
-//Returns true on success, false if the linkage wasn't perfect.  On false, the feedback
-//message has more information.
-//THIS IS GOING TO NEED SOME DEBUGGING.  MAKE SURE, FOR EXAMPLE, THAT ADDING AN ANALYSISSCRIPTHOLDER TO A
-//NUMERIC PARAMETER WON'T BREAK ANYTHING!!!  Possibly fix these types of issues by overloading the AssociateElement's
-//attachToLinkedAsset function for different types of classes depending on whether they can be loaded onto the wrong
-//element or not.
+/*! \brief Links this AssociateRoot to the input AssociateRootHost.
+ *	\details Calls setLinkedAsset() to go through the details of linking this AssociateRoot to the input AssociateRootHost(). 
+ *	Also goes through all of this AssociateRoot's children and attempts to link them to their corresponding Assets in the
+ *	AssociateRootHost's tree using saved "link asset ID" and "link asset path" data.  Returns true on success, false if the linkage wasn't perfect.  On false, the feedback
+ *	input will be set to a message with more information.
+ *	\note This could use some debugging.  Make sure, for example, that adding an AnalysisScriptHolder to a NumberVariable either won't 
+ *	work or at least won't break anything.  Possibly fix these types of issues by overloading the AssociateElement's
+ *	attachToLinkedAsset function for different types of classes depending on whether they can be loaded onto the wrong
+ *	element or not.
+ *	\note This function would be better named linkToHost() or something like that. It is called LinkToAsset() for historic reasons.
+ */
 bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
 {
 	if(asset == linkedAsset_.toStrongRef())
@@ -91,6 +98,9 @@ bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
 	return true;
 }
 
+/*! \brief Searches this object's parent's (PictoData) tree for an AssociateRootHost with the linked host ID
+ *	set for this AssociateRoot and returns it as an Asset.  Returns an empty pointer otherwise.
+ */
 QSharedPointer<Asset> AssociateRoot::getLinkableAsset()
 {
 	QSharedPointer<PictoData> parent = getParentAsset().staticCast<PictoData>();
@@ -121,6 +131,12 @@ bool AssociateRoot::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	return true;
 }
 
+/*! \brief Performs operations necessary to link this object with the input AssociateRootHost object.
+ *	\details Informs the input AssociateRootHost that this AssociateRoot is linking to it.  Connects the 
+ *	various signals and slots that need to be connnected. 
+ *	Updates this objects Properties to store the connection to the AssociateRootHost by calling updateLinkedAssetProperties().
+ *	Sets the LinkedHostId and LinkedHostName properties to the input AssociateRootHost's information.  
+ */ 
 void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT(asset);
@@ -152,6 +168,9 @@ void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset)
 		connect(linkedNameProp.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(linkedAssetPropertyEdited(Property*,QVariant)));
 }
 
+/*!	\brief Updates this objects Properties to store the connection to the AssociateRootHost by calling updateLinkedAssetProperties().
+ *	\details Sets the LinkedHostId and LinkedHostName properties to the linked AssociateRootHost's information.  
+ */
 void AssociateRoot::updateLinkedAssetProperties()
 {
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(linkedAsset_.data());
@@ -160,6 +179,7 @@ void AssociateRoot::updateLinkedAssetProperties()
 	propertyContainer_->setPropertyValue("LinkedHostName",linkedAsset_.toStrongRef()->getName());
 }
 
+/*! \brief Returns true if the input asset is a AssociateRootHost with host ID equal to this AssociateRoot's saved LinkedHostId.*/
 bool AssociateRoot::isLinkableAsset(QSharedPointer<Asset> asset)
 {
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(asset.data());
@@ -173,13 +193,14 @@ bool AssociateRoot::isLinkableAsset(QSharedPointer<Asset> asset)
 		return true;
 	return false;
 }
+/*! \brief Returns a pointer to the linked AssociateRootHost's name Property. */
 QSharedPointer<Property> AssociateRoot::getLinkedHostNameProperty()
 {
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(linkedAsset_.data());
 	Q_ASSERT(assocRootHost);
 	return assocRootHost->getNameProperty();
 }
-
+/*! \brief Returns a pointer to the linked AssociateRootHost's Host Id Property. */
 QSharedPointer<Property> AssociateRoot::getLinkedAssetHostIdProperty()
 {
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(linkedAsset_.data());
@@ -187,12 +208,17 @@ QSharedPointer<Property> AssociateRoot::getLinkedAssetHostIdProperty()
 	return assocRootHost->getHostIdProperty();
 }
 
+/*! \brief Called when one of the linked AssociateRootHost's Properties is edited.  Calls updateLinkedAssetProperties() to update
+ *	this object's corresponding Property values.
+*/
 void AssociateRoot::linkedAssetPropertyEdited(Property*,QVariant)
 {
 	updateLinkedAssetProperties();
 }
 
-//Whenever a child is added to the AssociateRoot, we must set all of its descendant properties to Associate properties.
+/*! \brief Called whenever a child is added to this AssociateRoot. Sets all of its descendant properties to Associate properties.
+ *	\sa DataStore::setDescendantPropertiesAsAssociates()
+ */
 void AssociateRoot::AssociateRootChildWasAdded(QSharedPointer<Asset> child)
 {
 	if(!child->inherits("Picto::DataStore"))

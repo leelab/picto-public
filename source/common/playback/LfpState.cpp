@@ -10,6 +10,14 @@ enabled_(enabled)
 
 }
 
+/*! \brief Enables/Disables this LfpState to make memory / load time savings possible when lfp data is not needed.
+ *	\details This function could take quite some time if LFP data wasn't loaded and it is used to enable lfp data.
+ *	This is because in this case all lfp data will be loaded before the function returns.
+ *
+ *	lfpLoadProgress() signals are emitted as part of this function to indicate when the lfp data loading or 
+ *	unloading is complete.
+ *	\sa getEnabled()
+ */
 void LfpState::setEnabled(bool enable)
 {
 	if(enable)
@@ -35,6 +43,9 @@ void LfpState::setEnabled(bool enable)
 	emit lfpLoadProgress(100);
 }
 
+/*! \brief Returns true if this LFPState is currently set to return lfp data, false otherwise.
+ *	\sa setEnabled()
+ */
 bool LfpState::getEnabled()
 {
 	return enabled_;

@@ -7,12 +7,16 @@
 
 namespace Picto {
 
-/*! \brief A boolean parameter.
+/*! \brief A simple parameter for holding a boolean value.
  *
- *	This parameter can only hold the values true or false, although we can relable those
- *	values to anything we want (e.g. "On" and "Off").  The equality operators work as 
- *	expected for these parameters, but the greater than and less than operators will
- *	always return false, since theydoesn't make sense with boolean values.
+ *	The Value Property is runtime editable and appears as a checkbox widget
+ *	in the PropertyFrame.  The boolean value is accessible through the javascript "value" property as:
+ *	\code
+ 		BooleanParameterName.value = false;
+ 		var boolVal = BooleanParameterName.value;
+ 	\endcode
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API BooleanParameter : public Parameter
@@ -21,10 +25,8 @@ class BooleanParameter : public Parameter
 #endif
 {
 	Q_OBJECT
+	/*! \brief Sets/Gets the stored boolean value.*/
 	Q_PROPERTY(bool value READ getValue WRITE setValue)
-//public slots:
-//	void setValue(QVariant value) { value_ = value.toBool(); };
-//	QVariant getValue() { return QVariant(value_); };
 
 public:
 	BooleanParameter();
@@ -33,31 +35,27 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
 
-	//DataStore functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
+	/*! \brief Obsolete.  We should get rid of this function.*/
 	void setTrueLabel(QString label) { trueLabel_ = label; };
+	/*! \brief Obsolete.  We should get rid of this function.*/
 	void setFalseLabel(QString label) { falseLabel_ = label; };
 
+	/*! \brief Returns the stored boolean value.*/
 	bool getValue(){return propertyContainer_->getPropertyValue("Value").toBool();};
+	/*! \brief Sets the stored boolean value.*/
 	void setValue(bool val){propertyContainer_->setPropertyValue("Value",val);};
 
 	virtual QString getUITemplate(){return "BooleanParameter";};
 	virtual QString friendlyTypeName(){return "Boolean";};
-	//note that the lessThan & greaterThan functions aren't redefined, 
-	//so they will always return false
-	//bool equalTo(Parameter& RHS) { return RHS.getValue().toBool() == value_ && RHS.type() == "Boolean"; };
-	//bool equalTo(QVariant& RHS) { return (RHS.type() == QVariant::Bool) && (RHS.toBool() == value_); };
 
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	bool value_;
-	QString trueLabel_;
-	QString falseLabel_;
+	bool value_;	//Get rid of this.  Everything must be stored in Properties now.
+	QString trueLabel_;	//Get rid of this.  Everything must be stored in Properties now.
+	QString falseLabel_;//Get rid of this.  Everything must be stored in Properties now.
 
 };
 

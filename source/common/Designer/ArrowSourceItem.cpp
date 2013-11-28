@@ -13,7 +13,9 @@ ArrowPortItem(name,editorState, parent,asset)
 	setBrush(brush);
 	//setCursor(Qt::CrossCursor);
 }
-
+/*! \brief The idea of this function was to define a point where the arrow should contact it.
+ *	in practice, this function is not used.
+ */
 QPointF ArrowSourceItem::getContactPoint()
 {
 	return getRect().center()+QPointF(getRect().width()/2.0,0);
@@ -30,6 +32,10 @@ void ArrowSourceItem::setRect(QRectF rect)
 	setBrush(brush);
 }
 
+/*! \brief Sets the EditorState::EditMode to either InsertLine or Select when the mouse enters this ArrowSourceItem
+ *	depending on what kind of ArrowSourceItem this is.
+ *	\note This might better be handled in sub-classes.
+ */
 void ArrowSourceItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 {
 	//The cursor is hovering over me

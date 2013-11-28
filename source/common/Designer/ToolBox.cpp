@@ -5,7 +5,12 @@
 //#include "BackgroundToolGroup.h"
 #include "../../common/memleakdetect.h"
 
-//! [0]
+/*! \brief Constructs a new Toolbox.  
+ *	\details editorState is used to detect when the Designer Window Asset changes and 
+ *	whether the Designer is operating in Experimental or Analysis mode so that
+ *	the Toolbox can update the available tools accordingly.
+ *	\sa EditorState::windowAssetChanged()
+ */
 Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 	editorState_(editorState),
 	QToolBox(parent)
@@ -21,6 +26,11 @@ Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 		this, SLOT(setAsset(QSharedPointer<Asset>)));
 }
 
+/*! \brief Updates the contents of the Toolbox so that they will be appropriate for editing the input asset.
+ *	\details This function pretty much just chooses which kind of ToolGroup objects will need to be
+ *	added based on the design mode (Analysis or Experimental).  It adds the ToolGroups using
+ *	addToolGroup().
+ */
 void Toolbox::setAsset(QSharedPointer<Asset> asset)
 {
 	//For some reason, simply changing the items in the AssetToolGroup messed up QT's
@@ -70,6 +80,11 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	setCurrentIndex(currIndex);
 }
 
+/*! \brief Creates a ToolGroup according to the input specifications and adds it to this Toolbox.
+ *	\details Currently we are only using AssetToolGroup objects.  tagFilters and windowAsset are 
+ *	passed into the AssetToolGroup constructor.  groupName is added as a label to a maximizable/minimizable 
+ *	bar that is used to display/hide each AssetToolGroup.
+ */
 void Toolbox::addToolGroup(QStringList tagFilters,QString groupName,QSharedPointer<Asset> windowAsset)
 {
 	//If we're working on experimental design

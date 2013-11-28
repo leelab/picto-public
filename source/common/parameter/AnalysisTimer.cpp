@@ -4,14 +4,17 @@
 namespace Picto
 {
 
+/*! \brief Creates and AnalysisTimer
+ *	\details Adds a TimeUnits property where the units of returned time values can be selected.
+ *	Supported values are Sec, Ms, Us
+ */
 AnalysisTimer::AnalysisTimer()
 : AnalysisDataSource()
 {
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
-	//AddDefinableProperty(QVariant::Int,"Value",-1);
 }
-
+/*! \brief Creates a new AnalysisTimer object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> AnalysisTimer::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisTimer());
@@ -20,13 +23,15 @@ QSharedPointer<Asset> AnalysisTimer::Create()
 void AnalysisTimer::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
 	AnalysisDataSource::setDesignConfig(designConfig);
-	//Whenever the design config changes we need to change our change our frame timer so that 
+	//Whenever the design config changes we need to change our frame timer so that 
 	//we can be sure that it will be updated according to presented frames in the  
 	//experiment to which this analysis is attached
 	timer_ = getDesignConfig()->getFrameTimerFactory()->createTimer();
 	restart();
 }
 
+/*! \brief Restarts this timer as of the latest frame time.
+*/
 void AnalysisTimer::restart()
 {
 	time_ = 0;
@@ -40,6 +45,8 @@ void AnalysisTimer::enteredScope()
 	restart();
 }
 
+/*! \brief Returns the latest time on the timer in the units set in the TimeUnits Property.
+*/
 int AnalysisTimer::getValue()
 {
 	Controller::TimerUnits::TimerUnits units;

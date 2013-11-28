@@ -10,9 +10,15 @@ namespace Picto {
 
 /*! \brief An Image File parameter.
  *
- *	This parameter holds an image file.  Not the path to the file, but the actual file such that changing
+ *	\details This parameter holds an image file.  Not the path to the file, but the actual file such that changing
  *	the original file on disk will not affect the contents of this parameter unless the file is
- *	reloaded.
+ *	reloaded.  The class checks all loaded files to make sure that they have formats that Picto
+ *	understands (it understands the formats that QImage understands).
+ *
+ *	This class works with the ImageGraphic class such that multiple ImageGraphic objects can use the same
+ *	ImageFileParameter.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ImageFileParameter : public FileParameter

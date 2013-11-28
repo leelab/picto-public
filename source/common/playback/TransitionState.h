@@ -6,7 +6,24 @@
 
 namespace Picto {
 struct PlaybackTransData;
-/*! \brief Stores Transition PlaybackData values for use in Playback system.
+/*! \brief Implements the DataState and TransitionReader classes to load a Picto Session database, 
+ *	extract transition traversal data and implement functions for traversing through that data.
+ *	\details The class is fairly simple, a QList of PlaybackTransData objects is loaded from the 
+ *	session data.  Each PlaybackTransData represents a single Transition traversal and when moveToIndex() 
+ *	is called, we just move through the list until we reach a PlaybackTransData with the appropriate PlaybackIndex.
+ *	Each time moveToIndex() causes us to pass through a PlaybackTransData entry, the transitionActivated() 
+ *	signal is called, which tells the rest of the playback system that a Transition was traversed.
+ *
+ *	\note Since the functions here simply implement the TransitionReader and DataState classes for
+ *	data read in from a Session Database, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding function level documentation
+ *	for this class.
+ *
+ *	\note TransitionReader no longer has any contents since we realized that TransitionReader was more naturally
+ *	extracted as part of StateMachine playback instead of being gathered over time ranges.  We have left
+ *	the TransitionReader interface extension here, but it could probably be removed.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class TransitionState : public TransitionReader, public DataState
 {
@@ -17,9 +34,17 @@ public:
 	virtual PlaybackIndex getCurrentIndex();
 	virtual PlaybackIndex getNextIndex(double lookForwardTime);
 	virtual void moveToIndex(PlaybackIndex index);
+	/*! \brief Sets a lookup table of Asset Ids for Assets that have become obsolete.
+	 *	\details When Property value changes for these Assets are encountered, they are ignored.
+	 *	For more information, see the SessionVersionInterfacer object.  The SessionVersionInterfacer can
+	 *	be used to prepare the input obsoleteAssetIds table.
+	 */
 	void setObsoleteAssets(QHash<int,bool> obsoleteAssetIds){obsoleteAssetIds_ = obsoleteAssetIds;};
 	int getFirstTransIdInRun();
 signals:
+	/*! \brief Emitted whenever a Transition traversal is passed over due to a call to moveToIndex().
+	 *	\details The transId is the Asset Id of the Transition that was traversed.
+	 */
 	void transitionActivated(int transId);
 private:
 	PlaybackIndex getNextIndex();
@@ -32,20 +57,12 @@ private:
 	int firstLocationInRun_;
 	QList<PlaybackTransData> data_;
 	QHash<int,bool> obsoleteAssetIds_;
-//public:
-//	bool setTransition(double time,qulonglong dataId,int transId);
-//
-//signals:
-//	void transitionActivated(int transId);
-//	void needsData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsNextData(PlaybackIndex currLast,bool backward);
-//
-//protected:
-//	virtual void triggerValueChange(bool reverse,bool last);
-//	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
-//	virtual void requestNextData(PlaybackIndex currLast,bool backward);
 };
 
+/*! \brief A struct used to store a single Transition traversal.
+ *	\details Includes the PlaybackIndex of the Transition traversal, and the Asset Id (transId_) of the
+ *	Transition that was traversed.
+ */
 struct PlaybackTransData
 {
 	PlaybackTransData(){};

@@ -14,9 +14,16 @@
 #include "../../common/memleakdetect.h"
 using namespace std;
 
+/*! \brief A lookup table of IconDef structs indexed by the UITemplate name to which they belong.*/
 QMap<QString,IconDef> DiagramItemFactory::iconDefs_;
+/*! \brief A flag indicating whether the icondDefs_ lookup table has been initialized yet.*/
 bool DiagramItemFactory::mapInitialized_ = false;
 
+/*! \brief Constructs a new DiagramItemFactory.
+ *	\details The factory needs the EditorState, contextMenu, and scene to create the various types
+ *	of DiagramItems that will be needed.  Among other things, this function initializes the iconDefs_
+ *	lookup table with all of the icons and DiagramItem sizes needed for each type of UITemplate.
+*/
 DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, QMenu *contextMenu, QGraphicsScene *scene)
 {
 	if(!mapInitialized_)
@@ -110,6 +117,9 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 	scene_ = scene;
 }
 
+/*! \brief Creates and retuns an appropriate DiagramItem for the input asset.
+ *	The type of DiagramItem, its size and icon are functions of the type of Asset that is input.
+ */
 DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 {
 	AssetItem* returnVal = NULL;
@@ -163,17 +173,26 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	return returnVal;
 }
 
+/*! \brief Returns the QIcon used for the input type of UITemplate.*/
 QIcon DiagramItemFactory::getIcon(QString uITemplate)
 {
 	Q_ASSERT_X(iconDefs_.contains(uITemplate),"DiagramItemFactory::getIconDef","Unknown UI Template requested.");
 	return QIcon(iconDefs_[uITemplate].fileName_);
 }
 
+/*! \brief Creates an IconDef using the input parameters and adds it to the iconDefs_ lookup table under the input assetType.
+ *	\note There is some inconsistent naming here for historical reasons that should be fixed.  AssetType is really just the
+ *	UITemplate name that is returned from UIEnabled::getUITemplate() and is sometimes named correctly and sometimes named assetType.
+ *	This should probably be fixed.
+ */
 void DiagramItemFactory::addIconDefinition(QString assetType, QString fileName, float width, float height)
 {
 	iconDefs_[assetType] = IconDef(fileName,width,height);
 }
 
+/*! \brief Returns the IconDef that should be used for the input Asset.
+ *	\sa addIconDefinition()
+ */
 IconDef DiagramItemFactory::getIconDef(QSharedPointer<Asset> asset)
 {
 	Q_ASSERT_X(!asset.dynamicCast<UIEnabled>().isNull(),"DiagramItemFactory::getIconDef","Only assets that are UIEnabled can used in the DiagramItemFactory.");

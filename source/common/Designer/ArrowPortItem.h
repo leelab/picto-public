@@ -5,7 +5,13 @@
 #include "diagramitem.h"
 #include "../storage/asset.h"
 
-//! [0]
+/*! \brief A box that acts as a port for the tail or head of a transition arrow.
+ *	\details This ArrowPortItem takes care of things like telling the arrow connected to it if it
+ *	needs to redraw itself with new endpoints and deleting an attached arrow if this ArrowPortItem
+ *	is deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class ArrowPortItem : public DiagramItem
 {
 	Q_OBJECT
@@ -15,7 +21,11 @@ public:
  	void addArrow(Arrow *arrow);
 	void removeArrow(Arrow *arrow);
     void removeArrows();
+	/*! \brief The idea of this function was to define a point where the arrow should contact it.
+ 	 *	in practice, this function is not used.
+	 */
 	virtual QPointF getContactPoint() = 0;
+	/*! \brief Returns the Asset associated with this ArrowPortItem. */ 
 	QSharedPointer<Asset> getAsset(){return asset_;};
 protected:
 	virtual void updateDependantGraphics();
@@ -25,6 +35,6 @@ protected:
 private:
 	QList<Arrow *> arrows;
 };
-//! [0]
+
 
 #endif

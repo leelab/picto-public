@@ -7,6 +7,20 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new Experiment object.
+ *	\details Adds a number of Properties including the following for the purpose of position signal calibration:
+ *	- XGain
+ *	- YGain
+ *	- XOffset
+ *	- YOffset
+ *	- XYSignalShear
+ *	Also adds the following for the purpose of overriding UIEnabled Properties:
+ *	- Name - Overriden as an ObsoleteAsset to remove the Name Property from this object since it must always be "Experiment"
+ *	- UIEnabled	- Overriden to be "true" by default so that eye calibration Properties will appear in the Property Frame by default.
+ *	\sa xOffset, yOffset, xGain, yGain, xySignalShear, setName()
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 Experiment::Experiment()
 :
 engine_(NULL)
@@ -29,6 +43,7 @@ engine_(NULL)
 	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }
 
+/*! \brief Creates a new Experiment object and returns a shared Asset pointer to it.*/
 QSharedPointer<Experiment> Experiment::Create()
 {
 	QSharedPointer<Experiment> newExperiment(new Experiment());
@@ -38,6 +53,9 @@ QSharedPointer<Experiment> Experiment::Create()
 	return newExperiment;
 }
 
+/*! \brief Sets the Engine::PictoEngine that will be used in running this Experiment to the input object.
+ *	\details This must be called before attempting to run a task or any of its descendant objects.
+ */
 void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 {
 	engine_ = engine;
@@ -50,17 +68,23 @@ void Experiment::setEngine(QSharedPointer<Engine::PictoEngine> engine)
 	engine_->setPropertyTable(propTable_);
 };
 
+/*! \brief Returns the Engine::PictoEngine set in setEngine().
+ */
 QSharedPointer<Engine::PictoEngine> Experiment::getEngine()
 {
 	return engine_;
 }
 
+/*! \brief Adds the input task to this Experiment's Task list.
+ */
 void Experiment::addTask(QSharedPointer<Task> task)
 {
 	tasks_.append(task);
 	task->setTaskNumber(tasks_.size());
 }
 
+/*! \brief Returns a list of this Experiment's Task names.
+ */
 QStringList Experiment::getTaskNames()
 {
 	QStringList taskList;
@@ -71,6 +95,10 @@ QStringList Experiment::getTaskNames()
 	return taskList;
 }
 
+/*! \brief Returns the Task object with the input taskName.
+ *	\details If no Task with the input taskName is found, returns 
+ *	an empty shared pointer.
+ */
 QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 {
 	QSharedPointer<Task> returnVal;
@@ -91,6 +119,12 @@ QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 	return returnVal;
 }
 
+/*! \brief Runs the Task with the input taskName starting with the initial transition
+ *	in its top level StateMachine.
+ *	\details This function blocks until the Task is done running, then returns true.
+ *	if it returns false, the Task could not be found, or an Engine::PictoEngine
+ *	was not yet addded to this Experiment using setEngine().
+ */
 bool Experiment::runTask(QString taskName)
 {
 	if(engine_.isNull())
@@ -162,7 +196,15 @@ bool Experiment::runTask(QString taskName)
 }
 
 
-//! Jumps to the specified task and state
+/*! \brief This function appears to no longer be used.
+ *	\details The function as once used when attaching the Experiment to a remote Experiment
+ *	that was already running to jump to the currently running state.  Since then, we have created 
+ *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
+ *	within the Qt event loop based on information coming from the Master, and not only from within 
+ *	the blocking runTask() function.
+ *	
+ *	This function should probably be removed.
+ */
 bool Experiment::jumpToState(QStringList path, QString state)
 {
 	QString taskName = path.takeFirst();
@@ -252,6 +294,11 @@ bool Experiment::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
+/*! \brief Updates the SignalChannel calibration coefficients 
+ *	( SignalChannel::setCalibrationCoefficients() and SignalChannel::setShear() )
+ *	based on the current calibration Property values.
+ *	\details This is called whenever the calibration Property values change.
+*/
 void Experiment::updateSignalCoefficients(Property*,QVariant)
 {
 	if(engine_.isNull())
@@ -295,6 +342,8 @@ void Experiment::updateSignalCoefficients(Property*,QVariant)
 
 }
 
+/*! \brief Checks to see if the input Asset is a Task and if so, adds it to the Task list using addTask()
+ */
 void Experiment::sortTasksIntoList(QSharedPointer<Asset> newChild)
 {
 	if(newChild->inherits("Picto::Task"))

@@ -7,7 +7,7 @@ namespace Picto {
 
 /*!	\Brief Unimplemented base class for storing caluibration info
  *
- *	This hasn't been implemented, but it was intended to be a base class for all calibration
+ *	THIS IS NOT USED.  It was never implemented, but it was intended to be a base class for all calibration
  *	objects.  Presumably it would provide methods for reading and writing calibrations.
  */
 class Calibration

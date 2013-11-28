@@ -4,6 +4,16 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new PseudorandomIntParameter
+ *	\details Adds a number of Properties
+ *		- Value - The random value last generated with randomize().
+ *		- UseSeed - Sets whether a seed is used to reproduce the random series of values predictably.
+ *		- DontRepeatAnyValue - If set true, no value will be reused more than once in a row unless it 
+ *			is the last value that must be used in the PseudoRandom list and has just been reshuffled.
+ *		- Seed - The seed that will be used if "UseSeed" is true.
+ *		- Min - The minimum integer that will be included in the list of values to be pseudorandomly selected
+ *		- Max - The maximum integer that will be included in the list of values to be pseudorandomly selected
+*/
 PseudorandomIntParameter::PseudorandomIntParameter()
 : 
   value_(0),
@@ -20,16 +30,46 @@ PseudorandomIntParameter::PseudorandomIntParameter()
 
 }
 
+/*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
+ *	Create() is now the function to use.
+ */
 Parameter* PseudorandomIntParameter::NewParameter()
 {
 	return new PseudorandomIntParameter;
 }
 
+/*! \brief Creates a new PseudorandomIntParameter and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> PseudorandomIntParameter::Create()
 {
 	return QSharedPointer<Asset>(new PseudorandomIntParameter());
 }
 
+/*! \brief Returns the next randomly selected value from the list of values.
+ *	\details The PseudorandomIntParameter works by forcing all values from the list of integers
+ *	between the "Min" and "Max" parameters to be randomly selected before any of them are selected
+ *	again.  This function takes care of choosing the next value within that system.  Some of the 
+ *	features that it has to support are: 
+ *		- Reshuffling  - If reshuffleLastValue() is called the last value to be selected with 
+ *			randomize() must be selected again before the list is used up.
+ *		- NonRepeating  - The same value can never show up twice in a row, even if the list
+ *			of possible values was just entirely used up and we are starting the list again, and
+ *			even if the last value was reshuffled.  The only exception to this is if we have used
+ *			all values in the list of possible values but one.  In that case, if we reshuffle the
+ *			value it must show up again next time.
+ *	The way that this function deals with all of this is that it tracks a current position in
+ *	an array of allowed values which is incremented at the beginning of the function.  To select a random value 
+ *	it chooses a random position between its current position and the end of the array of allowed values.  
+ *	The value at that position is swapped with the value at the current position and that value is used as the 
+ *	random value.  This gives equal probability to all allowed values according to: 
+ *	http://adrianquark.blogspot.com/2008/09/how-to-shuffle-array-correctly.html.  To deal with not repeating
+ *	values, when that option is set we don't choose the last value in the array until the current index reaches it.  
+ *	This assures us that when we restart a list we never pick the last value from the last time through the list
+ *	twice in a row.  Since we put values that are reshuffled at the end of the array as well, they also don't appear 
+ *	twice in a row.  This does of course, add some predictability to the random selection, but that is always going to be 
+ *	a side effect of enforcing a rule like non-repitition on randomness.  It might be a good idea to review
+ *	this algorithm again at some point in any case.
+ */
 void PseudorandomIntParameter::randomize()
 {
 	checkForPropertyChanges();
@@ -53,6 +93,13 @@ void PseudorandomIntParameter::randomize()
 	propertyContainer_->setPropertyValue("Value",randomArray_[currIndex_]);
 }
 
+/*! \brief Reshuffles the last randomly selected value (in randomize()) back into the list of values
+ *	that need to appear before all of the random options are used up.
+ *	\details We do this by swapping the latest value with the one at the back of the list and decrementing
+ *	the current index value.  Decrementing the current index value would be enough to reshuffle the value, 
+ *	but putting at the end of the list also takes care of assuring non-repition when that option is set.
+ *	\sa randomize()
+ */
 void PseudorandomIntParameter::reshuffleLastValue()
 {
 	if(currIndex_ < 0)
@@ -74,8 +121,9 @@ void PseudorandomIntParameter::reshuffleLastValue()
 		currIndex_--;
 }
 
-//Resets the object to its original state as if no values have yet been
-//randomized.
+/*! \brief Extends Parameter::enteredScope() to resets the object to its original state as 
+*	if no values have yet been randomized.
+*/
 void PseudorandomIntParameter::enteredScope()
 {
 	Parameter::enteredScope();
@@ -87,8 +135,10 @@ void PseudorandomIntParameter::enteredScope()
 	checkForPropertyChanges();
 }
 
-//Resets the object to its original state as if no values have yet been
-//randomized.
+/*! \brief Resets the object to its original state as if no values have yet been
+ *	randomized.
+ *	\details Note the method used this function supports the non-repetition option.
+ */
 void PseudorandomIntParameter::reset()
 {
 	//First we reshuffle last value.  This has the effect of putting the
@@ -113,6 +163,9 @@ void PseudorandomIntParameter::postDeserialize()
 	setPropertyRuntimeEditable("Value");
 }
 
+/*! \brief Extends Parameter::validateObject() to verify that the Min Property is not greater
+ *	than the Max Property.
+ */
 bool PseudorandomIntParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 
@@ -173,6 +226,9 @@ void PseudorandomIntParameter::fixValues()
 	}
 }
 
+/*! \brief Checks if any of this object's Property values changed.  If so, selection array
+ *	data variables and selection algorithm are reset to start from scratch.
+*/
 void PseudorandomIntParameter::checkForPropertyChanges()
 {
 	bool useSeed = propertyContainer_->getPropertyValue("UseSeed").toBool();
@@ -203,10 +259,16 @@ void PseudorandomIntParameter::checkForPropertyChanges()
 		currIndex_ = randomArray_.size()-1;
 	}
 }
+/*! \brief Returns the minimum random value that may be returned from this Parameter.
+ *	\details This is the value in the "Min" Property.
+ */
 int PseudorandomIntParameter::getMin()
 {
 	return propertyContainer_->getPropertyValue("Min").toInt();
 }
+/*! \brief Sets the minimum random value that may be returned from this Parameter.
+ *	\details This is the value in the "Min" Property.
+ */
 void PseudorandomIntParameter::setMin(int min)
 {
 	if(min != min_)
@@ -215,10 +277,17 @@ void PseudorandomIntParameter::setMin(int min)
 		checkForPropertyChanges();
 	}
 }
+
+/*! \brief Returns the maximum random value that may be returned from this Parameter.
+ *	\details This is the value in the "Max" Property.
+ */
 int PseudorandomIntParameter::getMax()
 {
 	return propertyContainer_->getPropertyValue("Max").toInt();
 }
+/*! \brief Sets the maximum random value that may be returned from this Parameter.
+ *	\details This is the value in the "Max" Property.
+ */
 void PseudorandomIntParameter::setMax(int max)
 {
 	if(max != max_)

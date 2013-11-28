@@ -16,6 +16,8 @@ firstRewardSupplied_(false)
 {
 }
 
+/*! \brief Extends RewardController::startReward() to play a simple tick sound.
+ */
 void AudioRewardController::startReward(unsigned int,int quantity)
 {
 	latestQuantity_ = quantity;
@@ -24,6 +26,10 @@ void AudioRewardController::startReward(unsigned int,int quantity)
 	firstRewardSupplied_ = true;
 }
 
+/*! \brief Extends RewardController::rewardWasSupplied() to return whether the time
+ *	specified in quantity of startReward() has elapsed.  
+ *	\details We just use a timer to check this since the reward sound is of a fixed length.
+ */
 bool AudioRewardController::rewardWasSupplied(unsigned int)
 {
 	if((timer_.elapsed() <= latestQuantity_) && firstRewardSupplied_)

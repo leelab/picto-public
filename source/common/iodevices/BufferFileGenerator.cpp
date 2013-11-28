@@ -9,6 +9,9 @@ using namespace Picto;
 QString BufferFileGenerator::outputDir_("");
 QSharedPointer<QFile> BufferFileGenerator::lockFile_;
 
+/*! \brief Creates a temporary file in the subDirName sub-directory of the "TemporaryFiles" directory
+ *	in the Picto run path and returns a shared pointer to the file.
+ */
 QSharedPointer<QFile> BufferFileGenerator::createTempFile(QString subDirName, QString fileType)
 {
 	//Assure that the top level output directory exists
@@ -22,7 +25,9 @@ QSharedPointer<QFile> BufferFileGenerator::createTempFile(QString subDirName, QS
 	return QSharedPointer<QFile>(new QFile(fileName));
 }
 
-//Creates a subdirectory within the staticly generated temporary directory
+/*!	\brief Creates a subdirectory called subDirName within the statically generated temporary directory ("TemporaryFiles")
+ *	and returns its absolute path.
+ */
 QString BufferFileGenerator::createSubDirectory(QString subDirName)
 {
 	Q_ASSERT(!outputDir_.isEmpty());
@@ -32,21 +37,21 @@ QString BufferFileGenerator::createSubDirectory(QString subDirName)
 	return dir.absolutePath();
 }
 
-//Will create an empty BufferFileGenerator directory in the runpath once
-//per executable run, clearing out any previous contents if there 
-//were any.
+/*!	\brief Creates an empty temporary directory  ("TemporaryFiles") in the runpath once
+ *	per executable run, clearing out any previous contents if there 
+ *	were any.
+ *	\details We want to make sure that even if multiple Picto applications are open at the
+ *	same time, no one will remove the data that we are currently using.  We also 
+ *	want to erase the data if we are just opening for the first time and no one else
+ *	is using the data in the temporary folder.  For this reason, we attempt to remove
+ *	all files at the top level of the temporary directory, then if successful, remove
+ *	all other contained directories as well.  We then create a top level file in the
+ *	temporary directory and leave it open until the application closes.
+ *	If another workstation is open, we won't succeed in removing its open file so we
+ *	wont delete the temporary directory contents, otherwise, we will.
+ */
 void BufferFileGenerator::initTempOutputDir()
 {
-	//We want to make sure that even if multiple Picto applications are open at the
-	//same time, no one will remove the data that we are currently using.  We also 
-	//want to erase the data if we are just opening for the first time and no one else
-	//is using the data in the temporary folder.  For this reason, we attempt to remove
-	//all files at the top level of the temporary directory, then if successful, remove
-	//all other contained directories as well.  We then create a top level file in the
-	//temporary directory and leave it open until the application closes.
-	//If another workstation is open, we won't succeed in removing its open file so we
-	//wont delete the temporary directory contents, otherwise, we will.
-
 	//If an output directory has already been created, initialization is done
 	if(!outputDir_.isEmpty())
 		return;
@@ -73,8 +78,9 @@ void BufferFileGenerator::initTempOutputDir()
 
 }
 
-//Removes everything in the input directory and all of its sub directories.
-//Stops at any level where a file cannot be removed.
+/*! \brief Removes everything in the input directory and all of its sub directories.
+ *	\details Stops at any level where a file cannot be removed.
+ */
 void BufferFileGenerator::removeFilesThenDirectories(QDir container)
 {
 	//Get all files in this directory.

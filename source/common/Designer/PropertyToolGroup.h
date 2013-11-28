@@ -4,6 +4,12 @@
 #include "../../common/storage/asset.h"
 #include <QSharedPointer>
 using namespace Picto;
+/*! \brief A very early class in Designer development that was going to allow generation of new properties.... until we realized
+ *	that there should be a fixed number of properties for every element.
+ *	\details This class is no longer used.  You may delete it if you want.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class PropertyToolGroup : public ToolGroup
 {
     Q_OBJECT

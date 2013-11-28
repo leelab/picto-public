@@ -14,11 +14,13 @@ struct StringParameterOption
 	MediaItem icon;
 };
 
-/*!	\brief A parameter for storing strings
+/*!	\brief A parameter for storing strings that is not being used.
  *
- *	This parameter was never implemented.  It may turn out to be unnecessary.
- *	The parameter was intended to hold arbitrary strings, but this seems
- *	like something that would be of limited use within a state machine.
+ *	There is a StringVariable for this purpose, so having a separate Parameter to do it doesn't seem to useful
+ *	although one could imagine things like showing text messages to test subjects that are updatable during an experiment
+ *	from the Remote Viewer.  This should be easy to implment someday if someone feels the need to do so.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StringParameter : public Parameter

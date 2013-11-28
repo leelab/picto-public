@@ -8,10 +8,21 @@
 
 namespace Picto {
 
-/*!	\brief A parameter for retrieving frame times.
- *
+/*!	\brief An AnalysisDataSource for gathering spike data.
+ *	\details This object can be used to query spike times, channels, units and waveforms
+ *	as well as metadata (the sample period of the spike acquisition system).
+ *	
+ *	A spike's channel is the electrode number on which is was detected.  The unit is the
+ *	index of the spike detection filter being used on that electrode for cases where
+ *	multiple spikes are detected on one electrode.
+ *	
+ *	\note For test runs in the testviewer, the data returned from this object will necessarily
+ *	be fake sample data.  For consistency's sake, any functions requesting 
+ *	future data will return meaningless values.
+ *	\note This class uses a SpikeReader as its main data source.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisSpikeData : public AnalysisDataSource
 #else
@@ -32,53 +43,37 @@ public:
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:
-	//Sets the time of the latest frame to zero.  Spike times will be returned with respect to
-	//this latest frame.
 	void zeroLatestFrame();
-	//Returns the sample period used by the spike data acquisition system
 	double getSamplePeriod();
-	//Returns the time of the latest spike to have been read
 	double getLatestTime();
 	int getLatestChannel();
 	int getLatestUnit();
 	QVariantList getLatestWaveform();
-	//Returns the time of the next spike to be read.
 	double getNextTime();
 	int getNextChannel();
 	int getNextUnit();
 	QVariantList getNextWaveform();
-	//Returns a list of spike times that occured with times > the input # sec before the latest frame and <= the latest frame time.
 	QVariantList getPrevTimes(double secsPreceding);
 	QVariantList getPrevChannels(double secsPreceding);
 	QVariantList getPrevUnits(double secsPreceding);
 	QVariantList getPrevWaveforms(double secsPreceding);
-	//Returns a list of spike times that will occur with times <= the input # sec after the latest frame and > the latest frame time.
 	QVariantList getNextTimes(double secsFollowing);
 	QVariantList getNextChannels(double secsFollowing);
 	QVariantList getNextUnits(double secsFollowing);
 	QVariantList getNextWaveforms(double secsFollowing);
-	//Functions like getTimesUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesSince(double beyondTime);
-	//Functions like getTimesUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesUntil(double upToTime);
-	//Functions like getChannelsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getChannelsSince(double beyondTime);
-	//Functions like getChannelsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getChannelsUntil(double upToTime);
-	//Functions like getUnitsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getUnitsSince(double beyondTime);
-	//Functions like getUnitsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getUnitsUntil(double upToTime);
-	//Functions like getWaveformsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getWaveformsSince(double beyondTime);
-	//Functions like getWaveformsUntil except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getWaveformsUntil(double upToTime);
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	//Returns the latest frame time with respect to the beginning of the run
 	double getLatestRunTime();
 	double zeroTime_;
 

@@ -12,6 +12,10 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new MouseInputPort.
+ *	\details The input widget is the widget within which the mouse coordinates returned by this function should be defined.
+ *	Typically, this would be the VisualTarget.
+ */
 MouseInputPort::MouseInputPort(QWidget *widget)
 	: InputPort(),
 	  widget_(widget)
@@ -19,6 +23,12 @@ MouseInputPort::MouseInputPort(QWidget *widget)
 	lastTime_ = -1;
 }
 
+/*! \brief Initializes the mouse port for sampling mouse data.
+ *	\details There is no initialization necessary to start reading mouse data from the OS;
+ *	however, since in the mouse port we simulate sampling at the sample rate configured 
+ *	in InputPort, we need to mark the startSampling time in order to calculate the number
+ *	of simulated samples that "have occured" when updateDataBuffer() is called.
+ */
 bool MouseInputPort::startSampling()
 {
 	Timestamper stamper;
@@ -26,14 +36,22 @@ bool MouseInputPort::startSampling()
 	return true;
 }
 
+/*! \brief Deinitializes mouse sampling.
+ *	\details In practice, there is no deinitialization necessary, so we leave this blank.
+ */
 void MouseInputPort::stopSampling()
 {
 }
 
-//In this case, we are constantly polling the mouse position and 
-//updating the data buffer, so update data buffer doesn't need to
-//do anything.  However, if the timers aren't working (for example if
-//we're running without an event loop), we'll call pollMouse anyway).
+/*! \copydoc InputPort::updateDataBuffer()
+ *	\details In the case of the MouseInputPort, there is no external hardware system or any
+ *	external data buffer that is filled and needs to be copied in.  Also, whenever the 
+ *	mouse is used as the input, precise timing is unnecessary.  For this reason, we "simulate"
+ *	reading in mouse data at the correct sample rate.  We actually just check the mouse position
+ *	once for every time that this function is called, but fake additional samples are 
+ *	produced to fill out the correct number of samples based on the configured sample rate
+ *	and elapsed time since this function was last called.
+ */
 double MouseInputPort::updateDataBuffer()
 {
 	Timestamper stamper;
@@ -87,6 +105,8 @@ double MouseInputPort::updateDataBuffer()
 	return curr;
 }
 
+/*! \brief Returns a QPoint with the current mouse position in the coordinate frame of the widget passed into the constructor.
+*/
 QPoint MouseInputPort::pollMouse()
 {
 	Timestamper stamper;

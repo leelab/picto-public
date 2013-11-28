@@ -35,6 +35,7 @@
    <file alias="_analysis_definition_8h_source.html">../../../output/documentation/main/html/_analysis_definition_8h_source.html</file>
    <file alias="_analysis_element_8cpp_source.html">../../../output/documentation/main/html/_analysis_element_8cpp_source.html</file>
    <file alias="_analysis_element_8h_source.html">../../../output/documentation/main/html/_analysis_element_8h_source.html</file>
+   <file alias="_analysis_file_output_8cpp.html">../../../output/documentation/main/html/_analysis_file_output_8cpp.html</file>
    <file alias="_analysis_file_output_8cpp_source.html">../../../output/documentation/main/html/_analysis_file_output_8cpp_source.html</file>
    <file alias="_analysis_file_output_8h_source.html">../../../output/documentation/main/html/_analysis_file_output_8h_source.html</file>
    <file alias="_analysis_file_output_widget_8cpp_source.html">../../../output/documentation/main/html/_analysis_file_output_widget_8cpp_source.html</file>
@@ -122,12 +123,14 @@
    <file alias="_asset_tool_group_8cpp_source.html">../../../output/documentation/main/html/_asset_tool_group_8cpp_source.html</file>
    <file alias="_asset_tool_group_8h_source.html">../../../output/documentation/main/html/_asset_tool_group_8h_source.html</file>
    <file alias="_associate_element_8cpp_source.html">../../../output/documentation/main/html/_associate_element_8cpp_source.html</file>
+   <file alias="_associate_element_8h.html">../../../output/documentation/main/html/_associate_element_8h.html</file>
    <file alias="_associate_element_8h_source.html">../../../output/documentation/main/html/_associate_element_8h_source.html</file>
    <file alias="_associate_host_link_8cpp_source.html">../../../output/documentation/main/html/_associate_host_link_8cpp_source.html</file>
    <file alias="_associate_host_link_8h_source.html">../../../output/documentation/main/html/_associate_host_link_8h_source.html</file>
    <file alias="_associate_root_8cpp_source.html">../../../output/documentation/main/html/_associate_root_8cpp_source.html</file>
    <file alias="_associate_root_8h_source.html">../../../output/documentation/main/html/_associate_root_8h_source.html</file>
    <file alias="_associate_root_host_8cpp_source.html">../../../output/documentation/main/html/_associate_root_host_8cpp_source.html</file>
+   <file alias="_associate_root_host_8h.html">../../../output/documentation/main/html/_associate_root_host_8h.html</file>
    <file alias="_associate_root_host_8h_source.html">../../../output/documentation/main/html/_associate_root_host_8h_source.html</file>
    <file alias="_audio_element_8cpp_source.html">../../../output/documentation/main/html/_audio_element_8cpp_source.html</file>
    <file alias="_audio_element_8h_source.html">../../../output/documentation/main/html/_audio_element_8h_source.html</file>
@@ -458,6 +461,7 @@
    <file alias="_l_f_p_trigger_8h_source.html">../../../output/documentation/main/html/_l_f_p_trigger_8h_source.html</file>
    <file alias="_layer_8cpp_source.html">../../../output/documentation/main/html/_layer_8cpp_source.html</file>
    <file alias="_layer_8h_source.html">../../../output/documentation/main/html/_layer_8h_source.html</file>
+   <file alias="_legacy_system_x_p_analog_input_port_8cpp.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_port_8cpp.html</file>
    <file alias="_legacy_system_x_p_analog_input_port_8cpp_source.html">../../../output/documentation/main/html/_legacy_system_x_p_analog_input_port_8cpp_source.html</file>
    <file alias="_legacy_system_x_p_event_code_generator_8cpp_source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8cpp_source.html</file>
    <file alias="_legacy_system_x_p_event_code_generator_8h_source.html">../../../output/documentation/main/html/_legacy_system_x_p_event_code_generator_8h_source.html</file>
@@ -581,6 +585,7 @@
    <file alias="_picto_box_daq_board_register_map_8h_source.html">../../../output/documentation/main/html/_picto_box_daq_board_register_map_8h_source.html</file>
    <file alias="_picto_box_reward_controller_c_e_8cpp_source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8cpp_source.html</file>
    <file alias="_picto_box_reward_controller_c_e_8h_source.html">../../../output/documentation/main/html/_picto_box_reward_controller_c_e_8h_source.html</file>
+   <file alias="_picto_box_x_p_analog_input_port_8cpp.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_port_8cpp.html</file>
    <file alias="_picto_box_x_p_analog_input_port_8cpp_source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_port_8cpp_source.html</file>
    <file alias="_picto_box_x_p_analog_input_port_8h_source.html">../../../output/documentation/main/html/_picto_box_x_p_analog_input_port_8h_source.html</file>
    <file alias="_picto_box_x_p_event_code_generator_8cpp_source.html">../../../output/documentation/main/html/_picto_box_x_p_event_code_generator_8cpp_source.html</file>
@@ -3994,6 +3999,9 @@
    <file alias="functions_0x75.html">../../../output/documentation/main/html/functions_0x75.html</file>
    <file alias="functions_0x76.html">../../../output/documentation/main/html/functions_0x76.html</file>
    <file alias="functions_0x77.html">../../../output/documentation/main/html/functions_0x77.html</file>
+   <file alias="functions_0x78.html">../../../output/documentation/main/html/functions_0x78.html</file>
+   <file alias="functions_0x79.html">../../../output/documentation/main/html/functions_0x79.html</file>
+   <file alias="functions_0x7a.html">../../../output/documentation/main/html/functions_0x7a.html</file>
    <file alias="functions_0x7e.html">../../../output/documentation/main/html/functions_0x7e.html</file>
    <file alias="functions_enum.html">../../../output/documentation/main/html/functions_enum.html</file>
    <file alias="functions_eval.html">../../../output/documentation/main/html/functions_eval.html</file>
@@ -4019,6 +4027,8 @@
    <file alias="functions_func_0x75.html">../../../output/documentation/main/html/functions_func_0x75.html</file>
    <file alias="functions_func_0x76.html">../../../output/documentation/main/html/functions_func_0x76.html</file>
    <file alias="functions_func_0x77.html">../../../output/documentation/main/html/functions_func_0x77.html</file>
+   <file alias="functions_func_0x78.html">../../../output/documentation/main/html/functions_func_0x78.html</file>
+   <file alias="functions_func_0x7a.html">../../../output/documentation/main/html/functions_func_0x7a.html</file>
    <file alias="functions_func_0x7e.html">../../../output/documentation/main/html/functions_func_0x7e.html</file>
    <file alias="functions_prop.html">../../../output/documentation/main/html/functions_prop.html</file>
    <file alias="functions_type.html">../../../output/documentation/main/html/functions_type.html</file>

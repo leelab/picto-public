@@ -3,6 +3,9 @@
 #include "LevelUpButton.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a new LevelUpButton.
+ *	\details editorState is used to properly receive and handle search requests.
+ */
 LevelUpButton::LevelUpButton(QSharedPointer<EditorState> editorState, QWidget* parent )
 	:QToolButton(parent)
 {
@@ -15,6 +18,9 @@ LevelUpButton::LevelUpButton(QSharedPointer<EditorState> editorState, QWidget* p
 	connect(editorState.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(windowAssetChanged(QSharedPointer<Asset>)));
 }
 
+/*! \brief Called when a new search is requested to search the current Window Asset's ancestors for the search query and
+ *	highlight the button red if the query is found or remove the highlight if it isn't.
+ */
 void LevelUpButton::searchRequested(SearchRequest searchRequest)
 {
 	if(searchRequest.type != SearchRequest::STRING)
@@ -52,6 +58,8 @@ void LevelUpButton::searchRequested(SearchRequest searchRequest)
 		
 }
 
+/*! \brief Called when the Window Asset changes to redo the current search and rehighlight the button accordingly.
+*/
 void LevelUpButton::windowAssetChanged(QSharedPointer<Asset> windowAsset)
 {
 	//If any searches are already going on, trigger searchRequested now in case the window change affects the search

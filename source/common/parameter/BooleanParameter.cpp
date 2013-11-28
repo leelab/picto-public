@@ -3,6 +3,10 @@
 
 namespace Picto {
 
+/*!	\brief Constructs a Boolean Parameter.
+ *	\details A boolean Value Property is created.  TrueLabel and FalseLabel are also created, but not currently used so they are
+ *	set as invisible in postDeserialize().
+ */
 BooleanParameter::BooleanParameter()
 : Parameter()
 {
@@ -13,11 +17,16 @@ BooleanParameter::BooleanParameter()
 	falseLabel_ = "";
 }
 
+/*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
+ *	Create() is now the function to use.
+ */
 Parameter* BooleanParameter::NewParameter()
 {
 	return new BooleanParameter;
 }
 
+/*! \brief Creates a new BooleanParameter and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> BooleanParameter::Create()
 {
 	return QSharedPointer<Asset>(new BooleanParameter());

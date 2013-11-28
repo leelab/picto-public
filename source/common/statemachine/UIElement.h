@@ -8,8 +8,21 @@
 
 namespace Picto {
 
-/*!	\brief A UIElement is the exit point from a StateMachineElement or ControlElement
- *	
+/*!	\brief An AssociateElement used to store UI information for its linked Asset's representation in the Designer UI.
+ *	\details This element stores the x,y position of its linked Asset within the Designer canvas.  It also stores 
+ *	a "notes" string that is displayed when an Asset is selected and in a tooltip displayed when the mouse hovers
+ *	over the linked asset.
+ *
+ *	By separating UIElement's from the Design, we can remove them when the design is run in an experiment.
+ *	Theoretically, although this is not yet implemented, we could also store multiple UI represntations of the same
+ *	Design, although that may not be all that useful.  In general, separating UI information from Design information
+ *	is good programming practice and ends up solving a whole host of problems that are not usually obvious at first 
+ *	glance.
+ *
+ *	On the design side, the UIEnabled class knows how to interface with UIElement objects in order to retrieve UI information.
+ *	\sa UIEnabled
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -24,7 +37,6 @@ public:
 	virtual ~UIElement(){};
 
 	static QSharedPointer<Asset> Create();
-
 	void setPos(QPoint pos);
 	QPoint getPos();
 	void setNotes(QString notes);

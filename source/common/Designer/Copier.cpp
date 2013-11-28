@@ -16,6 +16,14 @@ Copier::~Copier()
 {
 }
 
+/*! \brief Copies experimental or analysis assets from the input assets list depending on the copyAnalysis input.
+ *	\details The copy function uses the AssetExportImport::exportToText()
+ *	function and inserts the exported text into the computer's clipboard.  If the export fails, a QMessageBox pops
+ *	up information the designer of the error and the clipboard is unchanged.
+ *	When copying Analyses from sub-levels in the expreriment tree, it is necessary to select an experiment
+ *	element but copy only the analyses inside.  This is the reason for using the copyAnalysis input rather than
+ *	simply detecting the types of the input assets.
+ */
 void Copier::copy(QList<QSharedPointer<Asset>> assets,bool copyAnalysis)
 {
 	//Get the AssociateRootHost (Experiment or Analysis)
@@ -36,7 +44,16 @@ void Copier::copy(QList<QSharedPointer<Asset>> assets,bool copyAnalysis)
 	QClipboard *clipboard = QApplication::clipboard();
 	clipboard->setText(	copyText );
 }
-
+/*! \brief Pastes the assets currently stored as text in the clipboard into the input pasteParent at the input pastePosition.
+ *	\details When preforming an AnalysisImport (ie. Importing analyses to levels beneath the currently displayed one), all
+ *	existing analysis elements must be removed first.  This is so that we don't end up trying to put two Analysis scripts
+ *	on the same StateMachineElement.  It would have been cleaner to just let the user to decide to overwrite existing 
+ *	scripts or not, but this was simpler and in practice, people don't usually import analyses unless they are starting
+ *	from scratch.  Things get pretty complicated if you try to import an analysis when there are already analysis elements there.
+ *	\note If the paste fails, a warning to that effect is displayed in a pop-up.  Similary, if the paste is only an partial
+ *	success (ie. Some of the experimental assets linked by analyses could not be found), a warning appears in a pop-up listing
+ *	the AnalysisElements that could not be imported.
+ */
 void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 {
 	bool analysisDescendantsDeleted = false;
@@ -101,7 +118,11 @@ void Copier::paste(QSharedPointer<Asset> pasteParent, QPoint pastePosition)
 	}
 }
 
-enum PASTE_TYPE{NONE,EXPERIMENT_PASTE,ANALYSIS_PASTE,ANALYSIS_IMPORT};
+/*! \brief Returns the type of command that can be performed with the clipboard text.
+ *	\details AssetExportImport::commandTypeOfText() with the current clipboard text.  
+ *	AssetThe returned value is a Copier::PASTE_TYPE.
+ *	\note The returned value is based entirely on the contents of the clipboard text string.
+ */
 int Copier::availablePasteType()
 {
 	QClipboard *clipboard = QApplication::clipboard();

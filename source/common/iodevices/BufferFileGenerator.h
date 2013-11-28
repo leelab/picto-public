@@ -8,6 +8,21 @@
 
 namespace Picto {
 
+/*! \brief Creates temporary files in a temporary directory that is cleared everytime
+ *	a new Pictoworkstation is opened so long as no other workstations were already open
+ *	at the time.
+ *	\details A "TemporaryFiles" directory is created in the Picto run directory and a 
+ *	"lock file" is created and placed inside that isn't closed until the application closes.
+ *	Each time a PictoWorkstation is opened, the temporary director is checked, if the lock
+ *	files can be deleted, the files in the directory are deleted as well.  Otherwise 
+ *	temporary files are simply added to the existing temporary directory.
+ *	\note We need to use this type of set up in a few different places in Picto.  For
+ *	playback video files, for AnalysisFileOutput files, and for design AutoSaved files.
+ *	So far we have only used this BufferFileGenerator for the playback video files 
+ *	(RecordingVisualTargetHost).  We should probably reuse it in all those places though.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API BufferFileGenerator
 #else

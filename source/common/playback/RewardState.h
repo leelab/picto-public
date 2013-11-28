@@ -5,7 +5,20 @@
 
 namespace Picto {
 struct PlaybackRewardData;
-/*! \brief Stores Transition PlaybackData values for use in Playback system.
+/*! \brief Implements the DataState and RewardReader classes to load a Picto Session database, 
+ *	extract the data for reward deliveries and implement functions for traversing through that data.
+ *	\details The class is fairly simple, a QList of PlaybackRewardData objects is loaded from the 
+ *	session data.  Each PlaybackRewardData represents a single reward delivery and when moveToIndex() 
+ *	is called, we just traverse through the list until we reach a PlaybackRewardData object with the appropriate PlaybackIndex.
+ *	Each time moveToIndex() causes us to pass through a PlaybackRewardData entry, the rewardSupplied() 
+ *	signal is called, which tells the rest of the playback system that a Reward was delivered.
+ *
+ *	\note Since the functions here simply implement the RewardReader and DataState classes for
+ *	data read in from a Session Database, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding function level documentation
+ *	for this class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class RewardState : public RewardReader, public DataState
 {
@@ -32,6 +45,10 @@ public:
 	virtual QVariantList getDurationsUntil(double time);
 
 signals:
+	/*! \brief Emitted when moveToIndex() moves the current time passed a new reward value.  time is the
+	 *	time that the reward was supplied, duration is its duraiton in milliseconds, channel is the reward channel
+	 *	on which the reward was supplied.
+	 */
 	void rewardSupplied(double time,int duration,int channel);
 private:
 	PlaybackIndex getNextIndex();
@@ -43,24 +60,17 @@ private:
 	int curr_;
 	QList<PlaybackRewardData> data_;
 
-//public:
-//	bool setReward(double time,qulonglong dataId,int duration,int channel);
-//signals:
-//	void rewardSupplied(double time,int duration,int channel);
-//	void needsData(PlaybackIndex currLast,PlaybackIndex to);
-//	void needsNextData(PlaybackIndex currLast,bool backward);
-//
-//protected:
-//	virtual void triggerValueChange(bool reverse,bool last);
-//	virtual void requestMoreData(PlaybackIndex currLast,PlaybackIndex to);
-//	virtual void requestNextData(PlaybackIndex currLast,bool backward);
-
 };
 
+/*! \brief A struct used to store a single Reward delivery event.
+ *	\details Includes the PlaybackIndex of the Reward delivery along with its duration in milliseconds and the channel on which
+ *	the delivery occured.
+ */
 struct PlaybackRewardData
 {
 	PlaybackRewardData(){};
 	PlaybackRewardData(PlaybackIndex index,int duration,int channel){index_ = index;duration_ = duration;channel_ = channel;};
+	/*! \brief One PlaybackRewardData is lower than another if its PlaybackIndex is lower.*/
 	inline bool operator<(const PlaybackRewardData& someData) const {
 		return index_ < someData.index_;
 	}

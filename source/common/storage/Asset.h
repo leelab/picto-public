@@ -82,11 +82,11 @@ public:
 	void setParentAsset(QSharedPointer<Asset> parent){parent_ = parent;};
 	/*! \brief Returns the name of this asset.*/
 	virtual QString getName(){return "";};
-	/*! \brief Returns a short string used to identify this type of asset.
+	/*! \brief Returns a short string used to identify this type of Asset.
 	 *	\details Usually this is the same as this assets serialized XML tag name, but it may not be.
 	 */
 	virtual QString identifier(){return "";};
-	/*! \brief Returns a friendly string identifying this type of asset.
+	/*! \brief Returns a friendly string identifying this type of Asset.
 	 *	\details This is a string that users will see, so check the spelling... we've had problems with that in the past 
 	 *	(ie. TargetController, "Total Time Excceeded" result).
 	 */

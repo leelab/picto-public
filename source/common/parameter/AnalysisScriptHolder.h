@@ -9,8 +9,18 @@
 
 namespace Picto {
 
-/*! \brief An analysis variable parameter.
+/*! \brief A container for scripts that are used in an Analysis.
+ *	\details This class doesn't have an analogy in the experimental design.  In the experimental design, StateMachineElement objects contain
+ *	Entry,Exit and Frame (for State objects) script Properties that are directly used by the StateMachineElement.  With Analyses, we want
+ *	to be able to dynamically add and remove Analysis Entry, Exit and Frame scripts depending on whether an Analyisis is enabled or not.
+ *	For this reason, we created this container class that holds the Entry, Exit and Frame Scripts and can be added or removed from a 
+ *	StateMachineElement just like any other AssociateElement.  The StateMachineElement can then simply check if it has a child AssociateElement
+ *	that is an AnalysisScriptHolder with an active Associate ID in order to decide if it needs to run the Analysis scripts or not.
  *
+ *	Since it does contain scripts and needs to be able to run them in the script engine, this class inherits ScriptableContainer.
+ *	\sa ScriptableContainer, StateMachineElement
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisScriptHolder : public ScriptableContainer, public AssociateElement
@@ -23,9 +33,13 @@ class AnalysisScriptHolder : public ScriptableContainer, public AssociateElement
 public:
 	AnalysisScriptHolder();
 	virtual ~AnalysisScriptHolder(){};
-
 	static QSharedPointer<Asset> Create();
-	enum ScriptType {ENTRY,FRAME,EXIT};
+	/*! \brief An enum describing the types of scripts available in this class.*/
+	enum ScriptType {
+		ENTRY,	//!< An entry script that runs just before the design entry script.
+		FRAME,	//!< A frame script that runs just after each frame is presented.
+		EXIT	//!< An exit script that runs just after the design exit script.
+	};
 	void runScript(ScriptType type);
 	//Returns true if this object contains a property of the input type, whether or not it is empty.
 	bool hasScriptPropertyType(ScriptType type);

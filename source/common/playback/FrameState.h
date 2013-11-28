@@ -4,7 +4,21 @@
 #include "PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Frame PlaybackData values for use in Playback system.
+/*! \brief Implements the DataState and FrameReader classes to load a Picto Session database, 
+ *	extract the frame data and implement functions for traversing through that data.
+ *	\details The class is fairly simple, a QList of PlaybackIndex objects is loaded from the 
+ *	session data.  Each PlaybackIndex represents a frame presentation and when moveToIndex() 
+ *	is called, we just traverse through the list until we reach the appropriate PlaybackIndex.
+ *	Each time moveToIndex() causes us to pass through a PlaybackIndex, the framePresented() 
+ *	signal is called, which tells the rest of the playback system that a frame occured.
+ *
+ *	\note Since the functions here simply implement the FrameReader and DataState classes for
+ *	data read in from a Session Database, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding function level documentation
+ *	for this class.
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class FrameState : public FrameReader, public DataState
 {
@@ -20,12 +34,13 @@ public:
 	virtual double getPrevTime();
 	virtual double getLatestTime();
 	virtual double getNextTime();
-	//Returns a list of frame times that occured with times > the input time and <= the current time.  
 	virtual QVariantList getTimesSince(double time);
-	//Returns a list of values with times > the current time and <= the input time.  
 	virtual QVariantList getTimesUntil(double time);
 	
 signals:
+	/*! \brief Emitted whenever a new frame presentation is traveresed due to a call to moveToIndex().
+	 *	\details The "time" input is the frame time.
+	*/
 	void framePresented(double time);
 
 private:

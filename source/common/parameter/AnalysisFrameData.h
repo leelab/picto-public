@@ -8,10 +8,19 @@
 
 namespace Picto {
 
-/*!	\brief A parameter for retrieving frame times.
- *
+/*!	\brief An AnalysisDataSource for gathering frame timing data.
+ *	\details This object can be used to query the latest, next and previous
+ *	frame times as well as lists of frame times for input time ranges.
+ *	
+ *	All frame times are the Picto system's best estimate for the time at which the first 
+ *	phosphor of the frame appeared on screen.  When the frame is displayed with DirectX
+ *	as in the Director, this estimate is fairly precise (within a few ms) since DirectX
+ *	can be polled for that type of information.  When using Pixmap rendering, the value
+ *	is less precise.
+ *	\note This class uses an LfpReader as its main data source.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisFrameData : public AnalysisDataSource
 #else
@@ -32,22 +41,14 @@ public:
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:
-	//Sets the time of the latest frame to zero.  Other frame times will be returned with respect to
-	//this latest frame.
+	
 	void zeroLatestFrame();
-	//Returns the time of the latest frame to have been shown
 	double getLatestTime();
-	//Returns the time of the frame shown before the latest one
 	double getPrevTime();
-	//Returns the time of the next frame to be shown.
 	double getNextTime();
-	//Returns a list of frame times that occured with times > the input # sec before the latest frame and <= the latest frame time.
 	QVariantList getPrevTimes(double secsPreceding);
-	//Returns a list of frame times that occured with times <= the input # sec after the latest frame and > the latest frame time.
 	QVariantList getNextTimes(double secsFollowing);
-	//Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesSince(double beyondTime);
-	//Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
 	QVariantList getTimesUntil(double upToTime);
 
 protected:
@@ -55,7 +56,6 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:
-	//Returns the latest frame time with respect to the beginning of the run
 	double getLatestRunTime();
 	double zeroTime_;
 

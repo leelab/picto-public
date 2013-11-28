@@ -4,6 +4,14 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new RandomDoubleParameter
+ *	\details Adds a number of Properties
+ *		- Value - The random value last generated with randomize().
+ *		- UseSeed - Sets whether a seed is used to reproduce the random series of values predictably.
+ *		- Seed - The seed that will be used if "UseSeed" is true.
+ *		- Min - The minimum double that will be randomizable
+ *		- Max - The maximum double that will be randomizable
+*/
 RandomDoubleParameter::RandomDoubleParameter()
 : 
   value_(0),
@@ -18,16 +26,24 @@ RandomDoubleParameter::RandomDoubleParameter()
 
 }
 
+/*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
+ *	Create() is now the function to use.
+ */
 Parameter* RandomDoubleParameter::NewParameter()
 {
 	return new RandomDoubleParameter;
 }
 
+/*! \brief Creates a new RandomDoubleParameter and returns a shared Asset pointer to it.
+*/
 QSharedPointer<Asset> RandomDoubleParameter::Create()
 {
 	return QSharedPointer<Asset>(new RandomDoubleParameter());
 }
 
+/*! \brief Causes a new random value between the Min (>=) and Max (<) Property values to be set to the
+ *	Value Property.  It will then be readable using the "value" script property.
+ */
 void RandomDoubleParameter::randomize()
 {
 	checkForPropertyChanges();
@@ -46,6 +62,9 @@ void RandomDoubleParameter::postDeserialize()
 	setPropertyRuntimeEditable("Value");
 }
 
+/*! \brief Extends Parameter::validateObject() to verify that the Min Property is not higher
+ *	than the Max Property.
+ */
 bool RandomDoubleParameter::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 
@@ -107,6 +126,9 @@ void RandomDoubleParameter::fixValues()
 	}
 }
 
+/*! \brief Checks if this object's "UseSeed" or "Seed" Property values changed.  If so, the seed
+ *	is updated.
+*/
 void RandomDoubleParameter::checkForPropertyChanges()
 {
 	bool useSeed = propertyContainer_->getPropertyValue("UseSeed").toBool();

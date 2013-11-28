@@ -7,7 +7,7 @@ AnalysisFunction::AnalysisFunction()
 {
 	EXP_LINK_FACTORY_CREATION	
 }
-
+/*! \brief Creates a new AnalysisFunction and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> AnalysisFunction::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisFunction());

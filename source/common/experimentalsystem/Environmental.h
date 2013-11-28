@@ -5,7 +5,11 @@
 
 namespace Picto {
 
-//! \brief Unimplemented. Stores information about the environment.
+/*!	\brief Unimplemented.  This class should probably be removed.
+ *	The original documentation appears below:
+ *
+ *	Unimplemented. Stores information about the environment.
+ */
 class Environmental
 {
 public:

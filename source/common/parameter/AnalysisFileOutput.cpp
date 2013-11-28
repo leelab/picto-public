@@ -7,8 +7,18 @@
 
 namespace Picto {
 
+/*! \file */
+/*! \brief The number of characters that must be written to the file before the file buffer is 
+ *	automatically flushed to disk.*/
 #define CHARS_BEFORE_FLUSH 10000
 
+/*! \brief Creates a new AnalysisFileOutput object.
+ *	\details 
+ *		- Adds a FileSuffix property to hold the string that will be appended to the run name
+ *	to create the name of the file underlying this object, (ie .txt).
+ *		- Adds a FileType list property to hold the type of the text file, Text, Big Endian binary,
+ * or Little Endiant binary.
+ */
 AnalysisFileOutput::AnalysisFileOutput()
 : AnalysisOutput()
 {
@@ -20,30 +30,26 @@ AnalysisFileOutput::AnalysisFileOutput()
 	setValid(false);
 }
 
+/*! \brief Creates a ne AnalysisFileOutput and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> AnalysisFileOutput::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisFileOutput());
 }
-
-//QPointer<AnalysisOutputWidget> AnalysisFileOutput::getOutputWidget()
-//{
-//	if(!file_ || !isValid())
-//		return QPointer<AnalysisOutputWidget>();
-//	QPointer<FileOutputWidget> outputWidget(new FileOutputWidget(1000));
-//	outputWidget->setFile(file_->fileName());
-//	return qobject_cast<AnalysisOutputWidget*>(outputWidget);
-//}
 
 void AnalysisFileOutput::enteredScope()
 {	
 	AnalysisOutput::enteredScope();
 }
 
+/*! \brief Writes the input text to the underlying file followed by a new line character.*/
 void AnalysisFileOutput::writeLine(QString text)
 {
 	writeText(text + "\n");
 }
-
+/*! \brief Writes the input text to the underlying file.
+ *	\note The data written to the file is only flushed to disk once every CHARS_BEFORE_FLUSH 
+ *	characters or when the current run ends.
+ */
 void AnalysisFileOutput::writeText(QString text)
 {
 	if(!isValid())
@@ -58,7 +64,13 @@ void AnalysisFileOutput::writeText(QString text)
 		charsWritten_ = 0;
 	}
 }
-
+/*! \brief Writes data out to the underlying file as binary values (ie. short, int, double)
+ *  @param csvData a comma separated series of values (ie. "2.4,1,5.65,2.0")
+ *  @param csvTypes a comma separated series of types to use for the csvData (ie. "float,int,double,float")
+ *	Valid types are short,int,long,float,double.  If more values appear in the
+ *	csvData than there are types in csvTypes, the last type will be used for
+ *	all remaining values (ie. "float,int" in the previous example is equivalent to "float,int,int,int").
+ */
 void AnalysisFileOutput::writeBinary(QString csvData,QString csvTypes)
 {
 	if(!isValid())
@@ -119,6 +131,11 @@ bool AnalysisFileOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
+/*! \brief Creates a new AnalysisFileOutputWidget or AnalysisBinaryOutputWidget depending on the type
+ *	of the underlying file data, sets its underlying file and returns an AnalysisOutputWidget pointer 
+ *	to it.
+ *	\details It is the callers responsibility to delete the widget returned from this function.
+ */
 AnalysisOutputWidget* AnalysisFileOutput::createWidget()
 {
 	if(!isValid())
@@ -140,6 +157,9 @@ AnalysisOutputWidget* AnalysisFileOutput::createWidget()
 	return outputWidget;
 }
 
+/*! \brief Called to end the analysis.  Closes the underlying file, which has the effect of flushing
+ *	all data from the file buffer into the file.
+ */
 void AnalysisFileOutput::finishUp()
 {
 	if(!file_.isNull() && file_->isOpen())
@@ -150,11 +170,15 @@ void AnalysisFileOutput::finishUp()
 	setValid(false);
 }
 
-//If the file is opened in text mode, it will convert all binary 0x0A to 0x0D0A
-//we need to make sure its opened in the right mode.
+/*! \brief Opens a temporary file in the a subdirectory of the directory returned from getTempOutputDir()
+ *	\details If the file is successfully opened, setValid(true) is called.  If it cannot be opened a
+ *	message box to that effect pops up for the user and the function ends.
+ *	\note The file must be opened in the correct mode, text or binary.  Binary files opened in text
+ *	mode, for example, convert all 0x0A values to 0x0D0A.  This function takes care of that.
+ */
 void AnalysisFileOutput::openFile()
 {
-	//If the output sub director for this file doesn't exist yet, make it.
+	//If the output sub directory for this file doesn't exist yet, make it.
 	QString outputDir = getTempOutputDir();
 	if(!QFile::exists(outputDir+"/"+getRunName()))
 	{	//The directory doesn't exist yet.  Make it.

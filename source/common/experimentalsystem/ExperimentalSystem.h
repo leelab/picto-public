@@ -5,7 +5,11 @@
 
 namespace Picto {
 
-/*! \brief Unimplemented.  Stores information about the Experimental system being used
+/*!	\brief Unimplemented.  This class should probably be removed.  Presumably we will handle
+ *	this by using the Workstation's run notes.
+ *	The original documentation appears below:  
+ *
+ *	Unimplemented.  Stores information about the Experimental system being used
  *
  *	It makes sense to record the experimental setup being used for each experiment.
  *	This class will eventually provide that capability.  I am envisioning it as a container

@@ -6,7 +6,16 @@
 #include <QWheelEvent>
 #include <QKeyEvent>
 
-//! [0]
+/*! \brief The ViewerWindow is the widget that displays the DiagramScene.
+ *	\details In documentation, we often refer to the Designer's canvas, which is the white area
+ *	on which we insert, move and select DiagramItems.  The Viewer is the widget that manages this
+ *	canvas.  It scrolls it, it zooms it, it adjusts the functionality of the mouse for interacting
+ *	with it, etc.  Most of the ViewerWindow functionality is supplied automatically by its parent
+ *	class QGraphicsView; however, there is some customization that we need to do for Picto, which we
+ *	add here.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class ViewerWindow : public QGraphicsView
 {
     Q_OBJECT
@@ -26,5 +35,5 @@ private slots:
 	void editModeChanged(int mode);
 	void zoomToFitContents();
 };
-//! [0]
+
 #endif

@@ -12,8 +12,11 @@
 
 namespace Picto {
 
-/*! \brief A signal channel for representing an XY point.
- *
+/*! \brief A signal channel for representing a two dimensional (x,y) position.
+ *	\details This is the signal channel used for the test subjects position input.
+ *	It includes "x" and "y" sub-channels.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API XYSignalChannel : public SignalChannel

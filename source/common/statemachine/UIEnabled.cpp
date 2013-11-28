@@ -23,6 +23,10 @@ QSharedPointer<Asset> UIEnabled::Create()
 	return QSharedPointer<Asset>(new UIEnabled());
 }
 
+/*! \brief Sets the position of this object in the Designer canvas.
+ *	\note The position is stored in a linked UIElement since this data is not relevant to running
+ *	an Experiment and therefore need not be loaded by a Director or TestViewer.
+ */
 void UIEnabled::setPos(QPoint pos)
 {
 	//Get the UI Element
@@ -31,6 +35,10 @@ void UIEnabled::setPos(QPoint pos)
 	uiElement.staticCast<UIElement>()->setPos(pos);
 }
 
+/*! \brief Gets the position of this object in the Designer canvas.
+ *	\note The position is stored in a linked UIElement since this data is not relevant to running
+ *	an Experiment and therefore need not be loaded by a Director or TestViewer.
+ */
 QPoint UIEnabled::getPos()
 {
 	//Get the UI Element
@@ -38,7 +46,10 @@ QPoint UIEnabled::getPos()
 	return uiElement.staticCast<UIElement>()->getPos();
 
 }
-
+/*! \brief Sets the design notes for this object that appear in the Design window.
+ *	\note The design notes are stored in a linked UIElement since this data is not relevant to running
+ *	an Experiment and therefore need not be loaded by a Director or TestViewer.
+ */
 void UIEnabled::setNotes(QString notes)
 {
 	//Get the UI Element
@@ -47,6 +58,10 @@ void UIEnabled::setNotes(QString notes)
 	uiElement.staticCast<UIElement>()->setNotes(notes);
 }
 
+/*! \brief Gets the design notes for this object that appear in the Design window.
+ *	\note The design notes are stored in a linked UIElement since this data is not relevant to running
+ *	an Experiment and therefore need not be loaded by a Director or TestViewer.
+ */
 QString UIEnabled::getNotes()
 {
 	//Get the UI Element
@@ -55,13 +70,17 @@ QString UIEnabled::getNotes()
 	return uiElement.staticCast<UIElement>()->getNotes();
 }
 
+/*! 
+ *	\details Before Design syntax version 0.0.1, all UI position data was stored in UIInfo objects that were sub-elements
+ * of UIEnabled objects.  At version 0.0.1, we moved UI data out of the Experimental design into a separate UIElements of a UIData design.
+ */
 void UIEnabled::upgradeVersion(QString deserializedVersion)
 {
 	DataStore::upgradeVersion(deserializedVersion);
 	if(deserializedVersion < "0.0.1")
 	{
 		//Before Design syntax version 0.0.1, all UI position data was stored in UIInfo objects that were sub-elements
-		//of UIEnabled objects.  At version 0.0.1, we moved UI data out of the Experimental design into a separate UIData design.
+		//of UIEnabled objects.  At version 0.0.1, we moved UI data out of the Experimental design into a separate UIElements of a UIData design.
 		
 		//Get the old position from the obsolete UIInfo asset
 		QList<QSharedPointer<Asset>> oldUIInfoList = getGeneratedChildren("UIInfo");
@@ -99,7 +118,7 @@ void UIEnabled::postDeserialize()
 		connect(nameProp.data(),SIGNAL(edited()),this,SIGNAL(nameEdited()));
 }
 
-
+/*! \brief Verifies that this object does not have an empty name or a name that contains "::".*/
 bool UIEnabled::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!DataStore::validateObject(xmlStreamReader))
@@ -119,7 +138,7 @@ bool UIEnabled::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
-
+/*! \brief Searches this UIEnabled object's name for the input searchRequest.*/
 bool UIEnabled::executeSearchAlgorithm(SearchRequest searchRequest)
 {
 	if(DataStore::executeSearchAlgorithm(searchRequest))
@@ -139,6 +158,8 @@ bool UIEnabled::executeSearchAlgorithm(SearchRequest searchRequest)
 	return false;
 }
 
+/*! \brief Returns the UIElement linked to this UIEnabled object.
+*/
 QSharedPointer<Asset> UIEnabled::getUIElement()
 {
 	//If we've already done this before, use the UIData associate ID that we got last time to find the UIElement

@@ -1,7 +1,12 @@
 #ifndef BACKGROUNDTOOLGROUP_H
 #define BACKGROUNDTOOLGROUP_H
 #include "ToolGroup.h"
-
+/*! \brief An early class in Designer development that was going to allow us to change the canvas background in the designer...
+ *	until we realized "who cares about the canvas background."
+ *	\details This class is no longer used.  You may delete it if you want.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class BackgroundToolGroup : public ToolGroup
 {
     Q_OBJECT

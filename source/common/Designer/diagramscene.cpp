@@ -1,44 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include <QtWidgets>
 #include <QApplication>
 #include <QClipboard>
@@ -58,8 +17,11 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+/*! \brief The default buffer from the top left of the screen where new items are added when they are placed automatically.
+ *	\note This is not well named for historical reasons, its name should be fixed.
+ */
 #define DEFAULT_ITEM_BORDER_BUFFER 50
-//! [0]
+
 DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemContextMenu, QMenu *sceneContextMenu,  QObject *parent)
     : QGraphicsScene(parent)
 {
@@ -73,7 +35,6 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemC
     myItemMenu = itemContextMenu;
 	sceneMenu_ = sceneContextMenu;
 	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
-    myItemType = DiagramItem::Step;
     line = 0;
     textItem = 0;
 	insertionItem_ = "";
@@ -83,9 +44,8 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemC
 	useNavigateMode_ = false;
 	mouseOverScene_ = false;
 }
-//! [0]
 
-//! [1]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::setLineColor(const QColor &)
 {
     if (isItemChange(Arrow::Type)) {
@@ -95,9 +55,8 @@ void DiagramScene::setLineColor(const QColor &)
         update();
     }
 }
-//! [1]
 
-//! [2]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::setTextColor(const QColor &)
 {
     if (isItemChange(DiagramTextItem::Type)) {
@@ -106,9 +65,8 @@ void DiagramScene::setTextColor(const QColor &)
         item->setDefaultTextColor(editorState_->getTextColor());
     }
 }
-//! [2]
 
-//! [3]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::setItemColor(const QColor &)
 {
     if (isItemChange(DiagramItem::Type)) {
@@ -117,9 +75,8 @@ void DiagramScene::setItemColor(const QColor &)
         item->setBrush(editorState_->getItemColor());
     }
 }
-//! [3]
 
-//! [4]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::setFont(const QFont &)
 {
     if (isItemChange(DiagramTextItem::Type)) {
@@ -131,6 +88,10 @@ void DiagramScene::setFont(const QFont &)
     }
 }
 
+/*! \brief Creates an Arrow to represent the input transition from the source DiagramItem to the dest DiagramItem and adds it to the scene.
+ *	\details If the input transition is NULL, a new transition object will be created and added as a child of the current Window Asset as 
+ *	well.
+ */
 QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition)
 {
 	Arrow *arrow;
@@ -140,14 +101,19 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 		arrow = Arrow::Create(editorState_, transition.staticCast<Transition>(),source,dest,myItemMenu,NULL);
 	if(!arrow)
 		return NULL;
-    arrow->setColor(editorState_->getLineColor());
+    arrow->setColor(editorState_->getLineColor());	//This is currently always black, but who knows, maybe we'll want this configurable someday for some reason.
     addItem(arrow); //Don't need to add it cause its already parented by this
     arrow->updatePosition();
 	if(transition.isNull())
 		editorState_->setLastActionUndoable();
 	return arrow;
 }
-//! [4]
+
+/*! \brief Creates a diagram item for the input Asset according to its type and adds it to the scene.
+ *	\detais If the input Asset already has an attached UIElement including its position, that position will
+ *	be used to position it, otherwise it will be positioned based on the input pos value.
+ *	After the DiagramItem is added itemInserted() is emitted and the DiagramItem is returned from the function.
+ */
 DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF pos)
 {
 	DiagramItem *item = diagItemFactory_->create(asset);
@@ -166,9 +132,9 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 	return item;
 }
 
-// Returns a QRectF that contains all items in this
-//scene except the start bar.  If we didn't have the start bar,
-//we could just used itemsBoundingRect()
+/*! \brief Returns a QRectF that contains all items in this scene except the start bar.  
+ *	\details If we didn't have the start bar, we could just used itemsBoundingRect(), but we do, so we use this
+ */
 QRectF DiagramScene::getDefaultZoomRect()
 {
 	if(!startBar_)
@@ -216,6 +182,14 @@ QRectF DiagramScene::getDefaultZoomRect()
 	return returnVal;
 }
 
+/*! \brief Sets the current scene asset (ie. The asset who's canvas we are looking at) to the input.
+ *	\details This function is called when the EditorState object's windowAssetChanged() signal is called.
+ *	What we refer to here as the SceneAsset, is referred to everywhere else as the WindowAsset.  The 
+ *	function goes through all of the input asset's children, creates DiagramItem objects for them using
+ *	insertDiagramItem(), adds the necessary transition Arrow objects using insertTransition()
+ *	adds the necessary AnalysisItem objects using insertDiagramItem(), then tells the EditorState that
+ *	the asset was loaded into the current window using EditorState::setWindowItemsLoaded().
+ */
 void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 {					
 	QSharedPointer<DataStore> dataStore(asset.staticCast<DataStore>());
@@ -348,13 +322,14 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	editorState_->setWindowItemsLoaded();
 }
 
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::setBackgroundPattern(QPixmap pattern)
 {
 	setBackgroundBrush(pattern);
 	update();
 }
 
-//! [5]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::editorLostFocus(DiagramTextItem *item)
 {
     QTextCursor cursor = item->textCursor();
@@ -367,6 +342,12 @@ void DiagramScene::editorLostFocus(DiagramTextItem *item)
     }
 }
 
+/*! \brief Deletes all currently selected DiagramItems and Arrows along with their referenced Asset and Transition objects.
+ *	\details If a deletion actually took place, this function calls EditorState::triggerExperimentReset() to cause
+ *	the design to be reloaded from XML thereby removing deleted elements and reloading this scene with the correct
+ *	diagrams.
+ *	\sa Designer::resetExperiment()
+ */
 void DiagramScene::deleteSelectedItems()
 {
 
@@ -445,11 +426,20 @@ void DiagramScene::deleteSelectedItems()
 		editorState_->triggerExperimentReset();
 }
 
+/*! \brief Uses a Copier object to copy the Asset objects referenced by all selected DiagramItems.
+ *	\note Transitions are not copied even if they are selected.
+ *	\sa getSelectedAssets()
+ */
 void DiagramScene::copySelectedItems()
 {
 	copier_->copy(getSelectedAssets(),(!editorState_->getCurrentAnalysis().isNull()));
 }
 
+/*! \brief Imports AnalysisElements that were just exported into the currently selected Asset.
+ *	\details Shows a warning and returns if no Assets or more than one Asset are selected.
+ *	Warnings will also be displayed by the Copier object if there are other problems with the
+ *	import.  For more information see Copier::paste().
+ */
 void DiagramScene::analysisImportSelectedItem()
 {
 	//Make sure only one asset is selected
@@ -467,11 +457,20 @@ void DiagramScene::analysisImportSelectedItem()
 	copier_->paste(selectedAssets.first());
 }
 
+/*! \brief Exports all AnalysisElements from the selected items.
+ *	\details Exported text is stored in the computer's clipboard for importing.
+ *	This function uses the Copier::copy() function.
+ *	\sa Copier::copy()
+ */
 void DiagramScene::analysisExportSelectedItem()
 {
 	copier_->copy(getSelectedAssets(),true);
 }
 
+/*! \brief Pastes any Assets whose data was stored in the Clipboard (this should have been done by copySelectedItems()) into the current Window Asset.
+ *	\details When pasteItems() was initiated from a contextMenuEvent(), the copied Asset's DiagramItems are pasted at the position where the user created the
+ *	context menu.  Otherwise, they are pasted to the right side of the currently visible DiagramItems.
+ */
 void DiagramScene::pasteItems()
 {
 	//Make sure no assets are selected
@@ -494,9 +493,11 @@ void DiagramScene::pasteItems()
 	copier_->paste(editorState_->getWindowAsset(),pasteLoc);
 	
 }
-//! [5]
 
-//! [6]
+/*! \brief Extends the QGraphicsScene::mousePressEvent() to allow the designer to start drawing a Transition Arrow.
+ *	\details The designer can draw a Transition Arrow when the EditorState::getEditMode() is the EditorState::InserLine 
+ *	mode which occurs when the mouse hovers over a result bar hanging off of a StateMachineElement.
+ */
 void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
@@ -513,9 +514,14 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
-//! [9]
 
-//! [10]
+/*! \brief Extends the QGraphicsScene::mouseMoveEvent() as part of the DiagramScene's context aware tools logic.
+ *	\details This function allows the designer to continue drawing a Transition Arrow after they started doing this in the mousePressEvent().
+ *	The DiagramScene knows if the designer is in the midst of drawing an Arrow by looking for the EditorState::DrawLine
+ *	mode.  It also handles other context aware issues like changing the EditorState::EditMode
+ *	depending on the current mouse position.
+ *	\sa EditorState::getEditMode()
+ */ 
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -544,9 +550,13 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		mouseOverScene_ = true;
 	}
 }
-//! [10]
 
-//! [11]
+/*! \brief Extends the QGraphicsScene::mouseReleaseEvent() for placing new DiagramItems and finishing the Transition Arrow
+ *	creation process.
+ *	\details The designer's release of the mouse is the event trigger for consructing DiagramItems that were selected in the 
+ *	Toolbox as well as adding Transitions for Arrows that were started during a mousePressEvent().  This logic is handled
+ *	here.
+ */
 void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	//Only respond to left buttons
@@ -602,7 +612,6 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         removeItem(line);
         delete line;
 		line = NULL;
-//! [11] //! [12]
 
 		//Ignore text graphics.
 		while(startItems.count() && (!dynamic_cast<ArrowPortItem*>(startItems.first())))
@@ -626,11 +635,17 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
 		editorState_->setEditMode(EditorState::Select);
     }
-//! [12] //! [13]
+
     line = 0;
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
+/*! \brief Extends the QGraphicsScene::keyPressEvent() for moving the EditorState between EditorState::Navigate
+ *	and EditorState:Select mode.
+ *	\details We use the Shift key state to transition between EditorState::Select mode and EditorState::Navigate mode.
+ *	In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer
+ *	to drag the canvas position.  In EditorState::Select mode, clicking on a DiagramItem causes it to be selected.
+ */
 void DiagramScene::keyPressEvent(QKeyEvent * event)
 {
 	if(event->key() == Qt::Key_Shift)
@@ -644,6 +659,12 @@ void DiagramScene::keyPressEvent(QKeyEvent * event)
 	QGraphicsScene::keyPressEvent(event);
 }
 
+/*! \brief Extends the QGraphicsScene::keyReleaseEvent() for moving the EditorState between EditorState::Navigate
+ *	and EditorState:Select mode.
+ *	\details We use the Shift key state to transition between EditorState::Select mode and EditorState::Navigate mode.
+ *	In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer
+ *	to drag the canvas position.  In EditorState::Select mode, clicking on a DiagramItem causes it to be selected.
+ */
 void DiagramScene::keyReleaseEvent(QKeyEvent * event)
 {
 	if(event->key() == Qt::Key_Shift)
@@ -657,6 +678,10 @@ void DiagramScene::keyReleaseEvent(QKeyEvent * event)
 	QGraphicsScene::keyReleaseEvent(event);
 }
 
+/*! \brief Captures the position at which the designer right clicked for a ContextMenu in order to use 
+ *	it as the paste position should the designer choose the paste action.
+ *	\sa pasteItems()
+ */
 void DiagramScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	QGraphicsScene::contextMenuEvent(event);
@@ -670,6 +695,9 @@ void DiagramScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	}
 }
 
+/*! \brief Creates a new Asset based on the currently selected Asset type in the Toolbox.
+ *	\sa mouseReleaseEvent()
+ */
 QSharedPointer<Asset> DiagramScene::createNewAsset()
 {
 	QString category = editorState_->getInsertionItemCategory();
@@ -713,7 +741,7 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 
 	return newAsset;
 }
-//! [13]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 void DiagramScene::insertTextItem(QString text,QPointF pos)
 {
 	textItem = new DiagramTextItem();
@@ -729,7 +757,7 @@ void DiagramScene::insertTextItem(QString text,QPointF pos)
 	textItem->setPos(pos);
 	emit textInserted(textItem);
 }
-//! [14]
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 bool DiagramScene::isItemChange(int type)
 {
     foreach (QGraphicsItem *item, selectedItems()) {
@@ -739,6 +767,8 @@ bool DiagramScene::isItemChange(int type)
     return false;
 }
 
+/*! \brief Returns a list of Asset objects referenced by the currently selected DiagramItems.
+ */
 QList<QSharedPointer<Asset>> DiagramScene::getSelectedAssets()
 {
 	QList<QSharedPointer<Asset>> assets;
@@ -754,4 +784,4 @@ QList<QSharedPointer<Asset>> DiagramScene::getSelectedAssets()
     }
 	return assets;
 }
-//! [14]
+
