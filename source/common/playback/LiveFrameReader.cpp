@@ -1,16 +1,23 @@
 #include "LiveFrameReader.h"
 using namespace Picto;
 
+/*! \brief Called when a new Run Starts to let this object know that it should clear out its frame list and start again.
+*/
 void LiveFrameReader::setRunStart()
 {
 	frameTimes_.clear();
 }
 
+/*! \brief Called to add a new frame time to this object so that it can 
+*	be included in future data requests.
+*/
 void LiveFrameReader::setLatestFrameTime(double time)
 {
 	frameTimes_.append(time);
 }
 
+/*! \brief Called when a Run Ends to let this object know that it can clear out its frame list.
+*/
 void LiveFrameReader::setRunEnd()
 {
 	frameTimes_.clear();

@@ -17,11 +17,27 @@
 #include "../common.h"
 
 namespace Picto {
+	/*! \brief This Enum does not appear to be used and should probably be deleted.
+	*/
 	typedef enum{eProperty,eTransition,eFrame,eReward,eSignal,eLfp,eSpike} PlaybackDataType;
-/*! \brief Component of Picto Playback system that stores property values and transition states.
- *	Whenever property or transition values are changed, a corresponding signal is triggered.
- *	On the first iteration, this object will simply store current values.  Later, it may store 
- *	values according to time such that rewind can be sped up.
+
+/*! \brief This is pretty much a convenience class for grouping together DataState objects for
+ *	playback and Analysis purposes.
+ *	\details When the SessionState is created, it creates all of the standard DataState objects
+ *	for playback.  addSignal() can be used to create and add SignalState DataState objects since the number of
+ *	Signal channels in a session is variable as a function of the Director hardware and configuration.  setSessionData()
+ *	loads session data into all of the DataState objects, startNewRun() sets the active run, and various get functions
+ *	can then be used to access the DataState objects and traverse through them for playback purposes by using their
+ *	moveToIndex() functions.  Value changes due to the playback process are emitted as signals from this SessionState.
+ *	For Analysis purposes, various get functions are available to retrieve Reader objects which can be used to poll
+ *	data over set time intervals.  There is also the capability to disable Lfp data for lower RAM usage and load time.
+ *	
+ *	\note Some of the functionality that currently appears in the SessionPlayer might better appear here.  Ideally, this
+ *	class would encapsulate all of the DataState objects to the extent that they wouldn't need to be accessed from
+ *	the outside world.  This would be a good thing to work on when someone has some free time.
+ *	\sa SessionLoader, SessionPlayer
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionState : public QObject
@@ -37,30 +53,9 @@ public:
 	void setSessionData(QSqlDatabase session,QHash<int,bool> obsoleteAssetIds = QHash<int,bool>());
 	void startNewRun(double startTime,double endTime=-1);
 	void restartRun();
-	//Used to load values
-	//bool reset();
-	//Used to add a new signal to the SessionState since different sessions
-	//can contain different numbers of signals.
 	void addSignal(QString name,QString tableName,QStringList subChanNames,double sampPeriod);
 	void enableLfp(bool enable);
 	bool lfpEnabled();
-	//The before boolean should be set true if data will be inserted in decreasing index order
-	//before the current data set.
-	//bool setPropertyValue(double time,qulonglong dataId,int propId,QString value);
-	//bool setTransition(double time,qulonglong dataId,int transId);
-	//bool setFrame(qulonglong dataId,double frameTime);
-	//bool setReward(double time,qulonglong dataId,int duration,int channel);
-	//bool setSignal(QString name,QStringList subChanNames,double time,qulonglong dataId,double sampPeriod,QByteArray data);
-	//bool setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
-	//bool setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
-
-	//void setBehavioralBounds(double min,double max);
-	//void clearBehavioralData(double bound,bool before);
-	//void setBehavioralFinished();
-	//void setNeuralBounds(double min,double max);
-	//void clearNeuralData(double bound,bool before);
-	//void setNeuralFinished();
-
 
 	//GET FUNCTIONS-----------------------------------------------------------------
 	//The separate types of DataReaders are used to access asynchronous data
@@ -89,39 +84,61 @@ public:
 signals:
 	
 	//Synchronous Data Signals, triggered when values change
+
+	/*! \brief Emitted whenever a Property value change is traversed as part of playback.
+	 *	\details The propId is the Asset Id of the Property, the value is the new value of the Property.
+	 */
 	void propertyChanged(int propId, QString value);
+	/*! \brief Emitted whenever a Property initValue change is traversed as part of playback.
+	 *	\details The propId is the Asset Id of the Property, the value is the new value of the Property.
+	 *	InitValues are the values to which Property values are set when their parents first enter scope.
+	 *	When the Operator changes values during playback, these are the values that are changed.  They then
+	 *	take effect and affect the run values when their parents next enter scope.
+	 */
 	void propertyInitValueChanged(int propId, QString value);
+	/*! \brief Emitted whenever a Transition traversal is passed over as part of playback.
+	 *	\details The transId is the Asset Id of the Transition that was traversed.
+	 */
 	void transitionActivated(int transId);
+	/*! \brief Emitted whenever a new frame presentation is traveresed as part of playback.
+	 *	\details The "time" input is the frame time.
+	*/
 	void framePresented(double time);
+	/*! \brief Emitted when playback moves the current time passed a new reward value.  
+	 *	\details time is the time that the reward was supplied, duration is its duraiton in milliseconds, 
+	 *	channel is the reward channel on which the reward was supplied.
+	 */
 	void rewardSupplied(double time,int duration,int channel);
+	/*! \brief Emitted whenever a Signal data sample time is passed as part of playback.
+	 *	\details name is the name of the Signal channel, subChanNames is a list of the names of
+	 *	that signals sub channels, vals is a Vector of the new float values of those signals, where
+	 *	they are listed in the same order as subChanNames.  Values returned have already been calibrated
+	 *	according to the experimental calibration parameters set in the remote viewer during the experiment.
+	 */
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
+	/*! \brief Emitted when playback moves the current time passed a new lfp value.  
+	 *	\details channel is the channel on which the value occured, value is the value.
+	 */
 	void lfpChanged(int channel,double value);
+	/*! \brief Emitted whenever a spike time is passed as part of playback.
+	 *	\details time is the time at which the spike occured, channel is the electrode channel on which
+	 *	it occured, unit is the neuron unit within that channel that spiked, and waveform is a vector of
+	 *	floats describing the spike waveform.
+	 */
 	void spikeEvent(double time, int channel, int unit, QVector<float> waveform);
+	/*! \brief During the session load process (started when setSessionData() is called), this
+	 *	signal provides the current load percentage as a number between 0 and 100.
+	 *	\note This is definitely not a linear scale with respect to time.  It just
+	 *	provides a "general sense" of the current percent loaded.
+	 */
 	void percentLoaded(double percent);
-
-	//Indicates that data is needed by the session state to fulfil playback requests
-	//from (not including) currLast up to and including "to" of type "type".  
-	//If data is not available, the system should wait for it to arrive before 
-	//returning from this function.  More data than requested may be supplied, 
-	//but it must not be before or at the currLast index. All data for a given time 
-	//should be supplied at the same time (ie. if spikes from two channels came in 
-	//at the same time, they should both be supplied from the same needsData call).
-	//void needsData(PlaybackDataType type,PlaybackIndex currLast,PlaybackIndex to);
-
-	//Indicates that at least a single data unit is needed by the session state 
-	//to fulfil playback requests from (not including) currLast in the direction of
-	//the backward indicator of type "type".  If data is not available, the system 
-	//should wait for it to arrive before returning from this function.  
-	//More data than requested may be supplied, but it must not be before or at the
-	//currLast index. 
-	//void needsNextData(PlaybackDataType type,PlaybackIndex currLast,bool backward);
-
-	//Indicates that this SessionState was reset (for a new Run for example)
+	/*! \brief This signal does not appear to ever be emitted. It should probably be deleted.
+	 */
 	void wasReset();
 
 private:
 	void updatePercentLoaded();
-	//Lookup table of Property States indexed by PropId used for reversing and 
+
 	QSharedPointer<PropertyState> propState_;
 	QSharedPointer<PropertyState> initPropState_;
 	QSharedPointer<TransitionState> transState_;

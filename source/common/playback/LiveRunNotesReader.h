@@ -4,7 +4,14 @@
 #include "../../common/playback/PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Frame PlaybackData values for use in Playback system.
+/*! \brief Implements the RunNotesReader class for a live test experiment.
+ *	\details Since run notes are pretty meaningless in a test experiment, but we want Analysis elements
+ *	that poll run notes data to return something, this class pretty much just extends the RunNotesReader
+ *	functions to return simple fake data like the "Sample Name" name and the "Sample Notes" notes.  Start
+ *	time is zero and end time is always -1 (since we don't know how long the run is while we're still in it).
+ *	Run index is zero.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveRunNotesReader : public RunNotesReader

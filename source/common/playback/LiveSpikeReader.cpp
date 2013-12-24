@@ -2,6 +2,12 @@
 using namespace Picto;
 
 #define SAMP_PERIOD 0.000025
+
+/*! \brief Constructs a new LiveSpikeReader
+ *	\details maxChan is the maximum channel on which spikes will be reported (ie. range will be channel 0->maxChan)
+ *	maxUnit is the maximum unit on which spikes will be reported (ie. range will be unit 0->maxUnit), waveform size
+ *	is the number of entries that will be included in spike waveforms.
+ */
 LiveSpikeReader::LiveSpikeReader(int maxChan,int maxUnit,int waveformSize)
 {
 	maxChans_=maxChan;
@@ -16,12 +22,18 @@ LiveSpikeReader::LiveSpikeReader(int maxChan,int maxUnit,int waveformSize)
 		units_.append(i);
 	}
 }
-
+/*! \brief Called when a new Run Starts to let this object know that it should clear out its spike list and start again.
+*/
 void LiveSpikeReader::setRunStart()
 {
 	spikeData_.clear();
 }
 
+/*! \brief Called to add a new spike to the list of spikes with the input time.
+*	\details The actual spike data is fake.  The spike channel is randomly selected from the channel range
+*	entered in the constructor as is the spike unit.  The waveform is simply a sine wave with some random
+*	noise.
+*/
 void LiveSpikeReader::createVirtualSpike(double time)
 {
 	int chan = rand()%maxChans_;
@@ -34,6 +46,8 @@ void LiveSpikeReader::createVirtualSpike(double time)
 	spikeData_.append(SpikeData(time,chan,unit,waveform));
 }
 
+/*! \brief Called when a Run ends to let this object know that it can clear out its spike list.
+*/
 void LiveSpikeReader::setRunEnd()
 {
 	spikeData_.clear();

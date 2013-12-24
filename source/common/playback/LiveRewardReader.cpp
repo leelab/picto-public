@@ -1,16 +1,25 @@
 #include "LiveRewardReader.h"
 using namespace Picto;
 
+/*! \brief Called when a new Run Starts to let this object know that it should clear out its reward list and start again.
+*/
 void LiveRewardReader::setRunStart()
 {
 	rewardData_.clear();
 }
 
+/*! \brief Called to add a new reward event to this object so that it can 
+*	be included in future data requests.
+*	\details time is the time that the reward occured, duration is the duration of the
+*	reward in milliseconds.
+*/
 void LiveRewardReader::setLatestRewardData(double time,double duration)
 {
 	rewardData_.append(RewardData(time,duration));
 }
 
+/*! \brief Called when a Run Ends to let this object know that it can clear out its reward list.
+*/
 void LiveRewardReader::setRunEnd()
 {
 	rewardData_.clear();

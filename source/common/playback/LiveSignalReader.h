@@ -5,7 +5,16 @@
 #include "../../common/playback/PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Signal PlaybackData values for use in Playback system.
+/*! \brief Implements the SignalReader class for a live test experiment.
+ *	\details This object is filled during run time by using the setLatestSignalData() function such that Analyses 
+ *	have access to all past data but no future data.  Requests for future data from this class will result in 
+ *	meaningless values.
+ *	\note Since the functions here simply implement the SignalReader class for
+ *	data read in during a live Session, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding additional function level documentation
+ *	for many of the functions in this class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveSignalReader : public SignalReader
@@ -21,16 +30,13 @@ public:
 	void setRunEnd();
 
 	//Signal Reader Interface
-	//Returns the name of the signal handled by this signal reader
 	virtual QString getName();
-	//Returns the sub channels of this signal
 	virtual QStringList getComponentNames();
 	virtual double getSamplePeriod();
 	virtual double getLatestTime();
 	virtual double getLatestValue(QString channel);
 	virtual double getNextTime();
 	virtual double getNextValue(QString channel);
-	//Returns signal values for the input sub channel with times > the input time.
 	virtual QVariantList getValuesSince(QString channel,double time);
 	virtual QVariantList getValuesUntil(QString channel,double time);
 	virtual QVariantList getTimesSince(double time);

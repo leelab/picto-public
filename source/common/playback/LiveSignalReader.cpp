@@ -1,6 +1,11 @@
 #include "LiveSignalReader.h"
 using namespace Picto;
 
+/*! \brief Constructs a new LiveSignalReader.
+ *	\details name is the name of the signal to be tracked by this LiveSignalReader (ie. "Position").
+ *	subChanNames is a list of the names of the subchannels of the signal tracked by this object
+ *	(ie. "x","y").  samplePeriod is the time per sample for this signal channel.
+ */
 LiveSignalReader::LiveSignalReader(QString name,QStringList subChanNames,double samplePeriod)
 :	name_(name),
 	subChanNames_(subChanNames),
@@ -13,21 +18,30 @@ LiveSignalReader::LiveSignalReader(QString name,QStringList subChanNames,double 
 		subChanIndexLookup_[subChanNames_[i]] = i;
 	}
 }
-
+/*! \brief Called when a new Run Starts to let this object know that it should clear out its signal data list and start again.
+*/
 void LiveSignalReader::setRunStart()
 {
 	signalData_.clear();
 }
-
+/*! \brief Called to add new signal data to this object so that it can 
+*	be included in future data requests.
+*	\details time is the time that the data was read.  vals is a list of floats
+*	ordered like getComponentNames() with the signal values (They are already calibrated according
+*	to the current Experiment calibration values).
+*/
 void LiveSignalReader::setLatestSignalData(double time,QVector<float> vals)
 { 
 	signalData_.append(PlaybackSignalData(time,vals));
 }
-
+/*! \brief Called when a Run Ends to let this object know that it can clear out its signal data list.
+*/
 void LiveSignalReader::setRunEnd()
 {
 	signalData_.clear();
 }
+/*! \brief Returns the name of the Signal tracked by this LiveSignalReader (ie. "Position").
+*/
 QString LiveSignalReader::getName()
 {
 	return name_;

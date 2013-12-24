@@ -7,7 +7,20 @@
 #include "FileSessionLoader.h"
 
 namespace Picto {
-/*! \brief Component of Picto Playback system that plays back sessions.
+/*! \brief Controls the timing and ordering of played back events during Picto Session playback.
+ *	\details This class works closely with a SessionState to playback Session events in a well defined and tightly controlled
+ *	order. Its public interface is fairly simple, with restart() being used to restart the current run and stepToTime() being
+ *	used to move through it.  A great deal of thought has been put into the exact ordering of played back events.  In particular
+ *	the interleaving system for events that occured as part of the StateMachine (Property value changes, Transition traversals)
+ *	and events that occured outside of StateMachine control (Signal data, Spikes, LFP, Reward) needed to be clearly defined.
+ *	For more detail on how this is handled, see step().
+ *
+ *	It should also be pointed out that the SessionPlayer does not support "reverse playback" behavior.  When stepToTime()
+ *	recieves an input with a time that is lower than the latest time, the Session Run is restarted and fast forwarded to 
+ *	that position.  This is due to the need to support the Analysis system.  For more detail, see stepToTime().
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionPlayer : public QObject
@@ -23,14 +36,18 @@ public:
 	void restart();
 	bool stepToTime(double time);
 	double getTime();
-	//If the object isProcessing, it is in the process of handling a previous command
-	//and will not respond to new commands.  This can be used in reentrant cases since
-	//the playback system may return processing to the event loop while it performs 
-	//long processes.
 	bool isProcessing();
 signals:
+	/*! \brief Emitted when playback of a Session Run starts or is restarted.  taskName is the name of the task
+	 *	that was Run, runName is the name that was saved for this Run during the Experimental Session.
+	 */
 	void startingRun(QString taskName,QString runName);
-	void loading(bool startingLoad);	//Emits true when starting load and false when load is ending
+	/*! \brief Emitted when loading of Session data starts or finishes.  startingLoad indicates if the event is 
+	 *	a load start (true) or a load finish (false).
+	 */
+	void loading(bool startingLoad);
+	/*! \brief Emitted when playback of the current Run ends.
+	*/
 	void reachedEnd();
 protected:
 

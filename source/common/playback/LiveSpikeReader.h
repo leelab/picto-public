@@ -4,7 +4,18 @@
 #include "../../common/playback/PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Frame PlaybackData values for use in Playback system.
+/*! \brief Implements the SpikeReader class for a live test experiment.
+ *	\details Since this is meant to be used with a test experiment, this object just generates fake spike
+ *	data.  Every time createVirtualSpike() is called, it creates a fake spike with the input time and a random
+ *	channel/unit between 0 and the maxChan/maxUnit input in the constructor.  Waveforms are also virtual with
+ *	a simple noisy sine wave shape.  Since this object is filled during run time, Analyses have access to all 
+ *	past data but no future data.  Requests for future data from this class will result in meaningless values.
+ *	\note Since the functions here simply implement the SpikeReader class for
+ *	live session data, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding additional function level documentation
+ *	for many of the functions in this class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveSpikeReader : public SpikeReader
@@ -33,15 +44,7 @@ public:
 	virtual int getNextUnit();
 	virtual QVariantList getNextWaveform();
 	
-	//Returns a list of spikes times when that occured with times > the input time and 
-	//<= the current time on all channels and units.  There is a one to one matchup of times
-	//from this function and channels from getChannelsSince(time), units from getUnitsSince(time)
-	//and waveforms from getWaveformsSince(time).
 	virtual QVariantList getTimesSince(double time);
-	//Returns a list of spikes times when that occured with times > the current time and 
-	// <= the input time on the all channels and units.  There is a one to one matchup of times
-	//from this function and channels from getChannelsUntil(time), units from getUnitsUntil(time)
-	//and waveforms from getWaveformsSince(time).
 	virtual QVariantList getTimesUntil(double time);
 	virtual QVariantList getChannelsSince(double time);
 	virtual QVariantList getChannelsUntil(double time);

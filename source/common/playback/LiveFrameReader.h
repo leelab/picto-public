@@ -4,7 +4,16 @@
 #include "../../common/playback/PlaybackInterfaces.h"
 
 namespace Picto {
-/*! \brief Stores Frame PlaybackData values for use in Playback system.
+/*! \brief Implements the FrameReader class for a live test experiment.
+ *	\details This object is filled during run time by using the setLatestFrameTime() function such that Analyses 
+ *	have access to all past data but no future data.  Requests for future data from this class will result in 
+ *	meaningless values.
+ *	\note Since the functions here simply implement the FrameReader class for
+ *	data read in during a live Session, there is not much to add in terms of documentation 
+ *	beyond what was described above, so we will not be adding additional function level documentation
+ *	for many of the functions in this class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveFrameReader : public FrameReader

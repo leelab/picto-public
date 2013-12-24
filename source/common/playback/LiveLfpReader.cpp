@@ -21,11 +21,16 @@ LiveLfpReader::LiveLfpReader(QList<int> channels,double samplePeriod)
 	}
 }
 
+/*! \brief Called when a new Run Starts to let this object know that it should clear out its lfp list and start again.
+*/
 void LiveLfpReader::setRunStart()
 {
 	data_.clear();
 }
-
+/*! \brief Called to add the input time to the list of valid lfp times.
+*	\details The actual lfp data values are fake and calculated from a simple sine wave function of
+*	the sample time when getValue() is called.
+*/
 void LiveLfpReader::createVirtualLfpData(double time)
 {
 	if(time < 0)
@@ -38,6 +43,8 @@ void LiveLfpReader::createVirtualLfpData(double time)
 	}
 }
 
+/*! \brief Called when a Run ends to let this object know that it can clear out its lfp list.
+*/
 void LiveLfpReader::setRunEnd()
 {
 	data_.clear();

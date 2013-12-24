@@ -1,6 +1,12 @@
 #include "SessionPlayer.h"
 using namespace Picto;
 
+/*! \brief Constructs a new SessionPlayer.
+ *	\details sessState is the SessionState that will be used to playback all of the Session data.  sessLoader
+ *	is the FileSessionLoader that will load the Session file into the SessionState object before playback.
+ *	\note The input FileSessionLoader does not appear to be used in this class anymore.  It should probably be removed
+ *	from this constructor.
+ */
 SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<FileSessionLoader> sessLoader)
 :
 sessionState_(sessState),
@@ -17,6 +23,8 @@ SessionPlayer::~SessionPlayer()
 {
 }
 
+/*! \brief Restarts the current run from the beginning.
+*/
 void SessionPlayer::restart()
 {
 	markLoading(true);
@@ -27,6 +35,23 @@ void SessionPlayer::restart()
 	markLoading(false);
 }
 
+/*! \brief Steps the Session time up to the input time.  SessionState signals indicating that Session events occured
+ *	will be triggered along the way.
+ *	\details This function calls stepToNextFrame() over and over again until the input time is no longer higher than
+ *	the time of the next frame.  
+ *	If the current Run has not yet been started, some initialization will occur before starting stepToNextFrame() in 
+ *	the loop.  
+ *
+ *	If the input time is lower than the current time in the Run, the Run will be 
+ *	restarted and then stepToNextFrame() will be called until the input time as usual.  This is due to the fact that
+ *	Analyses depend on a complete pass through the Session Run from the beginning.  If we "rewound", we would have to
+ *	undo Analysis script effects while we rewind to the input time and then restart Analysis at that point. That 
+ *	is not supported so we need to just clear the entire Analysis and start over from scratch.  
+ *	In cases where we end up restarting the run, the outside world will know what happened
+ *	because the startingRun() signal will be emitted, just as it always is when playback of a new run starts.
+ *
+ *	If we reach the end of the Run before arriving at the input time, the reachedEnd() will be emitted.
+ */
 bool SessionPlayer::stepToTime(double time)
 {
 	//qDebug(QString("Player: Step To Time called with input: %1").arg(time).toLatin1());
@@ -98,23 +123,35 @@ bool SessionPlayer::stepToTime(double time)
 	return true;
 }
 
-
+/*! \brief Returns the current playback time.
+ *	\details All Session events that occured up to this time have been emitted through SessionState signals.
+ */
 double SessionPlayer::getTime()
 {
 	return lastIndex_.time();
 }
 
+/*! \brief While the processing_ bool is used in this class to make functions reentrant, this function does not
+ *	appear to be used.  It should probably be deleted.
+ */
 bool SessionPlayer::isProcessing()
 {
 	return processing_;
 }
 
+/*! \brief This function calls step() and doesn't appear to add any other functionality apart from reentrancy.  We should probably
+ *	consider getting rid of it.
+ */
 bool SessionPlayer::stepForward(double lookForward)
 {
 	if(processing_) return false;
 	return step(lookForward);
 }
 
+/*! \brief Steps playback forward to the next Frame presentation so long as it occurs before the input lookForward
+ *	time.
+ *	\details The lookForward time is in runtime (ie. 0 is the beginning of the run) in units of seconds.
+ */
 bool SessionPlayer::stepToNextFrame(double lookForward)
 {
 	if(processing_) return false;
@@ -126,6 +163,26 @@ bool SessionPlayer::stepToNextFrame(double lookForward)
 	return true;
 }
 
+/*! \brief Steps playback forward to the next Session event so long as that event occurs before the input lookForward
+ *	time.
+ *	\details The lookForward time is in Run time (ie. 0 is the beginning of the run) in units of seconds.
+ *	\note Since some Picto events have no DataIds and are indexed only by their timestamps, the ordering of this
+ *	step() function could have been set up in multiple ways.  We have set it up so that all DataId indexed events marked
+ *	with the upcoming frame presentation time are traversed first.  Then, before the actual frame presentation is 
+ *	traversed, we traverse all timestamp indexed Session events (spikes, lfp, signal channels, rewards) up to the time of 
+ *	the upcoming frame presentation.  We currently just move through all of the time based events one after the other.
+ *	This means, for example that if we had a Position signal with times .003, .005, .007, etc and a spike at time .004
+ *	we would still see all of the Position signal data first and only then see the spike event, or alternatively, we might
+ *	see the spike event first and only then all of the Position signal data.  Strictly speaking, we should probably
+ *	be presenting these in their time order too; however it is currently irrelevant because the only place where anything
+ *	can actually happen with this data is in Analysis scripts which are part of the StateMachine traversal.  Analysis Scripts are
+ *	triggered by Transition traversals and frame presentations, so whenever an Analysis script is called, all of the Timestamp
+ *	indexed events for the latest frame will have been triggered anyway.  It should also be pointed out that even though
+ *	timestamp indexed events might sometimes have occured just after one frame was presented, all DataId indexed events will be 
+ *	traversed before those timestamp based events are traversed.  We thought long and hard about this, and it has to do with the 
+ *	fact that the Experiment system itself only has access to position data from the previous frame regardless of when position 
+ *	data for the upcoming frame is read.  If you want to change this, think about it for a long long time.
+ */
 bool SessionPlayer::step(double lookForward)
 {
 	processing_ = true;
@@ -156,6 +213,9 @@ bool SessionPlayer::step(double lookForward)
 	return true;
 }
 
+/*! \brief Use this function to mark when loading starts and stops.  Internally, it takes care of only emitting
+ *	the loading() signal when loading first starts and when it first ends.
+ */
 void SessionPlayer::markLoading(bool load)
 {
 	if(loading_ != load)
@@ -165,6 +225,17 @@ void SessionPlayer::markLoading(bool load)
 	}
 }
 
+/*! \brief Returns the SessionState's DataState which is DataId indexed and has the next lowest
+ *	DataId so long as it occurs before the input lookForward time.
+ *	\details This is used in order to step through the session in the proper order.  We always choose
+ *	the next lowest DataId so that can be sure, for example, that any Property value changes that occured before
+ *	a particular Transition was traversed in the actual experiment will always be played back before that 
+ *	Transition and not afterward.
+ *
+ *	The lookForward time is in Run time (ie. 0 is the beginning of the run) in units of seconds.
+ *	If no appropriate DataState can be found before the lookForward time, an empty shared DataState
+ *	pointer is returned.
+ */
 QSharedPointer<DataState> SessionPlayer::getNextTriggerState(double lookForward)
 {
 	//Look for the next property, transition or frame
