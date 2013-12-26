@@ -6,10 +6,18 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new EnumProperty with the input name and QVariant(int) value, where the int is the index of the 
+ *	enum value that is selected.
+ */
 EnumProperty::EnumProperty(QString name, QVariant value):
 Property(typeId(),name,value)
 {}
 
+/*! \brief Implements Property::stringToVariant to convert the input QVariant integer value to the corresponding
+ *	enum name as a QString.  
+ *	\details For example, if the EnumProperty holds (Small,Medium,Big), variantToString(1) would
+ *	return "Medium".
+*/
 QString EnumProperty::variantToString(QVariant value) const
 {
 	int val = value.toInt();
@@ -18,6 +26,12 @@ QString EnumProperty::variantToString(QVariant value) const
 	return enumNames[val];
 }
 
+/*! \brief Implements Property::stringToVariant() to convert the input enum value name string the corresponding integer that
+ *	it represents.  
+ *	\details For example, if the EnumProperty holds (Small,Medium,Big), stringToVariant("Big") would
+ *	return QVariant(2).  If the input string is not one of the enum value names, QVariant(-1) will
+ *	be returned and an error message will be set to the input error string reference.
+*/
 QVariant EnumProperty::stringToVariant(QString string, QString& error) const
 {
 	error = "";

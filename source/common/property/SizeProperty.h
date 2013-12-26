@@ -4,8 +4,11 @@
 #include "Property.h"
 
 namespace Picto {
-/*!	\brief Describes a SizeProperty of an object
- *
+/*!	\brief A Property for storing width,height size data.
+ *	This is useful for storing the size of VisualElements.  It is almost exactly the same as the PointProperty
+ *	class with the exception that it deals with QVariant(QSize) values instead of QVariant(QPoint).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API SizeProperty : public Property

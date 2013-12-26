@@ -4,8 +4,12 @@
 #include "Property.h"
 
 namespace Picto {
-/*!	\brief Describes a SizeProperty of an object
- *
+/*!	\brief A Property for storing enums.
+ *	\details This is useful for storing a list of options that the designer can select.  The list of possible
+ *	enum values is set by adding a Property Attribute with the name "enumNames" and a QVariant of 
+ *	a QStringList containing enum names for the value.  This is done using Property::setAttribute().
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API EnumProperty : public Property
@@ -17,6 +21,9 @@ class EnumProperty : public Property
 public:
 	EnumProperty(QString name, QVariant value);
 	virtual ~EnumProperty(){};
+	/*! \brief Since there is no QVariant::Enum type, the EnumProperty's type is 
+	 *	from the UserType region (UserType+1).
+	 */
 	static int typeId(){return QVariant::UserType+1;};
 	
 protected:

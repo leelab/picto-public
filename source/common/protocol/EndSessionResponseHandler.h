@@ -6,7 +6,11 @@
 
 namespace Picto {
 
-/*! \brief A response handler for ENDSESSION responses
+/*! \brief A response handler for ENDSESSION responses.
+ *	\details ENDSESSION responses are requests to a Picto Component to close its current session and
+ *	finish sending all of its data to the Server.  This class handles that job.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API EndSessionResponseHandler : public ProtocolResponseHandler

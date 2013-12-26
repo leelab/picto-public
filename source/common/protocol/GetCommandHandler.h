@@ -10,8 +10,10 @@ namespace Picto {
 /*!	\brief Handles GET commands.
  *
  *	This command handler was used during testing, but isn't really part of Picto at
- *	this point.  Instead of a more general GET command, I implemented a more specific
- *	GETDATA command (which can be found in /server/protocol/).
+ *	this point.  Instead of a more general GET command, We implemented a more specific
+ *	GETDATA command handler (which can be found in /server/protocol/).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API GetCommandHandler : ProtocolCommandHandler

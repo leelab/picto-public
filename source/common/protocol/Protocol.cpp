@@ -13,11 +13,13 @@ Protocol::Protocol()
 {
 }
 
+/*! \brief Adds a new ProtocolCommandHandler to this Protocol.*/
 void Protocol::addCommandHandler(QSharedPointer<ProtocolCommandHandler> _commandHandler)
 {
 	commandHandlers_[_commandHandler->method()] = _commandHandler;
 }
 
+/*! \brief Returns this ProtocolCommandHandler that handles the input _command method (ie. PUTDATA, JOINSESSION, etc).*/
 QSharedPointer<ProtocolCommandHandler> Protocol::getCommandHandler(QString _command)
 {
 	QSharedPointer<ProtocolCommandHandler> commandHandler;

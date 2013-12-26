@@ -11,12 +11,15 @@
 
 namespace Picto {
 
-/*! \brief A base class from which all command handlers are derived
+/*! \brief A base class from which all command handlers are derived.  These command handlers define
+ *	responses to ProtocolCommand objects coming in over the network.
  *
  *	A command handler needs to implement two functions.  The method function is 
- *	simply the name of the commang (e.g. GET).  The processCommand function is where
+ *	simply the name of the command (e.g. GET).  The processCommand function is where
  *	all of the logic is.  The processCommand function should return a response, and
  *	cause any necessary internal state changes.  
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolCommandHandler : public QObject
@@ -28,7 +31,11 @@ struct ProtocolCommandHandler : public QObject
 public:
 	ProtocolCommandHandler();
 
+	/*! \brief Returns the name of the commeand that this ProtocolCommandHandler handles.*/
 	virtual QString method() = 0;
+	/*! \brief Processes the input ProtocolCommand, triggering any necessary logic based on the command contents, 
+	 *	and returns an appropriate ProtocolResponse.
+	 */
 	virtual QSharedPointer<ProtocolResponse> processCommand(QSharedPointer<ProtocolCommand>) = 0;
 
 };

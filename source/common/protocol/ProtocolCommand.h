@@ -16,6 +16,8 @@ namespace Picto {
  * The ProtocolCommand object is used to parse and execute commands received via the PICTO protocol.
  * Since the PICTO protocol shares the same semantics as the HTTP protocol, a ProtocolCommand object
  * can be used for both purposes.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolCommand
@@ -27,16 +29,26 @@ public:
 	ProtocolCommand();
 	ProtocolCommand(QString commandText);
 
+	/*! \brief Sets the method for this command.  The method is the overall action that the Protocol will perform (ie. PUT or GET in http).*/
 	void setMethod(QString _method) { method_ = _method; }
+	/*! \brief Returns the method for this command.
+	 *	\sa setMethod()
+	 */
 	QString getMethod() { return method_; }
 
+	/*! \brief Sets the target for this command.*/
 	void setTarget(QString _target) { target_ = _target; }
+	/*! \brief Gets the target for this command.*/
 	QString getTarget() { return target_; }
 
+	/*! \brief Sets the name of the Protocol in which this ProtocolCommand is defined.*/
 	void setProtocolName(QString _protocolName) { protocolName_ = _protocolName; }
+	/*! \brief Gets the name of the Protocol in which this ProtocolCommand is defined.*/
 	QString getProtocolName() { return protocolName_; }
 
+	/*! \brief Sets the version of the Protocol in which this ProtocolCommand is defined.*/
 	void setProtocolVersion(QString _protocolVersion) { protocolVersion_ = _protocolVersion; }
+	/*! \brief Gets the version of the Protocol in which this ProtocolCommand is defined.*/
 	QString getProtocolVersion() { return protocolVersion_; }
 
 	bool hasField(QString field);
@@ -51,16 +63,11 @@ public:
 	bool isPendingContent();
 
 	int setContent(QByteArray _content);
-	/*! Appends the provided \a _content to the ProtocolCommand's existing payload, if any.
-	    No Content-Length field is added to the ProtocolCommand's fields, nor is an existing
-		Content-Length field modified by this method.
-	    \param _content a QByteArray containing the content to be added to the payload
-	    \return an integer containing the remaining content length needed for a well formed command
-		If no Content-Length field is present, this function will return std::numeric_limits<int>::min()
-		If the added content causes the stored content to exceed the value specified by the
-		Content-Length field, then this function will return a negative value
-	*/
+
 	int addToContent(QByteArray _content);
+	/*! \brief Returns the content of this ProtocolCommand.
+	 *	\sa setContent(), addToContents()
+	 */
 	QByteArray getContent() { return content_; }
 
 	bool isWellFormed();

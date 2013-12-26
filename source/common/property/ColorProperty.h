@@ -4,8 +4,10 @@
 #include "Property.h"
 
 namespace Picto {
-/*!	\brief Describes a SizeProperty of an object
- *
+/*!	\brief A Property for storing color data.
+ *	This is useful for storing colors of VisualElements.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ColorProperty : public Property

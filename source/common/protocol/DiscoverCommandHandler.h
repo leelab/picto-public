@@ -7,17 +7,13 @@
 
 namespace Picto {
 
-/*!	\brief Handles DISCOVER commands. Kinda, sorta not implemented
- *
- *	Although this command handler isn't implemented, there is an DISCOVER command that
- *	does get passed around the network.  If you dig into the PictoServer code (in particular
- *	/server/network/server.cpp), you'll see that if a DISCOVER command is received via a UDP
- *	broadcast, we assume that it is coming from someone who is looking for a server instance
- *	respond by broadacasting an ANNOUNCE command back.
- *
- *	It may be wise to get rid of this command handler...
+/*!	\brief This was meant to handle DISCOVER commands, but since they are an integral part of the ServerDiscovery system in the
+ *	Director and Proxy, handling of DISCOVER commands ended up getting hard coded into the Server class.
+ *	\details Using this DiscoverCommandHandler to handle the DISCOVER commands was actually a pretty good idea though so it might
+ *	be worthwhile at some point to try to clean things up so that DISCOVER handling isn't hard coded into anything.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API DiscoverCommandHandler : ProtocolCommandHandler
 #else

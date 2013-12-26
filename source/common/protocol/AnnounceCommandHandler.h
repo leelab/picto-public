@@ -8,14 +8,13 @@
 
 namespace Picto {
 
-/*!	\brief Handles ANNOUNCE commands. Kinda, sorta not implemented
- *
- *	Although this command handler isn't implemented, there is an ANNOUNCE command that
- *	does get passed around the network.  If you dig into the PictoServer code (in particular
- *	/server/network/server.cpp), you'll see that if a UDP ANNOUNCE command is received, we
- *	assume that it is coming from a proxy server, and add that server to our list.
- *
- *	It may be wise to get rid of this command handler...
+/*!	\brief This was meant to handle ANNOUNCE commands, but since they are an integral part of the ServerDiscovery system in the
+ *	Director and Proxy, handling of ANNOUNCE commands ended up getting hard coded into the ServerDiscoverer and CommandChannel
+ *	classes.
+ *	\details Using this AnnounceCommandHandler to handle the ANNOUNCE commands was actually a pretty good idea though so it might
+ *	be worthwhile at some point to try to clean things up so that ANNOUNCE handling isn't hard coded into anything.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct PICTOLIB_CLASS AnnounceCommandHandler : ProtocolCommandHandler
 {

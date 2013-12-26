@@ -6,7 +6,11 @@
 
 namespace Picto {
 
-/*! \brief A response handler for NEWSESSION responses
+/*! \brief A response handler for NEWSESSION responses.
+ *	\details NEWSESSION responses are requests to a Picto Component to perform whatever initializations are necessary 
+ *	to start a new session.  The message comes in with the SessionId that will be used for the new session.  This class handles that job.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API NewSessionResponseHandler : public ProtocolResponseHandler

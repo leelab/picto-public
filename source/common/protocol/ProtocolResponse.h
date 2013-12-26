@@ -12,6 +12,8 @@
 
 namespace Picto {
 
+/*! \brief The types of ProtocolResponses that are supported.
+ */
 namespace ProtocolResponseType
 {
 	typedef enum
@@ -23,6 +25,9 @@ namespace ProtocolResponseType
 	} ProtocolResponseType;
 }
 
+/*! \brief The types of content encoding that can be used for ProtocolResponses.
+ *	\note Encoding is no longer supported.
+ */
 namespace ContentEncodingType
 {
 	typedef enum
@@ -31,6 +36,9 @@ namespace ContentEncodingType
 	} ContentEncodingType;
 }
 
+/*! \brief The type of a particular multipart ProtocolResponse.
+ *	\note Multipart responses are not currently used in Picto even though they are supported here.
+*/
 namespace MultiPartResponseType
 {
 	typedef enum
@@ -39,27 +47,37 @@ namespace MultiPartResponseType
 	} MultiPartResponseType;
 }
 
+/*! \brief The registration type of the current Picto response.
+ *	\details The Picto server tells its client whenever data from a "registered command" that was received has been written to disk.  Whenever a ProtocolResponse
+ *	is sent, the command id of the command to which it is responding is added to a list.  The RegisteredResponseType on a ProtocolResponse is used to 
+ *	piggyback information about whether the data from the commands with command-ids in that list has been written to disk.  When that has happened that list
+ *	of command-ids is attached to the ProtocolResponse to tell the client which data was written to disk.
+ *	\note RegisteredResponseType on ProtocolResponses is complicated by the fact that commands/responses live in one thread while flushing to disk
+ *	occurs in another thread.  That is the source of some of the complexity involved in correctly replying to registered commands.
+*/
 namespace RegisteredResponseType
 {
 	typedef enum
 	{
-		NotRegistered = 0x0,			//This type of response doesn't include the command id of the command that it's responding to.  The command id from this type is appended to an unconfirmed command id list
-		Immediate = 0x1,				//This type of response includes the command id of all commands in any list that preceded it.  It is used when all activities that needed to occur on the any previous responses all occured within the same thread in which they arrived.
-		FirstInCommandPackage = 0x2,	//This type of response indicates that the current command is the first in a new unconfirmed command id list.  From this point on, new commands should go in this new list.
-										//If this type of response is detected while there is already a closed unconfirmed command id list, that list is erased and replaced by the latest list.
-		SendLastCommandPackage = 0x4,	//This type of response indicates that the current command should include a comma separated list of commands in the latest complete unconfirmed command list.
-										//It is used when the thread handling the activities of the commands in LastInCommandPackage is complete.
+		NotRegistered = 0x0,			//!< This type of response doesn't include the command id of the command that it's responding to.  The command id from this type is appended to an unconfirmed command id list
+		Immediate = 0x1,				//!< This type of response includes the command id of all commands in any list that preceded it.  It is used when all activities that needed to occur on the any previous responses all occured within the same thread in which they arrived.
+		FirstInCommandPackage = 0x2,	//!< This type of response indicates that the current command is the first in a new unconfirmed command id list.  From this point on, new commands should go in this new list.
+										//!< If this type of response is detected while there is already a closed unconfirmed command id list, that list is erased and replaced by the latest list.
+		SendLastCommandPackage = 0x4,	//!< This type of response indicates that the current command should include a comma separated list of commands in the latest complete unconfirmed command list.
+										//!< It is used when the thread handling the activities of the commands in LastInCommandPackage is complete.
 		FirstInPackAndSendLast = 0x6
 	} RegisteredResponseType;
 }
 
 /*!	\brief A response, issued as the result of a command
  *
- *	Protocol responses are the obvious object that gets returned after a command 
+ *	Protocol responses are the object that gets returned after a command 
  *	is received.  The response can simply be an empty 200:OK, in response to a 
- *	simple command, or they can be much more complex.  Although there is functionality
- *	in place for streaming responses, I never used it.  (However, it might be wise
- *	to stream some of the responses for the repetitve commands.)
+ *	simple command, or it can be much more complex.  Although there is functionality
+ *	in place for streaming responses, Picto doesn't currently use it.  Multipart responses
+ *	are also supported but not used.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolResponse

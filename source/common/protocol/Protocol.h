@@ -18,6 +18,8 @@ namespace Picto {
  *	object is a base class that makes it easy to define a custom protocol.  Each
  *	derived protocol needs to have a name and version, as well as a list of command
  *	handlers that get added to the protocol.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API Protocol
@@ -30,7 +32,9 @@ public:
 	
 	QSharedPointer<ProtocolCommandHandler> getCommandHandler(QString _command);
 
+	/*! \brief Returns this Protocol's ID.*/
 	virtual QString id() = 0;
+	/*! \brief Returns this Protocol's Version.*/
 	virtual QString version() = 0;
 
 private:

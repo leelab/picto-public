@@ -1,8 +1,3 @@
-/*! \file AnnounceCommandHandler.cpp
- * \ingroup picto_protocol
- * \brief
- */
-
 #include "AnnounceCommandHandler.h"
 #include "../common/globals.h"
 #include "../memleakdetect.h"
@@ -13,6 +8,8 @@ AnnounceCommandHandler::AnnounceCommandHandler()
 {
 }
 
+/*! \brief Implements ProtocolCommandHandler::processCommand() to return a ProtocolResponseType::NotImplemented ProtocolResponse.
+ */
 QSharedPointer<ProtocolResponse> AnnounceCommandHandler::processCommand(QSharedPointer<ProtocolCommand> command)
 {
 	/*! \todo implement handler */

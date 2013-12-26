@@ -5,7 +5,15 @@
 
 namespace Picto {
 
-/*! \brief A response handler for REWARD responses
+/*! \brief A base class for ProtocolResponseHandler classes that respond to the "PARAMETER" method.
+ *	\details PARAMETER messages indicate that the Operator changed the initValue of one of the
+ *	runtime Properties exposed during an experiment.  The response includes the AssetId of the
+ *	affected Property and the new value.
+ *
+ *	The processResponse() function implemented by this class is empty.  Extend this class
+ *	to add logic that is triggered by the arrival of a new ProtocolRespose.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API ParameterResponseHandler : public ProtocolResponseHandler

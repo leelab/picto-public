@@ -5,7 +5,14 @@
 
 namespace Picto {
 
-/*! \brief A response handler for LOADEXP responses
+/*! \brief A base class for ProtocolResponseHandler classes that respond to the "LOADEXP" method.
+ *	\details LOADEXP reponses are sent along with an Experiment design and indicate that the Component
+ *	should load and run the included Experiment.
+ *	
+ *	The processResponse() function implemented by this class is empty.  Extend this class
+ *	to add logic that is triggered by the arrival of a new ProtocolRespose.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API LoadExpResponseHandler : public ProtocolResponseHandler

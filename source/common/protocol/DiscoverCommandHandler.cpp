@@ -8,6 +8,8 @@ DiscoverCommandHandler::DiscoverCommandHandler()
 {
 }
 
+/*! \brief Implements ProtocolCommandHandler::processCommand() to return a ProtocolResponseType::NotImplemented ProtocolResponse.
+ */
 QSharedPointer<ProtocolResponse> DiscoverCommandHandler::processCommand(QSharedPointer<ProtocolCommand> command)
 {
 	/*! \todo implement handler */

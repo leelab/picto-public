@@ -5,7 +5,13 @@
 
 namespace Picto {
 
-/*! \brief A response handler for RESUME responses
+/*! \brief A base class for ProtocolResponseHandler classes that respond to the "RESUME" method.
+ *	\details A RESUME response indicates that a paused Experiment should resume operation.
+ *
+ *	The processResponse() function implemented by this class is empty.  Extend this class
+ *	to add logic that is triggered by the arrival of a new ProtocolRespose.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API ResumeResponseHandler : public ProtocolResponseHandler

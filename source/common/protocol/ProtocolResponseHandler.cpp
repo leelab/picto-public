@@ -3,6 +3,10 @@
 #include "../memleakdetect.h"
 using namespace Picto;
 
+/*! \brief Constructs a new ProtocolResponseHandler.
+ *	\details When a ProtocolResponse is handled by this object, if it can be correctly processed, the status 
+ *	of the ComponentStatusHandler input into this consructor will be changed accordingly.
+ */
 ProtocolResponseHandler::ProtocolResponseHandler(QSharedPointer<ComponentStatusManager> statusManager):
 statusManager_(statusManager),
 processingResponse_(false)
@@ -10,7 +14,11 @@ processingResponse_(false)
 	Q_ASSERT(!statusManager_.isNull());
 }
 
-
+/*! \brief This is the function that is used by the outside world to handle an incoming ProtocolResponse.
+ *	The function separates the "method" part of the response content from the rest of the content.  It then 
+ *	enters that content into processResponse() and changes the ComponentStatusManager's status according to the 
+ *	ProtocolResponse "method" if processResponse() returns true.
+*/
 void ProtocolResponseHandler::acceptResponse(QSharedPointer<ProtocolResponse> response)
 {
 	//If this response was received while processing the same response, somebody did something wrong.

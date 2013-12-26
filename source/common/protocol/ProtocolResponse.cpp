@@ -12,6 +12,11 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new ProtocolResponse
+ *	\details _serverType is the type of server that is responding (ie. "PictoServer"). _protocol is the name of the
+ *	protocol being used (ie. "Picto"). _version is the version of the Protocol being used (ie. "1.0"). protocolResponseType
+ *	is the type of response being returned (see ProtocolResponseType::ProtocolResponseType).
+ */
 ProtocolResponse::ProtocolResponse(QString _serverType,
 								   QString _protocol,
 								   QString _version,
@@ -46,7 +51,10 @@ ProtocolResponse::ProtocolResponse(QString _serverType,
 
 	fields["Server"] = _serverType;
 }
-
+/*! \brief Generates a header string for the response based on ProtocolResponse data values and returns it.
+ *	\note This function includes a line that changes the "Date" field of the ProtocolRespose, but otherwise
+ *	it appears to act as a const function.  This is misleading and we should look into removing that line.
+*/
 QString ProtocolResponse::generateHeadersString()
 {
 	//NOTE: The approach to generate headers changed sometime around 12/1/09.  If
@@ -85,8 +93,11 @@ QString ProtocolResponse::generateHeadersString()
 	return headers;
 }
 
-//In the case of a multipart response, after the initial headers are sent, 
-//we would send this header with the next piece of content.
+/*! \brief In the case of a multipart response, after the initial headers are sent, 
+ *	we would send this header with the next piece of content.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 QString ProtocolResponse::getMultiPartHeaders()
 {
 	QString headers;
@@ -102,58 +113,89 @@ QString ProtocolResponse::getMultiPartHeaders()
 	return headers;
 }
 
+/*! \brief For a multipart response, this function sets the type of data being sent (ie. "image/jpeg").
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 void ProtocolResponse::setMultiPartContentType(QString multiPartContentTypeString)
 {
 	multiPartContentType = multiPartContentTypeString;
 }
 
+/*! \brief For a multipart response, this function gets the type of data that being sent (ie. "image/jpeg").
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 QString ProtocolResponse::getMultiPartContentType()
 {
 	return multiPartContentType;
 }
 
-//Note that this does not affect the Content-Type field.  So, if for example
-//you were starting to build a mutlipart response, and this was the first 
-//piece of it, you would use the following functions:
-//	response->setContentType("multipart/x-mixed-replace; boundary=--pictoboundary");
-//	response->setMultiPartBoundary("--pictoboundary");
-
+/*! \brief Sets the string that is used to separate the content of this multipart response.  
+ *	\details This string defines the split point in multipart messages and should not appear in any other part of the content.
+ *	It should also be pointed out that this does not affect the Content-Type field.  So, if for example
+ *	you were starting to build a mutlipart response, and this was the first piece of it, you would use the following functions:
+ *	\code
+		response->setContentType("multipart/x-mixed-replace; boundary=--pictoboundary");
+		response->setMultiPartBoundary("--pictoboundary");
+	\endcode
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 void ProtocolResponse::setMultiPartBoundary(QString multiPartBoundaryString)
 {
 	multiPartBoundary = multiPartBoundaryString;
 }
 
+/*! \brief Gets the string that is used to separate the content of this multipart response.  
+ *	\details This string defines the split point in multipart messages and should not appear in any other part of the content.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 QString ProtocolResponse::getMultiPartBoundary()
 {
 	return multiPartBoundary;
 }
 
+/*! \brief Returns the type of this ProtocolResponse.
+ *	\details The returned value is a ProtocolResponseType::ProtocolResponseType
+ */
 int ProtocolResponse::getResponseCode()
 {
 	return protocolResponseCode;
 }
-
+/*! \brief Returns the name of the type of this ProtocolResponse as a string.
+ */
 QString ProtocolResponse::getResponseType()
 {
 	return protocolResponseTypeStrings[protocolResponseCode];
 }
 
+/*! \brief Returns a byte array with the content of this ProtocolResponse.
+*/
 QByteArray ProtocolResponse::getContent()
 {
 	return encodedContent;
 }
 
-//Yes, this is identical to getContent, but it makes things a bit clearer
+/*! \brief This function does not appear to be used and should probably be removed in my opinion.  On the other hand, its documentation used to be:
+ *	"Yes, this is identical to getContent, but it makes things a bit clearer."
+ */
 QByteArray ProtocolResponse::getEncodedContent()
 {
 	return encodedContent;
 }
 
+/*! \brief This class used to support zip/unzip of message content, but that support was removed.  This function used to return the
+ *	unizipped content of this ProtocolResponse.  Now it is really just the same as getContent().
+ */
 QByteArray ProtocolResponse::getDecodedContent()
 {
 	return content;
 }
 
+/*! \brief This class used to support zip/unzip of message content.  When that was supporte, this function zipped the response content.
+ */
 void ProtocolResponse::encodeContent()
 {
 	//if(fields.value("Content-Encoding") == "gzip")
@@ -186,6 +228,8 @@ void ProtocolResponse::encodeContent()
 	//}
 }
 
+/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function unzipped the response content.
+ */
 void ProtocolResponse::decodeContent()
 {
 	//if(fields.value("Content-Encoding") == "gzip")
@@ -215,12 +259,17 @@ void ProtocolResponse::decodeContent()
 
 }
 
+/*! \brief Sets the type of the contents in this response. (ie. "text/html; charset=\"utf-8\"").
+*/
 void ProtocolResponse::setContentType(QString contentTypeString)
 {
 	//contentType = contentTypeString;
 	fields["Content-Type"]=contentTypeString;
 }
 
+/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function took a content encoding type (ie. ContentEncodingType::gzip),
+ *  set that type to appropriate fields (ie. ContentEncodingType::gzip), and performed the encoding if content was not empty.
+ */
 void ProtocolResponse::setContentEncoding(ContentEncodingType::ContentEncodingType contentEncoding)
 {
 	//contentEncodingType = contentEncoding;
@@ -233,11 +282,16 @@ void ProtocolResponse::setContentEncoding(ContentEncodingType::ContentEncodingTy
 	}
 }
 
+/*! \brief Returns true if this response's content is not empty.
+ */
 bool ProtocolResponse::hasContent()
 {
 	return(!content.isEmpty());
 }
 
+/*! \brief Sets this response's content to the input byte array and updates the "Content-Length" field.
+ *	\details When zipping was supported, this function would also zip the content.
+ */
 void ProtocolResponse::setContent(QByteArray _content)
 {
 	content = _content;
@@ -245,26 +299,40 @@ void ProtocolResponse::setContent(QByteArray _content)
 	fields["Content-Length"] = QString("%1").arg(encodedContent.size());
 }
 
+/*! \brief Adds the input value to the input field of this response.  If the field doesn't exist yet, it is created.
+*/
 void ProtocolResponse::addField(QString field, QString value)
 {
 	fields[field] = value;
 }
 
+/*! \brief This does the exact same thing as addField().  One of them should really be removed.
+*/
 void ProtocolResponse::setFieldValue(QString field, QString value)
 {
 	fields[field] = value;
 }
 
+/*! \brief Sets whether the server sending this response should terminate its connection to the client
+ *	after this response is delivered.
+ */
 void ProtocolResponse::setShouldTerminateConnection(bool terminateConnection)
 {
 	bShouldTerminateConnection = terminateConnection;
 }
 
+/*! \brief Gets whether the server sending this response should terminate its connection to the client
+ *	after this response is delivered.
+ */
 bool ProtocolResponse::shouldTerminateConnection()
 {
 	return bShouldTerminateConnection;
 }
 
+/*! \brief Sets whether this ProtocolResponse should stream.
+ *	\note We are not currently using ProtocolResponse streaming in any part of Picto that is actually being used.  
+ *	It may be useful though at some point, so we have kept this code here.
+ */
 void ProtocolResponse::setShouldStream(bool shouldStream)
 {
 	bStreamingResponse = shouldStream;
@@ -274,11 +342,19 @@ void ProtocolResponse::setShouldStream(bool shouldStream)
 	}
 }
 
+/*! \brief Gets whether this ProtocolResponse should stream.
+ *	\note We are not currently using ProtocolResponse streaming in any part of Picto that is actually being used.  
+ *	It may be useful though at some point, so we have kept this code here.
+ */
 bool ProtocolResponse::shouldStream()
 {
 	return bStreamingResponse;
 }
 
+/*! \brief Sets the type of multipart response that this ProtocolResponse constitutes.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 void ProtocolResponse::setMultiPart(MultiPartResponseType::MultiPartResponseType multiPartState)
 {
 	multiPartResponseState = multiPartState;

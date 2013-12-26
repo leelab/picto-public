@@ -13,12 +13,23 @@
 namespace Picto {
 
 class Property;
-/*!	\brief A container for groups of properties.
+/*!	\brief A container that groups together a set of Property objects.
  *
- *	Since most objects have more than one property, it makes sense to provide a 
- *	container object for grouping the properties of a single object.  This uses the
- *	Qt PropertyBrowser framework to keep track of the properties.  (This will come in
- *	handy when we start building the state machine design GUI.)
+ *	\details Since DataStore objects are required to be completely defined by their Property values, it is
+ *	useful to have a container object which stores all of those Property objects and manages their creation,
+ *	access and signaling.  This class defines that container object and allows DataStores to contain only a 
+ *	single pointer to a PropertyContainer instead of maintaining lots of various lists filled with pointers to its Properties.
+ *
+ *	\note There is some history to this class.  It was once closely connected to the QtPropertyBrowser framework and some
+ *	of the design decisions were made with that in mind.  Since then we have decoupled the QtPropertyBrowser
+ *	framework in the interest of separating the design model and UI view; however, some design strangeness
+ *	remains due to the original class design.  One issue that comes up frequently is the fact that at one
+ *	point we allowed multiple Property objects in a PropertyContainer to have the same name.  We now require
+ *	all Property objects from the same PropertyContainer to have different names, but there is still some left
+ *	over code requiring inputting of an index along with a Property name to access a particular Property.  At
+ *	some point we should remove this requirement.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyContainer : public QObject
@@ -38,33 +49,29 @@ public:
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);
 	void setPropertiesToInitValues();
-	//QSharedPointer<Property> getPropertyFromQtProperty(QtProperty *property);
 	void setContainerName(QString _containerName);
 	QString getContainerName();
 	QStringList getPropertyList();
-	//QSharedPointer<QtVariantPropertyManager> getPropertyManager(){return propManager_;};
+	/*! \brief Returns a lookup table with all of the contained Property objects indexed by their names.
+	 *	\note At one point more than one Property with the same name was allowed.  This is not currently the case though
+	 *	so although the returned Hash contains Vectors of Property objects, those Vectors should all have a size of one.
+	 *	We should probably fix this at some point.
+	 */
 	QHash<QString, QVector<QSharedPointer<Property>>> getProperties(){return properties_;};
 	QList<QSharedPointer<Property>> getRuntimeProperties();
 	QSharedPointer<Property> getProperty(QString _identifier,int index=0);
-
-	//Sets the all the properties in this container as associate properties (or not if false is entered).
-	//This is used in run time checking for non-experimental scripts editing experimental properties.
 	void setPropertiesAsAssociates(bool toAssociate);
-	//QSharedPointer<Property> getContainerGroupProperty(){return containerGroupItem_;};
 	void clear();
 signals:
+	/*! \brief Emitted whenever the input Property's runValue changes.  The QVariant value is the value to which the Property's runValue changed.
+	 *	\note This is emitted for all Properties contained in this PropertyContainer.
+	 */
 	void propertyValueChanged(Property* prop,QVariant);
-//	void signalPropertyValueChanged(QString propertyName, int index, QVariant propertyValue);
 
 private:
-	//QSharedPointer<QtVariantPropertyManager> propManager_;
 	PropertyContainer(QString _containerName);
-	//QSharedPointer<Property> containerGroupItem_;
 	QHash<QString, QVector<QSharedPointer<Property>>> properties_;
 	QString containerName_;
-//
-//private slots:
-//	void slotPropertyManagerValueChanged(QtProperty * property, const QVariant & value);
 };
 
 
