@@ -9,7 +9,7 @@
 
 namespace Picto {
 
-/*!	A base class for all objects that can be tagged with a UUID
+/*!	\brief NOT USED.... A base class for all objects that can be tagged with a UUID
  *
  *	Within the Picto system, there are objects that are unique (Scenes, 
  *	states, parameters, etc).  To make it easy to find these items, the
@@ -22,7 +22,8 @@ namespace Picto {
  *	Although this was implemented, it was never used (I ended up finding an
  *	alternate solution).  However, the code is still useful, so I have
  *	left it in place.
- *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE

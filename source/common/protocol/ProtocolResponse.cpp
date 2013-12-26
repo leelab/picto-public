@@ -360,23 +360,37 @@ void ProtocolResponse::setMultiPart(MultiPartResponseType::MultiPartResponseType
 	multiPartResponseState = multiPartState;
 }
 
-//! \brief Sets whether this response shouldn't be sent until the next non-delay response is ready.
+/*! \brief RegisteredResponseTypes are used as part of the command-id confirmation system.  This function sets the RegisteredResponseType of this response.
+ *	\details The Picto server tells its client whenever data from a "registered command" that was received has been written to disk.  Whenever a ProtocolReseponse
+ *	is sent, the command id of the command to which it is responding is added to a list.  The RegisteredResponseType on a ProtocolResponse is used to 
+ *	piggyback information about whether the data from the commands with command-ids in that list has been written to disk.  When that has happened that list
+ *	of command-ids is attached to the ProtocolResponse to tell the client which data was written to disk.
+ *
+ *	This function is used to add that "piggybacked" information to this protocol response.
+*/
 void ProtocolResponse::setRegisteredType(RegisteredResponseType::RegisteredResponseType type)
 {
 	registeredType_ = type;
 }
 
-//! \brief Indicates whether this response shouldn't be sent until the next non-delay response is ready.
+/*! \brief Returns the RegisteredResponseType of this ProtocolResponse.  See setRegisteredType() for more detail.
+*/
 RegisteredResponseType::RegisteredResponseType ProtocolResponse::getRegisteredType()
 {
 	return registeredType_;
 }
 
+/*! \brief Gets the type of multipart response that this ProtocolResponse constitutes.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful
+ *	though at some point, so we have kept this code here.
+ */
 MultiPartResponseType::MultiPartResponseType ProtocolResponse::getMultiPart()
 {
 	return multiPartResponseState;
 }
 
+/*! \brief Gets the value of the input field.  If the field is not found, an empty string is returned.
+*/
 QString ProtocolResponse::getFieldValue(QString field)
 {
 	QString fieldValue;
@@ -384,7 +398,8 @@ QString ProtocolResponse::getFieldValue(QString field)
 	return fields.value(field,"");
 }
 
-//! Writes a response to the passed in socket.  Returns total bytes written
+/*! \brief Writes this ProtocolResponse to the passed in socket.  Returns the total number of bytes written.
+*/
 int ProtocolResponse::write(QAbstractSocket *socket)
 {
 	QByteArray response;
@@ -424,9 +439,13 @@ int ProtocolResponse::write(QAbstractSocket *socket)
 	return bytesWritten;
 }
 
-//! Reads an incoming response from a socket and returns the bytes of content read
-
-/*!	read() faces some interesting challenges, since it may not be easy to tell what
+/*! \brief Reads an incoming ProtocolResponse from the input socket and returns the number of content bytes that were read
+ *	\details The timeoutMs parameter is used to determine how long we should wait for incoming data
+ *	on the socket.  The default is 0.
+ *	\note Although we no longer use multi-part responses, since the code is still here we have maintained the documentation
+ *	that was written about them with respect to this function below:
+ *
+ *	read() faces some interesting challenges, since it may not be easy to tell what
  *	an incoming response actually is.  For example, if an incoming response is part of
  *	a multi-part response, the response will start with a boundary string, but if we
  *	haven't set the boundary string for the response, we won't know what to 
@@ -439,9 +458,6 @@ int ProtocolResponse::write(QAbstractSocket *socket)
  *		   this was the case on the receiving end.
  *	The safest way to use a response that you have just read is to look at the fields 
  *	directly
- *
- *	The timeoutSec parameter is used to determine how long we should wait for incoming data
- *	on the socket.  The default value is 0.
  */
 int ProtocolResponse::read(QAbstractSocket *socket, int timeoutMs)
 {

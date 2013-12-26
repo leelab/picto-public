@@ -4,6 +4,10 @@
 
 namespace Picto {
 
+/*! \brief A test function for making sure that the random number seed system works.
+ *	\details This should probably be removed.  It looks like the debug version of the workstation is calling
+ *	it every time it starts up.  This seems like a rediculous waste of time.
+ */
 bool testMTRand()
 {
 	MTRand rng;
