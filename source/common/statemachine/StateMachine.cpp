@@ -24,6 +24,9 @@ namespace Picto {
 short StateMachine::trialEventCode_;
 int StateMachine::trialNum_;
 
+/*! \brief Constructs a new StateMachine.
+ *	\details Adds AssetFactory objects for all of the StateMachineElement children that a StateMachine is allowed to have.
+ */
 StateMachine::StateMachine() : 
 	MachineContainer("Transition","StateMachineElement"),
 	ignoreInitialElement_(false),
@@ -57,54 +60,24 @@ StateMachine::StateMachine() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 	elementFactory_->addAssetType("PausePoint",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(PausePoint::Create))));
-	//AddDefinableObjectFactory("StateMachineElement",factory);
-
-	//AddDefinableObjectFactory("Parameters",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ParameterContainer::Create))));
-
-	//DefinePlaceholderTag("Transitions");
-
-	//AddDefinableObjectFactory("Transition",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Transition::Create))));
 
 	trialEventCode_ = 0;
 }
 
-//void StateMachine::setLevel(StateMachineLevel::StateMachineLevel level)
-//{
-//	propertyContainer_->setPropertyValue("Level", QVariant(level));
-//}
-
-//StateMachineLevel::StateMachineLevel StateMachine::getLevel()
-//{
-//	return (StateMachineLevel::StateMachineLevel) propertyContainer_->getPropertyValue("Level").toInt();
-//}
-
+/*! \brief Creates a new StateMachine object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> StateMachine::Create()
 {
 	return QSharedPointer<Asset>(new StateMachine());
 }
 
-
-//bool StateMachine::setInitialElement(QString elementName)
-//{
-//	if(elements_.contains(elementName))
-//	{
-//		propertyContainer_->setPropertyValue("InitialElement", elementName);
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-
-/*!	\brief Sets the machine in a specific state
+/*! \brief This function appears to no longer be used (ie. The functions that call it are never called themselves).
+ *	\details The function was once used when attaching to a remote Experiment
+ *	that was already running in order to jump to the currently running part of the StateMachine.  Since then, we have created 
+ *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
+ *	within the Qt event loop based on information coming from the Master, and not only from within 
+ *	the blocking runTask() function.
  *	
- *	Calling this function will place the state machine into the passed in state.
- *	Then, when run() or slaveRun() is called, the machine will start in that
- *	state, rather than in the initial state.  This is used when we are joining 
- *  state machines that are already running.
+ *	This function should probably be removed.
  */
 bool StateMachine::jumpToState(QStringList path, QString state)
 {
@@ -203,11 +176,17 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
 	}
 }
 
-/*	\brief The "run" function
- *
- *	Since slaveRun(), and run() are so similar, they both just call into this private
- *	run function.  This saves us some serious code repetition.
- */
+/*! \brief Runs this StateMachine execution logic within the framework of the input PictoEngine.
+ *	\details This function more or less performs the following run procedure:
+ *		- Verify that Scripting has been initialized
+ *		- Run EntryScript
+ *		- Transition to the initial StateMachineElement
+ *		- One by one, call StateMachineElement::run() on the current StateMachineElement.  When it returns, get its Result, find the Transition that transitions
+ *			from that result, transition to its destination, set that as the current StateMachineElement and loop again.
+ *		- When control transitions to a Result, run the Result's EntryScript, then run this StateMachine's ExitScript and exit the function.
+ *		- Return the name of the result that caused the StateMachine to exit.
+ *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after the Entry and Exit Scripts.
+*/
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool)
 {
 	resetScriptableValues();
@@ -349,11 +328,20 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	path_.takeLast();
 	return result;
 }
+
+/*! \brief Redirects directly to runPrivate().  See that function for more details.
+ *	\details This indiretion is here for historical reasons and can probably be removed.  
+ *	runPrivate() should probably be removed with its code copied into this function.
+*/
 QString StateMachine::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	return runPrivate(engine, false);
 }
 
+/*! \brief When a StateMachine is run as a slave, it really doesn't do anything since the SlaveExperimentDriver handles
+ *	changing of Property values and transitioning control flow based on what happened in the Master experiment.  
+ *	This function therefore does nothing except make sure that scripting is initialized.
+ */
 QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString result;
@@ -366,55 +354,8 @@ QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-///*!	\brief Sets up the script engines for this state machine
-// *
-// *	To make script execution more efficient, we attempt to preload everything
-// *	Each state machine maintains its own script engine, which is used by all of
-// *	the contained ScriptElements.  The initialization process consists of the 
-// *	following:
-// *		1. Bind all of the parameters to the scripting engine
-// *		2. Call initScripting on all contained elements.  This has the following effects:
-// *			a. Creates functions in our local engine for all ScriptElements
-// *			b. Sets up a local engine within all States
-// *			c. Calls this function on all contained StateMachines
-// */
-//bool StateMachine::initScripting(QScriptEngine &qsEngine)
-//{
-//	//Since the StateMachine maintains its own engine, we can ignore the passed in engine
-//	Q_UNUSED(qsEngine);
-//
-//	//bind the Scriptables
-//	bindToScriptEngine(qsEngine_);
-//
-//	//initialize scripting on all of the contained elements
-//	foreach(QSharedPointer<ResultContainer> element, elements_)
-//	{
-//		qDebug("Scripting Intialized for: " + element->getName().toLatin1());
-//		if(!element.staticCast<StateMachineElement>()->initScripting(qsEngine_))
-//			return false;
-//	}
-//
-//	scriptingInit_ = true;
-//	return true;
-//}
-
-/*!	\brief Sends a Trial event to PictoServer
- *
- *	At the begining and end of a Trial, we send a timestamped StartTrial event to 
- *	PictoServer. This is done nearly simultaneously to sending a StartTrial event 
- *	code to the neural recording device.  
- *
- *	The command used to do this is (the units of time are seconds)
- *		PUTDATA engineName:running PICTO/1.0
- *		Content-Length:???
- *		
- *		<Data>
- *			<AlignmentDataUnit>
- *				<Time>8684354986.358943</Time>
- *				<EventCode>56</EventCode>
- *				<TrialNum>412</TrialNum> 	
- *			</AlignmentDataUnit>
- *		</Data>
+/*!	\brief This function was used when we used to enforce a trial structure in Picto.  We no longer do this and alignment codes are no longer
+ *	attached to any particular experimental event, so this function is no longer used.  It should probably be deleted.
  */
 void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -461,73 +402,7 @@ void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> en
 	//}
 }
 
-///*!	\brief Sends a StateDataUnit to the server to let it know that we are transitioning
-// *
-// *	To keep master and slave engines in synch, we send StateDataUnits to the server
-// *	everytime there is a change in state.
-// *
-// *	This command is sent as a registered command, which means that we don't need to 
-// *	worry about checking for a response, as that will be taken care of in either the
-// *	State rendering loop, or the cleanup at the end of a trial.
-// */
-//void StateMachine::sendStateDataToServer(QSharedPointer<Transition> transition, QSharedPointer<Engine::PictoEngine> engine)
-//{
-//	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
-//
-//	if(dataChannel.isNull())
-//		return;
-//	
-//
-//	//send a PUTDATA command to the server with the state transition data
-//	QString status = "running";
-//	int engCmd = engine->getEngineCommand();
-//	switch(engCmd)
-//	{
-//	case Engine::PictoEngine::PlayEngine:
-//		status = "running";
-//		break;
-//	case Engine::PictoEngine::PauseEngine:
-//		status = "paused";
-//		break;
-//	case Engine::PictoEngine::StopEngine:
-//		status = "stopped";
-//		break;
-//	}
-//	QString dataCommandStr = "PUTDATA " + engine->getName() + ":" + status + " PICTO/1.0";
-//	QSharedPointer<Picto::ProtocolCommand> dataCommand(new Picto::ProtocolCommand(dataCommandStr));
-//
-//	QByteArray stateDataXml;
-//	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&stateDataXml));
-//
-//	Timestamper stamper;
-//	double timestamp = stamper.stampSec();
-//	QString qualifiedName = path_.join("::");
-//
-//	StateDataUnit stateData;
-//	stateData.setTransition(transition,timestamp,qualifiedName);
-//
-//	xmlWriter->writeStartElement("Data");
-//	stateData.toXml(xmlWriter);
-//	xmlWriter->writeEndElement();
-//
-//
-//	dataCommand->setContent(stateDataXml);
-//	dataCommand->setFieldValue("Content-Length",QString::number(stateDataXml.length()));
-//
-//	dataChannel->sendRegisteredCommand(dataCommand);
-//	dataChannel->processResponses(0);
-//}
-
-/*	\brief Called when we seem to have lost contact with the server
- *
- *	In the event that the server connection goes down, the commandChannels will
- *	automatically attempt to reconnect.  By the time we've gotten here, we can
- *	assume that the connection is completely lost (either the server died, or
- *	there's a network interruption.
- *
- *	We "handle" this by sending a stop command to the engine.
- *
- *	At some point, we may decide to use a more elegant error handling mechanism...
+/*	\brief This function is no longer used and should be deleted.
  */
 void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
 {

@@ -4,6 +4,10 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new Transition object.
+ *	\details Adds Source, SourceResult, and Destination Properties to hold the name of the element and result from which the Transition is source and
+ *	the element to which the Transition goes.  Also adds SId, SRId and DId Properties to hold the AssetIds of those elements.
+ */
 Transition::Transition()
 {
 	AddDefinableProperty("Source","");
@@ -14,6 +18,9 @@ Transition::Transition()
 	AddDefinableProperty(QVariant::Int,"DId",0);
 }
 
+/*! \brief Constructs a new Transition that will transition from the input sourceResult of the input source to the input destination.
+ *	\details The Properties described in Transition() are created to store the information.
+*/
 Transition::Transition(QSharedPointer<Asset> source, QSharedPointer<Asset> sourceResult, QSharedPointer<Asset> destination)
 {
 	AddDefinableProperty("Source",source?source->getName():"");
@@ -33,6 +40,10 @@ Transition::Transition(QSharedPointer<Asset> source, QSharedPointer<Asset> sourc
 	propertyContainer_->getProperty("DId")->setEdited();
 }
 
+/*! \brief Constructs a new Transition whose Source and Destination will be empty, but whose SourceResult will be equal to the input result value.
+ *	\details I believe that this is only used in the Task class to signify when the operator stopped an experiment using EngineAbort.
+ *	See Transition() for more information on which Properties are created.
+*/
 Transition::Transition(QString result)
 {
 	AddDefinableProperty("Source","");
@@ -52,6 +63,11 @@ Transition::Transition(QString result)
 	propertyContainer_->getProperty("DId")->setEdited();
 }
 
+/*! \brief Constructs a new Transition whose Destination will be empty, but whose Source and SourceResult will be equal to the input values.
+ *	\details I believe that this is only used in the Task class to represent the final Transition in a Task that ends on its own when one of the top level
+ *	StateMachine's Result objects is triggered to end the Run.
+ *	See Transition() for more information on which Properties are created.
+*/
 Transition::Transition(QSharedPointer<Asset> source,QString sourceResult)
 {
 	AddDefinableProperty("Source",source->getName());
@@ -71,11 +87,13 @@ Transition::Transition(QSharedPointer<Asset> source,QString sourceResult)
 	propertyContainer_->getProperty("DId")->setEdited();
 }
 
+/*! \brief Creates a new Transition object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> Transition::Create()
 {
 	return QSharedPointer<Asset>(new Transition());
 }
 
+/*! \brief Sets the source of this Transition to the input Asset.*/
 void Transition::setSource(QSharedPointer<Asset> source)
 {
 	Q_ASSERT(sourceAsset_.isNull());
@@ -93,6 +111,8 @@ void Transition::setSource(QSharedPointer<Asset> source)
 	if(propertyContainer_->getPropertyValue("SId").toInt() != id)
 		propertyContainer_->setPropertyValue("SId",id);
 }
+
+/*! \brief Sets the source result of this Transition to the input Asset.*/
 void Transition::setSourceResult(QSharedPointer<Asset> sourceResult)
 {
 	Q_ASSERT(sourceResultAsset_.isNull());
@@ -111,6 +131,8 @@ void Transition::setSourceResult(QSharedPointer<Asset> sourceResult)
 		propertyContainer_->setPropertyValue("SRId",id);
 
 }
+
+/*! \brief Sets the destination of this Transition to the input Asset.*/
 void Transition::setDestination(QSharedPointer<Asset> destination)
 {
 	Q_ASSERT(destination);
@@ -128,44 +150,55 @@ void Transition::setDestination(QSharedPointer<Asset> destination)
 		propertyContainer_->setPropertyValue("DId",id);
 }
 
+/*! \brief Returns the name of the source of this Transition.*/
 QString Transition::getSource() 
 {
 	return propertyContainer_->getPropertyValue("Source").toString();
 }
+
+/*! \brief Returns the name of the source result of this Transition.*/
 QString Transition::getSourceResult() 
 { 
 	return propertyContainer_->getPropertyValue("SourceResult").toString();
 }
+
+/*! \brief Returns the name of the destination of this Transition.*/
 QString Transition::getDestination() 
 { 
 	return propertyContainer_->getPropertyValue("Destination").toString();;
 }
 
+/*! \brief Returns the AssetId of the source of this Transition.*/
 int Transition::getSourceId()
 {
 	return propertyContainer_->getPropertyValue("SId").toInt();
 }
 
+/*! \brief Returns the AssetId of the source result of this Transition.*/
 int Transition::getSourceResultId()
 {
 	return propertyContainer_->getPropertyValue("SRId").toInt();
 }
 
+/*! \brief Returns the AssetId of the destination of this Transition.*/
 int Transition::getDestinationId()
 {
 	return propertyContainer_->getPropertyValue("DId").toInt();
 }
 
+/*! \brief Returns a pointer to the source of this Transition.*/
 QSharedPointer<Asset>  Transition::getSourceAsset()
 {
 	return sourceAsset_;
 }
 
+/*! \brief Returns a pointer to the source result of this Transition.*/
 QSharedPointer<Asset>  Transition::getSourceResultAsset()
 {
 	return sourceResultAsset_;
 }
 
+/*! \brief Returns a pointer to the destination of this Transition.*/
 QSharedPointer<Asset>  Transition::getDestinationAsset()
 {
 	return destinationAsset_;
@@ -176,6 +209,7 @@ void Transition::postDeserialize()
 	DataStore::postDeserialize();
 }
 
+/*! \brief Extends DataStore::validateObject() to verify that all Transitions that are included in the Design have a destination.*/
 bool Transition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!DataStore::validateObject(xmlStreamReader))
@@ -189,6 +223,7 @@ bool Transition::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
+/*! \brief Updtes all Property values according to the stored source, sourceResult and destination Asset pointers.*/
 void Transition::setValuesFromAssets()
 {
 	propertyContainer_->setPropertyValue("Source",sourceAsset_?sourceAsset_->getName():"");
@@ -200,6 +235,7 @@ void Transition::setValuesFromAssets()
 
 }
 
+/*! \brief Called when one of the Assets to which this Transition is linked is deleted.  Causes this Transition to be deleted.*/
 void Transition::linkedAssetDeleted()
 {
 	setDeleted();

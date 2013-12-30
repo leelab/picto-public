@@ -22,20 +22,25 @@ namespace Picto {
 class Result;
 //class Engine::PictoEngine;
 
-/*!	\brief A StateMachineElement is a piece that can be used in a state machine
+/*!	\brief A StateMachineElement is any element that can be part of the control flow in a StateMachine.
  *	
- *	StateMachineElements include FlowElements, Results, States, and StateMchines
- *	themselves. Not all StateMachineElements need all of the functionality provided.
+ *	StateMachineElements include things like States, Results, SwitchElements, and even StateMachines
+ *	themselves.  Each StateMachineElement implements a run() function that executes its internal logic and
+ *	is called whenever control flow transfers to it.  All StateMachineElements also have EntryScript and ExitScript
+ *	Properties that define scripts that are called when the StateMachine is entered (when a Transition to it is triggered) 
+ *	or exited (when control flow reaches one of its results).
  *
- *	Calling run() on a state machine element returns a result.
+ *	StateMachineElements are connected by Transitions objects with each Transition starting at a StateMachineElement's Result and 
+ *	ending at another StateMachineElement.
  *
- *	StateMchineElements are connected by transitions objects.  A transition
- *	connects a specific result from a specific StateMachineElement to antother
- *	specific StateMachineElement.
+ *	Scoping in StateMachineElements works as follows.  Scripts have access to all Scriptable elements that are direct children of
+ *	their StateMachineElement parent or any of its ancestor StateMachineElement objects.  Attached AnalysisScripts have the same
+ *	scoping except that they can also access attached Scriptable AnalysisElements (regular Scripts cannot access AnalysisElements).
+ *	If two Scriptable elements have the same name and are both in scope, the scriptable with the longer path will be the one that
+ *	is accessed by using its name.
  *
- *	Parameters are local+global in scope, so a StateMachineElement has access to 
- *	its own parameters as well as the parameters from above it in the hierarchy.
- *	
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
@@ -51,17 +56,18 @@ public:
 	virtual ~StateMachineElement(){};
 
 
-	//All StateMachineElements must implement a run function that returns a string
-	//The returned string should correspond to a result contained by the element
+	/*! \brief Called when control flow reaches this StateMachineElement to trigger its internal execution logic.
+	 *	\details The returned value is the name of the Result of the StateMachineElement's execution logic.
+	 */
 	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
+	/*! \brief This function comes from back before we were using the SlaveExperimentDriver.  
+	 *	\details Since the SlaveExperimentDriver handles changing of Property values and transitioning control flow based on what happened in the Master 
+	 *	experiment, and slaveRenderFrame() handles the rendering component, the slaveRun() function itself is pretty much obsolete at this point.
+	 *	It should probably be removed, but since some classes use it to perform various minor operations, we will need to assure that they are moved
+	 *	to more appropriate functions first.
+	 */
 	virtual QString slaveRun(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	virtual QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);
-	
-	//bool addResult(QSharedPointer<Result> result);
-	//QStringList getResultList();
-	////QSharedPointer<Result> getResult(QString name);
-	//void addParameters(QSharedPointer<ParameterContainer> parameters);
-	//void addParameters(ParameterContainer &parameters);
 
 	virtual QString friendlyTypeName(){return "State Machine Element";};
 

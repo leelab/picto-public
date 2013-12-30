@@ -11,9 +11,17 @@ namespace Picto {
 /*!	\Brief A transition between two StateMachineElements
  *
  *	A transition links a specific Result value from a specific StateMachineElement
- *	to another StateMachineElement.  Everything is referenced by by name.
+ *	to another StateMachineElement.  Since no two StateMachineElements on the same level are allowed
+ *	to have the same name, all of the connected Assets can be referenced by name.  We serialize AssetId references
+ *	and keep pointers to the Assets as well though in order to avoid problems when designers accidentally name two things with the same
+ *	name (this can also happen briefly if one StateMachineElement's name is equal to anothers with additional letters
+ *	on the end).
+ *
+ *	Transitions are mainly just containers for Source, SourceResult and Destination data; however they also include
+ *	functionality to automatically delete themselves if one of the Assets to which they are connected is deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Transition : public DataStore
 #else
@@ -30,10 +38,6 @@ public:
 	//Transition(QString source, QString sourceResult, QString destination);
 	static QSharedPointer<Asset> Create();
 
-	//void setSource(QString source);
-	//void setSourceResult(QString sourceResult);
-	//void setDestination(QString destination);
-
 	void setSource(QSharedPointer<Asset> source);
 	void setSourceResult(QSharedPointer<Asset> sourceResult);
 	void setDestination(QSharedPointer<Asset> destination);
@@ -49,11 +53,8 @@ public:
 	QSharedPointer<Asset>  getSourceAsset();
 	QSharedPointer<Asset>  getSourceResultAsset();
 	QSharedPointer<Asset>  getDestinationAsset();
-	//void setSpecialTransitionID(int id){Q_ASSERT(id<0);id_ = id;};
 	
 	//DataStore functions
-	//virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual QString friendlyTypeName(){return "Transition";};
 
 protected:

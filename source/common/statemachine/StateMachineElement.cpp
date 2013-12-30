@@ -13,6 +13,10 @@
 namespace Picto {
 
 
+/*! \brief Constructs a StateMachineElement object.
+ *	\details Adds EntryScript and ExitScript Properties that define the scripts that are called when control flow enters and exits this
+ *	StateMachineElement.
+ */
 StateMachineElement::StateMachineElement()
 {
 	AddDefinableProperty("EntryScript","");
@@ -20,11 +24,18 @@ StateMachineElement::StateMachineElement()
 	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
+/*! \brief In any StateMachineElement where experimental time passes (currently State and PausePoint) this function causes the latest frame
+ *	to be rendered.  In other StateMachineElements it doesn't do anything.
+ *	\details This is used by the SlaveExperimentDriver to render frames whenever it sees that control flow remains in a particular state
+ *	during the course of a frame presentation.
+ */
 QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine>)
 {
 	return "";
 }
 
+/*! \brief This function does not appear to be used and should probably be deleted.
+*/
 QPoint StateMachineElement::getDisplayLayoutPosition()
 {
 	return layoutPosition_;
@@ -60,6 +71,9 @@ bool StateMachineElement::hasScripts()
 		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
 }
 
+/*! \brief Runs this StateMachineElement's EntryScript.
+ *	\details If there is an attached AnalysisEntryScript (in the case of the TestViewer), it is run before the regular EntryScript.
+*/
 void StateMachineElement::runEntryScript()
 {
 	runAnalysisEntryScripts();
@@ -69,6 +83,9 @@ void StateMachineElement::runEntryScript()
 	runScript(entryScriptName);
 }
 
+/*! \brief Runs this StateMachineElement's ExitScript.
+ *	\details If there is an attached AnalysisExitScript (in the case of the TestViewer), it is run after the regular ExitScript.
+*/
 void StateMachineElement::runExitScript()
 {
 	if(!propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty())
@@ -79,16 +96,22 @@ void StateMachineElement::runExitScript()
 	runAnalysisExitScripts();
 }
 
+/*! \brief Runs this any active AnalysisEntryScripts attached to this StateMachineElement.
+*/
 void StateMachineElement::runAnalysisEntryScripts()
 {
 	runAnalysisScripts(StateMachineElement::ENTRY);
 }
 
+/*! \brief Runs this any active AnalysisExitScripts attached to this StateMachineElement.
+*/
 void StateMachineElement::runAnalysisExitScripts()
 {
 	runAnalysisScripts(StateMachineElement::EXIT);
 }
 
+/*! \brief Runs any active AnalysisScripts that are attached to this StateMachineElement and have the input ScriptType.
+*/
 void StateMachineElement::runAnalysisScripts(ScriptType type)
 {
 	QList<QUuid> activeAnalysisIds = getDesignConfig()->getActiveAnalysisIds();

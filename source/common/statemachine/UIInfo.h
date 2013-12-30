@@ -7,8 +7,11 @@
 
 namespace Picto {
 
-/*!	\brief A UIInfo is the exit point from a StateMachineElement or ControlElement
- *	
+/*!	\brief This class used to hold information about the UI associated with each Asset (position of icon in canvas, etc)
+ *	as part of the Experiment design tree.  Since then we have moved UI Data out into its own separate tree with UIData and UIElement classes
+ *	rendering this class obsolete.  It should probably be deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE
