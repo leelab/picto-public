@@ -6,6 +6,13 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new Reward object.
+ *	\details Adds the following Properties: 
+ *		- NumRewards - Editable at runtime: defines the number of rewards that will be provided each time control flow reaches this element.
+ *		- RewardQty - Editable at runtime: The number of milliseconds for which reward will be provided for each provided reward.
+ *		- MinRewardPeriod: The minimum number of milliseconds between the start of subsequent rewards.
+ *		- RewardChan: The reward channel on which the reward will be provided (Not currently visible since Pictoboxes currently only have one reward channel).
+ */
 Reward::Reward()
 {
 	setMaxOptionalResults(0);
@@ -18,11 +25,19 @@ Reward::Reward()
 	addRequiredResult("done");
 }
 
+/*! \brief Creates a new Reward object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> Reward::Create()
 {
 	return QSharedPointer<Asset>(new Reward());
 }
 
+/*! \brief Runs this Reward's execution logic within the framework of the input PictoEngine.
+ *	\details This function handles running entry and exit scripts, and initializing reward delivery according to its Property values.
+ *	No experimental time passes during this function since Picto provides Rewards asynchoronously.  This is important to keep in mind
+ *	in experimental designs.  When a Reward with NumRewards of 1 and RewardQty equal to 100 is triggered, for example, a reward will
+ *	begin at the next first phosphore time and will continue for 100ms thereafter.  This means that it is up to the Design to manage
+ *	what is visible to the test subject while a reward is being provided.
+*/
 QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
@@ -46,6 +61,9 @@ QString Reward::run(QSharedPointer<Engine::PictoEngine> engine)
 	return "done";
 }
 
+/*! \brief When a Reward is run as a slave, it really doesn't do anything.  The SlaveExperimentDriver tells the PictoEngine when to trigger an audio reward
+ *	based on the reward timing data in the session file.  This function is therefore empty.
+ */
 QString Reward::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString result;
@@ -63,6 +81,8 @@ void Reward::postDeserialize()
 	propertyContainer_->getProperty("RewardChan")->setVisible(false);
 }
 
+/*! \brief Extends StateMachineElement::validateObject() to verify that Property values for this element are greater than zero.
+*/
 bool Reward::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!StateMachineElement::validateObject(xmlStreamReader))

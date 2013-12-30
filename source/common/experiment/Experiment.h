@@ -49,6 +49,8 @@ namespace Picto {
  *	This is necessary since the Experiment never leaves scope.  If these Properties funcitoned
  *	like all other Properties, changes to their initValues would never actually take affect.
  *	\sa SignalChannel, Engine::PictoEngine, Task
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE

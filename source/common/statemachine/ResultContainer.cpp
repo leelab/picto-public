@@ -3,6 +3,9 @@
 
 using namespace Picto;
 
+/*! \brief Constructs a new ResultContainer object.
+ *	\details This constructor sets up an AssetFactory for creating Result objects.
+ */
 ResultContainer::ResultContainer()
 : resultFactory_(new AssetFactory(0,-1))
 {
@@ -13,15 +16,20 @@ ResultContainer::ResultContainer()
 void ResultContainer::enteredScope()
 {
 	ScriptableContainer::enteredScope();
+	//Clear the latest result whenever this ResultContainer enters scope so that the 
+	//result from last time through won't be returned from getLatestResult().
 	latestResult_ = "";
 }
 
-//! \brief Returns a list of all possible results.
+/*! \brief Returns a list of all possible results in this ResultContainer.
+ */
 QStringList ResultContainer::getResultList()
 {
 	return results_.keys();
 }
 
+/*! \brief Returns the Result with the input name.
+*/
 QSharedPointer<Result> ResultContainer::getResult(QString name)
 {
 	if(results_.contains(name))
@@ -56,13 +64,28 @@ bool ResultContainer::hasEditableDescendants()
 	return true;
 }
 
+/*! \brief Returns the name of the latest Result to have been triggered by this ResultContainer.
+ *	\note This function will only work properly if the class that is actually handling the internal
+ *	run logic tells this container class what the triggered result is using setLatestResult().
+ */
 QString ResultContainer::getLatestResult()
 {
 	return latestResult_;
 }
 
 
-//Tf you intend to limit the number of optional results, you must call setMaxOptionalResults before calling this function
+/*! \brief Adds a required result to this ResultContainer with the input resultName.  
+ *	\details The idea here is that some elements contain certain Results by default.  A StopwatchController for example
+ *	always contains a "Success" result that is triggered when the element times out.  This function is used to add these 
+ *	types of Results.  Some elements have some required, and some optional results.  In cases like these, setMaxOptionalResults()
+ *	should be called first if it is necessary to limit the number of optional results.  After that, any required results can be
+ *	added.  An example of an element with some required and some optional results is the ChoiceController.  It includes some
+ *	required results like "Broke Fixation" and "Total Time Exceeded" but includes optional ControlTargetResults as well which
+ *	are used to define the targets that the test subject should be fixating on.
+ *
+ *	This should be called in a child constructor.  If a result with this result's name isn't serialized in, it will be added 
+ *	automatically in postDeserialize().
+*/
 void ResultContainer::addRequiredResult(QString resultName)
 {
 	if(maxOptionalResults_[""] != -1)
@@ -82,19 +105,11 @@ void ResultContainer::addRequiredResult(QString resultName)
 	requiredResults_.insert("",requiredResult);
 }
 
-//void ResultContainer::addRequiredResult(QSharedPointer<Result> requiredResult, QString type)
-//{
-//	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
-//		QString("You must add an asset factory for type: \"%1\" before calling addRequiredResult"
-//		" for that type.").arg(type).toLatin1());
-//	requiredResults_.insert(type,requiredResult);
-//	if(maxOptionalResults_[type] != -1)
-//	{
-//		//This will reset the value in the factory according to the new number of required results of this type
-//		setMaxOptionalResults(maxOptionalResults_[type],type);
-//	}
-//}
-
+/*! \brief Sets the maximum number of allowed optional results of the input type to the input max value.
+ *	\details Regular results always have a type of "".  Other results (ie. ControlTargetResults for a 
+ *	ChoiceController) may have other type names that are set up in a call to defineResultFactoryType().
+ *	\sa defineResultFactoryType(), addRequiredResults()
+ */
 void ResultContainer::setMaxOptionalResults(int max, QString type)
 {
 	Q_ASSERT_X(resultFactoryByType_.contains(type),"ResultContainer",
@@ -104,6 +119,14 @@ void ResultContainer::setMaxOptionalResults(int max, QString type)
 	resultFactoryByType_[type]->setMaxAssets(max+requiredResults_.count(type));
 }
 
+/*! \brief Call this function to add a result factory for a non-standard Result type.
+ *	\details The input type is a name for this type of Result.  The input resultFactory is an AssetFactory
+ *	used to generate that type of Result.  
+ *	\note The signicance of the type string is that it will be the value in the 'type' field of the
+ *	xml design file.  For example, in the ChoiceController, this function is used to set up an AssetFactory
+ *	for ControlTargetResult objects under the name "Target".  The XML for that type of result will then be: 
+ *	\code <Result type='Target'>...</Result> \endcode
+ */
 void ResultContainer::defineResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory)
 {
 	resultFactoryByType_[type] = resultFactory;
@@ -144,17 +167,6 @@ void ResultContainer::postDeserialize()
 	{
 		results_[result->getName()] = result.staticCast<Result>();
 	}
-
-	////Re-Add all default results.  This puts them into the child map if they weren't serialized in.
-	////(They went into the child map the first time they were added too, but then got erased during serialize).
-	//QMap<QString, QSharedPointer<Result> > localResults = results_;
-	//foreach(QSharedPointer<Result> result,localResults)
-	//{
-	//	addResult(result);
-	//}
-
-	////Put all child results that were serialized in into the results list.
-	//updateResultsFromChildren();
 }
 
 bool ResultContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -165,17 +177,11 @@ bool ResultContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamR
 	return true;
 }
 
+/*! \brief Sets the name of the latest Result to have been triggered by this ResultContainer so that it will be accessible from getLatestResult().
+ *	\note This function must be called by the class that is actually handling the internal run logic.  It should be called just before triggering 
+ *	the result script in all ResultContainers such that any result script that calls getLatestResult() on its container will get its own name in return.
+ */
 void ResultContainer::setLatestResult(QString latestResult)
 {
 	latestResult_ = latestResult;
 }
-////Put all child results that were serialized in into the results list.
-//void ResultContainer::updateResultsFromChildren()
-//{
-//	results_.clear();
-//	QList<QSharedPointer<Asset>> results = getGeneratedChildren("Result");
-//	foreach(QSharedPointer<Asset> result,results)
-//	{
-//		addResult(result.staticCast<Result>());
-//	}
-//}

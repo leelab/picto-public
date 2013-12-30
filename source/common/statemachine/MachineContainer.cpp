@@ -24,6 +24,13 @@
 
 using namespace Picto;
 
+/*! \brief Constructs a new MachineContainer object.
+ *	\details transitionTag is the name that will be used by this object for serialization of Transitions.  elementTag is
+ *	the name that will be used by this object for serialization of other elements of the StateMachine.
+ *	\note This system of passing in tag names for xml serializations is mostly for historical reasons, and it would be a
+ *	good idea to clean this type of thing up at some point.  In general, the Factory design pattern can be improved pretty
+ *	significantly in DataStores overall.
+ */
 MachineContainer::MachineContainer(QString transitionTag, QString elementTag)
 :
 parameterFactory_(new AssetFactory(0,-1)),
@@ -87,7 +94,8 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(RectTarget::Create))));
 }
 
-//! \brief Adds a transition to this machineContainer
+/*! \brief Adds a transition to this MachineContainer's list.
+*/
 bool MachineContainer::addTransition(QSharedPointer<Transition> transition)
 {
 	QSharedPointer<ResultContainer> source,sourceResult,destination;
@@ -136,6 +144,8 @@ bool MachineContainer::addTransition(QSharedPointer<Transition> transition)
 	return true;
 }
 
+/*! \brief Adds the input ResultContainer element to this MachineContainer's elements_ lookup table, with the element's name as the table key.
+*/
 void MachineContainer::addElement(QSharedPointer<ResultContainer> element)
 {
 	//Add the element to our map
@@ -155,6 +165,9 @@ void MachineContainer::postDeserialize()
 	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(childWasAdded(QSharedPointer<Asset>)));
 }
 
+/*! \brief Extends OutputElementContainer::validateObject() to add checking for valid Transition definitions, checking that all child element's results
+ *	are connected to a transition, and checking to make sure no two elements have the same name.
+ */
 bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!OutputElementContainer::validateObject(xmlStreamReader))
@@ -287,6 +300,11 @@ bool MachineContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	return true;
 }
 
+/*! \brief Returns the source, sourceResult, and destination ResultContainer objects that are rerferenced in the input transition.
+ *	\details This function looks up these Asset's according to the names stored in the Transition.  If there is some problem
+ *	in finding the Assets due to invalid names or ambiguity, the function returns false.  Otherwise, the function returns true
+ *	and the output data is avaiable in the reference parameters.
+ */
 bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition, QSharedPointer<ResultContainer>& source, QSharedPointer<ResultContainer>& sourceResult, QSharedPointer<ResultContainer>& destination)
 {
 	source = sourceResult = destination = QSharedPointer<ResultContainer>();
@@ -434,11 +452,16 @@ bool MachineContainer::getTransitionAssets(QSharedPointer<Transition> transition
 	return true;
 }
 
+/*! \brief Called when a child is added to this MachineContainer.  Calls updateListsFromChildren() to update all of the various internal lists
+ *	accordingly.
+ */
 void MachineContainer::childWasAdded(QSharedPointer<Asset>)
 {
 	updateListsFromChildren();
 }
 
+/*! \brief Repopulates all internal lists (element and transition lists) according to the current child elements and their types.
+*/
 void MachineContainer::updateListsFromChildren()
 {
 	elements_.clear();

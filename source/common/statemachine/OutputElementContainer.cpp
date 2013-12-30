@@ -33,12 +33,16 @@
 
 using namespace Picto;
 
+/*! \brief Creates a new OutputElementContainer and adds lots of AssetFactory objects to it for creating all of the various types of 
+ *	OutputElements.
+ */
 OutputElementContainer::OutputElementContainer() :
 	visualElementFactory_(new AssetFactory(0,-1)),
 	audioElementFactory_(new AssetFactory(0,-1)),
 	outputSignalFactory_(new AssetFactory(0,-1)),
 	scriptFunctionFactory_(new AssetFactory(0,-1))
 {
+	//Hmm... It may have made more sense to put ScriptFunction somewhere else, it isn't an OutputElement.
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
 	scriptFunctionFactory_->addAssetType("ScriptFunction",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ScriptFunction::Create))));
@@ -102,6 +106,13 @@ void OutputElementContainer::addOutputElements(QSharedPointer<OutputElementConta
 	addOutputElements(outputElementContainer.data());
 }
 
+/*! \brief Copies the OutputElements from the passed in container
+ *	
+ *	This is used when adding an child element to a parent OutputElementContainer.  By passing
+ *	in the parent OutputElement container, we now have access to all 
+ *	of the parent's OutputElements.  This allows us to
+ *	have OutputElements with Picto scope.
+ */
 void OutputElementContainer::addOutputElements(OutputElementContainer *outputElementContainer)
 {
 	QList<QSharedPointer<OutputElement>> OutputElements = outputElementContainer->getOutputElementList();
@@ -111,18 +122,26 @@ void OutputElementContainer::addOutputElements(OutputElementContainer *outputEle
 	}
 }
 
+/*! \brief Adds the input OutputElementContainer to this one's list of child OutputElementContainers and uses the child's addOutputElements() function
+ *	to add this one's OutputElements to it.
+ *	\details We need to store child OutputElementContainers so that whenever a new OutputElement is added to this container, it can be added automatically
+ *	to child OutputElementContainers as well.
+ */
 void OutputElementContainer::addChildOutputElementContainer(QSharedPointer<OutputElementContainer> child)
 {
 	outputElementContainers_.push_back(child);
 	child->addOutputElements(this);
 }
 
-//! \brief Returns a list of all contained parameters
+/*! \brief Returns a list of all OutputElement objects that are in scope for this object. */
 QList<QSharedPointer<OutputElement>> OutputElementContainer::getOutputElementList()
 {
 	return outputElements_;
 }
 
+/*! \brief Extends StateMachineElement::ClearAssociateChildren() to remove AssociateChildren with the input associateId
+ *	from this element's in-scope outputElements_ list as well.
+ */
 void OutputElementContainer::ClearAssociateChildren(QUuid associateId)
 {
 	StateMachineElement::ClearAssociateChildren(associateId);
@@ -170,6 +189,8 @@ bool OutputElementContainer::validateObject(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
+/*! \brief Adds a new OutputElement to this object's in-scope OutputElements list as well as those of its child OutputElementContainers.
+ */
 void OutputElementContainer::addOutputElement(QSharedPointer<OutputElement> outputElement)
 {
 	//If the OutputElement is empty return
@@ -184,8 +205,9 @@ void OutputElementContainer::addOutputElement(QSharedPointer<OutputElement> outp
 	}
 }
 
-//If a child is added to this element after postDeserialize then we may need to add it
-//using addOutputElement() or addChildOutputElementContainer().  We handle that here.
+/*! \brief Handles the case where a child is added to this element after postDeserialize().  In that case, depending on the child's type, we may need to add it
+ *	using either addOutputElement() or addChildOutputElementContainer().  We handle that here.
+ */
 void OutputElementContainer::addChildToElementLists(QSharedPointer<Asset> newChild)
 {
 	if(newChild.dynamicCast<OutputElement>())

@@ -29,6 +29,10 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new State object.
+ *	\details Initializes the State's Scene object, adds a 'FrameScript" Property and AssetFactories for the various ControlElements
+ *	that can be added to the State.
+ */
 State::State() :
 	MachineContainer("Transition","ControlElement"),
 	scene_(Scene::createScene()),
@@ -51,11 +55,14 @@ State::State() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
 }
 
+/*! \brief Creates a new State object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> State::Create()
 {
 	return QSharedPointer<Asset>(new State());
 }
 
+/*! \brief rebuilds the scene whenever run mode is enable in case something about the scene changed.
+*/
 void State::enableRunMode(bool enable)
 {
 	MachineContainer::enableRunMode(enable);
@@ -64,6 +71,17 @@ void State::enableRunMode(bool enable)
 	rebuildScene();
 }
 
+/*! \brief Runs this State's execution logic within the framework of the input PictoEngine.
+ *	\details This function more or less performs the following run procedure:
+ *		- Run EntryScript
+ *		- Go through all ControlElements and check to see if any are done.  If they are, run the ControlResult script, transition to their attached result, run its script,
+ *			run the State's ExitScript and return.
+ *		- If ControlElements aren't done, run the FrameScript, render the Scene and loop back to checking ControlElements.
+ *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after the Entry and Exit Scripts.  The
+ *	AnalysisFrameScript is run after the Scene is rendered.
+ *	
+ *	The name of the result that ended the State execution is returned from the function as a string.
+*/
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
@@ -168,14 +186,8 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief Runs a state in slave mode
- *
- *	Running in slave mode results in two major differences:
- *		1. The controllers are completely ignored, and we return the result 
- *		   pulled from the master engine over the network.
- *		2. Frames are rendered as behavioral data comes in.  For every piece of
- *		   behavioral data received, we advance one frame.  This keeps us from 
- *		   getting ahead of the master engine.
+/*! \brief When a State is run as a slave, it really doesn't do anything except render frames until the State ends, since the SlaveExperimentDriver handles
+ *	changing of Property values.  This function is therefore empty and slaveRenderFrame() handles frame rendering.
  */
 QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -183,6 +195,8 @@ QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
+/*! \brief Handles rendering of the latest frame to the display while this State is active and when the Experiment is running in slave mode.
+*/
 QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
 	sigChannel_ = engine->getSignalChannel("Position");
@@ -213,12 +227,7 @@ QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief Checks for engine commands and returns true if we need to stop
- *
- *	The commands are a bit funny, but they work.  When Engine::stop() is called,
- *	the engine command gets set to StopEngine (and never gets reset).  This results
- *	in all of our states returning.  When pause is called, we simply sit and spin
- *	until a new command is issued (play or stop). 
+/*! \brief Checks the current engine command and returns true if we need to stop, false otherwise.
  */
 bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -232,6 +241,9 @@ bool State::checkForEngineStop(QSharedPointer<Engine::PictoEngine> engine)
 	return false;
 }
 
+/*! \brief Adds a cursor to the Scene so that it can display the current value of the Position signal.
+ *	\details This should only be used in Slave mode since we don't show the cursor to the test subject.
+ */
 void State::addCursor()
 {
 	//We should only add the cursor the first time we run as a slave.
@@ -264,6 +276,9 @@ void State::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+/*! \brief Extends MachineContainer::setDesignConfig() to connect to signals associated with changing active Analyses so that we can respond
+ *	when that happens.
+ */
 void State::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
 	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
@@ -275,18 +290,14 @@ void State::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 
 void State::postDeserialize()
 {
-	//QList<QSharedPointer<Asset>> newVisElems = getGeneratedChildren("VisualElement");
-	//foreach(QSharedPointer<Asset> newVisElem,newVisElems)
-	//{
-	//	scene_->addVisualElement(newVisElem.staticCast<VisualElement>());
-	//	addScriptable(newVisElem.staticCast<Scriptable>());
-	//}
 	MachineContainer::postDeserialize();
 	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
 	//the UI.
 	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
 }
 
+/*! \brief Extends MachineContainer::validateObject() to verify that this State has at least one ControlElement.
+*/
 bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	////Validate Results (so they're ready for link checking)
@@ -323,11 +334,17 @@ QMap<QString,QString> State::getScripts()
 	return scripts;
 }
 
+/*! \brief Runs this State's AnalysisFrameScript if it isn't empty.*/
 void State::runAnalysisFrameScripts()
 {
 	runAnalysisScripts(StateMachineElement::FRAME);
 }
 
+/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can
+ *	correctly render the current scene each frame.
+ *	\details This needs to be called at least once before a State is run and after all OutputElement objects
+ *	that are in scope have been added.
+ */
 void State::rebuildScene()
 {
 	//Since the scene needs access to visual elements stored above it in the tree, we get
@@ -367,6 +384,10 @@ void State::rebuildScene()
 	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
+/*! \brief Calls rebuildScene() any time the Active Analysis changes.
+ *	\details This should be more useful when/if we start adding Analysis Output Elements (plots or text info)
+ *	to the scene in the Workstation when Analyses are active.
+*/
 void State::activeAnalysisIdsChanged()
 {
 	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function

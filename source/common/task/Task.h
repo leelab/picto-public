@@ -19,17 +19,19 @@
 
 namespace Picto {
 
-/*!	\brief A task is a single statemachine that is part of an experiment
+/*!	\brief A Task contains the top level StateMachine that defines the logic for researching an
+ *	experimental question.
  *
- *	An experiment is likely to contain multiple tasks.  Each task is a single
- *	activity for the experiment.  A task can contain only one StateMachine.
+ *	A Task can define anything from a MemorySaccade exercise, to a system for checking the
+ *	calibration of a reward supply system.  An Experiment usually contains multiple Tasks with each
+ *	Task containing only one StateMachine.  The period from the time a Task starts until it finishes
+ *	is called a Task Run, or simply a Run.  The Task class defines all the setup/take down logic
+ *	for the Task Run and starts the underlying StateMachine that handles its actual experimental
+ *	control logic.
  *
- *	MATT'S NOTE:
- *	When I started to write this, there were a lot of contained objects that I 
- *	wasn't totally sure how to deal with.  Rather than ignoring them, I commented
- *	them out.  It is highly likely that we will need to add these as we go...
-*/
-
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Task : public ScriptableContainer
 #else
@@ -49,8 +51,11 @@ public:
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString friendlyTypeName(){return "Task";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
+	/*! \brief Since there is no TaskId Property, this function doesn't appear to do anything and should be removed.*/
 	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
+	/*! \brief Returns a pointer to the top level StateMachine contained in this Task.
+	*/
 	QSharedPointer<StateMachine> getStateMachine(){return stateMachine_;};
 
 protected:

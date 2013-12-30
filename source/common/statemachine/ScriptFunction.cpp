@@ -4,12 +4,17 @@
 
 using namespace Picto;
 
+/*! \brief Constructs a new ScriptFunction.
+ *	\details Adds an Inputs Property for defining a comma separated list of input parameter names for the function.
+ *	Also defines a Script Property for defining the Script Function logic.
+ */
 ScriptFunction::ScriptFunction()
 {
 	AddDefinableProperty(QVariant::String,"Inputs","");
 	AddDefinableProperty(QVariant::String,"Script","");
 }
 
+/*! \brief Creates a new ScriptFunction object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> ScriptFunction::Create()
 {
 	return QSharedPointer<Asset>(new ScriptFunction());
@@ -108,6 +113,8 @@ void ScriptFunction::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+/*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do anything in ScriptFunction objects.
+ */
 void ScriptFunction::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();
@@ -121,6 +128,8 @@ bool ScriptFunction::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	return true;
 }
 
+/*! \brief Extends ScriptableContainer::executeSearchAlgorithm() to search for the searchRequest in this ScriptFunction's Script Property.
+*/
 bool ScriptFunction::executeSearchAlgorithm(SearchRequest searchRequest)
 {	
 	if(ScriptableContainer::executeSearchAlgorithm(searchRequest))

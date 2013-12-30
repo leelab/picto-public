@@ -6,10 +6,20 @@
 
 namespace Picto {
 
-/*!	\brief A Result is the exit point from a StateMachineElement or ControlElement
- *	
+/*!	\brief A Result is the control flow exit point from every element of a Picto StateMachine.
+ *	\details In Picto, the StateMachine contains multiple levels.  Regardless of whether the
+ *	particular level of a StateMachine is another StateMachine or a State or an element
+ *	who's internal logic is defined by C++ code, control flow always leaves that element
+ *	and returns to the level above through a Result element.  
+ *
+ *	Unlike other StateMachineElement objects, since Results have no internal logic, they
+ *	have only an EntryScript and no ExitScript.  When exactly their EntryScript is called is of 
+ *	course a function of the Result's parent container since the Result does not have its
+ *	own run() function.  With that said, however, all elements that call a results EntryScript 
+ *	(runResultScript()) should do so before calling their own ExitScript.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Result : public ScriptableContainer
 #else
@@ -19,10 +29,6 @@ class Result : public ScriptableContainer
 	Q_OBJECT
 public:
 	Result();
-	/*! \brief Constructs new result with input name and option to define result as default.
-	 *	Define the result as default if it is added automatically by your ResultContainer and
-	 *	need not be serialized out.
-	 */
 	Result(QString name);
 	virtual ~Result(){};
 
@@ -41,7 +47,7 @@ protected:
 	virtual QMap<QString,QString> getScripts();
 	virtual bool canHaveScripts(){return true;};
 
-	QSharedPointer<AssetFactory> resultEntryScriptFactory_;
+	QSharedPointer<AssetFactory> resultEntryScriptFactory_;	//!< This appears to be unused and should probably be deleted.
 
 };
 

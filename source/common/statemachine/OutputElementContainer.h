@@ -15,7 +15,13 @@
 
 namespace Picto {
 
-/*! \brief A container for storing Visual Elements
+/*! \brief A base class for elements that hold OutputElement objects.
+ *
+ *	\details This class contains the AssetFactory objects for creating OutputElements and manages
+ *	their scoping issues so that descendant classes can easily access all in-scope OutputElements
+ *	from a single list.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API OutputElementContainer : public StateMachineElement

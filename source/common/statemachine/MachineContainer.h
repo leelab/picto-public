@@ -7,9 +7,17 @@
 
 namespace Picto {
 
-/*!	\brief An ancestor class for StateMachineElement's that allow transitions
+/*!	\brief A base class for everything that can contain transitions and other elements.
  *
- *
+ *	\details This class should be refactored.  It appears the way it does mainly for historical reasons, but
+ *	essentially what it does is manage transitions and objects in the StateMachine that are not StateMachineElements
+ *	or OutputElements.  There should probably be one class that handles Transitions, and one or more that handles Variables,
+ *  Parameters, etc.
+ *	
+ *	As it stands however, this is a fairly important class that handles a lot of the code necessary for elements that contain
+ *	"machines" that includes some form of state transfer.  Currently these include StateMachine and State.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #if defined WIN32 || defined WINCE

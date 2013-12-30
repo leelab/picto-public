@@ -16,15 +16,20 @@
 
 namespace Picto {
 
-/*!	\brief A scene consists of the graphical stimuli
+/*!	\brief Handles rendering of OutputElements each frame.
  *
- *	A scene is the thing that actually puts images on the screen.  Scenes 
- *	are closesly tied to the state machine element "State".  Each state must
- *	contain a single Scene.  The scenes also have include the control elements
- *	since those need to get passed down to the rendering loop.
+ *	\details A scene is the thing that actually puts images on the screen, plays audio, and sets voltages to output pins.  Scenes 
+ *	are used by the two StateMachineElements in which experimental time passes, State and PausePoint.  Each of these contains a single Scene.
+ *	To use a scene, VisualElements, AudioElements, and OutputSignals are added using their respective add?() functions.  When it comes time
+ *	to render the elements for the test subject, render() is called with the PictoEngine and the AssetId of the element calling the function.
  *
- *	NOTE: At some point we will need to add support for audio elements.  This
- *	will probably require adding them to the scene.
+ *	\note There is some complexity associated with this object due to the fact that Qt requires that all rendering activities occur in the
+ *	main UI thread.  Since we want to be able to run Experiments in a separate thread, we needed to set up a system in which we can be sure
+ *	that the render code gets run in the main UI thread, but everything else can run in a separate thread.  We handle this by moving the
+ *	Scene object into the UI thread, and then calling its private render code using a signal-slot framework.  This is all handled internally
+ *	and needn't concern outside classes.  For more detail on this, see render() and doRender().
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Scene : public QObject
@@ -46,6 +51,10 @@ public:
 	static void closeRenderLoops();
 
 signals:
+	/*! \brief Emitted when rendering is setup and the object wants doRender() to be called.
+	 *	\details This signal essentially exists in order to deal with a Qt requirement that all rendering activity occurs
+	 *	only in the main UI thread.  See renderI(), doRender() for more detail.
+	 */
 	void readyForRender(int callerId);
 
 

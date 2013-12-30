@@ -16,14 +16,20 @@
 
 namespace Picto {
 
-/*!	\brief A Base class for all Output Elements
+/*!	\brief A Base class for all Elements representing data that is output to the Experiment subject during frame rendering.
  *
- *	Currently these include Visual Elements and Output Signals
+ *	\details It is useful to be able to group together these types of elements such that they can be handled in similar ways.
+ *	This way, any element that can define some kind of output to the Experiment subject can inherit OutputElementContainer and 
+ *	all of its associated logic.
+ *	Currently, VisualElement objects, AudioElement objects, and OutputSignal objects (for digital voltage output) are considered 
+ *	OutputElements.  
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_CLASS OutputElement : public ScriptableContainer
 #else
-class ScriptableContainer : public ScriptableContainer
+class OutputElement : public ScriptableContainer
 #endif
 {
 	Q_OBJECT

@@ -3,6 +3,10 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new result.
+ *	\details An optional EntryScript Property defining a Script that will be called when control flow reaches this Result 
+ *	is added in this constructor.
+ */
 Result::Result()
 {
 	//Add Optional Script property
@@ -10,6 +14,11 @@ Result::Result()
 	resultEntryScriptFactory_ = getAssetFactory("EntryScript");
 }
 
+/*! \brief Constructs a new result with input name.
+ *	\details An optional EntryScript Property defining a Script that will be called when control flow reaches this Result 
+ *	is added in this constructor.
+ *	\note I think that we aren't using this Constructor anywhere.  You should probably get rid of it.
+ */
 Result::Result(QString name)
 {
 	Q_ASSERT(false);	//Just put this here because I don't think we're using this constructor anymore and I want to get rid of it.
@@ -25,11 +34,13 @@ Result::Result(QString name)
 	setUnedited();
 }
 
+/*! \brief Creates a new Result object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> Result::Create()
 {
 	return QSharedPointer<Asset>(new Result());
 }
 
+/*! \brief Runs this Result's ResultScript if it is not empty.*/
 void Result::runResultScript()
 {
 	if(propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty() || propertyContainer_->getProperty("EntryScript")->isDeleted())
@@ -38,6 +49,8 @@ void Result::runResultScript()
 	runScript(scriptName);
 }
 
+/*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do anything in Result objects.
+ */
 void Result::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();

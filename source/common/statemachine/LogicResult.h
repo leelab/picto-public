@@ -6,10 +6,13 @@
 
 namespace Picto {
 
-/*!	\brief A LogicResult is a result that is not a transition destination but rather triggered by a StateMachineElement's internal logic
+/*!	\brief A LogicResult is a Result that is not a transition destination but rather triggered by a StateMachineElement's internal logic
  *	
+ *	\details This is the class used for low level Results that live beneath the Design's StateMachine.  For example, in the case of a
+ *	TargetController, the C++ logic itself decides which Results should be triggered.	
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LogicResult : public Result
 #else

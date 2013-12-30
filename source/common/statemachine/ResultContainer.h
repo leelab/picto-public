@@ -10,11 +10,15 @@
 #include "Result.h"
 namespace Picto {
 
-/*!	\brief An ancestor class for DataStores's that container results
- *
- *
+/*!	\brief A base class for elements that may contain Result elements.
+ *	\details Since Results are a fundamental part of the Picto StateMachine, ResultContainers
+ *	are very important.  The ResultContainer class is a base class for elements like StateMachine, 
+ *	State, SwitchElement, etc.  This class contains functionality for adding Results, setting up 
+ *	required and optional Results and different types of Results, as well as accessing the latest 
+ *	triggered result name from a script during execution.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ResultContainer : public ScriptableContainer
 #else
@@ -35,29 +39,11 @@ public slots:
 	QString getLatestResult();
 
 protected:
-	/*! \brief Defines a result that is required to be in this resultContainer.
-	 *	This should be called in a child constructor.  If a result with this results name
-	 *	isn't serialized in, it will be added automatically.  In validate object, the
-	 *	result container will verify that the required results have been defined and no
-	 *	result type limits have been exceeeded.
-	 */
 	void addRequiredResult(QString resultName);
-	//Same as above except that the actual result object pointer is passed in.
-	//checking for a deserialized copy is still by result name.
-	//void addRequiredResult(QSharedPointer<Result> requiredResult, QString type = "");
 	void setMaxOptionalResults(int max, QString type = "");
-	/*! \brief This is used to add a result factory type.
-	 * If, for example, an object can have regular results and ControlTargetResults,
-	 * this function would be used to add a "target" type such that <Result type="Target">
-	 * tags would get their results from the input factory.
-	 */
 	void defineResultFactoryType(QString type,QSharedPointer<AssetFactory> resultFactory);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	/*! \brief Sets the latest result encountered in this result container for retrieval in the getLatestResult() slot.
-	 *	This should be called just before triggering the result script in all ResultContainers such that any result
-	 *  script that calls getLatestResult() on its container will get its own name in return.
-	 */
 	void setLatestResult(QString latestResult);
 	QMap<QString, QSharedPointer<Result> > results_;
 

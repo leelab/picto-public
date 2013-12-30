@@ -9,6 +9,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new Task object.
+ *	\details Automatically adds a required StateMachine object to the Task.
+ */
 Task::Task() 
 {
 		taskNumber_ = 0;
@@ -16,11 +19,23 @@ Task::Task()
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 }
 
+/*! \brief Creates a new Task object and returns a shared Asset pointer to it.*/
 QSharedPointer<Task> Task::Create()
 {
 	return QSharedPointer<Task>(new Task());
 }
 
+/*! \brief Runs this Task's execution logic within the framework of the input PictoEngine.
+ *	\details Since the Task only ever contains a single StateMachine, this function just
+ *	takes care of initializing the new Task run, running the
+ *	StateMachine, and sending any final data to the Server (if necessary).  
+ *	\note Currently, this function blocks the Qt Event Loop execution until it finishes
+ *	except in the case where the PictoEngine is running in slave mode, in which case
+ *	the event loop is processed at various times from within this engine (which is not
+ *	a very clean way to do things).  In the future this function should be rewritten to 
+ *	run a single frame at a time from within an event loop.  See CommandChannel::processResponses() 
+ *	for more details.
+*/
 QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString result = "";
@@ -54,7 +69,15 @@ QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
-//!	Jumps to the specified state in the task's main state machine
+/*! \brief This function appears to no longer be used (ie. The functions that call it are never called themselves).
+ *	\details The function was once used when attaching to a remote Experiment
+ *	that was already running in order to jump to the currently running State.  Since then, we have created 
+ *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
+ *	within the Qt event loop based on information coming from the Master, and not only from within 
+ *	the blocking runTask() function.
+ *	
+ *	This function should probably be removed.
+ */
 bool Task::jumpToState(QStringList path, QString state)
 {
 	//If there's nothing left in the path, it means that we haven't started 
@@ -69,6 +92,15 @@ bool Task::jumpToState(QStringList path, QString state)
 	return stateMachine_->jumpToState(path,state);
 }
 
+/*! \brief Sets the index of this Task within its container.
+ *	\details This is useful since the Task's index is used to define
+ *	an "initial transition" that is sent to the server during run
+ *	time to indicate that this Task is the one that was run.  The idea here was that it is necessary to
+ *	create a "fake" transition, since execution only really begins at the Task level, 
+ *	so it is somewhat illogical to store a Transition in the design above the top level of the StateMachine.
+ *	This can certainly be reconsidered at some point and changed, so long as reverse design compatibility is 
+ *	maintained somehow.
+ */
 void Task::setTaskNumber(int num)
 {
 	taskNumber_ = num;
@@ -77,26 +109,29 @@ void Task::setTaskNumber(int num)
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
 	designConfig_->addManagedAsset(initTransition_);	//This adds the transition to the designConfig list so that it will be recognized
-													//By the server and remote workstations.  In the future we will add transitions
-													//into initial states which will make all of this unnecessary.
+													//By the server and remote workstations.  In the future we can consider adding transitions
+													//into initial states which wpuld make all of this unnecessary.
 	designConfig_->fixDuplicatedAssetIds();
 }
 
 /*! \brief Sends the initial state transition to the server
- *
- *	If a task is stopped, and then restarted, the transitions recordered by the server
- *	will be this:
- *		1. Final transition before stop command recieved
- *		2. First transition within state machine after start
+ *	\details Takes care of some initial operations for the Task before it is actually run.
+ *	These include things like, marking the start time of the Task, setting up the 
+ *	default name of the Task Run using this Task start time, sending the initial transition
+ *	data to the server, etc.
+ *	
+ *	\note If a task is stopped, and then restarted, the transitions recordered by the server
+ *	would be this:
+ *		- Final transition before stop command recieved
+ *		- First transition within state machine after start
  *	This is a problem for a remotely viewed session, since if it tries to join just after
  *	the task is restarted, it will put itself into the destination state from 1, which 
  *	probably won't be the source state for 2.
- *
- *	To fix this issue, we'll generate a starting the task transition with the following
+ *	To fix this issue, we generate a "starting the task" transition with the following
  *	values:
- *		source: NULL
- *		sourceResult: NULL
- *		destination: the task's statemachine
+ *		- source: NULL
+ *		- sourceResult: NULL
+ *		- destination: the task's statemachine
  */
 void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -134,10 +169,12 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 }
 
 
-/*! \brief Sends the final state transition to the server
+/*! \brief Sends the final StateMachine Transition to the server
  *
- *	When a task completes, the final state transition never gets sent to the server.
- *	by the state machine, so we send it here.
+ *	When a task completes, the final Transition never gets sent to the server.
+ *	by the StateMachine, so we send it here.  We also create a fake final frame
+ *	whose frameId can be used to stamp all of the Property changes, etc that occured
+ *	after the last frame that was actually presented.
  */
 void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -169,91 +206,9 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	engine->markTaskRunStop();
 	engine->reportNewFrame(frameTime,getAssetId());
 }
-/*! \brief Turns this task into an XML fragment
- *
- *	The XML for a task looks like this:
- *	
- *	<Task>
- *		<Name>SomeExperiment</Name>
- *		<StateMachine>
- *			...
- *		</StateMachine>
- *	</Task>
- */
-//bool Task::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
-//{
-//	xmlStreamWriter->writeStartElement("Task");
-//	xmlStreamWriter->writeTextElement("Name", propertyContainer_->getPropertyValue("Name").toString());
-//
-//	xmlStreamWriter->writeStartElement("StateMachine");
-//	stateMachine_->toXml(xmlStreamWriter);
-//	xmlStreamWriter->writeEndElement(); //StateMachine
-//
-//	xmlStreamWriter->writeEndElement(); //Task
-//	
-//	return true;
-//}
-//
-////! Turns XML into a Task
-//bool Task::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-//{
-//	//Do some basic error checking
-//	if(!xmlStreamReader->isStartElement() || xmlStreamReader->getName() != "Task")
-//	{
-//		addError("Task","Incorrect tag, expected <Task>");
-//		return false;
-//	}
-//	
-//	xmlStreamReader->readNext();
-//	
-//	while(!(xmlStreamReader->isEndElement() && xmlStreamReader->getName().toString() == "Task") && !xmlStreamReader->atEnd())
-//	{
-//		if(!xmlStreamReader->isStartElement())
-//		{
-//			//Do nothing unless we're at a start element
-//			xmlStreamReader->readNext();
-//			continue;
-//		}
-//
-//		QString name = xmlStreamReader->getName().toString();
-//		if(name == "Name")
-//		{
-//			setName(xmlStreamReader->readElementText());
-//		}
-//		else if(name == "StateMachine")
-//		{
-//			stateMachine_ = QSharedPointer<StateMachine>(new StateMachine);
-//			if(!stateMachine_->fromXml(xmlStreamReader))
-//			{
-//				addError("Task","State Machine failed to deserialize", xmlStreamReader);
-//				return false;
-//			}
-//		}
-//		else
-//		{
-//			addError("Task", "Unexpected tag", xmlStreamReader);
-//			return false;
-//		}		
-//
-//		xmlStreamReader->readNext();
-//	}
-//
-//	if(xmlStreamReader->atEnd())
-//	{
-//		addError("Task", "Unexpected end of document", xmlStreamReader);
-//		return false;
-//	}
-//	if(stateMachine_->validateStateMachine())
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		addError("StateMachine","StateMachine failed validation");
-//		return false;
-//	}
-//}
 
+/*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do anything in Task objects.
+ */
 void Task::postDeserialize()
 {
 	ScriptableContainer::postDeserialize();

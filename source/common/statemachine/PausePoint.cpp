@@ -10,6 +10,9 @@
 namespace Picto
 {
 
+/*! \brief Constructs a new PausePoint object.
+ *	\details Adds a ForcePause Property that, when 'true', causes the Experiment to pause whenever control reaches this PausePoint.
+ */
 PausePoint::PausePoint()
 : scene_(Scene::createScene()),
 hasCursor_(false)
@@ -27,11 +30,14 @@ hasCursor_(false)
 	addRequiredResult("done");
 }
 
+/*! \brief Creates a new PausePoint object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> PausePoint::Create()
 {
 	return QSharedPointer<Asset>(new PausePoint());
 }
 
+/*! \brief rebuilds the scene whenever run mode is enable in case something about the scene changed.
+*/
 void PausePoint::enableRunMode(bool enable)
 {
 	OutputElementContainer::enableRunMode(enable);
@@ -39,7 +45,15 @@ void PausePoint::enableRunMode(bool enable)
 		return;
 	rebuildScene();
 }
-
+/*! \brief Runs this PausePoint's execution logic within the framework of the input PictoEngine.
+ *	\details This function handles running entry and exit scripts, and, if the engine says so (ie. the operator pressed the pause button),
+ *	pausing execution.  When ForcePause is true, this function always pauses until the engines says to resume (ie. the operator presses the play
+ *	button again).
+ *
+ *	While Paused, PausePoints display all in scope OutputElements and this function handles that during the course of the Pause.
+ *
+ *	Since PausePoint objects always have a single "done" result, this function always returns "done".
+*/
 QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
@@ -76,12 +90,17 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 	return "done";
 }
 
+/*! \brief When a PausePoint is run as a slave, it really doesn't do anything except render frames until Pause ends.  This function is therefore empty
+ *	and slaveRenderFrame() handles frame rendering.
+ */
 QString PausePoint::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString result;
 	return result; 
 }
 
+/*! \brief Handles rendering of the latest frame to the display during a Pause when the Experiment is running in slave mode.
+*/
 QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Add the cursor to the scene if it isn't there already
@@ -104,6 +123,9 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
+/*! \brief Extends OutputElementContainer::upgradeVersion() to copy any "PausingScript" Property value from an older Design syntax and paste
+ *	it into the "EntryScript" Property which now exists on all StateMachineElement objects.
+ */
 void PausePoint::upgradeVersion(QString deserializedVersion)
 {
 	OutputElementContainer::upgradeVersion(deserializedVersion);
@@ -161,6 +183,11 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
+/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can
+ *	correctly render the current scene each frame.
+ *	\details This needs to be called at least once before a PausePoint is run and after all OutputElement objects
+ *	that are in scope have been added.
+ */
 void PausePoint::rebuildScene()
 {
 	//Since the scene needs access to visual elements stored above it in the tree, we get
@@ -200,6 +227,10 @@ void PausePoint::rebuildScene()
 	scene_->setBackgroundColor(QColor(propertyContainer_->getPropertyValue("BackgroundColor").toString()));
 }
 
+/*! \brief Calls rebuildScene() any time the Active Analysis changes.
+ *	\details This should be more useful when/if we start adding Analysis Output Elements (plots or text info)
+ *	to the scene in the Workstation when Analyses are active.
+*/
 void PausePoint::activeAnalysisIdsChanged()
 {
 	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function

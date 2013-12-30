@@ -10,7 +10,11 @@
 
 namespace Picto {
 
-/*!	\brief A state machine element that runs a script
+/*!	\brief This class is obsolete. In design syntax version "0.0.1", we removed "ScriptElements" and replaced them with "SwitchElements" since "ScriptElement" were essentially 
+ *	"SwitchElements" that contained only two results, "true" and "false" that were triggered with a boolean value.
+ *	\details We should probably look into deleting this class.  For reference, I have included the classes original documentation below:
+ *
+ *	ScriptElement: A state machine element that runs a script
  *
  *	Script elements are used when a script needs to be run.  The script
  *	being run will have access to all of the parameters of the state machine 
@@ -21,8 +25,9 @@ namespace Picto {
  *		return value of "done"
  *	 2. Access to more than just the parameters.  It might be interesting to
  *		provide the script access to the VisualElements contained in Scenes.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ScriptElement : public StateMachineElement
 #else
