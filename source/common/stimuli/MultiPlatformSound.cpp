@@ -6,6 +6,8 @@
 
 namespace Picto {
 
+/*! \brief Creates a MultiplatformSound object to play the audio file at the input path.
+*/
 MultiplatformSound::MultiplatformSound(QString path)
 {
 	sound_ = QSharedPointer<QSound>(new QSound(path));

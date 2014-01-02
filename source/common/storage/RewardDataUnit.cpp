@@ -10,6 +10,11 @@ RewardDataUnit::RewardDataUnit() :
 {
 }
 
+/*! \brief Constructs a RewardDataUnit object.
+ *	@param durationMs The duration of the reward delivery in milliseconds.
+ *	@param channel The reward channel on which the reward was supplied.
+ *	@param time The time at which reward delivery began.
+ */
 RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 		durationMs_(durationMs),
 		channel_(channel),
@@ -17,16 +22,7 @@ RewardDataUnit::RewardDataUnit(int durationMs, int channel, double time) :
 {
 }
 
-
-
 /*! \brief Turns the RewardDataUnit into an XML fragment
- *
- *	The XML will look like this:
- *	<RewardDataUnit timestamp = 123.234>
- *		<Channel> 1</Channel>
- *		<Duration>25</Duration>
- *	</RewardDataUnit>
- *	
  */
 bool RewardDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -40,7 +36,7 @@ bool RewardDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 
 	return true;
 }
-//! Converts XML into a RewardDataUnit object.  Note that this deletes any existing data.
+/*! \brief Converts XML into a RewardDataUnit object.  Note that this deletes any existing data.*/
 bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	bool ok;

@@ -7,6 +7,11 @@ PropertyDataUnit::PropertyDataUnit()
 {
 }
 
+/*! \brief Constructs a PropertyDataUnit object.
+ *	@param index The AssetId of the Property whose value changed.
+ *	@param initValue True if the change was to an initValue, false if its a runValue.
+ *	@param value The new Property value.
+ */
 PropertyDataUnit::PropertyDataUnit(int index, bool initValue, QString value)
 {
 	index_ = index; 
@@ -14,9 +19,6 @@ PropertyDataUnit::PropertyDataUnit(int index, bool initValue, QString value)
 	value_ = value; 
 }
 /*! \brief Turns the PropertyDataUnit into an XML fragment
- *
- *	The XML will look like this:
- *	<PropertyDataUnit time=123.4324 x=450 y=394/>
  */
 bool PropertyDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {

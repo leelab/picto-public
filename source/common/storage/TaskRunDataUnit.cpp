@@ -8,6 +8,9 @@ TaskRunDataUnit::TaskRunDataUnit()
 {
 }
 
+/*! \brief Creates a TasnRunDataUnit object with the input startFrame DataId, run name, run notes, and
+ *	flag indicating whether it will be saved.
+ */
 TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, QString name, QString notes, bool saved)
 {
 	startFrame_ = startFrame;
@@ -17,6 +20,9 @@ TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, QString name, QString no
 	saved_ = saved;
 }
 
+/*! \brief Creates a TasnRunDataUnit object with the input startFrame DataId, endFrame DataId, run name, run notes, and
+ *	flag indicating whether it will be saved.
+ */
 TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QString name, QString notes, bool saved)
 {
 	startFrame_ = startFrame;
@@ -26,9 +32,7 @@ TaskRunDataUnit::TaskRunDataUnit(qulonglong startFrame, qulonglong endFrame, QSt
 	saved_ = saved;
 }
 
-/*! \brief Turns the TaskRunDataUnitPackage into an XML fragment
- *
- *	
+/*! \brief Turns the TaskRunDataUnit into an XML fragment
  */
 bool TaskRunDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -42,7 +46,8 @@ bool TaskRunDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamW
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a TaskRunDataUnitPackage object.  Note that this deletes any existing data.
+/*! Converts XML into a TaskRunDataUnit object.  Note that this deletes any existing data.
+*/
 bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking

@@ -13,17 +13,24 @@ assetId_(0)
 ObsoleteAsset::~ObsoleteAsset()
 {
 }
-
+/*! \brief Constructs and returns a shared pointer to a new ObsoleteAsset.*/
 QSharedPointer<Asset> ObsoleteAsset::Create()
 {
 	return QSharedPointer<Asset>(new ObsoleteAsset());
 }
 
+/*! \brief Implements Asset::serializeAsXml() to do nothing since ObsoleteAsset values are obsolete and never serialized out.*/
 bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	Q_ASSERT_X(false,"ObsoleteAsset::serializeAsXml","An ObsoleteAsset's serializeAsXml() function should never be used.");
 	return true;
 }
+
+/*! \brief Implements Asset::deserializeFromXml() to deserialize everything from the input XML tag to its closing tag into a 
+ *	"tree" of ObsoleteAsset objects, each containing a list of XML tag attributes, and the tag values.
+ *	\details THis function also uses reportOldVersionAsset() to inform Picto that something that was obsolete was serialized
+ *	in so it will have to perform an automatic upgrade.
+ */
 bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	reportOldVersionAsset();
@@ -51,6 +58,10 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	}
 	return true;
 }
+
+/*! \brief Extends Asset::postDeserialize() to set this object deleted and emit the edited() signal to tell Parent Assets that this
+ *	ObsoleteAsset won't be saved out.
+ */
 void ObsoleteAsset::postDeserialize()
 {
 	Asset::postDeserialize();
@@ -58,6 +69,9 @@ void ObsoleteAsset::postDeserialize()
 	emit edited();
 }
 
+/*! \brief Returns the child ObsoleteAsset that was serialized in with the input tagName.
+ *	\sa deserializeFromXml()
+ */
 QList<QSharedPointer<ObsoleteAsset>> ObsoleteAsset::getObsoleteChildAsset(QString tagName)
 {
 	if(!children_.contains(tagName))
@@ -65,6 +79,9 @@ QList<QSharedPointer<ObsoleteAsset>> ObsoleteAsset::getObsoleteChildAsset(QStrin
 	return children_.values(tagName);
 }
 
+/*! \brief Returns the attribute name that was included in this ObsoleteAsset's XML tag at the input index.
+ *	\sa numAttributes()
+ */
 QString ObsoleteAsset::getAttributeName(int index)
 {
 	if(index >= attrMap_.size())
@@ -72,6 +89,9 @@ QString ObsoleteAsset::getAttributeName(int index)
 	return attrMap_.keys()[index];
 }
 
+/*! \brief Returns the attribute value that was included in this ObsoleteAsset's XML tag at the input index.
+ *	\sa numAttributes()
+ */
 QString ObsoleteAsset::getAttributeValue(QString name)
 {
 	if(!attrMap_.contains(name))

@@ -3,8 +3,14 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString DigitalOutput::type = "Digital Output";
 
+/*! \brief Constructs a BinaryDataOutput object.
+ *	\details Adds a Value Property to store a boolean value that will be output to the output pin.
+ *	Adds a Pin Property to define the pin that is handled by this object within the Port defined
+ *	in the parent OutputSignal class.
+ */
 DigitalOutput::DigitalOutput()
 : OutputSignal()
 {
@@ -12,6 +18,7 @@ DigitalOutput::DigitalOutput()
 	AddDefinableProperty(QVariant::Bool,"Value",false);
 }
 
+/*! \brief Creates a new DigitalOutput object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> DigitalOutput::Create()
 {
 	return QSharedPointer<Asset>(new DigitalOutput());
@@ -22,6 +29,9 @@ void DigitalOutput::postDeserialize()
 	OutputSignal::postDeserialize();
 }
 
+/*! \brief Extends OutputSignal::validateObject() to verify that the stored Pin value
+ *	is not negative.
+ */
 bool DigitalOutput::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!OutputSignal::validateObject(xmlStreamReader))

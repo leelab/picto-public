@@ -14,8 +14,8 @@ NeuralDataUnit::NeuralDataUnit()
 	setWaveformFromString("");
 }
 
-/*! \brief Will serialize out spike data. Not Yet Implemented.
- *	Returns true if successful.
+/*! \brief Turns the serializeAsXml into an XML fragment
+ *	
  */
 bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -32,9 +32,7 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-/*!	\brief Deserializes Neural data from XML into this object.
- *	Returns true if successful.
- */
+/*! Converts XML into a NeuralDataUnit object.  Note that this deletes any existing data.*/
 bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
@@ -96,6 +94,7 @@ bool NeuralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	return true;
 }
 
+/*! \brief Sets the stored spike waveform to the input vector of float values.*/
 void NeuralDataUnit::setWaveform(QSharedPointer<QVector<float>> waveform)
 {
 	waveform_.clear();
@@ -105,18 +104,20 @@ void NeuralDataUnit::setWaveform(QSharedPointer<QVector<float>> waveform)
 	}
 }
 
-//! \brief Waveform should be formatted as "X X X X " where each X is an int
+/*! \brief Sets the stored spike waveform from the input string, which should be formatted as "X X X X " where each X is a floating point number.*/
 void NeuralDataUnit::setWaveformFromString(QString waveform)
 {
 	waveform_.clear();
 	waveform_ = waveform.split(" ",QString::SkipEmptyParts);
 }
 
+/*! \brief Gets the stored spike waveform as a string formatted like "X X X X " where each X is a floating point number.*/
 QString NeuralDataUnit::getWaveformAsString()
 {
 	return waveform_.join(" ");
 }
 
+/*! \brief Gets the stored spike waveform as a QByteArray.*/
 QByteArray NeuralDataUnit::getWaveformAsByteArray()
 {
 	float* pots = new float[waveform_.size()];
@@ -130,7 +131,7 @@ QByteArray NeuralDataUnit::getWaveformAsByteArray()
 	delete[] pots;
 	return returnVal;
 }
-
+/*! \brief Sets the stored spike waveform from a QByteArray as returned from getWaveformAsByteArray().*/
 void NeuralDataUnit::setWaveformFromByteArray(QByteArray waveform)
 {
 	const float* pots = reinterpret_cast<const float*>(waveform.constData());

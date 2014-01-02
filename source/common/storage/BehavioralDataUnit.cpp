@@ -7,6 +7,9 @@ BehavioralDataUnit::BehavioralDataUnit()
 {
 }
 
+/*! \brief Constucts a BehavioralDataUnit object.
+ *	\details x,y are the components of the signal channel.
+ */
 BehavioralDataUnit::BehavioralDataUnit(double X, double Y)
 {
 	x = X; 
@@ -14,9 +17,6 @@ BehavioralDataUnit::BehavioralDataUnit(double X, double Y)
 };
 
 /*! \brief Turns the BehavioralDataUnit into an XML fragment
- *
- *	The XML will look like this:
- *	<BehavioralDataUnit time=123.4324 x=450 y=394/>
  */
 bool BehavioralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {

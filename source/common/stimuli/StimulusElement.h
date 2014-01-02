@@ -6,11 +6,13 @@
 
 namespace Picto {
 
-/*!	\brief A base class for all stimulus elements.
+/*!	\brief NOT USED.  Original documentation appears below.  Should probably be deleted.
+ *
+ *	\details A base class for all stimulus elements.
  *
  *	This base class for all stimulus elements doesn't actually end up doing anything.
- *	I suppose we could delete it...  Or perhpas, we should move the DataStore 
- *	inheritance to here...
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 class StimulusElement

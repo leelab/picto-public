@@ -8,12 +8,20 @@ FrameDataUnit::FrameDataUnit()
 {
 }
 
+/*! \brief Constucts a FrameDataUnit object.
+ *	@param timestamp The time of the frame's first phosphor (as a string).
+ *	@param stateId The AssetId of the State that was active when this frame was displayed.
+ */
 FrameDataUnit::FrameDataUnit(QString timestamp, int stateId)
 {
 	time = timestamp;
 	stateId_ = stateId;
 }
 
+/*! \brief Constucts a FrameDataUnit object.
+ *	@param timestamp The time of the frame's first phosphor.
+ *	@param stateId The AssetId of the State that was active when this frame was displayed.
+ */
 FrameDataUnit::FrameDataUnit(double timestamp, int stateId)
 {
 	time = QString("%1").arg(timestamp,0,'f',14);
@@ -21,9 +29,6 @@ FrameDataUnit::FrameDataUnit(double timestamp, int stateId)
 }
 
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<FrameDataUnit time=1.234 state=somestate>1</FrameDataUnit>
  *	
  */
 bool FrameDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)

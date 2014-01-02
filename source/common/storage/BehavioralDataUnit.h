@@ -8,11 +8,12 @@
 
 namespace Picto {
 
-/*!	\brief Stores behavioral a single unit of behavioral data as an x,y,t triplet
+/*!	\brief Stores a single unit (ie. the sample for a single instant in time) of x,y behavioral data
  *
- *	The behavioral unit data stores a single unit of behavioral data
+ *	\details Behavioral data is just x,y SignalChannel data.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API BehavioralDataUnit : public DataUnit
 #else
@@ -27,8 +28,8 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 		
-	double x;
-	double y;
+	double x;	//!< The X component of the data
+	double y;	//!< The Y component of the data
 
 protected:
 	virtual void postDeserialize();

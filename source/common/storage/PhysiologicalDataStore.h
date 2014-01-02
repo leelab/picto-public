@@ -5,11 +5,12 @@
 
 namespace Picto {
 
-/*!	\brief Unimplemented.
+/*!	\brief NOT USED. Unimplemented. We should probably delete this.
  *
  *	I'm not sure what this was going to be used for.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PhysiologicalDataStore
 {
 public:

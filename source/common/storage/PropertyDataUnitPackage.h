@@ -10,13 +10,12 @@
 
 namespace Picto {
 
-/*!	\brief Stores behavioral data as x,y,t triplets
+/*!	\brief Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame
  *
- *	The behavioral data store is designed to work with signal channels
- *	to store behavioral data.  The store is used to convert data into
- *  XML fragments for movement across the network.
+ *	\details This class is meant to be used for transferring the Property value changes over a network.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PropertyDataUnitPackage : public DataUnit
 #else
@@ -26,15 +25,13 @@ class PropertyDataUnitPackage : public DataUnit
 public:
 
 	PropertyDataUnitPackage();
-	//Adds property data to the package.  If initValue is set,
-	//the property value will be marked as an init value.
 	void addData(int index, bool initValue, QString value);
-
 	void setActionFrame(qulonglong frameId);
-
+	/*! \brief Removes all PropertyDataUnits from this package.*/
 	void emptyData() { data_.clear(); };
-
+	/*! \brief Returns the number of PropertyDataUnits in this package.*/
 	int length() { return data_.length(); }
+	/*! \brief Returns the first PropertyDataUnit in this package and removes it from the list.*/
 	QSharedPointer<PropertyDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
 
 	//Data store functions

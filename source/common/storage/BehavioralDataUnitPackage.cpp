@@ -3,15 +3,12 @@
 
 namespace Picto {
 
-/*! \brief Contains all data from a single signal channel.
- * The name of the channel is passed in as input.
- */
 BehavioralDataUnitPackage::BehavioralDataUnitPackage()
 {
 }
 
 /*! \brief Input a comma separated list of value names for the input data.
- * This string is used to identify the number of input values, and 
+ * \details This string is used to identify the number of input values, and 
  * is sent along with the data to describe individual data points significance.
  * (ex. "xPos,yPos")
  */
@@ -27,7 +24,7 @@ void BehavioralDataUnitPackage::setChannel(QString channel)
 	channel_ = channel;
 }
 
-//! Adds a simple (x,y,t) data point
+//! Adds a simple (x,y) sample
 void BehavioralDataUnitPackage::addData(double x, double y)
 {
 	QSharedPointer<BehavioralDataUnit> newPoint(new BehavioralDataUnit(x,y));
@@ -37,8 +34,11 @@ void BehavioralDataUnitPackage::addData(double x, double y)
 /*!	\brief Adds the map returned from a behavioral data signal channel
  *
  *	The format of the input to this function seems a bit odd, but it is
- *	exactly the same Map used by SignalChannel::getValues, allowing
+ *	exactly the same Map used by SignalChannel::getValues(), allowing
  *	us to add the data directly to our data store.
+ *
+ *	frameToSampleOffset is the offset time between when the previous frame's phosphor appeared and when the first samples
+ *	in the input signalChannelData were read.
  */
 void BehavioralDataUnitPackage::addData(QMap<QString, QVector<double>> signalChannelData, double frameToSampleOffset)
 {
@@ -66,6 +66,8 @@ void BehavioralDataUnitPackage::addData(QMap<QString, QVector<double>> signalCha
 	}
 }
 
+/*! \brief Clears all data points apart from the ones at the latest time.
+*/
 void BehavioralDataUnitPackage::clearAllButLastDataPoints()
 {
 	if(length() > 1)
@@ -74,6 +76,8 @@ void BehavioralDataUnitPackage::clearAllButLastDataPoints()
 	}
 }
 
+/*! \brief Returns the list of BehavioralDataUnits as a ByteArray.
+*/
 QByteArray BehavioralDataUnitPackage::getDataAsByteArray()
 {
 	int arraySize = data_.size() * 2;//"* 2" is for x,y.  \todo This should be configurable so that we can support single signal channels.
@@ -91,6 +95,7 @@ QByteArray BehavioralDataUnitPackage::getDataAsByteArray()
 	return returnVal;
 }
 
+/*! \brief Returns the DataId of the last BehavioralDataUnit in the list.*/
 qulonglong BehavioralDataUnitPackage::getDataIDOfLastUnit()
 {
 	if(!data_.size())
@@ -99,13 +104,6 @@ qulonglong BehavioralDataUnitPackage::getDataIDOfLastUnit()
 }
 
 /*! \brief Turns the BehavioralDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<BehavioralDataUnitPackage>
- *		<BehavioralDataUnit time=123.4324 x=450 y=394/>
- *		<BehavioralDataUnit time=123.4334 x=457 y=386/>
- *		...
- *	</BehavioralDataUnitPackage>
  */
 bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -125,7 +123,8 @@ bool BehavioralDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> 
 
 	return true;
 }
-//! Converts XML into a BehavioralDataUnitPackage object.  Note that this deletes any existing data.
+/*! Converts XML into a BehavioralDataUnitPackage object.  Note that this deletes any existing data.
+*/
 bool BehavioralDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	emptyData();

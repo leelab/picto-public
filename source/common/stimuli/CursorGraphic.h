@@ -10,25 +10,19 @@
 
 namespace Picto {
 
-/*! \brief Displays the current location of an input
+/*! \brief A cursor graphic used to displays the current location of an input (typically the position signal).
  *
- *	The cursor graphic displays the current location of an input as taken
- *	from a signal channel.  It was designed and tested for use in an engine
- *	running in slave mode.
+ *	The cursor graphic displays the current x,y location of an input as taken
+ *	from a signal channel and is not meant to be used as part of an Experiment design.  It was designed and 
+ *	tested for use in an engine running in slave mode.
  *
- *	A CursorGraphic has the following properties:
- *	- Position: The position of the top-left corner of the box containing the cursor (in screen coordinates)
- *	- Color: The color of the circle
- *
- *	NOTE: In its current state, the cursor graphic can be used in a state
- *	machine, but it won't be possible to automatically update its location
- * using a signal channel
- *
- *	Initially, the cursor will be a simple cross.  However, future versions 
- *	will likely inlcude multiple shapes, and should probably include the 
- *	option to have a "tail" (showing how the cursor has moved).
+ *	This graphic is set as non-scalable (VisualElement::setScalable()) since we want the cross to remain
+ *	the same size regardless of the current viewer zoom state.
+ *	\note It might be a good idea to add a "tail" to the position signal at some point since this has proven
+ *	somewhat useful in Orion.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PICTOLIB_CLASS CursorGraphic : public VisualElement
 {
 	Q_OBJECT

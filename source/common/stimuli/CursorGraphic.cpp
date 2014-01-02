@@ -4,8 +4,12 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString CursorGraphic::type = "Cursor Graphic";
 
+/*! \brief Creates a new CursorGraphic object whose position will be determined by the input SignalChannel and with the input color.
+ *	\details The input SignalChannel must have x and y subcomponents.  This is checked in the constructor with assertions.
+ */
 CursorGraphic::CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color)
 : VisualElement(QPoint(0,0),color),
 size_(16)
@@ -19,20 +23,14 @@ size_(16)
 		Q_ASSERT(positionChannel_->getSubchannels().contains("x"));
 		Q_ASSERT(positionChannel_->getSubchannels().contains("y"));
 	}
-	propertyContainer_->addProperty(QVariant::String,"Name","");
+	propertyContainer_->addProperty(QVariant::String,"Name","");	//This object doesn't need a name, clear it.
 	propertyContainer_->setContainerName(type);
 	initializePropertiesToDefaults();
-	propertyContainer_->setPropertyValue("Position",QPoint(0,0));
-	propertyContainer_->setPropertyValue("Color",color);
+	propertyContainer_->setPropertyValue("Position",QPoint(0,0));	//Hmm... There already is a Position Property.  This line should probably be removed.
+	propertyContainer_->setPropertyValue("Color",color);	//Hmm... Isn't this handled in the VisualElement constructor.  This line should probably be removed.
 	setScalable(false);
 
 	draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 void CursorGraphic::draw()
@@ -63,7 +61,9 @@ void CursorGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
-//! \brief Change the position of the cursor every frame if we have a position channel
+/*! \brief Implements VisualElement::updateAnimation() to change the position of the cursor every frame based on the position SignalChannel's
+ *	x, y values.
+ */
 void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 {
 	Q_UNUSED(frame);
@@ -87,6 +87,7 @@ QPoint CursorGraphic::getPositionOffset()
 	return QPoint(size_/2,size_/2);
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* CursorGraphic::NewVisualElement()
 {
 	//! \TODO Figure out what to do in the NewVisualElement function
@@ -97,15 +98,6 @@ VisualElement* CursorGraphic::NewVisualElement()
 	//I'm going to ignore this issue.
 	return new CursorGraphic(QSharedPointer<SignalChannel>());
 }
-
-//void CursorGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											  QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 void CursorGraphic::postDeserialize()
 {

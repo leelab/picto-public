@@ -12,11 +12,13 @@ ObsoleteNameAsset::~ObsoleteNameAsset()
 {
 }
 
+/*! \brief Constructs and returns a shared pointer to a new ObsoleteNameAsset.*/
 QSharedPointer<Asset> ObsoleteNameAsset::Create()
 {
 	return QSharedPointer<Asset>(new ObsoleteNameAsset());
 }
 
+/*! \brief Implements Asset::serializeAsXml() to serialize this ObsoleteNameAsset back out exactly as it was serialized in but with the new tag name set in setNewTagName().*/
 bool ObsoleteNameAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	Q_ASSERT_X(tagText_ != "","DataStore::serializeAsXml","This datastore has no tag text, it was either not serialized in or not initialized to default values.");
@@ -52,6 +54,7 @@ bool ObsoleteNameAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStrea
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
+/*! \brief Implements Asset::deserializeFromXml() to deserialize this ObsoleteNameAsset so that it can have its tag name changed and be serialized back out.*/
 bool ObsoleteNameAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Create XMLStreamWriter to store this DataStore's tag text in a string
@@ -116,6 +119,8 @@ bool ObsoleteNameAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	}
 	return returnVal;
 }
+
+/*! \brief Extends DataStore::postDeserialize() to emit the edited() signal and tell this objects parent that it changed.*/
 void ObsoleteNameAsset::postDeserialize()
 {
 	DataStore::postDeserialize();
@@ -123,12 +128,13 @@ void ObsoleteNameAsset::postDeserialize()
 	emit edited();
 }
 
-//Sets the tag name to which this objects tag should be changed
+/*! \brief Sets the new name that should be used in this object's serialized XML tag.*/
 void ObsoleteNameAsset::setNewTagName(QString newName)
 {
 	newTagName_ = newName;
 }
 
+/*! \brief Returns the value of the "type" attribute in the XML that was deserialized into this object.*/
 QString ObsoleteNameAsset::getOriginalType()
 {
 	return origType_;

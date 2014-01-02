@@ -6,6 +6,17 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new VisualElement object with the input position and color.
+ *	\details Adds the following Properties, all of which are editable by the operator at runtime if the VisualElement is UIEnabled:
+ *	- Position: Defines the position of the VisualElement in the Scene where 0,0 is the top left corner and 800,600 is the bottom right corner.
+ *		It would have been a good idea to make Picto resolution independent, but this didn't happen.  Hopefully someone will be able to do this
+ *		someday.
+ *	- Color: Defines the color of the VisualElement.
+ *	- Layer: Defines the layer of the VisualElement where elements with higher layers are drawn on top of elements with lower layers.
+ *	- Visible: Defines whether anyone can see this VisualElement.
+ *	- OperatorView: Defines whether the Operator can see the VisualElement when its Visible Property is true.
+ *	- SubjectView: Defines whether the Subject can see the VisualElement when its Visible Property is true.
+ */
 VisualElement::VisualElement(QPoint position, QColor color) :
 	shouldUpdateCompositingSurfaces_(true),
 	scalable_(true)
@@ -26,6 +37,7 @@ VisualElement::~VisualElement()
 {
 }
 
+/*! \brief Returns the position of the Visual Element, or 0,0 if the Position is invalid.*/
 QPoint VisualElement::getPosition()
 {
 	QVariant positionVariant = propertyContainer_->getPropertyValue("Position");
@@ -39,35 +51,36 @@ QPoint VisualElement::getPosition()
 	}
 }
 
+/*! \brief Returns a rectangle that bounds the image that the VisualElement represents.*/
 QRect VisualElement::getBoundingRect()
 {
 	return image_.rect();
 }
 
-
-
+/*! \brief Sets the position of the VisualElement.*/
 void VisualElement::setPosition(QPoint position)
 {
 	propertyContainer_->setPropertyValue("Position",position);
 }
-
+/*! \brief Gets the color of the VisualElement.*/
 QColor VisualElement::getColor()
 {
 	return propertyContainer_->getPropertyValue("Color").value<QColor>();
 }
-
+/*! \brief Sets the color of the VisualElement.*/
 void VisualElement::setColor(QColor color)
 {
 	propertyContainer_->setPropertyValue("Color",color);
 }
 
+/*! \brief Sets the color of the VisualElement.*/
 void VisualElement::setColor(QVariant color)
 {
 	setColor(color.value<QColor>());
 }
 
-/*! \brief Returns whether the object is visible to the input user.
- *	The input is true for subject, false for operator
+/*! \brief Returns whether the object is currently visible to the input user.
+ *	\details The input is true for subject, false for operator
  */
 bool VisualElement::getVisibleByUser(bool subject)
 {
@@ -77,9 +90,9 @@ bool VisualElement::getVisibleByUser(bool subject)
 
 }
 
-/*! \Brief Sets this Visual Element scalable/non-scalable.  Visual Elements are scalable by default.
- *	The only reason a visual element would make itself non-scalable is if it is a kind of UI only element that should not
- *	scale down with the rest of the scene.  A good example of this type of functionality would be a cursor visible
+/*! \brief Sets this Visual Element scalable/non-scalable.  Visual Elements are scalable by default.
+ *	\details The only reason a visual element would be non-scalable is if it is a kind of UI only element that should not
+ *	scale down with the rest of the scene.  This is used for example with the red cursor that is visible
  *	only by the operator.  If the operator zooms out, he doesn't want the cursor graphic
  *	to get smaller.  It should stay the same size.  For that reason, the cursor graphic is set as non-scalable.
  */
@@ -129,6 +142,9 @@ void VisualElement::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+/*! \brief Adds a CompositingSurface on which the Image represented by this VisualElement will be drawn.
+ *	\details surfaceType is a string identifying the input compositingSurface type.
+*/
 void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<CompositingSurface> compositingSurface)
 {
 	compositingSurface->convertImage(image_);
@@ -137,6 +153,9 @@ void VisualElement::addCompositingSurface(QString surfaceType, QSharedPointer<Co
 		compositingSurface->dontAllowScaling();
 }
 
+/*! \brief Gets the CompositingSurface that was added to this VisualElement (addCompositingSurface()) with the input surfaceType name.
+ *	\details If not such CompositingSurface is found, an empty pointer is returned.
+*/
 QSharedPointer<CompositingSurface> VisualElement::getCompositingSurface(QString surfaceType)
 {
 	if(compositingSurfaces_.contains(surfaceType))
@@ -149,6 +168,10 @@ QSharedPointer<CompositingSurface> VisualElement::getCompositingSurface(QString 
 	}
 }
 
+/*! \brief Causes the image represented by this VisualElement to be redrawn on all of its CompositingSurface objects.
+ *	\details When the VisualElement contains some kind of animation, changes to the image need to be transfered to 
+ *	the CompositingSurfaces.  This function can be used for that purpose.
+ */
 void VisualElement::updateCompositingSurfaces()
 {
 	foreach(QSharedPointer<CompositingSurface> compositingSurface, compositingSurfaces_.values())
@@ -157,7 +180,10 @@ void VisualElement::updateCompositingSurfaces()
 	}
 }
 
-//If updateAnimation isn't implemented in the derived class, we can simply return.
+/*! \brief Causes a VisualElement with animation to update its underlying image object according to the input timing data.
+ *	\details When a change to the image occurs, shouldUpdateCompositingSurfaces_ can be set true, after which VisualElement::updateAnimation()
+ *	will make sure that all CompositingSurfaces are updated with the changed image (updateCompositingSurfaces()).
+ */
 void VisualElement::updateAnimation(int frame, QTime elapsedTime)
 {
 	Q_UNUSED(frame);
@@ -194,6 +220,11 @@ bool VisualElement::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
 	return true;
 }
 
+/*! \brief Called when any of the VisualElement's Property values change.  If the changed Property is the Name or Position Property,
+ *	draw() is called to redraw the underlying image.
+ *	\details It would be a good idea to look into this to see why its actually necessary.  draw() just updates the image itself, not
+ *	its position, so it shouldn't matter if the Position changed.  I'm not sure why anything has to change if the Property Name is changed.
+ */
 void VisualElement::slotPropertyValueChanged(Property* prop,QVariant)
 {
 	if(prop->getName() != "Position" && prop->getName() != "Name")

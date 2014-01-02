@@ -9,7 +9,7 @@
 
 namespace Picto {
 
-/*!	\brief An arrow graphic.
+/*!	\brief An arrow graphic.  This graphic is not currently used in Picto, so we won't be documenting it in detail.  Original documentation is included in the details.
  *
  *	An ArrowGraphic has the following properties:
  *	- Position: the position of the top-left corner of the box containing the arrow (in screen coordinates)
@@ -17,6 +17,9 @@ namespace Picto {
  *	- End: The end position of the arrow (in local coordinates)
  *	- Size: The size of the arrowhead
  *	- Color: The color
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class PICTOLIB_CLASS ArrowGraphic : public VisualElement
 {

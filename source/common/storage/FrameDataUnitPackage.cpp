@@ -6,29 +6,21 @@ namespace Picto {
 FrameDataUnitPackage::FrameDataUnitPackage()
 {
 }
-
+/*! \brief Adds a new frame to this package with the input first phosphor time and the input AssetId of the state that was active when this frame was displayed.*/
 void FrameDataUnitPackage::addFrame(double time, int stateId)
 {
 	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(time, stateId));
 	data_.append(data);
 }
 
+/*! \brief Adds a new frame to this package with the input first phosphor time (as a string) and the input AssetId of the state that was active when this frame was displayed.*/
 void FrameDataUnitPackage::addFrame(QString time, int stateId)
 {
 	QSharedPointer<FrameDataUnit> data(new FrameDataUnit(time, stateId));
 	data_.append(data);
 }
 
-
-
 /*! \brief Turns the FrameDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<FrameDataUnitPackage>
- *		<Frame timestamp=1.234 state=somestate>1</Frame>
- *		<Frame timestamp=1.434 state=somestate>2</Frame>
- *		...
- *	</FrameDataUnitPackage>
  *	
  */
 bool FrameDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)

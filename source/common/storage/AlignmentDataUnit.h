@@ -8,12 +8,14 @@
 
 namespace Picto {
 
-/*!	\brief Unimplemented. Neural Data.
+/*!	\brief A DataUnit used to send serialize/deserialize alignment data.
  *
- *	I'm not sure exactly how this was going to be used, but it is clearly
- *	intended to store neural data.  I suspect this may already be covered by
- *	the ACQGetCommand Handler in the Proxy Server.  It would be smart to move
- *	the definition here, but I didn't have time to do so...
+ *	\details Alignment events are 7 bit codes sent from the Director to the Proxy to synchronize their timing.
+ *	Both systems mark the time at which the alignment code occured, and the Directer, which generates the code
+ *	also records the index of the event (Alignment Number, not limited to 7 bits).  They can then be matched up and used for
+ *	a least squares method of time synchronization.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AlignmentDataUnit : public DataUnit
@@ -28,12 +30,18 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	void setTimestamp(double timestamp){timestamp_ = timestamp;}
+	/*! \brief Returns the alignment code (0->127).*/
 	void setAlignCode(int alignCode){alignCode_ = alignCode;}
+	/*! \brief Sets the alignment number.*/
 	void setAlignNumber(int alignNumber){alignNumber_ = alignNumber;}
 
+	/*! \brief Returns the time at which the alignment event occurred.*/
 	double getTimestamp(){return timestamp_;}
+	/*! \brief Returns the alignment code.*/
 	int getAlignCode(){return alignCode_;}
+	/*! \brief Returns true if this unit contains an alignment number (Proxy AlignmentDataUnits only have an AlignCode).*/
 	int hasAlignNumber(){return (alignNumber_ != -1);};
+	/*! \brief Returns the alignment number.*/
 	int getAlignNumber(){return alignNumber_;}
 
 protected:

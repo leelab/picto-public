@@ -8,9 +8,14 @@
 
 namespace Picto {
 
-/*!	\brief Unimplemented.
+/*!	\brief Stores information about all Task runs in a given session.
  *
- *	I'm not sure what this was going to be used for.
+ *	\details A Session can be viewed as a collection of Task runs (we often refer to these simply as "runs").
+ *	Objects of this class store a collection of TaskRunDataUnit objects containing meta-data about all of
+ *	the runs that made up a particular session.  Runs can be accessed by their DataId values or their
+ *	order in the session.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionDataPackage : public DataUnit
@@ -22,6 +27,7 @@ public:
 	SessionDataPackage();
 
 	void setTaskRun(QSharedPointer<TaskRunDataUnit> run);
+	/*! \brief Returns the number of Runs stored in this SessionDataPackage.*/
 	int getNumRuns(){return runsMap_.size();};
 	QSharedPointer<TaskRunDataUnit> getTaskRunByIndex(int index);
 	QSharedPointer<TaskRunDataUnit> getTaskRunByRunId(qulonglong id);

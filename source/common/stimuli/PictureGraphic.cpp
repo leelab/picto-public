@@ -4,8 +4,12 @@
 #include "../memleakdetect.h"
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString PictureGraphic::type = "Picture Graphic";
 
+/*! \brief Creates a PictureGraphic object at the input position based on the image at the input ImageFile path.
+ *	\details Adds an ImageFile Property to hold the path to the ImageFile.
+ */
 PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 : VisualElement(position)
 {
@@ -17,22 +21,9 @@ PictureGraphic::PictureGraphic(QPoint position, QString imageFile)
 		propertyContainer_->getProperty("Position")->setEdited();
 		propertyContainer_->getProperty("ImageFile")->setEdited();
 	}
-
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-
-	//propertyContainer_->addProperty(QVariant::String,"ImageFile",imageFile);
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
+/*! \brief Creates a new PictureGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> PictureGraphic::Create()
 {
 	return QSharedPointer<Asset>(new PictureGraphic());
@@ -48,19 +39,11 @@ void PictureGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* PictureGraphic::NewVisualElement()
 {
 	return new PictureGraphic;
 }
-
-//void PictureGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											   QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 void PictureGraphic::postDeserialize()
 {

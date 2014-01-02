@@ -45,6 +45,7 @@ bool RectTarget::contains(int x, int y)
 	return getOutside()?true:false;
 }
 
+/*! \brief Constructs and returns a shared pointer to a new RectTarget.*/
 QSharedPointer<Asset> RectTarget::Create()
 {
 	return QSharedPointer<Asset>(new RectTarget());

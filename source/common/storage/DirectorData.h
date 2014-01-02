@@ -8,9 +8,11 @@
 
 namespace Picto {
 
-/*!	\brief Stores information about a picto director instance
- *
- *	
+/*!	\brief Stores a list of RewardUnits including the Default reward quantities for all channels on this dierctor.
+ *	\details This data is used to synchronize the Workstation with the Director so that the same reward quantities set 
+ *	on the Director itself (through the Pictobox) appear in the workstation as well.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API DirectorData : public DataUnit

@@ -4,6 +4,7 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
@@ -62,11 +63,13 @@ void LineGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* LineGraphic::NewVisualElement()
 {
 	return new LineGraphic;
 }
 
+/*! \brief Creates a new LineGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> LineGraphic::Create()
 {
 	return QSharedPointer<Asset>(new LineGraphic());

@@ -6,7 +6,8 @@ namespace Picto {
 StateDataUnitPackage::StateDataUnitPackage()
 {
 }
-
+/*! \brier Adds the input Transition to this package's list of Transition traversals.
+*/
 void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition)
 {
 	QSharedPointer<StateDataUnit> data(new StateDataUnit());
@@ -14,6 +15,8 @@ void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition)
 	data_.append(data);
 }
 
+/*! \brier Adds a Transition by its AssetId to this package's list of Transition traversals.
+*/
 void StateDataUnitPackage::addTransition(int id)
 {
 	QSharedPointer<StateDataUnit> data(new StateDataUnit());
@@ -21,6 +24,9 @@ void StateDataUnitPackage::addTransition(int id)
 	data_.append(data);
 }
 
+/*! \brief Sets the DataId of the Frame that was presented following all Transition traversals
+ *	stored in this package.
+ */
 void StateDataUnitPackage::setActionFrame(qulonglong frameId)
 {
 	for(QList<QSharedPointer<StateDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
@@ -30,14 +36,6 @@ void StateDataUnitPackage::setActionFrame(qulonglong frameId)
 }
 
 /*! \brief Turns the StateDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<StateDataUnitPackage>
- *		<Frame timestamp=1.234 state=somestate>1</Frame>
- *		<Frame timestamp=1.434 state=somestate>2</Frame>
- *		...
- *	</StateDataUnitPackage>
- *	
  */
 bool StateDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -52,7 +50,7 @@ bool StateDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlSt
 
 	return true;
 }
-//! Converts XML into a StateDataUnitPackage object.  Note that this deletes any existing data.
+/*! Converts XML into a StateDataUnitPackage object.  Note that this deletes any existing data. */
 bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	clear();

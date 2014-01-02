@@ -7,10 +7,13 @@ AlignmentInfo::AlignmentInfo()
 {
 }
 
-/*! \brief Builds a new signal channel info object.
- *	@param sourceName The name of the source of the data that this information will align.
- *	@param offsetTime The name of the table associated with the signal channel
- *	@param temporalFactor The State Variable ID associated with the signal channel
+/*! \brief Builds a AlignmentInfo object.
+ *	\details There is a main timestream and a secondary time stream.  This object represents the timing of
+ *	the secondary time stream.  offsetTime is the offset of the secondary timestream from the first (ie. It might
+ *	have said 15 seconds when the primary said 0 seconds).  temporalFactor is the factor by which the primary
+ *	time stream needs to be multipled in order to align it with the secondary time stream (believe it or not
+ *	this is sometimes an issue, particularly with the Pictobox Nidaq card, although we handle that differently since
+ *	it doesn't except event codes).
  */
 AlignmentInfo::AlignmentInfo(	double offsetTime,
 								double temporalFactor)

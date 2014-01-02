@@ -9,22 +9,16 @@
 
 namespace Picto {
 
-/*!	\brief Stores state transitions.
+/*!	\brief Stores data about a particular Transition traversal that occured during a Task run 
+ *	for transmission over the network.
  *
- *	The state data store is used for storing the current state of the engine's 
- *	state machine.  These are generated when there is some sort of change in the
- *	state machine.
- *
- *	The XML format is:
- *	<StateDataUnit timestamp = 123.456 statemachinepath="state machine name">
- *		<Transition>
- *			<Source>TestState</Source>
- *			<SourceResult>Success</SourceResult>
- *			<Destination>Done</Destination>
- *		</Transition>
- *	</StateDataUnit>
+ *	\details Objects of this class store the AssetId of a Transition that was traversed along
+ *	with the DataId of the Frame that was presented following that traversal.  This information
+ *	can later be used to reproduce the precise path through the StateMachine that was taken
+ *	during a given session.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StateDataUnit : public DataUnit
 #else
@@ -37,17 +31,15 @@ public:
 	void setTransition(QSharedPointer<Transition> transition);
 	void setTransition(int id);
 
-	//void setTime(double time);
-	//void setTime(QString time);
+	/*! \brief Sets the DataId of the Frame that was presented following the Transition traversal
+	 *	contained in this object.*/
 	void setActionFrame(qulonglong frameId){actionFrame_ = frameId;};
 
-	//QString getMachinePath() { return machinePath_; };
+	/*! \brief Returns the Transition AssetId stored in this object.*/
 	int		getTransitionID(){return id_;};
+	/*! \brief Returns the DataId of the Frame that was presented following the Transition traversal
+	 *	contained in this object.*/
 	qulonglong getActionFrame(){return actionFrame_;};
-	//QString getTime() { return timestamp_; };
-	//QString getSource() { return source_; };
-	//QString getSourceResult() { return sourceResult_; };
-	//QString getDestination() { return destination_; };
 
 	//Data store functions
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);

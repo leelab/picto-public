@@ -6,8 +6,24 @@
 namespace Picto {
 
 #define PI 3.141592
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString TokenFactoryGraphic::type = "Token Factory Graphic";
 
+/*! \brief Creates a new TokenFactoryGraphic object at the input position and with the input dimensions and color.
+ *	\details Adds the following Properties:
+ *	- TokenShape: Stores the default shape of the tokens (Ellipse, Rectangle or Diamond).
+ *	- TokenSize: Stores the default size of the tokens.
+ *	- NumTokens: Stores the number of tokens to be displayed.
+ *	- Outline: Stores whether only the outline of the tokens will be shown by default.
+ *	- OutlineWidth: Stores the thickness of the outline that will be shown if "Outline" is true.
+ *	- TokenSizes: A comma separated list storing TokenSizes as a factor by which the default token size will be multiplied.  Unset values will be the default size.
+ *	- TokenColors: A comma separated list storing TokenColors.  Unset values will be the default color.
+ *	- TokenShapes: A comma separated list storing TokenShapes.  Unset values will be the default shape.
+ *	- TokenOutlines: A comma separated list storing whether only the outlines of Tokens will be drawn.  Unset values will be according to the default Outline value.
+ *	- TokenOutlineWidths: A comma separated list storing TokenOutlineWidgths.  Unset values will have the default OutlineWidth.
+ *	- TokenXs: A comma separated list storing Token x positions with respect to the position of the TokenFactoryGraphic itself.
+ *	- TokenYs: A comma separated list storing Token y positions with respect to the position of the TokenFactoryGraphic itself.
+ */
 TokenFactoryGraphic::TokenFactoryGraphic(QPoint position, QRect dimensions, QColor color)
 :
 VisualElement(position,color)
@@ -43,27 +59,40 @@ VisualElement(position,color)
 	deltaHashs_.push_back(&xDelta_);
 	deltaHashs_.push_back(&yDelta_);
 }
+
+/*! \brief Gets the default size of tokens.
+ *	\note Only the width and height of the returned QRect are defined.
+ */
 QRect TokenFactoryGraphic::getTokenDimensions()
 {
 	return QRect(QPoint(),propertyContainer_->getPropertyValue("TokenSize").toSize());
 }
 
+/*! \brief Sets the default size of tokens.
+ *	\note Only the width and height of the input QRect are used.  x,y position values will be ignored.
+*/
 void TokenFactoryGraphic::setTokenDimensions(QRect dimensions)
 {
 	propertyContainer_->setPropertyValue("TokenSize",dimensions.size());
 }
 
+/*! \brief Gets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+*/
 QString TokenFactoryGraphic::getTokenShape()
 {
 	return shapeList_.value(propertyContainer_->getPropertyValue("TokenShape").toInt(),"");
 }
 
+/*! \brief Sets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+*/
 void TokenFactoryGraphic::setTokenShape(QString shape)
 {
 	if(shapeList_.contains(shape))
 		propertyContainer_->setPropertyValue("TokenShape",shapeList_.indexOf(shape));
 }
 
+/*! \brief Sets the number of tokens to be displayed.
+*/
 void TokenFactoryGraphic::setNumTokens(int num)
 {
 	if(num < 0)
@@ -71,26 +100,37 @@ void TokenFactoryGraphic::setNumTokens(int num)
 	propertyContainer_->setPropertyValue("NumTokens",num);
 	updateListSizes();
 }
+
+/*! \brief Gets the number of tokens to be displayed.
+*/
 int TokenFactoryGraphic::getNumTokens()
 {
 	return propertyContainer_->getPropertyValue("NumTokens").toInt();
 }
 
+/*! \brief Gets whether only the outline of the tokens will be shown by default.
+*/
 bool TokenFactoryGraphic::getOutline()
 {
 	return propertyContainer_->getPropertyValue("Outline").toBool();
 }
 
+/*! \brief Sets whether only the outline of the tokens will be shown by default.
+*/
 void TokenFactoryGraphic::setOutline(bool on)
 {
 	propertyContainer_->setPropertyValue("Outline",on);
 }
 
+/*! \brief Gets the thickness of the outline that will be shown if "Outline" is true.
+*/
 int TokenFactoryGraphic::getOutlineWidth()
 {
 	return propertyContainer_->getPropertyValue("OutlineWidth").toInt();
 }
 
+/*! \brief Sets the thickness of the outline that will be shown if "Outline" is true.
+*/
 void TokenFactoryGraphic::setOutlineWidth(int pixels)
 {
 	if(pixels < 0)
@@ -102,30 +142,39 @@ QPoint TokenFactoryGraphic::getPositionOffset()
 {
 	return posOffset_;
 }
-
+/*! \brief Sets the global x,y position of the token at the input index.
+*/
 void TokenFactoryGraphic::setTokenPos(int index,int x,int y)
 {
 	setTokenX(index,x);
 	setTokenY(index,y);
 }
 
+/*! \brief Sets the local x,y position of the token at the input index with respect to the TokenFactoryGraphic position.
+*/
 void TokenFactoryGraphic::setTokenLocalPos(int index,int x,int y)
 {
 	setTokenLocalX(index,x);
 	setTokenLocalY(index,y);
 }
 
+/*! \brief Sets the global x position of the token at the input index.
+*/
 void TokenFactoryGraphic::setTokenX(int index,int x)
 {
 	int offset = getPosition().x();
 	setTokenLocalX(index,x-offset);
 }
 
+/*! \brief Sets the global y position of the token at the input index.
+*/
 void TokenFactoryGraphic::setTokenY(int index,int y)
 {
 	int offset = getPosition().y();
-	setTokenLocalY(index,y-offset);}
-
+	setTokenLocalY(index,y-offset);
+}
+/*! \brief Sets the local x position of the token at the input index with respect to the TokenFactoryGraphic position.
+*/
 void TokenFactoryGraphic::setTokenLocalX(int index,int x)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -135,6 +184,8 @@ void TokenFactoryGraphic::setTokenLocalX(int index,int x)
 	propertyContainer_->setPropertyValue("TokenXs",xs.join(","));
 }
 
+/*! \brief Sets the local y position of the token at the input index with respect to the TokenFactoryGraphic position.
+*/
 void TokenFactoryGraphic::setTokenLocalY(int index,int y)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -144,6 +195,9 @@ void TokenFactoryGraphic::setTokenLocalY(int index,int y)
 	propertyContainer_->setPropertyValue("TokenYs",ys.join(","));
 }
 
+/*! \brief Sets the relative size of the token with the input index to size.  size is a factor by which the default token size will be multiplied for the token at the 
+ *	input index.
+ */
 void TokenFactoryGraphic::setTokenSize(int index,double size)
 {
 	if(size > 1.0)
@@ -157,6 +211,8 @@ void TokenFactoryGraphic::setTokenSize(int index,double size)
 	propertyContainer_->setPropertyValue("TokenSizes",sizes.join(","));
 }
 
+/*! \brief Sets the color of the token with the input index to the input red, green, blue, alpha values.
+ */
 void TokenFactoryGraphic::setTokenColor(int index, int r, int g, int b, int a)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -166,12 +222,16 @@ void TokenFactoryGraphic::setTokenColor(int index, int r, int g, int b, int a)
 	propertyContainer_->setPropertyValue("TokenColors",colors.join(","));
 }
 
+/*! \brief Sets the color of the token with the input index to the input color QVariant.
+ */
 void TokenFactoryGraphic::setTokenColor(int index,QVariant color)
 {
 	QColor col = color.value<QColor>();
 	setTokenColor(index,col.red(),col.green(),col.blue());
 }
 
+/*! \brief Sets the shape of the token with the input index to the input shape name ("Ellipse", "Rectangle", or "Diamond").
+ */
 void TokenFactoryGraphic::setTokenShape(int index, QString shape)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -182,6 +242,9 @@ void TokenFactoryGraphic::setTokenShape(int index, QString shape)
 	shapes[index] = shape;
 	propertyContainer_->setPropertyValue("TokenShapes",shapes.join(","));
 }
+
+/*! \brief Sets whether only the outline will be drawn for the token with the input index.
+ */
 void TokenFactoryGraphic::setTokenOutline(int index, bool on)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -190,6 +253,9 @@ void TokenFactoryGraphic::setTokenOutline(int index, bool on)
 	outlines[index] = QString::number(int(on));
 	propertyContainer_->setPropertyValue("TokenOutlines",outlines.join(","));
 }
+
+/*! \brief Sets the outline width to be drawn for the token with the input index (if only its outline is being drawn).
+ */
 void TokenFactoryGraphic::setTokenOutlineWidth(int index, int pixels)
 {
 	if(index < 0 || index >= getNumTokens())
@@ -199,16 +265,22 @@ void TokenFactoryGraphic::setTokenOutlineWidth(int index, int pixels)
 	propertyContainer_->setPropertyValue("TokenOutlineWidths",outlineWidths.join(","));
 }
 
+/*! \brief Returns the global x position component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenX(int index)
 {
 	return getPosition().x() + getTokenLocalX(index);
 }
 
+/*! \brief Returns the global y position component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenY(int index)
 {
 	return getPosition().y() + getTokenLocalY(index);
 }
 
+/*! \brief Returns the x position component of the token at the input index with respect to the TokenFactoryGraphic position.
+ */
 int TokenFactoryGraphic::getTokenLocalX(int index)
 {
 	QStringList xs = propertyContainer_->getPropertyValue("TokenXs").toString().split(",",QString::SkipEmptyParts);
@@ -220,6 +292,8 @@ int TokenFactoryGraphic::getTokenLocalX(int index)
 	return val.toInt();
 }
 
+/*! \brief Returns the y position component of the token at the input index with respect to the TokenFactoryGraphic position.
+ */
 int TokenFactoryGraphic::getTokenLocalY(int index)
 {
 	QStringList ys = propertyContainer_->getPropertyValue("TokenYs").toString().split(",",QString::SkipEmptyParts);
@@ -230,6 +304,9 @@ int TokenFactoryGraphic::getTokenLocalY(int index)
 		return 0;
 	return val.toInt();
 }
+
+/*! \brief Returns the relative size factor of the token at the input index.
+ */
 double TokenFactoryGraphic::getTokenSize(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -242,22 +319,32 @@ double TokenFactoryGraphic::getTokenSize(int index)
 		return 1.0;
 	return result.toDouble();
 }
+/*! \brief Returns the red color component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenRed(int index)
 {
 	return getTokenColor(index).red();
 }
+/*! \brief Returns the green color component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenGreen(int index)
 {
 	return getTokenColor(index).green();
 }
+/*! \brief Returns the blue color component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenBlue(int index)
 {
 	return getTokenColor(index).blue();
 }
+/*! \brief Returns the alpha color component of the token at the input index.
+ */
 int TokenFactoryGraphic::getTokenAlpha(int index)
 {
 	return getTokenColor(index).alpha();
 }
+/*! \brief Returns the color of the token at the input index.
+ */
 QColor TokenFactoryGraphic::getTokenColor(int index)
 {
 	if(index > getNumTokens() || index < 0)
@@ -271,6 +358,8 @@ QColor TokenFactoryGraphic::getTokenColor(int index)
 		return getColor();;
 	return QColor(result);
 }
+/*! \brief Returns whether only the outline is being drawn for the token at the input index.
+ */
 bool TokenFactoryGraphic::getTokenOutline(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -283,6 +372,8 @@ bool TokenFactoryGraphic::getTokenOutline(int index)
 		return getOutline();
 	return result.toInt();
 }
+/*! \brief Returns the width of the outline being drawn for the token at the input index (when only its outline is drawn).
+ */
 int TokenFactoryGraphic::getTokenOutlineWidth(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -296,6 +387,9 @@ int TokenFactoryGraphic::getTokenOutlineWidth(int index)
 		return getOutlineWidth();
 	return result.toInt();
 }
+
+/*! \brief Returns the shape of the token at the input index as a string ("Ellipse", "Rectangle", or "Diamond").
+ */
 QString TokenFactoryGraphic::getTokenShape(int index)
 {
 	if(index > getNumTokens() || index < 0)
@@ -334,6 +428,7 @@ void TokenFactoryGraphic::draw()
 		//Stuff is in the process of being updated.
 		return;
 	}
+	//Whenever a list's value is "_" it should juist used the default value
 	for(int i=0;i<numTokens;i++)
 	{
 		if(sizes[i] == "_")
@@ -404,11 +499,13 @@ void TokenFactoryGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* TokenFactoryGraphic::NewVisualElement()
 {
 	return new TokenFactoryGraphic;
 }
 
+/*! \brief Creates a new TokenFactoryGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> TokenFactoryGraphic::Create()
 {
 	return QSharedPointer<Asset>(new TokenFactoryGraphic());
@@ -445,6 +542,8 @@ void TokenFactoryGraphic::postDeserialize()
 	}
 }
 
+/*! \brief Extends VisualElement::validateObject() to make sure that the number of tokens is not negative.
+ */
 bool TokenFactoryGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
@@ -455,6 +554,7 @@ bool TokenFactoryGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 		return false;
 	}
 
+	//This is a copy paste error, there is not Shape Property in this class.  Get rid of this line.
 	if(shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"") != "Ellipse")
 	{
 		addError("Non-Ellipse token trays are not yet supported.");
@@ -463,6 +563,8 @@ bool TokenFactoryGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
+/*! \brief Updates the sizes of the lists stored in this object's Property values when necessary (ie. number of tokens changes).
+*/
 void TokenFactoryGraphic::updateListSizes()
 {
 	int num = getNumTokens();
@@ -477,147 +579,9 @@ void TokenFactoryGraphic::updateListSizes()
 	}
 }
 
-//QPoint TokenFactoryGraphic::getTokenOffset(int index)
-//{
-//	QRect dims = getTrayDimensions();
-//	int numTokens = getNumTokens();
-//	double angle = double(index)*2.0*PI/double(numTokens);
-//	angle += propertyContainer_->getPropertyValue("Phase").toInt()*PI/180.0;
-//	//Keep angle in 0->2PI
-//	int fullLoops = angle/(2*PI);
-//	angle = angle-double(fullLoops*2*PI);
-//	double h = dims.height();
-//	double w = dims.width();
-//	if((w <= 0) || (h <= 0))//Ideally, these cases would be allowed and just signify a straight line.  I'm not going to worry about this right now.
-//		return QPoint(0,0);
-//	double x=0;
-//	double y=0;
-//
-//	QString trayShape = shapeList_.value(propertyContainer_->getPropertyValue("Shape").toInt(),"");
-//	if(trayShape == "Ellipse")
-//	{
-//		//Lots of algebra leads to the following x value where a line at angle (angle) intersects our ellipse
-//		x = sqrt( (h*h*w*w) / (4.0* ((w*w*tan(angle)*tan(angle))+(h*h)) ) );
-//		if((angle > PI/2.0) && (angle <= 3.0*PI/2.0))
-//			x = -x;
-//		//More algebra leads to the value of y below (where the line at angle (angle) intersects our ellipse).
-//		double buff = (w*w*.25)-(x*x);
-//		if(buff < 0) buff = 0;
-//		y=-sqrt( h*h*(buff)/(w*w) );	//negative sine is because y is down in screen coordinates but up in standard coordinates
-//		if(angle > PI)
-//			y = -y;
-//	}
-//	else if(trayShape == "Rectangle")
-//	{
-//		
-//	}
-//	else if(trayShape == "Diamond")
-//	{
-//	
-//	}
-//	return QPoint(x,y);
-//}
-
-
-//void TokenFactoryGraphic::updateParameterLists()
-//{
-//	if(updatingParameterLists_)	//Changing properties can have the affect of getting this called recursively
-//		return;				//This prevents that.
-//	updatingParameterLists_ = true;
-//
-//	//If default values have changed, empty the list to which the default applies because the 
-//	//init values in our list parameters are no longer accurate.  Ideally, we should just change the
-//	//list in the init value, but I haven't done that yet.
-//	if(getColor().name() != defaults_[1])
-//	{
-//		propertyContainer_->setPropertyValue("TokenColors","");
-//	}
-//	if(getTokenShape() != defaults_[2])
-//	{
-//		propertyContainer_->setPropertyValue("TokenShapes","");
-//	}
-//	if(QString::number(int(getOutline())) != defaults_[3])
-//	{
-//		propertyContainer_->setPropertyValue("TokenOutlines","");
-//	}
-//	if(QString::number(getOutlineWidth()) != defaults_[4])
-//	{
-//		propertyContainer_->setPropertyValue("TokenOutlineWidths","");
-//	}
-//
-//	QVector<QStringList> propLists;
-//	foreach(QString listName,listNames_)
-//	{
-//		propLists.push_back(propertyContainer_->getPropertyValue(listName).toString().split(",",QString::SkipEmptyParts));
-//	}
-//
-//	//Assure that list lengths match the number of tokens.
-//	int num = propertyContainer_->getPropertyValue("NumTokens").toInt();
-//	for(int i=0;i<propLists.size();i++)
-//	{
-//		while(num < propLists[i].size())
-//		{
-//			propLists[i].pop_back();
-//		}
-//		while(num > propLists[i].size())
-//		{
-//			propLists[i].push_back(defaults_[i]);
-//		}
-//		
-//	}
-//	
-//	//Write new changes over current lists.
-//	QHash<int,QString>::iterator iter;
-//	for(int i=0;i<deltaHashs_.size();i++)
-//	{
-//		for(iter = deltaHashs_[i]->begin();iter != deltaHashs_[i]->end();iter++)
-//		{
-//			if(propLists[i].size()<=iter.key())
-//				continue;	//In case numTokens was decreased after something was changed on a high index token
-//			int key = iter.key();
-//			QString val = iter.value();
-//			propLists[i][iter.key()] = iter.value();
-//		}
-//	}
-//
-//	//Rebuild property strings from lists.
-//	for(int i=0;i<listNames_.size();i++)
-//	{
-//		propertyContainer_->setPropertyValue(listNames_[i],propLists[i].join(","));
-//	}
-//	updatingParameterLists_ = false;
-//}
-
-//int TokenFactoryGraphic::getMaxTokenDiam()
-//{
-//	int defaultOutlineWidth = getOutlineWidth();
-//	int defaultWidth = getTokenWidth()+getOutlineWidth();
-//	int defaultHeight = getTokenHeight()+getOutlineWidth();
-//	int defaultTokenDiam = defaultWidth;
-//	if(defaultHeight > defaultWidth) defaultTokenDiam = defaultHeight;
-//	int maxDiam = defaultTokenDiam;
-//	if(defaultHeight > defaultWidth) maxDiam = defaultHeight;
-//	QStringList sizes = propertyContainer_->getPropertyValue("TokenSizes").toString().split(",",QString::SkipEmptyParts);
-//	QStringList outlineWidths = propertyContainer_->getPropertyValue("TokenOutlineWidths").toString().split(",",QString::SkipEmptyParts);
-//	if	(	(sizes.size() < getNumTokens())
-//		||	(outlineWidths.size() < getNumTokens())
-//		)
-//		return defaultTokenDiam + defaultOutlineWidth  + 1;	//If this is the case, somethings being updated and calling draw and the system won't really need this data yet.
-//	for(int i=0;i<getNumTokens();i++)
-//	{
-//		int oWidth = defaultOutlineWidth;
-//		int diam = defaultTokenDiam;
-//		if(sizes[i] != "_")
-//			diam *= sizes[i].toDouble();
-//		if(outlineWidths[i] != "_")
-//			oWidth = outlineWidths[i].toInt();
-//		int fullDiam = diam+oWidth;
-//		if(fullDiam > maxDiam)
-//			maxDiam = fullDiam;
-//	}
-//	return maxDiam+1;
-//}
-
+/*! \brief Calculates the minimum QImage size necessary to contain all of this TokenFactoryGraphic's tokens without clipping
+ *	any of them and returns it in a QRect.
+ */
 QRect TokenFactoryGraphic::getImageDims()
 {
 	int defaultOutlineWidth = getOutlineWidth();

@@ -9,19 +9,24 @@
 
 namespace Picto {
 
-/*!	\brief An ellipse graphic.
+/*!	\brief Represents an ellipse graphic.
  *
- *	An EllipseGraphic has the following properties:
- *	- Position: The position of the top-left corner of the box containing the ellipse (in screen coordinates)
- *	- Dimensions: The width and height of the ellipse
- *	- Color: The color
+ *	\details In addition to the Properties provided by the VisualElement class, this class provides size, outline and outline thickness
+ *	Properties.  The size is just the total width and height of the graphic.  The outline Property determines if only the outline of the
+ *	graphic will be drawn.  The outline thickness Property determines the thickness of the graphic outline if the outline Property is true.
+ *	\note Setting the width and height to be equal makes this graphic identical to a CircleGraphic with radius equal to half of the width
+ *	or height dimension.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PICTOLIB_CLASS EllipseGraphic : public VisualElement
 {
 	Q_OBJECT
+	/*! \brief Sets/gets the width of this graphic in pixels.*/
 	Q_PROPERTY(int width READ getWidth WRITE setWidth)
+	/*! \brief Sets/gets the height of this graphic in pixels.*/
 	Q_PROPERTY(int height READ getHeight WRITE setHeight)
+	/*! \brief Sets/gets whether this graphic will display only its outline.*/
 	Q_PROPERTY(bool outline READ getOutline WRITE setOutline)
 
 public:
@@ -30,14 +35,27 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	/*! \brief Returns a QRect with the dimensions (width, height) of this graphic.
+	 *	\note The returned value contains no position information.  Only the Width, Height
+	 *	values should be used.
+	 */
 	QRect getDimensions(){ return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize()); };
+	/*! \brief Sets the dimensions (width, height) of this graphic.
+	 *	\note Only the width and height of the input QRect are used.  x,y position values will be ignored.
+	 */
 	void setDimensions(QRect dimensions){ propertyContainer_->setPropertyValue("Size",dimensions.size());};
 
+	/*! \brief Returns the width of this graphic in pixels.*/
 	int getWidth(){return getDimensions().width();};
+	/*! \brief Returns the height of this graphic in pixels.*/
 	int getHeight(){return getDimensions().height();};
+	/*! \brief Sets the width of this graphic in pixels.*/
 	void setWidth(int w){QRect dims = getDimensions(); dims.setWidth(w);setDimensions(dims);};
+	/*! \brief Sets the height of this graphic in pixels.*/
 	void setHeight(int h){QRect dims = getDimensions(); dims.setHeight(h);setDimensions(dims);};
+	/*! \brief Returns whether this graphic is set to display only its outline.*/
 	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
+	/*! \brief Sets whether this graphic should display only its outline.*/
 	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
 
 	QPoint getPositionOffset();
@@ -46,6 +64,7 @@ public:
 	virtual QString friendlyTypeName(){return "Ellipse";};
 	virtual QString getUITemplate(){return "EllipseElement";};
 public slots:
+	/*! \brief Set the dimensions (width, height) of this graphic.*/
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};
 
 protected:
@@ -54,7 +73,6 @@ protected:
 
 private:
 	QPoint posOffset_;
-private slots:
 	
 };
 

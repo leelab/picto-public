@@ -11,6 +11,18 @@
 
 namespace Picto {
 
+/*! \brief Since Property objects are just another kind of Asset, we pickyback onto the AssetFactory system to create the Property objects used in DataStores.
+ *
+ *	\details A Property AssetFactory has minAssets and maxAsset of 1.  It is slightly more complicated than a typical AssetFactory since generating
+ *	a Property requires calling a non-static function on a particular PropertyContainer instance.  For that reason, this class simply extends AssetFactory
+ *	and reimplements generateNewAsset() to make use of the dynamic addProperty() function on the PropertyContainer passed into the constructor.
+ *  Other than that, it functions exactly the same.
+ *	
+ *	\note The PropertyFactory constructor includes minAsset, maxAssets inputs but it really shouldn't.  These should both always be one and it would be a
+ *	good idea to fix this at some point.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyFactory : public AssetFactory
 #else
@@ -25,8 +37,7 @@ public:
 		int propertyType, 
 		QString propIdentifier,
 		QVariant defaultValue = QVariant(),
-		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>()/*,
-		QVector<QSharedPointer<Asset>> defaultAssets = QVector<QSharedPointer<Asset>>()*/
+		QMap<QString,QVariant> attributeMap = QMap<QString,QVariant>()
 		);
 	virtual ~PropertyFactory(){};
 	

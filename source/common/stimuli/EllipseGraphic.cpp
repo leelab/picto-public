@@ -4,29 +4,21 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString EllipseGraphic::type = "Ellipse Graphic";
 
+/*! \brief Creates a new EllipseGraphic object at the input position and with the input dimensions and color.
+ *	\details Adds the following Properties:
+ *	- Outline: Stores whether only the graphics outline will be shown.
+ *	- OutlineThickness: Stores the thickness of the outline that will be shown if "Outline" is true.
+ *	- Size: Stores the size of the graphic (width, height).
+ */
 EllipseGraphic::EllipseGraphic(QPoint position, QRect dimensions, QColor color)
 : VisualElement(position,color)
 {
 	AddDefinableProperty(QVariant::Bool,"Outline",false);
 	AddDefinableProperty(QVariant::Int,"OutlineThickness",0);
 	AddDefinableProperty(QVariant::Size,"Size",dimensions.size());
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-
-	//propertyContainer_->addProperty(QVariant::Size,"Size",dimensions.size());
-
-	//propertyContainer_->setPropertyValue("Color",color);
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 void EllipseGraphic::draw()
@@ -54,11 +46,13 @@ void EllipseGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* EllipseGraphic::NewVisualElement()
 {
 	return new EllipseGraphic;
 }
 
+/*! \brief Creates a new EllipseGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> EllipseGraphic::Create()
 {
 	return QSharedPointer<Asset>(new EllipseGraphic());
@@ -68,15 +62,6 @@ QPoint EllipseGraphic::getPositionOffset()
 {
 	return posOffset_;
 }
-
-//void EllipseGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											  QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 void EllipseGraphic::postDeserialize()
 {

@@ -9,8 +9,6 @@ DirectorData::DirectorData()
 }
 
 /*! \brief Turns the DirectorDataPackage into an XML fragment
- *
- *	
  */
 bool DirectorData::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -22,7 +20,7 @@ bool DirectorData::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWrit
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a DirectorDataPackage object.  Note that this deletes any existing data.
+/*! \brief Converts XML into a DirectorDataPackage object.  Note that this deletes any existing data.*/
 bool DirectorData::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	rewardMap_.clear();
@@ -52,7 +50,7 @@ bool DirectorData::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStream
 	}
 	return true;
 }
-
+/*! \brief Sets the default duration (milliseconds) for rewards on the input channel.*/
 void DirectorData::setReward(int channel, int duration)
 {
 	QSharedPointer<RewardUnit> ru;
@@ -66,6 +64,7 @@ void DirectorData::setReward(int channel, int duration)
 	rewardMap_[channel] = ru;
 }
 
+/*! \brief Gets the default duration (milliseconds) for rewards on the input channel.*/
 int DirectorData::getRewardDuration(int channel)
 {
 	if(rewardMap_.contains(channel))
@@ -73,6 +72,7 @@ int DirectorData::getRewardDuration(int channel)
 	return -1;
 }
 
+/*! \brief Gets a lookup table of reward durations keyed by reward channel.*/
 QHash<int,int> DirectorData::getRewardMap()
 {
 	QHash<int,int> returnVal;

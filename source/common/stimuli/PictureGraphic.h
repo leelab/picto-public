@@ -9,17 +9,25 @@
 
 namespace Picto {
 
-/*!	\brief A picture graphic.
+/*!	\brief This is ALMOST an obsolete class that does the same thing as ImageFile but in a less logical way.  We can't quite get rid of it yet though because
+ *	it is being used to display the BlockDesign splash screen.
  *
- *	A PictureGraphic has the following properties:
- *	- Position: The position of the top-left corner of the box containing the picture (in screen coordinates)
- *	- ImageFile: The name of the file to display
+ *	\details This class was created long ago as a way to show the BlockDesign splash screen in Picto.  It is very limited though in the fact that it
+ *	requires the image that it wants to display to actually be loaded on the hard disk of the computer running Picto.  This means that in order to
+ *	use it for images in experimental designs, we would have to make sure to also copy all of the correct image files to the Director computer 
+ *	before running the Picto Experiment or else it wouldn't work.  The ImageGraphic class takes care of these issues by embedding the image file code
+ *	in the Design file itself.  The ImageGraphic system also separated ImageFileParameter objects and ImageGraphic objects so that a given ImageGraphic
+ *	can quickly switch the particular graphic that is being displayed.
+ *	
+ *	In summary, this class should be removed, but first we will have to set Picto up to use the ImageGraphic for displaying the BlockDesign splash
+ *	screen.  This was never a high proirity so it hasn't happened yet.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
-
 class PICTOLIB_CLASS PictureGraphic : public VisualElement
 {
 	Q_OBJECT
+	/*! \brief Sets/Gets the current image file path.*/
 	Q_PROPERTY(QString imageFile READ getImageFile WRITE setImageFile)
 public:
 	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
@@ -27,7 +35,9 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 
+	/*! \brief Gets the current image file path.*/
 	QString getImageFile() { return propertyContainer_->getPropertyValue("ImageFile").toString(); };
+	/*! \brief Sets the image file path to the input value.*/
 	void setImageFile(QString fileName) { propertyContainer_->setPropertyValue("ImageFile",fileName); };
 
 	static const QString type;

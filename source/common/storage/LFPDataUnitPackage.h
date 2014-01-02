@@ -12,6 +12,8 @@
 
 namespace Picto {
 
+/*! \brief This doesn't appear to be used in Picto in any meaningful way, it should probably be deleted.
+ */
 struct lfpDataBlock
 {
 	lfpDataBlock(double timestamp,double timePerSample){timestamp_=timestamp;timePerSample_=timePerSample;};
@@ -20,27 +22,23 @@ struct lfpDataBlock
 	double timePerSample_;
 };
 
-/*!	\brief Stores local field data
+/*!	\brief Stores local field data for transmission over a network.
  *
- *	Currently, local field potential data storage is implemented as a one shot deal.
- *	At the end of a session, all local field data is sent to server as a single 
- *	data store.  It is meant to be written to the lfp database once
- *	with aligned timestamps, with one row per channel per session.
- *	The cleaner way to do this would be to create one row per timestamp
- *	with columns for each channel, but with the current database Sqlite
- *	this simply takes too long.  We ran a benchmark test and found that
+ *	\details Each LFPDataUnitPackage holds a list of LFP data that was read starting at
+ *	a stored timestamp with a stored sample period for a particular stored channel.  The
+ *	class also includes functions for setting "aligned" timestamps and sample periods so
+ *	that the function can include lfp timing that is aligned to the behavioral timestream.
+ *	The correlation coefficient for the least squares fitting of the timestamp alignment 
+ *	can be stored here as well.
+ *	\note Originally, we wanted to right LFP data on a row by row basis with one row for 
+ *	each timestamp and columns for each channel, but with the current Sqlite database 
+ *	this simply takes way too long.  We ran a benchmark test and found that
  *	each character stored in a new row takes an additional ~20us, whereas
  *	each character stored in the same row takes an additional ~20ns.
- *	Big difference.
- *	A typical session can include millions of timestamps, which means
- *	that even the most efficient of Sql commands would require multiple
- *	minutes of processing power over the course of the session, even if 
- *  we could somehow write everything at once.  
- *	This is too much.  
- *	By putting everything on one line, we can bring this time down to 
- *	tens of milliseconds of processing, which is much more doable.  Possibly
- *	we can add post session background database conversion at some
- *	point to move the values into separate rows by timestamp.
+ *	Big difference.  For this reason, we are storing lfp data in ~500ms chunks
+ *	indexed by timestamp and channel.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API LFPDataUnitPackage : public DataUnit
@@ -54,25 +52,43 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	/*! \brief Sets the lfp channel whose data is stored in this object.*/
 	void setChannel(int channel){channel_ = channel;};
+	/*! \brief Sets the least squares correlation coefficient describing the quality of the neural to behavioral alignment
+	 *	estimate.
+	 */
 	void setCorrelation(double correlation){correlation_ = correlation;}
+	/*! \brief Sets the time at which the first LFP sample stored here occured (not yet aligned to behavioral timestream).*/
 	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',14);};
+	/*! \brief Sets the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.*/
 	void setFittedTimestamp(double timestamp){fittedTimestamp_ = QString::number(timestamp,'e',14);};
+	/*! \brief Sets the time per LFP sample in the neural timestream (not yet aligned to behavioral timestream).*/
 	void setResolution(double resolution){resolution_ = resolution;};
+	/*! \brief Sets the time per LFP sample as aligned to the behavioral timestream.*/
 	void setFittedResolution(double fittedresolution){fittedResolution_ = fittedresolution;};
 	void appendData(const float* adPotentialReadings, int numVals);
 	void appendData(float adPotentialReading);
+	/*! \brief Returns the number of LFP samples stored in this object.*/
 	int numSamples(){return numSamples_;};
 
+	/*! \brief Returns the least squares correlation coefficient describing the quality of the neural to behavioral alignment
+	 *	estimate.
+	 */
 	double getCorrelation(){return correlation_;}
+	/*! \brief Returns the time at which the first LFP sample stored here occured (not yet aligned to behavioral timestream).*/
 	QString getTimestamp(){return timestamp_;};
+	/*! \brief Returns the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.*/
 	QString getFittedTimestamp(){return fittedTimestamp_;};
+	/*! \brief Returns the time per LFP sample in the neural timestream (not yet aligned to behavioral timestream).*/
 	double getResolution(){return resolution_;};
+	/*! \brief Returns the time per LFP sample as aligned to the behavioral timestream.*/
 	double getFittedResolution(){return fittedResolution_;};
+	/*! \brief Returns the list of Local Field Potentials as a single string with values separated by spaces.*/
 	QString getPotentials(){return potentials_.join(" ");};
 	QByteArray getPotentialsAsByteArray();
 	QLinkedList<QPointF> getAlignedDataAsLinkedList();
 	void setPotentialsFromByteArray(QByteArray potentials);
+	/*! \brief Returns the lfp channel whose data is stored in this object.*/
 	int getChannel(){return channel_;};
 
 protected:

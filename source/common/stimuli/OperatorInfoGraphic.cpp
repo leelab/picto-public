@@ -5,8 +5,15 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString OperatorInfoGraphic::type = "Operator Info Graphic";
 
+/*! \brief Constructs an OperatorInfoGraphic object.
+ *	\details Adds the following Properties:
+ *	- Size: Stores the size of the graphic window containing text (width, height).
+ *	- Fields: Stores a comma separated list of all of the graphic's fields names (like keys in a lookup table).
+ *	- Values: Stores a comma separated list of all of the graphic's values ordered like the Fields Property value.
+ */
 OperatorInfoGraphic::OperatorInfoGraphic()
 : VisualElement(QPoint(),QColor(Qt::green)),
 settingPropsFromMap_(false)
@@ -53,11 +60,13 @@ void OperatorInfoGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* OperatorInfoGraphic::NewVisualElement()
 {
 	return new OperatorInfoGraphic;
 }
 
+/*! \brief Creates a new OperatorInfoGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> OperatorInfoGraphic::Create()
 {
 	return QSharedPointer<Asset>(new OperatorInfoGraphic());
@@ -70,6 +79,15 @@ void OperatorInfoGraphic::enteredScope()
 	VisualElement::enteredScope();
 }
 
+/*! \brief Sets the input value to the input field.  If the field does not yet exist, it will be added.
+ *	\note This change does not actually take effect until updateValue is called.  This was originally designed
+ *	to save lots of unnecessary writes of long Fields/Values Property values to the server.  Since then we
+ *	have added things like the VariableList and VariableMap which don't worry about that type of issue though,
+ *	so it might make sense to think about changing this at some point; however, this could certainly adversely
+ *	effect older sessions, so some thought will need to be put into this.
+ *	\note When data is actually written to the screen, it is written in the order that field/value pairs
+ *	are added to this object.
+ */
 void OperatorInfoGraphic::setData(QString field, QVariant value)
 {
 	if(!infoMap_.contains(field))
@@ -79,6 +97,8 @@ void OperatorInfoGraphic::setData(QString field, QVariant value)
 	infoMap_[field] = value;
 }
 
+/*! \brief Returns a list of all of the field names currently used in this object.
+ */
 QVariantList OperatorInfoGraphic::getFields()
 {
 	QStringList fields = propertyContainer_->getPropertyValue("Fields").toString().split(",");
@@ -91,6 +111,8 @@ QVariantList OperatorInfoGraphic::getFields()
 	return returnVal;
 }
 
+/*! \brief Returns a list of all of the values currently used in this object ordered like the result of getFields().
+ */
 QVariantList OperatorInfoGraphic::getValues()
 {
 	QStringList values = propertyContainer_->getPropertyValue("Values").toString().split(",");
@@ -103,6 +125,9 @@ QVariantList OperatorInfoGraphic::getValues()
 	return returnVal;
 }
 
+/*! \brief Causes all of the updates of fields/values that have been made since the last call to this function to "take effect" and be written
+*	into the "Fields" and "Values" Properties.
+*/
 void OperatorInfoGraphic::updateValue()
 {
 	QStringList values;
@@ -116,6 +141,8 @@ void OperatorInfoGraphic::updateValue()
 	settingPropsFromMap_ = false;
 }
 
+/*! \brief Returns the value of the input field if it exists or an empty QVariant otherwise.
+*/
 QVariant OperatorInfoGraphic::getData(QString field)
 {
 	if(infoMap_.contains(field))
@@ -140,6 +167,9 @@ bool OperatorInfoGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
+/*! \brief Whenever the Fields or Values Properties change due to an outside source (a SlaveExperimentDriver might set them in playback for example)
+ *	this object's internal data needs to be updated accordingly.  This takes care of that.
+ */
 void OperatorInfoGraphic::propValueChanged(Property*,QVariant)
 {
 	//If the change happened because of one of this object's functions, return.

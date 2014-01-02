@@ -4,8 +4,15 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString GridGraphic::type = "Grid Graphic";
 
+/*! \brief Constructs a GridGraphic object.
+ *	\detils Adds the following Properties:
+ *	- Rows: The number of rows in the grid (where a row is the space between horizontal lines)
+ *	- Columns: The number of colums in the grid (where a column is the space between vertical lines)
+ *	- Size:	The total size of the grid graphic.
+ */
 GridGraphic::GridGraphic()
 : VisualElement()
 {
@@ -51,11 +58,13 @@ void GridGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* GridGraphic::NewVisualElement()
 {
 	return new GridGraphic;
 }
 
+/*! \brief Creates a new GridGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> GridGraphic::Create()
 {
 	return QSharedPointer<Asset>(new GridGraphic());
@@ -88,6 +97,8 @@ void GridGraphic::postDeserialize()
 	draw();
 }
 
+/*! \brief Extends VisualElement::validateObject() to verify that the Rows and Columns values are greater than zero.
+*/
 bool GridGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))

@@ -7,7 +7,7 @@ SignalChannelInfo::SignalChannelInfo()
 {
 }
 
-/*! \brief Builds a new signal channel info object.
+/*! \brief Builds a SignalChannelInfo object.
  *	@param name The signal channel name
  *	@param tableName The name of the table associated with the signal channel
  *	@param stateVariableId The State Variable ID associated with the signal channel
@@ -46,7 +46,7 @@ bool SignalChannelInfo::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStrea
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a SignalChannelInfo object.  Note that this deletes any existing data.
+/*! Converts XML into a SignalChannelInfo object.  Note that this deletes any existing data.*/
 bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking

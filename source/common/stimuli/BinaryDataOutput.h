@@ -7,15 +7,16 @@
 
 namespace Picto {
 
-/*!	\brief A circle graphic.
- *
- *	A BinaryDataOutput has the following properties:
- *	Widget to control the output of a digital port from the director.
+/*!	\brief An OutputSignal that handles the value of multiple pins over an entire port.
+ *	\details Output values are set as an integer.  The integer is intepreted
+ *	as a binary value and written to the output port accordingly.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PICTOLIB_CLASS BinaryDataOutput : public OutputSignal
 {
 	Q_OBJECT
+	/*! \brief Gets/sets the value on the output port as an integer in binary form.*/
 	Q_PROPERTY(int value READ getBinValue WRITE setBinValue)
 public:
 	BinaryDataOutput();
@@ -23,8 +24,11 @@ public:
 	static QSharedPointer<Asset> Create();
 	static const QString type;
 	
+	/*! \brief Sets the value on the output port to the binary form of the input integer.*/
 	void setBinValue(int value){propertyContainer_->setPropertyValue("Value",value);};
+	/*! \brief Returns the value on the output port when interpreted as the binary form of an integer.*/
 	int getBinValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
+	/*! \brief This is a bug and should be removed. This element does not contain a Pin Property.*/
 	void setPin(int pin){propertyContainer_->setPropertyValue("Pin",pin);};
 	virtual int getPin(){return -1;};
 	virtual QVariant getValue(){return QVariant(getBinValue());};

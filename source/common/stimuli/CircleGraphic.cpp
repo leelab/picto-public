@@ -4,8 +4,15 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString CircleGraphic::type = "Circle Graphic";
 
+/*! \brief Creates a new CircleGraphic object at the input position and with the input radius and color.
+ *	\details Adds the following Properties:
+ *	- Outline: Stores whether only the graphics outline will be shown.
+ *	- OutlineThickness: Stores the thickness of the outline that will be shown if "Outline" is true.
+ *	- Radius: Stores the radius of the circle in Pixels.
+ */
 CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 : VisualElement(position,color)
 {
@@ -16,25 +23,6 @@ CircleGraphic::CircleGraphic(QPoint position, int radius, QColor color)
 	//attributeMap["maximum"] = 1000;
 	//attributeMap["singleStep"] = 1;
 	AddDefinableProperty(QVariant::Int,"Radius",radius,attributeMap);
-
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-
-	//QSharedPointer<Property> radiusProperty = propertyContainer_->addProperty(QVariant::Int,"Radius",radius);
-	//radiusProperty->setAttribute("minimum", 1);
-	//radiusProperty->setAttribute("maximum", 1000);
-	//radiusProperty->setAttribute("singleStep", 1);
-
-	//propertyContainer_->setPropertyValue("Color",color);
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 void CircleGraphic::draw()
@@ -67,24 +55,17 @@ void CircleGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* CircleGraphic::NewVisualElement()
 {
 	return new CircleGraphic;
 }
 
+/*! \brief Creates a new CircleGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> CircleGraphic::Create()
 {
 	return QSharedPointer<Asset>(new CircleGraphic());
 }
-
-//void CircleGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											  QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 QPoint CircleGraphic::getPositionOffset()
 {

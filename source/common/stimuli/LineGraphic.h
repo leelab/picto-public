@@ -11,7 +11,8 @@
 
 namespace Picto {
 
-/*!	\brief A line segment graphic.
+/*!	\brief This class is not currently used in Picto.  The original documentation appears below:
+ *	\details A line segment graphic.
  *
  *	A line graphic is basically a set of points (in the graphic's internal coordinates) that draw a 
  *	series of line segments.  This one is a bit weird, since the number of properties is indeterminate
@@ -21,8 +22,9 @@ namespace Picto {
  *	- Position: The position of the top-left corner of the box containing the line (in screen coordinates)
  *	- Point 1 - N: The points (in order) that will be conencted to form the line graphic.
  *	- Color: The color of the lines
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PICTOLIB_CLASS LineGraphic : public VisualElement
 {
 	Q_OBJECT

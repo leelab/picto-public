@@ -7,14 +7,10 @@ DataSourceInfo::DataSourceInfo()
 {
 }
 
-/*! \brief Builds a new signal channel info object.
- *	@param name The signal channel name
- *	@param tableName The name of the table associated with the signal channel
- *	@param stateVariableId The State Variable ID associated with the signal channel
- *	@param resolution time between each group of subchannel samples (seconds)
- *	@param subchannels number of subchannels in this SignalChannel
- *	@param subchannelNames A comma seperated string describing the subchannels
- *	in order of appearance(i.e. "xPos,yPos")
+/*! \brief Builds a new DataSourceInfo object.
+ *	@param name The of the DataSource (ie. "lfp" or "spikes")
+ *	@param tableName The name of the table to be associated with data source
+ *	@param resolution time between each sample in the source (for spikes this is in reference to the waveform)
  */
 DataSourceInfo::DataSourceInfo(QString name,
 									 QString tableName,

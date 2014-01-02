@@ -10,15 +10,17 @@ RewardUnit::RewardUnit()
 {
 }
 
+/*! \brief Constructs a RewardUnit object.
+ *	@param duration The duration of the reward delivery in milliseconds.
+ *	@param channel The reward channel for which this is the default duration.
+ */
 RewardUnit::RewardUnit(int channel, int duration)
 :	channel_(channel),
 	duration_(duration)
 {
 }
 
-/*! \brief Turns the RewardUnitPackage into an XML fragment
- *
- *	
+/*! \brief Turns the RewardUnit into an XML fragment
  */
 bool RewardUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -28,7 +30,7 @@ bool RewardUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a RewardUnitPackage object.  Note that this deletes any existing data.
+//! Converts XML into a RewardUnit object.  Note that this deletes any existing data.
 bool RewardUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
@@ -75,16 +77,19 @@ bool RewardUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRe
 	return true;
 }
 
+/*! \brief Sets the input number of milliseconds as the default duration for this RewardUnit.*/
 void RewardUnit::setDuration(int duration)
 {
 	duration_ = duration;
 }
 
+/*! \brief Gets the number of milliseconds of reward for this RewardUnit.*/
 int RewardUnit::getDuration()
 {
 	return duration_;
 }
 
+/*! \brief Gets the channel for which this RewardUnit stores the default reward duration.*/
 int RewardUnit::getChannel()
 {
 	return channel_;

@@ -6,8 +6,26 @@
 namespace Picto {
 
 #define PI 3.141592
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString TokenTrayGraphic::type = "Token Tray Graphic";
 
+/*! \brief Creates a new TokenTrayGraphic object at the input position and with the input dimensions and color.
+ *	\details Adds the following Properties:
+ *	- Shape: Stores the shape of the Token tray itself.  Tokens will be dispersed along a path of this shape.  Currently, only Ellipse is supported.
+ *	- Size: Stores the size of the Token tray itself (width, height).
+ *	- TokenShape: Stores the default shape of the individual tokens themselves (Ellipse, Rectangle or Diamond).
+ *	- TokenSize: Stores the default size of the individual tokens themselves.
+ *	- NumTokens: Stores the number of tokens to be displayed in this tray.
+ *	- Phase: Stores the Phase in degrees at which the tokens will start being drawn starting from the right side and in a counter clockwise direction 
+ *		(ie. 0 - 360 where 0 is along the x axis).
+ *	- Outline: Stores whether only the outline of the individual tokens will be shown by default.
+ *	- OutlineWidth: Stores the thickness of the outline that will be shown if "Outline" is true.
+ *	- TokenSizes: A comma separated list storing individual TokenSizes as a factor by which the default token size will be multiplied.  Unset values will be the default size.
+ *	- TokenColors: A comma separated list storing individual TokenColors.  Unset values will be the default color.
+ *	- TokenShapes: A comma separated list storing individual TokenShapes.  Unset values will be the default shape.
+ *	- TokenOutlines: A comma separated list storing whether only the outlines of individual Tokens will be drawn.  Unset values will be according to the default Outline value.
+ *	- TokenOutlineWidths: A comma separated list storing individual TokenOutlineWidgths.  Unset values will have the default OutlineWidth.
+ */
 TokenTrayGraphic::TokenTrayGraphic(QPoint position, QRect dimensions, QColor color)
 :
 VisualElement(position,color)
@@ -48,27 +66,37 @@ VisualElement(position,color)
 	deltaHashs_.push_back(&outlineDelta_);
 	deltaHashs_.push_back(&outlineWidthDelta_);
 }
+/*! \brief Gets the default size of individual tokens.
+ *	\note Only the width and height of the returned QRect are defined.
+ */
 QRect TokenTrayGraphic::getTokenDimensions()
 {
 	return QRect(QPoint(),propertyContainer_->getPropertyValue("TokenSize").toSize());
 }
-
+/*! \brief Sets the default size of individual tokens.
+ *	\note Only the width and height of the input QRect are used.  x,y position values will be ignored.
+*/
 void TokenTrayGraphic::setTokenDimensions(QRect dimensions)
 {
 	propertyContainer_->setPropertyValue("TokenSize",dimensions.size());
 }
-
+/*! \brief Gets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+*/
 QString TokenTrayGraphic::getTokenShape()
 {
 	return shapeList_.value(propertyContainer_->getPropertyValue("TokenShape").toInt(),"");
 }
 
+/*! \brief Sets the default TokenShape as a string ("Ellipse", "Rectangle", or "Diamond").
+*/
 void TokenTrayGraphic::setTokenShape(QString shape)
 {
 	if(shapeList_.contains(shape))
 		propertyContainer_->setPropertyValue("TokenShape",shapeList_.indexOf(shape));
 }
 
+/*! \brief Sets the number of tokens to be displayed.
+*/
 void TokenTrayGraphic::setNumTokens(int num)
 {
 	if(num < 0)
@@ -76,56 +104,84 @@ void TokenTrayGraphic::setNumTokens(int num)
 	propertyContainer_->setPropertyValue("NumTokens",num);
 	updateListSizes();
 }
+
+/*! \brief Gets the number of tokens to be displayed.
+*/
 int TokenTrayGraphic::getNumTokens()
 {
 	return propertyContainer_->getPropertyValue("NumTokens").toInt();
 }
 
+/*! \brief Returns a QRect with the dimensions (width, height) of this entire token tray.
+ *	\note The returned value contains no position information.  Only the Width, Height
+ *	values should be used.
+*/
 QRect TokenTrayGraphic::getTrayDimensions()
 {
 	return QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 }
 
+/*! \brief Sets the dimensions (width, height) of the entire tokey tray.
+ *	\note Only the width and height of the input QRect are used.  x,y position values will be ignored.
+*/
 void TokenTrayGraphic::setTrayDimensions(QRect dimensions)
 {
 	propertyContainer_->setPropertyValue("Size",dimensions.size());
 }
 
+/*! \brief Gets the shape of the Token tray as a string (currently only "Ellipse" is supported).
+*/
 QString TokenTrayGraphic::getTrayShape()
 {
 	return shapeList_.value(propertyContainer_->getPropertyValue("TrayShape").toInt(),"");
 }
 
+/*! \brief Sets the default shape of the token tray as a string (currently only "Ellipse" is supported).
+*/
 void TokenTrayGraphic::setTrayShape(QString shape)
 {
 	if(shapeList_.contains(shape))
 		propertyContainer_->setPropertyValue("TrayShape",shapeList_.indexOf(shape));
 }
 
+/*! \brief Gets the Phase in degrees at which the tokens start being drawn starting from the right side and in a counter clockwise direction 
+ *		(ie. 0 - 360 where 0 is along the x axis).
+ */
 int TokenTrayGraphic::getPhase()
 {
 	return propertyContainer_->getPropertyValue("Phase").toInt();
 }
+/*! \brief Sets the Phase in degrees at which the tokens start being drawn starting from the right side and in a counter clockwise direction 
+ *		(ie. 0 - 360 where 0 is along the x axis).
+ */
 void TokenTrayGraphic::setPhase(int phase)
 {
 	propertyContainer_->setPropertyValue("Phase",phase);
 }
 
+/*! \brief Gets whether only the outline of the individual tokens will be shown by default.
+*/
 bool TokenTrayGraphic::getOutline()
 {
 	return propertyContainer_->getPropertyValue("Outline").toBool();
 }
 
+/*! \brief Sets whether only the outline of the individual tokens will be shown by default.
+*/
 void TokenTrayGraphic::setOutline(bool on)
 {
 	propertyContainer_->setPropertyValue("Outline",on);
 }
 
+/*! \brief Gets the thickness of the outline that will be shown if "Outline" is true.
+*/
 int TokenTrayGraphic::getOutlineWidth()
 {
 	return propertyContainer_->getPropertyValue("OutlineWidth").toInt();
 }
 
+/*! \brief Sets the thickness of the outline that will be shown if "Outline" is true.
+*/
 void TokenTrayGraphic::setOutlineWidth(int pixels)
 {
 	if(pixels < 0)
@@ -179,6 +235,9 @@ void TokenTrayGraphic::upgradeVersion(QString deserializedVersion)
 	}
 }
 
+/*! \brief Sets the relative size of the token with the input index to size.  size is a factor by which the default token size will be multiplied for the token at the 
+ *	input index.
+ */
 void TokenTrayGraphic::setTokenSize(int index,double size)
 {
 	if(size > 1.0)
@@ -191,7 +250,8 @@ void TokenTrayGraphic::setTokenSize(int index,double size)
 	sizes[index] = QString::number(size);
 	propertyContainer_->setPropertyValue("TokenSizes",sizes.join(","));
 }
-
+/*! \brief Sets the color of the token with the input index to the input red, green, blue, alpha values.
+ */
 void TokenTrayGraphic::setTokenColor(int index, int r, int g, int b, int a)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -201,12 +261,16 @@ void TokenTrayGraphic::setTokenColor(int index, int r, int g, int b, int a)
 	propertyContainer_->setPropertyValue("TokenColors",colors.join(","));
 }
 
+/*! \brief Sets the color of the token with the input index to the input color QVariant.
+ */
 void TokenTrayGraphic::setTokenColor(int index,QVariant color)
 {
 	QColor col = color.value<QColor>();
 	setTokenColor(index,col.red(),col.green(),col.blue());
 }
 
+/*! \brief Sets the shape of the token with the input index to the input shape name ("Ellipse", "Rectangle", or "Diamond").
+ */
 void TokenTrayGraphic::setTokenShape(int index, QString shape)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -217,6 +281,8 @@ void TokenTrayGraphic::setTokenShape(int index, QString shape)
 	shapes[index] = shape;
 	propertyContainer_->setPropertyValue("TokenShapes",shapes.join(","));
 }
+/*! \brief Sets whether only the outline will be drawn for the token with the input index.
+ */
 void TokenTrayGraphic::setTokenOutline(int index, bool on)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -225,6 +291,9 @@ void TokenTrayGraphic::setTokenOutline(int index, bool on)
 	outlines[index] = QString::number(int(on));
 	propertyContainer_->setPropertyValue("TokenOutlines",outlines.join(","));
 }
+
+/*! \brief Sets the outline width to be drawn for the token with the input index (if only its outline is being drawn).
+ */
 void TokenTrayGraphic::setTokenOutlineWidth(int index, int pixels)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -234,26 +303,36 @@ void TokenTrayGraphic::setTokenOutlineWidth(int index, int pixels)
 	propertyContainer_->setPropertyValue("TokenOutlineWidths",outlineWidths.join(","));
 }
 
+/*! \brief Returns the x position component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenX(int index)
 {
 	return getTokenPosition(index).x();
 }
 
+/*! \brief Returns the y position component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenY(int index)
 {
 	return getTokenPosition(index).y();
 }
 
+/*! \brief Returns the x position component of the token at the input index with respect to the center of the token tray.
+ */
 int TokenTrayGraphic::getTokenLocalX(int index)
 {
 	return getTokenOffset(index).x();
 }
 
+/*! \brief Returns the y position component of the token at the input index with respect to the center of the token tray.
+ */
 int TokenTrayGraphic::getTokenLocalY(int index)
 {
 	return getTokenOffset(index).y();
 }
 
+/*! \brief Returns the relative size factor of the token at the input index.
+ */
 double TokenTrayGraphic::getTokenSize(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -266,22 +345,32 @@ double TokenTrayGraphic::getTokenSize(int index)
 		return 1.0;
 	return result.toDouble();
 }
+/*! \brief Returns the red color component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenRed(int index)
 {
 	return getTokenColor(index).red();
 }
+/*! \brief Returns the green color component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenGreen(int index)
 {
 	return getTokenColor(index).green();
 }
+/*! \brief Returns the blue color component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenBlue(int index)
 {
 	return getTokenColor(index).blue();
 }
+/*! \brief Returns the alpha color component of the token at the input index.
+ */
 int TokenTrayGraphic::getTokenAlpha(int index)
 {
 	return getTokenColor(index).alpha();
 }
+/*! \brief Returns the color of the token at the input index.
+ */
 QColor TokenTrayGraphic::getTokenColor(int index)
 {
 	if(index > getNumTokens() || index < 0)
@@ -295,6 +384,8 @@ QColor TokenTrayGraphic::getTokenColor(int index)
 		return getColor();;
 	return QColor(result);
 }
+/*! \brief Returns whether only the outline is being drawn for the token at the input index.
+ */
 bool TokenTrayGraphic::getTokenOutline(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -307,6 +398,8 @@ bool TokenTrayGraphic::getTokenOutline(int index)
 		return getOutline();
 	return result.toInt();
 }
+/*! \brief Returns the width of the outline being drawn for the token at the input index (when only its outline is drawn).
+ */
 int TokenTrayGraphic::getTokenOutlineWidth(int index)
 {
 	if(index >= getNumTokens() || index < 0)
@@ -320,6 +413,9 @@ int TokenTrayGraphic::getTokenOutlineWidth(int index)
 		return getOutlineWidth();
 	return result.toInt();
 }
+
+/*! \brief Returns the shape of the token at the input index as a string ("Ellipse", "Rectangle", or "Diamond").
+ */
 QString TokenTrayGraphic::getTokenShape(int index)
 {
 	if(index > getNumTokens() || index < 0)
@@ -332,82 +428,6 @@ QString TokenTrayGraphic::getTokenShape(int index)
 		return getTokenShape();
 	return result;
 }
-
-
-////This is always called every frame (even when draw is not) by the scene.
-////We use it to update our properties based on changes from script calls
-////since the last reset.  We don't do this in draw, because if the tray
-////isn't visible, properties wouldn't be updated.
-//void TokenTrayGraphic::updateAnimation(int frame, QTime elapsedTime)
-//{
-//	updateParameterLists();
-//
-//
-//		int numTokens = getNumTokens();
-//	QRect trayDimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
-//	QRect tokenDimensions = propertyContainer_->getPropertyValue("TokenDimensions").toRect();
-//	//Make sure size of sizes,colors,shapes lists matches numTokens before drawing
-//	QStringList sizes = propertyContainer_->getPropertyValue("TokenSizes").toString().split(",",QString::SkipEmptyParts);
-//	QStringList colors = propertyContainer_->getPropertyValue("TokenColors").toString().split(",",QString::SkipEmptyParts);
-//	QStringList shapes = propertyContainer_->getPropertyValue("TokenShapes").toString().split(",",QString::SkipEmptyParts);
-//	QStringList outlines = propertyContainer_->getPropertyValue("TokenOutlines").toString().split(",",QString::SkipEmptyParts);
-//	QStringList outlineWidths = propertyContainer_->getPropertyValue("TokenOutlineWidths").toString().split(",",QString::SkipEmptyParts);
-//	int maxTokenDiam= getMaxTokenDiam();
-//	QRect imageDimensions(0,0,trayDimensions.width()+maxTokenDiam,trayDimensions.height()+maxTokenDiam);
-//	QImage image(imageDimensions.width()+maxTokenDiam,imageDimensions.height()+maxTokenDiam,QImage::Format_ARGB32);
-//	image.fill(0);
-//	posOffset_ = QPoint(imageDimensions.width()/2.0,imageDimensions.height()/2.0);
-//
-//	for(int i=0;i<numTokens;i++)
-//	{	
-//		QColor color(colors[i]);
-//		double size = sizes[i].toDouble();
-//		QRect dimensions(tokenDimensions.x(),tokenDimensions.y(),tokenDimensions.width()*size,tokenDimensions.height()*size);
-//		QPoint tokenPosOffset = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
-//		QPoint offset = posOffset_+getTokenOffset(i)-tokenPosOffset;
-//		QPainter p(&image);
-//		QPen pen(color);
-//		p.setBrush(color);
-//		p.translate(offset);
-//		if(outlines[i].toInt())
-//		{
-//			p.setBrush(QColor(0,0,0,0));
-//			pen.setWidth(outlineWidths[i].toInt());
-//		}
-//		p.setPen(pen);
-//		p.setRenderHint(QPainter::Antialiasing, true);
-//		
-//		if(shapes[i] == "Ellipse")
-//		{
-//			p.drawEllipse(dimensions);
-//		}
-//		else if(shapes[i] == "Rectangle")
-//		{
-//			p.drawRect(dimensions);
-//		}
-//		else if(shapes[i] == "Diamond")
-//		{
-//			QPolygon diamond;
-//			int maxWPoint = dimensions.width()-1;
-//			int maxHPoint = dimensions.height()-1;
-//			diamond << QPoint(maxWPoint/2,0)
-//					<< QPoint(maxWPoint,maxHPoint/2)
-//					<< QPoint(maxWPoint/2,maxHPoint)
-//					<< QPoint(0,maxHPoint/2)
-//					<< QPoint(maxWPoint/2,0);
-//			p.drawPolygon(diamond);
-//		}
-//
-//		p.end();
-//	}
-//	image_ = image;
-//	//updateCompositingSurfaces();
-//
-//	shouldUpdateCompositingSurfaces_ = true;
-//
-//	//Call parent version of the function.
-//	VisualElement::updateAnimation(frame,elapsedTime);
-//}
 
 void TokenTrayGraphic::draw()
 {
@@ -433,6 +453,7 @@ void TokenTrayGraphic::draw()
 		//Stuff is in the process of being updated.
 		return;
 	}
+	//Whenever a list's value is -1 it should juist used the default value
 	for(int i=0;i<numTokens;i++)
 	{
 		if(sizes[i] == "-1")
@@ -500,11 +521,13 @@ void TokenTrayGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* TokenTrayGraphic::NewVisualElement()
 {
 	return new TokenTrayGraphic;
 }
 
+/*! \brief Creates a new TokenTrayGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> TokenTrayGraphic::Create()
 {
 	return QSharedPointer<Asset>(new TokenTrayGraphic());
@@ -539,6 +562,9 @@ void TokenTrayGraphic::postDeserialize()
 	}
 }
 
+/*! \brief Extends VisualElement::validateObject() to make sure that the number of tokens is not negative and that only
+ *	elliptical token trays are being used since other shapes are not yet supported.
+ */
 bool TokenTrayGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!VisualElement::validateObject(xmlStreamReader))
@@ -557,6 +583,8 @@ bool TokenTrayGraphic::validateObject(QSharedPointer<QXmlStreamReader> xmlStream
 	return true;
 }
 
+/*! \brief Updates the sizes of the lists stored in this object's Property values when necessary (ie. number of tokens changes).
+*/
 void TokenTrayGraphic::updateListSizes()
 {
 	int num = getNumTokens();
@@ -571,11 +599,13 @@ void TokenTrayGraphic::updateListSizes()
 	}
 }
 
+/*! \brief Returns the x,y position of the token at the input index.*/
 QPoint TokenTrayGraphic::getTokenPosition(int index)
 {
 	return getPosition()+getTokenOffset(index);
 }
 
+/*! \brief Returns the x,y position of the token at the input index relative to the center of the token tray.*/
 QPoint TokenTrayGraphic::getTokenOffset(int index)
 {
 	QRect dims = getTrayDimensions();
@@ -617,76 +647,9 @@ QPoint TokenTrayGraphic::getTokenOffset(int index)
 	return QPoint(x,y);
 }
 
-
-//void TokenTrayGraphic::updateParameterLists()
-//{
-//	if(updatingParameterLists_)	//Changing properties can have the affect of getting this called recursively
-//		return;				//This prevents that.
-//	updatingParameterLists_ = true;
-//
-//	//If default values have changed, empty the list to which the default applies because the 
-//	//init values in our list parameters are no longer accurate.  Ideally, we should just change the
-//	//list in the init value, but I haven't done that yet.
-//	if(getColor().name() != defaults_[1])
-//	{
-//		propertyContainer_->setPropertyValue("TokenColors","");
-//	}
-//	if(getTokenShape() != defaults_[2])
-//	{
-//		propertyContainer_->setPropertyValue("TokenShapes","");
-//	}
-//	if(QString::number(int(getOutline())) != defaults_[3])
-//	{
-//		propertyContainer_->setPropertyValue("TokenOutlines","");
-//	}
-//	if(QString::number(getOutlineWidth()) != defaults_[4])
-//	{
-//		propertyContainer_->setPropertyValue("TokenOutlineWidths","");
-//	}
-//
-//	QVector<QStringList> propLists;
-//	foreach(QString listName,listNames_)
-//	{
-//		propLists.push_back(propertyContainer_->getPropertyValue(listName).toString().split(",",QString::SkipEmptyParts));
-//	}
-//
-//	//Assure that list lengths match the number of tokens.
-//	int num = propertyContainer_->getPropertyValue("NumTokens").toInt();
-//	for(int i=0;i<propLists.size();i++)
-//	{
-//		while(num < propLists[i].size())
-//		{
-//			propLists[i].pop_back();
-//		}
-//		while(num > propLists[i].size())
-//		{
-//			propLists[i].push_back(defaults_[i]);
-//		}
-//		
-//	}
-//	
-//	//Write new changes over current lists.
-//	QHash<int,QString>::iterator iter;
-//	for(int i=0;i<deltaHashs_.size();i++)
-//	{
-//		for(iter = deltaHashs_[i]->begin();iter != deltaHashs_[i]->end();iter++)
-//		{
-//			if(propLists[i].size()<=iter.key())
-//				continue;	//In case numTokens was decreased after something was changed on a high index token
-//			int key = iter.key();
-//			QString val = iter.value();
-//			propLists[i][iter.key()] = iter.value();
-//		}
-//	}
-//
-//	//Rebuild property strings from lists.
-//	for(int i=0;i<listNames_.size();i++)
-//	{
-//		propertyContainer_->setPropertyValue(listNames_[i],propLists[i].join(","));
-//	}
-//	updatingParameterLists_ = false;
-//}
-
+/*! \brief Returns the maximum possible diameter of a token.  This is used to calculate the size of the QImage that we need in order to be sure
+ *	that none of the token graphics gets clipped.
+ */
 int TokenTrayGraphic::getMaxTokenDiam()
 {
 	int defaultOutlineWidth = getOutlineWidth();

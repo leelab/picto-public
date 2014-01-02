@@ -8,12 +8,15 @@
 
 namespace Picto {
 
-/*!	\brief Unimplemented. Neural Data.
+/*!	\brief Stores Neural Spike data for transmission over a network.
  *
- *	I'm not sure exactly how this was going to be used, but it is clearly
- *	intended to store neural data.  I suspect this may already be covered by
- *	the ACQGetCommand Handler in the Proxy Server.  It would be smart to move
- *	the definition here, but I didn't have time to do so...
+ *	\details Each NeuralDataUnit holds the time, channel, unit and waveform of a neural spike along with the
+ *	sample period of the waveform data.  The class also includes functions for setting the "aligned" spike 
+ *	timestamp and waveform sample periods so that the function can include spike timing that is aligned to the 
+ *	behavioral timestream.  The correlation coefficient for the least squares fitting of the timestamp alignment 
+ *	can be stored here as well.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API NeuralDataUnit : public DataUnit
@@ -27,20 +30,36 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	/*! \brief Sets the time at which the spike occured (not yet aligned to behavioral timestream).*/
 	void setTimestamp(double timestamp){timestamp_ = timestamp;}
+	/*! \brief Sets the time at which the spike occured as aligned to the behavioral timestream.*/
 	void setFittedtime(double fittedtime){fittedtime_ = fittedtime;}
+	/*! \brief Sets the least squares correlation coefficient describing the quality of the neural to behavioral alignment
+	 *	estimate.
+	 */
 	void setCorrelation(double correlation){correlation_ = correlation;}
+	/*! \brief Sets the channel on which the spike occured.*/
 	void setChannel(int channel){channel_ = channel;}
+	/*! \brief Sets the unit on which the spike occured.*/
 	void setUnit(int unit){unit_ = unit;}
+	/*! \brief Sets the time per spike waveform sample.*/
 	void setResolution(double secPerSamp){resolution_ = secPerSamp;};
 	void setWaveform(QSharedPointer<QVector<float>> waveform);
 	void setWaveformFromString(QString waveform);
 
+	/*! \brief Returns the time at which the spike occured (not yet aligned to behavioral timestream).*/
 	double getTimestamp(){return timestamp_;}
+	/*! \brief Returns the time at which the spike occured as aligned to the behavioral timestream.*/
 	double getFittedtime(){return fittedtime_;}
+	/*! \brief Returns the least squares correlation coefficient describing the quality of the neural to behavioral alignment
+	 *	estimate.
+	 */
 	double getCorrelation(){return correlation_;}
+	/*! \brief Returns the channel on which the spike occured.*/
 	int getChannel(){return channel_;}
+	/*! \brief Returns the unit on which the spike occured.*/
 	int getUnit(){return unit_;}
+	/*! \brief Returns the time per spike waveform sample.*/
 	double getResolution(){return resolution_;};
 	QString getWaveformAsString();
 	QByteArray getWaveformAsByteArray();

@@ -7,14 +7,18 @@ PropertyDataUnitPackage::PropertyDataUnitPackage()
 {
 }
 
-//! Adds a simple (path,value,time) data point
+/*! Adds a single Property change entry to this package.
+ *	@param index The AssetId of the Property whose value changed.
+ *	@param initValue True if the change was to an initValue, false if its a runValue.
+ *	@param value The new Property value.
+ */
 void PropertyDataUnitPackage::addData(int index, bool initValue, QString value)
 {
 	QSharedPointer<PropertyDataUnit> newPoint(new PropertyDataUnit(index, initValue, value));
 	data_.append(newPoint);
 }
 
-
+/*! \brief Sets the FrameId of the next frame to be presented after the all of the Property value changes in this package occured.*/
 void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 {
 	for(QList<QSharedPointer<PropertyDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
@@ -24,13 +28,6 @@ void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 }
 
 /*! \brief Turns the PropertyDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<PropertyDataUnitPackage>
- *		<PropertyDataUnit p="TopMachine::Block::TaskNum v="5" t=394.0330/>
- *		<PropertyDataUnit p="TopMachine::BlockNum v="2" t=397.4652/>
- *		...
- *	</PropertyDataUnitPackage>
  */
 bool PropertyDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {

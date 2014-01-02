@@ -15,10 +15,7 @@ LFPDataUnitPackage::LFPDataUnitPackage()
 	resolution_ = 0;
 }
 
-/*! \brief Turns the FrameDataUnitPackage into an XML fragment
- *
- *	The XML will look like this:
- *	<FrameDataUnit time=1.234 state=somestate>1</FrameDataUnit>
+/*! \brief Turns the LFPDataUnitPackage into an XML fragment
  *	
  */
 bool LFPDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
@@ -35,7 +32,7 @@ bool LFPDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStre
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-//! Converts XML into a FrameDataUnitPackage object.  Note that this deletes any existing data.
+/*! Converts XML into a LFPDataUnitPackage object.  Note that this deletes any existing data.*/
 bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking
@@ -148,6 +145,10 @@ bool LFPDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
+/*! \brief Adds the input list of Local Field Potential readings to this package.
+ *	@param adPotentialReadings An array of potential readings
+ *	@param numVals the size of the adPotentialReadings array
+ */
 void LFPDataUnitPackage::appendData(const float* adPotentialReadings, int numVals)
 {
 	QString newVals;
@@ -158,11 +159,13 @@ void LFPDataUnitPackage::appendData(const float* adPotentialReadings, int numVal
 	numSamples_ = potentials_.length();
 	Q_ASSERT_X(numSamples_ <= 10000,"LFPDataUnitPackage::addData","No more than 10000 lfp samples should be stored in a lfpdatastore");
 }
+
+/*! \brief Appends the input value to the list of lfp readings.*/
 void LFPDataUnitPackage::appendData(float adPotentialReading)
 {
 	appendData(&adPotentialReading,1);
 }
-
+/*! \brief Returns the list of LFP potential readings as a byte array.*/
 QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
 {
 	float* pots = new float[potentials_.size()];
@@ -177,6 +180,10 @@ QByteArray LFPDataUnitPackage::getPotentialsAsByteArray()
 	return returnVal;
 }
 
+/*! \brief Returns the list of LFP potential readings as a linked list of QPointF objects where the 
+ *	'xPos' is the timestamp (aligned with the behavioral time stream) and 'yPos' is the potential value.
+ *	This is useful for plotting lfp data.
+ */
 QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
 {
 	QLinkedList<QPointF> returnVal;
@@ -191,6 +198,7 @@ QLinkedList<QPointF> LFPDataUnitPackage::getAlignedDataAsLinkedList()
 	return returnVal;
 }
 
+/*! \brief Sets the list of LFP potential readings from a byte array (as returned from getPotentialsAsByteArray()).*/
 void LFPDataUnitPackage::setPotentialsFromByteArray(QByteArray potentials)
 {
 	const float* pots = reinterpret_cast<const float*>(potentials.constData());

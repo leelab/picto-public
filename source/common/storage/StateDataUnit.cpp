@@ -6,26 +6,21 @@ namespace Picto {
 StateDataUnit::StateDataUnit()
 {
 }
-
+/*! \brier Sets up the StateDataUnit with the AssetId of the input Transition.
+*/
 void StateDataUnit::setTransition(QSharedPointer<Transition> transition)
 {
 	setTransition(transition->getAssetId());
 }
+
+/*! \brief Sets the stored Transition AssetId to the input value.
+*/
 void StateDataUnit::setTransition(int id)
 {
 	id_ = id;
 }
 
 /*! \brief Turns the StateDataUnit into an XML fragment
- *
- *	The XML will look like this:
- *	<StateDataUnit timestamp = 123.456 statemachinepath="state machine name">
- *		<Transition>
- *			<Source>TestState</Source>
- *			<SourceResult>Success</SourceResult>
- *			<Destination>Done</Destination>
- *		</Transition>
- *	</StateDataUnit>
  */
 bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
@@ -38,7 +33,7 @@ bool StateDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWri
 
 	return true;
 }
-//! Converts XML into a StateDataUnit object.  Note that this deletes any existing data.
+/*! Converts XML into a StateDataUnit object.  Note that this deletes any existing data. */
 bool StateDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	//Do some basic error checking

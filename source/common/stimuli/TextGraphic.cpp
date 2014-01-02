@@ -5,8 +5,14 @@
 
 namespace Picto {
 
+/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 const QString TextGraphic::type = "Text Graphic";
 
+/*! \brief Creates a new TextGraphic object at the input position and with the input dimensions, color and text string.
+ *	\details Adds the following Properties:
+ *	- Size: Stores the size of the graphic (width, height).
+ *	- Text: Stores the text that will be displayed in the graphic.
+ */
 TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QString text)
 : VisualElement(position,color)
 {
@@ -21,24 +27,6 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 		propertyContainer_->getProperty("Size")->setEdited();
 		propertyContainer_->getProperty("Text")->setEdited();
 	}
-
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-
-	//propertyContainer_->addProperty(QVariant::Size,"Size",dimensions.size());
-
-	//propertyContainer_->setPropertyValue("Color",color);
-
-	//propertyContainer_->addProperty(QVariant::String,"Text",text);
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 void TextGraphic::draw()
@@ -63,24 +51,17 @@ void TextGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
+/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* TextGraphic::NewVisualElement()
 {
 	return new TextGraphic;
 }
 
+/*! \brief Creates a new TextGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> TextGraphic::Create()
 {
 	return QSharedPointer<Asset>(new TextGraphic());
 }
-
-//void TextGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											  QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 void TextGraphic::postDeserialize()
 {
