@@ -27,6 +27,8 @@ updating_(false)
 	connect(&serverVersionRequestTimer_,SIGNAL(timeout()),this,SLOT(noNewVersionAvailable()));
 }
 
+/*! \brief Returns a singleton instance of an UpdateDownloader.
+ */
 QSharedPointer<UpdateDownloader> UpdateDownloader::getInstance()
 {
 	if(singleton_.isNull())
@@ -36,21 +38,31 @@ QSharedPointer<UpdateDownloader> UpdateDownloader::getInstance()
 	return singleton_;
 }
 
+/*! \brief Use this to set the root widget of this application.*/
 void UpdateDownloader::setRootWidget(QWidget* root)
 {
 	rootWidgetPointer_ = root;
 }
+
+/*! \brief Use this enable an update warning allowing the user to disable the automatic update before it happens.
+ *	\note By default, the update warning is disabled.
+ */
 
 void UpdateDownloader::enableUpdateWarning(bool en)
 {
 	useWarning_ = en;
 }
 
+/*! \brief If set true, the user will be required to press a button after an error message comes up.  If user interaction is disabled,
+ *	error messages will timeout automatically after MESSAGEBOXDELEYSEC.
+ *	\note By default, the user interaction is disabled.
+ */
 void UpdateDownloader::requireUserInteraction(bool en)
 {
 	requireInteraction_ = en;
 }
 
+/*! \brief Removes all files in the input path or subdirectores that ends with a ".new" or ".old" suffix.*/
 bool deleteOldFiles(QString dirPath)
 {
 	QDir dir(dirPath);
@@ -88,6 +100,19 @@ bool deleteOldFiles(QString dirPath)
 	return true;
 }
 
+/*! \brief Call this to update this application to the latest code available on the server.
+ *	@param serverAddress The IP address of the Picto Server.
+ *	@param port The port on which to request the new Picto files.
+ *	\details This function starts out by requesting user permission to perform the update if necessary,
+ *	it then goes through the following procedure:
+ *	- Deletes all files in the Picto directory with ".new" or ".old" suffixes. (deleteOldFiles())
+ *	- Downloads all files from the server, unzips them and saves them with added ".new" suffixes in the application directory (getFiles())
+ *	- Append ".old" suffixes to everything in the application directory that isn't ".new", removes all ".new" suffixes, starts a new
+ *		instance of the application in a new process and exits the current application process. (updateApps())
+ *
+ *	If any of the above steps fails, an appropriate error message is displayed, and any changes that would make the current installation
+ *	corrupt (ie. if the ".old" suffixes were appended to the current application files) are fixed.
+ */
 bool UpdateDownloader::update(QString serverAddress, quint16 port)
 {
 	if(updating_)
@@ -126,12 +151,23 @@ bool UpdateDownloader::update(QString serverAddress, quint16 port)
 	return false;
 }
 
+/*! \brief Sets the commands needed to restart this application.
+ *	@param exePath The path to the running executable.
+ *	@param args The list of arguments to use with the executable.
+ *	\details If the application update is successfull, the application is restarted automatically.
+ *	This tells the updateDownloader what commands need to be used to perform the restart.
+ */
 void UpdateDownloader::setRestartCommands(QString exePath,QStringList args)
 {
 	exePath_ = exePath;
 	exeArgs_ = args;
 }
 
+/*! \brief Use this function to set up automatic checking for updates in an application that wouldn't normally be connecting to
+ *	the server all the time anyway (ie. The workstation when not operating in RemoteViewer mode).
+ *	\note Client applications that use CommandChannel::readIncomingResponse() trigger an autoupdate automatically due to some code in
+ *	that function.
+ */
 void UpdateDownloader::autoCheckForUpdates(int freqSec)
 {
 	stopAutoUpdate_ = false;
@@ -146,6 +182,8 @@ void UpdateDownloader::autoCheckForUpdates(int freqSec)
 	serverDiscoverer_->discover(autoCheckFreq_*1000);
 }
 
+/*!	\brief Downloads all files from the server, unzips them and saves them with added ".new" suffixes in the application directory.
+*/
 bool UpdateDownloader::getFiles()
 {
 	int totalFiles = 1000;
@@ -236,6 +274,8 @@ bool UpdateDownloader::getFiles()
 	return (fileIndex == totalFiles);
 }
 
+/*! \brief Renames all files whose names don't end with .new in the input dirPath or beneath it to their name + .old.
+*/
 bool renameNonNewFiles(QString dirPath)
 {
 	QDir dir(dirPath);
@@ -245,10 +285,13 @@ bool renameNonNewFiles(QString dirPath)
 	QStringList files = dir.entryList();
 	foreach(QString file,files)
 	{
+		//If the directory already has this file+.old and it can't be removed, give up.
 		if(dir.exists(file+".old") && !dir.remove(file+".old"))
 			return false;
+		//If the file doesn't end with .new and it can't be renamed to file+.old, give up.
 		if(!QDir::match("*.new",file) && !dir.rename(file,file+".old"))
 			return false;
+		//If we got here, the file either ends with .new or was renamed to file+.old
 	}
 
 	dir.setNameFilters(QStringList());
@@ -264,6 +307,8 @@ bool renameNonNewFiles(QString dirPath)
 	return true;
 }
 
+/*! \brief Removes the input suffix from all files in or beneath the input directory path.
+*/
 bool remove4LetterSuffixOnFiles(QString dirPath,QString suffix)
 {
 	Q_ASSERT(suffix.length() == 4);
@@ -277,8 +322,10 @@ bool remove4LetterSuffixOnFiles(QString dirPath,QString suffix)
 	{
 		QString newName = file;
 		newName.chop(4);
+		//If a file with the name we want to rename to exists and cant be removed, give up.
 		if(dir.exists(newName) && !dir.remove(newName))
 			return false;
+		//If we cant rename the file to lost the suffix, give up.
 		if(!dir.rename(file,newName))
 			return false;
 	}
@@ -308,6 +355,10 @@ bool remove4LetterSuffixOnFiles(QString dirPath,QString suffix)
 	return true;
 }
 
+/*! \brief Finishes the process of updating application files and restarts the application.
+ *	\details Appends ".old" suffixes to everything in the application directory that isn't ".new", removes all ".new" suffixes from newly
+ *	downloaded application files, starts a new instance of the application in a new process and exits the current application process.
+ */
 bool UpdateDownloader::updateApps()
 {
 	//Append ".old" to old files and folders
@@ -344,6 +395,9 @@ bool UpdateDownloader::updateApps()
 	return false;
 }
 
+/*! \brief Shows a message box with an error message indicating that Picto couldn't remove the old application files for the update.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.
+ */
 void UpdateDownloader::reportUnableToRemoveOldFiles()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -356,6 +410,9 @@ void UpdateDownloader::reportUnableToRemoveOldFiles()
 	box.exec();
 }
 
+/*! \brief Shows a message box with an error message indicating that Picto couldn't download the new files for the update.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.
+ */
 void UpdateDownloader::reportUnableToGetFiles()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -369,6 +426,9 @@ void UpdateDownloader::reportUnableToGetFiles()
 	box.exec();
 }
 
+/*! \brief Shows a message box with an error message indicating that Picto couldn't complete the update process.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.
+ */
 void UpdateDownloader::reportUnableToCompleteUpdate()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -378,6 +438,10 @@ void UpdateDownloader::reportUnableToCompleteUpdate()
 	box.exec();
 }
 
+/*! \brief Shows a message box with an error message indicating that Picto has entered a corrupt state.  New files couldn't get properly named and then
+ *	the old application files couldn't be rolled back.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.
+ */
 void UpdateDownloader::reportCorruptState()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -387,6 +451,9 @@ void UpdateDownloader::reportCorruptState()
 	box.exec();
 }
 
+/*! \brief Shows a message box with an error message indicating that Picto couldn't automatically restart for the update.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.
+ */
 void UpdateDownloader::reportUnableToRestart()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -396,6 +463,10 @@ void UpdateDownloader::reportUnableToRestart()
 	box.exec();
 }
 
+/*! \brief Shows a message box requesting permission to automatically update the application.
+ *	\details The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set.  In that
+ *	case permission is implicitely granted.
+ */
 bool UpdateDownloader::acceptUpdate()
 {
 	TimedMessageBox box(requireInteraction_?0:MESSAGEBOXDELAYSEC);
@@ -413,6 +484,8 @@ bool UpdateDownloader::acceptUpdate()
 	return box.exec() == QMessageBox::Ok; 
 }
 
+/*! \brief Called when the server is discovered with autoCheckForUpdates().  Connects to the server to check for updated code.
+ */
 void UpdateDownloader::serverDiscovered(QHostAddress pictoServerAddress, quint16)
 {
 	serverAddress_ = pictoServerAddress;
@@ -434,6 +507,7 @@ void UpdateDownloader::serverDiscovered(QHostAddress pictoServerAddress, quint16
 		requestServerPictoVersion();
 }
 
+/*! \brief Requests the version of Picto currently being used by the Picto Server.*/
 void UpdateDownloader::requestServerPictoVersion()
 {
 	serverVersionRequestTimer_.setInterval(5000);	//In case we never get a response
@@ -448,6 +522,10 @@ void UpdateDownloader::requestServerPictoVersion()
 	command.write(updateCheckSocket_.data());
 }
 
+/*! \brief Called when a response is received indicating the version of Picto currently being used by the Picto Server.
+ *	If the version is higher that this applications version, newVersionAvailable() is called, otherwise noNewVersionAvailable() is called.
+ *	\sa autoCheckForUpdates()
+*/
 void UpdateDownloader::serverVersionResponseReceived()
 {
 	serverVersionRequestTimer_.stop();
@@ -462,6 +540,7 @@ void UpdateDownloader::serverVersionResponseReceived()
 	}
 	else if(response.getFieldValue("PictoVersion").isEmpty())
 	{
+
 	}
 	else if(response.getFieldValue("PictoVersion") <= PICTOVERSION)
 	{
@@ -474,6 +553,9 @@ void UpdateDownloader::serverVersionResponseReceived()
 	noNewVersionAvailable();
 }
 
+/*! \brief Called when Picto Server indicated that no new version is available.  Resets timer to check for a new version again according to autoCheckFreq_.
+*	\sa autoCheckForUpdates()
+*/
 void UpdateDownloader::noNewVersionAvailable()
 {
 	//No updates.  Check again in autoCheckFreq_ - timeSinceLastCheck seconds.
@@ -486,6 +568,9 @@ void UpdateDownloader::noNewVersionAvailable()
 	reattemptDiscoveryTimer_.start();
 }
 
+/*! \brief Called when Picto Server indicated that a new version is available.  Uses update() to try to update the application.
+ *	\sa autoCheckForUpdates()
+*/
 void UpdateDownloader::newVersionAvailable()
 {
 	//If we got here, there's an update
@@ -498,6 +583,8 @@ void UpdateDownloader::newVersionAvailable()
 		reattemptDiscovery();	//Update failed, reattempt.
 }
 
+/*! \brief Calls autoCheckForUpdates() unless stopAutoUpdate_ is set.
+*/
 void UpdateDownloader::reattemptDiscovery()
 {
 	if(stopAutoUpdate_)

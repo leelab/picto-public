@@ -10,7 +10,8 @@ namespace Picto
 	QDateTime Timestamper::startTime_;
 #endif
 
-
+/*! \brief Constructs a Timestamper object and starts it.
+*/
 Timestamper::Timestamper()
 {
 #if defined WIN32 || defined WINCE
@@ -29,7 +30,7 @@ Timestamper::Timestamper()
 	}
 #endif
 }
-
+/*! \brief Returns the elapsed time on the timestamper in units of seconds.*/
 double Timestamper::stampSec()
 {
 #if defined WIN32 || defined WINCE
@@ -44,6 +45,7 @@ double Timestamper::stampSec()
 #endif
 }
 
+/*! \brief Returns the elapsed time on the timestamper in units of milliseconds.*/
 double Timestamper::stampMs()
 {
 #if defined WIN32 || defined WINCE
@@ -58,6 +60,7 @@ double Timestamper::stampMs()
 #endif
 }
 
+/*! \brief Returns the elapsed time on the timestamper in units of microseconds.*/
 double Timestamper::stampUs()
 {
 #if defined WIN32 || defined WINCE
@@ -72,7 +75,9 @@ double Timestamper::stampUs()
 #endif
 }
 
-//! Resets the timestamper to 0
+/*! \brief Reset the Timestamper.
+ *	\details Internally all this is doing is recording a startTime that will be subtracted from the current time when an elapsed time value is requested.
+ */
 void Timestamper::reset()
 {
 #if defined WIN32 || defined WINCE

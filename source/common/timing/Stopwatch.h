@@ -9,9 +9,20 @@
 #endif
 namespace Picto {
 
-/*! \brief Reports time since starting the watch in as accurate units as possible on the current os.
+/*! \brief A simple timer class that can return elapsed time in seconds, milliseconds or microsecond.
+ *	
+ *	\details Reports time since starting the watch in as accurate units as possible on the current os.
+ *	Currently we have implemented this for Windows by using the performance counter.  On other OS
+ *	the QT QDataTime system will be used, which I believe is only accurate to the millisecond level.
+ *	To use the stopwatch, start/restart it by using startWatch() and then check the ellapsed time 
+ *	by using one of the elapsedSec(), elapsedMs(), or elapsedUs() functions.
+ *
+ *	\note This class is pretty much the same as the Timestamper with one exception.
+ *	All Timestamper objects have the same start time, whereas StopWatch objects
+ *	all have their own object dependent start time.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Stopwatch
 #else

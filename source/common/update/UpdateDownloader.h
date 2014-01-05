@@ -23,6 +23,31 @@
 
 using namespace Picto;
 
+/*! \brief A singleton class used to check for and automatically update to a newer version of the Picto Application.
+ *
+ *	\details Currently, we put all Picto application files into all Picto installation directories regardless of which of the Picto applications
+ *	will actually be run on a particular computer.  This means that the PictoServer has a copy of all Picto Application files needed 
+ *	by all Picto computers.  Whenever the PictoServer sends a message, it reports its current Picto Version.  If the client sees that
+ *	its version is lower than the server's version, it can request newer versions of the application files by using this class' object.  The server 
+ *	keeps a cached copy of the zipped files and sends them over the network to the object.  The object then goes through some 
+ *	fancy footwork to carefully upgrade the application in a reversible way.  It first puts all of the new files into the application 
+ *	directory with .new suffixes appended to their names.  It then tries to rename all of the other files in the application directory
+ *	and add .old to their names.  If this all works correctly, the indication is that there should be no problem renaming all the .new files 
+ *	by removing their .new suffixes.  If that works, the application starts a new application process and ends the current one, thereby completing
+ *	the update.  If anything about the update fails, the application rolls all of the application files back to their previous condition.
+ *	Since all files with .old or .new suffixes are always deleted at the beginning of the update process (before files are even downloaded)
+ *	we don't have to worry about corruption from old files.
+ *
+ *	This object also makes heavy use of TimedMessageBox widgets so that Automatic updating can occur on Director and Proxy installations with zero
+ *	user input, completely automatically.  
+ *
+ *	The class is fairly stand alone.  You pretty much just need to add it to every application, call a few setup functions like setRootWidget(),
+ *	and possibly requireUserInteraction(), enableUpdateWarning() and/or autoCheckForUpdates() depending on the particular application use case
+ *	and let the object do the rest.
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API UpdateDownloader : public QObject
 #else

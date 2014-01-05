@@ -4,6 +4,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs an AnalysisVariableMap.
+ *	\details Adds a "Value" property to hold the map data.
+ */
 AnalysisVariableMap::AnalysisVariableMap()
 : AnalysisVariable()
 {
@@ -90,7 +93,7 @@ QVariant AnalysisVariableMap::getValue(QVariant key)
 	return map_.value(keyString);
 }
 
-/*! \brief Returns the value under the input key as a variant and remove it from the map.*/
+/*! \brief Returns the value under the input key as a variant and removes it from the map.*/
 QVariant AnalysisVariableMap::takeAt(QVariant key)
 {
 	QVariant returnVal = map_.take(key.toString());

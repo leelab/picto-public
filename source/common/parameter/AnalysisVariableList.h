@@ -29,7 +29,6 @@ public:
 
 	virtual void enteredScope();
 
-	//Resets the AnalysisVariableList Object to its initial state.
 	virtual QString getUITemplate(){return "ListVariable";};
 	virtual QString friendlyTypeName(){return "Variable List";};
 	

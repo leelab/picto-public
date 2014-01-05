@@ -3,12 +3,15 @@
 
 namespace Picto {
 
+/*! \brief Constructs an StringVariable.
+ *	\details Adds a "Value" property.
+ */
 StringVariable::StringVariable()
 : Variable()
 {
 	AddDefinableProperty(QVariant::String,"Value",QVariant());
 }
-
+/*! \brief Creates a new StringVariable and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> StringVariable::Create()
 {
 	return QSharedPointer<Asset>(new StringVariable());

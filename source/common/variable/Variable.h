@@ -12,7 +12,10 @@ namespace Picto {
 /*!	\brief A base class for storing values that can be used in a state machine
  *
  *	Since Picto requires users to build state machines to define their experiments, we need
- *	some sort of "variable".
+ *	some sort of "variable" to hold data over defined scopes.  Descendants of this class
+ *	define those variables.
+  *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Variable : public Scriptable

@@ -12,6 +12,9 @@ Stopwatch::Stopwatch()
 	startWatch();
 }
 
+/*! \brief Starts the stopwatch.
+ *	\details Internally all this is doing is recording a startTime that will be subtracted from the current time when an elapsed time value is requested.
+ */
 void Stopwatch::startWatch()
 {
 #if defined WIN32 || defined WINCE
@@ -21,6 +24,7 @@ void Stopwatch::startWatch()
 #endif
 }
 
+/*! \brief Returns the elapsed time since startWatch() was called in units of seconds.*/
 double Stopwatch::elapsedSec()
 {
 	#if defined WIN32 || defined WINCE
@@ -34,7 +38,7 @@ double Stopwatch::elapsedSec()
 	return timeSec;
 #endif
 }
-
+/*! \brief Returns the elapsed time since startWatch() was called in units of milliseconds.*/
 double Stopwatch::elapsedMs()
 {
 	#if defined WIN32 || defined WINCE
@@ -48,7 +52,7 @@ double Stopwatch::elapsedMs()
 	return timeSec/1000.0;
 #endif
 }
-
+/*! \brief Returns the elapsed time since startWatch() was called in units of microseconds.*/
 double Stopwatch::elapsedUs()
 {
 #if defined WIN32 || defined WINCE

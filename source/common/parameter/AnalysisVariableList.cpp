@@ -4,6 +4,9 @@
 
 namespace Picto {
 
+/*! \brief Constructs an AnalysisVariableList.
+ *	\details Adds a "Value" property to hold the list data.
+ */
 AnalysisVariableList::AnalysisVariableList()
 : AnalysisVariable()
 {

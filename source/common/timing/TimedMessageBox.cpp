@@ -3,6 +3,9 @@
 #include "../memleakdetect.h"
 
 using namespace Picto;
+/*! \brief Constructs a TimedMessageBox widget.
+ *	@param timeoutSec The number of seconds before the message box will automatically disappear.  0 means the timer never times out.
+ */
 TimedMessageBox::TimedMessageBox(int timeoutSec)
 :
 QMessageBox(),
@@ -16,6 +19,9 @@ progBar_(new QProgressDialog("Auto close dialog...","",0,timeoutSec,this))
 		progBar_->setCancelButton(NULL);
 	}
 }
+
+/*! \brief Extends QMessageBox::showEvent to initialize the MessageBox to update itself once every second in the timerEvent() function.
+ */
 void TimedMessageBox::showEvent ( QShowEvent * event) 
 {
 	QMessageBox::showEvent(event);
@@ -29,6 +35,9 @@ void TimedMessageBox::showEvent ( QShowEvent * event)
 
 }
 
+/*! \brief Implements QMessageBox::timerEvent() to update the Widget's ProgressBar and close the widget once the timeout set in the 
+ *	constructor has been reached.
+ */
 void TimedMessageBox::timerEvent(QTimerEvent *)
 {
     currentTime_++;
