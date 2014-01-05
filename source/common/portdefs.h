@@ -13,8 +13,16 @@
 
 namespace Picto {
 
-/*! \brief Exposes the port numbers used for %Picto applications and hardware
- * \ingroup picto
+/*! \brief Defines which port numbers will be used for %Picto applications based on the current Picto system number.
+ *	\details Picto is designed such that multiple Picto Systems can operate independently on the same network so long
+ *	as they have different system numbers.  This parallelism is implemented by defining different communication ports
+ *	based on the system number being used.  Since communication ports are a function of system number, applications
+ *	with different system numbers never recieve any communications from each other.  This class implements this
+ *	system number mapping.  Once the system number is set using setSystemNumber(), that number is saved on the
+ *	computer's file system and all port numbers are updated internally.  To access the correct port number for 
+ *	a particular type of operation, the get*Port() functions are used.
+  *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PortNums
@@ -26,8 +34,6 @@ public:
 
 	PortNums(QString appName,bool usedInSystemService = false);
 
-	//If the system number changes, you will almost definitely need to restart the application.  
-	//Use the restart input to do this automatically.
 	void setSystemNumber(QString appExePath,QStringList appExeArgs,int systemNumber,bool restart);
 
 	int getSystemNumber();

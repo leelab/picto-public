@@ -1,6 +1,8 @@
 /*! \file common.h
  * \ingroup picto
  * \brief Definitions common to the %Picto library
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 /*! \addtogroup picto
@@ -33,6 +35,7 @@
 //any platform's values to show up in the documentation.  Also, some defines are
 //set at the project level, and won't be seen by the documentation processor,
 //so we explicitly define them here if it is a documentation pass.
+//Joey - Haven't used this... not sure that the assumptions made for this flag are still valid.
 #ifdef DOCUMENTATION_PASS
 	#define PICTOLIB_EXPORTS
 	#define PICTOLIB_CLASS
@@ -63,6 +66,8 @@
 /*! The various ports used by components of the system are changed for release and development versions of the code.
  *	This allows us to develop and debug picto on a network running picto experiments.  Otherwise, we could not have
  *	two separate PictoServers open at the same time.
+ *	\note The method mentioned here was used before we added "System numbers" to Picto.  Now the System Number takes care
+ *	of making sure that Picto in development doesn't affect live experiments.
  */
 //#define DEVELOPMENTBUILD
 //#define SYSTEM_0	//Currently we are using different servers for each picto system.  System 0 is Chris's/Bart's/Hansem's system.  System 1 is Hyojung's. System 2 is Min's.
@@ -92,11 +97,21 @@
 //#define LCDCOMMANDPORT PORTPREFIX+2422
 //#define LCDEVENTPORT PORTPREFIX+2421
 
-//Version MAJOR.MINOR.BUILD
+/*! \brief This is the current Version of the Picto Software according to MAJOR.MINOR.BUILD.
+ *	\details We are currently on Major number 2.  We moved to this number when we reached 
+ *	a "feature complete" version of Picto containing a full Experimental and Analysis framework.
+ *	Obviously there is a whole ton more that needs to be done, but in this version it is possible
+ *	for researchers to build and run their own experiments fully within the Picto system without
+ *	help from a Picto software developer.
+ */
 #define PICTOVERSION "2.0.1"
+/*! \brief This is the current version of the Picto design syntax.  It is saved along with every Picto design
+ *	so that it will be clear on deserialization whether some syntax needs to be upgraded and how.
+ */
 #define DESIGNSYNTAXVERSION "0.0.2"
 //Directory name of automatic updater application and dependencies
 //It is a subdirectory of the main binary directory
+//THIS APPEARS TO NO LONGER BE USED AND SHOULD PROBABLY BE DELETED.
 #define UPDATERDIR "updater"
 
 #ifdef _DEBUG 
@@ -104,16 +119,6 @@
 	//#define DETECTMEMLEAKS
 #endif
 
-////Any file that includes this file will have memory leak detection enabled.
-////Note that this file must be included after all predefined headers (ie. 
-////#include <QSharedPointer>).  Also, all non-predefined headers 
-////(ie. picto headers) must be included after all predefined headers in general
-////or else this will effectively be before some predefined headers
-//// See http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS
-//#if defined (DETECTMEMLEAKS) && defined(WIN32) && defined(_DEBUG)
-//	#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-//	#define new DEBUG_NEW
-//#endif
 
 #endif
 

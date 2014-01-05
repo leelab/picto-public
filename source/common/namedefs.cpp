@@ -3,6 +3,8 @@
 
 namespace Picto {
 
+/*! \brief Defines the names of the difference Picto apps for the various purposes (mostly client identification in network communication).
+*/
 TranslatedNames::TranslatedNames()
 {
 	serverAppName = tr("PictoServer");

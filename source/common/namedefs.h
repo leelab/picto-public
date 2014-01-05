@@ -11,7 +11,7 @@
 
 namespace Picto {
 
-/*! \brief Exposes the translated names used for %Picto applications and hardware
+/*! \brief Exposes the names used for %Picto applications and hardware
  * \ingroup picto
  */
 class TranslatedNames
