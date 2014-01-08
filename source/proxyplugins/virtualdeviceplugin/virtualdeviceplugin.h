@@ -15,15 +15,19 @@
 
 /*! \brief A plugin allowing the proxy server to interface with a VirtualDevice
  *
- *	This plugin runs a virtual device and returns its marking events and spikes
+ *	\details This plugin runs a virtual device and returns its alignment events, spikes and LFP readings
  *  through the standard proxy plugin interface.  It is purely for debugging 
- *  purposes as this point so that it can only be extended to run a different
- *  type of virtual device in code.  The plugin relies on two VirtualEventSource
- *  objects, a spike source and a mark source.  Every time dumpData is called,
- *  the plugin calls getNextEvent() on each data source over and over until
- *  getNextEvent() returns a null event.  Events are sorted for increasing 
- *  timestamp automatically and added to the xml message that is sent to 
- *  the pictoserver through the plugin interface.
+ *  purposes at this point and it can only be extended to run a different
+ *  type of virtual device from within the C++ code itself.  The plugin relies on three types of 
+ *	VirtualEventSource objects, SimpleSpikeSource, SimpleMarkSource, and SimpleLFPSource.  
+ *	Every time dumpData is called, the plugin calls getNextEvent() on each data source over and over until
+ *  getNextEvent() returns a null event.  The VirtualEventSource objects always return data when getNextEvent() is
+ *	called until all of their virtual data up to the current time has been used up.  This way, dumpData() can 
+ *	be sure that it has all available virtual data when getNextEvent() returns an empty pointer for all VirtualEventSources.
+ *	After all data from VirtualEventSources is loaded, the data is added to the message that is sent to the 
+ *	Picto Server by the Proxy application that calls dumpData().
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class VirtualDevicePlugin : public QObject, public NeuralDataAcqInterface
 {

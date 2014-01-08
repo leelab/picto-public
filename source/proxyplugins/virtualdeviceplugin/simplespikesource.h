@@ -7,9 +7,15 @@
 
 #include "simpleeventsource.h"
 
-/*! \brief A Simple Event Source that builds simple Spike events.
- *
- *	
+/*! \brief A Simple Event Source that builds NeuralDataUnit objects.
+ *	\details The frequency at which the NeuralDataUnit objects will be created along with
+ *	the range over which their timespans are randomized is set as the secPerEvent value in
+ *	the constructor.  channel and unit for this source are also set there.
+ *	Apart from that, objects of this class are used entirely for their buildEvent() 
+ *	function which just creates NeuralDataUnit objects one after the other when SimpleEventSource
+ *	says to do so.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class SimpleSpikeSource : public SimpleEventSource
 {

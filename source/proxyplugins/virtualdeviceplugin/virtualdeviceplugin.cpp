@@ -7,14 +7,16 @@
 
 QSharedPointer<Picto::Timestamper> VirtualDevicePlugin::timeStamper_ = QSharedPointer<Picto::Timestamper>(new Picto::Timestamper());
 
+/*! \brief Constructs a new VirtualDevicePlugin object.
+*/
 VirtualDevicePlugin::VirtualDevicePlugin()
 {
 	status_ = notStarted;
 }
 
-/*!	\brief	Used to define the VirtualEventSources to which this VirtualDevicePlugin is attached.
+/*!	\brief	Defines the VirtualEventSources to be used by this VirtualDevicePlugin.
  *
- *	To use a different type of VirtualEventSource, include it above and replace the two 
+ *	\details To use a different type of VirtualEventSource, include it above and replace the  
  *  constructors in this function.  We could also use a dialog, but that is overkill
  *  right now.
  */
@@ -73,6 +75,9 @@ QString VirtualDevicePlugin::device() const
 	return "VirtualDevice";
 }
 
+/*! \brief Implements NeuralDataAcqInterface::startDevice() to start each VirtualEventSource
+ *	 object in the list of those objects.
+ */
 NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 {
 	double currTime = timeStamper_->stampSec();
@@ -103,6 +108,9 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 	return status_;
 }
 
+/*! \brief Implements NeuralDataAcqInterface::startDevice() to stop each VirtualEventSource
+ *	 object in the list of those objects.
+ */
 NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::stopDevice()
 {
 	foreach(QSharedPointer<VirtualEventSource> source,sources_)
@@ -118,7 +126,9 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::getDeviceStatus()
 	return status_;
 }
 
-
+/*! \brief Implements NeuralDataAcqInterface::samplingRate() to return the minimum sample rate of all 
+ *	VirtualEventSource objects.
+ */
 float VirtualDevicePlugin::samplingRate()
 {
 	float rate = -1;
@@ -130,7 +140,8 @@ float VirtualDevicePlugin::samplingRate()
 	return rate;
 }
 
-/*!	\brief	Gets new events from spikeSource and markSource until they return NULL and returns them.
+/*!	\brief	Checks all VirtualEventSources for the latest neural DataUnit objects and returns the first one 
+ *	 in the list.
  */
 QSharedPointer<Picto::DataUnit> VirtualDevicePlugin::getNextEvent(double currTime)
 {
@@ -160,7 +171,9 @@ QList<QSharedPointer<Picto::DataUnit>> VirtualDevicePlugin::dumpData()
 	return dataList_;
 }
 
-/*!	\brief	Calls getNextEvent() over and over, adding new events to the DataUnits until it gets null back.
+/*!	\brief	Calls getNextEvent() over and over, adding new DataUnits to the dataList_ that will be returned
+ *	by dumpData().  Stops when getNextEvent() returns an empty pointer (meaning that all data up to this time has 
+ *	been provided.
  */
 void VirtualDevicePlugin::updateData()
 {

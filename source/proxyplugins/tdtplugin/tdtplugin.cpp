@@ -10,6 +10,7 @@
 #include "dialog.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a PlexonPlugin object.*/
 TdtPlugin::TdtPlugin()
 {
 	deviceStatus_ = notStarted;
@@ -20,6 +21,16 @@ QString TdtPlugin::device() const
 	return "TDT";
 }
 
+/*! \brief To access data from the TDT system, we need the TDT server name, and the names of the Tank and Block that
+ *	to which data is currently being written.  This function gets that data and stores it.
+ *	\details In the general case, the Proxy application runs on the same computer as the TDT Server,
+ *	in this case, the "local" name can be used for the tdt server.  To get the names of the Tank and the currently running
+ *	Block, we run through all available tanks and use the TDT API to check each one for a running block with
+ *	TTANKXLib::_DTTankXPtr::GetHotBlock().  When we find the "HotBlock" we store it and its Tank.
+ *	In the case where DEVELOPMENTBUILD is defined, the Proxy application needn't run on the TDT Server computer.  We get 
+ *	the name of the TDT Server from a dialog and then use that to access the server and get the active Block/Tank.  
+ *	In either case, if we fail to find an active block we return false, otherwise we return true.
+ */
 bool TdtPlugin::getRunningBlockInfo()
 {
 	QString serverName = "local";
@@ -157,6 +168,9 @@ bool TdtPlugin::getRunningBlockInfo()
 	return true;
 }
 
+/*! \brief Attempts to open the Tank and Block discovered in getRunningBlockInfo() through the COM interface,
+ *	returns true on success, false otherwise.
+ */
 bool TdtPlugin::startCOM()
 {
 	if(deviceStatus_ > notStarted)
@@ -208,6 +222,7 @@ bool TdtPlugin::startCOM()
 	return true;
 }
 
+/*! \brief Closes resources that were opened in startCOM().*/
 void TdtPlugin::stopCOM()
 {
 	if(deviceStatus_ == notStarted)
@@ -580,12 +595,17 @@ bool TdtPlugin::acqDataAfterNow()
 	return true;
 }
 
-//comparison functions for easy sorting
+/*! \brief This is a comparison function for easy sorting of SpikeDetails structs according
+ *	to time.
+*/
 bool TdtPlugin::spikeTimestampLessThan(const SpikeDetails &sd1, const SpikeDetails &sd2)
 {
 	return sd1.timeStamp < sd2.timeStamp;
 }
 
+/*! \brief This is a comparison function for easy sorting of EventDetails structs according
+ *	to time.
+ */
 bool TdtPlugin::eventTimestampLessThan(const EventDetails &ed1, const EventDetails &ed2)
 {
 	return ed1.timeStamp < ed2.timeStamp;

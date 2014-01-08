@@ -3,6 +3,11 @@
 #include "../../common/memleakdetect.h"
 #include <math.h>
 #define PI 3.14159265
+
+/*! \brief Constructs a SimpleLFPSource object that will generate LFPDataUnitPackage objects once 
+ *	for every input number of seconds, with a sample rate of secPerSample, and for the input channel.
+ *	\note We don't use randomization for the SimpleLFPSource.
+ */
 SimpleLFPSource::SimpleLFPSource(double secPerEvent, double secPerSample,int channel)
 :SimpleEventSource(secPerEvent,secPerSample,0)
 {
@@ -16,6 +21,8 @@ SimpleLFPSource::~SimpleLFPSource()
 	delete[] vals_;
 }
 
+/*! \brief Creates a single LFPDataUnitPackage according to the parameters passed into the constructor.
+ */
 QSharedPointer<Picto::DataUnit> SimpleLFPSource::buildEvent(double time)
 {
 	QSharedPointer<Picto::LFPDataUnitPackage> newEvent;

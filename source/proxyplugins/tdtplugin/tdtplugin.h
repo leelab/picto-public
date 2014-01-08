@@ -13,10 +13,15 @@
 
 /*! \brief A plugin allowing the proxy server to interface with a TDT system
  *
- *	This uses the Microsoft COM interface to talk to the TDT system.  This interface is
- *	well-documented by TDT.
+ *	\details This uses the Microsoft COM interface to talk to the TDT system.  This interface is
+ *	well-documented by TDT. All of the functions do what they are supposed to do according 
+ *	to the NeuralDataAcqInterface documentation.  This class simply implements those 
+ *	functions for the TDT interface.  Some additional functions were created purely for
+ *	the purpose of cleaning up the inherited functions.  Those functions have been documented here
+ *	but they are really just another part of the TDT interface logic.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class TdtPlugin : public QObject, public NeuralDataAcqInterface
 {
     Q_OBJECT
@@ -35,6 +40,8 @@ public:
 	bool acqDataAfterNow();
 
 private:
+
+	/*! \brief A simple struct used for organizing Spike data.*/
 	struct SpikeDetails
 	{
 		QVector<float> sampleWaveform;
@@ -43,6 +50,10 @@ private:
 		double timeStamp;
 		double resolution;
 	};
+
+	/*! \brief A simple struct used for organizing Event code data.
+	 *	\note Event codes are actually alignment codes that were sent in from the Picto Director.
+	 */
 	struct EventDetails
 	{
 		int code;
@@ -69,6 +80,7 @@ private:
 	wchar_t *szServerName;
 	wchar_t *szTankName;
 	wchar_t *szBlockName;
+	/*! \brief A simple struct used for organizing LFPData.*/
 	struct LFPData
 	{
 		LFPData(){currTime = -1;};

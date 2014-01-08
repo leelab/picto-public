@@ -4,10 +4,12 @@
 #include "plexonplugin.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a PlexonPlugin object.*/
 PlexonPlugin::PlexonPlugin()
 {
 	deviceStatus_ = notStarted;
 }
+
 QString PlexonPlugin::device() const
 {
 	return "Plexon";

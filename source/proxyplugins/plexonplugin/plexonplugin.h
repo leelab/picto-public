@@ -11,14 +11,15 @@
 
 /*! \brief A plugin allowing the proxy server to interface with a Plexon MAP
  *
- *	This uses the API provided by Plexon to extract neural data from a running Plexon 
- *	system.  The documentation for this APi is relatively easy to come by. Unfortunately
- *	I made the mistake of designing these plugins to return raw XML.  In a refactoring, 
- *	it would be wise to ... (Note by Joey: It will forever be a mystery what Matt was
- *	planning to do when refactoring).
- *	Note that PlexClient.dll must be in the path for this plugin to be loaded.
+ *	\details This uses the API provided by Plexon to extract neural data from a running Plexon 
+ *	system.  The documentation for this API is relatively easy to come by.  All of the functions
+ *	do what they are supposed to do according to the NeuralDataAcqInterface documentation.  This
+ *	class simply implements those functions for the Plexon interface.
+ *	\note The PlexClient.dll must be in the path for this plugin to be loaded.  Currently we place
+ *	it in the PictoRunPath\plugins directory alongside the dll generated for this class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PlexonPlugin : public QObject, public NeuralDataAcqInterface
 {
     Q_OBJECT
