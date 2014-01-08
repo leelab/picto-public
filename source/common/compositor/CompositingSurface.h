@@ -12,12 +12,12 @@ namespace Picto {
  */
 
 /*!	\brief A base class that represents an area with a drawing on it.
- * \details QImages are converted and drawn onto CompositingSurface objects.  Multiple
- * CompositingSurface objects are in turn drawn onto a VisualTarget which is what is finally
- * rendered on screen.  In essence, a CompositingSurface can be thought of as an image object
- * that is drawn in a language that the VisualTarget understands, or looked at another way, a
- * compositing surface is a translater, translating from the language of the QImage to the
- * language of the VisualTarget.
+ *	\details QImages are converted and drawn onto CompositingSurface objects.  Multiple
+ *	CompositingSurface objects are in turn drawn onto a VisualTarget which is what is finally
+ *	rendered on screen.  In essence, a CompositingSurface can be thought of as an image object
+ *	that is drawn in a language that the VisualTarget understands, or looked at another way, a
+ *	compositing surface is a translater, translating from the language of the QImage to the
+ *	language of the VisualTarget.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */

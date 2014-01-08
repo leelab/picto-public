@@ -4,7 +4,10 @@
 #include "../../common/protocol/PauseResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for PAUSE responses
+/*! \brief Implements PauseResponseHandler to pause the current Task run when a pause request is
+ *	received over the network.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorPauseResponseHandler : public Picto::PauseResponseHandler
 {

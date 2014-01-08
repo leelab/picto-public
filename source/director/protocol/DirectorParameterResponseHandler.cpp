@@ -7,6 +7,9 @@ DirectorParameterResponseHandler::DirectorParameterResponseHandler(QSharedPointe
 ParameterResponseHandler(statusManager)
 {}
 
+/*! \brief Implements ParameterResponseHandler::processResponse() to set the init value from the input
+ *	directive to the correct Property in the current Experiment.
+ */
 bool DirectorParameterResponseHandler::processResponse(QString directive)
 {	int paramIdLoc = directive.indexOf("id=");
 	if(paramIdLoc < 0)

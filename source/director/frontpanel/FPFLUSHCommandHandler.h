@@ -6,11 +6,10 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \addtogroup pictoserver_protocol
- * @{
- */
-
-/*! \brief Handles GET commands received specifying use of the HTTP protocol
+/*! \brief A Picto::ProtocolCommandHandler that Handles FPFLUSH commands received by the Director from the EmbeddedFrontPanel.
+ *	\details Emits a flush() signal when a flush is requested.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct FPFLUSHCommandHandler : Picto::ProtocolCommandHandler
 {

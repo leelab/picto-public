@@ -6,6 +6,10 @@ DirectorRewardResponseHandler::DirectorRewardResponseHandler(QSharedPointer<Dire
 RewardResponseHandler(statusManager)
 {}
 
+/*! \brief Implements RewardResponseHandler::processResponse() to determine if the directive is a request to change
+ *	the default reward time or that a reward be supplied, and which reward channel should be affected.  Then performs the 
+ *	requested action.
+ */
 bool DirectorRewardResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

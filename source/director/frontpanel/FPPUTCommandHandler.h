@@ -6,11 +6,14 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \addtogroup pictoserver_protocol
- * @{
- */
 
-/*! \brief Handles GET commands received specifying use of the HTTP protocol
+/*! \brief A Picto::ProtocolCommandHandler that Handles FPPUT commands received by the Director from the EmbeddedFrontPanel.
+ *	\details Parses the Picto::ProtocolCommand for the requested value changes (DirectorName, RewardDuration, FlushDuration).
+ *	then implements them using various signals.  The object that owns this one should take care of connecting to these signals
+ *	and performing the requested operations.
+ *
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct FPPUTCommandHandler : Picto::ProtocolCommandHandler
 {

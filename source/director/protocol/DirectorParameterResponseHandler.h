@@ -4,7 +4,10 @@
 #include "../../common/protocol/ParameterResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for REWARD responses
+/*! \brief Implements ParameterResponseHandler to set initValues received over the network 
+ *	into the correct Experimental Properties.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct  DirectorParameterResponseHandler : public Picto::ParameterResponseHandler
 {

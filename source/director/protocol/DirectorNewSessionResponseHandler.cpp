@@ -6,6 +6,9 @@ DirectorNewSessionResponseHandler::DirectorNewSessionResponseHandler(QSharedPoin
 NewSessionResponseHandler(statusManager,commandChannel)
 {}
 
+/*! \brief Extends NewSessionResponseHandler::processCommand() to load the new Session's SessionId 
+ *	into the Picto::Engine::PictoEngine and display it on screen using DirectorStatusManager::setUserInfo().
+ */
 bool DirectorNewSessionResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!commandChannel_.isNull());

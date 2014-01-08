@@ -11,12 +11,17 @@
 #include "../common/stimuli/CircleGraphic.h"
 #include "compositor/D3DVisualTarget.h"
 
-/*!	\brief A test class for playing with signal channels
+/*!	\brief NO LONGER USED. This class is no longer used and should probably be deleted.  The following documentation appeared with the original file.
+ *
+ * 	\details A test class for playing with signal channels.
  *	
+ *	This class is no longer used and should probably be deleted.
  *	This was a test class that was written to test out a signal channel.  It draws a 
  *	circle on the screen, and moves it around according to the inputs from the signal 
  *	channel.  This is actually a really good place to start reading if you're trying 
  *	to understand either signal channels, or the compositing system.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class SignalChannelTest : public QObject
 {

@@ -40,7 +40,7 @@ public:
 	virtual int activate();
 	virtual int deActivate();
 protected:
-	/*! \brief Returns the name of this COmponentInterface.
+	/*! \brief Returns the name of this ComponentInterface.
 	*/
 	virtual QString name() = 0;
 

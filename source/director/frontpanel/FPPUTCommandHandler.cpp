@@ -13,6 +13,12 @@ FPPUTCommandHandler::FPPUTCommandHandler()
 {
 }
 
+/*! \brief Parses the input ProtocolCommand to check its syntax and set any requested values.
+ *	\details Fields that can he set include PictoBox Name, Reward duration, Flush duration.
+ *	The actual implementation of the input requests are performed using signals.  It is the 
+ *	responsibility of the object that created this one to connect to the signals and make them
+ *	do what they are supposed to do.
+ */
 QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(

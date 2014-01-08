@@ -8,6 +8,9 @@
 #include "../../common/globals.h"
 using namespace Picto;
 
+/*! \brief The number of seconds that must pass since the last alignment event before the next
+ *	alignment event is sent by objects of this class.
+ */
 #define SECS_PRE_ALIGN 5
 
 QString DirectorStatusManager::getName()
@@ -17,6 +20,7 @@ QString DirectorStatusManager::getName()
 	return getEngine()->getName();
 }
 
+/*! \brief Sets the Picto::Engine::PictoEngine that is used on this Director to run Experiments.*/
 void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {
 	engine_ = engine;
@@ -26,26 +30,36 @@ void DirectorStatusManager::setEngine(QSharedPointer<Picto::Engine::PictoEngine>
 	connect(engine.data(),SIGNAL(pauseRequested()),this,SLOT(pauseRequested()));
 }
 
+/*! \brief Sets the DirectorData that is used to store default reward quantities on this DirectorStatusManager. 
+ *	This is used in COMPONENTUPDATE commands sent to the Picto Server.
+ */
 void DirectorStatusManager::setDirectorData(QSharedPointer<DirectorData> directorData)
 {
 	directorData_ = directorData;
 }
 
+/*! \brief Returns the Picto::Engine::PictoEngine that is used on this Director to run Experiments.*/
 QSharedPointer<Picto::Engine::PictoEngine> DirectorStatusManager::getEngine()
 {
 	Q_ASSERT(!engine_.isNull());
 	return engine_.toStrongRef();
 }
 
+/*! \brief Sets the current experiment being run by this Director.*/
 void DirectorStatusManager::setExperiment(QSharedPointer<Picto::Experiment> experiment)
 {
 	experiment_ = experiment;
 }
+
+/*! \brief Gets the current experiment being run by this Director.*/
 QSharedPointer<Picto::Experiment> DirectorStatusManager::getExperiment()
 {
 	return experiment_;
 }
 
+/*! \brief Extends ComponentStatusManager::setUserInfo() to display the input user information
+ *	on the bottom left corner of the screen.
+ */
 void DirectorStatusManager::setUserInfo(QString info)
 {
 	if(engine_.isNull())
@@ -60,9 +74,12 @@ void DirectorStatusManager::setUserInfo(QString info)
 	}
 }
 
+/*! \brief Extends ComponentStatusManager::setStatus() to send the current Status to attached
+ *	ControlPanelInterface objects and describe the current server connection in setUserInfo().
+ */
 void DirectorStatusManager::setStatus(ComponentStatus status)
 {
-	ComponentStatus oldStatus = getStatus();
+	ComponentStatus oldStatus = getStatus();	//Not sure why this is here...
 	ComponentStatusManager::setStatus(status);
 	ComponentStatus newStatus = getStatus();
 
@@ -89,6 +106,8 @@ void DirectorStatusManager::setStatus(ComponentStatus status)
 	}
 }
 
+/*! \brief Implements ComponentStatusManager::newSession() to reset alignment event data.
+*/
 void DirectorStatusManager::newSession()
 {
 	alignmentCode_ = 0;
@@ -96,6 +115,9 @@ void DirectorStatusManager::newSession()
 	lastAlignTime_ = QDateTime::currentDateTime();
 }
 
+/*! \brief Implements ComponentStatusManager::doFrequentUpdate() to handle all commands coming into
+*	attached ControlPanelInterface object.
+*/
 void DirectorStatusManager::doFrequentUpdate()
 {
 	if(engine_.isNull())
@@ -106,6 +128,9 @@ void DirectorStatusManager::doFrequentUpdate()
 	}
 }
 
+/*! \brief Implements ComponentStatusManager::doServerUpdate() to send alignment events to an attached neural system.  Also sends
+ *	records of recent Alignment events and COMPONENTUPDATE "keep alive" commands to the Picto Server.
+ */
 void DirectorStatusManager::doServerUpdate()
 {
 	//We keep on setting status/user info here just in case the director got minimized.  These actions will cause the splash
@@ -167,6 +192,11 @@ void DirectorStatusManager::doServerUpdate()
 	}
 }
 
+/*! \brief Called when experimental elements programatically request that a pause be triggered.  
+ *	\details Updates the current ComponentStatusManager status (setStatus()) and tells the
+ *	PictoEngine to pause.
+ *	\sa Picto::Engine::PictoEngine::pauseRequested()
+ */
 void DirectorStatusManager::pauseRequested()
 {
 	setStatus(paused);

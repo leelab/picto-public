@@ -6,11 +6,10 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \addtogroup pictoserver_protocol
- * @{
- */
-
-/*! \brief Handles GET commands received specifying use of the HTTP protocol
+/*! \brief A Picto::ProtocolCommandHandler that Handles FPREWARD commands received by the Director from the EmbeddedFrontPanel.
+ *	\details Emits a giveReward() signal when a reward is requested.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct FPREWARDCommandHandler : Picto::ProtocolCommandHandler
 {

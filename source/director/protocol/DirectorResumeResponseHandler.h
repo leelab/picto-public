@@ -4,7 +4,10 @@
 #include "../../common/protocol/ResumeResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for RESUME responses
+/*! \brief Implements ResumeResponseHandler to resume running the current Experiment 
+ *	from a paused state when a resume request is received over the network.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorResumeResponseHandler : public Picto::ResumeResponseHandler
 {

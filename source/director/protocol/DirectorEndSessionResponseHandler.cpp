@@ -6,6 +6,9 @@ DirectorEndSessionResponseHandler::DirectorEndSessionResponseHandler(QSharedPoin
 EndSessionResponseHandler(statusManager,commandChannel)
 {}
 
+/*! \brief Extends EndSessionResponseHandler::processCommand() to clear the SessionId of the previous session from
+ *	the StatusManager and right "Session Ended" to DirectorStatusManager::setUserInfo().
+ */
 bool DirectorEndSessionResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

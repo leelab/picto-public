@@ -6,6 +6,10 @@ DirectorErrorResponseHandler::DirectorErrorResponseHandler(QSharedPointer<Direct
 ErrorResponseHandler(statusManager)
 {}
 
+/*! \brief Extends ErrorResponseHandler::processResponse() to display the latest received error message
+ *	to the display.
+ *	\sa DirectorStatusManager::setUserInfo().
+ */
 bool DirectorErrorResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

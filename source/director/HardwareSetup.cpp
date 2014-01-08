@@ -57,6 +57,8 @@
 #endif
 #include "../common/memleakdetect.h"
 
+/*! \brief Constructs a HardwareSetup object that configures the input Picto::Engine::PictoEngine.
+*/
 HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 {
 	engine_ = engine;
@@ -72,7 +74,8 @@ HardwareSetup::HardwareSetup(QSharedPointer<Picto::Engine::PictoEngine> engine)
 	diamSampPer_ = 4;
 }
 
-//! Returns true if everything has been setup
+/*! \brief Returns true if everything has been successfully setup.
+*/
 bool HardwareSetup::isSetup()
 {
 	return renderingTargetsSetup_ & 
@@ -81,16 +84,14 @@ bool HardwareSetup::isSetup()
 }
 
 
-/*!	\brief	Sets up the rendering target used in the experiment
+/*!	\brief Sets up the rendering target used in the experiment with appropriate 
+ *	Picto::VisualTarget and Picto::PCMAuralTarget objects, then adds it to the Picto::Engine::PictoEngine.
  *
- *	As this is an early release, we don't set up the audio target.
- *
- *	Note that if the visual target is of a type not supported by the 
- *	platform, we return false
- *
- *	timingCritical indicates that this process/thread should run at maximum
+ *	@param visualTargetType The type of VisualTarget to be setup.
+ *	@param timingCritical Indicates that this process/thread should run at maximum
  *	priority.  This makes the mouse unresponsive, which is okay 
  *	when input is from the eye tracker.
+ *	\details Returns false if the RenderingTarget can not be set up properly.
  */
 bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, bool timingCritical)
 {
@@ -122,21 +123,22 @@ bool HardwareSetup::setupRenderingTargets(VisualTargetType visualTargetType, boo
 
 }
 
-/*!	\brief Sets up the signal channel used for input
+/*!	\brief Sets up the signal channels used for input
  *
  *	Every director instance requires some form of input (mouse, eye tracker, or something
- *	else.  This function sets that up.  The channelType string is used to determine
+ *	else.  This function sets that up.  The SignalChannelType is used to determine
  *	the type of channel we wish to set up.  The legal choices are:
  *		mouse
  *		EyetrackerLegacySystemXp
  *		EyetrackerPictoBoxXp
- *	Additional choice will be added as we expand platforms (actually, the CE stuff would be
- *	really easy to add, but I don't have time to test it...)
+ *	Additional choices will be added as we expand platforms.
  *
+ *	Returns false if we try to set up signal channels for the wrong platform, or we can't setup
+ *	the SignalChannels for some other reason.  Returns true otherwise.
+ *	\warning The Mouse Signal channel can't be set up unless the rendering targets have already
+ *	been setup.  This is because the MouseSignalChannel requires a visual target.
  *	Note that if we try to set up a signal channel for the wrong platform, we simply return false
  *
- *	IMPORTANT: The Mouse Signal channel can't be set up unless the rendering targets have already
- *	been setup.  This is because the MouseSignalChannel requires a visual target.
  */
 bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 { 
@@ -205,8 +207,8 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 
 /*!	\brief Sets up the reward controller
  *
- *	Initially there are only 2 possibile reward controllers: The PictoBoxXP
- *	controller, and the null controller.
+ *	\details Potential RewardController are PictoBoxXpReward, LegacySystemXpReward, AudioReward, NullReward.
+ *	Returns true on success, false otherwise.
  */
 bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 {
@@ -240,10 +242,12 @@ bool HardwareSetup::setupRewardController(RewardControllerType controllerType)
 	return true;
 }
 
-/*!	\brief Sets up the output signal controller
+/*!	\brief Sets up the OutputSignalController used to handle output voltage signals.
  *
- *	Initially there are only 2 possibile reward controllers: The PictoBoxXP
- *	controller, and the null controller.
+ *	\details There are only two types of OutputSignalControllers currently: PictoBoxXpOutSig and NullOutSig.
+ *	Returns true on success, returns false otherwise.
+ *	\note This function needs to know the EventCodeGeneratorType so that it knows if the port used for Event codes is 
+ *	free to be used as an OutputSignal port or not.
  */
 bool HardwareSetup::setupOutputSignalController(OutputSignalControllerType controllerType, EventCodeGeneratorType generatorType)
 {
@@ -276,10 +280,10 @@ bool HardwareSetup::setupOutputSignalController(OutputSignalControllerType contr
 	return true;
 }
 
-/*!	\brief Sets up the event code generator
+/*!	\brief Sets up the EventCodeGenerator used to send event codes to a neural data acquisition system.
  *
- *	Initially there are only 2 possibile event code generator: The PictoBoxXP
- *	generator, and the null generator.
+ *	\details Options are PictoBoxXpGen, LegacyGen, NullGen.
+ *	Returns true on success, false otherwise.
  */
 bool HardwareSetup::setupEventCodeGenerator(HardwareSetup::EventCodeGeneratorType generatorType)
 {

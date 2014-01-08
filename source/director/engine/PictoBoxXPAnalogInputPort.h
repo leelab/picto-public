@@ -24,7 +24,6 @@ namespace Picto {
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
-
 class PictoBoxXPAnalogInputPort : public InputPort
 {
 public:

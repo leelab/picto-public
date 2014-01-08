@@ -21,7 +21,7 @@ namespace Picto {
  *	system number mapping.  Once the system number is set using setSystemNumber(), that number is saved on the
  *	computer's file system and all port numbers are updated internally.  To access the correct port number for 
  *	a particular type of operation, the get*Port() functions are used.
-  *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
 #if defined WIN32 || defined WINCE

@@ -8,11 +8,13 @@
 
 namespace Picto {
 
-/*!	\brief A CompositingSurface that uses Direct3D
+/*!	\brief A CompositingSurface that converts a QImage to a LPDIRECT3DTEXTURE9 for Direct3D
  *
- *	The D3D Compositing surface is located in the PictoDirector tree (as opposed to the
- *	libPictoTree) because it is platform dependant.  The compositing surface uses
- *	Direct3D Textures to store image data, and then pases them to the Visual Target.
+ *	\details The D3DCompositingSurface is located in the PictoDirector source tree (as opposed to the
+ *	libPicto Tree) because it is platform dependant.  The compositing surface uses
+ *	Direct3D Textures to store image data, and then pases them to the D3DVisualTarget.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class D3DCompositingSurface : public CompositingSurface
 {

@@ -8,6 +8,9 @@ DirectorLoadExpResponseHandler::DirectorLoadExpResponseHandler(QSharedPointer<Di
 LoadExpResponseHandler(statusManager)
 {}
 
+/*! \brief Extends LoadExpResponseHandler::processResponse() to load the Experiment from the input directive
+ *	and attach the Director's Picto::Engine::PictoEngine to it.
+ */
 bool DirectorLoadExpResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

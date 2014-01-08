@@ -4,7 +4,9 @@
 #include "../../common/protocol/ErrorResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for ERROR responses
+/*! \brief Extends ErrorResponseHandler to display received error messages to the display.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorErrorResponseHandler : public Picto::ErrorResponseHandler
 {

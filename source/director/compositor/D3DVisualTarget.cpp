@@ -12,9 +12,12 @@
 namespace Picto {
 
 
-//timingCritical indicates that this process/thread should run at maximum
-//priority.  This makes the mouse unresponsive, which is okay 
-//when input is from the eye tracker.
+/*! \brief Constructs a D3DVisualTarget object.
+ *	\details timingCritical indicates that this process/thread should run at maximum
+ *	priority.  This makes the mouse unresponsive, which is okay when input is from the eye tracker.
+ *	\note Currently the D3DVisualTarget is always created with 800x600 resolution and in general Picto
+ *	assumes that everything is going to be 800x600.  This is something that we should consider working on.
+ */
 D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
 	VisualTarget(false, 800,600)
 {
@@ -184,6 +187,10 @@ D3DVisualTarget::D3DVisualTarget(bool timingCritical) :
 
 
 }
+
+/*! \brief Implements QWidget::closeEvent() to deallocate unneeded memory and bring the current thread priority back
+ *	to normal (if it was changed) when this VisualTarget is closed.
+*/
 void D3DVisualTarget::closeEvent(QCloseEvent *event)
  {
 	 Q_UNUSED(event);
@@ -213,7 +220,8 @@ D3DVisualTarget::~D3DVisualTarget()
 {	
 }
 
-//! Return a D3D Compositing surface
+/*! \brief Implmements VisualTarget::generateCompositingSurface() to create and return a shared pointer to a D3DCompositing surface.
+*/
 QSharedPointer<CompositingSurface> D3DVisualTarget::generateCompositingSurface()
 {
 	QSharedPointer<D3DCompositingSurface> d3dCompositingSurface(new D3DCompositingSurface(pD3dDevice_));
@@ -257,7 +265,10 @@ void D3DVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, QSh
 	}
 }
 
-
+/*! \brief Implements VisualTarget::present() to render the latest frame to the display and call setFirstPhosphorTime() as soon as 
+ *	rendering leaves the vSync period.
+ *	\details Blocks execution until the end of the vSync period (ie. Can consume up to one frame length of CPU time).
+ */
 void D3DVisualTarget::present()
 {
 	renderSuccess_ = false;
@@ -357,15 +368,16 @@ void D3DVisualTarget::present()
 
 }
 
-//!We'll never get any paint events since we run in full screen
+/*!	\brief This object never gets any paint events since we run in full screen.
+*/
 void D3DVisualTarget::paint(QPaintDevice *widget)
 {
 	Q_UNUSED(widget);
 }
 
-/*!	\Brief Draws text on the screen
+/*!	\Brief Draws the input text on the screen according to the input font, color, and in the input rect with the input alignment.
  *
- *	WARNING: This function is slow, and will likely result in dropped frames.
+ *	\warning This function is slow, and will likely result in dropped frames.  Don't use it during a Task run.
  */
 void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
 {
@@ -441,6 +453,7 @@ void D3DVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect
 
 }
 
+/*! \brief Call this function to inialized the D3D device for rendering.*/
 void D3DVisualTarget::initializeD3DDevice()
 {
 	if(pVertexBuffer_)
@@ -543,7 +556,8 @@ void D3DVisualTarget::initializeD3DDevice()
 
 }
 
-//outputs an error message if something goes wrong with Direct3DMobile
+/*! \brief Outputs an error message if something goes wrong with IDirect3D API.
+*/
 void D3DVisualTarget::d3dFail(QString errorMsg)
 {
 	QString text = "If you are seeing this message, something has gone ";

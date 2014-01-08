@@ -13,6 +13,9 @@ FPFLUSHCommandHandler::FPFLUSHCommandHandler()
 {
 }
 
+/*! \brief Parses the input ProtocolCommand to check its syntax, extract the reward channel on which a flush should occur and
+ *	emit a flush() signal accordingly.
+ */
 QSharedPointer<Picto::ProtocolResponse> FPFLUSHCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);

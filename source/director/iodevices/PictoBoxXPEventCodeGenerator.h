@@ -7,7 +7,7 @@ namespace Picto {
 
 /*!	\brief EventCodeGenerator specific to PictoBox when it is running WindowsXP
  *
- *	The EventCodeGenerator for PictoBox running Windows XP makes the following
+ *	The EventCodeGenerator for PictoBox running Windows 7 makes the following
  *	assumptions about the hardware:
  *		- A single NI PCI-6221 DAQ is installed as Dev 1
  *		- There is an 8-bit line attached to digital out port1 for the event codes 
@@ -25,8 +25,12 @@ namespace Picto {
  *			eventCode[5]		P1.5			6
  *			eventCode[6]		P1.6			5
  *			event stobe			P1.7			38
+ *	When sendEvent() is called data goes to bits 0:6 and bit 7 is sent high as an event strobe.  
+ *	The digital output lines remain at these levels for 250us and are then lowered back down.  
+ *	This is sufficient to provide the event code data to the Plexon system.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class PictoBoxXPEventCodeGenerator : public EventCodeGenerator
 {
 	Q_OBJECT

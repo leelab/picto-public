@@ -13,6 +13,15 @@
 #include "frontpanel/FPInterface.h"
 #include "../common/storage/directordata.h"
 
+/*! \brief Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the
+ *	Picto server and sends timing alignment events to a Neural data acquisition system.
+ *	\details This class implements a ComponentInterface to setup a DirectorStatusManager, a Picto::Engine::PictoEngine and
+ *	a CommandChannel that work together to run Experiments that come in from the PictoServer.  When running on a Pictobox it 
+ *	also starts an instance of the EmbeddedFrontPanel process which functions as a simple control panel for things like 
+ *	supplying rewards and displaying feedback to the Experiment operator.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class Director : public QObject, public ComponentInterface
 {
 	Q_OBJECT

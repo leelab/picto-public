@@ -6,11 +6,13 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \addtogroup pictoserver_protocol
- * @{
- */
-
-/*! \brief Handles GET commands received specifying use of the HTTP protocol
+/*! \brief A Picto::ProtocolCommandHandler that Handles FPGET commands received by the Director from the EmbeddedFrontPanel.
+ *	\details Returns the requested data (IPAddress, DirectorName, DirectorStatus, RewardDuration, FlushDuration).  
+ *
+ *	Rather than creating some kind of complex circular reference system, we have simply exposed functions here that higher level 
+ *	classes can use to update this ProtocolCommandHandler with the data that it needs.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct FPGETCommandHandler : Picto::ProtocolCommandHandler
 {
@@ -21,7 +23,13 @@ public:
 	QString method() { return QString("FPGET"); }
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 
+	/*! \brief Use this function to tell this object what the Director's IP Address is so that it can be correctly returned to
+	 *	anyone requesting that data.
+	 */
 	void setIpAddress(QString val){ip_ = val;};
+	/*! \brief Use this function to tell this object what the Director's name is so that it can be correctly returned to
+	 *	anyone requesting that data.
+	 */
 	void setName(QString val){name_ = val;};
 	void setRewardDuration(int controller,int dur);
 	void setFlushDuration(int controller,int dur);

@@ -20,7 +20,6 @@ namespace Picto {
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
-
 class LegacySystemXPAnalogInputPort : public InputPort
 {
 public:

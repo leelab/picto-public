@@ -5,7 +5,10 @@
 #include "../../common/network/commandchannel.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for ERROR responses
+/*! \brief Extends EndSessionResponseHandler to perform various "finish up" tasks in the 
+ *	Picto::Engine::PictoEngine.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorEndSessionResponseHandler : public Picto::EndSessionResponseHandler
 {

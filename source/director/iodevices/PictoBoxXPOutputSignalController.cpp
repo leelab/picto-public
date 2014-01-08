@@ -13,9 +13,7 @@
 							Q_ASSERT_X(!rc, "PictoBoxXPOutputSignalController", msg.toLatin1());\
 						 } }
 
-// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
-//		 where we have full hardware control.  If this is meant to run elsewhere, a more
-//		 generic RewardController will need to be written
+// THIS IS NOT USED AND SHOULD BE DELETED.
 #define DEVICE_NAME "Dev1"
 
 namespace Picto
@@ -26,7 +24,6 @@ namespace Picto
  *	Pictobox.
  *	Port 1 is Dev1/port1/line0:7 on the Nidaq, corresponding to the PAR0 (parallel) port on a standard
  *	Pictobox.
- *
  */
 PictoBoxXPOutputSignalController::PictoBoxXPOutputSignalController(int port)
 :	OutputSignalController(0,7),

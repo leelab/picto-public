@@ -1,6 +1,8 @@
 /*! \file namedefs.h
  * \ingroup picto
  * \brief Names used for %Picto applications and hardware
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 
 #ifndef _NAMEDEFS_H_
@@ -12,7 +14,9 @@
 namespace Picto {
 
 /*! \brief Exposes the names used for %Picto applications and hardware
- * \ingroup picto
+ *	\ingroup picto
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class TranslatedNames
 {

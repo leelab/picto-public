@@ -4,7 +4,9 @@
 #include "../../common/protocol/LoadExpResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for LOADEXP responses
+/*! \brief Implements LoadExpResponseHandler to load the Experiment in directive's received over the network.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorLoadExpResponseHandler : public Picto::LoadExpResponseHandler
 {

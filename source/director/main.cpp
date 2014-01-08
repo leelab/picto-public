@@ -1,32 +1,62 @@
 /*!	\file director/main.cpp
- *	\brief PictoDirector is the software that presents the stimuli and collects the behavioral data.
+ *	\brief PictoDirector is the application that presents stimuli and collects the behavioral data.  It 
+ *	runs the Picto "game."
  *
  *	Picto Director is one of the major components of the Picto system.  This software
- *	is responsible for presenting the stimuli, collecting the behavioral data, and 
- *	controlling the flow of the experiment by running the state machines.  Director
- *	is also responsible for all communications with PictoServer.
+ *	is responsible for presenting Experimental stimuli, collecting behavioral data from the test
+ *	subject, and controlling the flow of the experiment by running the StateMachine.  The Director
+ *	communicates with PictoServer during the experiment, receives commands and sends over all Experimental
+ *	data in real time.
  *	
- *	Despite the long list of responsibilities, PictoDirector is actually a really
- *	simple program.  Upon booting it first sets up hardware to match the system on 
- *	which it is running (actually, at the moment it sets up the hardware for PictoBoxXp).
- *	Then, it attempts to connect to a PictoServer instance. Once connected, it sits in a 
- *	loop waiting sending COMPONENTUPDATE commands.  The responses to these commands may 
- *	include "directives" which tell Director to do something (start an experiment, deliver
+ *	Upon booting, the Director first sets up the hardware interface to match the system on 
+ *	which it is running (currently this is limited to a PictoBox or a legacy Orion computer).
+ *	Next, it attempts to connect to a PictoServer instance. Once connected, it sits in a 
+ *	loop sending COMPONENTUPDATE "keep alive" commands periodically.  The responses to these commands may 
+ *	include "directives" which tell the Director to do something (start an experiment, deliver
  *	a reward, etc).
  *
- *	In its current state, PictoDirector is really only capable of running on PictoBox
- *	with WinXP.  However, this was not how the application was intended to work.  In
- *	theory, PictoDirector should be able to run on PictoBox with WinCE, or on any machine.
- *	To get this working, you'll need to create some sort of PictoDirector configuration 
- *	scheme.  A basic one of these has already been developed using command line arguments.
+ *	In its current state, PictoDirector is really only capable of running on Windows.  However, this was 
+ *	not how the application was intended to work.  In theory, PictoDirector should be able to run on 
+ *	other Operating systems as well.  If QT supported everything that we wanted to do, this would be 
+ *	trivial.  In practice though, we need to communicate with the NiDaq card, the Phidgets devices,
+ *	and render at high speed with precise timing to the display.  None of these operations are supporte
+ *	in Qt, so supporting other OSes will necessitate writing the classes that handle those operations
+ *	for the other OS.
  *
  *	Command line arguments:
- *	- -name: Set the name of this Director instance to the string argument immediately following "-name"
- *	- -pixmap: Run Director using Pixmap rendering.  This is really slow, but it lets you run
- *	Director in places where DirectX is not available (e.g. when running Director on a machine that
- *	is accessed by remote desktop).
+ *	- -name: Set the name of this Director instance to the string argument immediately following "-name "
+ *  - -systemNumber: Sets the system number to the number immediately following "-systemNumber ".  A 
+ *		Director can communicate only with a PictoServer running with the same system number
+ *  - -pixmap: If this is included, Pixmap rendering will be used instead of DirectX rendering.  This makes
+ *		timing less precise, but is good for testing since it is a little kinder about things like taking over
+ *		as the main window and generally allowing for other things to happen on the Director computer.  It 
+ *		is also usable over remote desktop.
+ *  - -xChan: The number argument following this one defines the analog input channel on which the x coordinate of eye position data will come in.
+ *		If xChan and yChan are not used, the mouse will be used for position input.
+ *  - -yChan: The number argument following this one defines the analog input channel on which the y coordinate of eye position data will come in.
+ *		If xChan and yChan are not used, the mouse will be used for position input.
+ *  - -xDiamChan: The number argument following this one defines the analog input channel on which the x coordinate of eye diameter data will come in.
+ *		Don't use this if eye diameter is not tracked.
+ *  - -yDiamChan: The number argument following this one defines the analog input channel on which the y coordinate of eye diameter data will come in.
+ *		Don't use this if eye diameter is not tracked.
+ *  - -positionPeriod: The number argument following this one defines the sample period per eye position sample.  For example, 
+ *		"-positionPeriod 2" sets up the Director to sample eye position data once every 2 ms.
+ *  - -diamPeriod: The number argument following this one defines the sample period per eye diameter sample.  For example, 
+ *		"-diamPeriod 4" sets up the Director to sample eye diameter data once every 4 ms.
+ *  - -legacy: Sets the Director to interface with Orion computer hardware for its RewardController, EventCodeGenerator and
+ *		AnalogInputPort (no OutputSignalController is supported).  Note that the hardware line that controlles the reward box still needs to be moved to a different 
+ *		pin that was used in Orion.  See LegacySystemXPRewardController for more details.  Use only one of
+ *		legacy, pictobox, or test.
+ *  - -pictobox: Sets the Director to interface with Pictobox computer hardware for its RewardController, EventCodeGenerator, 
+ *		AnalogInputPort, and OutputSignalController. Use only one of legacy, pictobox, or test.
+ *  - -test: Sets the Director to use an AudioRewardController, MouseSignalChannel and no event or output controllers. Use only one of
+ *		legacy, pictobox, or test.
+ *  - -onesided: When this is used there will be no alignment or gathering of neural data.  This means that the parallel port usually used to 
+ *		send alignment events to the neural system will be available as a secondary OutputSignal port to the experiment developer
+ *		referred to as PAR0.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #include <QApplication>
 #include <QTranslator>
 #include <QMessageBox>
@@ -42,7 +72,16 @@
 QSharedPointer<Picto::CommandChannel> connectToServer(QUuid directorID);
 void setUserInfo(QSharedPointer<Picto::Engine::PictoEngine> engine, QString status);
 
-
+/*! \brief The main method of the Picto Director application.
+ *	\details Goes through standard Picto application setup procedure, setting up the QApplication,
+ *	the QTranslator, and calling Picto::InitializeLib() and Picto::IniitializePorts(), then parses
+ *	the command line for Hardware setup data which will be used in the construction of the
+ *	Director object.  After parsing command line options, the AutoUpdater system is setup with the
+ *	commands that will be needed to restart this application, then the Director object is created
+ *	and its Director::activate() function is called.
+ *	
+ *	Director::activate() doesn't return until the application closes.
+ */
 int main(int argc, char *argv[])
 {
 	//This will cause memory leaks to print out on exit if they're enabled

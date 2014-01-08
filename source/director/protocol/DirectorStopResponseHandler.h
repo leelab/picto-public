@@ -4,10 +4,12 @@
 #include "../../common/protocol/StopResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for STOP responses
+/*! \brief Implements StopResponseHandler to stop the current Task run when a stop request is
+ *	received over the network.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorStopResponseHandler : public Picto::StopResponseHandler
-
 {
 public:
 	DirectorStopResponseHandler(QSharedPointer<DirectorStatusManager> statusManager);

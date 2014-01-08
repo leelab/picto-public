@@ -6,6 +6,14 @@
 #include "../../common/experiment/experiment.h"
 #include "../../common/storage/directordata.h"
 
+/*! \brief Handles overall status operations for a Director object.
+ *	\details This class adds to the default ComponentStatusManager functionality by implimenting Status and user info display
+ *	for the Experiment subject, interfacing with any Control Panels attached to the Director, sending Alignment Events to
+ *	attached neural systems, and sending COMPONENTUPDATE commands and Alignment Event data to the Picto Server.
+ *	\sa ComponentStatusManager
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class DirectorStatusManager : public ComponentStatusManager
 {
 	Q_OBJECT

@@ -12,6 +12,9 @@ FPGETCommandHandler::FPGETCommandHandler()
 {
 }
 
+/*! \brief Parses the input ProtocolCommand to check its syntax and return any requested information.
+ *	\details Available data includes IP Address, PictoBox Name, Reward duration, Flush duration, status string.
+ */
 QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);
@@ -90,6 +93,9 @@ QSharedPointer<Picto::ProtocolResponse> FPGETCommandHandler::processCommand(QSha
 	return response;
 }
 
+/*! \brief Use this function to tell this object what the current reward duration is so that it can be correctly returned to
+ *	anyone requesting that data.
+ */
 void FPGETCommandHandler::setRewardDuration(int controller,int dur)
 {
 	while(rewardDurs_.size() <= controller)
@@ -97,6 +103,9 @@ void FPGETCommandHandler::setRewardDuration(int controller,int dur)
 	rewardDurs_[controller] = dur;
 }
 
+/*! \brief Use this function to tell this object what the current flush duration is so that it can be correctly returned to
+ *	anyone requesting that data.
+ */
 void FPGETCommandHandler::setFlushDuration(int controller,int dur)
 {
 	while(flushDurs_.size() <= controller)
@@ -104,12 +113,17 @@ void FPGETCommandHandler::setFlushDuration(int controller,int dur)
 	flushDurs_[controller] = dur;
 }
 
+/*! \brief Returns the reward duration that was set using setRewardDuration().
+ */
 int FPGETCommandHandler::getRewardDuration(int controller)
 {
 	if(rewardDurs_.size() <= controller)
 		return -1;
 	return rewardDurs_[controller];
 }
+
+/*! \brief Returns the flush duration that was set using setFlushDuration().
+ */
 int FPGETCommandHandler::getFlushDuration(int controller)
 {
 	if(flushDurs_.size() <= controller)

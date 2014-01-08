@@ -10,20 +10,18 @@ namespace Picto
 /*!	\brief A reward controller for the LegacySystem (ie. an old Orion computer being used
  *	as a Picto Director).
  *
- *	LegacySystem uses a National Instruments PCI-6503 data acquisition board
- *	to deliver rewards (the same board is used for triggering event codes).  
- *	As long as LegacySystem is running Windows XP, we can 
- *	use the traditional NIDAQ MX drivers.
+ *	In order to support precise timing using a reward clock, we had to change things a little
+ *	bit from the Orion system here.  Whereas Orion is connected up such that the PCI-6503 board
+ *	used for event delivery is also used for reward delivery, in Picto, in order to be able to use the clock timing
+ *	we needed to use the other Orion card, the PCI-MIO-16XE-50.  For this reason, when running Picto on a legacy Orion
+ *	box we need to open up the breakout box and connect the reward controller BNC to the Ao0 port (pin 22).
  *
- * The reward controller MUST be connected to the Port 2 pin 7 on the DAQ for this to work.
- * 
- * PIN CONNECTIONS:
- * 		Reward controller	  Port0 bit
- * 			1					P2.7	
+ *	For more detail on the precise reward timing system, see startReward().
  *
- * \note The Legacy System uses requires active high logic for reward delivery
+ *	\note The Legacy System requires active high logic for reward delivery
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class LegacySystemXPRewardController :  public RewardController
 {
 public:

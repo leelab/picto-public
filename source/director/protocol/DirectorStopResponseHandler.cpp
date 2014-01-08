@@ -6,6 +6,9 @@ DirectorStopResponseHandler::DirectorStopResponseHandler(QSharedPointer<Director
 StopResponseHandler(statusManager)
 {}
 
+/*! \brief Implements StopResponseHandler::processResponse() to stop the current Experiment when a directive
+ *	is received.
+ */
 bool DirectorStopResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

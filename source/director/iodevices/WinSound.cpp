@@ -3,6 +3,11 @@
 
 namespace Picto {
 
+/*! \brief Constructs a new WinSound with the .wav file at the input path.
+ *	\details This constructor attempts to load the .wav file at the input path.
+ *	If it fails to load the file, errorString() will return an error message.  Otherwise,
+ *	errorString() returns an empty string.
+ */
 WinSound::WinSound(QString path)
 {
 

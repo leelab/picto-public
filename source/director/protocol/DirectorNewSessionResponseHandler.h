@@ -5,7 +5,9 @@
 #include "../../common/network/commandchannel.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for ERROR responses
+/*! \brief Extends NewSessionResponseHandler to setup the Picto::Engine::PictoEngine for the new Session.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct DirectorNewSessionResponseHandler : public Picto::NewSessionResponseHandler
 {

@@ -9,24 +9,38 @@ namespace Picto {
  *
  *	The EventCodeGenerator for LegacySystem running Windows XP makes the following
  *	assumptions about the hardware:
- *		- A single NI PCI-6221 DAQ is installed as Dev1
- *		- There is an 8-bit line attached to digital out port1 for the event codes 
+ *		- A NI PCI-6503 DAQ is installed as Dev1
+ *		- There is an 16-bit line attached to digital out port1 for the event codes 
  *		  (see PINs below)
  *		- The event codes are destined for a Plexon device (although with some
  *		  minor adjustments to the connector, this will also talk to a TDT box).
  *
  *	PIN CONNECTIONS
- *		   EventCode bit	  Port1 bit	   Pin on PCI-6221
- *			eventCode[0]		P1.0			11
- *			eventCode[1]		P1.1			10
- *			eventCode[2]		P1.2			43
- *			eventCode[3]		P1.3			42
- *			eventCode[4]		P1.4			41
- *			eventCode[5]		P1.5			6
- *			eventCode[6]		P1.6			5
- *			event stobe			P1.7			38
+ *		   EventCode bit	  Port1 bit	   
+ *			eventCode[0]		P1.0
+ *			eventCode[1]		P1.1
+ *			eventCode[2]		P1.2
+ *			eventCode[3]		P1.3
+ *			eventCode[4]		P1.4
+ *			eventCode[5]		P1.5
+ *			eventCode[6]		P1.6
+ *			eventCode[7]		P1.7
+ *			eventCode[8]		P1.8
+ *			eventCode[9]		P1.9
+ *			eventCode[10]		P1.10
+ *			eventCode[11]		P1.11
+ *			eventCode[12]		P1.12
+ *			eventCode[13]		P1.13
+ *			eventCode[14]		P1.14
+ *			event strobe		P1.15
+ *	
+ *	When sendEvent() is called data goes to bits 0:6, bits 7:14 are set to zero and bit 15
+ *	is sent high as an event strobe.  The digital output lines remain at these levels for 
+ *	250us and are then lowered back down.  This is sufficient to provide the event code data 
+ *	to the Plexon system.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class LegacySystemXPEventCodeGenerator : public EventCodeGenerator
 {
 	Q_OBJECT

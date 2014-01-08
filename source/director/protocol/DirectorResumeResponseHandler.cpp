@@ -6,6 +6,9 @@ DirectorResumeResponseHandler::DirectorResumeResponseHandler(QSharedPointer<Dire
 ResumeResponseHandler(statusManager)
 {}
 
+/*! \brief Implements ResumeResponseHandler::processResponse() to resume running the current Experiment 
+ *	from a paused state.
+ */
 bool DirectorResumeResponseHandler::processResponse(QString directive)
 {
 	Q_ASSERT(!statusManager_.isNull());

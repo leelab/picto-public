@@ -9,16 +9,19 @@
 
 namespace Picto {
 
-/*!	\brief A visual target that uses the Direct3D interface.  For use on any windows system.
+/*!	\brief An implementation of VisualTarget within the Direct3D API.  For use on any windows system.
  *	
- *
- *	This visual target is clearly limited to Windows platforms.  Additionally, the
+ *	\details This VisualTarget is clearly limited to Windows platforms.  Additionally, the
  *	platform must support DirectX9.  We are using Direct3D for a number of reasons:
  *	- It gives us full control over the frame rate
  *	- DirectDraw isn't really supported (outside of WinCE and Win7)
  *	- Video card drivers always support Direct3D
+ *	
+ *	In general, Direct3D is very useful in that it is very fast and very good at providing precise vSync timing 
+ *	for the purpose of marking first phosphor times.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class D3DVisualTarget : public VisualTarget
 {
 public:
@@ -30,6 +33,7 @@ public:
 	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
+	/*! \brief Returns true if the latest frame was succesfully rendered (ie. The present() function didn't fail somewhere in the middle).*/
 	bool latestFrameSuccesfullyRendered(){return renderSuccess_;};
 
 	void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text);

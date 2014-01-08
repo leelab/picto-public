@@ -4,7 +4,10 @@
 #include "../../common/protocol/ClickResponseHandler.h"
 #include "../network/DirectorStatusManager.h"
 
-/*! \brief A response handler for REWARD responses
+/*! \brief Implements the ClickResponseHandler class by extracting click data
+ *	when it arrives and delivering it to the OperatorClickParameter class.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct  DirectorClickResponseHandler : public Picto::ClickResponseHandler
 {

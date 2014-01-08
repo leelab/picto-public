@@ -12,6 +12,9 @@ FPREWARDCommandHandler::FPREWARDCommandHandler()
 {
 }
 
+/*! \brief Parses the input ProtocolCommand to check its syntax, extract the reward channel on which a reward should occur and
+ *	emit a giveReward() signal accordingly.
+ */
 QSharedPointer<Picto::ProtocolResponse> FPREWARDCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	QTextStream out(stdout);

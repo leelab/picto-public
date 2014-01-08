@@ -5,7 +5,7 @@
 #include "LegacySystemXPEventCodeGenerator.h"
 #include "../../common/memleakdetect.h"
 
-
+/*! \brief A macro used to check for NiDaq errors and trigger an assertion if they occur.*/
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
@@ -17,6 +17,10 @@
 namespace Picto
 {
 
+/*! \brief Constructs a LegacySystemXPEventCodeGenerator object.
+ *	\details Creates an "EventTask" DAQmxTask that will be used to write event codes out
+ *	over the digital output lines.
+ */
 LegacySystemXPEventCodeGenerator::LegacySystemXPEventCodeGenerator()
 {
 	DAQmxErrChk(DAQmxCreateTask("EventTask",(TaskHandle*)&daqTaskHandle_));
@@ -37,6 +41,10 @@ LegacySystemXPEventCodeGenerator::~LegacySystemXPEventCodeGenerator()
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
+/*! \brief Implements EventCodeGenerator::sendEvent() to add an 8th "write bit" to the input data, then hold the data
+ *	on the digital out lines for 250us and lower the pins back down.  This causes an event code to be written
+ *	into the attached Plexon system's time stream for use by the server in timing alignment.
+ */
 double LegacySystemXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	int32 sampsPerChanWritten;

@@ -6,6 +6,8 @@
  *	This was really just a test piece to confirm that the ServerDiscoverer was
  *	working.  You would probably kill it if you were writing some sort of 
  *	configuration app.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class TestLabel : public QLabel
 {

@@ -7,13 +7,18 @@
 
 namespace Picto {
 
-
+/*! \brief Creates a D3DCompositingSurface object.
+ *	\details _pD3dDevice is the Direct3d device which will be used in convertImage() to convert QImage objects into
+ *	D3D textures.
+ */
 D3DCompositingSurface::D3DCompositingSurface(IDirect3DDevice9 *_pD3dDevice)
 {
 	pD3dDevice_ = _pD3dDevice;
 	texture_ = 0;
 }
 
+/*! \brief Deallocates RAM used for this object's D3D Texture object.
+*/
 D3DCompositingSurface::~D3DCompositingSurface()
 {
 	if(texture_)
@@ -25,7 +30,7 @@ D3DCompositingSurface::~D3DCompositingSurface()
 	//Visual Target), so it is not our responsibility to release it.
 }
 
-/*!	\brief Converts a QImage to a D3D Texture.
+/*!	\brief Implements CompositingSurface::convertImage() to convert a QImage to a D3D Texture.
  *
  *	We use DIRECT3DTEXTURE9 objects to store the image data.  What convertImage
  *	is called, the passed in QImage gets written to a texture of the
@@ -136,12 +141,14 @@ QString D3DCompositingSurface::getTypeName()
 	return "Direct3D";
 }
 
+/*! \brief Returns the QImage that was passed into convertImage() in LPDIRECT3DTEXTURE9 form.*/ 
 LPDIRECT3DTEXTURE9 D3DCompositingSurface::getTexture()
 {
 	return texture_;
 }
 
-//! outputs an error message if something goes wrong with Direct3DMobile
+/*! \brief Outputs an error message if something goes wrong with IDirect3DDevice9.
+*/
 void D3DCompositingSurface::d3dFail(QString errorMsg)
 {
 	QString text = "If you are seeing this message, something has gone ";

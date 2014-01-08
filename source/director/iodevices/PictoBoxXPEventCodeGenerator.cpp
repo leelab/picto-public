@@ -5,7 +5,7 @@
 #include "PictoBoxXPEventCodeGenerator.h"
 #include "../../common/memleakdetect.h"
 
-
+/*! \brief A macro used to check for NiDaq errors and trigger an assertion if they occur.*/
 #define DAQmxErrChk(rc) { if (rc) { \
 							DAQmxStopTask(daqTaskHandle_); \
 							DAQmxClearTask(daqTaskHandle_); \
@@ -14,14 +14,20 @@
 
 #define EVENT_CODE_HOLD_TIME .000250  //250 microseconds
 
-// NOTE: I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
-//		 where we have full hardware control.  If this is meant to run elsewhere, a more
-//		 generic RewardController will need to be written
+/*! \brief The NiDaq channels to be used for Event code transfer.
+ *	\details I am hard coding the NIDAQ setup, since this code is only intended to run on PictoBox 
+ *	where we have full hardware control.  If this is meant to run elsewhere, a more
+ *	generic RewardController will need to be written
+ */
 #define PICTO_BOX_NIDAQ_EVENTCODE_CHANNELS "Dev1/port1/line0:7"
 
 namespace Picto
 {
 
+/*! \brief Constructs a PictoBoxXPEventCodeGenerator object.
+ *	\details Creates an "EventTask" DAQmxTask that will be used to write event codes out
+ *	over the digital output lines.
+ */
 PictoBoxXPEventCodeGenerator::PictoBoxXPEventCodeGenerator()
 {
 	DAQmxErrChk(DAQmxCreateTask("EventTask",(TaskHandle*)&daqTaskHandle_));
@@ -41,6 +47,10 @@ PictoBoxXPEventCodeGenerator::~PictoBoxXPEventCodeGenerator()
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));
 }
 
+/*! \brief Implements EventCodeGenerator::sendEvent() to add an 8th "write bit" to the input data, then hold the data
+ *	on the digital out lines for 250us and lower the pins back down.  This causes an event code to be written
+ *	into the attached Plexon system's time stream for use by the server in timing alignment.
+ */
 double PictoBoxXPEventCodeGenerator::sendEvent(unsigned int eventCode)
 {
 	int32 sampsPerChanWritten;
