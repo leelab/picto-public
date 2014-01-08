@@ -3,7 +3,10 @@
 
 #include "..\..\common\protocol\LoadExpResponseHandler.h"
 
-/*! \brief A response handler for LOADEXP responses
+/*! \brief Extends LoadExpResponseHandler but doesn't actually add anything.
+ *	\details Maybe this will be a handy container to have some day :).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ProxyLoadExpResponseHandler : public Picto::LoadExpResponseHandler
 {

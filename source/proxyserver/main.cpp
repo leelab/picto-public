@@ -1,19 +1,21 @@
 /*! \file proxyserver/main.cpp
- * \brief A proxy server used to send data from the Data acquisition devices (Plexon, TDT,etc) to PictoServer
+ * \brief A proxy application used to gather data from a Neural Data acquisition device (Plexon, TDT,etc) and send it 
+ *	to the PictoServer.
  *
- *	Picto needs to be able to collect and organize data produced by neural data acquisition
- *	devices.  These include Plexon, TDT, and many other devices.  To collect this data, a
- *	proxy server is used.  the proxy server runs on a machine that has access to the data 
+ *	\details Picto needs to be able to collect and align data produced by neural data acquisition
+ *	devices.  These include Plexon, TDT and many other devices.  To collect this data, a
+ *	proxy application is used.  The proxy application runs on a machine that has access to the data 
  *	(most devices have a dedicated PC that is used for spike sorting, so the proxy would
- *	run there).  During an active session, PictoServer periodically requests the latest 
- *	neural data from the proxy server using the ACQ protocol.
+ *	run there).  During an active session, the Proxy sends the latest gathered neural data to the 
+ *	PictoServer in real time.
  *
- *	Since there are so many different neural acquisition devices, the proxy server was
- *	written with a plugin architecture.  Each plugin is tailored to a specific device.
+ *	Since there are so many different neural acquisition devices, the proxy was written with a plugin 
+ *	architecture.  Each plugin is tailored to a specific device or in one case a "Virtual" device.
  *	The plugin architecture was written with advice from the second edition of "C++ GUI
  *	Programming with Qt" (Chapter 21).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 #include <QApplication>
 #include <QDialog>
 #include <QLabel>
@@ -41,6 +43,14 @@
 #endif
 #include "../common/mainmemleakdetect.h"
 
+/*! \brief The main method of the Picto Proxy application.
+ *	\details Goes through standard Picto application setup procedure, setting up the QApplication,
+ *	the QTranslator, and calling Picto::InitializeLib() and Picto::IniitializePorts(), then sets up
+ *	the AutoUpdater system with the commands that will be needed to restart this application and its top
+ *	level window (so that it can correctly close the window during restart). Next a new ProxyMainWindow is
+ *	displayed and the application is executed by calling QApplication::exec(), which only returns when
+ *	the main window is closed.
+ */
 int main(int argc, char *argv[])
 {
 	//This will cause memory leaks to print out on exit if they're enabled

@@ -4,7 +4,11 @@
 #include "..\..\common\protocol\EndSessionResponseHandler.h"
 #include "..\..\common\network\commandchannel.h"
 
-/*! \brief A response handler for STOP responses
+/*! \brief Extends EndSessionResponseHandler but does not actually add any functionality.
+ *
+ *	\details Maybe this will be a handy container to have someday though :).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ProxyEndSessionResponseHandler : public Picto::EndSessionResponseHandler
 {

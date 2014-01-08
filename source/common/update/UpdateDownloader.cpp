@@ -38,7 +38,9 @@ QSharedPointer<UpdateDownloader> UpdateDownloader::getInstance()
 	return singleton_;
 }
 
-/*! \brief Use this to set the root widget of this application.*/
+/*! \brief Use this to set the root widget of this application.
+ *	\details This is used as part of the process of closing the application when it needs to be restarted automatically after an update.
+ */
 void UpdateDownloader::setRootWidget(QWidget* root)
 {
 	rootWidgetPointer_ = root;

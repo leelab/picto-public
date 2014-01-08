@@ -5,7 +5,11 @@
 #include "..\..\common\network\CommandChannel.h"
 #include <QObject>
 
-/*! \brief A response handler for START responses
+/*! \brief Extends NewSessionResponseHandler to gather Neural data and send it to the Picto Server until
+ *	the Session ends or the Proxy application is closed.
+ *	\details This class really only extends the processResponse() function.  See that functions documentation for more details.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ProxyNewSessionResponseHandler : public Picto::NewSessionResponseHandler
 {

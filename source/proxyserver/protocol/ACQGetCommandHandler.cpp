@@ -14,15 +14,17 @@
 
 #define MAX_MAP_EVENTS_PER_READ 5000
 
-/*!
- *  See the Trac wiki for a better description of this protocol. 
+/*!	\brief NO LONGER USED.  THIS SHOULD PROBABLY BE DELETED.  Original documentation apperas below.
+ *
+ *	\details See the Trac wiki for a better description of this protocol. 
  *
  *  NOTE: The protocol grabs the full waveforms from the Plexon every single time.
  *  This may be a waste of time/data if we aren't using the waveforms, but given the
  *  way the Plexon server works (only giving us the data since the last time we
  *  asked for data), this seems to make the most sense.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 ACQGetCommandHandler::ACQGetCommandHandler(QObject *acqPlugin)
 {
 	iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin);

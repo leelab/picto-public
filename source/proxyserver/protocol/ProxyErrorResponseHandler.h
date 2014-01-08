@@ -3,7 +3,10 @@
 
 #include "..\..\common\protocol\ErrorResponseHandler.h"
 
-/*! \brief A response handler for ERROR responses
+/*! \brief Extends ErrorResponseHandler but doesn't actually add anything.
+ *	\details Maybe this will be a handy container to have some day :).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ProxyErrorResponseHandler : public Picto::ErrorResponseHandler
 {

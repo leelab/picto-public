@@ -13,11 +13,15 @@
 
 #include "../protocol/ProxyServerProtocols.h"
 
-/*!	\brief The thread spun up by the server to handle each connection
+/*!	\brief NO LONGER USED (except by ProxyServer which itself is no longer used).  SHOULD PROBABLY BE DELTED.  Original documentation appears below.
+ *
+ *	\details The thread spun up by the server to handle each connection
  *
  *	Much like the server itself, this thread was stolen from the PictoServer
  *	code.  And we are now stuck maintinaing two nearly identical pieces of code...
  *	And again, sorry.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class ProxyServerThread : public QThread
 {

@@ -21,8 +21,20 @@ QT_END_NAMESPACE
 
 /*!	\brief The main window of the proxy server
  *
- *	The MainWindow object is the GUI for the proxy server.  It also handles a little
- *	bit of the networking (it sends out ANNOUNCE and DEPART broadcasts), and the plugins.
+ *	\details This is the GUI for the Proxy application.  Since the Proxy application is
+ *	so simple, this class handles the application state as well.  There are only 5 possible
+ *	states:
+ *		- InitState: Application starts in this state.
+ *		- WaitForConnect: Application is attempting to connect to the Picto Server
+ *		- WaitForSession: Application is waiting for a new session command to come in from the Picto Server.
+ *		- WaitForDevice: Application is in a session and waiting for the Neural Data Acq. device handled by
+ *			the plugin to start sourcing data.
+ *		- Running:	Application is running a Session and sending neural data to the Picto Server.
+ *
+ *	It would probably be cleaner to separate out the logical state machine code from the simple UI code
+ *	and that would be a good refactoring project for someone who has the time to do so.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class ProxyMainWindow : public QMainWindow, public ComponentInterface
 {
@@ -50,6 +62,7 @@ private slots:
 	void closeEvent(QCloseEvent *event);
 
 private:
+	/*! \brief The logical states that a ProxyMainWindow can be in.*/
 	enum ProxyState
 	{
 		InitState,
@@ -59,6 +72,7 @@ private:
 		Running
 	} currState_;
 
+	/*! \brief The transitions that can occur between different logical states in the ProxyMainWindow.*/
 	enum ProxyTrigger
 	{
 		NoProxyTrigger,

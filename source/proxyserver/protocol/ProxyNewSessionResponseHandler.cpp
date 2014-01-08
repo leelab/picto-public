@@ -11,6 +11,22 @@ NewSessionResponseHandler(statusManager,dataCommandChannel),
 dataCommandChannel_(dataCommandChannel)
 {}
 
+/*! \brief Extends NewSessionResponseHandler::processCommand() to implement what is essentially the Proxy's main method.
+ *
+ *	\details READ THIS! THIS FUNCTION IS IMPORTANT!
+ *
+ *	When a NEWSESSION command is received, this function tells the StatusManager that it is running (ComponentStatusManager::setStatus()),
+ *	then starts looping until the session is ended by the PictoServer or the Proxy application is closed.  In the loop, the
+ *	Neural DAQ plugin is polled for data.  New data is gathered into a PUTDATA command and sent to the Server,
+ *	then we make sure the Server connection is still active, check the CommandChannel for pending responses, process any pending Qt Events
+ *	and restart the loop.
+ *	\note This whole thing is actually running underneath the CommandChannel::processResponses() function which is in itself
+ *	a kind of main method.  This function also calls CommandChannel::processResponses() to get ENDSESSION directives.  This
+ *	is overly complicated and results from the fact that we are running within the ComponentInterface system which was 
+ *	designed to be able to support the Picto Director too, even though that system does not use the Qt Event Loop.  What really
+ *	needs to happen is the Director needs to be refactored to run within the Qt Event loop, then ComponentInterface needs to
+ *	be refactored accordingly, followed by updating this sytem.  See CommandChannel::processResponses() for more details.
+ */
 bool ProxyNewSessionResponseHandler::processResponse(QString directive)
 {
 	NewSessionResponseHandler::processResponse(directive);

@@ -14,6 +14,11 @@
 #include "../common/protocol/ProtocolResponseHandler.h"
 #include "../common/memleakdetect.h"
 
+/*! \brief Constrcuts a ProxyMainWindow object.
+ *	\details Sets up the ProxyMainWindow UI, sets up a timer to periodically call updateState() to update
+ *	this object's state machine, and schedules a call to startConnecting() from the Qt Event Loop
+ *	so that the ComponentInterface's activate() function will be called and the application will run.
+ */
 ProxyMainWindow::ProxyMainWindow()
 :ComponentInterface("PROXY")
 {
@@ -53,7 +58,9 @@ ProxyMainWindow::ProxyMainWindow()
 	QTimer::singleShot(1,this,SLOT(startConnecting()));
 }
 
-//! \brief Sets the plugin to the value in the plugin list
+/*! \brief Sets the active plugin to the one at the input index in the plugin list.
+ *	\details If another plugin is currently active, it is stopped first.
+ */
 void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 {
 	if(acqPlugin_ != acqPluginList_[index])
@@ -74,6 +81,9 @@ void ProxyMainWindow::setNeuralDataAcquisitionDevice(int index)
 	return;
 }
 
+/*! \brief Returns true if the Neural Data plugin has been started by this system (ie. Data from the 
+*	current time will be gathered for the session).
+*/
 bool ProxyMainWindow::deviceIsRunning()
 {
 	//Is the device running?
@@ -83,7 +93,9 @@ bool ProxyMainWindow::deviceIsRunning()
 	return iNDAcq->getDeviceStatus() > NeuralDataAcqInterface::notStarted;
 }
 
-//! \brief This is called to confirm that the neural acquisition is running, or attempt to start it running.
+/*! \brief Returns true if the neural data plugin is running and there is data available for gathering
+ *	from the Neural Data Acquisition device with which it is interfaceing.
+ */
 bool ProxyMainWindow::deviceHasData()
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
@@ -103,6 +115,9 @@ bool ProxyMainWindow::deviceHasData()
 	return returnVal;
 }
 
+/*! \brief Tells the the Neural Data plugin to start gathering data.
+ *	\details Returns false if the plugin was not able to start, true otherwise.
+ */
 bool ProxyMainWindow::startDevice()
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
@@ -111,6 +126,8 @@ bool ProxyMainWindow::startDevice()
 	return (iNDAcq->startDevice() > NeuralDataAcqInterface::notStarted);
 }
 
+/*! \brief Tells the Neural Data plugin to stop gathering data.
+ */
 void ProxyMainWindow::stopDevice()
 {
 	NeuralDataAcqInterface *iNDAcq = qobject_cast<NeuralDataAcqInterface *>(acqPlugin_);
@@ -119,7 +136,9 @@ void ProxyMainWindow::stopDevice()
 	iNDAcq->stopDevice();
 }
 
-//! \brief This is called to confirm that the server connection is active and reconnect if its not.
+/*! \brief Returns true if the Picto Server is connected.  If it isn't this function uses
+ *	CommandChannel::assureConnection() to restart the connection process.
+ */
 bool ProxyMainWindow::isServerConnected()
 {
 	if(dataCommandChannel_.isNull() || !dataCommandChannel_->assureConnection())
@@ -130,7 +149,8 @@ bool ProxyMainWindow::isServerConnected()
 	
 }
 
-//! \brief Comfirms that the proxy is in a session.
+/*! \brief Returns true if this Proxy is in a Session.
+ */
 bool ProxyMainWindow::isSessionActive()
 {
 	if(statusManager_.isNull())
@@ -143,6 +163,11 @@ bool ProxyMainWindow::isSessionActive()
 	return true;
 }
 
+/*! \brief Called when the Proxy window is closed to cause the main data load/send loop in 
+ *	ProxyNewSessionResponseHandler::processResponse() to exit.
+ *	\details Before causing that loop to exit, if we are in a session a pop-up makes sure that
+ *	the user understands that the proxy cannot reconnect to the session once it has been closed.
+ */
 void ProxyMainWindow::closeEvent(QCloseEvent *event)
 {
 	if(currState_ > WaitForSession)
@@ -166,6 +191,8 @@ void ProxyMainWindow::closeEvent(QCloseEvent *event)
 	writeSettings();
 }
 
+/*! \brief Creates the status light widgets/labels that are used in the UI.
+*/
 void ProxyMainWindow::createStatusLights()
 {
 	connectionStatus_ = new StatusLight(this,Qt::red,10);
@@ -178,6 +205,10 @@ void ProxyMainWindow::createStatusLights()
 
 }
 
+/*! \brief Creates the UI combobox used to select the current Neural Data plugin.
+ *	\details Plugins are loaded from the "\plugins" sub-directory of the application
+ *	directory.
+ */
 void ProxyMainWindow::createComboBox()
 {
 	pluginCombo_ = new QComboBox();
@@ -248,12 +279,17 @@ void ProxyMainWindow::createComboBox()
 	return;
 }
 
+/*! \brief Doesn't do anything.  Should probably be deleted.*/
 void ProxyMainWindow::createButtons()
 {
 	//connect(startStopClientButton_,SIGNAL(clicked()),this,SLOT(startStopClient()));
 	//connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
+/*! \brief Creates the widgets for entering the Proxy name and displaying/changing the 
+ *	Proxy's System Number (Proxy can only communicate with the Picto Server that is 
+ *	on the same System number.
+ */
 void ProxyMainWindow::createLineEdits()
 {
 	lineEditName_ = new QLineEdit();
@@ -269,6 +305,7 @@ void ProxyMainWindow::createLineEdits()
 	connect(systemNumber_,SIGNAL(valueChanged(int)),this,SLOT(systemNumberChanged(int)));
 }
 
+/*! \brief Sets up the UI layout for this widget.*/
 void ProxyMainWindow::createLayout()
 {
 	QHBoxLayout *HLayout;
@@ -310,14 +347,13 @@ void ProxyMainWindow::createLayout()
  *			PERSISTANT SETTINGS
  *
  *****************************************************/
-/*! \Brief stores settings
+/*! \Brief Reads the current Proxy settings
  *
  *	Settings for the workstation app are stored between sessions.
  *	The QSettings object does this for us in a platform independent
  *	manner.  This uses the registry in Windows, XML preference files
  *	in OSX, and ini files in Unix.
  */
-
 void ProxyMainWindow::readSettings()
 {
 	QSettings settings("Block Designs", Picto::Names->proxyServerAppName);
@@ -335,7 +371,9 @@ void ProxyMainWindow::readSettings()
 		pluginCombo_->setCurrentIndex(pluginCombo_->findText(plugin));
 }
 
-
+/*! \brief Returns the current Proxy name.  If no name has been set, an automatic one is
+ *	generated.
+ */
 QString ProxyMainWindow::name()
 {
 	QString name = lineEditName_->text().remove(' ');
@@ -343,26 +381,28 @@ QString ProxyMainWindow::name()
 		name = QString("Proxy").append(componentId_.toString());
 	return name;
 }
+
+/*! \brief Implements ComponentInterface::openDevice() to create a ProxyStatusManager, load the Data CommandChannel
+ *	into it and add a response handler for NEWSESSION commands.
+ *	\details the ProxyNewSessionResponseHandler contains the "main method" that gathers neural data and sends it to
+ *	the Picto Server, see ProxyNewSessionResponseHandler::processResponse() for more details.
+ */
 int ProxyMainWindow::openDevice()
 {
 	statusManager_ = QSharedPointer<ComponentStatusManager>(new ProxyStatusManager(dataCommandChannel_));
 	dataCommandChannel_->addResponseHandler(QSharedPointer<Picto::ProtocolResponseHandler>(new ProxyNewSessionResponseHandler(statusManager_,dataCommandChannel_)));
 	return 0;
 }
+
+/*! \brief Implements ComponentInterface::closeDevice() to do nothing.*/
 int ProxyMainWindow::closeDevice()
 {
 	return 0;
 }
 
-
-
-
-
-
-
-
-
-
+/*! \brief Updates this objects current state based on the latest stateTrigger_ value.
+ *	\details stateTrigger_ is set in the runState() function.
+*/
 void ProxyMainWindow::updateState()
 {
 	updatingState_ = true;
@@ -425,12 +465,29 @@ void ProxyMainWindow::updateState()
 	//updateStatus();
 	updatingState_ = false;
 }
+/*! \brief Calls ComponentInterface::activate() to start listening on the Server interface 
+ *	and run the application.  When that returns, exits the application.
+ */
 void ProxyMainWindow::startConnecting()
 {
 	activate();
 	QCoreApplication::exit();
 }
 
+/*! \brief Runs the current state.
+ *	\details Depending on this object's logical state and the state of the rest of the application,
+ *	different things happen and different transitions occur.
+ *	
+ *	When we're in the WaitForConnect state, we keep trying to connect to the Picto Server.  When we
+ *	succeed, we are transferred to the WaitForSession state.  In that state we set up the Neural 
+ *	data plugin, then go back to WaitForConnect if the connection is lost, or go to WaitForDevice if a new
+ *	session comes in.  From WaitForDevice we start the device and transition to Running when it has data
+ *	available.  Alternatively, we transition back to WaitForSession if the session ends.  From Running
+ *	we can transition back to WaitForDevice if device data stops coming in or back to WaitForSession if the 
+ *	Session ends.
+ *
+ *	This function also handles updating of the connection status light.
+ */
 void ProxyMainWindow::runState()
 {
 	switch(currState_)
@@ -485,6 +542,9 @@ void ProxyMainWindow::runState()
 	}
 }
 
+/*! \brief This doesn't actually do anything, but the idea is that it can be used to handle any
+ *	logic that needs to be triggered when a state ends.
+ */
 void ProxyMainWindow::endState()
 {
 	switch(currState_)
@@ -500,6 +560,11 @@ void ProxyMainWindow::endState()
 	}
 }
 
+/*! \brief Takes care of various operations when this object enters a new logical state.
+ *	\details For example, when we enter the WaitForDevice state, the runStatus light is set red,
+ *	and the sessionStatus light is set green.  When we enter the Running state, both of these are
+ *	set to green.
+ */
 void ProxyMainWindow::enterState()
 {
 	switch(currState_)
@@ -539,22 +604,33 @@ void ProxyMainWindow::enterState()
 	}
 }
 
+/*! \brief Called when the active plugin changes.  Writes the plugin value setting to disk
+ *	so that the same one will be used next time.
+ */
 void ProxyMainWindow::pluginIndexChanged(int)
 {
 	writeSettings();
 }
 
+/*! \brief When the user changes the system number, this function implements the change by using
+ *	the Picto::PortNums::setSystemNumber() function.
+ *	\note This causes the Proxy application to restart.
+ */
 void ProxyMainWindow::systemNumberChanged(int index)
 {
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),index,true);
 }
 
-/*! \Brief stores settings
+/*! \Brief Stores applicaiont settings to disk
  *
  *	Settings for the workstation app are stored between sessions.
  *	The QSettings object does this for us in a platform independent
  *	manner.  This uses the registry in Windows, XML preference files
  *	in OSX, and ini files in Unix.
+ *
+ *	Stored settings are:
+ *	- proxyName: The name of this proxy application
+ *	- plugin: The name of the Neural data plugin that is currently being used by the proxy application.
  */
 void ProxyMainWindow::writeSettings()
 {

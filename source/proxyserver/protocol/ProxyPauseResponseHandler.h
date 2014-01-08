@@ -3,7 +3,10 @@
 
 #include "..\..\common\protocol\PauseResponseHandler.h"
 
-/*! \brief A response handler for PAUSE responses
+/*! \brief Extends PauseResponseHandler but doesn't actually add anything.
+ *	\details Maybe this will be a handy container to have some day :).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ProxyPauseResponseHandler : public Picto::PauseResponseHandler
 {
