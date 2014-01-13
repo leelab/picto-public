@@ -9,8 +9,8 @@ EndsessionCommandHandler::EndsessionCommandHandler()
 {
 }
 
-/*! \brief handles an ENDSESSION command
- *
+/*! \brief Parses the input ProtocolCommand to check its syntax, adds ENDSESSION pending directives to the SessionInfo object handling the input Session and responds 
+ *	with a simple okResponse or other response depending on whether something was wrong with the request.
  */
 QSharedPointer<Picto::ProtocolResponse> EndsessionCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

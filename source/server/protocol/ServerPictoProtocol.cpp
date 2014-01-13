@@ -22,6 +22,10 @@
 #include "TrialCommandHandler.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a ServerPictoProtocol object which includes ProtocolCommandHandlers to handle
+ *	all of the various commands that allow operators to control/view experimental runs and allow Session Components 
+ *	(Director, Proxy) to upload data to the server.
+*/
 ServerPictoProtocol::ServerPictoProtocol()
 {
 	QSharedPointer<Picto::AnnounceCommandHandler> announceCommandHandler(new Picto::AnnounceCommandHandler());

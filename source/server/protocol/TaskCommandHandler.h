@@ -11,25 +11,18 @@
 
 class ConnectionManager;
 
-/*! \brief Handles the TASK commands
+/*! \brief Handles TASK commands
  *
- *	PictoWorkstation sends these commands when it wants a remote Director
- *	instance to change the current state of a task (start, stop, pause)
- *
- *	FORMAT
- *		STARTTASK command[:argument] PICTO/1.0
- *		Session-ID: 582f4440-43f7-11df-9879-0800200c9a66
- *		
- *		Valid commands: start, stop, pause, resume, reward (case insenseitive)
- *
- *	RESPONSES
- *		There are 3 possible responses:
- *		200:OK - sent if the command is proccessed sucessfully
- *		400:BadRequest - sent if the command doesn't make sense (e.g. calling stop on a task that isn't currently running)
- *		401:Unauthorized - sent if the originator of the command isn't authorized to send task commands.
- *		404:NotFound - sent if the session ID, taskname, or command isn't recognized
+ *	PictoWorkstation send TASK commands when it wants a remote Director
+ *	instance to change the current state of a task (start, stop, pause, etc).
+ *	It is also used to alter Experimental Property values (init values) during runtime,
+ *	provide information about an operator click in the viewer window, trigger a reward,
+ *	and change the notes, name or saved value of a Task Run.  Essentially, this
+ *	is the Workstation's interface to a running session.  For more details
+ *	see processCommand().
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 struct TaskCommandHandler : Picto::ProtocolCommandHandler
 {
 public:

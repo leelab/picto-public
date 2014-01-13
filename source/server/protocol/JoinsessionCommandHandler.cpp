@@ -11,8 +11,8 @@ JoinsessionCommandHandler::JoinsessionCommandHandler()
 {
 }
 
-/*! \brief handles a STARTSESSION command
- *
+/*! \brief handles a JOINSESSION command.  If the Director in the Command target is in a Session a ProtocolResponse is sent with a SessionID field 
+ *	and the Session's Design XML in the response contents.
  */
 QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
@@ -60,21 +60,6 @@ QSharedPointer<Picto::ProtocolResponse> JoinsessionCommandHandler::processComman
 	QSharedPointer<SessionInfo> sessInfo = ConnectionManager::Instance()->getSessionInfo(sessionId);
 	if(sessInfo.isNull())
 		return notFoundResponse;
-	//QSharedPointer<ComponentInfo> proxy = sessInfo->getComponentByType("PROXY");
-	//if(!proxy.isNull())
-	//{
-	//	QUuid proxyID = proxy->getUuid();
-	//	if(conMgr->getComponentStatus(proxyID) == ComponentStatus::notFound)
-	//	{
-	//		notFoundResponse->setContent("Proxy for this sessionID not found");
-	//		return notFoundResponse;
-	//	}
-	//	else if(conMgr->getComponentStatus(proxyID) < ComponentStatus::stopped)
-	//	{
-	//		unauthorizedResponse->setContent("Proxy is currently ending the session");
-	//		return unauthorizedResponse;
-	//	}
-	//}
 
 	QUuid observerId = QUuid(command->getFieldValue("Observer-ID"));
 	if(observerId != QUuid() && !sessInfo->isAuthorizedObserver(observerId))

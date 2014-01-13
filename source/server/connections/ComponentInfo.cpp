@@ -10,58 +10,67 @@ ComponentInfo::ComponentInfo()
 {
 	activity_=true;
 }
-//! \brief sets the address of the component to the input value
+//! \brief Sets the address of the component to the input value.
 void ComponentInfo::setAddress(QString addressStr)
 {QMutexLocker locker(&mutex_);addressStr_ = addressStr;}
-//! \brief sets the name of the component to the input value
+//! \brief Sets the name of the component to the input value.
 void ComponentInfo::setName(QString name)
 {QMutexLocker locker(&mutex_);name_ = name;}
-//! \brief sets the type of the component to the input value
+//! \brief Sets the type of the component to the input value.
 void ComponentInfo::setType(QString type)
 {QMutexLocker locker(&mutex_);type_ = type;}
-//! \brief sets the uuid of the component to the input value
+//! \brief Sets the uuid of the component to the input value.
 void ComponentInfo::setUuid(QUuid uuid)
 {QMutexLocker locker(&mutex_);uuid_ = uuid;}
-//! \brief sets the sessionID with which this component is associated
+//! \brief Sets the sessionID with which this component is associated.
 void ComponentInfo::setSessionID(QUuid sessionID)
 {QMutexLocker locker(&mutex_);sessionID_ = sessionID;}
-//! \brief sets the status of the component to the input value
+//! \brief Sets the status of the component to the input value.
 void ComponentInfo::setStatus(ComponentStatus::ComponentStatus status)
 {QMutexLocker locker(&mutex_);status_ = status;}
-//! \brief sets the details of the component to the input value
+//! \brief Sets the details of the component to the input value.
 void ComponentInfo::setDetails(QString details)
 {QMutexLocker locker(&mutex_);details_ = details;}
-/*! \brief sets the activity of the component to true
- *	Used in conjunction with clear activity.  SetActivity should be called
- *	every time data is recieved from a component and clearActivity should
+/*! \brief Sets the activity of the component to true
+ *	\details This is used in conjunction with clearActivity().  SetActivity() should be called
+ *	every time data is recieved from a component and clearActivity() should
  *	be called once every timeout period to make sure that some activity 
- *	occured during that period.
+ *	occured during that period.  When clearActivity() returns false, we know
+ *	that the Component must be disconnected because we haven't heard from it in
+ *	at least one full timeout period.
  */
 void ComponentInfo::setActivity() 
 {QMutexLocker locker(&mutex_);activity_ = true;}
 
-//! \brief returns the address of the component
+//! \brief Returns the address of the component
 QString ComponentInfo::getAddress()
 {QMutexLocker locker(&mutex_);return addressStr_;}
-//! \brief returns the name of the component
+//! \brief Returns the name of the component
 QString ComponentInfo::getName()
 {QMutexLocker locker(&mutex_);return name_;}
-//! \brief returns the type of the component
+//! \brief Returns the type of the component
 QString ComponentInfo::getType()
 {QMutexLocker locker(&mutex_);return type_;}
-//! \brief returns the Uuid of the component
+//! \brief Returns the Uuid of the component
 QUuid ComponentInfo::getUuid()
 {QMutexLocker locker(&mutex_);return uuid_;}
-//! \brief returns the sessionID with which the component is associated
+//! \brief Returns the sessionID with which the component is associated
 QUuid ComponentInfo::getSessionID()
 {QMutexLocker locker(&mutex_);return sessionID_;}
-//! \brief returns the status of the component
+//! \brief Returns the status of the component
 ComponentStatus::ComponentStatus ComponentInfo::getStatus()
 {QMutexLocker locker(&mutex_);return status_;}
-//! \brief returns the details of the component
+//! \brief Returns the details of the component
 QString ComponentInfo::getDetails()
 {QMutexLocker locker(&mutex_);return details_;}
-//! \brief clears the state of activity and returns it.
+/*! \brief Returns the activity flag and sets it to false.
+ *	\details This is used in conjunction with SetActivity().  SetActivity() should be called
+ *	every time data is recieved from a component and clearActivity() should
+ *	be called once every timeout period to make sure that some activity 
+ *	occured during that period.  When clearActivity() returns false, we know
+ *	that the Component must be disconnected because we haven't heard from it in
+ *	at least one full timeout period.
+ */
 bool ComponentInfo::clearActivity() 
 {
 	QMutexLocker locker(&mutex_);

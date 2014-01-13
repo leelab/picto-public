@@ -29,35 +29,25 @@
 #include <QMutex>
 #include <QLinkedList>
 
-/*!	\brief Contains info about a single session
+/*!	\brief Manages data for a single Session.  Stores data needed for Session monitoring in RAM and Session data
+ *	needed for future Analysis on Disk.  
  *
- *	The Server will likely be handling multiple concurrent sessions,
- *	so we need to be able to keep track of them.  The SessionInfo
- *	object is used by the SessionManager to keep track of everything.
- *
- *	Initially this will be more of a struct than an object (although I am
- *	keeping the member variables private).  I am creating it as a seperate object
- *	since it seems possible that we may need to add functionality at a 
- *	later date.
- *
- *	Since we don't want random objects changing the values of the contained variables
- *	I am not providing setter functions.  Instead, this is a friend of the 
- *	ConnectionManager class, so it will be the only object able to set these
- *	values.  As a result, it is perfectly safe to pass these objects around
- *	(ideally we should pass around pointers to them).
- *
- *	The SessionInfo object handles all access to the Session databases (both the one
- *	on disk, and the in-memory cache database.  Database connections can't be used from 
- *	different threads, so we create a unique connection for each thread.  This is somewhat
- *	wasteful, but it's easy and gauranteed to work.  An alternative approach would be to
- *	create a special thread that handles db access through some sort of queued interface.
- *	The cache database is limited to a single connection (since it's a :memory database),
- *	so we're not controlling access to it.  This may be risky.
- *
- *	Since database access here is generally messed up, I have placed Q_ASSERTs on all
- *	calls to QSqlQuery::exec().  This will let us know as soon as there is a problem.
+ *	\details The Picto Server is designed to handle multiple concurrent sessions and to allow Sessions to timeout
+ *	and be reloaded later.  SessionInfo objects help with this task by keeping track of a single Session and its 
+ *	associated data.  They take care of things like:
+ *	- Writing data coming in from the Director and Proxy to disk.  
+ *	- Storing the current values of all Properties in a Session design so that the workstation can quickly display 
+ *	the most up to date Experimental state
+ *	- Managing timestamp alignment to synchonize Neural and Behavioral timestreams
+ *	- Generating a SessionId
+ *	- Loading data from a previously timed out Session
+ *	- etc.
+ *	The SessionInfo class works closely with the SessionData class and its descendants since objects of these classes
+ *	store the bulk of the data that comes into the SessionInfo object.  This is a very important class.  It is
+ *	fairly central to the function of the Picto Server.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class SessionInfo
 {
 public:
@@ -69,17 +59,16 @@ public:
 	void AddComponent(QSharedPointer<ComponentInfo> component);
 	void UpdateComponentActivity();
 	bool hasActiveComponents();
-	//! After this function is called, hasActiveComponents will return false
+	/*! \brief After this function is called, hasActiveComponents will return false.*/
 	void ignoreComponents(){ignoreComponents_ = true;}
 	QSharedPointer<ComponentInfo> getComponentByType(QString type);
 	bool hasComponent(QUuid componentID);
 	void alignTimestampsTo(QString componentType);
 	bool endSession();
 
-	//returns true on success or false if nothing happened.
 	bool flushCache(QString sourceType = "");
 	//void insertTrialEvent(double time, int eventCode, int trialNum, QString sourceType, qulonglong dataID );
-	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);\
+	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);
 	void insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data);
 	void insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data);
 	void insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data);
@@ -95,33 +84,37 @@ public:
 	QString selectSessionDataPackage();
 
 	//getters/setters
+	/*! \brief Returns the Uuid used to identify this Session.*/
 	QUuid sessionId() { return uuid_; };
+	/*! \brief Returns the filepath of the Sqlite file storing all of this Session's data.*/
 	QString dataBaseFilePath() { return baseSessionDbFilepath_; };
+	/*! \brief Return the time that this Session was created.*/
 	QString timeCreated() { return timeCreated_; };
+	/*! \brief Returns a pointer to the AlignmentTool that calculates the alignment
+	 *	parameters used to synchronize neural and behavioral data.
+	 */
 	QSharedPointer<AlignmentTool> alignmentTool() { return alignmentTool_; };
+	/*! \brief Returns the XML that defines the design used in this Session.*/
 	QByteArray experimentXml() { return designXml_; };
 
 	QString pendingDirective(QUuid componentID);
 	void addPendingDirective(QString directive, QString componentType);
 
-	//void enableFlush(QString componentType){flushEnabled_[componentType] = true;};
-	//bool needsFlush(QString componentType){bool r = flushEnabled_[componentType]; flushEnabled_[componentType]=false; return r;};
-
-	//! clears the state of activity and returns it.
+	/*! \brief Clears the state of activity and returns it.
+	*/
 	bool clearActivity() {bool temp = activity_; activity_ = false; return temp; };
+	/*! \brief Marks this Session as active.  This indicates that the Components that are
+	 *	part of this Session are still communicating with the Server and the Session has not
+	 *	been ended.
+	 */
 	void setActivity() { activity_ = true; };
 
 	bool isAuthorizedObserver(QUuid observerId);
 
 	bool addAuthorizedObserver(QUuid observerId, QString password);
 	QString getPassword();
-	//Marks the time that the last data was written by the input source
 	void markLastDataTime(QString source);
-	//Returns whether the last data marked for the input source preceded the
-	//beginning of the latest flush.
 	bool lastDataPrecededFlush(QString source);
-	//Returns whether the last data marked for the input source followed the 
-	//end of the latest flush
 	bool lastDataFollowedFlush(QString source);
 
 	friend class ConnectionManager;
@@ -145,7 +138,7 @@ private:
 							REWARDS_TYPE,
 							CURRENT_STATE_TYPE,
 							FIRST_SIGNAL_CHANNEL_TYPE};
-	QMap<QString,int> sigChanTypes_;	//Store the SessionTableType of the signal channel indexed by its name
+	QMap<QString,int> sigChanTypes_;	//!< Store the SessionTableType of the signal channel indexed by its name
 	SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
 	SessionInfo(QString databaseFilePath);
 	void InitializeVariables();
@@ -153,8 +146,6 @@ private:
 	void SetupBaseSessionDatabase();
 	void CreateCacheDatabase(QString databaseName);
 	void AddTablesToDatabase(QSqlQuery* query);
-	//bool executeReadQuery(QSqlQuery* query, QString optionalString = "",bool debug = false);
-	//bool executeWriteQuery(QSqlQuery* query, QString optionalString = "",bool lock = true,bool debug = true);
 	void alignTimeBases(bool realignAll = false);
 	void createSessionIndeces();
 	void setStateVariable(int dataid, int varid, QString serializedValue);
@@ -162,8 +153,6 @@ private:
 
 	void updateCurrentStateTable(QString updateTime);
 	void addAuthorizedObserver(QUuid observerId);
-	//QSqlDatabase getSessionDb();
-	//QSqlDatabase getCacheDb();
 
 	static QMap<QUuid,QWeakPointer<SessionInfo>> loadedSessions_;
 	QUuid uuid_;
@@ -182,10 +171,10 @@ private:
 	QMutex latestNeuralDataMutex_;
 	QSharedPointer<QMutex> databaseWriteMutex_;
 	QTimer timeoutTimer_;
-	QMap<QUuid,QStringList> pendingDirectives_; //Uuid is the Uuid of the component who's pending directives are stored in the QStringList
-	QMap<QString,QSharedPointer<ComponentInfo>> components_;	//QString is the type of the component (only one of each component type can be attached).
+	QMap<QUuid,QStringList> pendingDirectives_; //!< Uuid is the Uuid of the component who's pending directives are stored in the QStringList
+	QMap<QString,QSharedPointer<ComponentInfo>> components_;	//!< QString is the type of the component (only one of each component type can be attached).
 	QMap<QUuid,bool> componentActivity_;
-	QString alignToType_;	//The component type who's timeframe should be used as a baseline in timing alignment.
+	QString alignToType_;	//!< The component type who's timeframe should be used as a baseline in timing alignment.
 	bool activity_;
 	bool ignoreComponents_;
 	int sessionInfoDataId_;

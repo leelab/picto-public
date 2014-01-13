@@ -9,8 +9,8 @@ ProxyListCommandHandler::ProxyListCommandHandler()
 {
 }
 
-/*! \brief handles a PROXYLIST command
- *
+/*! \brief Parses the input ProtocolCommand to check its syntax, responds with a serialized list of currently connected Proxy Components.
+ *	\details The returned list comes directly from ConnectionManager::getProxyList().
  */
 QSharedPointer<Picto::ProtocolResponse> ProxyListCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

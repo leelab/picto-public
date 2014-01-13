@@ -8,22 +8,22 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \brief Handles the GETDATA commands, which are sent by Director
+/*! \brief Handles the GETFILE commands sent by all of the Server's clients.
  *
- *	PictoWorkstation sends these commands to the server to request that 
- *  behavioral data be sent.  The target of the command is the type of data
- *	requested followed by a colon and the time or index of the data last received.
+ *	\details The GETFILE command handler works closely with the UpdateDownloader class.
+ *	This handler stores a list of byte arrays each of which contains a compressed version of one
+ *	of the files in or underneath the Picto Server's run directory.  Together, these files 
+ *	constitute a complete Picto installation, so a client can completely update its installation
+ *	to the version on the server by downloading all of these files, decompressing them, and running
+ *	the appropriate executable (which is what UpdateDownloader does).  
  *
- *	FORMAT
- *		GETDATA datastoretype:index(e.g. CurrentState:3.245 or LatestNeural:23341) PICTO.1/0
- *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
- *
- *	RESPONSES
- *
- *	The response to this command is always of type 200:OK, and the content
- *	will be an XML fragment containing requested data.
+ *	GETFILE commands include an index in their target area that can be anywhere from zero to the total number 
+ *	of compressed files available.  The compressed file who's index is sent is returned in the 
+ *	ProtocolResponse when a GETFILE command is sent.  Other fields are included in the response 
+ *	like "TotalFiles" which tells the client how many files it needs to have a complete updated Picto installation.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 struct GetFileCommandHandler : Picto::ProtocolCommandHandler
 {
 public:

@@ -10,17 +10,25 @@
 
 #include "SessionData.h"
 
-/*!	\brief Interface to an object that stores session data
- *
+/*!	\brief Handles long term storage of session data in an SQL file.
+ *	\details This is meant to be used with CachedSessionData objects.  Those objects should
+ *	periodically move their data to a StoredSessionData object using moveDataTo().  The
+ *	StoredSessionData object writes the data to an SQL file according to the table structure
+ *	entered in the setTableInfo() function.  This object also supports setting up of SQL indeces
+ *	by using the setTableInfo() function to define index columns and calling buildTableIndeces()
+ *	to actually create them (typically when a Session is ending).  Individual values can
+ *	be entered into the object by using insertData().
+ *	\note This object groups batched writeData() operations into a single SQL transaction.  See
+ *	startDataWrite() for more details.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class StoredSessionData : public SessionData
 {
 public:
 	StoredSessionData::StoredSessionData(QString sessionPath,QString databaseFileName);
 	virtual ~StoredSessionData();
 	void setSessionId(QUuid sessionId);
-	//Note that indeces are not built when you call this function.  You must use buildTableIndeces to do that later.
 	void setTableInfo(int dataType,QString tableName,QString columnNames,QString columnTypes,QString indexedColumns = "");
 	void buildTableIndeces();
 	void insertData(int dataType, QVariantList data);

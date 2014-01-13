@@ -21,10 +21,15 @@ PutDataCommandHandler::PutDataCommandHandler()
 {
 }
 
-/*! \brief handles a PUTDATA command
- *
- *	The data is stored in a database table appropraite to the type of data,
- *	and a response is returned indicating that the data was received.
+/*! \brief Handles PUTDATA commands.
+ *	\details PUTDATA is probably the most heavily used command in Picto.  It is used to send all Behavioral and Neural
+ *	data from the Director and Proxy to the Picto Server.  Each incoming command contains information about the source
+ *	of the command in various command fields and serialized Session data in the command content area.  The Session data
+ *	is serialized in XML format and an XML reader goes through the XML tags one by one, writing the data into the Session's SessionInfo
+ *	object using the appropriate function each time.  ProtocolResponse objects returned from this object include any pending directives for 
+ *	the calling Component, or a simple OK response otherwise.
+ *	\note This function takes part in making sure the correct registered command responses are sent to Components to let them know which
+ *	of their commands have been processed and their data saved to disk.  See Picto::RegisteredResponseType for more details.
  */
 QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
@@ -206,35 +211,6 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 	if(directive.isEmpty())
 	{
 		response->setContent("OK");
-		//if(sessionInfo->needsFlush(sourceType))
-		//{
-		//	//sessionInfo->flushCache(sourceType);
-		//	//response->setRegisteredType(Picto::RegisteredResponseType::Immediate);
-		//	readWriteLock_.lockForWrite();
-		//	flushCacheFutures_[sourceType] = QtConcurrent::run(sessionInfo.data(),&SessionInfo::flushCache,sourceType);
-		//	flushCacheWaiting_[sourceType] = true;
-		//	readWriteLock_.unlock();
-		//	response->setRegisteredType(Picto::RegisteredResponseType::LastInCommandPackage);
-		//}
-		//else
-		//{
-		//	//If we were flushing for this sourcetype and the flushing ended for this sourcetype,
-		//	//mark this response to include the commands that were included in that flush
-		//	readWriteLock_.lockForRead();
-		//	if(flushCacheWaiting_.contains(sourceType) 
-		//		&& flushCacheWaiting_.value(sourceType)
-		//		&& flushCacheFutures_.contains(sourceType)
-		//		&& flushCacheFutures_.value(sourceType).isFinished())
-		//	{
-		//		bool flushSuccess = flushCacheFutures_.value(sourceType).result();
-		//		readWriteLock_.unlock();
-		//		if(flushSuccess)
-		//			response->setRegisteredType(Picto::RegisteredResponseType::SendLastCommandPackage);
-		//		readWriteLock_.lockForWrite();
-		//		flushCacheWaiting_[sourceType] = false;
-		//	}
-		//	readWriteLock_.unlock();
-		//}
 	}
 	else
 	{

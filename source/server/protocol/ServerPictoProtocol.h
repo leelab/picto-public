@@ -7,7 +7,10 @@
 
 /*!	\brief The PICTO protocol.
  *
- *	The PICTO protocol contains all of the commands that are used by the Picto system.
+ *	The PICTO protocol contains all of the commands that are used by the Picto system to run
+ *	a Session, view its progress and upload its data.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ServerPictoProtocol : Picto::Protocol
 {

@@ -6,23 +6,14 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \brief Handles the COMPONENTUPDATE commands, which are sent by Director
+/*! \brief Handles COMPONENTUPDATE commands, which are sent by ComponentInterface objects (Director and Proxy).
  *
- *	Passive Picto Components (ie. Director, Proxy... not Workstation) send these 
- *	commands to the Server at a fixed interval.  These keep the network connection 
- *	from timing out and are used to send directives from Server to the Component.
- *
- *	FORMAT
- *		COMPONENTUPDATE name:idle/running PICTO.1/0
- *	RESPONSES
- *		The response is always of type 200 OK.  The first line of content 
- *		contains the directive, and the remaining lines may contain XML
- *		
- *		Legal Commands:
- *			OK, LOADEXP, START, STOP, PAUSE, RESTART
- *		
+ *	\details ComponentInterface objects (ie. Director, Proxy... not Workstation) send COMPONENTUPDATE 
+ *	commands to the Server at a fixed interval.  These provide up to data information about the Component status,
+ *	keep the network connection from timing out and are used to send directives from the Picto Server to the Component.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 struct ComponentUpdateCommandHandler : Picto::ProtocolCommandHandler
 {
 public:

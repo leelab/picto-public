@@ -12,8 +12,10 @@ ComponentUpdateCommandHandler::ComponentUpdateCommandHandler()
 {
 }
 
-/*! \brief handles a COMPONENTUPDATE command
- *
+/*! \brief Parses the input ProtocolCommand to check its syntax, extract the included Component data and use it to update the ConnectionManager
+ *	and a Session that it is being used in.  Returns any pending directives for the calling Component, or  a simple OK response otherwise.
+ *	\note This function takes part in making sure the correct registered command responses are sent to Components to let them know which
+ *	of their commands have been processed and their data saved to disk.  See Picto::RegisteredResponseType for more details.
  */
 QSharedPointer<Picto::ProtocolResponse> ComponentUpdateCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

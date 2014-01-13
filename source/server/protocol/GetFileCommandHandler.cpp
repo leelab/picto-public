@@ -19,6 +19,10 @@ QMutex GetFileCommandHandler::workingWithFiles_;
 QStringList GetFileCommandHandler::fileNames_;
 QList<QByteArray> GetFileCommandHandler::files_;
 
+/*! \brief Constructs a GetFileCommandHandler.
+ *	\details When the GetFileCommandHandler is constructed, all files in the run directory are compressed and added to a list.
+ *	When GETFILE commands come in, these files can be downloaded.
+ */
 GetFileCommandHandler::GetFileCommandHandler()
 {
 	QMutexLocker locker(&workingWithFiles_);
@@ -72,10 +76,9 @@ GetFileCommandHandler::GetFileCommandHandler()
 	}
 }
 
-/*! \brief handles a GETDATA command
- *
- *	The data is stored in a database table appropraite to the type of data,
- *	and a response is returned indicating that the data was received.
+/*! \brief Parses the input ProtocolCommand to check its syntax, responds with a ProtocolResponse including the compressed file with the index that
+ *	was sent as the command target in the Response content area.
+ *	\details The filename, its directory, and the total number of files available (totalFiles) are also sent as fields in the response.
  */
 QSharedPointer<Picto::ProtocolResponse> GetFileCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

@@ -6,22 +6,17 @@
 #include "../../common/protocol/ProtocolCommandHandler.h"
 #include "../../common/protocol/ProtocolResponse.h"
 
-/*! \brief Handles the GETDATA commands, which are sent by Director
+/*! \brief Handles GETDATA commands, which are sent by the Workstation to request up to date Session data.
  *
- *	PictoWorkstation sends these commands to the server to request that 
- *  behavioral data be sent.  The target of the command is the type of data
- *	requested followed by a colon and the time or index of the data last received.
+ *	\details PictoWorkstation sends these commands to the Server to request behavioral, neural and overall Session data. 
+ *  The target of the command is the type of data requested followed by a colon and the time or index of the data last received.
  *
  *	FORMAT
- *		GETDATA datastoretype:index(e.g. CurrentState:3.245 or LatestNeural:23341) PICTO.1/0
+ *		GETDATA datastoretype:index(e.g. CurrentState:3.245, LatestNeural:23341, etc.) PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
- *
- *	RESPONSES
- *
- *	The response to this command is always of type 200:OK, and the content
- *	will be an XML fragment containing requested data.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 struct GetDataCommandHandler : Picto::ProtocolCommandHandler
 {
 public:

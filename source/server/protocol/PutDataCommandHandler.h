@@ -9,43 +9,15 @@
 #include <QFuture>
 #include <QReadWriteLock>
 
-/*! \brief Handles the PUTDATA commands, which are sent by Director
+/*! \brief Handles PUTDATA commands sent by Director and Proxy.
  *
- *	PictoDirector sends these commands to the server when it has data it would
- *	like to be recorded.  Initially, these commands will contain behavioral data,
- *	but it's likely that there will be additional data being transmitted in the 
- *	future.
- *
- *	The id included in the command is a consequence of the fact that these
- *	commands are usually sent as "registered" commands, but it is not an 
- *	essential field for the command
- *
- *	FORMAT
- *		PUTDATA directorname:running/paused PICTO.1/0
- *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
- *
- *	 <Data>
- *	   <!--- This could be any type of data --->
- *	   <BehavioralDataUnitPackage>
- *	      <Data timestamp=3.5186 x=52 y=476/>
- *	      <Data timestamp=3.5188 x=55 y=471/>
- *	      <Data timestamp=3.5190 x=67 y=463/>
- *	      <Data timestamp=3.5192 x=64 y=457/>
- *	      ...
- *	      ...
- *	   </BehavioralDataUnitPackage>
- *	   <FrameDataUnitPackage>
- *	      <Frame time = 3.125 state="somestatename">1</Frame>
- *	      <Frame time = 3.250 state="somestatename">2</Frame>
- *	   </FrameDataUnitPackage>
- *	</Data>
- *
- *	RESPONSES
- *		The response is of type 200 OK if the data was processed and stored
- *		correctly.  If the session ID isn't recognized, the response is
- *		404:NotFound.  
+ *	\details The Director and Proxy send these commands to the server with data that should be
+ *	recorded.  PUTDATA commands are very heavily used and include just about all of the important data 
+ *	in a Session: Property value changes, input signal values, frame times, transition traversals, spike data,
+ *	LFP data, reward times, etc.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 struct PutDataCommandHandler : Picto::ProtocolCommandHandler
 {
 public:

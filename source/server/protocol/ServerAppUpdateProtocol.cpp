@@ -7,6 +7,10 @@
 #include "GetFileCommandHandler.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a ServerAppUpdateProtocol object which includes a single ProtocolCommandHandler,
+ *	the GetFileCommandHandler that is used for older Picto version to download the files for a new
+ *	Picto installation.
+*/
 ServerAppUpdateProtocol::ServerAppUpdateProtocol()
 {
 	QSharedPointer<GetFileCommandHandler> getFileCommandHandler(new GetFileCommandHandler());

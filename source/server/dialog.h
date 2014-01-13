@@ -13,10 +13,11 @@ class QLabel;
 class QPushButton;
 QT_END_NAMESPACE
 
-/*!	\brief A diaolog box explaining the server.
+/*!	\brief A dialog box that Users can use to install/remove/start/stop the Picto Server as a service.
  *
- *	If the server is run in a GUI environment, this dialog box pops up.  It gives the user the
- *	option to start and stop the server service.
+ *	\details The Dialog also allows the user to change the system number on which this Server operates.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class Dialog : public QDialog
 {

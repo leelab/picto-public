@@ -6,6 +6,9 @@
 #include <qlogging.h>
 #include "StoredSessionData.h"
 
+/*! \brief Creates a new StoredSessionData object that will put Session data in a Sqlite database
+ *	in the sessionPath with the databaseFileName name.
+ */
 StoredSessionData::StoredSessionData(QString sessionPath,QString databaseFileName)
 {
 	QSqlDatabase baseSessionDb = QSqlDatabase::addDatabase("QSQLITE",databaseFileName);
@@ -45,6 +48,9 @@ StoredSessionData::StoredSessionData(QString sessionPath,QString databaseFileNam
 	success = query.exec("PRAGMA temp_store = 2");
 	Q_ASSERT_X(success,"StoredSessionData::StoredSessionData","Error: Failed to initialize database: "+query.lastError().text().toLatin1());
 }
+
+/*! \brief Called when the StoredSessionData object is deleted.  Closes all Sqlite database resources.
+ */
 StoredSessionData::~StoredSessionData()
 {
 	//Close all database connections
@@ -67,11 +73,31 @@ StoredSessionData::~StoredSessionData()
 	}
 }
 
+/*! \brief Sets the SessionId of the session that will use this StoredSessionData object.
+ *	\details The SessionId is used in generating uniquely named database connections when 
+ *	multiple threads access this database.
+ *	\sa getSessionDb()
+ */
 void StoredSessionData::setSessionId(QUuid sessionId)
 {
 	sessionId_ = sessionId;
 }
 
+/*! \brief Stores information about the SQL table that should be used to store data for different data types.
+ *	@param dataType An integer signifying the type of data to which these settings will apply.
+ *	@param tableName The name of the table that will be used to store data for this dataType.
+ *	@param columnNames A comma separated string including the names of the columns that will be used to 
+ *		store data for this dataType (put spaces on both ends of the string, like " dataId,timestamp,value ").
+ *	@param columnTypes A comma separated string including the Sqlite types of the columns that will be used to 
+ *		store data for this dataType (put spaces on both ends of the string, 
+ *		like " INTEGER UNIQUE ON CONFLICT REPLACE,REAL,TEXT ").
+ *	@param indexedColumns A comma separated string including the names of the columns that will be indexed for fast
+ *		lookup by the Sqlite system for this dataType (put spaces on both ends of the string, like " dataId,timestamp ").
+ *	\details This function actually creates the necessary table in the Sql database if it doesn't already exist.
+ *	\note The indeces are not built when you call this function.  Once indeces are built, additions to the SQL table
+ *	can take significantly longer.  For this reason, we only want to add indeces at the end of the session.  To do that
+ *	you must use buildTableIndeces().
+ */
 void StoredSessionData::setTableInfo(int dataType,QString tableName,QString columnNames,QString columnTypes,QString indexedColumns)
 {
 	Q_ASSERT(!tableByType_.contains(dataType));
@@ -99,6 +125,9 @@ void StoredSessionData::setTableInfo(int dataType,QString tableName,QString colu
 	Q_ASSERT_X(success,"StoredSessionData::setTableInfo","Error: Failed to create table: " + tableName.toLatin1() + ", Error: " +query.lastError().text().toLatin1());
 }
 
+/*! \brief Builds all table indeces that were requested in setTableInfo().
+ *	\details This should typically be done only at the end of a session.  See setTableInfo() documentation for more details.
+ */
 void StoredSessionData::buildTableIndeces()
 {
 	QSqlQuery query(getSessionDb());
@@ -114,11 +143,19 @@ void StoredSessionData::buildTableIndeces()
 	}
 }
 
+/*! \brief Inserts the input data of the input dataType into this object.
+ *	\details Internally, this just sends the inputs to addData().
+ */
 void StoredSessionData::insertData(int dataType, QVariantList data)
 {
 	addData(dataType,data);
 }
 
+/*! \brief Implements SessionData::startDataWrite() to setup the SqlQuery that will be used and start
+ *	a SQL transaction.
+ *	\details We put all batched writeData() calls into a single transaction for significant runtime
+ *	savings.
+ */
 bool StoredSessionData::startDataWrite(QString* error)
 {
 	QSqlDatabase sessionDb = getSessionDb();
@@ -137,6 +174,14 @@ bool StoredSessionData::startDataWrite(QString* error)
 	return true;
 }
 
+/*! \brief Writes the input data to the SQL database by creating an SQL query according to the information 
+ *	entered in setTableInfo() for the input dataType.
+ *	\details writeData() calls are always in between startDataWrite() and endDataWrite() calls.  For the
+ *	purpose of runtime savings, these surrounding functions setup and commit an SQL transaction such that
+ *	no actual writing of data to the SQL database is occuring during this function.  It only occurs when
+ *	endDataWrite() is called.
+ *	\sa startDataWrite(), endDataWrite()
+ */
 void StoredSessionData::writeData(int dataType, QVariantList data)
 {
 	Q_ASSERT(tableByType_.contains(dataType));
@@ -150,6 +195,13 @@ void StoredSessionData::writeData(int dataType, QVariantList data)
 	bool success = query_->exec();
 	Q_ASSERT_X(success,"StoredSessionData::writeData","Error: "+query_->lastError().text().toLatin1());
 }
+
+/*! \brief Implements SessionData::endDataWrite() to commit the SQL transaction that was opened in 
+ *	startDataWrite() and get rid of the SqlQuery.
+ *	\details Since we put all batched writeData() calls into a single transaction, the actual writing
+ *	of the data to the underlying database doesn't happen until this function is called.
+ *	\sa startDataWrite(), writeData()
+ */
 bool StoredSessionData::endDataWrite(QString* error)
 {
 	QSqlDatabase sessionDb = getSessionDb();
@@ -163,11 +215,23 @@ bool StoredSessionData::endDataWrite(QString* error)
 	}
 	return true;
 }
+
+/*! \brief Implements SessionData::readDataTypes() to return all the dataTypes that have
+ *	had their SQL table information set up in setTableInfo().
+ */
 QList<int> StoredSessionData::readDataTypes()
 {
 	return tableByType_.keys();
 }
 
+/*!\ brief Implements SessionData:readData() to read out all data from the underlying SQL database
+ *	for the input dataType.
+ *	\details Each value will be set up by retrieving data from the table for the input dataType in 
+ *	the order that the columns were set up in setTableInfo() and putting it all together into a 
+ *	QVariantList.  Each QVariantList is appended to a QList<QVariantList> and returned.
+ * 
+ *	\note The condition and cut parameters are not supported by this class.
+ */
 QList<QVariantList> StoredSessionData::readData(int dataType,QVariant condition,bool cut)
 {
 	Q_ASSERT((condition == QVariant())	 && !cut);//These options are not supported
@@ -192,10 +256,13 @@ QList<QVariantList> StoredSessionData::readData(int dataType,QVariant condition,
 			returnRow.append(query.value(i));
 		returnVal.append(returnRow);
 	}
-	success = query.exec();
+	success = query.exec();	//What is this doing here?
 	return returnVal;
 }
 
+/*! \brief Implements SessionData::eraseEverything() to do nothing and trigger an
+ *	assertion since this function should never be called on objects of this class.
+ */
 void StoredSessionData::eraseEverything()
 {
 	Q_ASSERT(false);
@@ -208,10 +275,11 @@ void StoredSessionData::eraseEverything()
  *		1. The session database may be accessed from different threads 
  *		   (remember, the commands coming into the server are processed
  *		   by different threads)
- *		2. Database connections can't be shared across threads
+ *		2. File Databases can be used from multiple threads, but QSqlDatabase
+ *			database connections cannot be shared across threads.
  *	The current solution to these problems is to create a unique database
- *	connection for each thread.  This is somewhat wasteful, but it's simple
- *	and it works.
+ *	connection for each thread.  If you can figure out a cleaner way to do this
+ *	go for it.
  */
 QSqlDatabase StoredSessionData::getSessionDb()
 {

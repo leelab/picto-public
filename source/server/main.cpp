@@ -4,9 +4,10 @@
  *	PictoServer is the central server that ties all of the distributed pieces of Picto
  *	together.  Like any good server, it recieves commands, parses and replies to them.
  *
- *	The server can be run in two modes.  The first mode is as a service.  This lets us 
- *	install it on a machine and completely ignore it (assuming that it doesn't crash).  The
- *	second mode is "interactive".  This gets run from a command line and provides feedback
+ *	The server can be run in two modes.  The first mode is as a service.  It is referred to as GUI mode since
+ *	the service is installed/removed/started/stopped through a GUI dialog.  Running the Server as a Service lets us 
+ *	install it on a machine and completely ignore it.  It will actually even restart
+ *	itself if it crashes.  The second mode is "interactive".  This gets run from a command line and provides feedback
  *	as the server is running.  While developing Picto, you will want to use interactive 
  *	mode exclusively, since it gives you some clue as to what is going on with the server.
  */
@@ -48,20 +49,8 @@
 #include "processinfo/WinGetPID.h"
 #endif
 
-/*! \todo we need to set up a database structure for the server.  This should consist of:
- *        a configuration database tracking server settings (IP to listen on, ports, etcetera)
- *        a session database tracking current connections, running experiments, observers, etcetera
- *          this should likely be an in-memory database accessed via an object coordinating concurrent
- *          access amongst threads.  while this is possible with SQLite, it isn't possible with QSqlDatabase
- *          connections; so this in-memory object may need to simply store this in a non SQL data structure
- *        individual experiment databases
- *          these will need to be written to sparingly (likely during the ITI) due to atomic commits to disk
- *          being somewhat slow.  So as to handle network distribution of the data, we can maintain in-memory
- *          trial representations that are flushed, emit signals when new data is present, and allow read-only
- *          threaded access to the object
- *        a master database of all experiments
- */
-
+/*! \brief This looks to me like the main method when the Picto Server runs as a service.  I didn't write it, but that's definitely what it looks like.
+*/
 int serviceMain(SystemService *)
 {
 	Picto::InitializeNames();
@@ -82,17 +71,6 @@ int serviceMain(SystemService *)
 	pictoProtocols->addProtocol(pictoProtocol);
 	PictoUpdateProtocols->addProtocol(pictoUpdateProtocol);
 
-	/*! \todo we need to check for the presence of a session database, and if present handle a crashed session
-	 *        recovery.  Initially, that recovery may be non-existent (i.e. we'll just delete the old session
-	 *        database).
-	 *        This should also all be abstracted into a seperate object layer.
-	 */
-	//ServerConfig config;
-	
-
-	/*! \todo this should specify the IP address in addition to the port, and both should be read from the
-	 *        configuration database.
-	 */
 	Server httpServer(80, httpProtocols);
 	Server pictoServer(Picto::portNums->getServerPort(), pictoProtocols);
 	Server appUpdateServer(Picto::portNums->getUpdatePort(), PictoUpdateProtocols);
@@ -101,6 +79,30 @@ int serviceMain(SystemService *)
 	return eventLoop.exec();
 }
 
+/*! \brief The main method of the Picto Server application.  I didn't write this function, and its kind of a beast, so I'm going to just go ahead and
+ *	paste the command line usage instructions:
+ *	\code 
+		Usage:
+		PictoServer [-gui] [-interactive] [-install] [-start] [-remove] [-stop]
+
+		  -gui          - Launch a graphical user interface for the
+		                  Service/Daemon.  Must be the only argument.
+		  -interactive  - Runs in interactive mode (as a regular application)
+		                  instead of as a Service/Daemon.
+		  -install      - Installs the Service/Daemon so that it will run in
+		                  the background at system startup, even if no user
+		                 is logged in.
+		  -start        - Puts the Service/Daemon into the running state.
+			                  This can be placed after -install to install and
+		                  start the Service/Daemon immediately.
+		  -remove       - Removes the Service/Daemon from the system.
+		                  The Service/Daemon can no longer be started and
+		                  will not run at system startup.
+		  -stop         - Puts the Service/Daemon into the stopped state, but
+		                  does not remove it from the system.
+		                  The Service/Daemon will still run at system startup.
+	\endcode
+ */
 int main(int argc, char *argv[])
 {
 	//This will cause memory leaks to print out on exit if they're enabled

@@ -17,7 +17,9 @@
 HTTPGetCommandHandler::HTTPGetCommandHandler()
 {
 }
-
+/*! \brief Handles HTTP get commands.  The returned data was pretty much built for testing purposes.  Picto doesn't
+ *	currently use this.
+ */
 QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	/*! \todo implement handler */

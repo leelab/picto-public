@@ -18,13 +18,13 @@
 
 /*!	\brief A thread used to handle TCP connections.
  *
- *	When a TCp connection is created by the server, a new serverthread is spun
+ *	\details When a TCp connection is created by the server, a new ServerThread is spun
  *	up to handle the incoming data.  The thread reads the incoming data as if it is
  *	following HTTP protocol.  It then finds the appropriate command handler (using the 
- *	protocol and command name) and calls that command handler for a response, which 
- *	is then returned to the sender.  The server is treated as a true server, so it
- *	is only equipped to handle ProtocolCommands.  Should a ProtocolResponse arrive,
- *	it will be treated as an error.
+ *	protocol from ServerProtocols and the command name) and calls that command handler for a response
+ *	which is then returned to the sender.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class ServerThread : public QThread
 {
@@ -33,12 +33,16 @@ class ServerThread : public QThread
 public:
 	ServerThread(qintptr socketDescriptor, QSharedPointer<ServerProtocols> _protocol, QObject *parent);
 
+	/*! \brief Returns the IP Address of the thing on the other end of the QTcpSocket in string form.
+	 */
 	QString getPeerAddress() { return peerAddress_; };
-	//void setSessionId(QUuid sessionId) { sessionId_ = sessionId; };
 
     void run();
 
 signals:
+	/*! \brief Emitted if there is something wrong with the socketDesriptor input into the constructor at the time
+	 *	that run() is called.
+	 */
     void error(QTcpSocket::SocketError socketError);
 
 private:

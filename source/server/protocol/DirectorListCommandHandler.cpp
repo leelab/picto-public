@@ -9,8 +9,8 @@ DirectorListCommandHandler::DirectorListCommandHandler()
 {
 }
 
-/*! \brief handles a DIRECTORLIST command
- *
+/*! \brief Parses the input ProtocolCommand to check its syntax, responds with a serialized list of currently connected Director Components.
+ *	\details The returned list comes directly from ConnectionManager::getDirectorList().
  */
 QSharedPointer<Picto::ProtocolResponse> DirectorListCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

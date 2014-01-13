@@ -18,10 +18,7 @@ TrialCommandHandler::TrialCommandHandler()
 {
 }
 
-/*! \brief handles a TRIAL command
- *
- *	The TRIAL command is sent by a Director instance to inform us that a trial has 
- *	started or stopped.
+/*! \brief NO LONGER USED.
  */
 QSharedPointer<Picto::ProtocolResponse> TrialCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

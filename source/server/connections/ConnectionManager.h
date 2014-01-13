@@ -13,27 +13,20 @@
 class ServerThread;
 class QTimer;
 
-/*! \brief	Keeps track of all server connections
+/*! \brief	Keeps track of all active Components (Director/Proxy) as well as all active and recently timed out Sessions. 
+ *	The Components used with each Session, active or timed out, are tracked as well.
  *
- *	There are 3 different components that the server talks to:
- *		PictoDirector (client)
- *		PictoWorkstation (client)
- *		PictoProxyServer (server)
+ *	The server talks to the Picto Director, Proxy and Workstation applications over the network.  These applications
+ *	are related in that they may or may not be involved with the same Session.  The Connection Manager keeps track of 
+ *	all of these components and categorize them by their activity, the session to which they are attached and whether
+ *	it is active.  It also provides functions for updating information about specific components.
  *
- *	Certain commands are used to link together these components, so the 
- *	connection manager attempts to keep track of all connections and categorize them.
- *	It also provides functions for finding specific instances, and keeping track
- *	of timed out connections.
- *
- *	The ConnectionManager is a singleton object.   The actual object will be held by the
- *	server, but we can grab an instance of it anywhere we need it (such as in the 
+ *	The ConnectionManager is a singleton object that is accessed by multiple threads.   The actual object will be held 
+ *	by the Server, but we can grab an instance of it anywhere we need it (such as in the 
  *	command handlers).  
- *
- *	The multi-threaded nature of the server may present issues:
- *	- We'll use signals to start QTimers
- *	- We'll protect a lot of the data with Mutexes.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class ConnectionManager : public QObject
 {
 	Q_OBJECT
@@ -44,7 +37,6 @@ public:
 
 	//Director related functions
 	void updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status, QString details);
-	//void removeDirector(QUuid uuid);
 
 	ComponentStatus::ComponentStatus getComponentStatus(QUuid uuid);
 	ComponentStatus::ComponentStatus getComponentStatus(QString uuidStr);
@@ -57,10 +49,6 @@ public:
 	QString getDirectorList();
 
 	QString getProxyList();
-
-	//ServerThread related functions
-	//void addServerThread(ServerThread* thread);
-	//bool removeServerThread(ServerThread* thread);
 
 	//Session related functions
 	QSharedPointer<SessionInfo> createSession(QUuid directorID, QUuid proxyID, QString designName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password);
@@ -77,28 +65,25 @@ private slots:
 
 private:
 	ConnectionManager();
-	ConnectionManager(ConnectionManager const&){};	//empty private copy constructor
-	ConnectionManager& operator=(ConnectionManager const&){} //empty private assignment operator
+	ConnectionManager(ConnectionManager const&){};	//!< empty private copy constructor
+	ConnectionManager& operator=(ConnectionManager const&){} //!< empty private assignment operator
 	void checkForDroppedSessionTimeouts();
 
-	//The single allowed instance
+	//! The single allowed instance of a ConnectionManager object.
 	static ConnectionManager* conMan_;
 
-	//List of threads
-	//QMutex serverThreadListMutex_;
-	//QList<ServerThread*> threads_;
-
-	//Mutex - We are using a single mutex to protect access to everything (I tried using multiple
-	//mutexes earlier and managed to deadlock the server, so even though this is slightly less
-	//efficient, it's a lot safer.)
+	/*! Mutex - We are using a single mutex to protect access to everything (I tried using multiple
+	 *mutexes earlier and managed to deadlock the server, so even though this is slightly less
+	 *efficient, it's a lot cleaner.)
+	 */
 	QMutex *mutex_;
 
 	//Map of passive components (ie. Directors and Proxies)
-	QMap<QUuid,QSharedPointer<ComponentInfo> > components_;  //QUuid = component's unique user Id delivered in its messages
+	QMap<QUuid,QSharedPointer<ComponentInfo> > components_;  //!< QUuid = component's unique user Id delivered in its messages
 
 	//List of Sessions
 	QMap<QUuid, QSharedPointer<SessionInfo> > openSessions_;
-	QMap<QUuid, QUuid> pendingSessions_; //First QUuid is the directors ID, second is the Session ID
+	QMap<QUuid, QUuid> pendingSessions_; //!< First QUuid is the directors ID, second is the Session ID
 
 	QTimer *timeoutTimer_;
 

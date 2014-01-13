@@ -10,6 +10,8 @@
  *
  *	Components can send simple messages to the server using TEST anything PICTO/1.0.
  *	The server will always respond with an OK message.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct TestCommandHandler : Picto::ProtocolCommandHandler
 {

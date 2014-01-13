@@ -12,6 +12,11 @@
 
 QMutex ServerConfig::fileAccessMutex_;
 
+/*! \brief Constructs a ServerConfig object.
+ *	\details Opens a connection to the .config Sqlite database that stores
+ *	information about current and timed out Sessions.  If the database file
+ *	doesn't exist, it is created here.
+ */
 ServerConfig::ServerConfig()
 {
 	//Create a unique connection name
@@ -57,7 +62,9 @@ ServerConfig::~ServerConfig()
 	//configDb_.close();
 }
 
-//! \brief Inserts a session into the open sessions list
+/*! \brief Inserts a session into the open sessions list.  Stored data includes the Session's ID, filepath
+ *	and the IDs of the Director and Proxy that are used in the Session.
+ */
 void ServerConfig::addSession(QString sessionID, QString filepath, QString directorID, QString proxyID)
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -76,7 +83,8 @@ void ServerConfig::addSession(QString sessionID, QString filepath, QString direc
 	setActivity(sessionID,true);
 }
 
-//! \brief Removes a the session with the input ID from the database
+/*! \brief Removes the session with the input ID from the config database
+ */
 void ServerConfig::removeSession(QString sessionID)
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -89,7 +97,8 @@ void ServerConfig::removeSession(QString sessionID)
 	query.exec();
 }
 
-//! \brief Returns the filepath of the database for the session with input ID
+/*! \brief Returns the filepath of the database for the session with input ID
+ */
 QString ServerConfig::getSessionPathByID(QString sessionID)
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -107,7 +116,8 @@ QString ServerConfig::getSessionPathByID(QString sessionID)
 	return path;
 }
 
-//! \brief Returns the filepath of the database for the session associated with the input component
+/*! \brief Returns the filepath of the database for the Session associated with the input component.
+*/
 QString ServerConfig::getSessionPathByComponent(QString componentID)
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -125,7 +135,8 @@ QString ServerConfig::getSessionPathByComponent(QString componentID)
 	return path;
 }
 
-//! \brief Returns the sessionID of the session associated with the input component
+/*! \brief Returns the sessionID of the Session associated with the input component
+*/
 QString ServerConfig::getSessionIDByComponent(QString componentID)
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -143,7 +154,10 @@ QString ServerConfig::getSessionIDByComponent(QString componentID)
 	return sessionID;
 }
 
-//! \brief Sets the lastactivity field for the input session to the current time and changes the running field to the input value
+/*! \brief Sets the lastactivity field for the input session to the current time and changes the running field to the input value
+ *	\details lastactivity is the approximate time at which the last communication came in regarding this session.  It is
+ *	set as the current time.  running indicates if the Session is currently open (ie. Not timedout) on the Server.
+*/
 void ServerConfig::setActivity(QString sessionID, bool running)
 {
 	if(sessionID == "")
@@ -160,7 +174,8 @@ void ServerConfig::setActivity(QString sessionID, bool running)
 	query.exec();
 }
 
-//! \brief Returns a list of all sessions with "running" field of true
+/*! \brief Returns a list of all sessions with "running" field of true (ie. They have not timed out).
+*/
 QStringList ServerConfig::getRunningSessions()
 {
 	Q_ASSERT(configDb_.isOpen());
@@ -175,7 +190,9 @@ QStringList ServerConfig::getRunningSessions()
 	return result;
 }
 
-//! \brief Returns a list of all sessions with "running" field of false and lastactivity time after input time
+/*! \brief Returns a list of all sessions with "running" field of false and lastactivity time before the input time.
+ *	\details This is useful for figuring out if a Session timed out a long time ago or recently.
+*/
 QStringList ServerConfig::getSessionsIdledBefore(QDateTime time)
 {
 	Q_ASSERT(configDb_.isOpen());

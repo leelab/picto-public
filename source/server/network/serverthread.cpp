@@ -7,6 +7,12 @@
 #include <QDateTime>
 #include "../../common/memleakdetect.h"
 
+/*! \brief Constructs a ServerThread object.
+ *	@param socketDescriptor_ This is used with QTcpSocket::setSocketDescriptor() to allow this socket to handle a new 
+ *	connection that came into the Server's Server::incomingConnection() function.
+ *	@param protocols A ServerProtocols object that includes a list of Protocol object that will handle incoming 
+ *	messages.
+ */
 ServerThread::ServerThread(qintptr socketDescriptor_, QSharedPointer<ServerProtocols> protocols, QObject *parent)
     : QThread(parent),
       socketDescriptor_(socketDescriptor_),
@@ -15,6 +21,10 @@ ServerThread::ServerThread(qintptr socketDescriptor_, QSharedPointer<ServerProto
 {
 }
 
+/*! \brief This is the main method of the ServerThread.  It sets up the ServerThread's variables, Signal/Slot connections and event timing, then
+ *	calls QThread::exec() to start the thread's event loop.  This continues until the thread ends at which point its socket is disconnected from 
+ *	its host.
+ */
 void ServerThread::run()
 {
 	QTcpSocket socket;
@@ -58,6 +68,9 @@ void ServerThread::run()
 	}
 }
 
+/*! \brief Calling this causes all data from the QTcpSocket that belongs in the input command's content field to be read into it.
+ *	\note This function blocks until all the content arrives.
+ */
 bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	int remainingContentLength = command->getFieldValue("Content-Length").toInt();
@@ -76,6 +89,9 @@ bool ServerThread::receiveContent(QSharedPointer<Picto::ProtocolCommand> command
 	return true;
 }
 
+/*! \brief Processes the input ProtocolCommand using the correct Protocol object extracted from the ServerProtocols object.
+ *	An appropriate ProtocolResponse is returned.
+ */
 QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPointer<Picto::ProtocolCommand> _command)
 {
 	QSharedPointer<Picto::Protocol> protocol = protocols_->getProtocol(_command->getProtocolName());
@@ -177,6 +193,8 @@ QSharedPointer<Picto::ProtocolResponse> ServerThread::processCommand(QSharedPoin
 	return response;
 }
 
+/*! \brief Writes the input ProtocolResponse out over the QTcpSocket.
+*/
 void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> response)
 {
 	if(response.isNull())
@@ -224,6 +242,9 @@ void ServerThread::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respo
 	}
 }
 
+/*! \brief Called whenever new data arrives on the QTcpSocket.  Reads the data in, uses it to build the ProtocolCommand objects that were sent on the other
+ *	end of the Socket, processes them with processCommand() and delivers the responses generated in that function back to the other end of the socket.
+ */
 void ServerThread::readClient()
 {
 	timer_->stop();
@@ -280,11 +301,15 @@ void ServerThread::readClient()
 	timer_->start();
 }
 
+/*! \brief Called when the QTcpSocket is disconnected.  Causes this ServerThread to exit().
+ */
 void ServerThread::handleDroppedClient()
 {
 	exit();
 }
 
+/*! \brief Called when nothing happens on the QTcpSocket for timeoutInterval_ (10) seconds.  Causes this ServerThread to exit().
+*/
 void ServerThread::handleTimeout()
 {
 	//QSharedPointer<Picto::ProtocolResponse> response = new Picto::ProtocolResponse(protocol->id(),protocol->version(),Picto::ProtocolResponseType::ConnectionTimedOut);
@@ -292,6 +317,8 @@ void ServerThread::handleTimeout()
 	exit();
 }
 
+/*! \brief Called when an error occurs on the QTcpSocket.  Currently, doesn't do anything about it.
+*/
 void ServerThread::handleError(QAbstractSocket::SocketError socketError)
 {
 	int i = socketError;

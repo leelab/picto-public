@@ -5,10 +5,30 @@
 #include <QReadWriteLock>
 #include <QList>
 
-/*!	\brief Interface to an object that stores session data
+/*!	\brief The base class or objects that stores session data.
+ *	\details There is some history to this class.  Originally, we used to create two databases
+ *	on the server, one file system database, and another very similiar database that was stored
+ *	in RAM.  We then periodically wrote the cache database out to the file database.  When we found
+ *	that the original system required a lot of complex and costly data access for workstations to join
+ *	running sessions, we also added a lookup table with the current values of all Properties and other
+ *	 data.  This allowed workstations to join up with running sessions more quickly.  At one point 
+ *	though, in the process of upgrading our Qt version, we found that we were suddenly getting lots of 
+ *	errors that were crashing the server.  With some research we discovered that cached Sqlite databases 
+ *	were only supposed to be accessed by a single thread, and this was causing the crash since the sockets
+ *	handling Director and Proxy data, along with the socket handling Workstation data access all had
+ *	their own threads and were accessing this same cached database.  
  *
+ *	This class was created to solve that problem.  SessionData objects support multi-threaded access, and 
+ *	can easily write data to one another using the copyDataTo() or moveDataTo() functions.  Essentially, 
+ *	the entire SessionData system is built to replace the in memory Sqlite database that doesn't support
+ *	multithreaded access.  By understanding the use case, we can get away without all of the SQL support
+ *	that we didn't actually need and simply handle what needs to be done here in our server.  By creating
+ *	a StoredSessionData SessionData class, we have even been able to simplify our SQL file interface by hiding
+ *	it all inside that class and writing to SQL by simply copying data from a CachedSessionData object
+ *	to a StoredSessionData object.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class SessionData
 {
 public:
@@ -16,43 +36,35 @@ public:
 	virtual ~SessionData();
 
 	QList<QVariantList> peekData(int dataType);
-	//Copies all data in this SessionData object to another session data object
-	//condition variable is some condition that defines which data gets copied.
-	//It's meaning is defined in the descendant's implementation of readData().
 	void copyDataTo(SessionData* receiver,QVariant condition = QVariant());
-
-	//Moves all data in this SessionData object to another session data object,
-	//the data gets deleted from this SessionData object in the process.
-	//condition variable is some condition that defines which data gets copied.
-	//It's meaning is defined in the descendant's implementation of readData().
 	void moveDataTo(SessionData* receiver,QVariant condition = QVariant());
-
-	//Brings this object back into the state it was in when just constructed.
 	void clearData();
 
 protected:
 
 	void addData(int dataType, QVariantList data);
 	void addData(int dataType, QList<QVariantList> data);
-	//Called before writeData.  Should return false if descendant couldn't initialize
-	//data write resources.
 	virtual bool startDataWrite(QString* error = NULL);
-	//Should write the input data to descendant defined data structure
+	/*! \brief Write the data of the input dataType to this object.*/
 	virtual void writeData(int dataType, QVariantList data) = 0;
-	//Called after all writeData's in a batch.  Should return false if descendant 
-	//couldn't finalize data write.
 	virtual bool endDataWrite(QString* error = NULL);
+	/*! \brief Returns a list of integers representing types of data handled by this object.
+	 *	\details For example, if this SessionData handles both Transition traversal and Property
+	 *	value change data, Transition traversal data might be data type 1 and Property value change
+	 *	data might be data type 2 such that this functio would return {1,2}.
+	 */
 	virtual QList<int>readDataTypes() = 0;
-	//Should read all data of the input dataType into a QVector or VariantList
-	//condition input comes from the copyDataTo function and has the same meaning
-	//as it does in that location
+	/*! \brief Reads all data of the input dataType into a QVector or VariantList.
+	 *	\details The meaning of the condition input is a function of the type of this SessionData
+	 *	class.
+	 */
 	virtual QList<QVariantList> readData(int dataType,QVariant condition,bool cut=false) = 0;
 	//Should rease all data from the descendant, bringing it to the state that it was in when it was newly
 	//constructed.
 	virtual void eraseEverything() = 0;
 
-	friend class SessionData;
-	QReadWriteLock readWriteLock_;
+	friend class SessionData;	//This is unnecessary.  Remove it.
+	QReadWriteLock readWriteLock_;	//!< A Read/Write mutex for handling reads and write from multiple threads.
 
 private:
 	bool startDataWriteAndLock(QString* error);

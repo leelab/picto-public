@@ -11,6 +11,11 @@
 #include <QVariant>
 #include "../../common/memleakdetect.h"
 
+/*! \brief Creates a Server object on the input port that uses the Protocol objects in the input ServerProtocols object
+ *	to handle incoming messages.
+ *	\details Among other initializations, a UDP socket is created to listen for Discover messages from Components looking 
+ *	for an active server.
+ */
 Server::Server(quint16 port, QSharedPointer<ServerProtocols> _protocols, QObject *parent) :
 	protocols(_protocols),
 	serverPort(port),
@@ -56,6 +61,8 @@ Server::~Server()
 	delete udpSocket;
 }
 
+/*! \brief Called when a new connection comes in.  Creates a ServerThread to handle the incoming connection.
+*/
 void Server::incomingConnection(qintptr socketDescriptor)
 {
     ServerThread *thread = new ServerThread(socketDescriptor, protocols, this);
@@ -65,6 +72,9 @@ void Server::incomingConnection(qintptr socketDescriptor)
     thread->start();
 }
 
+/*! \brief Called when new datagrams come in over the UDP socket.  Checks if the datagram is a DISCOVER 
+ *	command.  If it is, an ANNOUNCE response is sent with this Server's IP Address and Port.
+ */
 void Server::processPendingDatagrams()
 {
 
@@ -112,7 +122,8 @@ void Server::processPendingDatagrams()
 	}
 }
 
-//! Called when a server thread ends
+/*! \brief Called when a server thread ends.  Marks it to be deleted.
+*/
 void Server::endThread()
 {
 	ServerThread *thread = (ServerThread*)QObject::sender();

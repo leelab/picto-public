@@ -12,6 +12,8 @@
  *	This is actually more of a test protocol.  There is no reason for PictoServer
  *	to implement the HTTP protocol at the moment (although you could use something
  *	like this to stream images of an experiment to a web browser).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 struct ServerHTTPProtocol : Picto::Protocol
 {

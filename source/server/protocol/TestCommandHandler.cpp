@@ -21,6 +21,9 @@ TestCommandHandler::TestCommandHandler()
 {
 }
 
+/*! \brief Returns an OK response to any input command.  This can be used by clients as a sort of sanity check, like
+ *	pinging google.
+ */
 QSharedPointer<Picto::ProtocolResponse> TestCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
 	//create an "OK" response

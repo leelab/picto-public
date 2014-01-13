@@ -9,7 +9,10 @@
 #include "../../common/common.h"
 #include "../../common/protocol/Protocol.h"
 
-/*!	\brief Stores the protocols used by the server. */
+/*!	\brief A simple container object used to store all fo the Protocol objects used by the Server. 
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 struct ServerProtocols
 {
 public:

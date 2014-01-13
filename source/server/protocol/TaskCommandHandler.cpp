@@ -12,21 +12,28 @@ TaskCommandHandler::TaskCommandHandler()
 {
 }
 
-/*! \brief handles a TASK command
- *
+/*! \brief Handles TASK commands.
+ *	\details TASK commands are commands that the Workstation sends to cause something to happen in the Session.  They
+ *	are defined in the target of the command and include:
+ *	- start: Start the task with the name after the colon in the command header
+ *	- pause: Pause the currently running task
+ *	- stop: Stop the currently running task
+ *	- resume: Resume the currently running task
+ *	- reward: Supply a reward on the reward channel after the colon in the command header.  If the command has content, use
+ *		the number in the content to update the default reward duration for the channel.
+ *	- isauthorized:	Checks if the Workstation sending the command is authorized to use other Task commands.  If not an
+ *		unauthorized Response will be returned.  If so, an OK response will be returned.
+ *	- parameter: Update the initValue of the Property with the AssetId printed after the command header's colon.  Change it
+ *		to the value included in the command content.
+ *	- click: Inform the Director that an Operator click occured at the coordinates included after the command header's colon.
+ *	- updatedata: Change the saved TaskRun information to the serialized value included in the command contents.  This is useful
+ *		for adding notes, changing the name or changing the saved value of a Session's Task Run.
+ *	
+ *	This function processes all of these commands, adds appropriate Directives for the Director when necessary, changes
+ *	Session data when necessary, and returns appropriate information when necessary.
  */
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-
-	/*! \TODO Record the time that each command is received.  This way less trivial 
-	 *	than it appears.  We want the time to be recorded in the session's timebase,
-	 *	but the server doesn't hold a timer in that timebase, so at best, we could
-	 *	estimate the time using the frame table.  We could also try inserting the 
-	 *	command in the state transition table.
-	 */
-
-
-
 	printf("TASK handler: %d\n", QThread::currentThreadId());
 
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -121,8 +128,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::processCommand(QShar
 
 }
 
-
-//! Starts a task running either from the beginning or from a paused state
+/*! \brief Adds a START directive for the Director to cause it to start the task with the input task name.
+ *	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskname,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -151,70 +159,15 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::start(QString taskna
 		return badReqResponse;
 	}
 
-	//QTime timer;
-	//if(!sessInfo->getComponentByType("PROXY").isNull())
-	//{
-	//	//Check that we have a Proxy and that it is stopped
-	//	ComponentStatus::ComponentStatus proxyStatus = conMgr_->getComponentStatusBySession(sessionId_,"PROXY");
-
-	//	if(proxyStatus == ComponentStatus::running)
-	//	{
-	//		badReqResponse->setContent("Proxy is already running a task.");
-	//		return badReqResponse;
-	//	}
-	//	else if(proxyStatus == ComponentStatus::notFound)
-	//	{
-	//		badReqResponse->setContent("Proxy not found");
-	//		return badReqResponse;
-	//	}else if(proxyStatus == ComponentStatus::ending)
-	//	{
-	//		badReqResponse->setContent("Proxy is in the process of ending its session");
-	//		return badReqResponse;
-	//	}else if(proxyStatus == ComponentStatus::idle)
-	//	{
-	//		badReqResponse->setContent("Proxy is not currently in a session");
-	//		return badReqResponse;
-	//	}
-
-	//	//Add a START directive to the session info
-	//	timer.start();
-	//	sessInfo->addPendingDirective("START "+taskname,"PROXY");
-	//	do
-	//	{
-	//		QThread::yieldCurrentThread();
-	//		QCoreApplication::processEvents();
-	//	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"PROXY") < ComponentStatus::stopped);
-	//	if(timer.elapsed() >=10000)
-	//	{
-	//		badReqResponse->setContent("Proxy failed to start");
-	//		return badReqResponse;
-	//	}
-	//}
-
 	sessInfo->addPendingDirective("START "+taskname,"DIRECTOR");
 
-	////Wait around until the Director's status changes to "running"
-	//timer.start();
-	//do
-	//{
-	//	QThread::yieldCurrentThread();
-	//	QCoreApplication::processEvents();
-	//}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") < ComponentStatus::stopped);
-
-	//if(timer.elapsed() <10000)
-	//{
-	//	return okResponse;
-	//}
-	//else
-	//{
-	//	badReqResponse->setContent("Task failed to start");
-	//	return badReqResponse;
-	//}
 	return okResponse;
 
 }
 
-//! \brief Stops a running task
+/*! \brief Adds a STOP directive for the Director to cause it to stop running the current task.
+ *	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -228,42 +181,14 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::stop(QSharedPointer<
 	}
 	
 	sessInfo->addPendingDirective("STOP","DIRECTOR");
-	//QTime timer;
-	//timer.start();
-	//do
-	//{
-	//	QThread::yieldCurrentThread();
-	//	QCoreApplication::processEvents();
-	//}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
-	//if(timer.elapsed() >=10000)
-	//{
-	//	badReqResponse->setContent("Director failed to stop");
-	//	return badReqResponse;
-	//}
-	//if(!sessInfo->getComponentByType("PROXY").isNull())
-	//{
-	//	sessInfo->addPendingDirective("STOP","PROXY");
-	//	timer.start();
-	//	do
-	//	{
-	//		QThread::yieldCurrentThread();
-	//		QCoreApplication::processEvents();
-	//	}while(timer.elapsed() < 10000 && conMgr_->getComponentStatusBySession(sessionId_,"DIRECTOR") > ComponentStatus::stopped);
-	//	if(timer.elapsed() >=10000)
-	//	{
-	//		badReqResponse->setContent("Proxy failed to stop");
-	//		return badReqResponse;
-	//	}
-	//}
-
-	//conMgr_->setComponentStatus(sessionId_,"DIRECTOR"ComponentStatus::stopped);
-
 
 	return okResponse;
 
 }
 
-//! \brief Pauses a running task
+/*! \brief Adds a PAUSE directive for the Director to cause it to pause the currently running task.
+*	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -284,7 +209,9 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::pause(QSharedPointer
 }
 
 
-//! \brief resumes a paused task
+/*! \brief Adds a RESUME directive for the Director to cause it to resume running the task that is currently paused.
+*	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume(QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -303,7 +230,11 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::resume(QSharedPointe
 	return okResponse;
 }
 
-//! Delivers a reward
+/*! \brief Adds a REWARD directive for the Director to cause it to provide a reward on the input channel with the input details.
+ *	\details The details input may be an empty string, if not it includes a new default reward value for the input channel.
+ *	That value is included in the REWARD directive.
+ *	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -322,6 +253,10 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::reward(int channel, 
 
 }
 
+/*! \brief Adds a PARAMETER directive for the Director to cause it update the initValue of the Property with the input AssetId (called paramid) to 
+ *	the value input in the details field.
+ *	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString paramId, QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -332,6 +267,10 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::parameter(QString pa
 	return okResponse;
 }
 
+/*! \brief Adds a CLICK directive for the Director to inform it of an operator click in the workstation at the coordinates input as details in
+ *	the format (x,y ie. "100,300").
+ *	Returns an appropraite ProtocolResponse.
+*/
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString details,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));
@@ -340,6 +279,10 @@ QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::click(QString detail
 	return okResponse;
 }
 
+/*! \brief Creates a TaskRunDataUnit from the serial XML code input as "data".  Uses SessionInfo::modifyTaskRunData() to change the contents of the stored Task Run data 
+ *	with the same DataId to match that of the input.  This is useful to update the Task Run name, notes, or saved value.
+ *	Returns an appropraite ProtocolResponse.
+ */
 QSharedPointer<Picto::ProtocolResponse> TaskCommandHandler::updateServerData(QString data,QSharedPointer<SessionInfo> sessInfo)
 {
 	QSharedPointer<Picto::ProtocolResponse> okResponse(new Picto::ProtocolResponse(Picto::Names->serverAppName, "PICTO","1.0",Picto::ProtocolResponseType::OK));

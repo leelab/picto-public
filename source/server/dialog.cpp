@@ -7,6 +7,8 @@
 #include "dialog.h"
 #include "../common/memleakdetect.h"
 
+/*! \brief Constructs a Dialog object to handle starting/stopping/installing/uninstalling the input SystemService.
+ */
 Dialog::Dialog(SystemService * systemService, QWidget *parent) :	
   QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
 	targetService(systemService)
@@ -98,6 +100,8 @@ Dialog::Dialog(SystemService * systemService, QWidget *parent) :
 	setWindowFlags(Qt::Window);
 }
 
+/*! \brief Installs the SystemService to the OS using SystemService::install().  Shows an error message box if installation fails.
+*/
 void Dialog::doInstall()
 {
 	if(targetService->install())
@@ -118,6 +122,8 @@ void Dialog::doInstall()
 	}
 }
 
+/*! \brief Removes the SystemService from the OS using SystemService::remove().  Shows an error message box if removal fails.
+*/
 void Dialog::doRemove()
 {
 	if(targetService->remove())
@@ -138,6 +144,8 @@ void Dialog::doRemove()
 	}
 }
 
+/*! \brief Starts the SystemService using SystemService::start().  Shows an error message box if the service cannot start.
+*/
 void Dialog::doStart()
 {
 	if(targetService->start())
@@ -156,6 +164,8 @@ void Dialog::doStart()
 	}
 }
 
+/*! \brief Stops the SystemService using SystemService::stop().  Shows an error message box if the service cannot stop.
+*/
 void Dialog::doStop()
 {
 	if(targetService->stop())
@@ -174,6 +184,8 @@ void Dialog::doStop()
 	}
 }
 
+/*! \brief Called when the user changes the system number using the spinbox.  Updates the system number using Picto::portNums::setSystemNumber().
+*/
 void Dialog::systemNumberChanged(int num)
 {
 	int currSysNum = Picto::portNums->getSystemNumber();

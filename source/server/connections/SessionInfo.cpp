@@ -31,6 +31,18 @@
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
+
+/*! \brief Creates a new SessionInfo object.
+ *	@param designName The name of the design that will be used in the Session.
+  *	@param directorName The name of the Director that will be used in the Session.
+ *	@param designXml The contents of the Design file that will be used in the Session.
+ *	@param DesignConfig The serialized DesignConfig object that manages the Design used in this session.  This contains 
+ *		information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup 
+ *		tables in the session file.
+ *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an Authorized
+ *		observer (ie. It is authorized to make state changes to the Session).
+ *	@param password	The password that gives workstations authorization to change the Session state.
+*/
 QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
 {
 	//Creates a shared pointer for the object that will use the deleteSession function to actually delete
@@ -40,6 +52,10 @@ QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString designName, QStri
 	return returnVal;
 }
 
+/*! \brief Loads the Session with the input sessionId and the Sqlite Session file at the input databaseFilePath and returns it.
+ *	\details Internally, if the SessionInfo object for this session is already loaded, the function just returns it.  If it isn't
+ *	loaded, a new SessionInfo object is created and all of the data from the Sqlite Session file is loaded into that object.
+ */
 QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString databaseFilePath)
 {
 	QSharedPointer<SessionInfo> returnVal;
@@ -52,13 +68,13 @@ QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString 
 		//(the fact that loadedSessions_ contains weak pointers takes care of this issue)
 	}
 	if(returnVal.isNull())
+		//Note: deleteSession() will be called with the SessionInfo pointer when it is deleted by its shared pointer.
 		returnVal = QSharedPointer<SessionInfo>(new SessionInfo(databaseFilePath),&deleteSession);
 	return returnVal;
 }
 
-/*!
- * \brief Handles session deletion while maintaining a list of loaded sessions
- *	If a session is removed from the openSessions list by the ConnectionManager but
+/*! \brief Handles session deletion while maintaining a list of loaded sessions
+ *	\details If a session is removed from the openSessions list by the ConnectionManager but
  *	still hasn't been deleted since something with a shared pointer is stuck in a long
  *	operation, we want to make sure that nothing else reopens the session from file
  *	before the loaded session actually gets deleted.  To do this, we maintain a 
@@ -66,6 +82,10 @@ QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString 
  *	When LoadSession is called, this list is checked first and if a session is found 
  *	with the input sessionID, the weak reference is converted to a regular shared pointer
  *	and returned.  Viola!  No duplicate copies of sessions.
+ *
+ *	This function takes care of actually removing the SessionInfo weak pointer from the
+ *	list when the last SessionInfo strong smart pointer is cleared.
+ *	\sa LoadSession()
  */
 void SessionInfo::deleteSession(SessionInfo* session)
 {
@@ -85,6 +105,20 @@ void SessionInfo::deleteSession(SessionInfo* session)
 	qDebug("Session: " + sessionId.toLatin1() + " has been unloaded!");
 }
 
+/*! \brief Constructs a new SessionInfo object.
+ *	@param designName The name of the design that will be used in the Session.
+ *	@param directorName The name of the Director that will be used in the Session.
+ *	@param designXml The contents of the Design file that will be used in the Session.
+ *	@param DesignConfig The serialized DesignConfig object that manages the Design used in this session.  This contains 
+ *		information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup 
+ *		tables in the session file.
+ *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an Authorized
+ *		observer (ie. It is authorized to make state changes to the Session).
+ *	@param password	The password that gives workstations authorization to change the Session state.
+ *	\details Apart from the actual object construction, this function handles variable initialization by using InitializeVariables().
+ *	It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and SetupBaseSessionDatabase() to setup those
+ *	objects.
+ */
 SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password):
 	designXml_(designXml),
 	DesignConfig_(DesignConfig),
@@ -122,6 +156,12 @@ SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray de
 	//file_.open(QIODevice::WriteOnly);
 }
 
+/*! \brief Constructs a new SessionInfo object based on the contents of an old timed out Sqlite Session file at the input databaseFilePath.
+ *	\details Apart from the actual object construction, this function handles variable initialization by using InitializeVariables().
+ *	It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and SetupBaseSessionDatabase() to setup those
+ *	objects.  Once all of the SessionData objects are setup, this constructor extracts all data from the Sqlite session file that needs to 
+ *	be in RAM  (using a StoredSessionData object) and enters it into the relevant variables and SessionData objects.
+ */
 SessionInfo::SessionInfo(QString databaseFilePath)
 {
 	InitializeVariables();
@@ -134,7 +174,6 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	//Q_ASSERT(baseSessionDbConnection_.tables().contains("sessioninfo"));
 
 	SetupBaseSessionDatabase();
-	//CreateCacheDatabase(databaseName);
 
 	//Load Session Info from previously saved session
 	QList<QVariantList> sessionInfoList = storedSessionData_->peekData(SESSION_INFO_TYPE);
@@ -202,43 +241,6 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 			alignmentInfoMap_["Neural"] = inf;
 		}
 	}
-	//QSqlQuery sessionQ(baseSessionDbConnection_);
-	//QMutexLocker locker(databaseWriteMutex_.data());
-	// Load Database Version
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"DatabaseVersion\"");
-	//if(sessionQ.next())
-	//	databaseVersion_ = sessionQ.value(0).toString();
-	//sessionQ.finish();
-
-	// Load SessionID
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"SessionID\"");
-	//if(sessionQ.next())
-	//	uuid_ = QUuid(sessionQ.value(0).toString());
-	//sessionQ.finish();
-
-	// Load SessionPassword
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"Password\"");
-	//if(sessionQ.next())
-	//	password_ = sessionQ.value(0).toString();
-	//sessionQ.finish();
-	
-	// Load DesignXML
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"DesignXML\"");
-	//if(sessionQ.next())
-	//	designXml_ = sessionQ.value(0).toByteArray();
-	//sessionQ.finish();
-
-	// Load TimeCreated
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"sessionstart\"");
-	//if(sessionQ.next())
-	//	timeCreated_ = sessionQ.value(0).toString();
-	//sessionQ.finish();
-	
-	// Load Authorized Observers
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"AuthObserverID\"");
-	//while(sessionQ.next())
-	//	authorizedObservers_.append(QUuid(sessionQ.value(0).toString()));
-	//sessionQ.finish();
 
 	// Load Components from previously saved session
 	QList<QVariantList> componentInfoList = storedSessionData_->peekData(COMPONENT_INFO_TYPE);
@@ -254,58 +256,6 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 		components_[component->getType()] = component;
 		componentActivity_[component->getUuid()] = varList[4].toBool();
 	}
-	//QSharedPointer<ComponentInfo> component;
-	//executeReadQuery(&sessionQ,"SELECT componentid,address, name, type, active FROM componentinfo");
-	//while(sessionQ.next())
-	//{
-	//	component = QSharedPointer<ComponentInfo>(new ComponentInfo());
-	//	component->setUuid(QUuid(sessionQ.value(0).toString()));
-	//	component->setAddress(sessionQ.value(1).toString());
-	//	component->setName(sessionQ.value(2).toString());
-	//	component->setType(sessionQ.value(3).toString());
-	//	component->setStatus(ComponentStatus::notFound);
-	//	components_[component->getType()] = component;
-	//	componentActivity_[component->getUuid()] = sessionQ.value(4).toBool();
-	//}
-	//sessionQ.finish();
-
-	// Load AlignToType
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"AlignToComponent\"");
-	//if(sessionQ.next())
-	//	alignToType_ = sessionQ.value(0).toString();
-	//sessionQ.finish();
-
-	// Load signal channel variable ids.
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"Signal\"");
-	//int currId;
-	//while(sessionQ.next())
-	//{
-	//	Picto::SignalChannelInfo sigInfo;
-	//	sigInfo.fromXml(sessionQ.value(0).toString());
-	//	currId = sigInfo.getStateVariableId();
-	//	sigChanVarIDs_[sigInfo.getName()] = currId;
-	//	if(currId < nextSigChanVarId_)
-	//		nextSigChanVarId_ = currId - 1;
-
-	//	//Add the cache table for this signal channel to the list since it was dynamically created during
-	//	//the pre-disconnect run and will not have been added to the lists during InitializeVariables()
-	//	QString tableName = QString("signal_%1").arg(sigInfo.getName());
-	//	tables_.push_back(tableName);
-	//	tableColumns_[tableName] = " dataid,offsettime,sampleperiod,data,frameid ";
-	//	tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ";
-	//	tableDataProviders_[tableName] = "DIRECTOR";
-	//}
-	//sessionQ.finish();
-
-	// Load data source info.
-	//executeReadQuery(&sessionQ,"SELECT value FROM sessioninfo WHERE key=\"DataSource\"");
-	//while(sessionQ.next())
-	//{
-	//	QSharedPointer<Picto::DataSourceInfo> srcInfo(new Picto::DataSourceInfo());
-	//	srcInfo->fromXml(sessionQ.value(0).toString());
-	//	dataSourceInfoMap_[srcInfo->getName()] = srcInfo;
-	//}
-	//sessionQ.finish();
 
 	// Load Session Data Pack
 	QList<QVariantList> runsList = storedSessionData_->peekData(RUNS_TYPE);
@@ -322,23 +272,6 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 		taskRun->setDataID(varList[0].toLongLong());
 		currSessionDataPack_->setTaskRun(taskRun);
 	}
-	//executeReadQuery(&sessionQ,"SELECT runid,name,notes,firstframe,lastframe,saved FROM runs");
-	//while(sessionQ.next())
-	//{
-	//	QSharedPointer<Picto::TaskRunDataUnit> taskRun(
-	//		new Picto::TaskRunDataUnit(
-	//			sessionQ.value(3).toString().toLongLong(),
-	//			sessionQ.value(4).toString().toLongLong(),
-	//			sessionQ.value(1).toString(),	
-	//			sessionQ.value(2).toString(),
-	//			sessionQ.value(5).toString().toInt()
-	//		));
-	//	taskRun->setDataID(sessionQ.value(0).toLongLong());
-	//	currSessionDataPack_->setTaskRun(taskRun);
-	//}
-	//sessionQ.finish();
-
-	//CreateCacheDatabase(databaseName);
 
 	// Load Current State
 	QList<QVariantList> currStateList = storedSessionData_->peekData(CURRENT_STATE_TYPE);
@@ -346,34 +279,14 @@ SessionInfo::SessionInfo(QString databaseFilePath)
 	{
 		currentSessionData_->updateVariable(varList[0].toInt(),varList[1].toInt(),varList[2].toString(),varList[3].toString());
 	}
-
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery cacheQuery(cacheDb);
-	//executeReadQuery(&cacheQuery,"INSERT INTO currentstate(dataid, variableid, time, data) SELECT dataid, variableid, time, data FROM diskdb.currentstate",true);
-	//cacheQuery.finish();
-	//locker.unlock();
-
-	////Redoalignment and flush
-	////I removed this because it isn't strictly necessary (since we realign when we end the session)
-	////and it adds a lot of time to session loading, which is something that can occur frequently in
-	////certain situations
-	//alignTimeBases(true);
-	//flushCache();
 }
 
 SessionInfo::~SessionInfo()
 {
-
-	//foreach(QString connectionName, openDatabaseConnections_)
-	//{
-	//	QSqlDatabase connection = QSqlDatabase::database(connectionName);
-	//	if(connection.isValid())
-	//		connection.close();
-	//}
-	//file_.close();
 }
 
-//! \brief Adds a component to this session (ie. Director or proxy)
+/*! \brief Adds a Component represented by the input ComponentInfo object to the current session (ie. Director or Proxy)
+*/
 void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 {
 	storedSessionData_->insertData(
@@ -384,26 +297,17 @@ void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 											<< component->getType()
 											<< false
 										);
-	//QSqlDatabase sessionDb = getSessionDb();
-	////Add the component to the session db
-	//QSqlQuery query(sessionDb);
-	//query.prepare("INSERT INTO componentinfo(componentid,address, name, type, active)"
-	//	" VALUES (:componentid,:address,:name,:type, :active)");
-	//query.bindValue(":componentid", component->getUuid().toString());
-	//query.bindValue(":address", component->getAddress());
-	//query.bindValue(":name", component->getName());
-	//query.bindValue(":type", component->getType());
-	//query.bindValue(":active", false);
-	//executeWriteQuery(&query);
+
 	components_[component->getType()] = component;
 	flushEnabled_[component->getType()] = false;
 }
 
+/*! \brief Called periodically to update the stored information about the Session's Components in the Session database.
+ *	\details If the component is still attached to the Server, it is set as either Active or Inactive in this Session 
+ *	depending on whether it reports that it is attached to the current Session or to some other Session.
+ */
 void SessionInfo::UpdateComponentActivity()
 {
-	//QSqlDatabase sessionDb = getSessionDb();
-	//QSqlQuery query(sessionDb);
-
 	//Add the component to the stored data
 	foreach(QSharedPointer<ComponentInfo> component,components_)
 	{
@@ -421,16 +325,17 @@ void SessionInfo::UpdateComponentActivity()
 											<< component->getType()
 											<< active
 										);
-				//query.prepare("UPDATE componentinfo SET active=:active WHERE componentid=:componentid");
-				//query.bindValue(":active",active);
-				//query.bindValue(":componentid",component->getUuid().toString());
-				//executeWriteQuery(&query);
 				componentActivity_[component->getUuid()] = active;
 			}
 		}
 	}
 }
 
+/*! \brief Returns true if any of the Components associated with this Session are currently active (ie. Attached to the Server and
+ *	reporting that they are working on this Session.
+ *	\note If ignoreComponents() has been called, this will always return false.
+ *	\sa UpdateComponentActivity()
+ */
 bool SessionInfo::hasActiveComponents()
 {
 	if(ignoreComponents_)
@@ -443,7 +348,8 @@ bool SessionInfo::hasActiveComponents()
 	return false;
 }
 
-//! \brief Gets a component from this session by Type
+/*! \brief Returns the ComponentInfo object representing the Component of the input type (ie. "DIRECTOR", "PROXY") that is associated with this Session.
+*/
 QSharedPointer<ComponentInfo> SessionInfo::getComponentByType(QString type)
 {
 	if(components_.contains(type))
@@ -451,7 +357,8 @@ QSharedPointer<ComponentInfo> SessionInfo::getComponentByType(QString type)
 	return QSharedPointer<ComponentInfo>();
 }
 
-//! \brief Returns true if this Session is attached to the component with input componentID
+/*! \brief Returns true if the Component with the input componentId is one of the one's handling this Session.
+*/
 bool SessionInfo::hasComponent(QUuid componentID)
 {
 	foreach(QSharedPointer<ComponentInfo> component,components_)
@@ -464,25 +371,21 @@ bool SessionInfo::hasComponent(QUuid componentID)
 
 /*! \brief Sets the type of component to which other component types' timestamps should be aligned.
  *	If this is not called, component timestamps will not be aligned.
+ *	\details Currently, the input should always be "DIRECTOR".
  */
 void SessionInfo::alignTimestampsTo(QString componentType)
 {
 	Q_ASSERT(!getComponentByType(componentType).isNull());
-	
-	//QSqlDatabase sessionDb = getSessionDb();
-	////Add the align to type to the session db
-	//QSqlQuery query(sessionDb);
-	//query.prepare("INSERT INTO sessioninfo(key,value)"
-	//	" VALUES (\"AlignToComponent\",:type)");
-	//query.bindValue(":type", componentType);
-	//executeWriteQuery(&query);
 
 	storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ << "AlignToComponent" << componentType);
 	alignToType_ = componentType;
 }
 
 
-//! Returns the next pending directive
+/*! Returns the Directive that should be sent to the Component with the input componentId.
+ *	\details Internally, there is a queue of pending directives.  This function removes the first one from the queue and
+ *	returns it.
+*/
 QString SessionInfo::pendingDirective(QUuid componentID)
 {
 	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
@@ -491,8 +394,7 @@ QString SessionInfo::pendingDirective(QUuid componentID)
 		return pendingDirectives_[componentID].takeFirst();
 }
 
-/*!	\brief Adds the input directive to the pendingDirectives list for the component with the input type
- * If overwriteRedundantDirective is set (default) and the last directive type is the same as the new one, it will be overwritten.
+/*!	\brief Adds the input directive to the pendingDirectives list for the component with the input type.
  */
 void SessionInfo::addPendingDirective(QString directive, QString componentType)
 {
@@ -508,18 +410,13 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType)
  *
  *	Ending a session requires the following actions to be taken
  *	 -	Add an end time in the sessioninfo
- *   -  Send ENDSESSION directive to the Director and Proxy instances
- *	 -	Flush the databse cache after we're sure that the Director instance is done.
- *
+ *	 -  Realign timebases now that the entire Session's worth of data is available.
+ *	 -  Create the various indeces in the Sqlite Session file that will speed up queries now that there is no danger of them
+ *		slowing down data entry.
+ *	 -	Flush all final cached data to the Sqlite file (flushCache()).
  */
 bool SessionInfo::endSession()
 {
-	//QSqlDatabase sessionDb = getSessionDb();
-
-	//QSqlQuery query(sessionDb);
-	//query.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"sessionend\", :time)");
-	//query.bindValue(":time", QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
-	//executeWriteQuery(&query);
 	
 	//Add the end time to the session db
 	storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ <<"sessionend" << QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm"));
@@ -537,21 +434,21 @@ bool SessionInfo::endSession()
 }
 
 
-/*!	\brief Determines if the observer with the passed in ID is authorized to issue commands
+/*!	\brief Determines if the observer with the passed in ID is authorized to issue commands and change the State of the Session.
  *
  *	This is a really simple means of setting permissions on the session.  Effectively there
  *	are two levels of user: authorized, and unauthorized.  This allows us to limit who is 
- *	allowed to do things like issuing TASK and ENDSESSION commands.
+ *	allowed to do things like issuing TASK and ENDSESSION commands and changing Experimental runtime Properties.
  *
  *	The authorized observers list contains all observers who are authorized at the higher 
  *	permission level.  However, there is a special case.  If the list contains a null Uuid,
  *	then all observers (including those using null IDs) are considered to be at the authorized
  *	level.
  *
- *	!!!!  WARNING  !!!!
- *	This is by no means a secure method of assigning permissions.  Since all network communication
+ *	\warning This is by no means a secure method of assigning permissions.  Since all network communication
  *	is unencrypted, it would be trivial to intercept a valid observer ID, and then append it to
- *	spoofed commands.  If you want high security, you'll need to rewrite this from the ground up.
+ *	spoofed commands.  The password is also not encrypted on the Server or Workstation.
+ *	If you want real security, you'll need to rewrite this.
  */
 bool SessionInfo::isAuthorizedObserver(QUuid observerId)
 {
@@ -563,10 +460,9 @@ bool SessionInfo::isAuthorizedObserver(QUuid observerId)
 		return false;
 }
 
-/*! \brief Dumps the cache database into the session database
- *	Adds the input observerId to the list of authorized ids if
+/*! \brief Adds the input observerId to the list of authorized ids if
  *  the correct password is input.
- *	Returns true if the password was correct and the observer is authorized now
+ *	\details Returns true if the password was correct and the observer is authorized now
  */
 bool SessionInfo::addAuthorizedObserver(QUuid observerId, QString password)
 {
@@ -578,17 +474,21 @@ bool SessionInfo::addAuthorizedObserver(QUuid observerId, QString password)
 	return  false;
 }
 
+/*! \brief Returns the password that will give a Workstation access to change things about the Session and be more than a simple viewer.
+*/
 QString SessionInfo::getPassword()
 {
 	return password_;
 }
 
+/*! \brief Marks the time that the latest data was written to this Session by the input source type (ie. "DIRECTOR" or "PROXY").
+*/
 void SessionInfo::markLastDataTime(QString source)
 {
 	dataTimeBySource_[source] = totalSessionTime_.elapsed();
 }
-//Returns whether the last data marked for the input source preceded the
-//beginning of the latest flush.
+/*! \brief Returns whether the last data written from the input source preceded the beginning of the latest flush of RAM data to Disk.
+*/
 bool SessionInfo::lastDataPrecededFlush(QString source)
 {
 	if(!dataTimeBySource_.contains(source))
@@ -600,8 +500,8 @@ bool SessionInfo::lastDataPrecededFlush(QString source)
 	}
 	return false;
 }
-//Returns whether the last data marked for the input source followed the 
-//end of the latest flush
+/*! \brief Returns whether the last data written from the input source followed the end of the latest flush of RAM data to Disk.
+*/
 bool SessionInfo::lastDataFollowedFlush(QString source)
 {
 	if(!dataTimeBySource_.contains(source))
@@ -614,14 +514,26 @@ bool SessionInfo::lastDataFollowedFlush(QString source)
 	return false;
 }
 
-/*! \brief Dumps the cache database into the session database
+/*! \brief Dumps the RAM cached data into the file based Session database
  *
- *	The cache database is memory backed.  This is good for speed, but not so great
- *	for long-term storage (if Picto crashes, we lose the data).   This function 
- *	moves the contents of the cache database to the session database (which is disk-
- *	backed).  This should be done before sending registered command responses so that
- *	components can be sure that when they receive a command response, the data from
- *	that command is permanently stored.  It should also be done before ending a session.
+ *	@param sourceType The type of data source whose data will be written to the disk backed data base.  Options are currently "DIRECTOR", "PROXY"
+ *		or "".  In the case of the empty "" string, data from both the Director and the Proxy will be written to disk.
+ *
+ *	\details We buffer several seconds of data at a time in RAM for the purpose of avoiding the large SQL overhead every time a SQL write query
+ *	is performed.  We then save it to disk to that we won't lose data if Picto crashes.  This function 
+ *	moves the contents of the RAM data to the file based session database.  
+ *
+ *	This works closely with the ProtocolResponse system.  That system tells Picto Components which of their commmands' data has been saved
+ *	to disk (See ProtocolResponse::RegisteredResponseType).  When a long time goes by without a Component hearing that its data has been written
+ *	to disk, it sends it again.  This way, we are sure that a Server can crash and restart without any data being lost in the Session.
+ *	
+ *	\note The table of current Property, etc Values is also written to disk so that we can correctly pick up where we left off if the Server
+ *	crashes and restarts.
+ *
+ *	\note The time at which the flush starts and ends are also carefully marked for use with lastDataPrecededFlush() and lastDataFollowedFlush()
+ *	which are necessary to be sure we tell the Picto components exactly which data has been written to disk in this multi-threaded environment.
+ *
+ *	Returns true on success or false if nothing happened.
  */
 bool SessionInfo::flushCache(QString sourceType)
 {
@@ -678,82 +590,10 @@ bool SessionInfo::flushCache(QString sourceType)
 	lastFlushEndTime_ = totalSessionTime_.elapsed();
 	flushTimingMutex_.unlock();
 	return true;
-
-
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery cacheQuery(cacheDb);
-
-	////Since we are encapsulating all of these operations in a single transaction, we put the whole thing in a mutex.
-	//QMutexLocker locker(databaseWriteMutex_.data());
-	//QTime timer;
-	//timer.start();
-
-	//bool success;
-	//int attempt = 0;
-	//do
-	//{
-	//	//Start transaction
-	//	success = cacheDb.transaction();
-	//	if(!success)
-	//	{
-	//		qDebug("Failed to initiate transaction when flushing cache. Error was: " + cacheDb.lastError().text().toLatin1() + "...Reattempting.");
-	//		continue;
-	//	}
-
-	//	// Loop through all tables.  If this sourceType is responsible for that table, flush its contents to the diskdb and erase cache.
-	//	// In the case of the neural/behavioralalignevents, don't erase unvisited, unmatched alignevents
-	//	foreach(QString table,tables_)
-	//	{
-	//		if(tableDataProviders_.contains(table) && ((sourceType == "") || (tableDataProviders_.value(table)==sourceType)) )
-	//		{
-	//			QString queryString = "INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1";
-	//			executeWriteQuery(&cacheQuery,QString("INSERT INTO diskdb.%1(%2) SELECT %2 FROM %1").arg(table).arg(tableColumns_[table]));
-	//			//The code below was used for a test where we write the SQL commands to a file then create the database afterwards
-	//			//for the purposes of speed.  In this test, speed was increase by a factor of ~8 (ie. 50ms to flush cache as opposed
-	//			//to 400ms). It does not yet work because binary data needs to be written to sql too which doesn't work cleanly in
-	//			//a text file.  
-	//			//executeReadQuery(&cacheQuery,QString("SELECT %2 FROM %1").arg(table).arg(tableColumns_[table]));
-	//			//while(cacheQuery.next())
-	//			//{
-	//			//	QStringList  vals;
-	//			//	for(int i=0;i<tableColumns_[table].split(",",QString::SkipEmptyParts).size();i++)
-	//			//	{
-	//			//		vals.append(cacheQuery.value(i).toString());
-	//			//	}
-	//			//	//Doesn't quite work because of Binary Data.  Think about this.
-	//			//	writeToFile(QString("INSERT INTO %1(%2) VALUES ('%3');").arg(table).arg(tableColumns_[table]).arg(vals.join("','")));;
-	//			//}
-
-	//			if(table != "currentstate")
-	//				executeWriteQuery(&cacheQuery,QString("DELETE FROM %1%2").arg(table).arg(table.contains("ralalignevents")?" WHERE matched<>0":""));
-	//		}
-	//	}
-
-	//	// Store the latest "current table" entries
-	//	cacheQuery.prepare(QString("INSERT INTO diskdb.currentstate (dataid, variableid, time, data) SELECT dataid, variableid, time, data FROM currentstate WHERE time > :last"));
-	//	cacheQuery.bindValue(":last",latestWrittenStateVarTime_);
-	//	executeWriteQuery(&cacheQuery,"",true);
-
-	//	//Our latest written state var time has now caught up with the latest one in memory
-	//	latestWrittenStateVarTime_ = latestStateVarTime_;
-	//	cacheQuery.clear();
-	//	//End Transaction
-	//	success = cacheDb.commit();
-	//	//If Transaction failed, rollback and try again.
-	//	if(!success)
-	//	{
-	//		qDebug("Flush Cache failed for session: " + sessionId().toString().toLatin1() + " on attempt: " 
-	//			+ QString::number(attempt++).toLatin1() + " rolling back transaction and reattempting.");
-	//		cacheDb.rollback();
-	//	}
-	//}while(!success);
-
-	//locker.unlock();	// The transaction is over so we can release this mutex
-	//qDebug("Time to flush cache: " + QString::number(timer.elapsed()).toLatin1() + "ms");
-	//return;
 }
 
-/*! \brief inserts a neural record in the session database
+/*! \brief Inserts a NeuralDataUnit record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
  */
 void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 {
@@ -763,13 +603,6 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 		//Add the lfp data source info to the session database and our dataSourceInfoMap_ map
 		storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ << "DataSource" << srcInfo->toXml());
 		dataSourceInfoMap_["spikes"] = srcInfo;
-
-		//QSqlQuery sessionQ(getSessionDb());
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DataSource\", :value)");
-		//sessionQ.bindValue(":value", srcInfo->toXml());
-		//if(executeWriteQuery(&sessionQ))
-		//	dataSourceInfoMap_["spikes"] = srcInfo;
-		//sessionQ.finish();
 	}
 
 	//! Use the alignment tool to fit the time
@@ -783,41 +616,13 @@ void SessionInfo::insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data)
 																		<< data->getUnit()
 																		<< data->getWaveformAsByteArray());
 	setLatestNeuralData(data->getDataID(),data->toXml(),data->getFittedtime());
-
-
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
-
-	////! Use the alignment tool to fit the time
-	//data->setFittedtime(alignmentTool_->convertToBehavioralTimebase(data->getTimestamp()));
-	//data->setCorrelation(alignmentTool_->getCorrelationCoefficient());
-	////locker.unlock();
-
-	//query.prepare("INSERT INTO spikes (dataid, timestamp, channel, unit, waveform) "
-	//	"VALUES(:dataid, :timestamp, :channel, :unit, :waveform)");
-	//query.bindValue(":dataid", data->getDataID());
-	//query.bindValue(":timestamp", data->getTimestamp());
-	//query.bindValue(":channel", data->getChannel());
-	//query.bindValue(":unit", data->getUnit());
-	//query.bindValue(":waveform", data->getWaveformAsByteArray());
-	//executeWriteQuery(&query,"",false);
-
-	//setLatestNeuralData(data->getDataID(),data->toXml(),data->getFittedtime());
 }
 
-//! \brief inserts a behavioral data point in the cache database
+/*! \brief Inserts a BehavioralDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery cacheQ(cacheDb);
-	////BECAUSE OF THIS LINE, NON "Position" CHANNELS ARE
-	////IGNORED.  WHEN REMOVING THIS LINE, YOU ALSO HAVE TO WRITE
-	////CODE TO RECORD EACH CHANNEL IN A SEPERATE TABLE AND ONLY
-	////WRITE THE "Position" AS A STATE VARIABLE!!!!!!!!!!
-	////qDebug("Received data from chan: " + data->getChannel().toLatin1());
-	////if(data->getChannel() != "Position")
-	////	return;
-
 	//Get this signal channels State Variable ID.
 	//If it doesn't have one yet, add it to the map and store
 	//it in the session database.
@@ -830,18 +635,8 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	{
 		stateVarId = nextSigChanVarId_--;
 
-		////Create the table for this signal channel.
-		//QSqlQuery sessionQ(getSessionDb());
-		//tables_.push_back(tableName);
-		//tableColumns_[tableName] = " dataid,offsettime,sampleperiod,data,frameid ";
-		//tableColumnTypes_[tableName] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ";
-		//tableDataProviders_[tableName] = "DIRECTOR";
-
 		sigChanTypes_[tableName] = FIRST_SIGNAL_CHANNEL_TYPE + sigChanTypes_.size();
 		storedSessionData_->setTableInfo(sigChanTypes_[tableName],tableName," dataid,offsettime,sampleperiod,data,frameid "," INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ");
-
-		//AddTablesToDatabase(&sessionQ);
-		//AddTablesToDatabase(&cacheQ);
 
 		//Add the signal channel info to the session database
 		Picto::SignalChannelInfo sigInfo(	sigChan,
@@ -854,13 +649,6 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		//Add the signal channel info to the session database.
 		storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList()<< ++sessionInfoDataId_ << "Signal" << sigInfo.toXml());
 		sigChanVarIDs_[sigChan] = stateVarId;
-
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Signal\", :value)");
-		//sessionQ.bindValue(":value", sigInfo.toXml());
-		//if(executeWriteQuery(&sessionQ))
-		//	sigChanVarIDs_[sigChan] = stateVarId;
-		//sessionQ.finish();
-
 	}
 
 	if(data->length())
@@ -871,17 +659,6 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 														<< data->getResolution()
 														<< data->getDataAsByteArray()
 														<< data->getActionFrame());
-							
-
-		//cacheQ.prepare(QString("INSERT INTO %1 (dataid, offsettime, sampleperiod, data, frameid)"
-		//	"VALUES(:dataid, :offsettime, :sampleperiod, :data, :frameid)").arg(tableName));
-		////Use the data id of the last unit for the package
-		//cacheQ.bindValue(":dataid", data->getDataIDOfLastUnit());
-		//cacheQ.bindValue(":offsettime",data->getOffsetTime());
-		//cacheQ.bindValue(":sampleperiod",data->getResolution());
-		//cacheQ.bindValue(":data",data->getDataAsByteArray());
-		//cacheQ.bindValue(":frameid",data->getActionFrame());
-		//executeWriteQuery(&cacheQ,"",false);
 
 		//Only write a behavioralDataUnitPackage with the last data unit
 		//
@@ -897,12 +674,11 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	}
 }
 
-//! \brief inserts a behavioral data point in the cache database
+/*! \brief Inserts a PropertyDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery cacheQ(cacheDb);
-
 	QSharedPointer<Picto::PropertyDataUnit> dataPoint;
 	while(data->length() > 0)
 	{
@@ -915,8 +691,6 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 																	<< dataPoint->index_
 																	<< dataPoint->value_
 																	<< dataPoint->getActionFrame());
-			//cacheQ.prepare("INSERT INTO initproperties (dataid, assetid, value, frameid)"
-			//	"VALUES(:dataid, :assetid, :value, :frameid)");
 		}
 		else
 		{
@@ -926,22 +700,16 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 																	<< dataPoint->index_
 																	<< dataPoint->value_
 																	<< dataPoint->getActionFrame());
-			//cacheQ.prepare("INSERT INTO properties (dataid, assetid, value, frameid)"
-			//	"VALUES(:dataid, :assetid, :value, :frameid)");
 		}
-		//cacheQ.bindValue(":dataid", dataPoint->getDataID());
-		//cacheQ.bindValue(":assetid", dataPoint->index_);
-		//cacheQ.bindValue(":value",dataPoint->value_);
-		//cacheQ.bindValue(":frameid",dataPoint->getActionFrame());	
-		//executeWriteQuery(&cacheQ,"",false);
+
 	}
 }
 
-//! \brief inserts an alignment data point in the database and attempts latest alignment
+/*! \brief Adds an AlignmentDataUnit data point to the appropriate SessionData object attempts alignment with the
+ *	latest data using alignTimeBases().
+*/
 void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
 	// If the alignevent comes with an alignNumber, it must be from the component providing the time baseline, 
 	// put it in behavioralignevents and don't align its timestamps.
 	if(data->hasAlignNumber())
@@ -952,13 +720,6 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> d
 															<< data->getAlignCode()
 															<< data->getAlignNumber()
 															<< 0);
-		//query.prepare("INSERT INTO behavioralalignevents (dataid,timestamp,aligncode,aligneventnumber,matched)"
-		//	"VALUES(:dataid, :timestamp, :aligncode, :aligneventnumber, 0)");
-		//query.bindValue(":dataid", data->getDataID());
-		//query.bindValue(":timestamp", data->getTimestamp());
-		//query.bindValue(":aligncode", data->getAlignCode());
-		//query.bindValue(":aligneventnumber", data->getAlignNumber());
-		//executeWriteQuery(&query,"",false);
 		return;
 	}
 	//If we got here, its not coming from the component providing the time baseline.
@@ -968,22 +729,17 @@ void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> d
 															<< data->getTimestamp()
 															<< data->getAlignCode()
 															<< 0);
-	//query.prepare("INSERT OR IGNORE INTO neuralalignevents (dataid, timestamp, aligncode, matched)"
-	//	"VALUES(:dataid, :timestamp, :aligncode, 0)");
-	//query.bindValue(":dataid", data->getDataID());
-	//query.bindValue(":timestamp", data->getTimestamp());
-	//query.bindValue(":aligncode", data->getAlignCode());
-	//executeWriteQuery(&query,"",false);	
 
 	// Check if this session requires alignment.  If so, do it.
 	if(alignToType_ != "")
 		alignTimeBases();
 }
 
-//! \brief inserts an LFP data point in the cache database
+/*! \brief Inserts a LFPDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
 	//Get Fitted Times
 	//QStringList timestamps = data->getTimes().split(" ",QString::SkipEmptyParts);
 	double neuralTimestamp = data->getTimestamp().toDouble();
@@ -995,12 +751,6 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 		//Add the lfp data source info to the session database and our dataSourceInfoMap_ map
 		storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ << "DataSource" << srcInfo->toXml());
 		dataSourceInfoMap_["lfp"] = srcInfo;
-		//QSqlQuery sessionQ(getSessionDb());
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DataSource\", :value)");
-		//sessionQ.bindValue(":value", srcInfo->toXml());
-		//if(executeWriteQuery(&sessionQ))
-		//	dataSourceInfoMap_["lfp"] = srcInfo;
-		//sessionQ.finish();
 	}
 
 	//double correlation = alignmentTool_->getCorrelationCoefficient();
@@ -1014,31 +764,15 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 
 	//Now that the tables are ready.  Do the insertion.
 	cachedProxySessionData_->insertData(LFP_TYPE,dataID,QVariantList() << dataID << neuralTimestamp << channel << data->getPotentialsAsByteArray());
-
-	//QSqlQuery query(cacheDb);
-	//query.prepare("INSERT INTO lfp "
-	//	"(dataid,timestamp,channel,data) VALUES (:dataid,:timestamp,:channel,:data)");
-
-	//query.bindValue(":dataid",dataID);
-	//query.bindValue(":timestamp",neuralTimestamp);
-	//query.bindValue(":channel",channel);
-	//query.bindValue(":data",data->getPotentialsAsByteArray());
-
-	//executeWriteQuery(&query);
-	//query.finish();
 	
 	setLatestNeuralData(data->getDataID(),data->toXml(),fittedTimestamp);
 }
 
-//! \brief inserts a state change record in the session database
+/*! \brief Inserts a StateDataUnitPackage (Transition traversal) record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data)
 {
-
-
-
-
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
 
 	QSharedPointer<Picto::StateDataUnit> dataPoint;
 	while(data->length() > 0)
@@ -1050,37 +784,12 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 																			<< dataPoint->getDataID()
 																			<< dataPoint->getTransitionID()
 																			<< dataPoint->getActionFrame());
-		//query.prepare("INSERT INTO transitions "
-		//"(dataid, transid, frameid) "
-		//"VALUES(:dataid, :transid, :frameid) ");
-		//query.bindValue(":dataid", dataPoint->getDataID());
-		//query.bindValue(":transid", dataPoint->getTransitionID());
-		//query.bindValue(":frameid",dataPoint->getActionFrame());
-		//executeWriteQuery(&query,"",false);	
-	}
-
-
-
-
-
-
-	//setStateVariable(data->getDataID(),TRANSITION_STATE_VAR_ID,data->getTime(),data->toXml());
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
-
-	//query.prepare("INSERT INTO transitions "
-	//	"(dataid, transid, machinepath, source, sourceresult, destination, time) "
-	//	"VALUES(:dataid, :transid, :machinepath, :source, :sourceresult, :destination, :time) ");
-	//query.bindValue(":dataid", data->getDataID());
-	//query.bindValue(":transid", data->getTransitionID());
-	//query.bindValue(":machinepath", data->getMachinePath());
-	//query.bindValue(":source", data->getSource()); 
-	//query.bindValue(":sourceresult",data->getSourceResult());
-	//query.bindValue(":destination",data->getDestination());
-	//query.bindValue(":time",data->getTime());
-	//executeWriteQuery(&query,"",false);	
+	}	
 }
 
+/*! \brief Inserts a TaskRunDataUnit record into the appropriate SessionData objects.  Also takes care of adding an end time
+ *	to an already existing TaskRunDataUnit record if the Task Run has ended.
+ */
 void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 {
 	QMutexLocker locker(&sessionDataMutex_);
@@ -1097,20 +806,9 @@ void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 										<< data->startFrame_
 										<< data->endFrame_
 										<< false);	//saved
-		//query.prepare("INSERT INTO runs(runid,name,notes,firstframe,lastframe,saved)"
-		//	" VALUES (:runid,:name,:notes,:firstframe,:lastframe,:saved)");
-		//query.bindValue(":runid", data->getDataID());
-		//query.bindValue(":name",data->name_);
-		//query.bindValue(":notes",data->notes_);
-		//query.bindValue(":firstframe", data->startFrame_);
-		//query.bindValue(":lastframe", data->endFrame_);
-		//query.bindValue(":saved", false);
 	}
 	else
 	{	//This is the end of the run, just update the endFrame column
-		//query.prepare("UPDATE runs SET lastframe=:lastframe WHERE runid=:runid");
-		//query.bindValue(":lastframe", data->endFrame_);
-		//query.bindValue(":runid", data->getDataID());
 		QSharedPointer<Picto::TaskRunDataUnit> run = currSessionDataPack_->getTaskRunByRunId(data->getDataID());
 		if(run)
 		{
@@ -1124,9 +822,10 @@ void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 										<< run->saved_);	//saved
 		}
 	}
-	//executeWriteQuery(&query);
 }
 
+/*! \brief Modifies an existing TaskRunDataUnit database entry.  This is used by the Workstation to change the Run name, notes, or saved value.
+*/
 void SessionInfo::modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 {
 	QMutexLocker locker(&sessionDataMutex_);
@@ -1145,21 +844,11 @@ void SessionInfo::modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 										<< run->endFrame_
 										<< run->saved_);	//saved
 	}
-
-	//QSqlDatabase sessionDb = getSessionDb();
-	////Add the component to the session db
-	//QSqlQuery query(sessionDb);
-
-	//query.prepare("UPDATE runs SET name=:name,notes=:notes,saved=:saved WHERE runid=:runid");
-	//query.bindValue(":name",data->name_);
-	//query.bindValue(":notes",data->notes_);
-	//query.bindValue(":saved", data->saved_);
-	//query.bindValue(":runid", data->getDataID());
-
-	//executeWriteQuery(&query);
 }
 
-//! \brief Inserts the passed in frame data into the cache database
+/*! \brief Inserts a FrameDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data)
 {
 	//QSqlDatabase cacheDb = getCacheDb();
@@ -1171,11 +860,6 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 		hadData = true;
 		framedata = data->takeFirstDataPoint();
 		cachedDirectorSessionData_->insertData(FRAMES_TYPE,framedata->getDataID(),QVariantList()<<framedata->getDataID()<<framedata->time);
-		//cacheQ.prepare("INSERT INTO frames (dataid, time)"
-		//	"VALUES(:dataid, :time)");
-		//cacheQ.bindValue(":dataid", framedata->getDataID());
-		//cacheQ.bindValue(":time",framedata->time);
-		//executeWriteQuery(&cacheQ,"",false);	
 	}
 	//Currently we require that frame data be sent to the server as soon as all 
 	//data that was valid for that frame has been sent and before any other data arrives.
@@ -1184,12 +868,14 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	//state
 	if(hadData)
 	{	
-		//QMutexLocker locker(databaseWriteMutex_.data());
 		setStateVariable(framedata->getDataID(),FRAME_STATE_VAR_ID,framedata->toXml());
 		updateCurrentStateTable(framedata->time);
 	}
 }
 
+/*! \brief Inserts a RewardDataUnit record into the CachedSessionData and the record of the current Session state.  
+ *	The CachedSessionData will later be flushed to disk in flushCache().
+ */
 void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 {
 	//QSqlDatabase cacheDb = getCacheDb();
@@ -1200,13 +886,6 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 														<< data->getChannel()
 														<< data->getTime());
 
-	//query.prepare("INSERT INTO rewards (dataid, duration, channel, time) "
-	//	"VALUES (:dataid, :duration, :channel, :time)");
-	//query.bindValue(":dataid", data->getDataID());
-	//query.bindValue(":duration",data->getDuration());
-	//query.bindValue(":channel", data->getChannel());
-	//query.bindValue(":time",data->getTime());
-	//executeWriteQuery(&query,"",false);
 	setStateVariable(data->getDataID(),REWARD_STATE_VAR_ID,data->toXml());
 	
 	QSharedPointer<ComponentInfo> sourceComponent = getComponentByType("DIRECTOR");
@@ -1218,37 +897,29 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 	}
 }
 
-//We use a single table to track the latest state of all variables pertinant to running
-//a picto workstation.  Using this table, we can assure requests for the latest picto
-//state will have constant runtime independant of the previous runtime of the current
-//experiment.  New variable values always update existing values with the same id if 
-//their timestamp is greater than that of their predecessor.  Calling selectStateVariables
-//will return a string that can be sent to a workstation.  This string contains all of the
-//stateVariables that have changed after (not including) the input time.  The format of 
-//the returned variables is just the serialization that the director used when sending
-//them to the server.
+/*! \brief Returns a serialized version of all State Variables that have changed since the input time.
+ *	\details We use a single table to track the latest state of all variables pertinant to running
+ *	a picto workstation.  Using this table, we can assure requests for the latest picto
+ *	state will have constant runtime independant of the previous runtime of the current
+ *	experiment.  New variable values always update existing values with the same id if 
+ *	their timestamp is greater than that of their predecessor.  Calling selectStateVariables
+ *	will return a string that can be sent to a workstation.  This string contains all of the
+ *	stateVariables that have changed after (not including) the input time.  The format of 
+ *	the returned variables is just the serialization that the director used when sending
+ *	them to the server.
+ */
 QString SessionInfo::selectStateVariables(QString fromTime)
 {
 	QString result;
-	//if(!databaseWriteMutex_->tryLock())
-	//	return result;
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
-	//query.prepare("SELECT data FROM currentstate WHERE time > :time");
-	//query.bindValue(":time",fromTime);
-	//executeReadQuery(&query,"",true);
-	//while(query.next())
-	//{
-	//	result.append(query.value(0).toString());
-	//}
-	//query.finish();
-	//databaseWriteMutex_->unlock();
 	SerialSessionData serialSessionData;
 	currentSessionData_->copyDataTo(&serialSessionData,fromTime);
 	result = serialSessionData.takeSerializedData();
 	return result;
 }
 
+/*! \brief Returns a serialized version of all Neural data since the input time.
+ *	\sa selectStateVariables()
+ */
 QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 {
 	QString result;
@@ -1276,6 +947,10 @@ QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 	return result;
 }
 
+/*! \brief Returns the latest SessionDataPackage for this Session in XML serial form.
+ *	\details The SessionDataPackage includes data about all Task Runs that have occured 
+ *	in this Session.
+ */
 QString SessionInfo::selectSessionDataPackage()
 {
 	QString result;
@@ -1286,6 +961,8 @@ QString SessionInfo::selectSessionDataPackage()
 	return result;
 }
 
+/*! \brief Initializes all SessionInfo member variables for a new SessionInfo object.
+*/
 void SessionInfo::InitializeVariables()
 {
 	databaseWriteMutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
@@ -1317,100 +994,15 @@ void SessionInfo::InitializeVariables()
 	latestBehavioralTimestamp_ = 0;
 	currSessionDataPack_ = QSharedPointer<Picto::SessionDataPackage>(new Picto::SessionDataPackage());
 
-	////Define database
-	//tables_.push_back("sessioninfo");
-	//tableColumns_["sessioninfo"] = " key,value ";
-	//tableColumnTypes_["sessioninfo"] = " TEXT,TEXT ";
-
-	//tables_.push_back("componentinfo");
-	//tableColumns_["componentinfo"] = " componentid,address,name,type,active ";
-	//tableColumnTypes_["componentinfo"] = " TEXT,TEXT,TEXT,TEXT,INTEGER ";
-
-	//tables_.push_back("runs");
-	//tableColumns_["runs"] = " runid,name,notes,firstframe,lastframe,saved ";
-	//tableColumnTypes_["runs"] = " INTEGER UNIQUE ON CONFLICT REPLACE,TEXT,TEXT,INTEGER,INTEGER,INTEGER ";
-
-	//tables_.push_back("spikes");
-	//tableColumns_["spikes"] = " dataid,timestamp,channel,unit,waveform ";
-	//tableColumnTypes_["spikes"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER,INTEGER,BLOB ";
-	//tableDataProviders_["spikes"] = "PROXY";
-
-	//tables_.push_back("neuralalignevents");
-	//tableColumns_["neuralalignevents"] = " dataid,timestamp,aligncode,matched ";
-	//tableColumnTypes_["neuralalignevents"] = " INTEGER UNIQUE ON CONFLICT REPLACE,REAL,INTEGER,INTEGER ";
-	//tableDataProviders_["neuralalignevents"] = "PROXY";
-
-	//tables_.push_back("lfp");
-	//tableColumns_["lfp"] = " dataid,timestamp,channel,data ";
-	//tableColumnTypes_["lfp"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,INTEGER,BLOB ";
-	//tableDataProviders_["lfp"] = "PROXY";
-	//
-	//tables_.push_back("behavioralalignevents");
-	//tableColumns_["behavioralalignevents"] = " dataid,timestamp,aligncode,aligneventnumber,matched ";
-	//tableColumnTypes_["behavioralalignevents"] = " INTEGER UNIQUE ON CONFLICT REPLACE,REAL,INTEGER,INTEGER,INTEGER ";
-	//tableDataProviders_["behavioralalignevents"] = "DIRECTOR";
-
-	//tables_.push_back("alignevents");
-	//tableColumns_["alignevents"] = " aligneventnumber,aligncode,neuraltime,behavioraltime,jitter,correlation ";
-	//tableColumnTypes_["alignevents"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,REAL,REAL,REAL,REAL ";
-	//tableDataProviders_["alignevents"] = "DIRECTOR";
-
-	//tables_.push_back("transitions");
-	//tableColumns_["transitions"] = " dataid,transid,frameid ";
-	//tableColumnTypes_["transitions"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER";
-	//tableDataProviders_["transitions"] = "DIRECTOR";
-	//tableIndexedColumns_["transitions"] = " transid,frameid ";
-
-	//tables_.push_back("transitionlookup");
-	//tableColumns_["transitionlookup"] = " assetid,parent,source,sourceresult,destination ";
-	//tableColumnTypes_["transitionlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,TEXT,TEXT ";
-	//tableIndexedColumns_["transitionlookup"] = " parent,source,sourceresult,destination ";
-
-	//tables_.push_back("properties");
-	//tableColumns_["properties"] = " dataid,assetid,value,frameid ";
-	//tableColumnTypes_["properties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
-	//tableDataProviders_["properties"] = "DIRECTOR";
-	//tableIndexedColumns_["properties"] = " assetid,frameid ";
-
-	//tables_.push_back("initproperties");
-	//tableColumns_["initproperties"] = " dataid,assetid,value,frameid ";
-	//tableColumnTypes_["initproperties"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,TEXT,INTEGER ";
-	//tableDataProviders_["initproperties"] = "DIRECTOR";
-	//tableIndexedColumns_["initproperties"] = " assetid,frameid ";
-
-	//tables_.push_back("propertylookup");
-	//tableColumns_["propertylookup"] = " assetid,name,parent ";
-	//tableColumnTypes_["propertylookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT,INTEGER ";
-	//tableIndexedColumns_["propertylookup"] = " name,parent ";
-
-	//tables_.push_back("elementlookup");
-	//tableColumns_["elementlookup"] = " assetid,path ";
-	//tableColumnTypes_["elementlookup"] = " INTEGER UNIQUE ON CONFLICT IGNORE,TEXT ";
-	//tableIndexedColumns_["elementlookup"] = " path ";
-
-	//tables_.push_back("frames");
-	//tableColumns_["frames"] = " dataid,time ";
-	//tableColumnTypes_["frames"] = " INTEGER UNIQUE ON CONFLICT IGNORE,REAL ";
-	//tableDataProviders_["frames"] = "DIRECTOR";
-
-	//tables_.push_back("rewards");
-	//tableColumns_["rewards"] = " dataid,duration,channel,time ";
-	//tableColumnTypes_["rewards"] = " INTEGER UNIQUE ON CONFLICT IGNORE,INTEGER,INTEGER,REAL ";
-	//tableDataProviders_["rewards"] = "DIRECTOR";
-
-	////This tables is used internally by the session and accessed by workstations to get
-	////the latest experimental state.
-	////A sql INSERT query is constantly built up with the latest state info.  Whenever a frame input is
-	////received, the query gets performed creating contains a valid state that
-	////was in place at the time that frame was presented.
-	//tables_.push_back("currentstate");
-	//tableColumns_["currentstate"] = " dataid,variableid,time,data ";
-	//tableColumnTypes_["currentstate"] = " INTEGER,INTEGER UNIQUE ON CONFLICT REPLACE,REAL,TEXT ";
-
 	//create alignment tool
 	alignToType_ = "";
 	alignmentTool_ = QSharedPointer<AlignmentTool>(new AlignmentTool());
 }
+
+/*! \brief Creates all SessionData object necessary for storing Session data in this SessionInfo object.
+ *	\details The name of this function is historical and should probably be changed to something more
+ *	suitable.  Alternatively, this can all just be moved to InitializeVariables().
+ */
 void SessionInfo::LoadBaseSessionDatabase(QString path, QString databaseName)
 {
 	storedSessionData_ = QSharedPointer<StoredSessionData>(new StoredSessionData(path,databaseName));
@@ -1420,17 +1012,16 @@ void SessionInfo::LoadBaseSessionDatabase(QString path, QString databaseName)
 	neuralAlignSessionData_ = QSharedPointer<AlignSessionData>(new AlignSessionData(NEURAL_ALIGN_EVENTS_TYPE,NEURAL_MATCHED_COLUMN));
 	currentSessionData_ = QSharedPointer<CurrentSessionData>(new CurrentSessionData(CURRENT_STATE_TYPE));
 	baseSessionDbFilepath_ = path + "/" + databaseName;
-	//baseSessionDbConnection_ = QSqlDatabase::addDatabase("QSQLITE",databaseName);
-	//openDatabaseConnections_.append(databaseName);
-	//baseSessionDbFilepath_ = path + "/" + databaseName;
-	//baseSessionDbConnection_.setDatabaseName(baseSessionDbFilepath_);
-	//baseSessionDbConnection_.open();
 }
+
+/*! \brief Sets up the SessionData objects created in LoadBaseSessionDatabase().  In the case where this is
+ *	a previously timed out Session, data in the existing Sqlite database needed to initialize this SessionInfo
+ *	object is loaded into it.
+ */
 void SessionInfo::SetupBaseSessionDatabase()
 {
-	//Q_ASSERT(baseSessionDbConnection_.isOpen());
-	//QSqlQuery sessionQ(baseSessionDbConnection_);
-
+	//This was here when we used to handle all the SQL stuff directly in this file.  I have left
+	//it here for reference.
 	////Set the synchronous setting: 
 	////FULL is fully protected from application crash and system failure - This is the Sqlite default
 	////NORMAL is fully protected from application crash and most system failure case won't corrupt
@@ -1487,53 +1078,32 @@ void SessionInfo::SetupBaseSessionDatabase()
 	QList<QVariantList> currPropLookup = storedSessionData_->peekData(PROPERTY_LOOKUP_TYPE);
 	QList<QVariantList> currElemLookup = storedSessionData_->peekData(ELEMENT_LOOKUP_TYPE);
 
-	//AddTablesToDatabase(&sessionQ);
-
 	QSharedPointer<Picto::DesignConfig> designConfig;
 	QSharedPointer<CachedSessionData> tempCachedSessionData(new CachedSessionData());
 	if(currSessionInfo.isEmpty())
 	{
 		//Add the Database Version
 		tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "DatabaseVersion" << databaseVersion_);
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DatabaseVersion\", :databaseversion)");
-		//sessionQ.bindValue(":databaseversion",databaseVersion_);
-		//executeWriteQuery(&sessionQ);
 		
 		//Add the current time
 		timeCreated_ = QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm");
 		tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "sessionstart" << timeCreated_);
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"sessionstart\", :time)");
-		//timeCreated_ = QDateTime::currentDateTime().toString("MM/dd/yyyy hh:mm");
-		//sessionQ.bindValue(":time", timeCreated_);
-		//executeWriteQuery(&sessionQ);
 
 		//Add the session ID
 		tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "SessionID" << uuid_.toString());
 		storedSessionData_->setSessionId(uuid_);
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"SessionID\", :id)");
-		//sessionQ.bindValue(":id", uuid_.toString());
-		//executeWriteQuery(&sessionQ);
 
 		//Add the password
 		tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "Password" << password_);
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"Password\", :password)");
-		//sessionQ.bindValue(":password", password_);
-		//executeWriteQuery(&sessionQ);
 
 		//Add authorized observers
 		foreach(QUuid observer, authorizedObservers_)
 		{
 			tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "AuthObserverID" << observer.toString());
-			//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AuthObserverID\", :id)");
-			//sessionQ.bindValue(":id", observer.toString());
-			//executeWriteQuery(&sessionQ);
 		}
 
 		//Add the DesignXML
 		tempCachedSessionData->insertData(SESSION_INFO_TYPE,++sessionInfoDataId_,QVariantList() << sessionInfoDataId_ << "DesignXML" << QString(designXml_));
-		//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"DesignXML\", :xml)");
-		//sessionQ.bindValue(":xml", QString(designXml_));
-		//executeWriteQuery(&sessionQ);
 	}
 
 	//Create Experiment Lookup tables
@@ -1557,171 +1127,65 @@ void SessionInfo::SetupBaseSessionDatabase()
 		if(currElemLookup.isEmpty())
 			elemInfo = designConfig->getElementInfo();
 
-		//bool success;
-		//do
-		//{
-			////Start transaction
-			//success = baseSessionDbConnection_.transaction();
-			//if(!success)
-			//{
-			//	qDebug("Failed to initiate transaction when writing lookup tables. Error was: " + sessionQ.lastError().text().toLatin1() + "...Reattempting.");
-			//	continue;
-			//}
-			foreach(Picto::TransInfo infounit, transInfo)
-			{
-				tempCachedSessionData->insertData(TRANSITION_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.parent << infounit.source << infounit.result << infounit.dest);
-				//sessionQ.prepare("INSERT INTO transitionlookup(assetid,parent,source,sourceresult,destination) VALUES (:assetid,:parent,:source,:sourceresult,:destination) ");
-				//sessionQ.bindValue(":assetid",infounit.id);
-				//sessionQ.bindValue(":parent",infounit.parent);
-				//sessionQ.bindValue(":source",infounit.source);
-				//sessionQ.bindValue(":sourceresult",infounit.result);
-				//sessionQ.bindValue(":destination",infounit.dest);
-				//executeWriteQuery(&sessionQ,"",true);
-			}
-			foreach(Picto::PropInfo infounit, propInfo)
-			{
-				tempCachedSessionData->insertData(PROPERTY_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.name << infounit.parent );
-				//sessionQ.prepare("INSERT INTO propertylookup(assetid,name,parent) VALUES (:assetid,:name,:parent) ");
-				//sessionQ.bindValue(":assetid",infounit.id);
-				//sessionQ.bindValue(":name",infounit.name);
-				//sessionQ.bindValue(":parent",infounit.parent);
-				//executeWriteQuery(&sessionQ,"",true);
-			}
-			foreach(Picto::AssetInfo infounit, elemInfo)
-			{
-				tempCachedSessionData->insertData(ELEMENT_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.path);
-				//sessionQ.prepare("INSERT INTO elementlookup(assetid,path) VALUES (:assetid,:path) ");
-				//sessionQ.bindValue(":assetid",infounit.id);
-				//sessionQ.bindValue(":path",infounit.path);
-				//executeWriteQuery(&sessionQ,"",true);
-			}
-			//sessionQ.clear();
-			////End Transaction
-			//success = baseSessionDbConnection_.commit();
-		//	//If Transaction failed, rollback and try again.
-		//	if(!success)
-		//	{
-		//		qDebug("writing lookup tables failed for session: " + sessionId().toString().toLatin1() + " rolling back transaction and reattempting.");
-		//		baseSessionDbConnection_.rollback();
-		//	}
-		//}while(!success);
+		foreach(Picto::TransInfo infounit, transInfo)
+		{
+			tempCachedSessionData->insertData(TRANSITION_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.parent << infounit.source << infounit.result << infounit.dest);
+		}
+		foreach(Picto::PropInfo infounit, propInfo)
+		{
+			tempCachedSessionData->insertData(PROPERTY_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.name << infounit.parent );
+		}
+		foreach(Picto::AssetInfo infounit, elemInfo)
+		{
+			tempCachedSessionData->insertData(ELEMENT_LOOKUP_TYPE,++sessionInfoDataId_,QVariantList() << infounit.id << infounit.path);
+		}
 	}
 	
 	//Now that everything has been written to the tempCachedSessionData object.  Move it all to the StoredSessionData object in one
 	//big transaction
 	tempCachedSessionData->moveDataTo(storedSessionData_.data());
 }
+
+/*! \brief No longer does anything and should be deleted.*/
 void SessionInfo::CreateCacheDatabase(QString databaseName)
 {
-	////Create the cacheDB
-	//QString cacheDatabaseName = databaseName+"_cache";
-	//cacheDb_ = QSqlDatabase::addDatabase("QSQLITE",cacheDatabaseName);
-	//openDatabaseConnections_.append(cacheDatabaseName);
-	//cacheDb_.setDatabaseName(":memory:");
-	////baseCacheDbConnection_.setDatabaseName(QCoreApplication::applicationDirPath() + "/" + cacheDatabaseName + ".sqlite");
-	//bool success = cacheDb_.open();
-	//Q_ASSERT_X(success,"SessionInfo::CreateCacheDatabse","Error: Cache Database failed to open.");
-	//QSqlQuery cacheQ(cacheDb_);
-
-	////If a NeuralAlignEvent or BehavioralAlignEvent is reinserted it means that the data was resent.  For this reason, in the cache table, we use ON CONFLICT IGNORE for dataid
-	//tableColumnTypes_["neuralalignevents"].replace("INTEGER UNIQUE ON CONFLICT REPLACE","INTEGER UNIQUE ON CONFLICT IGNORE");
-	//tableColumnTypes_["behavioralalignevents"].replace("INTEGER UNIQUE ON CONFLICT REPLACE","INTEGER UNIQUE ON CONFLICT IGNORE");
-	//AddTablesToDatabase(&cacheQ);
-	////Restore original data type definitions
-	//tableColumnTypes_["neuralalignevents"].replace("INTEGER UNIQUE ON CONFLICT IGNORE","INTEGER UNIQUE ON CONFLICT REPLACE");
-	//tableColumnTypes_["behavioralalignevents"].replace("INTEGER UNIQUE ON CONFLICT IGNORE","INTEGER UNIQUE ON CONFLICT REPLACE");
-
-	//// Attach the disk backed database to the database connection so that we can easily access both from the same query.
-	//cacheQ.prepare("ATTACH DATABASE :databaseName AS diskdb");
-	//cacheQ.bindValue(":databaseName", baseSessionDbConnection_.databaseName());
-	//executeWriteQuery(&cacheQ);
 }
 
+/*! \brief No longer does anything and should be deleted.*/
 void SessionInfo::AddTablesToDatabase(QSqlQuery* /*query*/)
 {
-	//This is now in StoredSessionData in setTableInfo
-	//foreach(QString table, tables_)
-	//{
-	//	QStringList tableColumns = tableColumns_[table].split(",");
-	//	QStringList tableColumnTypes = tableColumnTypes_[table].split(",");
-	//	QString columnDefString;
-	//	int colLength = tableColumns.size();
-	//	int typeLength = tableColumnTypes.size();
-	//	for(int i=0;(i<colLength || i<typeLength);i++)
-	//	{
-	//		columnDefString.append(QString(",") + ((i<colLength)?tableColumns[i]:"") + " " + ((i<colLength)?tableColumnTypes[i]:"")); 
-	//	}
-	//	if(tableColumnConstraints_.contains(table))
-	//		columnDefString.append(QString(",") + tableColumnConstraints_[table]);
-	//	QString createTableString = "CREATE TABLE IF NOT EXISTS "+table+" (id  INTEGER PRIMARY KEY"+columnDefString+");";
-	//	
-	//	executeWriteQuery(query,createTableString);
-	//}
 }
 
-///*! \brief Adds optional debuggion to read query executions.  
-// *	The caller should lock the databaseWriteMutex before calling this function, then finish() the query and unlock
-// *	the mutex when done so as to avoid causing problems with commit() calls.  
-// *	( See http://doc.qt.nokia.com/latest/qsqldatabase.html#commit )
-// */
-//bool SessionInfo::executeReadQuery(QSqlQuery* query, QString optionalString, bool debug)
-//{
-//	bool success;
-//	if(optionalString != "")
-//		success = query->exec(optionalString);
-//	else
-//		success = query->exec();
-//	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toLatin1());
-//	return success;
-//}
-
-////! \brief Executes a Sql write query, making it threadsafe by locking a mutex during query use and including debug assertion
-//bool SessionInfo::executeWriteQuery(QSqlQuery* query, QString optionalString,bool lock,bool debug)
-//{
-//	if(lock)
-//		databaseWriteMutex_->lock();
-//	bool success;
-//	if(optionalString != "")
-//		success = query->exec(optionalString);
-//	else
-//		success = query->exec();
-//	query->finish();
-//	if(lock)
-//		databaseWriteMutex_->unlock();
-//	if(debug && !success)
-//	{
-//		int debugInt = 0;
-//		debugInt++;
-//	}
-//	Q_ASSERT_X(!debug || success,"SessionInfo::executeWriteQuery","Error: "+query->lastError().text().toLatin1());
-//	return success;
-//}
-
-//bool SessionInfo::writeToFile(QString line)
-//{
-//	databaseWriteMutex_->lock();
-//	file_.write((line+"\n").toLatin1());
-//	databaseWriteMutex_->unlock();
-//	return true;
-//}
+/*! \brief Should be used with SessionData values of BEHAVIORAL_ALIGN_EVENTS_TYPE.  Returns
+ *	true if the event represented by vList1 happened before the event represented by vList2.
+ */
 bool behavAlignLessThan(const QVariantList& vList1, const QVariantList& vList2)
 {
 	return vList1[BEHAV_TIMESTAMP_COLUMN].toDouble() < vList2[BEHAV_TIMESTAMP_COLUMN].toDouble();
 }
 
+/*! \brief Should be used with SessionData values of NEURAL_ALIGN_EVENTS_TYPE.  Returns
+ *	true if the event represented by vList1 happened before the event represented by vList2.
+ */
 bool neuralAlignLessThan(const QVariantList& vList1, const QVariantList& vList2)
 {
 	return vList1[NEURAL_TIMESTAMP_COLUMN].toDouble() < vList2[NEURAL_TIMESTAMP_COLUMN].toDouble();
 }
 
+/*! \brief Runs the alignment algorithm to calculate the offset and linear coefficient that aligns
+ *	the "PROXY" and "DIRECTOR" timestreams.
+ *	\details Whenever this function is called, it checks which behavioral and neural alignment events
+ *	have not yet been matched, then goes through and attempts to make the match.  When a match is 
+ *	found, AlignmentTool::updateCoefficients() is used to improven the precision of the alignment parameters
+ *	using a least squares algorithm.
+ *
+ *	When realignAll is set to true, all alignment events from the entire session are rematched and the
+ *	least squares timestamp alignment parameters are recalculated.  This takes care of possible losses in
+ *	precision that may arise if there is a connection problem and some alignment events arrive out of order
+ *	during the Session.
+ */
 void SessionInfo::alignTimeBases(bool realignAll)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery query(cacheDb);
-	//QSqlQuery updateNeuralQuery(cacheDb);
-	//QSqlQuery updateBehavioralQuery(cacheDb);
-	//QSqlQuery insertAlignEventQuery(cacheDb);
-	//QMutexLocker locker(databaseWriteMutex_.data());
 	if(realignAll)
 	{
 		// Make sure that everything is written to file
@@ -1753,21 +1217,6 @@ void SessionInfo::alignTimeBases(bool realignAll)
 
 		//Reset alignment tool coefficients to initial conditions
 		alignmentTool_->resetValues();
-
-
-		//// Move everything back into the cache, set it all as unmatched, and delete all previous alignevents
-		//flushCache();
-		//executeWriteQuery(&query,"INSERT INTO neuralalignevents(dataid,timestamp,aligncode,matched) "
-		//"SELECT diskdb.neuralalignevents.dataid,diskdb.neuralalignevents.timestamp,diskdb.neuralalignevents.aligncode,diskdb.neuralalignevents.matched FROM diskdb.neuralalignevents");
-		//executeWriteQuery(&query,"INSERT INTO behavioralalignevents(dataid,timestamp,aligncode,aligneventnumber,matched) "
-		//"SELECT diskdb.behavioralalignevents.dataid,diskdb.behavioralalignevents.timestamp,diskdb.behavioralalignevents.aligncode,diskdb.behavioralalignevents.aligneventnumber,diskdb.behavioralalignevents.matched FROM diskdb.behavioralalignevents");
-		//executeWriteQuery(&query,"UPDATE behavioralalignevents SET matched=0");
-		//executeWriteQuery(&query,"UPDATE neuralalignevents SET matched=0");
-		//executeWriteQuery(&query,"DELETE FROM alignevents");
-		//executeWriteQuery(&query,"DELETE FROM diskdb.alignevents");
-		//latestBehavioralTimestamp_ = 0;
-		//latestNeuralTimestamp_ = 0;
-		//alignmentTool_->resetValues();
 	}
 
 	//Get behavioral and neural align events
@@ -1911,116 +1360,27 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	//Put all updated values into database
 	if(realignAll)
 		flushCache();
-
-	//OLD VERSION WITH SQL IN SESSIONINFO FILE
-	//// We ignore any align codes that are sent out of order.  Set them all to ignored.
-	//query.prepare("UPDATE neuralalignevents SET matched = -1 WHERE timestamp < :time AND matched <> 1");
-	//query.bindValue(":time",latestNeuralTimestamp_);
-	//executeWriteQuery(&query);
-	//query.prepare("UPDATE behavioralalignevents SET matched = -1 WHERE timestamp < :time AND matched <> 1");
-	//query.bindValue(":time",latestBehavioralTimestamp_);
-	//executeWriteQuery(&query);
-
-	//// Find all the places where the aligncodes match on the lists, order by behavioral, then neural timestamp.
-	////Note: We compare the behavioral align event to only the bottom 7 digits of the neural align event.  This way
-	////systems can bind the top hardware bit to high if need be (ie. For -onesided mode) and it won't affect alignment
-	//executeReadQuery(&query,"SELECT behavioralalignevents.timestamp, neuralalignevents.timestamp, behavioralalignevents.id, neuralalignevents.id, behavioralalignevents.aligncode, behavioralalignevents.aligneventnumber "
-	//	"FROM behavioralalignevents JOIN neuralalignevents ON behavioralalignevents.aligncode=(neuralalignevents.aligncode & 127) WHERE behavioralalignevents.matched=0 AND neuralalignevents.matched=0 "
-	//						"ORDER BY behavioralalignevents.timestamp,neuralalignevents.timestamp ASC",true);
-	//// Go through the list.  Use the first alignable value for each aligncode, throw out any subsequent values for the same aligncode.
-	//double behavTime = latestBehavioralTimestamp_;
-	//double neuralTime = latestNeuralTimestamp_;
-	//updateNeuralQuery.prepare("UPDATE neuralalignevents SET matched=1 WHERE id=:id");
-	//updateBehavioralQuery.prepare("UPDATE behavioralalignevents SET matched=1 WHERE id=:id");
-	//insertAlignEventQuery.prepare(	"INSERT INTO alignevents(aligneventnumber,aligncode,neuraltime,"
-	//							"behavioraltime,jitter,correlation) "
-	//							"VALUES(:aligneventnumber,:aligncode,:neuraltime, "
-	//							":behavioraltime,:jitter,:correlation)");
-	//bool hadData = false;
-	//while(query.next())
-	//{
-	//	behavTime = query.value(0).toDouble();
-	//	neuralTime = query.value(1).toDouble();
-	//	if((behavTime <= latestBehavioralTimestamp_)
-	//		|| (neuralTime <= latestNeuralTimestamp_))
-	//		// We already matched this aligncode
-	//		continue;
-	//	hadData = true;
-	//	latestBehavioralTimestamp_ = behavTime;
-	//	latestNeuralTimestamp_ = neuralTime;
-	//	alignmentTool_->updateCoefficients(latestBehavioralTimestamp_,latestNeuralTimestamp_);
-	//	updateBehavioralQuery.bindValue(":id",query.value(2));
-	//	updateNeuralQuery.bindValue(":id",query.value(3));
-	//	insertAlignEventQuery.bindValue(":aligneventnumber",query.value(5));
-	//	insertAlignEventQuery.bindValue(":aligncode",query.value(4));
-	//	insertAlignEventQuery.bindValue(":neuraltime",latestNeuralTimestamp_);
-	//	insertAlignEventQuery.bindValue(":behavioraltime",latestBehavioralTimestamp_);
-	//	insertAlignEventQuery.bindValue(":jitter",alignmentTool_->getJitter(latestBehavioralTimestamp_,latestNeuralTimestamp_));
-	//	insertAlignEventQuery.bindValue(":correlation",alignmentTool_->getCorrelationCoefficient());
-	//	executeWriteQuery(&updateBehavioralQuery);
-	//	executeWriteQuery(&updateNeuralQuery);
-	//	executeWriteQuery(&insertAlignEventQuery);
-	//}
-	//query.finish();
-	//// Update all jitter and correlation values with the latest calculated alignment coefficients.
-
-	//executeWriteQuery(&query,(QString("UPDATE alignevents SET ")+alignmentTool_->getSQLJitterEquation("jitter","neuraltime","behavioraltime","correlation")).toLatin1());
-
-	////Update stored alignment coefficients
-	//double nOffset = alignmentTool_->getNeuralOffsetTime();
-	//double nFactor = alignmentTool_->getNeuralTemporalFactor();
-	//QSharedPointer<Picto::AlignmentInfo> inf;
-	//if(alignmentInfoMap_.contains("Neural"))
-	//{
-	//	inf = alignmentInfoMap_["Neural"];
-	//	inf->setOffsetTime(nOffset);
-	//	inf->setTemporalFactor(nFactor);
-	//}
-	//else
-	//{
-	//	alignmentInfoMap_["Neural"] = inf = QSharedPointer<Picto::AlignmentInfo>(new Picto::AlignmentInfo(nOffset,nFactor));
-	//}
-
-	////Replace the previous alignment info with updated data.
-	//QSqlQuery sessionQ(getSessionDb());
-	//sessionQ.prepare("DELETE FROM sessioninfo WHERE key=\"AlignmentInfo\"");
-	//executeWriteQuery(&sessionQ);
-	//sessionQ.finish();
-	//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AlignmentInfo\", :value)");
-	//sessionQ.bindValue(":value", inf->toXml());
-	//executeWriteQuery(&sessionQ);
-	//sessionQ.finish();
-
-	//locker.unlock();
-
 }
 
+/*! \brief Builds all table indeces that have been set in StoredSessionData to improve Session read query speed.
+ *	\details This should be done only at the end of a session since extra unnecessary indeces slow down data write
+ *	speed in SQL significantly.
+ */
 void SessionInfo::createSessionIndeces()
 {
 	storedSessionData_->buildTableIndeces();
-	//Q_ASSERT(baseSessionDbConnection_.isOpen());
-	//QSqlQuery query(baseSessionDbConnection_);
-
-	//QStringList createIndexQueries;
-	//foreach(QString table, tables_)
-	//{
-	//	QStringList tableIndeces;
-	//	if(tableIndexedColumns_.contains(table))
-	//		tableIndeces = tableIndexedColumns_[table].split(",",QString::SkipEmptyParts);
-
-	//	foreach(QString index,tableIndeces)
-	//	{
-	//		executeWriteQuery(&query,"CREATE INDEX IF NOT EXISTS "+table+"_"+index.trimmed()+"_index ON "+table+"("+index+");");
-	//	}
-	//}
-
 }
 
-//We use a single table to track the latest state of all variables pertinant to running
-//a picto workstation.  Using this table, we can assure requests for the latest picto
-//state will have constant runtime independant of the previous runtime of the current
-//experiment.  New variable values always update existing values with the same id if 
-//their timestamp is greater than that of their predecessor.  
+/*! \brief Adds a new Picto current state variable to a list that will be added to a CurrentSessionData object
+ *	for the purpose of updating the Picto Workstation with the current experimental state.  The list's data is
+ *	copied to the CurrentSessionData object in updateCurrentStateTable().
+ *	\details We use a single CurrentSessionData object to track the latest state of all variables needed to run
+ *	a remote session on a Picto Workstation.  Using this object, we can assure requests for the latest Picto
+ *	state will have constant runtime independant of how long the the current experiment has been running.
+ *	New variable values always update existing values with the same id if their timestamp is greater than 
+ *	that of their predecessor, such that the CurrentSessionData object always contains the most up to date
+ *	picture of the current Experimental state.  
+*/
 void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValue)
 {
 	Variable var;
@@ -2030,6 +1390,14 @@ void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValu
 	currentStateQuery_.append(var);
 }
 
+/*! \brief Adds the input neural data to the latestNeuralData buffer.  
+ *	\details The buffer stays NEURAL_DATA_BUFFER_SECS long, and if the input data has a timestamp of more 
+ *	than NEURAL_DATA_BUFFER_SECS from the beginning of the buffer, values from the beginning are removed 
+ *	accordingly.
+ *
+ *	This buffer is used to send neural data to Picto Workstations monitoring the current session
+ *	so that the neural data can be displayed to the operator.
+ */
 void SessionInfo::setLatestNeuralData(int dataid, QString serializedValue, double fittedTime)
 {
 	NeuralVariable newVar;
@@ -2052,74 +1420,40 @@ void SessionInfo::setLatestNeuralData(int dataid, QString serializedValue, doubl
 		latestNeuralDataMutex_.unlock();
 }
 
+/*! \brief Adds all of the experimental state variables from setStateVariable() to the CurrentSessionData object.
+ *	\details We don't just do this when the values come in so that we can always be sure that all of the data for
+ *	a given time is in the CurrentSessionData object when a Workstation requests it.  Otherwise, the Workstation 
+ *	might miss some data if it requests data for a certain time, misses some of the final data for that time because 
+ *	it hasn't come in yet and then requests data for AFTER that first time later, such that the missed data is 
+ *	never read.
+ *	
+ *	updateTime is the time of the latest state variable to be read.
+ *	\note We should look into why updateTime can't just be read from the currestStateQuery_ list.
+ */
 void SessionInfo::updateCurrentStateTable(QString updateTime)
 {
-	//QSqlDatabase cacheDb = getCacheDb();
-	//QSqlQuery cacheQuery(cacheDb);
-	////Since we are encapsulating all of these operations in a single transaction, we put the whole thing in a mutex.
-	//QMutexLocker locker(databaseWriteMutex_.data());
-	//bool success = false;
-	//do
-	//{
-	//	//Start transaction
-	//	success = cacheDb.transaction();
-	//	if(!success)
-	//	{
-	//		qDebug("Failed to initiate transaction when writing current state. Error was: " + cacheDb.lastError().text().toLatin1() + "...Reattempting.");
-	//		continue;
-	//	}
-		// Loop through all tables.  If this sourceType is responsible for that table, flush its contents to the diskdb and erase cache.
-		// In the case of the neural/behavioralalignevents, don't erase unvisited, unmatched alignevents
-		QList<QVariantList> currStateData;
-		foreach(Variable queryVars,currentStateQuery_)
-		{
-			currStateData.append(QVariantList() << queryVars.dataid<<queryVars.varid<<updateTime<<queryVars.serial);
-		}
-		currentSessionData_->updateVariables(currStateData);
-		//foreach(Variable queryVars,currentStateQuery_)
-		//{
-		//	//Put the variable value in
-		//	currentSessionData_->updateVariable(queryVars.dataid,queryVars.varid,updateTime,queryVars.serial);
-
-		//	////Make sure that the row is there.
-		//	//cacheQuery.prepare("INSERT OR IGNORE INTO currentstate (dataid,variableid,time,data) VALUES (-1,:variableid, -1, '')");
-		//	//cacheQuery.bindValue(":variableid",queryVars.varid);
-		//	//executeWriteQuery(&cacheQuery,"",true);
-		//	////Update the value of the row if the time increased.
-		//	//cacheQuery.prepare("UPDATE currentstate SET time = :time, data = :data, dataid = :dataid WHERE variableid = :variableid AND time <= :time1 AND dataid < :dataid1");
-		//	//cacheQuery.bindValue(":time",updateTime);
-		//	//cacheQuery.bindValue(":data",queryVars.serial);
-		//	//cacheQuery.bindValue(":dataid",queryVars.dataid);
-		//	//cacheQuery.bindValue(":variableid",queryVars.varid);
-		//	//cacheQuery.bindValue(":time1",updateTime);
-		//	//cacheQuery.bindValue(":dataid1",queryVars.dataid);
-		//	//executeWriteQuery(&cacheQuery,"",true);
-		//}
-		//Update latest written state variable.
-		if(updateTime.toDouble() > latestStateVarTime_.toDouble())
-		{
-			stateVarTimeMutex_.lock();
-			latestStateVarTime_ = updateTime;
-			stateVarTimeMutex_.unlock();
-		}
-		//Empty currentStateQuery_ list now that we put it in the currentSessionData_ object
-		currentStateQuery_.clear();
-
-	//	cacheQuery.clear();
-	//	//End Transaction
-	//	success = cacheDb.commit();
-	//	//If Transaction failed, rollback and try again.
-	//	if(!success)
-	//	{
-	//		qDebug("writing current state failed for session: " + sessionId().toString().toLatin1() + " rolling back transaction and reattempting.");
-	//		cacheDb.rollback();
-	//	}
-	//}while(!success);
-	//currentStateQuery_.clear();
-	//locker.unlock();
-	//return;
+	QList<QVariantList> currStateData;
+	foreach(Variable queryVars,currentStateQuery_)
+	{
+		currStateData.append(QVariantList() << queryVars.dataid<<queryVars.varid<<updateTime<<queryVars.serial);
+	}
+	currentSessionData_->updateVariables(currStateData);
+		
+	//Update latest written state variable.
+	if(updateTime.toDouble() > latestStateVarTime_.toDouble())
+	{
+		stateVarTimeMutex_.lock();
+		latestStateVarTime_ = updateTime;
+		stateVarTimeMutex_.unlock();
+	}
+	//Empty currentStateQuery_ list now that we put it in the currentSessionData_ object
+	currentStateQuery_.clear();
 }
 
+/*! \brief Adds the Workstation with the input Uuid to the authorized observer list.  
+ *	\details This means that Workstation will be able to use commands to change the Session 
+ *	state and not just watch what is happening in the Session.
+ */
 void SessionInfo::addAuthorizedObserver(QUuid observerId)
 {
 	if(isAuthorizedObserver(observerId))
@@ -2127,57 +1461,4 @@ void SessionInfo::addAuthorizedObserver(QUuid observerId)
 
 	storedSessionData_->insertData(SESSION_INFO_TYPE,QVariantList() << ++sessionInfoDataId_ << "AuthObserverID" << observerId.toString());
 	authorizedObservers_.append(observerId);
-
-	//Q_ASSERT(baseSessionDbConnection_.isOpen());
-	//QSqlQuery sessionQ(baseSessionDbConnection_);
-
-	//sessionQ.prepare("INSERT INTO sessioninfo(key, value) VALUES (\"AuthObserverID\", :id)");
-	//sessionQ.bindValue(":id", observerId.toString());
-	//executeWriteQuery(&sessionQ);
-	//authorizedObservers_.append(observerId);
 }
-
-/*! \brief Generates a thread-specific connection to the Session database
- *
- *	The session database has threading issues because of the following:
- *		1. The session database may be accessed from different threads 
- *		   (remember, the commands coming into the server are processed
- *		   by different threads)
- *		2. Database connections can't be shared across threads
- *	The current solution to these problems is to create a unique database
- *	connection for each thread.  This is somewhat wasteful, but it's simple
- *	and it works.
- */
-
-//QSqlDatabase SessionInfo::getSessionDb()
-//{
-//	QSqlDatabase sessionDb;
-//	QString connectionName = QString("SessionDatabase_%1_%2")
-//					.arg(sessionId().toString())
-//					.arg((int)QThread::currentThreadId());
-//
-//	
-//	//If we already have a connection open in this thread, use it, 
-//	//otherwise, clone a new connection
-//	if(QSqlDatabase::contains(connectionName))
-//	{
-//		sessionDb = QSqlDatabase::database(connectionName);
-//	}
-//	else
-//	{
-//		openDatabaseConnections_.append(connectionName);
-//		sessionDb = QSqlDatabase::cloneDatabase(baseSessionDbConnection_,connectionName);
-//		sessionDb.open();
-//	}
-//
-//	Q_ASSERT(sessionDb.isOpen());
-//
-//	return sessionDb;
-//}
-//
-///*! \brief Returns a connection to the Cache database
-// */
-//QSqlDatabase SessionInfo::getCacheDb()
-//{
-//	return cacheDb_;
-//}

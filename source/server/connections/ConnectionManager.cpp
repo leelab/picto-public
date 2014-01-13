@@ -17,7 +17,10 @@
 #define DROPPED_SESSION_TIMEOUT_DAYS 1
 ConnectionManager* ConnectionManager::conMan_ = 0;
 
-//! Private constructor
+/*! \brief Private constructor
+ *	\details Starts a timeout timer that is used to flush cached data to disk and
+ *	check to see if any components have stopped talking to the server.
+ */
 ConnectionManager::ConnectionManager()
 {
 	ServerConfig serverConfig;
@@ -32,7 +35,7 @@ ConnectionManager::ConnectionManager()
 
 /*! \brief Returns the ConnectionManager instance
  *
- *	Since this is a singleton, there is only one ConnectionManager
+ *	\details Since this is a singleton, there is only one ConnectionManager
  *	instance.  This function creates that instance if needed, and then
  *	returns it.
  */
@@ -48,28 +51,29 @@ ConnectionManager::~ConnectionManager()
 {
 	delete timeoutTimer_;
 	delete mutex_;
+	//This should probably also set conMan_ to NULL.
 }
 
-/*!	\brief Checks for timed out connections.
+/*!	\brief Checks for timed out connections and flushes cached session data to disk.
  *
- *	The timeout timer calls this function on a fixed interval.  The
- *	function looks at all of the director and proxy instances and sessions and
- *	checks to see if they have timed out.  If they have, then they are
- *	removed from their respective list.
+ *	\details The timeout timer calls this function on a fixed interval.  Whenever it is
+ *	called, first check for session timeouts.  This is done by calling the 
+ *	clearActivity function which clears the activity bool and returns
+ *	its value.  If there has been no activity since the last time we
+ *	checked, check if any components are still active in this session
+ *	(ie. Still providing data).  If they are, the session instance should 
+ *	be removed from our list and kept in the opensessions list in case we 
+ *	just lost a connection with one of the components and it is going to try to reconnect.
+ *	If all components are no longer active, we should end the session.
+ *	
+ *	If there has been activity on the session, we should set all of
+ *	that sessions components active, since we don't want any of them timing
+ *	out if there are any that haven't timed out.  This is also where we initiate 
+ *	a flush of cached data to disk.  The actual SessionInfo::flushCache() is
+ *	performed in a separate thread though so as to not block this function.
  */
 void ConnectionManager::checkForTimeouts()
 {
-	//First check for session timeouts.  This is done by calling the 
-	//clearActivity function which clears the activity bool and returns
-	//its value.  If there has been no activity since the last time we
-	//checked, check if any components are still active in this session
-	//(ie. Still providing data).  If they are, the session instance should 
-	//be removed from our list and kept in the opensessions list in case we 
-	//just lost a connection for a while and components are going to try to reconnect.
-	//If all components are no longer active, we should end the session.
-	//If there has been activity on the session, we should set activity for all of
-	//that sessions components, since we don't want any of them timing
-	//out if any of them haven't timed out. We also flush their cached data to disk.
 	QMutexLocker locker(mutex_);
 	foreach(QSharedPointer<SessionInfo> sessionInfo, openSessions_)
 	{
@@ -127,12 +131,14 @@ void ConnectionManager::checkForTimeouts()
 	}
 }
 
-/*!	\brief Updates the list of directors with this director
+/*!	\brief Updates the list of connected Components with the input Component information
  *
- *	Everytime the COMPONENTUPDATE command is received by the server, this 
+ *	\details Everytime the COMPONENTUPDATE command is received by the server, this 
  *	function gets called.  The function checks to see if the component instance referenced
  *	is in our list, and if not adds it.  If the instance already exists, the function makes
- *	any needed changes.  Note that the Uuid is being used as a primary key here.
+ *	any needed changes.  This function also calls setActivity() for the component
+ *	to indicate that communication with that component is active.
+ *	\note The component's Uuid is being used as a primary key here.
  */
 void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid sessionId, QString name, QString type, ComponentStatus::ComponentStatus status, QString details)
 {
@@ -187,18 +193,22 @@ void ConnectionManager::updateComponent(QUuid uuid, QHostAddress addr, QUuid ses
 /*!	\brief Returns a list of proxy instances as an xml fragment.
  *
  *	The XML fragment will look like this:
- *	<ProxyInstances>
- *		<Proxy>
- *			<Address>192.168.3.51</Address>
- *			<Name>Proxy Room 408</Name>
- *			<Status>Idle</Status>
- *		</Proxy>
- *		<Proxy>
- *			<Address>192.168.3.164</Address>
- *			<Name>Proxy Room 407</Name>
- *			<Status>Running</Status>
- *		</Proxy>
- *	</ProxyInstances>
+ *	\code
+ 	<ProxyInstances>
+ 		<Proxy>
+ 			<Address>192.168.3.51</Address>
+ 			<Id>{550e8400-e29b-41d4-a716-446655440000}</Id>
+ 			<Name>Proxy Room 408</Name>
+ 			<Status>Idle</Status>
+ 		</Proxy>
+ 		<Proxy>
+ 			<Address>192.168.3.164</Address>
+ 			 <Id>{5650e8400-e29b-41d4-a716-446655340000}</Id>
+ 			<Name>Proxy Room 407</Name>
+ 			<Status>Running</Status>
+ 		</Proxy>
+ 	</ProxyInstances>
+	\endcode
  */
 QString ConnectionManager::getProxyList()
 {
@@ -238,18 +248,24 @@ QString ConnectionManager::getProxyList()
 /*!	\brief Returns a list of director instances as an xml fragment.
  *
  *	The XML fragment will look like this:
- *	<DirectorInstances>
- *		<Director>
- *			<Address>192.168.3.51</Address>
- *			<Name>PictoDirector Room 408</Name>
- *			<Status>Idle</Status>
- *		</Director>
- *		<Director>
- *			<Address>192.168.3.164</Address>
- *			<Name>PictoDirector Room 407</Name>
- *			<Status>Running</Status>
- *		</Director>
- *	</DirectorInstances>
+ 	<DirectorInstances>
+ 		<Director>
+ 			<Address>192.168.3.51</Address>
+			<Id>{550e8400-e29b-41d4-a716-446655440000}</Id>
+ 			<Name>PictoDirector Room 408</Name>
+ 			<Status>Idle</Status>
+			<Session-ID>{12345600-e29b-41d4-a716-446655440000}</Session-ID>
+			<Details></Details>
+ 		</Director>
+ 		<Director>
+ 			<Address>192.168.3.164</Address>
+			<Id>{950e8400-e29b-41d4-a716-446655440000}</Id>
+ 			<Name>PictoDirector Room 407</Name>
+ 			<Status>Running</Status>
+			<Session-ID>{65432100-e29b-41d4-a716-446655440000}</Session-ID>
+			<Details></Details>
+ 		</Director>
+ 	</DirectorInstances>
  */
 QString ConnectionManager::getDirectorList()
 {
@@ -290,7 +306,7 @@ QString ConnectionManager::getDirectorList()
 }
 
 
-//! Returns the status of the component instance with the passed in Unique User ID
+/*! \brief Returns the status of the component instance with the passed in Unique User ID. */
 ComponentStatus::ComponentStatus ConnectionManager::getComponentStatus(QUuid uuid)
 {
 	QMutexLocker locker(mutex_);
@@ -306,13 +322,16 @@ ComponentStatus::ComponentStatus ConnectionManager::getComponentStatus(QUuid uui
 	}
 }
 
-//! Returns the status of the Director instance with the passed in Unique User ID
+/*! \brief Returns the status of the component instance with the passed in Unique User ID String. */
 ComponentStatus::ComponentStatus ConnectionManager::getComponentStatus(QString uuidStr)
 {
 	QUuid uuid(uuidStr);
 	return getComponentStatus(uuid);
 }
 
+/*! \brief Returns the status of the component instance with the passed in componentType that is 
+ *	part of the session with the passed in sessionId. 
+ */
 ComponentStatus::ComponentStatus ConnectionManager::getComponentStatusBySession(QUuid sessionId, QString componentType)
 {
 	QMutexLocker locker(mutex_);
@@ -326,7 +345,11 @@ ComponentStatus::ComponentStatus ConnectionManager::getComponentStatusBySession(
 	return ComponentStatus::notFound;
 }
 
-//! Sets the component status for the session id
+/*! \brief Sets the component status for the component instance of the input type that is running in the session with the
+ *	input session id.
+ *	\details This function also calls setActivity() on the component to indicate that the connection to that component is 
+ *	active.
+ */
 void ConnectionManager::setComponentStatus(QUuid sessionId, QString componentType, ComponentStatus::ComponentStatus status)
 {
 	QMutexLocker locker(mutex_);
@@ -344,13 +367,13 @@ void ConnectionManager::setComponentStatus(QUuid sessionId, QString componentTyp
 }
 
 /*! \brief Returns the sessionID associated with the input ComponentID
- *  Unlike getSessionInfoByComponent, this function looks up the sessionID
+ *  \details Unlike getSessionInfoByComponent(), this function looks up the sessionID
  *  That the component thinks its associated with rather than looking through
  *	all sessions to see if any session is associated with the input component.
  *	There is a distinction because in the case of sessions that were run before
- *	and now timing out, there may be more than one session associated with a given
- *	component, but the component itself will only ever report that its associated
- *	with the session that it's running.
+ *	and have timed out, there may be more than one session associated with a given
+ *	component, but the component itself will only ever report that it is associated
+ *	with the session that it is running.
  */
 QUuid ConnectionManager::GetComponentsSessionId(QUuid componentId)
 {
@@ -364,12 +387,25 @@ QUuid ConnectionManager::GetComponentsSessionId(QUuid componentId)
 	return QUuid();
 }
 
+/*! \brief Returns the sessionID associated with the input ComponentID string.
+ *  \details Unlike getSessionInfoByComponent(), this function looks up the sessionID
+ *  That the component thinks its associated with rather than looking through
+ *	all sessions to see if any session is associated with the input component.
+ *	There is a distinction because in the case of sessions that were run before
+ *	and have timed out, there may be more than one session associated with a given
+ *	component, but the component itself will only ever report that it is associated
+ *	with the session that it is running.
+ */
 QUuid ConnectionManager::GetComponentsSessionId(QString componentId)
 {
 	return GetComponentsSessionId(QUuid(componentId));
 }
 
-//! Returns the session info for the session attached to the component with the given ID
+/*! \brief Returns the session info for the session attached to the component with the input component ID
+ *	\details This looks through all open sessions for the one that includes the component with the input
+ *	componentID.  If an open session is not found, old timed out sessions are checked as well.  If more
+ *	than one timed out session was associated with the component, a randomly selected one will be chosen.
+ */
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByComponent(QUuid componentID)
 {
 	QMutexLocker locker(mutex_);
@@ -391,14 +427,20 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByComponent(QUuid c
 	return QSharedPointer<SessionInfo>(); // If we got here then it doesn't exist
 }
 
-//! Returns the session info for the session attached to the component with the given ID
+/*! \brief Returns the session info for the session attached to the component with the input component ID string
+ *	\details This looks through all open sessions for the one that includes the component with the input
+ *	componentID.  If an open session is not found, old timed out sessions are checked as well.  If more
+ *	than one timed out session was associated with the component, a randomly selected one will be chosen.
+ */
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfoByComponent(QString componentID)
 {
 	QUuid uuid(componentID);
 	return getSessionInfoByComponent(uuid);
 }
 
-//! Returns the session info for the passed in session id
+/*! \brief Returns the session info for the open session with the passed in session id.  If no such session
+ * is open, returns an empty pointer.
+ */
 QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
 {
 	QMutexLocker locker(mutex_);
@@ -412,9 +454,9 @@ QSharedPointer<SessionInfo> ConnectionManager::getSessionInfo(QUuid uuid)
 		return QSharedPointer<SessionInfo>();
 	}
 }
-/*! /Brief returns the session UUID if the component needs to start a new session
+/*! /Brief Returns the session UUID if the component with the input componentId needs to join a new session
  *
- *	Since all communication with proxy and director component instances is indirect (we have to
+ *	\details Since all communication with proxy and director component instances is indirect (we have to
  *	wait for an incoming COMPONENTUPDATE command), there is a delay between starting
  *	session and telling the component what it's session ID is.  This function
  *	is used by the COMPONENTUPDATE command handler to figure out if the component
@@ -434,7 +476,19 @@ QUuid ConnectionManager::pendingSession(QUuid componentID)
 	}
 }
 
-//! Creates a new session and returns a pointer to the SessinoInfo object
+/*! \brief Creates a new session and returns a pointer to the SessionInfo object.
+ *	@param directorId The Uuid of the Director to be used in the session.
+ *	@param proxyID The Uuid of the Proxy to be used in the session.
+ *	@param designName The name of the design that will be used in the Session.
+ *	@param designXml The contents of the Design file that will be used in the Session.
+ *	@param DesignConfig The serialized DesignConfig object that manages the Design used in this session.  This contains 
+ *		information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup 
+ *		tables in the session file.
+ *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an Authorized
+ *		observer (ie. It is authorized to make state changes to the Session).
+ *	@param password	The password that gives workstations authorization to change the Session state.
+ *	\note When DEVELOPMENTBUILD is not defined, password may not be empty.
+ */
 QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, QUuid proxyID, QString designName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
 {
 	QMutexLocker locker(mutex_);
@@ -475,7 +529,9 @@ QSharedPointer<SessionInfo> ConnectionManager::createSession(QUuid directorID, Q
 	return sessInfo;
 }
 
-//! \brief Load's a session from the serverConfig database
+/*! \brief Load's a previously timed out Session with the input sessionId from the file at filePath.  
+ *	If the file does not exist, the session is removed from the input ServerConfig object.
+ */
 QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString sessionId, QString filePath)
 {
 	QSharedPointer<SessionInfo> sessInfo;
@@ -496,7 +552,11 @@ QSharedPointer<SessionInfo> ConnectionManager::loadSession(QString sessionId, QS
 	return sessInfo;
 }
 
-//! \brief Checks for sessions that were dropped and have timed out and removes them from serverConfig
+/*! \brief Checks for sessions that were dropped and timed out a long time ago and removes them from the ServerConfig 
+ *	object
+ *	\details The maximum time that a dropped session sticks around before being removed is set in 
+ *	DROPPED_SESSION_TIMEOUT_DAYS.
+ */
 void ConnectionManager::checkForDroppedSessionTimeouts()
 {
 	QMutexLocker locker(mutex_);
@@ -522,7 +582,9 @@ void ConnectionManager::checkForDroppedSessionTimeouts()
 	}
 }
 
-//! \brief Indicates whether a session is being controlled by this server.
+/*! \brief Returns true if a session with the input sessionId is open or previously timed out on
+ *	this Server.
+ */
 bool ConnectionManager::sessionIsValid(QString sessionId)
 {
 	if((sessionId == "") || (QUuid(sessionId) == QUuid()))
@@ -544,7 +606,9 @@ bool ConnectionManager::sessionIsValid(QString sessionId)
 	return false;
 }
 
-//!Ends a currently running session
+/*!	\brief Ends a currently running session.
+ *	\sa SessionInfo::endSession()
+ */
 bool ConnectionManager::endSession(QUuid sessionId)
 {
 	if(sessionIsValid(sessionId.toString()) && openSessions_[sessionId]->endSession())

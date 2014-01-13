@@ -13,8 +13,13 @@ StartsessionCommandHandler::StartsessionCommandHandler()
 {
 }
 
-/*! \brief handles a STARTSESSION command
- *
+/*! \brief Handles STARTSESSION commands
+ *	\details This function takes the incoming command and extracts the Director and Proxy that are to be used in this Session, as well
+ *	as the serialized Design and DesignConfig.  All of this data is used to create a new SessionInfo object to handle the new Session.
+ *	The new Session will cause NEWSESSION directives to be sent to the Director and Proxy in the ComponentUpdateCommandHandler.
+ *	A LOADEXP directive is also added to the SessionInfo object to be sent to the Director.  Next, this thread yields until
+ *	it sees the Director and Proxy have recieved the message and updated their status.  Finally when everything is clearly started 
+ *	and ready for the new session, an okResponse is returned.
  */
 QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
@@ -146,6 +151,8 @@ QSharedPointer<Picto::ProtocolResponse> StartsessionCommandHandler::processComma
 
 }
 
+/*! \brief Extracts the Experiment part of a serielized Picto Design and returns it.
+*/
 QString StartsessionCommandHandler::extractExperimentFromDesign(QString designXML)
 {
 	QXmlStreamReader reader(designXML);

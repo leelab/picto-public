@@ -6,6 +6,9 @@
 #include "WinGetPID.h"
 #include "../../common/memleakdetect.h"
 
+/*! \brief Returns true if the caller is part of a GUI application, false otherwise.  This is used by the Picto Server application's
+ *	main method to determine if the Server is running in GUI or command line mode.
+ */
 bool winParentProcessIsGUI()
 {
 #ifdef WINCE
