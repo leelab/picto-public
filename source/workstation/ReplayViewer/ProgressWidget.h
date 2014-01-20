@@ -10,8 +10,20 @@ class QSlider;
 class QLCDNumber;
 class QLabel;
 class HighlightData;
-/*!	\brief	Widget for use in Replay system
- * 
+/*!	\brief	A Widget that represents some kind of progress along with a slider that can be moved to
+ *	request changes in the current progress position (like the youtube time bar).
+ *	\details This widget includes a progress bar with a slider on it and an LCD display on the end.
+ *	The units that are used to refer to the position of the slider bar are "progress" units.  The
+ *	bars max and min progresses can be set, and then the current progress can be set, causing the 
+ *	slider to move along the bar accordingly.  The current slider progress is always displayed on
+ *	the LCD display.
+ *
+ *	This ProgressWidget also supports a highlighting system.  Multiple highlight bars can be configured
+ *	to appear along the progress bar at particular positions.  It is useful to have these separate means
+ *	of displaying a progress value along the same bar as the slider.  The slider can represent a current
+ *	selected time and highlights can represent the times that are loaded (again, like youtube).
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class ProgressWidget : public QFrame
 {
@@ -22,9 +34,6 @@ public:
 	void setMaximum(double max);
 	double getMaximum();
 	double getHighlightMin(int index);
-	//By default, to conserve processing resources, highlight is not always updated
-	//when this function is called (it is updated at most once per frame).
-	//To force the highlight graphic to be updated on this call, use forceUpdate.
 	void setHighlightMin(int index,double progress,bool forceUpdate = false);
 	double getHighlightMax(int index);
 	void setHighlightMax(int index,double progress,bool forceUpdate = false);
@@ -36,7 +45,12 @@ public:
 	void jumpToEnd();
 
 signals:
+	/*! \brief Emitted when the user presses or releases the slider.  mouseDown indicates if a press or release is happening.
+	*/
 	void userAction(bool mouseDown);
+	/*! \brief Emitted when the user uses the slider to request that the system using the slider
+	 *	move to a new "progress".
+	 */
 	void valueRequested(double progress);
 
 private:

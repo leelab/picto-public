@@ -1,5 +1,4 @@
 /*! \file PictoEngine.h
- * \ingroup picto_engine
  * \brief
  */
 #pragma once

@@ -26,6 +26,4 @@ public:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand>);
 };
 
-/*! @} */
-
 #endif

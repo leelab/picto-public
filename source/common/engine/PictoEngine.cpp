@@ -1,5 +1,4 @@
 /*! * \file PictoEngine.cpp
- * \ingroup picto_engine
  * \brief
  */
 #include <QApplication>

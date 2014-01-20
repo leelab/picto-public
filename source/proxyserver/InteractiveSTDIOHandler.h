@@ -1,5 +1,4 @@
 /*! \file InteractiveSTDIOHandler.h
- * \ingroup pictoserver
  * \brief
  */
 
@@ -7,10 +6,6 @@
 #define _INTERACTIVESTDIOHANDLER_H_
 
 #include <QThread>
-
-/*! \addtogroup pictoserver
- * @{
- */
 
 /*! \brief Handles standard IO input when running in interactive mode */
 class InteractiveSTDIOHandler : public QThread
@@ -23,6 +18,5 @@ public:
     void run();
 };
 
-/*! @} */
 
 #endif

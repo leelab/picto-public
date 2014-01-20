@@ -21,21 +21,44 @@ class QToolBar;
 class QComboBox;
 class QSlider;
 
-/*!	\brief	This views the experiment as a running test
+/*!	\brief	This allows designers to run the Experiment/Analysis that they are creating in a test
+ *	environment for debugging.
  *
- *	Designers will want to test the experiments they have written.  This
- *	viewer allows them to do this.  It basically creates an engine inside
- *	a widget, using a Pixmap rendering target, and a mouse input channel.
+ *	\details This Viewer runs the Experiment inside a widget, using a Pixmap rendering target, 
+ *	and a mouse input channel.  Analyses can be run during the course of the Experiment and should
+ *	provide the same results as they would in real experiments with a couple of exceptions:
+ *		- AnalysisDataSource elements will not have access to future data (since it doesn't exist yet), 
+ *			depending on the type of future data request, the result will either be meaningless or empty.
+ *		- Some AnalysisDataSource data will be simulated.  LFP data for example is fake since there is
+ *			no "Test Neural System" attached.
+ *		- Frame rates may be much faster than they would be in a real experiment.  This is because the
+ *			PixmapVisualTarget doesn't know how to wait for VSync while rendering, so it just renders
+ *			and continues on.  This could cause the TestViewer to think that many frames have gone
+ *			by even though there may only have been one.
  *
- *	The toolbar for this will include start/pause/stop commands
+ *	The toolbar for the Test Viewer includes start/pause/stop commands as well as a drop down for choosing
+ *	the Task to run, another drop down to select the "viewer" as either a Test Subject or an Operator.  There
+ *	is also a PropertyFrame for changing Task Property InitValues during the run, an AnalysisSelectorWidget
+ *	for choosing Analyses to run during the Test, and an OutputWidgetHolder for presenting
+ *	AnalysisOutputWidgets
  *
- *	This is NOT a debugger.  A debugger would require a way to identify the 
- *	current state, pause/restart controls, and a JavaScript debugger.  This
- *	has none of that.
+ *	This Test Viewer also contains a simple debugger which allows the designer to check variable values and
+ *	even run javascript in a command line at the bottom of the window.  The debugger is the stock Qt debugger 
+ *	and is used to debug Picto scripts.  It is set up in ScriptableContainer::initScripting().  The debugger 
+ *	stops Experiment execution and waits for the user to press its play button before continuing for one of 
+ *	two reasons.
+ *		- A runtime error occurs.
+ *		- The keyword - debugger - appeared in a script.
+ *	Since Picto currently creates one script engine for every ScriptableContainer, a different debugger window
+ *	appears for every runtime error that occurs in a separate ScriptableContainer.  This can get unwieldy 
+ *	quickly, and we should consider fixing this at some point.
  *
+ *	\note Like in real Experimental Runs, pressing the pause button causes the Run to pause only when control
+ *	flow reaches the next PausePoint element.
  *	Suggestions for future features:
- *		- Pause should stop any timed controllers
  *		- Add a step function for advancing frame by frame
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class TestViewer : public Viewer
 {
@@ -46,8 +69,8 @@ public:
 	QString type() { return "Test"; };
 
 public slots:
-	void init();  //Called just before displaying the viewer
-	void deinit();	//Called just after the user switches out of the viewer
+	void init();
+	void deinit();
 	bool aboutToQuit();
 
 	void LoadPropValsFromFile();

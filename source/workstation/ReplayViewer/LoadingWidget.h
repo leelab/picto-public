@@ -6,11 +6,9 @@
 #include <QLabel>
 #include <QMovie>
  
-/**
- * LoadingWidget
- *
- * Uses animation from the path
- * to display it in a QLabel.
+/*!	\brief NOT USED.  This is no longer used and should probably be deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class LoadingWidget : public QWidget {
 	Q_OBJECT

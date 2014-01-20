@@ -3,13 +3,13 @@
 
 #include <QWidget>
 
-/*!	\brief The error handling tool for Workstation
- *
- *	Eventually, this thing will be a full bown widget with a list of current
- *	errors.  However, since I'm still putting things together, it's going to 
- *	start off as a really simple list of errors, with basic access functions
+/*!	\brief A simple list for holding error messages and their types.
+ *	\details This is a very simple object.  Errors are added to the
+ *	list with addError(), they are accessed with getAllErrors() and 
+ *	the list is cleared with clear().
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
-
 class ErrorList : public QWidget
 {
 	Q_OBJECT

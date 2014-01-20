@@ -36,7 +36,13 @@ TestViewer::TestViewer(QWidget *parent) :
 	setupUi();
 }
 
-//! Called just before displaying the viewer
+/*! \brief Called just before displaying the viewer.
+ *	\details This function prepares the DesignRoot and the various UI components for a test run.
+ *	\note Sometimes while working on an experiment, if we change something and don't reopen the experiment
+ *	we have found that the experimental run doesn't work right.  To prevent this, we are simply reseting 
+ *	the Experiment from xml whenever this Viewer is opened and init is called.  At some point, we should
+ *	probably go through and debug this issue.
+ */
 void TestViewer::init()
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,14 +94,29 @@ void TestViewer::init()
 	connect(designRoot_->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
-//!Called just before hiding the viewer
+/*! \brief Called just before hiding the viewer.
+ *	\details This function stops the current Task Run and clears the PropertyFrame.  It is 
+ *	important that it clears the PropertyFrame because otherwise an unexpected signal->slot->signal->...
+ *	path leading from Property value changes through the PropertyFrame back to
+ *	a different part of the Property value would be active.  This would lead to unexpected behavior
+ *	in the StateMachineEditor.  We also handle stopping the Experiment in a kind of round about way.
+ *	Due to the fact that we don't yet run Experiments from a Qt Event loop and we need to just
+ *	process events internally now and then, if an Experiment is running, this function will have
+ *	been called from some QCoreApplication::processEvents() call internal to the Experiment.  In that
+ *	case, calling stop() here will not actually stop the Experiment until somewhere way up the call stack.
+ *	If we were to directly emit deinitCompleted() here, we would be telling the next viewer that it can
+ *	take the focus before this Viewer's Experiment actually stopped running.  Instead, we connect the
+ *	TestPlaybackController's stopped() signal to our stopped() slot which emits deinitCompleted().  By
+ *	doing things this way, we are sure that when the next Viewer takes focus, this Viewer's test Run
+ *	will actually be fully stopped and done.
+ */
 void TestViewer::deinit()
 {
 	deiniting_ = true;
 	if(testController_ && testController_->isRunning())
 	{
 		//If the experiment is still running, tell it to stop.
-		//After it stops, the testController will trigger its stopped() signal which will
+		//After it stops, the testController will trigger its stopped() signal which
 		//will trigger our stopped() slot.  This will handle emitting the deinitCompleted()
 		//signal.  It is important that we do it this way in case the event loop is
 		//currently running from within the experimental run.  In that case, we need to actually leave
@@ -114,14 +135,16 @@ void TestViewer::deinit()
 	static_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(QSharedPointer<DataStore>());
 }
 
-//! \brief Called when the application is about to quit.  Takes care of closing this windows resources
+/*! \brief Called when the application is about to quit.  In this case, it just calls deinit().
+ */
 bool TestViewer::aboutToQuit()
 {
 	deinit();
 	return true;
 }
 
-//! Initializes the engine with all of the appropriate pieces for testing
+/*! \brief Initializes the engine with all of the appropriate pieces for testing
+ */
 void TestViewer::setupEngine()
 {
 	//set up the engine
@@ -170,7 +193,8 @@ void TestViewer::setupEngine()
 	renderingTarget_->showSplash();
 }
 
-//! Sets up the user interface portions of the GUI
+/*! \brief Sets up the user interface portions of the GUI
+ */
 void TestViewer::setupUi()
 {
 	///play/pause/stop actions and toolbar
@@ -267,6 +291,10 @@ void TestViewer::setupUi()
 
 }
 
+/*! \brief Loads runtime Property initValues from a previous Session to replace those in the current Experiment.
+ *	\warning We haven't tested this in a while and it may not be working.  Regardless, it might be good to do this
+ *	differently and allow operators to save current Property configurations and restore them later.
+ */
 void TestViewer::LoadPropValsFromFile()
 {
 	QString filename = QFileDialog::getOpenFileName(this,
@@ -275,6 +303,8 @@ void TestViewer::LoadPropValsFromFile()
 		static_cast<PropertyFrame*>(propertyFrame_)->updatePropertiesFromFile(filename);
 }
 
+/*! \brief Generates the task list combobox.
+ */
 void TestViewer::generateComboBox()
 {
 	Q_ASSERT(taskListBox_);
@@ -286,6 +316,14 @@ void TestViewer::generateComboBox()
 	taskListBox_->addItems(experiment_->getTaskNames());
 }
 
+/*! \brief Called when the play button is pressed.  Activates selected Analyses, disables the AnalysisSelectorWidget
+ *	and sets up Live Data Readers for the active Analyses to use for the test.  
+ *
+ *	\note Live Data Readers are used by Analyses to access data over ranges of times.  They
+ *	are different from the Data Readers in played back Sessions in that they have no access to future data
+ *	and in some cases their data is simulated (ie. LFP, since there is no neural system attached to the
+ *	TestViewer).
+ */
 void TestViewer::playTriggered()
 {
 	if(!testController_->isRunning())
@@ -354,6 +392,9 @@ void TestViewer::playTriggered()
 	//QMetaObject::invokeMethod(testController_.data(),"play");
 }
 
+/*! \brief This is called when the TestPlaybackController reports that a Task is running.  It changes
+ *	various aspects of the UI accordingly.
+ */
 void TestViewer::running()
 {
 	taskListBox_->setEnabled(false);
@@ -365,6 +406,10 @@ void TestViewer::running()
 		static_cast<OutputSignalWidget*>(outSigWidg)->enable(true);
 	}
 }
+
+/*! \brief This is called when the TestPlaybackController reports that a Task is paused.  It changes
+ *	various aspects of the UI accordingly.
+ */
 void TestViewer::paused()
 {
 	taskListBox_->setEnabled(false);
@@ -372,6 +417,12 @@ void TestViewer::paused()
 	stopAction_->setEnabled(true);
 	playAction_->setEnabled(true);
 }
+
+/*! \brief This is called when the TestPlaybackController reports that a Task is stopped.  It changes
+ *	various aspects of the UI accordingly, disables active Analyses, puts the splash screen up in the
+ *	central window, and emits deinitComplete() if the stopping was a result of the deinit() function
+ *	(See deinit() for more details).
+ */
 void TestViewer::stopped()
 {
 	taskListBox_->setEnabled(true);
@@ -403,6 +454,10 @@ void TestViewer::stopped()
 	}
 }
 
+/*! \brief This is called when the selected Task in the task combobox changes.  It updates the run time
+ *	enabled Properties in the PropetyFrame for that Task and sets that Task as the active Task in the 
+ *	TestPlaybackController.
+ */
 void TestViewer::taskListIndexChanged(int)
 {
 	if(!experiment_)
@@ -416,11 +471,21 @@ void TestViewer::taskListIndexChanged(int)
 	testController_->setTask(taskListBox_->currentText());
 }
 
+/*! \brief This is called when the operator clicks somewhere in the display window.  It informs the
+ *	OperatorClickParameter that a click was detected (OperatorClickParameter::addClick()).  This is
+ *	important in order to be able to test experiments that use the OperatorClickParameter, like the
+ *	Calibration Task.
+ */
 void TestViewer::operatorClickDetected(QPoint pos)
 {
 	OperatorClickParameter::addClick(pos);
 }
 
+/*! \brief Called when the User Type dropdown value changes.  Changes the user type in the 
+ *	PlaybackController accordingly.
+ *	\note The active user, Operator or Subject, determines which graphics are shown in the 
+ *	display depending on each graphics OperatorView/SubjectView Properties.
+ */
 void TestViewer::setUserType(int index)
 {
 	Q_ASSERT(!engine_.isNull());
@@ -435,6 +500,8 @@ void TestViewer::setUserType(int index)
 	}
 }
 
+/*! \brief Called when the run with the input runId starts.  Calls OutputWidgetHolder::newRunStarted().
+ */
 void TestViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);

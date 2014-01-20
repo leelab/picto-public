@@ -24,6 +24,4 @@ signals:
 	void giveReward(int controller);
 };
 
-/*! @} */
-
 #endif

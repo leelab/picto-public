@@ -1,52 +1,37 @@
 /*! \mainpage Picto Developer's Guide
- * \author Mark Hammond (markh)
- * \author Matthew Gay (mgay)
- * \version 2009.06.29.1.1
- * \date Last modified: June 29, 2009
- *
- * \bug <a href="http://127.0.0.1:8080/tktview?name=c0492a596c">c0492a596c</a>: brief description of an open bug
- *
- * To address bug <a href="bugDBurl?id=13493">13493</a>, foo and bar are done here
- *
- * This is the Developer's Guide for the %Picto suite of experimental control applications
- * and associated PictoBox hardware.  If you are an investigator utilizing the software as
- * part of your research then you probably want the User Manual.  If you are interested in
- * learning how the system itself works and/or modifying the system, then this guide is
- * the right place to start.
- *
- * If browsing this documentation using the PictoDevelopersGuide application, be aware that
- * you can move forward and backwards by right clicking and selecting the desired action.
- *
- * \section devdocs_getting_started Getting Started
- *
- * \subsection devdocs_getting_started_introduction Introduction
- * \par
- * The %Picto suite of experimental control applications is utilized by researchers to ...
- * \par
- * %Picto is comprised of several applications working together to form a comprehensive
- * experimental control system.
- * \par
- * %Picto is distributed in one of two forms, a platform specific archive containing the suite
- * of applications in a ready to run form
- * \todo Write devdocs_getting_started_introduction section
- *
- * \subsection devdocs_getting_started_prerequisites Prerequisites
- *
- * This document assumes that the reader is familiar with C and C++ based software development
- * and is comfortable with the command-line interface to prepare a build environment.
- * Windows CE for PictoBox.
- * \todo Write devdocs_getting_started_prerequisites section
- *
- * \subsection devdocs_getting_started_file_layout Picto file layout
- *
- * 3rdParty, tools, intermediate files, output, source, pictobox, projects, etcetera
- * \todo Write devdocs_getting_started_file_layout section
- *
- * \subsection devdocs_getting_started_build_environment_preparation The build environment and tool chain
- *
- * %Picto utilizes a build environment comprised of many tools allowing development of Linux,
- * Mac OS X, and Windows versions of the applications, along with a Windows CE based embedded
- * system simultaneously.  Details on setting up the needed environment are described on the
- * page: \ref build_environment_preparation.
- *
+\author Joey Schnurr, Mark Hammond, Matt Gay
+\version 2.0.1
+\date Last modified: January 24, 2014
+
+This is the Developer's Guide for the Picto suite of experimental control applications
+and associated PictoBox hardware.  If you are an investigator utilizing the software as
+part of your research then you probably want the User Manual.  If you are interested in
+learning how the system itself works and/or modifying the system, then this guide is
+the right place to start.
+
+\section devdocs_getting_started_introduction Introduction
+The Picto suite of experimental control applications is utilized by researchers to perform neurobiological experiments in the study of decision making.  The system consists of serveral components:
+	- The Director component runs the experimental "game" that the test subject "plays."  This component takes in user input from a mouse input, eye tracker, joystick, or any other device that can provide analog x/y data.  Inputs are monitored to control the flow of the "game" and all user input, reward, and experimental state data are sent over the network to the Picto Server Component.  A hardware line connects the Director to the Proxy component and an alignment code is sent over this line periodically for the purpose of time alignment.
+	- The Proxy component (ProxyMainWindow) runs on a neural data acquisition computer (currently supported models are Plexon and TDT).  It collects data from the acquisition system, including neural spikes, local field potential data and alignment codes coming in from the Director, repackages the data and sends it over the network to the Picto Server component.
+	_ The Picto Server component is the main hub of the application suite.  This component takes in data from the Proxy and Director, aligns the timestreams from the two components based on the alignment codes and saves the data to disk in a Session file.  It also makes Director/Proxy data available in real time for monitoring from the Workstation component.  Lastly, the Picto Server acts as the glue that binds the Workstation to the Proxy and Director.  Whenever the Workstation sends a command to be handled on either the Proxy or the Director, the command is sent to the Server.  The Server takes care of forwarding the command to the appropriate component and informs the Workstation when/if the component complies with the command directive.
+	- The Workstation component is the Researcher's window into the Picto system.  It includes a RemoteViewer which Researchers use to start/stop Experimental sessions, control them and monitor their activity.  It includes a StateEditViewer, used to design the Experiment that run on the Director and the Analysis that is used to extract data from session files.  It includes a TestViewer for locally testing and debuggin Experimental designs and Analyses.  Lastly, the Workstation includes a ReplayViewer which is used to playback Session files, record Session activity to a video file, and run Session Analyses.
+
+While Neurobiological research is the main focus on the application suite, we have made every effort to design it in such a way that it will be generalizable and extendable for other types of applications as well.  In this vain, and for the purpose of training users, the suite can be used without an attached Proxy component.  In its essence, Picto is a system for designing and running experiments consisting of precisely timed, carefully controlled stimuli and user feedback with an optional capability for tracking neurobiological data and aligning it with the behavioral stream.
+
+\section devdocs_getting_started_prerequisites Prerequisites
+This document assumes that the reader has experience with C++ based software development and is familiar with the Qt framework.  Many many details and tutorials about getting started with C++ and Qt are available online.  We also assume that the reader has a basic level of comfort with the command-line interface, as it will be used to prepare a build environment.
+
+\section devdocs_getting_started Getting Started
+In order to get up to speed with Picto development, you will need to create a development environment, become familiar with the various files used in the Picto system and familiarize yourself with the code base.  The following pages should help guide you through these tasks.
+	- \subpage build_environment_preparation
+	- \subpage user_files
+	- \subpage first_code_look
+
+\section devdocs_future_directions Future Directions
+
+\subsection devdocs_future_directions_in_code Future Directions in Software
+
+
+\subsection devdocs_future_directions_in_hw Future Directions in Hardware
+
  */

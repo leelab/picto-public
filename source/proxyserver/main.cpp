@@ -90,14 +90,3 @@ int main(int argc, char *argv[])
 	return retVal;
 
 }
-
-/*! \defgroup pictoproxyserver Picto Server
- *  \defgroup pictoproxyserver_network Network
- *		\ingroup pictoproxyserver
- *  \defgroup pictoproxyserver_processinfo ProcessInfo
- *		\ingroup pictoproxyserver
- *  \defgroup pictoproxyserver_protocol Protocol
- *		\ingroup pictoproxyserver
- *  \defgroup pictoproxyserver_service Service
- *		\ingroup pictoproxyserver
- */

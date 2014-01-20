@@ -24,6 +24,9 @@ OutputWidgetHolder::~OutputWidgetHolder()
 {
 }
 
+/*! \brief Called when a new run is started with the input run Id.
+ *	\details Resets the Widget to display the Analysis Output for the new Run.
+ */
 void OutputWidgetHolder::newRunStarted(QUuid runId)
 {
 	if(runId != latestRunId_)
@@ -37,12 +40,21 @@ void OutputWidgetHolder::newRunStarted(QUuid runId)
 	}
 }
 
+/*! \brief Sets the parameters that will be used when saving the underlying AnalysisOutputWidget data to file.
+ *	@param saveToPath The file path at which data will be saved.
+ *	@param separateSubDirs If true, the output files will go into their own directory named according to the
+ *		Run name in the saveToPath directory.  If false, the output files will go directly into the saveToPath
+ *		directory.
+ */
 void OutputWidgetHolder::setSaveParameters(QString saveToPath,bool separateSubDirs)
 {
 	saveToPath_ = saveToPath;
 	separateSubDirs_ = separateSubDirs;
 }
 
+/*! \brief Uses OutputWidgetContainer::saveOutputTo() to save the AnalysisOutputWidget data to disk using
+ *	the parameters defined in setSaveParameters().
+*/
 void OutputWidgetHolder::saveOutput()
 {
 	if(!containerWidget_ || saveToPath_.isEmpty())
@@ -50,6 +62,11 @@ void OutputWidgetHolder::saveOutput()
 	containerWidget_->saveOutputTo(saveToPath_,separateSubDirs_);
 }
 
+/*! \brief This gets called periodically until an OutputWidgetContainer is found for the Experiment Analysis.  When it is
+ *	it is added to this widget's layout.
+ *	\details The OutputWidgetContainer may not be immediately available after run start due to threading issues.  This is
+ *	why we need to use this periodic update system.
+ */
 void OutputWidgetHolder::update()
 {
 	containerWidget_ = Picto::AnalysisOutput::getContainerWidget(latestRunId_);
@@ -64,6 +81,9 @@ void OutputWidgetHolder::update()
 	}
 }
 
+/*! \brief Clears this widget's layout, removing the OutputWidgetContainer.  This is used whenever a new Run starts
+ *	so that the widget can display that AnalysisOutputWidget object of the new Run.
+ */
 void OutputWidgetHolder::resetLayout()
 {
 	//Delete last container widget layout and children (by putting it on another widget and deleting it)
@@ -82,26 +102,17 @@ void OutputWidgetHolder::resetLayout()
 	setLayout(layout);
 }
 
+/*! \brief Called when the save button is pressed to retrieve save parameters from a SaveOutputDialog amd save
+ *	all AnalysisOutputWidget data for this Experiment to disk.
+ *	\details Uses setSaveParameters() and saveOutput() functions.
+ */
 void OutputWidgetHolder::saveOutputFromDialog()
 {
 	//Restore dialog values
 	QString dirName = ".";
 	bool useSeperateSubDirs = true;
-	//if(configDb_.isOpen())
-	//{
-	//	QSqlQuery query(configDb_);
-	//	query.exec(QString("SELECT key,value FROM workstationinfo WHERE key IN ('OutputPath','SeperateDirs')"));
-	//	while(query.next())
-	//	{
-	//		if(query.value(0) == "OutputPath")
-	//			dirName = query.value(1).toString();
-	//		else if(query.value(0) == "SeperateDirs")
-	//			useSeperateSubDirs = query.value(1).toBool();
-	//	}
-	//}
 	SaveOutputDialog saveDialog(this,dirName,useSeperateSubDirs);
 	saveDialog.showDialog();
-	//savedOutputBoxState_ = saveDialog.getCurrentState();
 	dirName = saveDialog.getSelectedDir();
 	if(dirName.isEmpty())
 		return;
@@ -110,6 +121,9 @@ void OutputWidgetHolder::saveOutputFromDialog()
 	saveOutput();
 }
 
+/*! \brief Called when OutputWidgetContainer::detectedSaveable() is emitted.  Enables this widget's save button so that
+ *	AnalysisOutputWidget data can be saved to disk.
+ */
 void OutputWidgetHolder::enableSaveButton()
 {
 	if(saveButton_)

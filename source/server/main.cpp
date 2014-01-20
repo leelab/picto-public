@@ -11,7 +11,6 @@
  *	as the server is running.  While developing Picto, you will want to use interactive 
  *	mode exclusively, since it gives you some clue as to what is going on with the server.
  */
-
 #include <QApplication>
 #include <QDialog>
 #include <QLabel>
@@ -34,9 +33,7 @@
 #include "protocol/ServerAppUpdateProtocol.h"
 #include "service/systemservice.h"
 #include "dialog.h"
-//#include "InteractiveSTDIOHandler.h"
 #include "../common/mainmemleakdetect.h"
-//#include "connections/ServerConfig.h"
 
 #ifdef Q_OS_MAC
 #include <sys/types.h>
@@ -396,14 +393,3 @@ int main(int argc, char *argv[])
 
 	return(result);
 }
-
-/*! \defgroup pictoserver Picto Server
- *  \defgroup pictoserver_network Network
- *		\ingroup pictoserver
- *  \defgroup pictoserver_processinfo ProcessInfo
- *		\ingroup pictoserver
- *  \defgroup pictoserver_protocol Protocol
- *		\ingroup pictoserver
- *  \defgroup pictoserver_service Service
- *		\ingroup pictoserver
- */

@@ -12,9 +12,6 @@
 #include "../timing/Timestamper.h" 
 namespace Picto {
 
-/*! \addtogroup picto_compositor
- * @{
- */
 
 /*!	\brief The surface on which all graphics are rendered.
  *
@@ -142,7 +139,6 @@ protected:
 
 };
 
-/*! @} */
 }; //namespace Picto
 
 #endif

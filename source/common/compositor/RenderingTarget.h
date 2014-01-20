@@ -1,5 +1,4 @@
 /*! \file RenderingTarget.h
- * \ingroup picto_compositor
  * \brief
  */
 
@@ -17,10 +16,6 @@
 #include "AuralTarget.h"
 
 namespace Picto {
-
-/*! \addtogroup picto_compositor
- * @{
- */
 
 /*! \brief This is a top level container acting as a single location to access all of the various objects that are part of the rendering system for a specific type of rendering hardware.
  * \details RenderingTarget acts as a virtual base class for specialization to specific types of rendering hardware.
@@ -60,8 +55,6 @@ private:
 	QSharedPointer<AuralTarget> auralTarget_;
 	QString status_;
 };
-
-/*! @} */
 
 }; //namespace Picto
 #endif

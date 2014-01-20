@@ -10,7 +10,8 @@ INCLUDEPATH += .
 SOURCES += $$(PICTO_TREE)/source/documentation/developersguide/main.cpp
 HEADERS += $$(PICTO_TREE)/source/documentation/developersguide/mainpage.h
 HEADERS += $$(PICTO_TREE)/source/documentation/developersguide/build_environment_preparation.h
-HEADERS += $$(PICTO_TREE)/source/documentation/developersguide/coding_conventions.h
+HEADERS += $$(PICTO_TREE)/source/documentation/developersguide/first_code_look.h
+HEADERS += $$(PICTO_TREE)/source/documentation/developersguide/user_files.h
 
 # Resources
 RESOURCES += $$(PICTO_TREE)/source/documentation/developersguide/developersguide.qrc

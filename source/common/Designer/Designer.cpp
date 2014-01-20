@@ -20,7 +20,7 @@
 
 const int InsertTextButton = 10;
 
-/*! \brief Construts a new Designer widget with the input parent.
+/*! \brief Constructs a new Designer widget with the input parent.
  *	\details This function initializes the UI and all variables.  It also creates the EditorState object used throughout the designer
  *	to maintain the current state and allow different components to communicate with one another.
  */

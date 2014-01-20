@@ -19,6 +19,4 @@ public:
     void run();
 };
 
-/*! @} */
-
 #endif

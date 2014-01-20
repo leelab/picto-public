@@ -12,8 +12,9 @@
 #include <QSharedPointer>
 #include "../../common/storage/TaskRunDataUnit.h"
 
-/*!	\brief	This views and session data including information about the current tasks run.
- * 
+/*!	\brief NOT USED.  This is no longer used and should probably be deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class BehavViewer : public QWidget
 {

@@ -18,7 +18,6 @@ namespace Picto {
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
-
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateUpdater : public QObject
 #else

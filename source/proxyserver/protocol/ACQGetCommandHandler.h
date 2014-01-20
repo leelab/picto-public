@@ -26,6 +26,4 @@ private:
 	NeuralDataAcqInterface *iNDAcq;
 };
 
-/*! @} */
-
 #endif

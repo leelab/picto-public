@@ -10,6 +10,10 @@
 
 using namespace Picto;
 
+/*! \brief Constructs a new RemoteStateUpdater object.
+ *	@param serverChan The CommandChannel on which this object will
+ *		request the latest data from the Server.
+ */
 RemoteStateUpdater::RemoteStateUpdater(CommandChannel *serverChan)
 : serverChan_(serverChan)
 {
@@ -17,11 +21,24 @@ RemoteStateUpdater::RemoteStateUpdater(CommandChannel *serverChan)
 	initForNewSession();
 }
 
+/*! \brief Initializes this object for a new Session.
+ *	\details This means setting the last data requested time back to zero.
+ */
 void RemoteStateUpdater::initForNewSession()
 {
 	lastTimeStateDataRequested_ = "0.0";
 }
 
+/*! \brief Requests all new Session data from the Picto Server and emits
+ *	the appropriate signals accordingly.
+ *	\details This function keeps track of the latest time for which data has
+ *	arrived from the Server then requests all data from the Server that 
+ *	occured after that time.  The function goes through the returned data
+ *	and emits the appropriate StateUpdater signals for each type of new
+ *	data that arrives.  This function should be called at least once per
+ *	frame in order to be sure that the most up to date data is always 
+ *	coming into the Workstation.
+ */
 bool RemoteStateUpdater::updateState()
 {
 	//Clear any old responses out of the response queue

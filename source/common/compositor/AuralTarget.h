@@ -8,9 +8,6 @@
 #include "MixingSample.h"
 
 namespace Picto {
-/*! \addtogroup picto_compositor
- * @{
- */
 
 /*!	\brief Objects of this class handle mixing of MixingSample sounds and playing over the computer's speakers. 
  * \details As described by a classic SAT-style analogy:
@@ -54,7 +51,6 @@ public:
 	virtual void present() = 0;
 };
 
-/*! @} */
 }; //namespace Picto
 
 #endif

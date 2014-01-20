@@ -27,6 +27,12 @@ class QSlider;
 class QSpinBox;
 class QLineEdit;
 
+/*!	\brief NOT USED.  I think this was copied over from the RemoteViewer's NeuralDataViewer at some point so that Neural data could be viewed during
+ *	playback.  This has not yet been implemented though.  A NeuralViewer should probably be implemented at some point, but it should be reused
+ *	in both the RemoteViewer and ReplayViewer systems. This one should probably be deleted.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class NeuralViewer : public QWidget
 {
 	Q_OBJECT

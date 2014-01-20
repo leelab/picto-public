@@ -11,10 +11,6 @@
 
 namespace Picto {
 
-/*! \addtogroup picto_compositor
- * @{
- */
-
 /*! \brief A Widget that contains a Visual Target
  *
  *	\note Joey: This object seems to have been created due to an incomplete understanding
@@ -83,7 +79,6 @@ private slots:
 	void presented(double frameTime);
 };
 
-/*! @} */
 }; //namespace Picto
 
 #endif

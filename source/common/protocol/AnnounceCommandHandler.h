@@ -25,8 +25,6 @@ public:
 	QSharedPointer<ProtocolResponse> processCommand(QSharedPointer<ProtocolCommand>);
 };
 
-/*! @} */
-
 }; //namespace Picto
 
 #endif

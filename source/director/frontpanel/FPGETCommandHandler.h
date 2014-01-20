@@ -45,6 +45,4 @@ private:
 	QString status_;
 };
 
-/*! @} */
-
 #endif

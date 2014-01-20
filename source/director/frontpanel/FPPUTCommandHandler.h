@@ -30,6 +30,4 @@ signals:
 	void setFlushDuration(int controller,int duration);
 };
 
-/*! @} */
-
 #endif

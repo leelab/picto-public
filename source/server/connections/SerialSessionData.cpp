@@ -13,7 +13,7 @@ SerialSessionData::~SerialSessionData()
 /*! \brief Once data has been written to this object, takeSerializedData() returns
  *	this data in an XML serialized form as a single string.  Once this is called, 
  *	all stored data is removed from this object.
- *//
+ */
 QString SerialSessionData::takeSerializedData()
 {
 	QWriteLocker locker(&readWriteLock_);

@@ -5,12 +5,10 @@
 
 #include "errorlist.h"
 #include "viewer.h"
-//#include "texteditor/textviewer.h"
 #include "testviewer/testviewer.h"
 #include "remoteviewer/remoteviewer.h"
 #include "replayviewer/replayviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
-//#include "analysis/analysisviewer.h"
 #include "../common/update/updatedownloader.h"
 #include "../common/memleakdetect.h"
 
@@ -48,7 +46,8 @@ MainWindow::MainWindow()
  *
  *****************************************************/
 
-//! Creates all of the actions used by the main window
+/*! \brief Creates all of the actions used by the MainWindow.
+ */
 void MainWindow::createActions()
 {
 	//FileActions
@@ -88,37 +87,6 @@ void MainWindow::createActions()
 	exitAction_->setStatusTip(tr("Exit")+Picto::Names->workstationAppName);
 	connect(exitAction_, SIGNAL(triggered()), this, SLOT(close()));
 
-	//Edit actions
-	//--------------------------------------
-	/*cutAction_ = new QAction(tr("Cut&"), this);
-	cutAction_->setIcon(QIcon(":/icons/cut.png"));
-	cutAction_->setShortcut(QKeySequence::Cut);
-	cutAction_->setEnabled(false);
-	connect(cutAction_,SIGNAL(triggered()),currViewer_, SLOT(cut()));
-	connect(currViewer_,SIGNAL(enableCutAction(bool)),cutAction_,SLOT(setEnabled(bool)));
-
-	copyAction_ = new QAction(tr("&Copy"), this);
-	copyAction_->setIcon(QIcon(":/icons/copy.png"));
-	copyAction_->setShortcut(QKeySequence::Copy);
-	copyAction_->setEnabled(false);
-	connect(copyAction_,SIGNAL(triggered()),currViewer_, SLOT(copy()));
-	connect(currViewer_,SIGNAL(enableCopyAction(bool)),copyAction_,SLOT(setEnabled(bool)));
-
-	pasteAction_ = new QAction(tr("Cut&"), this);
-	pasteAction_->setIcon(QIcon(":/icons/paste.png"));
-	pasteAction_->setShortcut(QKeySequence::Paste);
-	pasteAction_->setEnabled(false);
-	connect(cutAction_,SIGNAL(triggered()),currViewer_, SLOT(paste()));
-	connect(currViewer_,SIGNAL(enablePasteAction(bool)),pasteAction_,SLOT(setEnabled(bool)));*/
-
-	//Experiment actions
-	//--------------------------------------
-	//checkSyntaxAction_ = new QAction(tr("&Check XML syntax"),this);
-	//checkSyntaxAction_->setShortcut(Qt::Key_F7);
-	//checkSyntaxAction_->setToolTip(tr("Check the current experiment's XML code for syntax errors."));
-	//checkSyntaxAction_->setIcon(QIcon(":/icons/checksyntax.png"));
-	//connect(checkSyntaxAction_, SIGNAL(triggered()), this, SLOT(checkSyntax()));
-
 	setSystemNumberAction_ = new QAction(tr("&Change System Number"),this);
 	connect(setSystemNumberAction_,SIGNAL(triggered()),this,SLOT(changeSystemNumber()));
 
@@ -127,6 +95,8 @@ void MainWindow::createActions()
 
 }
 
+/*! \brief Creates all of the menus used by the MainWindow.
+ */
 void MainWindow::createMenus()
 {
 	fileMenu_ = menuBar()->addMenu(tr("&File"));
@@ -141,11 +111,6 @@ void MainWindow::createMenus()
 	fileMenu_->addSeparator();
 	fileMenu_->addAction(exitAction_);
 
-	/*editMenu_ = menuBar()->addMenu(tr("&Edit"));
-	editMenu_->addAction(cutAction_);
-	editMenu_->addAction(copyAction_);
-	editMenu_->addAction(pasteAction_);*/
-
 	modeMenu_ = menuBar()->addMenu(tr("&Mode"));
 	systemMenu_ = menuBar()->addMenu(tr("S&ystem"));
 	systemMenu_->addAction(setSystemNumberAction_);
@@ -153,6 +118,8 @@ void MainWindow::createMenus()
 	aboutMenu_->addAction(aboutPictoAction_);
 }
 
+/*! \brief Creates all of the toolbars used by the MainWindow.
+ */
 void MainWindow::createToolbars()
 {
 	fileToolbar_ = addToolBar(tr("&File"));
@@ -161,11 +128,6 @@ void MainWindow::createToolbars()
 	fileToolbar_->addAction(saveExperimentAction_);
 	fileToolbar_->addSeparator();
 	fileToolbar_->addWidget(new QLabel(QString("<h3>System Number: <span style=\"color:darkgreen\">%1</span></h3>").arg(Picto::portNums->getSystemNumber())));
-
-	/*editToolbar_ = addToolBar(tr("&Edit"));
-	editToolbar_->addAction(cutAction_);
-	editToolbar_->addAction(copyAction_);
-	editToolbar_->addAction(pasteAction_);*/
 
 	viewerToolbar_ = new QToolBar(tr("&Mode"),this);
 	addToolBar(Qt::LeftToolBarArea,viewerToolbar_);
@@ -176,16 +138,16 @@ void MainWindow::createToolbars()
 
 }
 
-/*!	\brief Creates all of the different viewers
+/*!	\brief Creates all of the different viewers.
  *
- *	In order to save time, all of the different viewers are created at start-up.
- *	Then, the textViewer is set as the current viewer.
+ *	\details In order to save time, all of the different viewers are created at start-up.
+ *	The StateEditViewer is set as the current viewer.
  *
  *  To keep all of the code in one place, this function handles all of the actions 
- *	that are added to the viewer toolbar as well as putting together the
- *	stacked widget that contains the different viewer widgets
- *
- *	\TODO Store the previous setup and restore it on startup.
+ *	that are added to the viewer toolbar for selecting a different viewer as well as putting together the
+ *	QStackedWidget that contains the different Viewer widgets.
+ *	\note It would be nice if the system started at the same viewer that was being viewed before the last exit.
+ *	We should implement that.
  */
 void MainWindow::createViewers()
 {
@@ -195,21 +157,7 @@ void MainWindow::createViewers()
 	
 	Viewer* viewer;
 
-	////Text Viewer
-	//viewer = new TextViewer(checkSyntaxAction_,this);
-	//viewerNames_.append(viewer->type());
-	//viewerStack_->addWidget(viewer);
-	//viewerAction = new QAction(tr("Te&xt Editor"),this);
-	//viewerAction->setShortcut(tr("Ctrl+1"));
-	//viewerAction->setIcon(QIcon(":/icons/texteditmode.png"));
-	//viewerAction->setData(0);
-	//viewerToolbar_->addAction(viewerAction);
-	//modeMenu_->addAction(viewerAction);
-	//connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
-
 	//StateEditViewer
-	//NOTE: This hasn't yet been created, so we're using a test viewer
-	//as a placeholder
 	viewer = new StateEditViewer(this);
 	viewerNames_.append(viewer->type());
 	viewerStack_->addWidget(viewer);
@@ -263,19 +211,6 @@ void MainWindow::createViewers()
 	connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
 	connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
 
-	////Analysis Viewer
-	//viewer = new AnalysisViewer(this);
-	//viewerNames_.append(viewer->type());
-	//viewerStack_->addWidget(viewer);
-	//viewerAction = new QAction(tr("&Analyze experiment"),this);
-	//viewerAction->setShortcut(tr("Ctrl+6"));
-	//viewerAction->setIcon(QIcon(":/icons/analyze.png"));
-	//viewerAction->setData(viewerNames_.size()-1);
-	//viewerToolbar_->addAction(viewerAction);
-	//modeMenu_->addAction(viewerAction);
-	//connect(viewerAction, SIGNAL(triggered()), this, SLOT(changeMode()));
-	//connect(viewer, SIGNAL(deinitComplete()), this, SLOT(startMode()));
-
 	//If an application update fails, we want to go back to the statemachineeditor.
 	connect(UpdateDownloader::getInstance().data(),SIGNAL(updateFailed()),initViewerAction_,SLOT(trigger()));
 }
@@ -285,7 +220,9 @@ void MainWindow::createViewers()
  *			SLOTS
  *
  *****************************************************/
-
+/*! \brief Called when the MainWindow is told to close.  Calls aboutToQuit() on all of the viewers.  If nothing objects, the latest
+ *	settings are written to disk and the close can proceed.
+ */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 	//We're going to call the aboutToQuit slot on all of the viewer widgets
@@ -314,42 +251,26 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 }
 
+/*! \brief Called when the newExperimentAction_ is triggered.  If nothing objects to closing the current Design, a default
+ *	Design is loaded (loadFile() with the EyeCalibration.xml Design).
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
+ *	probably be updated.
+ */
 void MainWindow::newExperiment()
 {
-	//if(!pictoData_)
-	//{
-	//	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-	//}
 	if(okToContinue())
 	{
 		loadFile(DEFAULT_FILE);
-		//pictoData_->clear();
-		//pictoDataText_.clear();
-
-		//QString pictoDataXml;
-		//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&pictoDataXml));
-		//xmlWriter->setAutoFormatting(true);
-		//xmlWriter->setAutoFormattingIndent(-1);   //use 1 tab to indent
-		//xmlWriter->writeStartDocument();
-
-		//pictoData_->toXml(xmlWriter);
-		//pictoDataText_.setPlainText(pictoDataXml);
-		//pictoDataText_.setModified(false);
-
-		//setCurrentFile("");
-
-		//for(int i=0; i<viewerStack_->count(); i++)
-		//{
-		//	Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
-		//	viewer->setPictoData(pictoData_);
-		//	viewer->setPictoDataText(&pictoDataText_);
-		//}
-		//currViewer_->init();
 		setCurrentFile("");
 	}
 
 }
 
+/*! \brief Called when the openExperimentAction_ is triggered.  If nothing objects to closing the current Design, a QFileDialog allows
+ *	the user to choose a Design file and (if valid) that file is loaded.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
+ *	probably be updated.
+ */
 void MainWindow::openExperiment()
 {
 	if(okToContinue())
@@ -361,6 +282,12 @@ void MainWindow::openExperiment()
 	}
 }
 
+/*! \brief Called when one of the recentExperimentActions_ is triggered.  If nothing objects to closing the current Design, the file
+ *	referenced from the RecentExperimentAction that called this function is loaded.  If that fails, newExperiment() is called to load
+ *	the default Design.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
+ *	probably be updated.
+ */
 void MainWindow::openRecentExperiment()
 {
 	if(okToContinue())
@@ -372,6 +299,11 @@ void MainWindow::openRecentExperiment()
 	}
 }
 
+/*! \brief This is called when the StateEditViewer requests that the input DesignRoot be loaded.  If nothing objects to closing the current Design,
+ *	the input DesignRoot is loaded.
+ *	\details Essentially, this is the same as openExperiment() except that it is opening a Design from RAM not a file, so it needs to take care of
+ *	things differently and handle some of the complicating factors of this procedure.
+ */
 void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
 {
 	if(designRoot.isNull())
@@ -391,7 +323,11 @@ void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
 }
 
 
-//! Called to save a file
+/*! \brief Called to save the Design to file.  Redirects to saveFile() with the current file name in the default case, or saveAsExperiment() in the case
+ *	where there is no file defined yet where the data should go.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
+ *	probably be updated.
+ */
 bool MainWindow::saveExperiment()
 {
 	if(currFile_.isEmpty() || currFile_.right(4).toLower() != ".xml")
@@ -400,19 +336,13 @@ bool MainWindow::saveExperiment()
 		return saveFile(currFile_);
 }
 
+/*! \brief Called to save the Design to a new file.  Allows the user to select a file in a QFileDialog.  The file data is written to
+ *	the selected file using saveFile() with that new filename.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
+ *	probably be updated.
+ */
 bool MainWindow::saveAsExperiment()
 {
-	//QFileDialog fileDialog(this,
-	//	tr("Save Experiment"),currFile_.isEmpty()?".":currFile_,"XML files (*.xml)");
-	//fileDialog.setFileMode(QFileDialog::AnyFile);
-	//fileDialog.setDefaultSuffix(".xml");
-	//fileDialog.setAcceptMode(QFileDialog::AcceptSave);
-	//fileDialog.exec();
-	//if(fileDialog.selectedFiles().isEmpty())
-	//	return false;
-	//QString filename = fileDialog.selectedFiles().first();
-	//if(filename.isEmpty())
-	//	return false;
 	QString filename = QFileDialog::getSaveFileName(this,
 		tr("Save Experiment"),currFile_.isEmpty()?".":currFile_,"XML files (*.xml)");
 	if(filename.isEmpty())
@@ -430,6 +360,9 @@ bool MainWindow::saveAsExperiment()
 	return saveFile(filename);
 }
 
+/*! \brief Called when one of the Viewer actions is triggered.  Redirects to changeMode() with a pointer to the Viewer
+ *	that we should switch to.
+ */
 void MainWindow::changeMode()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
@@ -443,6 +376,10 @@ void MainWindow::changeMode()
 	changeMode(qobject_cast<Viewer*>(viewerStack_->currentWidget()));
 }
 
+/*! \brief Initiates a change in focus to the input Viewer.  If there is no current Viewer, startMode() is used.  If there is a current Viewer, its
+ *	deinit() function is called and startMode() will be called whien its deinitComplete() signal is triggered.
+ *	\details For more information on why we use the deinitComplete() signal indirection to trigger startMode(), see Viewer::deinitComplete().
+ */
 void MainWindow::changeMode(Viewer* nextViewer)
 {
 	nextViewer_ = nextViewer;
@@ -457,6 +394,8 @@ void MainWindow::changeMode(Viewer* nextViewer)
 		startMode();	//Start the next viewer
 }
 
+/*! \brief Changes the current view mode to that of the nextViewer_.  Sets the current DesignRoot to that Viewer and calls its Viewer::init() function.
+*/
 void MainWindow::startMode()
 {
 	if(currViewer_ || !nextViewer_)
@@ -468,33 +407,9 @@ void MainWindow::startMode()
 	nextViewer_ = NULL;
 }
 
-//! Checks the syntax of the current XML to see if it is a legal experiment
-//void MainWindow::checkSyntax()
-//{
-//	errorList_->clear();
-//	if(designRoot_->compiles())
-//	{
-//		QMessageBox box;
-//		box.setText("Syntax check passed");
-//		box.setIconPixmap(QPixmap(":/icons/check.png"));
-//		box.exec();
-//	}
-//	else
-//	{
-//		QString allErrors;
-//		foreach(QString str, errorList_->getAllErrors())
-//		{
-//			allErrors.append(str);
-//		}
-//
-//		QMessageBox box;
-//		box.setText("Syntax check failed                                       ");
-//		box.setDetailedText(errorList_->getAllErrors().join("\n"));
-//		box.setIconPixmap(QPixmap(":/icons/x.png"));
-//		box.exec();
-//	}
-//}
-
+/*! \brief Called when the setSystemNumberAction_ is triggered.  Allows the user to set the new system number and then uses Picto::portNums::setSystemNumber() to
+ *	enact the change and restart the Workstation.
+ */
 void MainWindow::changeSystemNumber()
 {
 	int continueWithChange = QMessageBox::Cancel;
@@ -510,6 +425,9 @@ void MainWindow::changeSystemNumber()
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),newSystemNum,true);
 }
 
+/*! \brief Called when the aboutPictoAction_ is triggered.  Displays a QMessageBox containing the latest release notes and general
+ *	information about the Picto application.
+ */
 void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
@@ -541,7 +459,9 @@ void MainWindow::aboutPicto()
  *			FILE HANDLING
  *
  *****************************************************/
-//! Checks to see if we have unsaved changes
+/*! \brief Checks to see if we have unsaved changes.  If so, uses a QMessageBox to ask the user if the unsaved changes are important or not.  If not, it is okay
+ *	to continue and true is returned, if so, false is returned.
+ */
 bool MainWindow::okToContinue()
 {
 	if(designRoot_->isModified())
@@ -559,7 +479,10 @@ bool MainWindow::okToContinue()
 }
 
 
-//! Does the actual file saving
+/*! \brief Saves the current DesignRoot to the input file.
+ *	\details The DesignRoot's name is changed to match that of the input filename, Viewer::aboutToSave() is called on the currentViewer, 
+ *	the DesignRoot is serialized using DesignRoot::getDesignRootText(), and that text is saved to the file.
+ */
 bool MainWindow::saveFile(const QString filename)
 {
 	int success = true;
@@ -598,7 +521,11 @@ bool MainWindow::saveFile(const QString filename)
 	}
 }
 
-//! Does the actual file loading
+/*! \brief Loads the DesignRoot from the XML or .sqlite file at the input filename path.  
+ *	\details This attemps to deserialize the file contents into a DesignRoot.  If deserialization fails, an error message is displayed and false is returned.
+ *	If the deserialization is successful with warnings, those warnings are shown to the user.  Then the new DesignRoot is sent into the background AutoSaver 
+ *	system for safety's sake in the case of a crash and the current filename is updated for the purpose of saveExperiment().
+ */
 bool MainWindow::loadFile(const QString filename)
 {
 	QFile file(filename);
@@ -685,7 +612,11 @@ bool MainWindow::loadFile(const QString filename)
 	return true;
 }
 
-//! Called whenever the current file is changed.
+/*! \brief Called whenever the current file is changed.  Updates various values accordingly.
+ *	\details The currFile_ string used to find the file to use in saveExperiment() is updated.  The recent files list in the file dropdown is updated along with the
+ *	window title.  Then changeMode() is called with the current Viewer in order to call Viewer::init() again.
+ *	
+ */
 void MainWindow::setCurrentFile(const QString &filename)
 {
 	currFile_ = filename;
@@ -702,66 +633,15 @@ void MainWindow::setCurrentFile(const QString &filename)
 
 	setWindowTitle(QString("%1[*] - %2").arg(shownName)
 								   .arg(Picto::Names->workstationAppName));
-	//bool legalPictoDataXml = convertTextToPictoData();
-
-	//for(int i=0; i<viewerStack_->count(); i++)
-	//{
-	//	Viewer *viewer = qobject_cast<Viewer*>(viewerStack_->widget(i));
-
-	//	//if(legalPictoDataXml)
-	//	//	viewer->setPictoData(pictoData_);
-	//	//else
-	//	//	viewer->setPictoData(QSharedPointer<Picto::PictoData>());
-	//	viewer->setDesignRoot(designRoot_);
-	//	
-	//	//viewer->setPictoDataText(&pictoDataText_);
-	//}
 	if(currViewer_)
 		changeMode(currViewer_);
 	else
 		initViewerAction_->trigger();
 }
 
-///*!	\brief attempts to convert the experiment text to an experiment object
-// *
-// *	If the experiment text can't be converted to an object (if the XML is
-// *	incorrect, this function emits an error signal containing the text of 
-// *	the XML parsing error, and returns false.
-// */
-//bool MainWindow::convertTextToPictoData()
-//{
-//	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(pictoDataText_.toPlainText()));
-//
-//	//read until we either see an experiment tag, or the end of the file
-//	while(xmlReader->name() != "PictoData" && !xmlReader->atEnd()) 
-//		xmlReader->readNext();
-//
-//	if(xmlReader->atEnd())
-//	{
-//		emit error("XML Parsing Error","Picto Data XML did not contain <PictoData> tag");
-//		return false;
-//	}
-//
-//	pictoData_ = QSharedPointer<Picto::PictoData>(Picto::PictoData::Create().staticCast<PictoData>());
-//	Picto::Asset::clearErrors();
-//	bool result = pictoData_->fromXml(xmlReader);
-//
-//	////!!!!!!!!!!!!!!!!!THIS IS FOR TESTING ONLY.  ITS A TOTAL WASTE OF TIME. REMOVE IT!!!!!!!
-//	//QString serialTestString;
-//	//QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&serialTestString));
-//	//pictoData_->toXml(xmlWriter);
-//	//Q_ASSERT(serialTestString == pictoDataText_.toPlainText());
-//	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//
-//	if(!result)
-//	{
-//		emit error("XML Parsing Error",pictoData_->getErrors());
-//		return false;
-//	}
-//	return true;
-//}
-
-//! Modifies the recent files portion of the File menu
+/*! \brief Updates the recent files portion of the File menu according to the latest recentFiles_ list and a check as to which of those files actually exist
+ *	in the file system.
+ */
 void MainWindow::updateRecentFileActions()
 {
 	//Clear out any non-existent files
@@ -800,12 +680,14 @@ void MainWindow::updateRecentFileActions()
  *			PERSISTANT SETTINGS
  *
  *****************************************************/
-/*! \Brief stores settings
+/*! \Brief Stores settings from the Workstation to disk.
  *
- *	Settings for the workstation app are stored between sessions.
+ *	\details Settings for the Workstation app are stored on disk.
  *	The QSettings object does this for us in a platform independent
  *	manner.  This uses the registry in Windows, XML preference files
  *	in OSX, and ini files in Unix.
+ *
+ *	Currently, the only settings are the recently opened files.
  */
 void MainWindow::writeSettings()
 {
@@ -815,6 +697,15 @@ void MainWindow::writeSettings()
 
 }
 
+/*! \Brief Reads settings for the Workstation from disk.
+ *
+ *	\details Settings for the Workstation app are stored on disk.
+ *	The QSettings object does this for us in a platform independent
+ *	manner.  This uses the registry in Windows, XML preference files
+ *	in OSX, and ini files in Unix.
+ *
+ *	Currently, the only settings are the recently opened files.
+ */
 void MainWindow::readSettings()
 {
 	QSettings settings("Block Designs", Picto::Names->workstationAppName);

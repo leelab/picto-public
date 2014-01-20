@@ -6,9 +6,6 @@
 #include "../common.h"
 
 namespace Picto {
-/*! \addtogroup picto_compositor
- * @{
- */
 /*! \brief Audio Mixing sample which is mixed into and played by an AuralTargets
  *
  *	Every MixingSample has an underlying PreloadedSound object which it plays
@@ -66,7 +63,6 @@ signals:
 	void stopping(QString mixSampleType);
 };
 
-/*! @} */
 }; //namespace Picto
 
 #endif

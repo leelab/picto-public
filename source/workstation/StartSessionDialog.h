@@ -15,11 +15,15 @@ class QLabel;
 class QLineEdit;
 class QDialogButtonBox;
 
-/*!	\brief Deprecated. A dialog for starting a session
+/*!	\brief NO LONGER USED.  SHOULD PROBABLY BE DELETED.  The original documentation appears below for your reference. 
+ *
+ *	\details A dialog for starting a session
  *
  *	This was originally used as a dialog to start up a new session.  We no longer use 
  *	this dialog, and hence the code is no longer needed.  However, I have left it in place
  *	as it shows exactly how to start up a new session.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class StartSessionDialog : public QDialog
 {

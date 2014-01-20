@@ -24,6 +24,4 @@ signals:
 	void flush(int controller);
 };
 
-/*! @} */
-
 #endif

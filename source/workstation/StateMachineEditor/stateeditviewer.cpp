@@ -1,44 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include <QtWidgets>
 #include <QLabel>
 #include <QMenuBar>
@@ -46,6 +5,7 @@
 
 #include "stateeditviewer.h"
 #include "../../common/memleakdetect.h"
+/*! \brief The interval at which automatic backups are saved.*/
 #define AUTOSAVEINTERVALMS 30000	//auto save every 30 seconds
 
 StateEditViewer::StateEditViewer(QWidget *parent) :
@@ -63,7 +23,13 @@ StateEditViewer::StateEditViewer(QWidget *parent) :
 StateEditViewer::~StateEditViewer()
 {
 }
-
+/*! \brief Called just before displaying the viewer.
+ *	\details Moves the DesignRoot out of run mode so that Property changes won't
+ *	only go into Property run values.  Loads the DesignRoot into the Designer widget
+ *	object and activates that widget.  Starts the Autosaver so that changes made to
+ *	the DesignRoot will be backed up in case of a crash.  In case we just
+ *	restarted after a crash, the AutoSaver's DesignRestoreDialog is shown here as well.
+ */
 void StateEditViewer::init()
 {
 	designRoot_->enableRunMode(false);
@@ -82,6 +48,11 @@ void StateEditViewer::init()
 	}
 }
 
+/*! \brief Called just before hiding the viewer.
+ *	\details Sets an undo point, deactivates the Designer widget, stops
+ *	the Autosave system and emits the deinitComplete() signal so that the 
+ *	next Viewer can be displayed.
+ */
 void StateEditViewer::deinit()
 {
 	//Whenever we're leaving the StateEditViewer, set an undo point.  This way we will

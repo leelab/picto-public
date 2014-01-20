@@ -1,5 +1,4 @@
 /*! \file globals.h
- * \ingroup picto
  * \brief Initialization calls and global variables exposed by the %Picto library
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
@@ -13,10 +12,6 @@
 #include "portdefs.h"
 
 namespace Picto {
-
-/*! \addtogroup picto
- * @{
- */
 
 PICTOLIB_API inline void InitializeNames();
 
@@ -36,7 +31,6 @@ PICTOLIB_GLOBAL const TranslatedNames * Names;
 /*! \brief This global variable contains all of the port numbers utilized by components of the %Picto suite */
 PICTOLIB_GLOBAL PortNums * portNums;
 
-/* @} */
 }; //namespace Picto
 
 #endif

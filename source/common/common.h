@@ -1,12 +1,7 @@
 /*! \file common.h
- * \ingroup picto
  * \brief Definitions common to the %Picto library
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
- */
-
-/*! \addtogroup picto
- * @{
  */
 
 #ifndef _COMMON_H_
@@ -121,5 +116,3 @@
 
 
 #endif
-
-/*! @} */

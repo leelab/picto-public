@@ -12,24 +12,30 @@ class QTextDocument;
 class ErrorList;
 class QStackedWidget;
 
-/*! \brief The main window for the Workstation tool
+/*! \brief The main window for the Workstation app.
  *
- *	This window works similarly to the the Qt Creator tool.  There are multiple
+ *	\details This window includes multiple
  *	"Modes" which are accessed by a toolbar on the left of the window.  At the
- *	moment, there are only 3 modes: Edit, Test, and Run.  The edit mode provides an 
- *	XML editor for editing experiments (we'll need to add a GUI at some point in
- *	the near future).  The test mode allows you to run a state machine inside the
- *	Workstation interface, and the Run mode allows you to run an experiment on a 
- *	remote Director instance.
+ *	moment, the modes are:  
+ *	- A StateMachineEditor - A graphical state machine based development environment that is used to design Picto Experiments and their Analysis.
+ *	- A TestViewer - A test environment where Experiments and Analyses can be run and debugged before being deployed in a real experimental Session.
+ *	- A RemoteViewer - A control panel that is used to start an experimental session on a Director/Proxy system, view it in real time, control
+ *			its operation, and interact with the experiment subject.
+ *	- A ReplayViewer - A playback system that allows for replaying completed experimental Sessions, recording their activity to video, running
+ *		Analysis on the Sessions, and saving the Analysis output to disk. 
  *
- *	Workstation operates on a single "experiment" at a time.
+ *	While each of these Workstation modes functions to a great extent in its own world, there are some loose ties between all Viewers.  The main
+ *	tie between all of these viewers is a "current design file."  The Workstation as whole always has a design file loaded.  The Design stored in the
+ *	design file's XML has different functions in each Viewer.  In the StateMachineEditor, the design is what is being created and edited.  In the 
+ *	TestViewer the design is what is being run and tested.  In the RemoteViewer the design is what is being sent over to a Director in order to run
+ *	an experimental Session.  In the ReplayViewer, the design defines the Analyses that can be imported into the currently loaded Session files
+ *	in order to gather data that may not have been considered when a Session was first run.
  *
- *	The relationship between pictoData_ and pictoDataText_ needs to be clarified.
- *	pictoDataText_ is the XML that defines a PictoData object.  This is what all of our
- *	file operations operate on.  The pictoData_ object is the actual pictoData object that
- *	includes an experiment and various data for the picto framework (GUI, etc).  This
- *	distinction is important, since it's possible to have pictoDataText_ that can't
- *	be deserialized.  In this case, pictoData_ will be null.
+ *	This window also includes some simple menus with functionality for saving the current Design, opening a new Design from different types of files,
+ *	changing the System number (Picto applications only communicate with the Server that has their System number) and retrieving broad "about" information
+ *	on the Picto system.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class MainWindow : public QMainWindow
 {
@@ -41,6 +47,7 @@ public:
 protected:
 	void closeEvent(QCloseEvent *event);
 signals:
+	/*! \brief This does not appear to be used.*/
 	void error(QString errorType, QString errorText);
 
 private slots:

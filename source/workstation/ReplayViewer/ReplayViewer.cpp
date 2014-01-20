@@ -45,7 +45,8 @@ ReplayViewer::ReplayViewer(QWidget *parent) :
 	setupUi();
 }
 
-//! Called just before displaying the viewer
+/*! \brief Called just before displaying the viewer
+ */
 void ReplayViewer::init()
 {
 	jumpDownRequested_ = false;
@@ -56,7 +57,8 @@ void ReplayViewer::init()
 		analysisSelector_->enableCheckboxes(false);
 }
 
-//!Called just before hiding the viewer
+/*! \brief Called just before hiding the viewer
+ */
 void ReplayViewer::deinit()
 {
 	stop();
@@ -70,7 +72,8 @@ bool ReplayViewer::aboutToQuit()
 	return true;
 }
 
-//! Sets up the user interface portions of the GUI
+/*! \brief  Sets up the user interface portions of the GUI
+ */
 void ReplayViewer::setupUi()
 {
 	//Load Session Actions
@@ -241,8 +244,9 @@ void ReplayViewer::setupUi()
 	setLayout(mainLayout);
 }
 
-//Updates the Recording Visual Target Host to record or not depending
-//on the current run and record mode states.
+/*! \brief Updates the Recording Visual Target Host to record or not depending
+ *	on the current run and record mode states.
+ */
 void ReplayViewer::updateRecordingTarget()
 {
 	if(recordModeOn_ && (latestStatus_ == PlaybackControllerData::Running))
@@ -257,11 +261,17 @@ void ReplayViewer::updateRecordingTarget()
 	}
 }
 
+/*! \brief Returns the Uuids of all selected Analyses that are included in the 
+ *	loaded Session file's design.
+ */
 QList<QUuid> ReplayViewer::getSelectedLocalAnalyses()
 {
 	return analysisSelector_->getSelectedAnalysisIds();
 }
 
+/*! \brief Returns the exported designs of all selected Analyses that should be imported
+ *	into the Session file's design.
+ */
 QStringList ReplayViewer::getAnalysesToImport()
 {
 	QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
@@ -280,8 +290,16 @@ QStringList ReplayViewer::getAnalysesToImport()
 	}
 	return resultList;
 }
-//Returns false if the runQueue was decremented to empty and then reinitialized
-//ie.  It didn't pop the front because the front's now back in the queue somewhere
+/*! \brief Removes the first Run in the Run queue that we are iterating through (to analyze all selected Runs).
+ *	\details If we end up emptying the Run queue and some of the Runs could not be properly analyzed,
+ *	we ask the user if they would like to re-analyze the failed Runs.  Otherwise we just tell the
+ *	user that all Runs have been succesfully analyzed.
+ *	
+ *	Returns false if the runQueue ended up being emptied and reinitialized to contain all selected Runs.
+ *	Whenever we finish the runQueue, if we don't change the selection to the runs that failed, we always
+ *	reinitialize the runQueue to contain all selected runs so that the user can just push play to start 
+ *	Analysis again.
+ */
 bool ReplayViewer::popRunQueueFront()
 {
 	bool returnValue = true;
@@ -332,6 +350,9 @@ bool ReplayViewer::popRunQueueFront()
 	return returnValue;
 }
 
+/*! \brief Sets the stored Run queue (used to playback/analyze batched Runs one after another) to the input
+ *	value.
+ */
 void ReplayViewer::setRunQueue(QList<PlayRunInfo> newRunQueue)
 {
 	//Update the runQueue_ to contain all the input runs.
@@ -345,6 +366,10 @@ void ReplayViewer::setRunQueue(QList<PlayRunInfo> newRunQueue)
 	}
 }
 
+/*! \brief Causes playback/analysis to begin in a normal way.  The user will be able to pause playback, fast forward,
+ *	etc.
+ *	\sa runToEnd()
+ */
 void ReplayViewer::runNormal()
 {
 	useRunToEnd_ = false;
@@ -353,7 +378,14 @@ void ReplayViewer::runNormal()
 	play();
 }
 
-
+/*! \brief Causes playback/analysis to run completely from the beginning to the end of each selected run at
+ *	maximum speed, no rendering, and without any opportunity for user interaction during the course of playback.
+ *	\details This is meant to be used when only Analysis is needed, and it is not important to be able to watch
+ *	the Session on screen.  When this function is called and Analysis objects are active, this function asks
+ *	if the user would like to automatically save Analysis outputs when each Run is complete.  This is important
+ *	because otherwise in batch analysis each new Run Analysis would overwrite previous Analysis outputs and the 
+ *	user would only be able to save Analysis output of the last Run in the batch.
+ */
 void ReplayViewer::runToEnd()
 {
 	needsAutoSave_ = false;
@@ -391,6 +423,9 @@ void ReplayViewer::runToEnd()
 	}
 }
 
+/*! \brief Causes playback to begin / resume.  If the current Run's Session has not yet been loaded, it will
+ *	first load and then the Run will begin playback.
+ */
 bool ReplayViewer::play()
 {
 	qDebug()<<"Play slot";
@@ -407,6 +442,10 @@ bool ReplayViewer::play()
 	return true;
 }
 
+/*! \brief Pauses the current Run, or starts the selected Run in a paused state (at time zero).
+ *	\details If the function causes a Run to start, and that Run's Session has not yet been loaded,
+ *	this will cause the Session to load and then the "start by pausing" will be enacted.
+ */
 void ReplayViewer::pause()
 {
 	qDebug()<<"Pause slot";
@@ -421,6 +460,8 @@ void ReplayViewer::pause()
 	playbackController_->pause(getSelectedLocalAnalyses(),getAnalysesToImport());
 }
 
+/*! \brief Stops playback/analysis of the current Run and reinitializes everything for the next playback.
+*/
 void ReplayViewer::stop()
 {
 	qDebug()<<"Stop slot";
@@ -430,6 +471,9 @@ void ReplayViewer::stop()
 	playbackController_->stop();
 }
 
+/*! \brief Returns a list of PlayRunInfo structs including information about all of the currently
+ *	select Runs (from the RunSelectorWidget).
+ */
 QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
 {
 	QList<PlayRunInfo> newRunQueue;
@@ -443,6 +487,18 @@ QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
 	return newRunQueue;
 }
 
+/*! \brief Called whenever the PlaybakController's State changes.  status is the new State.
+ *	\details This function updates the ReplayViewer UI to reflect the current PlaybackController
+ *	state.  We update the UI as a result of PlaybackController state changes rather than updating
+ *	it when actions are triggered in the ReplayViewer because the PlaybackController state machine
+ *	runs in a separate thread, so there may be some lag between when a ReplayViewer action is 
+ *	triggered (ie. Play) and when the action actually takes affect (ie. PlaybackControllerData::Running
+ *	state).
+ *	\note Since thie object is set as running in the UI thread, signals from the PlaybackController 
+ *	thread don't actually take affect until the UI thread's event loop runs.  That is how this how
+ *	this function can be triggered by changes that occur in the PlaybackController thread without
+ *	being in the thread itself.
+ */
 void ReplayViewer::playbackStatusChanged(int status)
 {
 	bool runIsSelected = runs_->getNumSelectedRuns();
@@ -589,6 +645,10 @@ void ReplayViewer::playbackStatusChanged(int status)
 	latestStatus_ = status;
 }
 
+/*! \brief Triggred when the user presses the load session button.  Opens a File dialog, gets
+ *	the user's selected Sessions, updates all the UI for new Session info, and then tells the
+ *	PlaybackController to preload the Session files (PlaybackController::preLoadSessions()).
+ */
 void ReplayViewer::loadSession()
 {
 	QStringList filenames = QFileDialog::getOpenFileNames(	this,
@@ -622,6 +682,17 @@ void ReplayViewer::loadSession()
 	playbackController_->preLoadSessions(sessionFiles);
 }
 
+/*! \brief Called when playback time changes in the PlaybackController.  Updates the position of the
+ *	ProgressWidget slider accordingly.
+ *	\details This function includes a bunch of logic that deals with cases where the slider was
+ *	used to change something in the PlaybackController.  For example, if the slider was used to
+ *	tell the PlaybackController to fast forward to a time 100 seconds after its current position,
+ *	we shouldn't move the slider back as soon as that command starts taking affect, instead, while
+ *	the fast forward is taking affect, the slider remains stationary, only restarting once the 
+ *	fastforward reaches its time.  Similar logic is in place if the slider is moved to a position
+ *	below the current PlaybackController time, in which case playback restarts from zero and
+ *	fast forwards to the new slider time.
+ */
 void ReplayViewer::updateTime(double time)
 {
 	double runLength = playbackController_->getRunLength();
@@ -646,6 +717,13 @@ void ReplayViewer::updateTime(double time)
 		progress_->setSliderProgress(time);
 }
 
+/*! \brief Called whenever the selected Runs change in the RunSelectorWidget.
+ *	Updates the Run queue for batch playback/analysis along with other parts of the UI.
+ *	\details If the change causes Runs to be selected from more than one Session, local
+ *	Analyses are disabled.  For multiple Sessions, only imported Analyses are allowed.
+ *	Other UI channges need to be made as well depending on things like whether the 
+ *	first run in the queue has changed, etc.
+ */
 void ReplayViewer::runSelectionChanged()
 {
 	QList<PlayRunInfo> newRunQueue = getSelectedPlayRunInfo();
@@ -710,6 +788,9 @@ void ReplayViewer::runSelectionChanged()
 	progress_->setHighlightRange(1,0,0);
 }
 
+/*! \brief Called when the AnalysisSelectorWidget selection changes.  Enables/disables the
+ *	"run to end" button depending on whether any Analyses are selected.
+*/
 void ReplayViewer::analysisWidgetChanged()
 {
 	if(latestStatus_ != PlaybackControllerData::Stopped)
@@ -718,6 +799,11 @@ void ReplayViewer::analysisWidgetChanged()
 	runToEndAction_->setEnabled(analysisSelector_->hasSelectedIds() && selectedRuns.size());
 }
 
+/*! \brief Called when the User Type dropdown value changes.  Changes the user type in the 
+ *	PlaybackController accordingly.
+ *	\note The active user, Operator or Subject, determines which graphics are shown in the 
+ *	display depending on each graphics OperatorView/SubjectView Properties.
+ */
 void ReplayViewer::setUserType(int index)
 {
 	switch(index)
@@ -731,7 +817,9 @@ void ReplayViewer::setUserType(int index)
 	};
 }
 
-
+/*! \brief Called when the LFP enable dropdown value changes.  Changes whether or not LFP data will
+ *	be loaded during playback for the purpose of runtime optimization.
+ */
 void ReplayViewer::setLFPRequirements(int index)
 {
 	switch(index)
@@ -745,12 +833,20 @@ void ReplayViewer::setLFPRequirements(int index)
 	};
 }
 
+/*! \brief Called when the PlaybackController reports a load progress change.  Updates the 
+ *	load progress bar.
+ */
 void ReplayViewer::percentLoaded(double percent)
 {
 	loadProgress_->setMaximum(100);
 	loadProgress_->setValue(percent);
 }
 
+/*! \brief Called when the ProgressWidget reports a jump time being requested.  Determines
+ *	whether the jump is up or down for the purpose of handling slider updating (see updateTime())
+ *	and tells the PlaybackController to enact the jump (PlaybackController::jumpToTime()).
+ *	\sa userChoosingJump()
+ */
 void ReplayViewer::jumpRequested(double time)
 {
 	if(time < progress_->getHighlightMax(0))
@@ -760,6 +856,10 @@ void ReplayViewer::jumpRequested(double time)
 	playbackController_->jumpToTime(time);
 }
 
+/*! \brief Called when the ProgressWidget reports a user starting or ending a jump choice.
+ *	Pauses playback when a jump starts and resumes it when it ends (unless playback was
+ *	already paused before the jump).
+ */
 void ReplayViewer::userChoosingJump(bool starting)
 {
 	if(starting)
@@ -779,6 +879,10 @@ void ReplayViewer::userChoosingJump(bool starting)
 	}
 }
 
+/*! \brief Called when the user toggles the record button.
+ *	\details Handles changes to the Icon, and the recording state.
+ *	\sa updateRecordingTarget()
+ */
 void ReplayViewer::toggleRecording()
 {
 	if(!visualTargetHost_)
@@ -795,13 +899,17 @@ void ReplayViewer::toggleRecording()
 	updateRecordingTarget();
 }
 
+/*! \brief Called when the restart recording button is pressed.  Enacts the request.
+*/
 void ReplayViewer::restartRecording()
 {
 	if(!visualTargetHost_)
 		return;
 	visualTargetHost_->restartRecording();
 }
-
+/*! \brief Called when the save recording button is pressed. Shows a dialog box allowing the user to choose
+ *	a save file path, saves the file at that path or shows a warning dialog if it doesn't work.
+ */
 void ReplayViewer::saveRecording()
 {
 	QString filename = QFileDialog::getSaveFileName(this,
@@ -814,7 +922,9 @@ void ReplayViewer::saveRecording()
 	}
 }
 
-//Updates the time recorded in the toolbar label
+/*! \brief Updates the record time in the toolbar label to the latest value.  Also deals with UI changes as
+ *	a function of whether the record time is positive or not.
+ */
 void ReplayViewer::setRecordTime(double time)
 {
 	if(recordTime_->value() == time)
@@ -833,8 +943,9 @@ void ReplayViewer::setRecordTime(double time)
 	recordTime_->display(QString::number(time,'f',3));
 }
 
-//When the playback controller's design root changes, we need to hook back
-//up to it's run started signal for the purposes of our output widget holder
+/*! \brief Called when the PlaybackController's DesignRoot changes.  Handles hooking its
+ *	runStarted() signal back up to our own.
+ */
 void ReplayViewer::designRootChanged()
 {
 	//In theory, we don't have to disconnect the old design config when a new one is set because it is done
@@ -842,17 +953,26 @@ void ReplayViewer::designRootChanged()
 	connect(playbackController_->getDesignRoot()->getExperiment()->getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
+/*! \brief Called when a preloadError occurs in the PlaybackController.  Presents the input errorStr message
+ *	in an error message box.
+ */
 void ReplayViewer::preloadError(QString errorStr)
 {
 	QMessageBox::critical(0,"Load Error",errorStr);
 	loadProgress_->setValue(0);
 }
 
+/*! \brief Called when the run with the input runId starts.  Calls OutputWidgetHolder::newRunStarted().
+ */
 void ReplayViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
 }
 
+/*! \brief Called when playback of the current Run finishes.  Saves Analysis Output automatically if set to
+ * do so, updates the displayed run status in the RunSelectorWidget and starts the next Run if Run 
+ * playbacks are batched.
+ */
 void ReplayViewer::finishedPlayback()
 {
 	//Perform autosave if this was requested
@@ -869,6 +989,10 @@ void ReplayViewer::finishedPlayback()
 		play();
 }
 
+/*! \brief Called when a loadError occurs in the PlaybackController.  Presents the input errorStr message
+ *	in an error message box, updates the Run status in the RunSelectorWidget, and starts playback of the
+ *	next Run if Runs are batched.
+ */
 void ReplayViewer::loadError(QString errorMsg)
 {
 	//Mark the run as an error
@@ -890,6 +1014,9 @@ void ReplayViewer::loadError(QString errorMsg)
 	}
 }
 
+/*! \brief Called when the PlaybackController successfully preloads a Session file.  Adds the preloaded
+ *	data to the RunSelectorWidget and AnalysisSelectorWidget.
+ */
 void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
 {
 	//A session was preloaded, add its runs to the runs_ widget

@@ -11,6 +11,14 @@
 
 namespace Picto {
 
+/*! \brief This adds video file recording functionality onto the regular VisualTargetHost functionality.
+ *	\details This class extends the VisualTargetHost so that whenever a new frame is drawn to its VisualTarget
+ *	it is also writtent to a video file.  Functions are provided for enabling/disabling the "copy frame to 
+ *	video file" functionality.  saveRecordingAs() can be used to save the recorded video file to a particular
+ *	path on disk.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
+ */
 class RecordingVisualTargetHost : public VisualTargetHost
 {
 	Q_OBJECT
@@ -22,6 +30,7 @@ public:
 	bool saveRecordingAs(QString filePath);
 	QString getVideoFileType();
 signals:
+	/*! \brief Emitted when the current recording time changes.  currTime is in seconds.*/
 	void updateRecordingTime(double currTime);
 public slots:
 	void toggleRecording();

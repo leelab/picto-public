@@ -12,8 +12,14 @@
 #include <QSharedPointer>
 #include "../../common/storage/TaskRunDataUnit.h"
 
-/*!	\brief	This views and session data including information about the current tasks run.
- * 
+/*!	\brief A viewer that displays data about the Task Runs from the current session and allows the operator to edit them.
+ *	\details This viewer allows the Experiment operator to save notes about the runs in the current session, set their names
+ *	and set a saved flag indicating if they contain useful data.  It communicates with the outside world by accessing run
+ *	data through input pointers and changing run data directly in the objects that those pointers point to.  When the
+ *	taskRunDataChanged() signal is emitted, the outside world knows that something changed in the Task Run that it 
+ *	indicates and that data can be sent to the Picto Server.
+ *	\author Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2013
  */
 class TaskRunViewer : public QWidget
 {
@@ -27,6 +33,11 @@ public:
 	void enableEditing(bool enable);
 	void clear();
 signals:
+	/*! \brief Emitted when the widget is used to change values in the Run with the input runId.  When this is emitted, the
+	 *	latest values of the run with that runId should be sent to the server.
+	 *	\note The TaskRunViewer operates on the objects pointed to in the QMap passed into setTaskRunData().  When this signal
+	 *	is emitted, those object will have already been updated.
+	 */
 	void taskRunDataChanged(qulonglong runId);
 private:
 	QSharedPointer<Picto::TaskRunDataUnit> getSelectedRun();

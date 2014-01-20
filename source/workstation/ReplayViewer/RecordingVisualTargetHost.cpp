@@ -23,12 +23,16 @@ RecordingVisualTargetHost::~RecordingVisualTargetHost()
 	restartRecording();
 }
 
-//Returns whether this object is currently in recording mode
+/*! \brief Returns whether this object is currently in recording mode.
+ */
 bool RecordingVisualTargetHost::isRecording()
 {
 	return recording_;
 }
 
+/*! \brief Saves the recorded file to the input file path.  Overwrites anything already at that path.
+ *	Returns false if the file could not be saved at the path.
+ */
 bool RecordingVisualTargetHost::saveRecordingAs(QString filePath)
 {
 	//Check if we have a video file
@@ -48,15 +52,18 @@ bool RecordingVisualTargetHost::saveRecordingAs(QString filePath)
 	return true;
 }
 
-// Returns the type of video file currently handled by this object (ie. "avi" or "mpg")
+/*! \brief  Returns the type of video file currently handled by this object (ie. "avi" or "mpg").
+ */
 QString RecordingVisualTargetHost::getVideoFileType()
 {
 	return VIDEOTYPE;
 }
 
-//Toggles the recording state.  When recording is on, each paint
-//event causes a frame to be written to video.  When recording is off
-//frames can be displayed to screen without going into the video file.
+/*! \brief Toggles the recording state.  
+ *	\details When recording is on, each paint event causes a frame to 
+ *	be written to video.  When recording is off frames can be displayed 
+ *	to the screen without going into the video file.
+ */
 void RecordingVisualTargetHost::toggleRecording()
 {
 	if(recording_)
@@ -72,8 +79,9 @@ void RecordingVisualTargetHost::toggleRecording()
 	}
 }
 
-//Closes the video file and zeros out the recording time.  Any new recording will erase
-//the previous video file and start a new one.
+/*! \brief Closes the video file and zeros out the recording time.  Any new recording will erase
+ *	the previous video file and start a new one.
+ */
 void RecordingVisualTargetHost::restartRecording()
 {
 	//Finish up the recording
@@ -83,7 +91,8 @@ void RecordingVisualTargetHost::restartRecording()
 	setRecordingTime(-1);
 }
 
-//Does normal inherited painting plus optional recording of visual target data to a video.
+/*! \brief Does normal inherited painting plus optional recording of visual target data to a video.
+ */
 void RecordingVisualTargetHost::paintEvent(QPaintEvent* e)
 {
 	//Do inherited painting
@@ -116,6 +125,11 @@ void RecordingVisualTargetHost::paintEvent(QPaintEvent* e)
 	encoder_->encodeImagePts(frame,getRecordingTime());
 }
 
+/*! \brief Recording needs to be initialized once before any video files are recorded.  This function
+ *	takes care of that.
+ *	\details Essentially what we are doing here is setting up the QVideoEncoder from the 
+ *	QTFFMpegWrapper package.
+ */
 bool RecordingVisualTargetHost::initializeRecording()
 {
 	//setup frame image
@@ -149,7 +163,8 @@ bool RecordingVisualTargetHost::initializeRecording()
 	return true;
 }
 
-//Finishes up recording and closes required resources
+/*! \brief Finishes up recording and closes required resources.
+ */
 void RecordingVisualTargetHost::finishRecording()
 {
 	//Close the encoder
@@ -166,9 +181,10 @@ void RecordingVisualTargetHost::finishRecording()
 	recordingInitialized_ = false;
 }
 
-//Updates the current recording time to the current time.
-//Record state toggles and initialization conditions are taken 
-//into account in the current time calculation.
+/*! \brief Updates the current recording time to the current time.
+ *	\details Prioer record state toggle events and initialization conditions are taken 
+ *	into account in the current time calculation.  Time is actually set using setRecordingTime().
+ */
 void RecordingVisualTargetHost::updateRecordingTime()
 {
 	//Get the last recording time
@@ -187,15 +203,16 @@ void RecordingVisualTargetHost::updateRecordingTime()
 	setRecordingTime(newFrameTime);
 }
 
-//Gets the latest recording time in Ms
+/*! \brief Gets the latest recording time in Ms
+ */
 int RecordingVisualTargetHost::getRecordingTime()
 {
 	return currFrameMs_;
 }
 
 
-//Sets the current recording time to a new value and tells any connected
-//objects who care
+/*! \brief Sets the current recording time to a new value and tells any connected objects who care.
+ */
 void RecordingVisualTargetHost::setRecordingTime(int currMs)
 {
 	//If time didn't change, do nothing

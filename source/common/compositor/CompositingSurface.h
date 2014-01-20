@@ -7,10 +7,6 @@
 
 namespace Picto {
 
-/*! \addtogroup picto_compositor
- * @{
- */
-
 /*!	\brief A base class that represents an area with a drawing on it.
  *	\details QImages are converted and drawn onto CompositingSurface objects.  Multiple
  *	CompositingSurface objects are in turn drawn onto a VisualTarget which is what is finally
@@ -50,7 +46,6 @@ private:
 
 };
 
-/*! @} */
 }; //namespace Picto
 
 #endif

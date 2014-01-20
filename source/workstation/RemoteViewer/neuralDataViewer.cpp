@@ -43,7 +43,12 @@
 #include <qwt_legend.h>
 using namespace Picto;
 
+/*! \brief The number of seconds shown on the X Axis in the plots.*/
 #define NEURAL_PLOT_WINDOW_SECS 20
+/*! \brief Constructs a NeuralDataViewer object.  
+ *	\details The engine input is only actually used in the replot() function, and there all that is done
+ *	is its existance is checked.  It can probably be removed, but this will take some looking into.
+ */
 NeuralDataViewer::NeuralDataViewer(QSharedPointer<Picto::Engine::PictoEngine> engine,QWidget *parent) :
 	QScrollArea(parent),
 	engine_(engine)
@@ -56,6 +61,8 @@ NeuralDataViewer::~NeuralDataViewer()
 {
 }
 
+/*! \brief Initializes NeuralDataViewer variables.
+*/
 void NeuralDataViewer::initialize()
 {
 	//Reset latestNeuralDataId_ so we'll start getting new data from the first that's available
@@ -71,6 +78,8 @@ void NeuralDataViewer::initialize()
 	behavTime_ = 0;
 }
 
+/*! \brief Deallocates memory used by the NeuralDataViewer.  This is useful for when the UI goes to a State where the NeuralDataViewer is not active.
+ */
 void NeuralDataViewer::deinitialize()
 {
 	lfpPlotData_.clear();
@@ -93,6 +102,13 @@ void NeuralDataViewer::deinitialize()
 	updatePlotOptions();
 }
 
+/*! \brief Adds the LFP data from the input LFPDataUnitPackage to the NeuralDataViewer.
+ *	\note This function does not actually cause anything to be redrawn.  It sets
+ *	a lfpPlotNeedsUpdate_ flag in case the new data is on the channel being displayed.
+ *	replot() needs to be called to actually redraw the plot on screen.  That function looks at
+ *	the lfpPlotNeedsUpdate_ flag to decide whether to add the new data to the displayed LFP
+ *	plot.
+ */
 void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 {
 	//We set the latestNeuralDataId_ to whatever came in regardless
@@ -132,6 +148,14 @@ void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 	if(data.getChannel() == currChannel())
 		lfpPlotNeedsUpdate_ = true;
 }
+
+/*! \brief Adds the Spike data from the input NeuralDataUnit to the NeuralDataViewer.
+ *	\note This function does not actually cause anything to be redrawn.  It sets
+ *	a spikePlotNeedsUpdate_ flag in case the new data is on the channel/unit being displayed.
+ *	replot() needs to be called to actually redraw the plot on screen.  That function looks at
+ *	the spikePlotNeedsUpdate_ flag to decide whether to add the new data to the displayed spike
+ *	plot.
+ */
 void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 {
 	latestNeuralDataId_ = data.getDataID();
@@ -172,7 +196,10 @@ void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 		spikePlotNeedsUpdate_ = true;
 }
 
-
+/*! \brief Updates the spike and lfp plots for the latest times and any new data that has arrived.
+ *	\details This takes care of things like moving the red current time bar and restarting the 
+ *	plot if the current time has reached the right side of the window.
+ */
 void NeuralDataViewer::replot()
 {
 	//Move plot axes with time
@@ -330,39 +357,34 @@ void NeuralDataViewer::replot()
 		spikePlotNeedsUpdate_ = false;
 	}
 
-	////If something changed, plot the lfp curve
-	//if(marksAdded_ || lfpPlotNeedsUpdate_)
-	//{
-	//	lfpPlot_->replot();
-	//	lfpPlotNeedsUpdate_ = false;
-	//}
-	////If something changed, plot the spike curve
-	//if(marksAdded_ || spikePlotNeedsUpdate_)
-	//{
-	//	spikePlot_->replot();
-	//	spikePlotNeedsUpdate_ = false;
-	//}
 	lfpPlot_->replot();
 	spikePlot_->replot();
 
 }
 
+/*! \brief Returns the channel of the neural data currently being displayed.
+ */
 int NeuralDataViewer::currChannel()
 {
 	return channelBox_->itemData(channelBox_->currentIndex()).toInt();
 }
 
+/*! \brief Returns the unit of the spike data currently being displayed.
+ */
 int NeuralDataViewer::currUnit()
 {
 	return unitBox_->itemData(unitBox_->currentIndex()).toInt();
 }
 
+/*! \brief Sets the current time for this Viewer.  Time is according to the behaioral time stream.
+*/
 void NeuralDataViewer::setBehavioralTime(double time)
 {
 	behavTime_ = time;
 }
 
-//! \brief Sets up the user interface portions of the GUI
+/*! \brief Sets up the user interface portions of the GUI, widgets, labels, etc.
+ */
 void NeuralDataViewer::setupUi()
 {
 	//----------Plots---------------
@@ -414,6 +436,8 @@ void NeuralDataViewer::setupUi()
 	setLayout(plotLayout);
 }
 
+/*! \brief Updates the plot options (ie. channel, unit dropdowns) according to the latest available neural data.
+*/
 void NeuralDataViewer::updatePlotOptions()
 {
 	int currCh = channelBox_->itemData(channelBox_->currentIndex()).toInt();
@@ -462,6 +486,10 @@ void NeuralDataViewer::updatePlotOptions()
 	}
 }
 
+/*! \brief Called when the currently selected plot channel (from the drop down) changes.  
+ *	\details This causes the units dropdown to be updated with units available in this
+ *	channel and causes the plots to be redrawn for the new channel.
+*/
 void NeuralDataViewer::plotChannelChanged(int)
 {
 	int ch = channelBox_->itemData(channelBox_->currentIndex()).toInt();
@@ -488,6 +516,9 @@ void NeuralDataViewer::plotChannelChanged(int)
 	replot();
 }
 
+/*! \brief Called when the currently selected unit (from the drop down) changes.  
+ *	\details This causes the spike plot to be redrawn for the new unit selection.
+*/
 void NeuralDataViewer::plotUnitChanged(int)
 {
 	spikePlotNeedsUpdate_ = true;

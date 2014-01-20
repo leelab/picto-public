@@ -5,7 +5,8 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-
+/*! \brief Constructs a new TaskRunViewer widget.
+ */
 TaskRunViewer::TaskRunViewer(QWidget *parent) :
 	QWidget(parent)
 {
@@ -53,6 +54,8 @@ TaskRunViewer::~TaskRunViewer()
 {
 }
 
+/*! \brief Sets the current table of Task Runs to the input QMap of TaskRunDataUnit objects indexed by their DataId values.
+ */
 void TaskRunViewer::setTaskRunData(QMap<qulonglong,QSharedPointer<Picto::TaskRunDataUnit>> dataMap)
 {
 	currTaskRuns_ = dataMap;
@@ -61,6 +64,8 @@ void TaskRunViewer::setTaskRunData(QMap<qulonglong,QSharedPointer<Picto::TaskRun
 							//the operator is editing or not.
 }
 
+/*! \brief Marks the latest Task Run in the list as currently running or not running according to the input isRunning boolean.
+ */
 void TaskRunViewer::markLatestAsRunning(bool isRunning)
 {
 	bool prevRunningValue = latestIsRunning_;
@@ -71,6 +76,8 @@ void TaskRunViewer::markLatestAsRunning(bool isRunning)
 	}
 }
 
+/*! \brief Returns the saved/unsaved icon currently being used for the latest run.
+ */
 QIcon TaskRunViewer::getLatestRunIcon()
 {
 	QSharedPointer<Picto::TaskRunDataUnit> latestRun = getLatestRun();
@@ -82,6 +89,11 @@ QIcon TaskRunViewer::getLatestRunIcon()
 		return latestIsRunning_?QIcon(":/icons/unsavedrunning.png"):QIcon("://icons/delete.png");
 }
 
+/*! \brief Enables/disables editing of Task Run notes, names and saved values.
+ *	\details When enabled, the notes and names fields stop being read only and the save run button
+ *	appears.  The button at the bottom of the window that says "Modify" when editing is disabled, says
+ *	"Apply" when editing is enabled.
+ */
 void TaskRunViewer::enableEditing(bool enable)
 {
 	editingEnabled_ = enable;
@@ -93,6 +105,8 @@ void TaskRunViewer::enableEditing(bool enable)
 		setStateToReadOnly();
 }
 
+/*! \brief Clears all data out of the Task Viewer display.
+*/
 void TaskRunViewer::clear()
 {
 	currTaskRuns_.clear();
@@ -102,6 +116,8 @@ void TaskRunViewer::clear()
 	latestIsRunning_ = false;
 }
 
+/*! \brief Returns a TaskRunDataUnit representing the run that is currently selected in the TaskRunViewer.
+ */
 QSharedPointer<TaskRunDataUnit> TaskRunViewer::getSelectedRun()
 {
 	if(!currTaskRuns_.contains(availableRuns_->itemData(availableRuns_->currentIndex()).toLongLong()))
@@ -109,6 +125,8 @@ QSharedPointer<TaskRunDataUnit> TaskRunViewer::getSelectedRun()
 	return currTaskRuns_.value(availableRuns_->itemData(availableRuns_->currentIndex()).toLongLong());
 }
 
+/*! \brief Returns a TaskRunDataUnit representing the latest run.
+ */
 QSharedPointer<Picto::TaskRunDataUnit> TaskRunViewer::getLatestRun()
 {
 	if(!currTaskRuns_.size())
@@ -117,6 +135,8 @@ QSharedPointer<Picto::TaskRunDataUnit> TaskRunViewer::getLatestRun()
 	return it.value();
 }
 
+/*! \brief Returns true if the run that is selected in the TaskRunViewer is currently active (ie. running).
+ */
 bool TaskRunViewer::selectedRunIsActive()
 {
 	QSharedPointer<Picto::TaskRunDataUnit> currRun = getSelectedRun();
@@ -126,6 +146,8 @@ bool TaskRunViewer::selectedRunIsActive()
 	return false;
 }
 
+/*! \brief Updates the TaskRuns combobox to reflect the TaskRuns that have been added in setTaskRunData().
+ */
 void TaskRunViewer::updateComboBox()
 {
 	if(editing_)
@@ -183,6 +205,8 @@ void TaskRunViewer::updateComboBox()
 	updateFieldsFromCurrentRun();
 }
 
+/*! \brief Updates the TaskRunViewer fields (name, notes, saved) according to the latest data about the currently selected run.
+ */
 void TaskRunViewer::updateFieldsFromCurrentRun()
 {
 	if(editing_)
@@ -199,6 +223,10 @@ void TaskRunViewer::updateFieldsFromCurrentRun()
 
 }
 
+/*! \brief Updates the stored data about the currently selected run according to the values that have been set in the TaskRunViewer fields, 
+ *	then emits taskRunDataChanged() with the current run's DataID to tell the outside world that the data should also be updated on the 
+ *	Picto Server.
+ */
 void TaskRunViewer::updateCurrentRunFromFields()
 {
 	if(!editingEnabled_)
@@ -218,6 +246,8 @@ void TaskRunViewer::updateCurrentRunFromFields()
 	emit taskRunDataChanged(currRun->getDataID());
 }
 
+/*! \brief Updates the SaveButton icon according to the current Run's saved value.
+ */
 void TaskRunViewer::updateSaveButtonIcon()
 {
 	bool selectedRunActive = selectedRunIsActive();
@@ -228,6 +258,9 @@ void TaskRunViewer::updateSaveButtonIcon()
 
 }
 
+/*! \brief Sets the TaskRunViewer state to editing.  Notes and name will no longer be read only.  The save button will appear
+ *	and the button at the bottom of the widget will show "Apply" instead of "Modify".
+ */
 void TaskRunViewer::setStateToEditing()
 {
 	if(!editingEnabled_)
@@ -242,6 +275,10 @@ void TaskRunViewer::setStateToEditing()
 	actButton_->setText("Apply");
 	editing_ = true;
 }
+
+/*! \brief Sets the TaskRunViewer state to read only.  Notes and name will be set as read only.  The save button will dissappear
+ *	and the button at the bottom of the widget will show "Modify" instead of "Apply".
+ */
 void TaskRunViewer::setStateToReadOnly()
 {
 	runNotes_->setReadOnly(true);
@@ -255,6 +292,10 @@ void TaskRunViewer::setStateToReadOnly()
 	updateComboBox();
 }
 
+/*! \brief Called when the button at the bottom of the TaskRunViewer is pressed.  If the state is currently read only, editing is enabled (setStateToEditing()).
+ *	If the state is currently edit mode, the new values are set to the selected run, and the state returns to read only *updateCurrentRunFromFields() and  
+ *	setStateToReadOnly())
+ */
 void TaskRunViewer::actTriggered()
 {
 	if(!editingEnabled_)
@@ -283,16 +324,24 @@ void TaskRunViewer::actTriggered()
 	setStateToEditing();
 }
 
+/*! \brief Called when the cancel button is triggered. Returns the TaskRunViewer state from edit to read only without updating the run values
+ *	from the widget fields.
+ *	\details Internally, this just callss setStateToReadOnly().
+ */
 void TaskRunViewer::cancelTriggered()
 {
 	setStateToReadOnly();
 }
 
+/*! \brief Called when the Task Runs dropdown index changes. Calls updateFieldsFromCurrentRun() to update the widget fields according to the selected run.
+ */
 void TaskRunViewer::availableRunsIndexChanged(int)
 {
 	updateFieldsFromCurrentRun();
 }
 
+/*! \brief Called when save button icon is toggled.  Updates the icon on the button to reflect the current saved/unsaved state.
+ */
 void TaskRunViewer::saveToggled(bool)
 {
 	updateSaveButtonIcon();

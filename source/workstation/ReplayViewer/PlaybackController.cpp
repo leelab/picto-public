@@ -21,6 +21,11 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
+/*! \brief Constructs a PlaybackController object.
+ *	\details Along with variable initialization, this function creates a new playback QThread, starts its event loop and moves this object
+ *	to that thread.  This means that the Session playback/loading will occur in a different, non-gui thread.  This is good because it 
+ *	will prevent long processes like loading of session data from tying up the UI.
+ */
 PlaybackController::PlaybackController()
 {
 	pixmapVisualTarget_ = QSharedPointer<Picto::PixmapVisualTarget>(new Picto::PixmapVisualTarget(true,800,600));
@@ -44,17 +49,27 @@ PlaybackController::~PlaybackController()
 {
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to preload
+ *	all of the files with paths in the input list.
+ *	\details Preload loads meta data about the file without loading the large quantities
+ *	of actual Session data.  These will be loaded later if Run from a file are 
+ *	selected for playback and run.
+ */
 QString PlaybackController::preLoadSessions(QStringList filenames)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::PreLoad,filenames));
 	return "";
 }
 
-//void PlaybackController::setEnabledAnalyses(QList<QUuid> analysisList)
-//{
-//	data_.setEnabledAnalyses(analysisList);
-//}
-
+/*! \brief Activates the input Analyses in the Experiment so that Analysis will occur during playback.
+ *	@param analysisData This can either be a list of exported analysis strings or a list of Analysis
+ *		AssocateIDs.  If the list includes exported analysis strings, the analyses will be imported
+ *		into the Experiment and (if successful) activated.  If the list includes Analysis Associate IDs
+ *		they are assumed to be local Analyses.  The loaded Design will be checked for the Analyses and they
+ *		will be activated.
+ *	\design If a problem occurs with the activation, a non-empty string will be returned with a discription
+ *	of the problem.
+ */
 QString PlaybackController::activateAnalyses(QStringList analysisData)
 {
 	QList<QUuid> localAnalyses;
@@ -129,56 +144,90 @@ QString PlaybackController::activateAnalyses(QStringList analysisData)
 	return "";
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to change the 
+ *	playback speed to the input value.
+ *	@param value A factor by which playback speed is multiplied (ie. 2 implies double the speed).
+ */
 void PlaybackController::setRunSpeed(double value)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeSpeed,value));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to change the current
+ *	playback user type to Operator.  This will cause VisualElement objects with OperatorView
+ *	set to be visible during playback.
+ */
 void PlaybackController::setUserToOperator()
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeUserType,PlaybackCommand::Operator));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to change the current
+ *	playback user type to Subject.  This will cause VisualElement objects with SubjectView
+ *	set to be visible during playback.
+ */
 void PlaybackController::setUserToSubject()
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeUserType,PlaybackCommand::TestSubject));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to enable/disable loading
+ *	of LFP data.
+ *	\details Disabling LFP data can have a significant effect in improving Session load times. 
+ */
 void PlaybackController::enableLFPLoad(bool enable)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::EnableLFP,enable));
 }
 
+/*! \brief Returns the Picto::VisualTarget that will be used to render VisualElements in the played back
+ *	Session.
+ */
 QSharedPointer<Picto::VisualTarget> PlaybackController::getVisualTarget()
 {
 	return pixmapVisualTarget_;
 }
 
+/*! \brief Returns the Picto::VirtualOutputSignalController that will be used to drive output signals in the played back
+ *	Session.
+ */
 QVector<QSharedPointer<Picto::VirtualOutputSignalController>> PlaybackController::getOutputSignalControllers()
 {
 	return outSigControllers_;
 }
 
+/*! \brief Returns the Picto::RenderingTarget on which VisualElements will be rendered in the played back
+ *	Session.
+ */
 QSharedPointer<Picto::RenderingTarget> PlaybackController::getRenderingTarget()
 {
 	return renderingTarget_;
 }
 
+/*! \brief Returns the Picto::DesignRoot of the Design in the currently loaded Session.
+ */
 QSharedPointer<Picto::DesignRoot> PlaybackController::getDesignRoot()
 {
 	return designRoot_;
 }
 
+/*! \brief Returns the length in seconds of the currently loaded run.
+ */
 double PlaybackController::getRunLength()
 {
 	return data_.getRunLength();
 }
 
+/*! \brief Returns the FilePath of the Session file for the currently loaded Session.
+ */
 QString PlaybackController::getLoadedFilePath()
 {
 	return data_.getLoadedFilePath();
 }
 
+/*! \brief Called when Picto is about to quit.  Stops playback, quits the playback thread, waits for rendering to end
+ * in the GUI thread (see Picto::Scene::closeRenderLoops()), waits for the playback thread to stop then returns.
+ */
 void PlaybackController::aboutToQuit()
 {
 	stop();
@@ -191,6 +240,14 @@ void PlaybackController::aboutToQuit()
 	playbackThread_->wait();
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to start playback of the
+ *	currently selected run.
+ *	@param activeAnalyses A list of Analysis Associate Ids that are included in the active Session's
+ *		design and should be activated during playback.
+ *	@param importAnalyses A list of exported analysis code that should be imported into the active Session
+ *		for analysis during playback.
+ *	\sa activateAnalyses()
+ */
 void PlaybackController::play(QList<QUuid> activeAnalyses,QStringList importAnalyses)
 {
 	QStringList analysisList;
@@ -199,6 +256,18 @@ void PlaybackController::play(QList<QUuid> activeAnalyses,QStringList importAnal
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Play,analysisList+importAnalyses));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to pause playback of the
+ *	currently selected run.
+ *	@param activeAnalyses A list of Analysis Associate Ids that are included in the active Session's
+ *		design and should be activated during playback.
+ *	@param importAnalyses A list of exported analysis code that should be imported into the active Session
+ *		for analysis during playback.
+ *	\note Runs can be loaded and started by pressing play, in which case playback starts, or pause, in which
+ *	case the Run loads and playback moves to time zero and then waits for play to be pressed.  
+ *	The reason that we include these two input parameters is for the case where the Run is started
+ *	with a pause.
+ *	\sa activateAnalyses()
+ */
 void PlaybackController::pause(QList<QUuid> activeAnalyses,QStringList importAnalyses)
 {
 	QStringList analysisList;
@@ -207,11 +276,19 @@ void PlaybackController::pause(QList<QUuid> activeAnalyses,QStringList importAna
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Pause,analysisList+importAnalyses));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to stop playback of the
+ *	currently selected run.
+ */
 void PlaybackController::stop()
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Stop));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to jump the playback time to the
+ *	input time (in seconds).
+ *	\note Jumping backwards in time results in playback starting from zero and moving forward to that time.  This
+ *	is to make sure that analyses that can only be run during a fast forward, not a rewind, will be valid.
+ */
 void PlaybackController::jumpToTime(double time)
 {
 	if(time > getRunLength() || time < 0)
@@ -219,33 +296,46 @@ void PlaybackController::jumpToTime(double time)
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Jump,time));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to select a new Session file for playback.
+ */
 void PlaybackController::selectFile(QString filePath)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeFile,filePath));
 }
 
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to select the run at the input index of the 
+ *	current Session file for playback.
+ */
 void PlaybackController::selectRun(int index)
 {
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::ChangeRun,index));
 }
 
+/*! \brief Updates the length of the current run according to the PlaybackStateUpdater::newRun() signal.*/
 void PlaybackController::newRunLength(double length)
 {
 	data_.setRunLength(length);
 }
 
+/*! \brief Updates the current time according to the PlaybackStateUpdater::framePresented() signal.
+ */
 void PlaybackController::setCurrTime(double time)
 {
 	data_.setCurrTime(time);
 	emit timeChanged(time);
 }
 
+/*! \brief Called when the PlaybackStateUpdater::finishedPlayback() signal is emitted.  Causes
+ *	the PlaybackController::finishedPlayback() signal to be emitted and stops the PlaybackController.
+ */
 void PlaybackController::playbackEnded()
 {
 	emit finishedPlayback();
 	stop();
 }
 
+/*! \brief Sets up the PlaybackController for playback of a new Task Run.
+ */
 void PlaybackController::setup()
 {
 	//set up the engine
@@ -304,6 +394,19 @@ void PlaybackController::setup()
 	data_.setAsSetup();
 }
 
+/*! \brief Updates the PlaybackController's StateMachine.
+ *	\details Each time this is called, the next command from the PlaybackControllerData object is taken from the queue.
+ *	Depending on the current state, the command is handled in different ways.  Sometimes it even causes the  
+ *	state (called status here) to change and is pushed back onto the front of the command list so that the new state
+ *	can handle it the next time update() is called.  Whenever the state does change, the change is reported with
+ *	the statusChanged() signal.
+ *	\note One of the major issues in the current playback system is that the entire active Session's data is stored in
+ *	RAM.  This causes some memory issues.  There is some complex code in the part of this function handling the
+ *	"Loading" state that attempts to make sure that only one session is ever in RAM at a given time and tries to
+ *	defragment the RAM (when we're in Windows) before loading the session.  Don't let this code scare you.  That's 
+ *	all it does.  In the future, we should spend some time working on new methods for improving RAM usage like storing
+ *	parts of the Session data lists in simple serial files until they are needed.
+ */
 void PlaybackController::update()
 {
 	PlaybackControllerData::Status status = data_.getStatus();
@@ -640,28 +743,66 @@ void PlaybackController::update()
 
 
 PlaybackControllerData::PlaybackControllerData(){isSetup_ = false;currTime_ = 0;runSpeed_ = 0;runLength_ = 0;status_ = None;nextStatus_ = None;filePath_ = "";nextFilePath_ = "";lfpEnabled_ = true;}
+/*! \brief Marks the PlaybackController as having been setup.*/
 void PlaybackControllerData::setAsSetup(){QMutexLocker locker(&mutex_);isSetup_=true;}
+/*! \brief Returns true if the PlaybackController was setup.*/
 bool PlaybackControllerData::isSetup(){QMutexLocker locker(&mutex_);return isSetup_;}
+/*! \brief Sets the current PlaybackController's current playback time.*/
 void PlaybackControllerData::setCurrTime(double val){QMutexLocker locker(&mutex_);currTime_=val;}
+/*! \brief Returns the PlaybackController's current time.*/
 double PlaybackControllerData::getCurrTime(){QMutexLocker locker(&mutex_);return currTime_;}
+/*! \brief Sets the PlaybackController's run speed as a factor (2.0 means double speed).*/
 void PlaybackControllerData::setRunSpeed(double val){QMutexLocker locker(&mutex_);runSpeed_ = val;}
+/*! \brief Returns the PlaybackController's run speed.
+ *	\sa setRunSpeed()
+ */
 double PlaybackControllerData::getRunSpeed(){QMutexLocker locker(&mutex_);return runSpeed_;}
+/*! \brief Sets the length in seconds of the PlaybackController's current Task Run.*/
 void PlaybackControllerData::setRunLength(double val){QMutexLocker locker(&mutex_);runLength_ = val;}
+/*! \brief Gets the length in seconds of the PlaybackContrller's current task Run.*/
 double PlaybackControllerData::getRunLength(){QMutexLocker locker(&mutex_);return runLength_;}
+/*! \brief Sets the file path of the currently loaded Session.*/
 void PlaybackControllerData::setLoadedFilePath(QString filePath){QMutexLocker locker(&mutex_);filePath_ = filePath;}
 QString PlaybackControllerData::getLoadedFilePath(){QMutexLocker locker(&mutex_);return filePath_;}
+/*! \brief Sets the file path of the next Session that should be loaded.*/
 void PlaybackControllerData::setNextFilePath(QString filePath){QMutexLocker locker(&mutex_);nextFilePath_ = filePath;}
+/*! \brief Gets the file path of the next Session that should be loaded.*/
 QString PlaybackControllerData::getNextFilePath(){QMutexLocker locker(&mutex_);return nextFilePath_;}
+/*! \brief Sets LFP loading enabled for the PlaybackController.*/
 void PlaybackControllerData::enableLfp(bool enabled){QMutexLocker locker(&mutex_);lfpEnabled_ = enabled;}
+/*! \brief Returns whether LFP loading is enabled for the PlaybackController.*/
 bool PlaybackControllerData::getLfpEnabled(){QMutexLocker locker(&mutex_);return lfpEnabled_;}
+/*! \brief Sets a list of Analysis Associate IDs which should be marked as active in the currently loaded Session.*/
 void PlaybackControllerData::setEnabledBuiltInAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledAnalyses_=analysisList;}
+/*! \brief Sets a list of exported Analysis code that should be imported into the currently loaded Session and marked as active.*/
 void PlaybackControllerData::setEnabledImportedAnalyses(QList<QUuid> analysisList){QMutexLocker locker(&mutex_);enabledImportedAnalyses_=analysisList;}
+/*! \brief Clears the list of Analysis Associate IDs that are supposed to be actived in the currently loaded Session.*/
 void PlaybackControllerData::clearEnabledBuiltInAnalyses(){QMutexLocker locker(&mutex_);enabledAnalyses_.clear();}
+/*! \brief Clears the list of exported Analysesthat are supposed to be imported and actived in the currently loaded Session.*/
 void PlaybackControllerData::clearEnabledImportedAnalyses(){QMutexLocker locker(&mutex_);enabledImportedAnalyses_.clear();}
+/*! \brief Returns a list of Analysis Associate IDs that are active in the currently loaded Session.*/
 QList<QUuid> PlaybackControllerData::getEnabledAnalyses(){QMutexLocker locker(&mutex_);return enabledAnalyses_ + enabledImportedAnalyses_ ;}
+/*! \brief Sets the PlaybackController's current Status.
+ *	\note What is referred to here as Status is actually a state of the PlaybackController state machine.
+ */
 void PlaybackControllerData::setStatus(Status val){QMutexLocker locker(&mutex_);status_ = val;}
+/*! \brief Gets the PlaybackController's current Status.
+ *	\note What is referred to here as Status is actually a state of the PlaybackController state machine.
+ */
 PlaybackControllerData::Status PlaybackControllerData::getStatus(){QMutexLocker locker(&mutex_);return status_;}
+/*! \brief Sets the PlaybackController's next Status.
+ *	\note What is referred to here as Status is actually a state of the PlaybackController state machine.
+ */
 void PlaybackControllerData::setNextStatus(Status val){QMutexLocker locker(&mutex_);nextStatus_ = val;}
+/*! \brief Gets the PlaybackController's next Status.
+ *	\note What is referred to here as Status is actually a state of the PlaybackController state machine.
+ */
 PlaybackControllerData::Status PlaybackControllerData::getNextStatus(){QMutexLocker locker(&mutex_);return nextStatus_;}
+/*! \brief Pushes the input PlaybackCommand onto the PlaybackCommand queue for retrieval in getNextCommand().
+ *	@param cmd The PlaybackCommand to be added to the queue.
+ *	@param toBack If true (the default), the command is added to the back of the list.  If false it is added to the front of the list and will be 
+ *	returned when getNextCommand() is called next.
+ */
 void PlaybackControllerData::pushCommand(PlaybackCommand cmd, bool toBack){QMutexLocker locker(&mutex_);if(toBack)cmds_.push_back(cmd);else cmds_.push_front(cmd);}
+/*! \brief Returns and removes the first command in the command queue.*/
 PlaybackCommand PlaybackControllerData::getNextCommand(){QMutexLocker locker(&mutex_);PlaybackCommand returnVal; if(cmds_.size()){returnVal = cmds_.front();cmds_.pop_front();}return returnVal;}

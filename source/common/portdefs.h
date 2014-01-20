@@ -1,5 +1,4 @@
 /*! \file portdefs.h
- * \ingroup picto
  * \brief Ports used for %Picto applications and hardware
  */
 
