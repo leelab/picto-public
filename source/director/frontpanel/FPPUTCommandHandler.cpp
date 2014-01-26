@@ -59,7 +59,7 @@ QSharedPointer<Picto::ProtocolResponse> FPPUTCommandHandler::processCommand(QSha
 			return badRequestResponse;
 
 	}
-	/*! \todo There is no error checking being done on this string.  Since the string is
+	/* Note that there is no error checking being done on this string.  Since the string is
 	 *   coming from the front panel, we are assuming that the front panel is passing
 	 *   us a safe value.  We might want to do a bit of error checking here, just 
 	 *   to be safe though.

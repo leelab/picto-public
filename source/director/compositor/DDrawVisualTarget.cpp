@@ -400,7 +400,7 @@ void DDrawVisualTarget::present()
 
 void DDrawVisualTarget::paintEvent(QPaintEvent *)
 {
-	//! \todo I'm not entirely sure how to do a paint event here...
+	//I'm not entirely sure how to do a paint event here...
 }
 
 

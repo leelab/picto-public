@@ -40,7 +40,7 @@ void Canvas::reset()
 
 void Canvas::draw(QSharedPointer<Engine::PictoEngine> engine)
 {
-	//! \todo deal with the background layer color
+	//! deal with the background layer color
 
 	//Grab the RenderingTargets from the engine
 	QList<QSharedPointer< RenderingTarget> > renderingTargets;

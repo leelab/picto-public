@@ -171,7 +171,6 @@ void ResultContainer::postDeserialize()
 
 bool ResultContainer::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	//! \todo verify that no two results have the same name
 	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;

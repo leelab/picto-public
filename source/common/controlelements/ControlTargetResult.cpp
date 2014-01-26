@@ -38,7 +38,7 @@ void ControlTargetResult::postDeserialize()
 
 bool ControlTargetResult::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
-	//! \todo Add script verification once validate runs after full deserialization
+	// \todo Add script verification once validate runs after full deserialization
 	if(!Result::validateObject(xmlStreamReader))
 		return false;
 	if(propertyContainer_->getPropertyValue("ControlTarget").toString().isEmpty())

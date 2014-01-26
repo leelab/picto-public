@@ -5,7 +5,6 @@ namespace Picto
 StopwatchController::StopwatchController()
 {
 	setMaxOptionalResults(0);
-	//AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	unitList_ << "Sec" << "Ms" << "Us";
 	AddDefinableProperty(PropertyContainer::enumTypeId(),"TimeUnits",0,"enumNames",unitList_);
 	AddDefinableProperty(QVariant::Int,"Time",5);

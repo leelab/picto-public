@@ -2563,6 +2563,10 @@
    <file alias="functions_rela.html">../../../output/documentation/main/html/functions_rela.html</file>
    <file alias="functions_type.html">../../../output/documentation/main/html/functions_type.html</file>
    <file alias="functions_vars.html">../../../output/documentation/main/html/functions_vars.html</file>
+   <file alias="future__directions__hardware_8h_source.html">../../../output/documentation/main/html/future__directions__hardware_8h_source.html</file>
+   <file alias="future__directions__software_8h_source.html">../../../output/documentation/main/html/future__directions__software_8h_source.html</file>
+   <file alias="future_directions_hardware.html">../../../output/documentation/main/html/future_directions_hardware.html</file>
+   <file alias="future_directions_software.html">../../../output/documentation/main/html/future_directions_software.html</file>
    <file alias="globals.html">../../../output/documentation/main/html/globals.html</file>
    <file alias="globals_8cpp_source.html">../../../output/documentation/main/html/globals_8cpp_source.html</file>
    <file alias="globals_8h.html">../../../output/documentation/main/html/globals_8h.html</file>
@@ -2580,6 +2584,8 @@
    <file alias="iowin32_8c_source.html">../../../output/documentation/main/html/iowin32_8c_source.html</file>
    <file alias="iowin32_8h_source.html">../../../output/documentation/main/html/iowin32_8h_source.html</file>
    <file alias="jquery.js">../../../output/documentation/main/html/jquery.js</file>
+   <file alias="known__bugs_8h_source.html">../../../output/documentation/main/html/known__bugs_8h_source.html</file>
+   <file alias="known_bugs.html">../../../output/documentation/main/html/known_bugs.html</file>
    <file alias="legacysystemxpanaloginputport_8h_source.html">../../../output/documentation/main/html/legacysystemxpanaloginputport_8h_source.html</file>
    <file alias="mainmemleakdetect_8h_source.html">../../../output/documentation/main/html/mainmemleakdetect_8h_source.html</file>
    <file alias="mainpage_8h_source.html">../../../output/documentation/main/html/mainpage_8h_source.html</file>

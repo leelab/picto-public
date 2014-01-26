@@ -517,13 +517,13 @@ void D3DMVisualTarget::present()
 
 void D3DMVisualTarget::paintEvent(QPaintEvent *)
 {
-	//! \todo I'm not entirely sure how to do a paint event here...
+	//!  I'm not entirely sure how to do a paint event here...
 }
 
 
 void D3DMVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)
 {
-	//! \todo implement drawNonExperimentText for D3DMVisualTarget
+	//!  implement drawNonExperimentText for D3DMVisualTarget
 }
 
 

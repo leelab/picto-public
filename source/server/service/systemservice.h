@@ -2,12 +2,6 @@
 //iTALC project (http://italc.sourceforge.net) by Tobias Doerffel
 //under the terms of the GNU General Public License version 2
 //
-/*! \todo This should be replaced with the QtService class
- * http://doc.trolltech.com/solutions/4/qtservice/qtservice.html.
- * All other classes are under the LGPL or some other non-GPL license;
- * replacing this class will allow us to adopt a non-GPL license
- * for the %Picto code.
- */
 
 #ifndef _SYSTEMSERVICE_H_
 #define _SYSTEMSERVICE_H_

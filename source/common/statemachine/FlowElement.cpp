@@ -14,7 +14,7 @@ bool conditionLessThan(const FlowElement::Condition &c1, const FlowElement::Cond
 FlowElement::FlowElement()
 {
 	
-	AddDefinableProperty("Type","FlowElement");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
+	AddDefinableProperty("Type","FlowElement");	/*! this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	addResultFactoryType("CompareParams",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToParamExpression::Create))));
 	addResultFactoryType("CompareParamToVal",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompareToValExpression::Create))));
 	addResultFactoryType("CompoundCompare",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(CompoundExpression::Create))));

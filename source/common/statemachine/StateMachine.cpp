@@ -32,8 +32,6 @@ StateMachine::StateMachine() :
 	ignoreInitialElement_(false),
 	dontRunElement_(false)
 {
-	
-	//AddDefinableProperty("Type","StateMachine");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 
 	//AddDefinableProperty("InitialElement","");
 	
@@ -312,7 +310,6 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 			//}
 			break;
 		}
-		//! \TODO come up with a more elegant error handling scheme...
 		//QString errorMsg = "Unable to find element with name: "+nextElementName
 		Q_ASSERT_X(elements_.contains(nextElementName), "StateMachine::Run",QString("Unable to find element with name: %1").arg(nextElementName).toLatin1());
 

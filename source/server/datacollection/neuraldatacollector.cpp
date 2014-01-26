@@ -76,7 +76,7 @@
 //	
 //	proxyResponse = cmdChannel_->getResponse();
 //
-//	//! \TODO Figure out how to handle missed responses from the proxy server.  We should probably \
+//	//!  Figure out how to handle missed responses from the proxy server.  We should probably \
 //	//!		  come up with a way to notify the workstation...
 //	if(proxyResponse)
 //		parseResponse(proxyResponse);
@@ -146,7 +146,7 @@
 //				fittedTime = align->convertToBehavioralTimebase(timestamp);
 //				correlation = align->getCorrelationCoefficient();
 //
-//				//! \TODO move this code to sessioninfo
+//				//!  move this code to sessioninfo
 //				query.prepare("INSERT INTO spikes (timestamp, fittedtime, correlation, channel, unit, waveform) "
 //					"VALUES(:timestamp, :fittedtime, :correlation, :channel, :unit, :waveform)");
 //				query.bindValue(":timestamp", timestamp);

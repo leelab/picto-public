@@ -46,7 +46,7 @@ void BehavioralDataUnitPackage::addData(QMap<QString, QVector<double>> signalCha
 	Q_ASSERT(signalChannelData.contains("x"));
 	Q_ASSERT(signalChannelData.contains("y"));
 
-	setDescriptor("x,y");	//! \todo This should be automatic later.
+	setDescriptor("x,y");
 
 	//Next, run through the two lists generating data points and adding them
 	//to our list
@@ -80,7 +80,7 @@ void BehavioralDataUnitPackage::clearAllButLastDataPoints()
 */
 QByteArray BehavioralDataUnitPackage::getDataAsByteArray()
 {
-	int arraySize = data_.size() * 2;//"* 2" is for x,y.  \todo This should be configurable so that we can support single signal channels.
+	int arraySize = data_.size() * 2;//"* 2" is for x,y.  \\ At some point this should be configurable so that we can support single signal channels.
 	float* data = new float[arraySize];
 	int i=0;
 	foreach(QSharedPointer<BehavioralDataUnit> unit, data_)

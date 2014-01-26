@@ -22,7 +22,6 @@ HTTPGetCommandHandler::HTTPGetCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	/*! \todo implement handler */
 	if(command->getTarget() == "/")
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::OK));
@@ -155,7 +154,7 @@ QSharedPointer<Picto::ProtocolResponse> HTTPGetCommandHandler::processCommand(QS
 	{
 		QSharedPointer<Picto::ProtocolResponse> response(new Picto::ProtocolResponse(Picto::Names->serverAppName, "HTTP","1.1",Picto::ProtocolResponseType::NotFound));
 
-		/*! \todo these should probably be moved to files in the Qt resource system.  This would require having some
+		/* these should probably be moved to files in the Qt resource system.  This would require having some
 		 *        rudimentary server side scripting support to replace basic dynamic values such as the URL that was
 		 *        not found below.
 		 */

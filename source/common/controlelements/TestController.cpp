@@ -7,7 +7,6 @@ namespace Picto
 TestController::TestController()
 {
 	
-	//AddDefinableProperty("Type",ControllerType());	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"NumberOfFrames",120);
 
 	//Make sure to update the list of results...

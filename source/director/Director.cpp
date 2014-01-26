@@ -70,7 +70,6 @@ Director::Director(QString name,
 	useFrontPanel_(rewardController == HardwareSetup::PictoBoxXpReward),
 	directorData_(new DirectorData())
 {
-	//! \TODO Set up random number generator?
 
 	///////////////////////////////////////
 	// Open Configuration database, and configure as needed

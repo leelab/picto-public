@@ -106,7 +106,6 @@ void RandomlyFilledGridGraphic::draw()
 	QColor foregroundColor = propertyContainer_->getPropertyValue("Color2").value<QColor>();
 	foregroundIndex = 1;
 
-	//! \todo use mersenne twister random number generator
 	std::random_shuffle(colorList_.begin(), colorList_.end());
 
 	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());

@@ -178,7 +178,7 @@ void StartSessionDialog::loadExperiment()
 {
 	if(directorComboBox_->currentIndex() == 0)
 	{
-		//! \todo Implement a local director instance, or simulator...
+		// Implement a local director instance, or simulator...
 	}
 	else
 	{

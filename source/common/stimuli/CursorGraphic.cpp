@@ -90,7 +90,6 @@ QPoint CursorGraphic::getPositionOffset()
 /*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
 VisualElement* CursorGraphic::NewVisualElement()
 {
-	//! \TODO Figure out what to do in the NewVisualElement function
 	// This function is used during deserialization, so we won't have access to a 
 	// signal channel at that point.  If we wanted to use a cursor graphic
 	// in a state machine, connecting it might not be possible.  However, since this

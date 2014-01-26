@@ -311,7 +311,6 @@ bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 		addError("At least one Control Element must be defined inside a State.");
 		return false;
 	}
-	//! \todo Validate Scripts
 
 	return true;
 }

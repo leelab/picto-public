@@ -370,7 +370,7 @@ QRectF DiagramItem::getRect()
 }
 
 /*! \brief Doesn't do anything.
- *	\todo We should probably remove DiagramItem::editModeChanged() because it appears to not do anything.
+ *	\note We should probably remove DiagramItem::editModeChanged() because it appears to not do anything.
  */
 void DiagramItem::editModeChanged(int)
 {

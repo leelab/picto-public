@@ -16,6 +16,9 @@ namespace Picto {
  *	it is also writtent to a video file.  Functions are provided for enabling/disabling the "copy frame to 
  *	video file" functionality.  saveRecordingAs() can be used to save the recorded video file to a particular
  *	path on disk.
+ *	\note This class currently uses qtffmpegwrapper which is a wrapper for ffmpeg since there is no way yet to 
+ *	save video files directly from Qt.  qtffmpegwrapper will undoubtedly need to be updated at some point.  It can
+ *	be found in Picto\\3rdParty.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */

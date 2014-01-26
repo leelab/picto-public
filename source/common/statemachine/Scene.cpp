@@ -165,8 +165,6 @@ void Scene::doRender(int callerId)
 		QList<QSharedPointer< RenderingTarget> > renderingTargets;
 		renderingTargets = engine_->getRenderingTargets();
 		
-		//! \TODO "render" the audio stuff
-		//! \todo deal with the background layer color
 		//Add any unadded visual elements to the visual elements list
 		if(!unaddedVisualElements_.isEmpty())
 		{

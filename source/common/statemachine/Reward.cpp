@@ -16,7 +16,6 @@ namespace Picto
 Reward::Reward()
 {
 	setMaxOptionalResults(0);
-	//AddDefinableProperty("Type","Reward");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty(QVariant::Int,"NumRewards",1);
 	AddDefinableProperty(QVariant::Int,"RewardQty",60);
 	AddDefinableProperty(QVariant::Int,"MinRewardPeriod",125);

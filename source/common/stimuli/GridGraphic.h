@@ -68,7 +68,6 @@ public:
 
 	virtual QString friendlyTypeName(){return "Grid";};
 	virtual QString getUITemplate(){return "GridElement";};
-	//! \TODO At some point, we might want to expose some getter and setter slots for script binding
 
 protected:
 	virtual void postDeserialize();

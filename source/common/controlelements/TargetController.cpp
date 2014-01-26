@@ -7,7 +7,6 @@ namespace Picto
 TargetController::TargetController()
 {
 	setMaxOptionalResults(0);
-	//AddDefinableProperty("Type","");	/*! \todo this shouldn't be a DEFINABLE property, but it needs to be here so that in StateMachine, element->type() gives the correct value.  Do something about this.*/
 	AddDefinableProperty("SignalChannel","Position");
 	//shapeList_ << "Rectangle" << "Oval";
 	//AddDefinableProperty(PropertyContainer::enumTypeId(),"Shape",0,"enumNames",shapeList_);
