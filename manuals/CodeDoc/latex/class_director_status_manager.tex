@@ -1,0 +1,83 @@
+\hypertarget{class_director_status_manager}{\section{Director\-Status\-Manager Class Reference}
+\label{class_director_status_manager}\index{Director\-Status\-Manager@{Director\-Status\-Manager}}
+}
+
+
+Handles overall status operations for a \hyperlink{class_director}{Director} object.  
+
+
+
+
+{\ttfamily \#include $<$Director\-Status\-Manager.\-h$>$}
+
+Inheritance diagram for Director\-Status\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_director_status_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_director_status_manager_a0401871f7445c672073aa3bb7a3fe027}{virtual Q\-String \hyperlink{class_director_status_manager_a0401871f7445c672073aa3bb7a3fe027}{get\-Name} ()}\label{class_director_status_manager_a0401871f7445c672073aa3bb7a3fe027}
+
+\begin{DoxyCompactList}\small\item\em Returns a name representing the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a637aaf1e265f2df5b7fca45335c0468a}{void \hyperlink{class_director_status_manager_a637aaf1e265f2df5b7fca45335c0468a}{set\-Engine} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} $>$ engine)}\label{class_director_status_manager_a637aaf1e265f2df5b7fca45335c0468a}
+
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} that is used on this \hyperlink{class_director}{Director} to run Experiments. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a3bd6d6af607ad5c5fb0a0181e5b1123a}{void \hyperlink{class_director_status_manager_a3bd6d6af607ad5c5fb0a0181e5b1123a}{set\-Director\-Data} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_director_data}{Picto\-::\-Director\-Data} $>$ director\-Data)}\label{class_director_status_manager_a3bd6d6af607ad5c5fb0a0181e5b1123a}
+
+\begin{DoxyCompactList}\small\item\em Sets the Director\-Data that is used to store default reward quantities on this \hyperlink{class_director_status_manager}{Director\-Status\-Manager}. This is used in C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E commands sent to the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_af3d315b6ea58398d992e297d8c70c06c}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} $>$ \hyperlink{class_director_status_manager_af3d315b6ea58398d992e297d8c70c06c}{get\-Engine} ()}\label{class_director_status_manager_af3d315b6ea58398d992e297d8c70c06c}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} that is used on this \hyperlink{class_director}{Director} to run Experiments. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a24f41d8039a1011c9bc35b113273fa88}{void \hyperlink{class_director_status_manager_a24f41d8039a1011c9bc35b113273fa88}{set\-Experiment} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Picto\-::\-Experiment} $>$ experiment)}\label{class_director_status_manager_a24f41d8039a1011c9bc35b113273fa88}
+
+\begin{DoxyCompactList}\small\item\em Sets the current experiment being run by this \hyperlink{class_director}{Director}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a0dcb0e210becf04a832b35f0f3eb5247}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Picto\-::\-Experiment} $>$ \hyperlink{class_director_status_manager_a0dcb0e210becf04a832b35f0f3eb5247}{get\-Experiment} ()}\label{class_director_status_manager_a0dcb0e210becf04a832b35f0f3eb5247}
+
+\begin{DoxyCompactList}\small\item\em Gets the current experiment being run by this \hyperlink{class_director}{Director}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{virtual void \hyperlink{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{set\-User\-Info} (Q\-String info)}\label{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_component_status_manager_a3621411701b009a63a676d5016aecfad}{Component\-Status\-Manager\-::set\-User\-Info()} to display the input user information on the bottom left corner of the screen. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a9fa585fdad94b511c03380b9a5926fb5}{virtual void \hyperlink{class_director_status_manager_a9fa585fdad94b511c03380b9a5926fb5}{set\-Status} (Component\-Status status)}\label{class_director_status_manager_a9fa585fdad94b511c03380b9a5926fb5}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_component_status_manager_a6b4219dc5a4105bd24b62d89861ee443}{Component\-Status\-Manager\-::set\-Status()} to send the current Status to attached \hyperlink{class_control_panel_interface}{Control\-Panel\-Interface} objects and describe the current server connection in \hyperlink{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{set\-User\-Info()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_director_status_manager_a5f8b476806aafe1f243165693faa7233}{virtual void \hyperlink{class_director_status_manager_a5f8b476806aafe1f243165693faa7233}{new\-Session} ()}\label{class_director_status_manager_a5f8b476806aafe1f243165693faa7233}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}{Component\-Status\-Manager\-::new\-Session()} to reset alignment event data. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_afd629965009196265771f3a7f956a0c8}{virtual void \hyperlink{class_director_status_manager_afd629965009196265771f3a7f956a0c8}{do\-Frequent\-Update} ()}\label{class_director_status_manager_afd629965009196265771f3a7f956a0c8}
+
+\begin{DoxyCompactList}\small\item\em Implements Component\-Status\-Manager\-::do\-Frequent\-Update() to handle all commands coming into attached \hyperlink{class_control_panel_interface}{Control\-Panel\-Interface} object. \end{DoxyCompactList}\item 
+\hypertarget{class_director_status_manager_a8149f3706ab34107c3faf01d8dcef3a8}{virtual void \hyperlink{class_director_status_manager_a8149f3706ab34107c3faf01d8dcef3a8}{do\-Server\-Update} ()}\label{class_director_status_manager_a8149f3706ab34107c3faf01d8dcef3a8}
+
+\begin{DoxyCompactList}\small\item\em Implements Component\-Status\-Manager\-::do\-Server\-Update() to send alignment events to an attached neural system. Also sends records of recent Alignment events and C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E \char`\"{}keep alive\char`\"{} commands to the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Handles overall status operations for a \hyperlink{class_director}{Director} object. 
+
+This class adds to the default \hyperlink{class_component_status_manager}{Component\-Status\-Manager} functionality by implimenting Status and user info display for the Experiment subject, interfacing with any Control Panels attached to the \hyperlink{class_director}{Director}, sending Alignment Events to attached neural systems, and sending C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E commands and Alignment Event data to the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_component_status_manager}{Component\-Status\-Manager} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 17 of file Director\-Status\-Manager.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/network/Director\-Status\-Manager.\-h\item 
+source/director/network/Director\-Status\-Manager.\-cpp\end{DoxyCompactItemize}

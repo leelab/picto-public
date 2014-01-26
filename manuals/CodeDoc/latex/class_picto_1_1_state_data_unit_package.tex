@@ -1,0 +1,116 @@
+\hypertarget{class_picto_1_1_state_data_unit_package}{\section{Picto\-:\-:State\-Data\-Unit\-Package Class Reference}
+\label{class_picto_1_1_state_data_unit_package}\index{Picto\-::\-State\-Data\-Unit\-Package@{Picto\-::\-State\-Data\-Unit\-Package}}
+}
+
+
+Stores a list of \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects representing \hyperlink{class_picto_1_1_state_machine}{State\-Machine} Transitions between one frame and the next.  
+
+
+
+
+{\ttfamily \#include $<$State\-Data\-Unit\-Package.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:State\-Data\-Unit\-Package\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_state_data_unit_package}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_state_data_unit_package_af569a41cce6b6bd83ae4dd55e1891f38}{add\-Transition} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition}{Transition} $>$ transition)
+\item 
+void \hyperlink{class_picto_1_1_state_data_unit_package_a64a8803a14b8a4f25972a1c36832b9e8}{add\-Transition} (int id)
+\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_a287630ac357b6084d29b26c9411a4577}{void \hyperlink{class_picto_1_1_state_data_unit_package_a287630ac357b6084d29b26c9411a4577}{set\-Action\-Frame} (qulonglong frame\-Id)}\label{class_picto_1_1_state_data_unit_package_a287630ac357b6084d29b26c9411a4577}
+
+\begin{DoxyCompactList}\small\item\em Sets the Data\-Id of the Frame that was presented following all \hyperlink{class_picto_1_1_transition}{Transition} traversals stored in this package. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_aaa09389ccff661b8c40a3c5ec75923df}{int \hyperlink{class_picto_1_1_state_data_unit_package_aaa09389ccff661b8c40a3c5ec75923df}{length} ()}\label{class_picto_1_1_state_data_unit_package_aaa09389ccff661b8c40a3c5ec75923df}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects in this package's list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_a04b0b6926106ffe6e77209421c732734}{void \hyperlink{class_picto_1_1_state_data_unit_package_a04b0b6926106ffe6e77209421c732734}{clear} ()}\label{class_picto_1_1_state_data_unit_package_a04b0b6926106ffe6e77209421c732734}
+
+\begin{DoxyCompactList}\small\item\em Removes all \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects from this package's list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_a3715233ffa1753e27d8d338c70fda5b4}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_state_data_unit_package_a3715233ffa1753e27d8d338c70fda5b4}{take\-First\-Data\-Point} ()}\label{class_picto_1_1_state_data_unit_package_a3715233ffa1753e27d8d338c70fda5b4}
+
+\begin{DoxyCompactList}\small\item\em Returns the first \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} in this package's list then removes it from the list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_a57ba13dd0c3f19342f5efb39d59ea2ad}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_state_data_unit_package_a57ba13dd0c3f19342f5efb39d59ea2ad}{take\-Last\-Data\-Point} ()}\label{class_picto_1_1_state_data_unit_package_a57ba13dd0c3f19342f5efb39d59ea2ad}
+
+\begin{DoxyCompactList}\small\item\em Returns the last \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} in this package's list then removes it from the list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_acca3eb97bacb1de87e99a6f01787eb84}{virtual bool \hyperlink{class_picto_1_1_state_data_unit_package_acca3eb97bacb1de87e99a6f01787eb84}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_state_data_unit_package_acca3eb97bacb1de87e99a6f01787eb84}
+
+\begin{DoxyCompactList}\small\item\em Turns the \hyperlink{class_picto_1_1_state_data_unit_package}{State\-Data\-Unit\-Package} into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_state_data_unit_package_ab1dfa63f518b4a629b289b4ee66f2be5}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_a30ad8e53d5b9e18b2147e7122e4d88ff}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_state_data_unit_package_a30ad8e53d5b9e18b2147e7122e4d88ff}
+
+\item 
+\hypertarget{class_picto_1_1_state_data_unit_package_aeefa8e153a3a1623b7cb0e59f9c6b793}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_state_data_unit_package_aeefa8e153a3a1623b7cb0e59f9c6b793}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores a list of \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects representing \hyperlink{class_picto_1_1_state_machine}{State\-Machine} Transitions between one frame and the next. 
+
+Objects of this class store the entire \hyperlink{class_picto_1_1_state_machine}{State\-Machine} traversal that occured during the course of a single frame. The traversal is stored as a list of \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects each of which contains a \hyperlink{class_picto_1_1_transition}{Transition} Asset\-Id. These \hyperlink{class_picto_1_1_state_data_unit}{State\-Data\-Unit} objects are stored with the Data\-Id of the Frame that followed them, and since they each have their own Data\-Id, we can follow the order of \hyperlink{class_picto_1_1_transition}{Transition} traversals accordingly. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file State\-Data\-Unit\-Package.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_state_data_unit_package_af569a41cce6b6bd83ae4dd55e1891f38}{\index{Picto\-::\-State\-Data\-Unit\-Package@{Picto\-::\-State\-Data\-Unit\-Package}!add\-Transition@{add\-Transition}}
+\index{add\-Transition@{add\-Transition}!Picto::StateDataUnitPackage@{Picto\-::\-State\-Data\-Unit\-Package}}
+\subsubsection[{add\-Transition}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Data\-Unit\-Package\-::add\-Transition (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Transition} $>$}]{transition}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_state_data_unit_package_af569a41cce6b6bd83ae4dd55e1891f38}
+Adds the input \hyperlink{class_picto_1_1_transition}{Transition} to this package's list of \hyperlink{class_picto_1_1_transition}{Transition} traversals. 
+
+Definition at line 11 of file State\-Data\-Unit\-Package.\-cpp.
+
+\hypertarget{class_picto_1_1_state_data_unit_package_a64a8803a14b8a4f25972a1c36832b9e8}{\index{Picto\-::\-State\-Data\-Unit\-Package@{Picto\-::\-State\-Data\-Unit\-Package}!add\-Transition@{add\-Transition}}
+\index{add\-Transition@{add\-Transition}!Picto::StateDataUnitPackage@{Picto\-::\-State\-Data\-Unit\-Package}}
+\subsubsection[{add\-Transition}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Data\-Unit\-Package\-::add\-Transition (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_state_data_unit_package_a64a8803a14b8a4f25972a1c36832b9e8}
+Adds a \hyperlink{class_picto_1_1_transition}{Transition} by its Asset\-Id to this package's list of \hyperlink{class_picto_1_1_transition}{Transition} traversals. 
+
+Definition at line 20 of file State\-Data\-Unit\-Package.\-cpp.
+
+\hypertarget{class_picto_1_1_state_data_unit_package_ab1dfa63f518b4a629b289b4ee66f2be5}{\index{Picto\-::\-State\-Data\-Unit\-Package@{Picto\-::\-State\-Data\-Unit\-Package}!deserialize\-From\-Xml@{deserialize\-From\-Xml}}
+\index{deserialize\-From\-Xml@{deserialize\-From\-Xml}!Picto::StateDataUnitPackage@{Picto\-::\-State\-Data\-Unit\-Package}}
+\subsubsection[{deserialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-State\-Data\-Unit\-Package\-::deserialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_state_data_unit_package_ab1dfa63f518b4a629b289b4ee66f2be5}
+Converts X\-M\-L into a \hyperlink{class_picto_1_1_state_data_unit_package}{State\-Data\-Unit\-Package} object. Note that this deletes any existing data. 
+
+Implements \hyperlink{class_picto_1_1_data_unit_a44ba3155a80dee6c504300b877e944d8}{Picto\-::\-Data\-Unit}.
+
+
+
+Definition at line 54 of file State\-Data\-Unit\-Package.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/State\-Data\-Unit\-Package.\-h\item 
+source/common/storage/State\-Data\-Unit\-Package.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,47 @@
+\hypertarget{globals_8h}{\section{source/common/globals.h File Reference}
+\label{globals_8h}\index{source/common/globals.\-h@{source/common/globals.\-h}}
+}
+
+
+Initialization calls and global variables exposed by the Picto library.  
+
+
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}namedefs.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}portdefs.\-h\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_picto}{Picto}
+\begin{DoxyCompactList}\small\item\em A compositing surface for Direct3\-D Mobile (used on Picto\-Box) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespace_picto_afdd009fc47ba59833c3c368b398be84f}{void \hyperlink{namespace_picto_afdd009fc47ba59833c3c368b398be84f}{Picto\-::\-Initialize\-Names} ()}\label{namespace_picto_afdd009fc47ba59833c3c368b398be84f}
+
+\begin{DoxyCompactList}\small\item\em Registers application names in the global \char`\"{}\-Names\char`\"{} variable. \end{DoxyCompactList}\item 
+\hypertarget{namespace_picto_af8ad28d4bf25d2fb345491568c52798c}{void \hyperlink{namespace_picto_af8ad28d4bf25d2fb345491568c52798c}{Picto\-::\-Initialize\-Meta\-Types} ()}\label{namespace_picto_af8ad28d4bf25d2fb345491568c52798c}
+
+\begin{DoxyCompactList}\small\item\em Registers types that need to be used in signals and slots with the Qt Framework. \end{DoxyCompactList}\item 
+\hypertarget{namespace_picto_a1bf78a0dbbca2ca81a700e8b5b8a2d28}{void \hyperlink{namespace_picto_a1bf78a0dbbca2ca81a700e8b5b8a2d28}{Picto\-::initialize\-Factories} ()}\label{namespace_picto_a1bf78a0dbbca2ca81a700e8b5b8a2d28}
+
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. Sets up the factories. This should probably be deleted. \end{DoxyCompactList}\item 
+void \hyperlink{namespace_picto_ab626f6cf7953f6f0c2947f0f03b8e62e}{Picto\-::\-Initialize\-Lib} (Q\-Core\-Application $\ast$core\-App, Q\-String locale\-Language\-Code)
+\begin{DoxyCompactList}\small\item\em Initializes the Picto library. \end{DoxyCompactList}\item 
+void \hyperlink{namespace_picto_a435830b96734ccf94079709ecaababdd}{Picto\-::\-Initialize\-Ports} (Q\-String app\-Name, bool used\-In\-System\-Service)
+\begin{DoxyCompactList}\small\item\em Initializes the ports used by this Picto application according to the system number. \end{DoxyCompactList}\item 
+void \hyperlink{namespace_picto_a4c3a40f67614c57efafec4403453edcd}{Picto\-::\-Close\-Lib} ()
+\begin{DoxyCompactList}\small\item\em Shuts down the Picto library. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Initialization calls and global variables exposed by the Picto library. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{globals_8h_source}{globals.\-h}.
+

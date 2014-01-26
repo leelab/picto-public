@@ -1,0 +1,210 @@
+\hypertarget{class_picto_1_1_control_target_result}{\section{Picto\-:\-:Control\-Target\-Result Class Reference}
+\label{class_picto_1_1_control_target_result}\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}}
+}
+
+
+A \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} is used by \hyperlink{class_picto_1_1_choice_controller}{Choice\-Controller}.  
+
+
+
+
+{\ttfamily \#include $<$Control\-Result.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Control\-Target\-Result\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.072289cm]{class_picto_1_1_control_target_result}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_target_result_ad61cc6a7872a231a1f68440bb2d4a048}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_control_target_result_ad61cc6a7872a231a1f68440bb2d4a048}
+
+\item 
+bool \hyperlink{class_picto_1_1_control_target_result_a34c979c9a23cb65809a282b98feb08af}{contains} (int x, int y)
+\begin{DoxyCompactList}\small\item\em A convenience function that calls this object's underlying \hyperlink{class_picto_1_1_control_target}{Control\-Target} objects \hyperlink{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}{Control\-Target\-::contains()} function. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_control_target_result_a5475c36fb8c2e0436a2825f5662e19f7}{set\-Active} (bool active)
+\begin{DoxyCompactList}\small\item\em A convenience function that calls this object's underlying \hyperlink{class_picto_1_1_control_target}{Control\-Target} objects \hyperlink{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}{Control\-Target\-::set\-Active()} function. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_target_result_a4c44eb3cf2f923bf9e0cbf4164a50874}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_result_a34c979c9a23cb65809a282b98feb08af}{bool {\bfseries contains} (int x, int y)}\label{class_picto_1_1_control_target_result_a34c979c9a23cb65809a282b98feb08af}
+
+\item 
+\hypertarget{class_picto_1_1_control_target_result_a5475c36fb8c2e0436a2825f5662e19f7}{void {\bfseries set\-Active} (bool active)}\label{class_picto_1_1_control_target_result_a5475c36fb8c2e0436a2825f5662e19f7}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_target_result_a628a1eb95bfa05d89172cfdd0af70e22}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_control_target_result_a628a1eb95bfa05d89172cfdd0af70e22}{Create} ()}\label{class_picto_1_1_control_target_result_a628a1eb95bfa05d89172cfdd0af70e22}
+
+\begin{DoxyCompactList}\small\item\em Creates and returns a shared pointer to a \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_result_acfa362206df1c3b906c22eceade51c68}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_control_target_result_acfa362206df1c3b906c22eceade51c68}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_target_result_a46d36f8cd048d2ffbfcbb99308c9e5cd}{virtual void \hyperlink{class_picto_1_1_control_target_result_a46d36f8cd048d2ffbfcbb99308c9e5cd}{post\-Deserialize} ()}\label{class_picto_1_1_control_target_result_a46d36f8cd048d2ffbfcbb99308c9e5cd}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Scriptable\-Container\-::post\-Deserialize()} to set the \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} \hyperlink{class_picto_1_1_property}{Property} invisible since it doesn't do anything in \hyperlink{class_picto_1_1_result}{Result} objects. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_control_target_result_ab9de740ffbe40f637b60b76bf3b71ad9}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_target_result_a6629c67f66c4f4e1290a9994f414ee8e}{scriptable\-Container\-Was\-Reinitialized} ()
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_result_aaa7e33f8afbc169c652a1aba180a968e}{virtual void \hyperlink{class_picto_1_1_control_target_result_aaa7e33f8afbc169c652a1aba180a968e}{post\-Deserialize} ()}\label{class_picto_1_1_control_target_result_aaa7e33f8afbc169c652a1aba180a968e}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Scriptable\-Container\-::post\-Deserialize()} to set the \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} \hyperlink{class_picto_1_1_property}{Property} invisible since it doesn't do anything in \hyperlink{class_picto_1_1_result}{Result} objects. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_result_a8c5964c5d142af68f1a3ef59379cf963}{virtual bool \hyperlink{class_picto_1_1_control_target_result_a8c5964c5d142af68f1a3ef59379cf963}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_control_target_result_a8c5964c5d142af68f1a3ef59379cf963}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_target_result_a6328bc782d1e2125da441c85c2a5059f}{scriptable\-Container\-Was\-Reinitialized} ()
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_result_aaf5e861e7d0ca2b3dac1890300c8cac4}{virtual bool \hyperlink{class_picto_1_1_control_target_result_aaf5e861e7d0ca2b3dac1890300c8cac4}{execute\-Search\-Algorithm} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)}\label{class_picto_1_1_control_target_result_aaf5e861e7d0ca2b3dac1890300c8cac4}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_u_i_enabled_a97cb540bf9702a5af91a9eeddde39db9}{Scriptable\-::execute\-Search\-Algorithm} to check for the input search\-Request in this object's scripts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} is used by \hyperlink{class_picto_1_1_choice_controller}{Choice\-Controller}. 
+
+A \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} is used by \hyperlink{class_picto_1_1_choice_controller}{Choice\-Controller} for defining the \hyperlink{class_picto_1_1_control_target}{Control\-Target} elements that the subject may choose from.
+
+Each \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} allows the designer to select a single \hyperlink{class_picto_1_1_control_target}{Control\-Target}. If that \hyperlink{class_picto_1_1_control_target}{Control\-Target} is selected, that \hyperlink{class_picto_1_1_control_target_result}{Control\-Target\-Result} will be set as the \hyperlink{class_picto_1_1_choice_controller}{Choice\-Controller} element's result. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Control\-Result.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_control_target_result_a34c979c9a23cb65809a282b98feb08af}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!contains@{contains}}
+\index{contains@{contains}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Control\-Target\-Result\-::contains (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_control_target_result_a34c979c9a23cb65809a282b98feb08af}
+
+
+A convenience function that calls this object's underlying \hyperlink{class_picto_1_1_control_target}{Control\-Target} objects \hyperlink{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}{Control\-Target\-::contains()} function. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}{Control\-Target\-::contains()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 15 of file Control\-Result.\-cpp.
+
+\hypertarget{class_picto_1_1_control_target_result_a4c44eb3cf2f923bf9e0cbf4164a50874}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Target\-Result\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_result_a4c44eb3cf2f923bf9e0cbf4164a50874}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_logic_result_ac50cf46d11bb005735d12f5e230fbf64}{Picto\-::\-Logic\-Result}.
+
+
+
+Definition at line 31 of file Control\-Target\-Result.\-h.
+
+\hypertarget{class_picto_1_1_control_target_result_a6629c67f66c4f4e1290a9994f414ee8e}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}}
+\index{scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{scriptable\-Container\-Was\-Reinitialized}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Control\-Target\-Result\-::scriptable\-Container\-Was\-Reinitialized (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_result_a6629c67f66c4f4e1290a9994f414ee8e}
+
+
+Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_scriptable_container_ab3d900d7a5403b8795b0edb54e50a750}{init\-Scripting()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acabb0f86283aefd4e247f076b56504cd}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 43 of file Control\-Result.\-cpp.
+
+\hypertarget{class_picto_1_1_control_target_result_a6328bc782d1e2125da441c85c2a5059f}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}}
+\index{scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{scriptable\-Container\-Was\-Reinitialized}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Control\-Target\-Result\-::scriptable\-Container\-Was\-Reinitialized (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_result_a6328bc782d1e2125da441c85c2a5059f}
+
+
+Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_scriptable_container_ab3d900d7a5403b8795b0edb54e50a750}{init\-Scripting()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acabb0f86283aefd4e247f076b56504cd}{Picto\-::\-Scriptable\-Container}.
+
+\hypertarget{class_picto_1_1_control_target_result_a5475c36fb8c2e0436a2825f5662e19f7}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!set\-Active@{set\-Active}}
+\index{set\-Active@{set\-Active}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{set\-Active}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Control\-Target\-Result\-::set\-Active (
+\begin{DoxyParamCaption}
+\item[{bool}]{active}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_control_target_result_a5475c36fb8c2e0436a2825f5662e19f7}
+
+
+A convenience function that calls this object's underlying \hyperlink{class_picto_1_1_control_target}{Control\-Target} objects \hyperlink{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}{Control\-Target\-::set\-Active()} function. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}{Control\-Target\-::set\-Active()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 22 of file Control\-Result.\-cpp.
+
+\hypertarget{class_picto_1_1_control_target_result_ab9de740ffbe40f637b60b76bf3b71ad9}{\index{Picto\-::\-Control\-Target\-Result@{Picto\-::\-Control\-Target\-Result}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::ControlTargetResult@{Picto\-::\-Control\-Target\-Result}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Control\-Target\-Result\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_result_ab9de740ffbe40f637b60b76bf3b71ad9}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. 
+
+
+
+Reimplemented from \hyperlink{class_picto_1_1_result_add19b99738db3cf72ca051d57fbeaf9b}{Picto\-::\-Result}.
+
+
+
+Definition at line 35 of file Control\-Result.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Control\-Result.\-h\item 
+source/common/controlelements/Control\-Target\-Result.\-h\item 
+source/common/controlelements/Control\-Result.\-cpp\item 
+source/common/controlelements/Control\-Target\-Result.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,817 @@
+\hypertarget{class_editor_state}{\section{Editor\-State Class Reference}
+\label{class_editor_state}\index{Editor\-State@{Editor\-State}}
+}
+
+
+The \hyperlink{class_editor_state}{Editor\-State} stores the current state of the \hyperlink{class_designer}{Designer} and provides multiple signals that widgets throughout the \hyperlink{class_designer}{Designer} can connect to in order to be updated on important events.  
+
+
+
+
+{\ttfamily \#include $<$Editor\-State.\-h$>$}
+
+Inheritance diagram for Editor\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_editor_state}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Edit\-Mode} \{ \\*
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Select} = 0, 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3fbf76edee5b880159781851f7f3196d}{Place\-Item}, 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a38dca5d68021a37ebb69ebbd8a2544b2}{Move\-Item}, 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a09c13572277c714c0e5d9c4e36725f4a}{Insert\-Line}, 
+\\*
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a575ea0fbd4fa6f8baa98a8f9817acb79}{Draw\-Line}, 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Navigate}
+ \}
+\begin{DoxyCompactList}\small\item\em The current Editing mode defining the effects of user interaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_editor_state_a0bff406b82ba28c7b2c9c8a847f4d77a}{set\-Top\-Level\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ top\-Level\-Asset)
+\begin{DoxyCompactList}\small\item\em Sets the top level asset for this \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_editor_state_a323672e3b605153f0a41f72c22865064}{set\-Current\-Analysis} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_analysis}{Analysis} $>$ curr\-Analysis)
+\begin{DoxyCompactList}\small\item\em Sets the input Analysis as the currently active analysis in the \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a4403aeb7c9354f48139d5312bce1e638}{set\-Edit\-Mode} (int mode)
+\begin{DoxyCompactList}\small\item\em Sets the current \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} to the input \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. \end{DoxyCompactList}\item 
+double \hyperlink{class_editor_state_ae58330ad315ac63798b5a7f80c9fb9ca}{set\-Zoom} (double zoom)
+\begin{DoxyCompactList}\small\item\em Call this to set the zoom level of the canvas to the input value. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a223d839ffbe770e3a4df806a57c196c1}{set\-Font} (const Q\-Font font)
+\begin{DoxyCompactList}\small\item\em Returns the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a71a280a1ccc7f832b2073dc62936a730}{set\-Text\-Color} (const Q\-Color color)
+\begin{DoxyCompactList}\small\item\em Sets the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a97266d3f8d232b317c2bbacf9dc46f93}{void \hyperlink{class_editor_state_a97266d3f8d232b317c2bbacf9dc46f93}{set\-Item\-Color} (const Q\-Color color)}\label{class_editor_state_a97266d3f8d232b317c2bbacf9dc46f93}
+
+\begin{DoxyCompactList}\small\item\em This function is not currently being used. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a368a8991432fd7c406ccbb55aaadf983}{set\-Background\-Pattern} (Q\-Pixmap pattern)
+\begin{DoxyCompactList}\small\item\em Sets the canvas background pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_acb87663efc3c0ecdfbb4964802e4358c}{set\-Line\-Color} (const Q\-Color color)
+\begin{DoxyCompactList}\small\item\em Sets the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_aa14e5b1cc9e0cf0221359c7ea8df382a}{set\-Insertion\-Item} (Q\-String class\-Name=\char`\"{}\char`\"{}, Q\-String friendly\-Name=\char`\"{}\char`\"{}, Q\-String category=\char`\"{}\char`\"{}, Q\-String type=\char`\"{}\char`\"{}, Q\-Pixmap pixmap=Q\-Pixmap())
+\begin{DoxyCompactList}\small\item\em Sets the current insertion item that will be added to the Window Asset if the user clicks in the canvas. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_ad9447b01659213315d32929fb3b353c8}{set\-Window\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset, bool undoable=true)
+\begin{DoxyCompactList}\small\item\em Sets the current asset opened in the editor window to the input asset object. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a988d247204ba5ef2e8e209eb33bcef39}{void \hyperlink{class_editor_state_a988d247204ba5ef2e8e209eb33bcef39}{set\-Window\-Asset\-To\-Parent} ()}\label{class_editor_state_a988d247204ba5ef2e8e209eb33bcef39}
+
+\begin{DoxyCompactList}\small\item\em Sets the Window Asset to the parent of the current Window Asset. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_acdada8168fd8de85fa44c38ffe621b31}{set\-Window\-Items\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Call this to inform the \hyperlink{class_editor_state}{Editor\-State} that all of the items in the current design window (ie. All of the Diagram\-Items and Arrows) have been successfully loaded. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{set\-Selected\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_designer}{Designer}'s currently selected Asset to the input object. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a88e0f970839edbfd57e12e4189dc6a4a}{set\-Selected\-Item} (Q\-Graphics\-Item $\ast$item)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_designer}{Designer}'s currently selected \hyperlink{class_diagram_item}{Diagram\-Item} or \hyperlink{class_arrow}{Arrow} to the input object. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a14a1806929ce9f6fc1c48a5dc356da4f}{set\-Last\-Action\-Undoable} ()
+\begin{DoxyCompactList}\small\item\em Call this function to inform the \hyperlink{class_editor_state}{Editor\-State} that the latest group of actions since the last call to this function should be undoable as a single unit. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_adc666c4228c6282f14399e454e832bba}{reload\-Window} ()
+\begin{DoxyCompactList}\small\item\em Call this function to cause the current \hyperlink{class_designer}{Designer} window to be reloaded. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a171f60df7de30e116e02eae6e8653143}{trigger\-Experiment\-Reset} ()
+\begin{DoxyCompactList}\small\item\em Call to inform the \hyperlink{class_editor_state}{Editor\-State} that this experiment needs to be reloaded from X\-M\-L. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a57f20d1fdc749babb13531095445f604}{void \hyperlink{class_editor_state_a57f20d1fdc749babb13531095445f604}{trigger\-Item\-Inserted} ()}\label{class_editor_state_a57f20d1fdc749babb13531095445f604}
+
+\begin{DoxyCompactList}\small\item\em Call to inform the \hyperlink{class_editor_state}{Editor\-State} that a new \hyperlink{class_diagram_item}{Diagram\-Item} or \hyperlink{class_arrow}{Arrow} was just inserted into the \hyperlink{class_designer}{Designer} canvas. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_ad83e491bc6df371b434096c36234eb6a}{void \hyperlink{class_editor_state_ad83e491bc6df371b434096c36234eb6a}{request\-Undo} ()}\label{class_editor_state_ad83e491bc6df371b434096c36234eb6a}
+
+\begin{DoxyCompactList}\small\item\em Call this function to request that the latest group of changes marked by \hyperlink{class_editor_state_a14a1806929ce9f6fc1c48a5dc356da4f}{set\-Last\-Action\-Undoable()} should be undone. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a8f26f76de1118e7e16dc6bd82496078a}{request\-Search} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Call this function to request a search for the input search\-Request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_editor_state_ac654abb4fb812ab6c010eb91ca25ecf2}{void \hyperlink{class_editor_state_ac654abb4fb812ab6c010eb91ca25ecf2}{edit\-Mode\-Changed} (int mode)}\label{class_editor_state_ac654abb4fb812ab6c010eb91ca25ecf2}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} changes to a new value. mode is the current \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_af5b7818287993dcab74199b4f71593e3}{zoom\-Changed} (double zoom)
+\begin{DoxyCompactList}\small\item\em Emitted when the zoom value for the canvas has changed. zoom is the new zoom value. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_ae76679fb6a87c2feead88d25b56af323}{font\-Changed} (Q\-Font font)
+\begin{DoxyCompactList}\small\item\em Emitted when the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a6c7d2c3d7cbc553a674e4fb2ad1011c3}{text\-Color\-Changed} (Q\-Color color)
+\begin{DoxyCompactList}\small\item\em Emitted when the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a127386630f919ed5a3bfbbc259d3b30c}{void \hyperlink{class_editor_state_a127386630f919ed5a3bfbbc259d3b30c}{item\-Color\-Changed} (Q\-Color color)}\label{class_editor_state_a127386630f919ed5a3bfbbc259d3b30c}
+
+\begin{DoxyCompactList}\small\item\em This signal is not currently being used. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a1771872fe0adcdf98d209fa3788cc486}{line\-Color\-Changed} (Q\-Color color)
+\begin{DoxyCompactList}\small\item\em Emitted when the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_aff5503b5e634c74bee849b2b9f48ff79}{background\-Pattern\-Changed} (Q\-Pixmap pattern)
+\begin{DoxyCompactList}\small\item\em Emitted when the background\-Pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a9649a61472cb32012334d945339ca11f}{insertion\-Item\-Changed} (Q\-String class\-Name, Q\-String friendly\-Name)
+\begin{DoxyCompactList}\small\item\em Emitted when the insertion item selected in the \hyperlink{class_toolbox}{Toolbox} changes. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_ac20a26572d858576503acda7d7c7231f}{window\-Items\-Loaded} ()
+\begin{DoxyCompactList}\small\item\em Emitted when all of the items in the current design window (ie. All of the Diagram\-Items and Arrows) have been successfully loaded. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a8ab4806896be67c7b57ae53f9f02147a}{window\-Asset\-Changed} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)
+\begin{DoxyCompactList}\small\item\em Emitted when the Window Asset changes. asset is the new Window Asset. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_acb38bf1c35a2cfd18857f932c211acc9}{void \hyperlink{class_editor_state_acb38bf1c35a2cfd18857f932c211acc9}{selected\-Asset\-Changed} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_editor_state_acb38bf1c35a2cfd18857f932c211acc9}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the \hyperlink{class_designer}{Designer}'s currently selected Asset changes. asset is the newly selected Asset. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a0404b2e2f2f10b818e71f12ec4b8e4cb}{void \hyperlink{class_editor_state_a0404b2e2f2f10b818e71f12ec4b8e4cb}{item\-Selected} (Q\-Graphics\-Item $\ast$item)}\label{class_editor_state_a0404b2e2f2f10b818e71f12ec4b8e4cb}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the \hyperlink{class_designer}{Designer}'s currently selected \hyperlink{class_diagram_item}{Diagram\-Item} changes. item is the newly selected \hyperlink{class_diagram_item}{Diagram\-Item}. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_a50e0836cdfe1d8272171575b2f33a918}{current\-Analysis\-Changed} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_analysis}{Analysis} $>$ curr\-Analysis)
+\begin{DoxyCompactList}\small\item\em Emitted if the Analysis currently being displayed in the \hyperlink{class_designer}{Designer} changed. curr\-Analysis is the new active Analysis. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_afef0aacb8483fa542087051f87ef8385}{void \hyperlink{class_editor_state_afef0aacb8483fa542087051f87ef8385}{arrow\-Port\-Selected} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_editor_state_afef0aacb8483fa542087051f87ef8385}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the \hyperlink{class_designer}{Designer}'s currently selected \hyperlink{class_diagram_item}{Diagram\-Item} changes to an \hyperlink{class_arrow_port_item}{Arrow\-Port\-Item}. asset is the Asset referenced by the \hyperlink{class_arrow_port_item}{Arrow\-Port\-Item}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_ad2d5531ffabffdc1db7e3e343f8ca8bf}{void \hyperlink{class_editor_state_ad2d5531ffabffdc1db7e3e343f8ca8bf}{item\-Inserted} ()}\label{class_editor_state_ad2d5531ffabffdc1db7e3e343f8ca8bf}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a new \hyperlink{class_diagram_item}{Diagram\-Item} or \hyperlink{class_arrow}{Arrow} was just inserted into the \hyperlink{class_designer}{Designer} canvas. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}{void \hyperlink{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}{undoable\-Action\-Performed} ()}\label{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the latest group of actions since the last time this signal was emitted should be considered undoable as a single unit. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_adb17c7032933e39f0dfa602ff9c28813}{void \hyperlink{class_editor_state_adb17c7032933e39f0dfa602ff9c28813}{undo\-Requested} ()}\label{class_editor_state_adb17c7032933e39f0dfa602ff9c28813}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the latest group of changes marked by the \hyperlink{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}{undoable\-Action\-Performed()} signal should be undone. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_abaea4e2e0cc7b68712ffed0a537f6577}{reset\-Experiment} ()
+\begin{DoxyCompactList}\small\item\em Emitted when this experiment needs to be reloaded from X\-M\-L. \end{DoxyCompactList}\item 
+void \hyperlink{class_editor_state_adfc61d63511d2f06084a13d58e746fae}{search\-Requested} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Emitted when a new search is requested. search\-Request is the new \hyperlink{struct_search_request}{Search\-Request}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Edit\-Mode} \hyperlink{class_editor_state_adc415e8403fef1a8888c995201a54d5b}{get\-Edit\-Mode} ()
+\begin{DoxyCompactList}\small\item\em Returns the current \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. \end{DoxyCompactList}\item 
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Edit\-Mode} \hyperlink{class_editor_state_a8090b6bbc15324fbebffcb8bb9779e47}{get\-Last\-Edit\-Mode} ()
+\begin{DoxyCompactList}\small\item\em Returns the latest \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} before the current one. \end{DoxyCompactList}\item 
+Q\-Font \hyperlink{class_editor_state_a585c1b6550fdcf92a8f9286c7ae28df4}{get\-Font} ()
+\begin{DoxyCompactList}\small\item\em Returns the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+Q\-Color \hyperlink{class_editor_state_adce02af07f16a48c21fe37c8db82feaf}{get\-Text\-Color} ()
+\begin{DoxyCompactList}\small\item\em Gets the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a89992ece78c605b6fed0d3a0a175f41d}{Q\-Color \hyperlink{class_editor_state_a89992ece78c605b6fed0d3a0a175f41d}{get\-Item\-Color} ()}\label{class_editor_state_a89992ece78c605b6fed0d3a0a175f41d}
+
+\begin{DoxyCompactList}\small\item\em This function is not currently being used. \end{DoxyCompactList}\item 
+Q\-Color \hyperlink{class_editor_state_a952a655485c8f041c07cdb2057de7a6a}{get\-Line\-Color} ()
+\begin{DoxyCompactList}\small\item\em Gets the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+Q\-Pixmap \hyperlink{class_editor_state_a05c8e0b1e9f22aab5ae167a06f04f7b5}{get\-Background\-Pattern} ()
+\begin{DoxyCompactList}\small\item\em Gets the canvas background pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a6a4490d34f24efa4c03136e4e006ecf4}{Q\-String \hyperlink{class_editor_state_a6a4490d34f24efa4c03136e4e006ecf4}{get\-Insertion\-Item\-Category} ()}\label{class_editor_state_a6a4490d34f24efa4c03136e4e006ecf4}
+
+\begin{DoxyCompactList}\small\item\em Returns the current insertion item category for the insertion item selected in the \hyperlink{class_toolbox}{Toolbox}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_ac4302956d19a3aeb7db98ea811a95b6f}{Q\-String \hyperlink{class_editor_state_ac4302956d19a3aeb7db98ea811a95b6f}{get\-Insertion\-Item\-Type} ()}\label{class_editor_state_ac4302956d19a3aeb7db98ea811a95b6f}
+
+\begin{DoxyCompactList}\small\item\em Returns the current insertion item type for the insertion item selected in the \hyperlink{class_toolbox}{Toolbox}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a054a40b7782f1810c8f0dd349a536efc}{Q\-Pixmap \hyperlink{class_editor_state_a054a40b7782f1810c8f0dd349a536efc}{get\-Insertion\-Item\-Pixmap} ()}\label{class_editor_state_a054a40b7782f1810c8f0dd349a536efc}
+
+\begin{DoxyCompactList}\small\item\em Returns the current insertion item diagram pixmap for the insertion item selected in the \hyperlink{class_toolbox}{Toolbox}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a9df7ef39d6c8fa0e23523d1b39c77175}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_editor_state_a9df7ef39d6c8fa0e23523d1b39c77175}{get\-Window\-Asset} ()}\label{class_editor_state_a9df7ef39d6c8fa0e23523d1b39c77175}
+
+\begin{DoxyCompactList}\small\item\em Returns the current Window\-Asset, ie. The Asset whose children are displayed in the \hyperlink{class_designer}{Designer} canvas. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a73361dfdbd2d8883a420cc8f2f9b934b}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_editor_state_a73361dfdbd2d8883a420cc8f2f9b934b}{get\-Selected\-Asset} ()}\label{class_editor_state_a73361dfdbd2d8883a420cc8f2f9b934b}
+
+\begin{DoxyCompactList}\small\item\em Returns the current selected Asset, ie. the Asset which the selected \hyperlink{class_diagram_item}{Diagram\-Item} symbolizes. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_editor_state_ace3a4785e22a4fa4132d9c6c0f8dad53}{get\-Top\-Level\-Asset} ()
+\begin{DoxyCompactList}\small\item\em Returns the current top level asset for this \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_a921986c35f0d332c428048993f13700a}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_analysis}{Analysis} $>$ \hyperlink{class_editor_state_a921986c35f0d332c428048993f13700a}{get\-Current\-Analysis} ()}\label{class_editor_state_a921986c35f0d332c428048993f13700a}
+
+\begin{DoxyCompactList}\small\item\em Returns the Analysis currently being displayed in the \hyperlink{class_designer}{Designer}, or an empty Q\-Shared\-Pointer$<$\-Analysis$>$ if the \hyperlink{class_designer}{Designer} is in Experimental design mode (ie. No Analysis Elements are visible and Experimental elements are editable). \end{DoxyCompactList}\item 
+\hypertarget{class_editor_state_acf9f71ae95321e69934d76ee87b79980}{Q\-Graphics\-Item $\ast$ \hyperlink{class_editor_state_acf9f71ae95321e69934d76ee87b79980}{get\-Selected\-Item} ()}\label{class_editor_state_acf9f71ae95321e69934d76ee87b79980}
+
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Graphics\-Item pointer to the currently selected \hyperlink{class_diagram_item}{Diagram\-Item} in the \hyperlink{class_diagram_scene}{Diagram\-Scene} canvas. \end{DoxyCompactList}\item 
+Q\-List$<$ \hyperlink{struct_search_request}{Search\-Request} $>$ \hyperlink{class_editor_state_a5ea7b318475acaacb392831ba147bc8b}{get\-Search\-Requests} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of the current \hyperlink{struct_search_request}{Search\-Request} objects. All searchable elements in the \hyperlink{class_designer}{Designer} should be serching for these. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_editor_state}{Editor\-State} stores the current state of the \hyperlink{class_designer}{Designer} and provides multiple signals that widgets throughout the \hyperlink{class_designer}{Designer} can connect to in order to be updated on important events. 
+
+Since the \hyperlink{class_designer}{Designer} is built up of lots of different widgets that shouldn't need to know about each other, there needs to be some communication channel that allows each widget to communicate with others without needing to know what they do or what they need to know. The \hyperlink{class_editor_state}{Editor\-State} is this communication channel. Whenever something significant happens, a widget just calls the appropriate function in the \hyperlink{class_editor_state}{Editor\-State}. The \hyperlink{class_editor_state}{Editor\-State} emits the appropriate signals based on this significant event and any widgets that connect to those signals will then be updated. It also stores useful information like the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}, current Window Asset, current Analysis, current \hyperlink{struct_search_request}{Search\-Request}, etc.
+
+Since it is so central to \hyperlink{class_designer}{Designer} operation, the \hyperlink{class_editor_state}{Editor\-State} is passed into most if not all of the constructors of classes used by the \hyperlink{class_designer}{Designer}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 27 of file Editor\-State.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{\index{Editor\-State@{Editor\-State}!Edit\-Mode@{Edit\-Mode}}
+\index{Edit\-Mode@{Edit\-Mode}!EditorState@{Editor\-State}}
+\subsubsection[{Edit\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Editor\-State\-::\-Edit\-Mode}}}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}
+
+
+The current Editing mode defining the effects of user interaction. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Select@{Select}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Select@{Select}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Select}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}
+}]In this mode, the user can select items in the \hyperlink{class_designer}{Designer} canvas. Their properties will appear in the Property window. \index{Place\-Item@{Place\-Item}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Place\-Item@{Place\-Item}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3fbf76edee5b880159781851f7f3196d}{Place\-Item}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3fbf76edee5b880159781851f7f3196d}
+}]In this mode, the user can press the mouse button in the \hyperlink{class_designer}{Designer} canvas to insert the Asset type selected in the \hyperlink{class_toolbox}{Toolbox} into the current Window Asset. \index{Move\-Item@{Move\-Item}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Move\-Item@{Move\-Item}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a38dca5d68021a37ebb69ebbd8a2544b2}{Move\-Item}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a38dca5d68021a37ebb69ebbd8a2544b2}
+}]In this mode, while the mouse button is pressed, moving the mouse will move the currently selected item. \index{Insert\-Line@{Insert\-Line}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Insert\-Line@{Insert\-Line}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a09c13572277c714c0e5d9c4e36725f4a}{Insert\-Line}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a09c13572277c714c0e5d9c4e36725f4a}
+}]In this mode, pressing the mouse button will start drawing a new Transition \hyperlink{class_arrow}{Arrow}. \index{Draw\-Line@{Draw\-Line}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Draw\-Line@{Draw\-Line}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a575ea0fbd4fa6f8baa98a8f9817acb79}{Draw\-Line}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a575ea0fbd4fa6f8baa98a8f9817acb79}
+}]In this mode, while the mouse button is pressed, moving the mouse will continue drawing a Transition \hyperlink{class_arrow}{Arrow} that was just created. \index{Navigate@{Navigate}!Editor\-State@{Editor\-State}}\index{Editor\-State@{Editor\-State}!Navigate@{Navigate}}\item[{\em 
+\hypertarget{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Navigate}\label{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}
+}]In this mode, the user can rotate the mouse wheel to zoom the \hyperlink{class_designer}{Designer} canvas and press the mouse button and move it to drag the canvas. \end{description}
+\end{Desc}
+
+
+Definition at line 32 of file Editor\-State.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_editor_state_aff5503b5e634c74bee849b2b9f48ff79}{\index{Editor\-State@{Editor\-State}!background\-Pattern\-Changed@{background\-Pattern\-Changed}}
+\index{background\-Pattern\-Changed@{background\-Pattern\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{background\-Pattern\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::background\-Pattern\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Pixmap}]{pattern}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_aff5503b5e634c74bee849b2b9f48ff79}
+
+
+Emitted when the background\-Pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. 
+
+\begin{DoxyNote}{Note}
+I believe that this signal, get\-Backgroun\-Pattern(), and set\-Backgroun\-Pattern() are not currently being used. 
+\end{DoxyNote}
+\hypertarget{class_editor_state_a50e0836cdfe1d8272171575b2f33a918}{\index{Editor\-State@{Editor\-State}!current\-Analysis\-Changed@{current\-Analysis\-Changed}}
+\index{current\-Analysis\-Changed@{current\-Analysis\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{current\-Analysis\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::current\-Analysis\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Analysis} $>$}]{curr\-Analysis}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_a50e0836cdfe1d8272171575b2f33a918}
+
+
+Emitted if the Analysis currently being displayed in the \hyperlink{class_designer}{Designer} changed. curr\-Analysis is the new active Analysis. 
+
+If the \hyperlink{class_designer}{Designer} is switching to Experiment only mode, this signal will be emitted with an empty shared pointer. \hypertarget{class_editor_state_ae76679fb6a87c2feead88d25b56af323}{\index{Editor\-State@{Editor\-State}!font\-Changed@{font\-Changed}}
+\index{font\-Changed@{font\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{font\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::font\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Font}]{font}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_ae76679fb6a87c2feead88d25b56af323}
+
+
+Emitted when the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. 
+
+\begin{DoxyNote}{Note}
+I believe that this signal, \hyperlink{class_editor_state_a223d839ffbe770e3a4df806a57c196c1}{set\-Font()}, and \hyperlink{class_editor_state_a585c1b6550fdcf92a8f9286c7ae28df4}{get\-Font()} are not currently being used. 
+\end{DoxyNote}
+\hypertarget{class_editor_state_a05c8e0b1e9f22aab5ae167a06f04f7b5}{\index{Editor\-State@{Editor\-State}!get\-Background\-Pattern@{get\-Background\-Pattern}}
+\index{get\-Background\-Pattern@{get\-Background\-Pattern}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Background\-Pattern}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Pixmap Editor\-State\-::get\-Background\-Pattern (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_a05c8e0b1e9f22aab5ae167a06f04f7b5}
+
+
+Gets the canvas background pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a368a8991432fd7c406ccbb55aaadf983}{set\-Background\-Pattern()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 72 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_adc415e8403fef1a8888c995201a54d5b}{\index{Editor\-State@{Editor\-State}!get\-Edit\-Mode@{get\-Edit\-Mode}}
+\index{get\-Edit\-Mode@{get\-Edit\-Mode}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Edit\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Edit\-Mode} Editor\-State\-::get\-Edit\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_adc415e8403fef1a8888c995201a54d5b}
+
+
+Returns the current \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} 
+\end{DoxySeeAlso}
+
+
+Definition at line 49 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a585c1b6550fdcf92a8f9286c7ae28df4}{\index{Editor\-State@{Editor\-State}!get\-Font@{get\-Font}}
+\index{get\-Font@{get\-Font}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Font}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Font Editor\-State\-::get\-Font (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_a585c1b6550fdcf92a8f9286c7ae28df4}
+
+
+Returns the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a223d839ffbe770e3a4df806a57c196c1}{set\-Font()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 57 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a8090b6bbc15324fbebffcb8bb9779e47}{\index{Editor\-State@{Editor\-State}!get\-Last\-Edit\-Mode@{get\-Last\-Edit\-Mode}}
+\index{get\-Last\-Edit\-Mode@{get\-Last\-Edit\-Mode}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Last\-Edit\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Edit\-Mode} Editor\-State\-::get\-Last\-Edit\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_a8090b6bbc15324fbebffcb8bb9779e47}
+
+
+Returns the latest \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} before the current one. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_adc415e8403fef1a8888c995201a54d5b}{get\-Edit\-Mode()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 53 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a952a655485c8f041c07cdb2057de7a6a}{\index{Editor\-State@{Editor\-State}!get\-Line\-Color@{get\-Line\-Color}}
+\index{get\-Line\-Color@{get\-Line\-Color}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Line\-Color}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color Editor\-State\-::get\-Line\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_a952a655485c8f041c07cdb2057de7a6a}
+
+
+Gets the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and Set\-Line\-Color() are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 68 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a5ea7b318475acaacb392831ba147bc8b}{\index{Editor\-State@{Editor\-State}!get\-Search\-Requests@{get\-Search\-Requests}}
+\index{get\-Search\-Requests@{get\-Search\-Requests}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Search\-Requests}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ {\bf Search\-Request} $>$ Editor\-State\-::get\-Search\-Requests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_editor_state_a5ea7b318475acaacb392831ba147bc8b}
+
+
+Returns a list of the current \hyperlink{struct_search_request}{Search\-Request} objects. All searchable elements in the \hyperlink{class_designer}{Designer} should be serching for these. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Definition at line 30 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_adce02af07f16a48c21fe37c8db82feaf}{\index{Editor\-State@{Editor\-State}!get\-Text\-Color@{get\-Text\-Color}}
+\index{get\-Text\-Color@{get\-Text\-Color}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Text\-Color}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color Editor\-State\-::get\-Text\-Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_adce02af07f16a48c21fe37c8db82feaf}
+
+
+Gets the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a71a280a1ccc7f832b2073dc62936a730}{set\-Text\-Color()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 61 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_ace3a4785e22a4fa4132d9c6c0f8dad53}{\index{Editor\-State@{Editor\-State}!get\-Top\-Level\-Asset@{get\-Top\-Level\-Asset}}
+\index{get\-Top\-Level\-Asset@{get\-Top\-Level\-Asset}!EditorState@{Editor\-State}}
+\subsubsection[{get\-Top\-Level\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<${\bf Asset}$>$ Editor\-State\-::get\-Top\-Level\-Asset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_editor_state_ace3a4785e22a4fa4132d9c6c0f8dad53}
+
+
+Returns the current top level asset for this \hyperlink{class_designer}{Designer}. 
+
+The top level asset is the Asset whose children will be visible when the \hyperlink{class_designer}{Designer} won't let us navigate any further up the design tree. Currently, this is set by the \hyperlink{class_designer}{Designer} to be the Experiment Asset. 
+
+Definition at line 87 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a9649a61472cb32012334d945339ca11f}{\index{Editor\-State@{Editor\-State}!insertion\-Item\-Changed@{insertion\-Item\-Changed}}
+\index{insertion\-Item\-Changed@{insertion\-Item\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{insertion\-Item\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::insertion\-Item\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{class\-Name, }
+\item[{Q\-String}]{friendly\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_a9649a61472cb32012334d945339ca11f}
+
+
+Emitted when the insertion item selected in the \hyperlink{class_toolbox}{Toolbox} changes. 
+
+class\-Name is the name of the Asset's class, friendly\-Name is the friendly\-Name for the Asset's class that is shown in the U\-I. \hypertarget{class_editor_state_a1771872fe0adcdf98d209fa3788cc486}{\index{Editor\-State@{Editor\-State}!line\-Color\-Changed@{line\-Color\-Changed}}
+\index{line\-Color\-Changed@{line\-Color\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{line\-Color\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::line\-Color\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Color}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_a1771872fe0adcdf98d209fa3788cc486}
+
+
+Emitted when the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. 
+
+\begin{DoxyNote}{Note}
+I believe that this signal, \hyperlink{class_editor_state_acb87663efc3c0ecdfbb4964802e4358c}{set\-Line\-Color()}, and get\-Color() are not currently being used. 
+\end{DoxyNote}
+\hypertarget{class_editor_state_adc666c4228c6282f14399e454e832bba}{\index{Editor\-State@{Editor\-State}!reload\-Window@{reload\-Window}}
+\index{reload\-Window@{reload\-Window}!EditorState@{Editor\-State}}
+\subsubsection[{reload\-Window}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::reload\-Window (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_adc666c4228c6282f14399e454e832bba}
+
+
+Call this function to cause the current \hyperlink{class_designer}{Designer} window to be reloaded. 
+
+This function clears the insertion item, then emits the \hyperlink{class_editor_state_a8ab4806896be67c7b57ae53f9f02147a}{window\-Asset\-Changed()} signal with the current Window Asset and then emits \hyperlink{class_editor_state_acb38bf1c35a2cfd18857f932c211acc9}{selected\-Asset\-Changed()} with the current selected Asset. This has the effect of telling all widgets connected to these signals to reload themselves. \begin{DoxyNote}{Note}
+This function does not appear to be in use right now. If you decide to use it, it is probably worth testing to make sure it does the job correctly. 
+\end{DoxyNote}
+
+
+Definition at line 250 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a8f26f76de1118e7e16dc6bd82496078a}{\index{Editor\-State@{Editor\-State}!request\-Search@{request\-Search}}
+\index{request\-Search@{request\-Search}!EditorState@{Editor\-State}}
+\subsubsection[{request\-Search}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::request\-Search (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a8f26f76de1118e7e16dc6bd82496078a}
+
+
+Call this function to request a search for the input search\-Request. 
+
+When called, the \hyperlink{class_editor_state_adfc61d63511d2f06084a13d58e746fae}{search\-Requested()} signal is emitted. All searchable elements in the \hyperlink{class_designer}{Designer} should respond to that signal by searching for all active search\-Requests returned from \hyperlink{class_editor_state_a5ea7b318475acaacb392831ba147bc8b}{get\-Search\-Requests()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Definition at line 264 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_abaea4e2e0cc7b68712ffed0a537f6577}{\index{Editor\-State@{Editor\-State}!reset\-Experiment@{reset\-Experiment}}
+\index{reset\-Experiment@{reset\-Experiment}!EditorState@{Editor\-State}}
+\subsubsection[{reset\-Experiment}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::reset\-Experiment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_abaea4e2e0cc7b68712ffed0a537f6577}
+
+
+Emitted when this experiment needs to be reloaded from X\-M\-L. 
+
+\begin{DoxySeeAlso}{See Also}
+Designer\-::reset\-Experiment() 
+\end{DoxySeeAlso}
+\hypertarget{class_editor_state_adfc61d63511d2f06084a13d58e746fae}{\index{Editor\-State@{Editor\-State}!search\-Requested@{search\-Requested}}
+\index{search\-Requested@{search\-Requested}!EditorState@{Editor\-State}}
+\subsubsection[{search\-Requested}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::search\-Requested (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_adfc61d63511d2f06084a13d58e746fae}
+
+
+Emitted when a new search is requested. search\-Request is the new \hyperlink{struct_search_request}{Search\-Request}. 
+
+When emitted, all searchable elements in the \hyperlink{class_designer}{Designer} should serch for active search\-Requests returned from \hyperlink{class_editor_state_a5ea7b318475acaacb392831ba147bc8b}{get\-Search\-Requests()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+\hypertarget{class_editor_state_a368a8991432fd7c406ccbb55aaadf983}{\index{Editor\-State@{Editor\-State}!set\-Background\-Pattern@{set\-Background\-Pattern}}
+\index{set\-Background\-Pattern@{set\-Background\-Pattern}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Background\-Pattern}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Background\-Pattern (
+\begin{DoxyParamCaption}
+\item[{Q\-Pixmap}]{pattern}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_a368a8991432fd7c406ccbb55aaadf983}
+
+
+Sets the canvas background pattern currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a05c8e0b1e9f22aab5ae167a06f04f7b5}{get\-Background\-Pattern()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 185 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a323672e3b605153f0a41f72c22865064}{\index{Editor\-State@{Editor\-State}!set\-Current\-Analysis@{set\-Current\-Analysis}}
+\index{set\-Current\-Analysis@{set\-Current\-Analysis}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Current\-Analysis}]{\setlength{\rightskip}{0pt plus 5cm}bool Editor\-State\-::set\-Current\-Analysis (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Analysis} $>$}]{curr\-Analysis}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a323672e3b605153f0a41f72c22865064}
+
+
+Sets the input Analysis as the currently active analysis in the \hyperlink{class_designer}{Designer}. 
+
+When there is an active Analysis, things are displayed differently on the \hyperlink{class_designer}{Designer} canvas. Analysis\-Elements specific to the current Analysis are shown. Experimental elements are grayed out. Only Analysis\-Elements are shown in the \hyperlink{class_toolbox}{Toolbox}. Since Analyses can exist on their own and be attached to different experiments, this function first checks to see if the input Analysis is already linked to the Experiment being designed. If it is not linked to the Experiment, the function links it. Any incompatibilities or other problems in the link are reported to the user in a message box. Then the Analysis is set to active in Design\-Config\-::set\-Active\-Analysis\-Ids() and the \hyperlink{class_editor_state_a50e0836cdfe1d8272171575b2f33a918}{current\-Analysis\-Changed()} signal is emitted. 
+
+Definition at line 56 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a4403aeb7c9354f48139d5312bce1e638}{\index{Editor\-State@{Editor\-State}!set\-Edit\-Mode@{set\-Edit\-Mode}}
+\index{set\-Edit\-Mode@{set\-Edit\-Mode}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Edit\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Edit\-Mode (
+\begin{DoxyParamCaption}
+\item[{int}]{mode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a4403aeb7c9354f48139d5312bce1e638}
+
+
+Sets the current \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} to the input \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. 
+
+When called, this function emits the \hyperlink{class_editor_state_ac654abb4fb812ab6c010eb91ca25ecf2}{edit\-Mode\-Changed()} signal with the new \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode}. 
+
+Definition at line 94 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a223d839ffbe770e3a4df806a57c196c1}{\index{Editor\-State@{Editor\-State}!set\-Font@{set\-Font}}
+\index{set\-Font@{set\-Font}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Font}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Font (
+\begin{DoxyParamCaption}
+\item[{const Q\-Font}]{font}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_a223d839ffbe770e3a4df806a57c196c1}
+
+
+Returns the font currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a585c1b6550fdcf92a8f9286c7ae28df4}{get\-Font()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 174 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_aa14e5b1cc9e0cf0221359c7ea8df382a}{\index{Editor\-State@{Editor\-State}!set\-Insertion\-Item@{set\-Insertion\-Item}}
+\index{set\-Insertion\-Item@{set\-Insertion\-Item}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Insertion\-Item}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Insertion\-Item (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{class\-Name = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{Q\-String}]{friendly\-Name = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{Q\-String}]{category = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{Q\-String}]{type = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{Q\-Pixmap}]{pixmap = {\ttfamily QPixmap()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_aa14e5b1cc9e0cf0221359c7ea8df382a}
+
+
+Sets the current insertion item that will be added to the Window Asset if the user clicks in the canvas. 
+
+class\-Name is the name of the Asset's class, friendly\-Name is the friendly\-Name for the Asset's class that is shown in the U\-I. Category and type are the name of the X\-M\-L tag and its type property value used to store this Asset within the Window\-Asset's X\-M\-L tag. pixmap is the Asset's icon which can replace the mouse icon to show the designer what type of Asset they are about to create before they click. This function emits the \hyperlink{class_editor_state_a9649a61472cb32012334d945339ca11f}{insertion\-Item\-Changed()} function. \begin{DoxyNote}{Note}
+When this function is called, the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} is changed from \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Editor\-State\-::\-Select} to \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3fbf76edee5b880159781851f7f3196d}{Editor\-State\-::\-Place\-Item} or the opposite depending if the input value is an insertable item or empty data (indicating that there is no current insertable item). 
+\end{DoxyNote}
+
+
+Definition at line 126 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a14a1806929ce9f6fc1c48a5dc356da4f}{\index{Editor\-State@{Editor\-State}!set\-Last\-Action\-Undoable@{set\-Last\-Action\-Undoable}}
+\index{set\-Last\-Action\-Undoable@{set\-Last\-Action\-Undoable}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Last\-Action\-Undoable}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Last\-Action\-Undoable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_a14a1806929ce9f6fc1c48a5dc356da4f}
+
+
+Call this function to inform the \hyperlink{class_editor_state}{Editor\-State} that the latest group of actions since the last call to this function should be undoable as a single unit. 
+
+This emits the \hyperlink{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}{undoable\-Action\-Performed()} signal when called. 
+
+Definition at line 205 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_acb87663efc3c0ecdfbb4964802e4358c}{\index{Editor\-State@{Editor\-State}!set\-Line\-Color@{set\-Line\-Color}}
+\index{set\-Line\-Color@{set\-Line\-Color}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Line\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Line\-Color (
+\begin{DoxyParamCaption}
+\item[{const Q\-Color}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_acb87663efc3c0ecdfbb4964802e4358c}
+
+
+Sets the line color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_a952a655485c8f041c07cdb2057de7a6a}{get\-Line\-Color()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 189 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{\index{Editor\-State@{Editor\-State}!set\-Selected\-Asset@{set\-Selected\-Asset}}
+\index{set\-Selected\-Asset@{set\-Selected\-Asset}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Selected\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Selected\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}
+
+
+Sets the \hyperlink{class_designer}{Designer}'s currently selected Asset to the input object. 
+
+This function emits \hyperlink{class_editor_state_acb38bf1c35a2cfd18857f932c211acc9}{selected\-Asset\-Changed()} 
+
+Definition at line 196 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a88e0f970839edbfd57e12e4189dc6a4a}{\index{Editor\-State@{Editor\-State}!set\-Selected\-Item@{set\-Selected\-Item}}
+\index{set\-Selected\-Item@{set\-Selected\-Item}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Selected\-Item}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Selected\-Item (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Item $\ast$}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a88e0f970839edbfd57e12e4189dc6a4a}
+
+
+Sets the \hyperlink{class_designer}{Designer}'s currently selected \hyperlink{class_diagram_item}{Diagram\-Item} or \hyperlink{class_arrow}{Arrow} to the input object. 
+
+Internally, this function checks the input item's type and calls \hyperlink{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{set\-Selected\-Asset()} with an appropriate input. If the input item is an \hyperlink{class_asset_item}{Asset\-Item} or a sub-\/graphic, it calls \hyperlink{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{set\-Selected\-Asset()} with the referenced Asset. If it is anything else, it calls \hyperlink{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{set\-Selected\-Asset()} with the current Window Asset. This function emits the \hyperlink{class_editor_state_a0404b2e2f2f10b818e71f12ec4b8e4cb}{item\-Selected()} or \hyperlink{class_editor_state_afef0aacb8483fa542087051f87ef8385}{arrow\-Port\-Selected()} signals as appropriate. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_a1a3d4da1b215113cc85bbc546e7d2845}{set\-Selected\-Asset()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 211 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a71a280a1ccc7f832b2073dc62936a730}{\index{Editor\-State@{Editor\-State}!set\-Text\-Color@{set\-Text\-Color}}
+\index{set\-Text\-Color@{set\-Text\-Color}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Text\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Text\-Color (
+\begin{DoxyParamCaption}
+\item[{const Q\-Color}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_a71a280a1ccc7f832b2073dc62936a730}
+
+
+Sets the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+\begin{DoxyNote}{Note}
+I believe that this function and \hyperlink{class_editor_state_adce02af07f16a48c21fe37c8db82feaf}{get\-Text\-Color()} are not currently being used. 
+\end{DoxyNote}
+
+
+Definition at line 178 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a0bff406b82ba28c7b2c9c8a847f4d77a}{\index{Editor\-State@{Editor\-State}!set\-Top\-Level\-Asset@{set\-Top\-Level\-Asset}}
+\index{set\-Top\-Level\-Asset@{set\-Top\-Level\-Asset}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Top\-Level\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Top\-Level\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{top\-Level\-Asset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_a0bff406b82ba28c7b2c9c8a847f4d77a}
+
+
+Sets the top level asset for this \hyperlink{class_designer}{Designer}. 
+
+The top level asset is the Asset whose children will be visible when the \hyperlink{class_designer}{Designer} won't let us navigate any further up the design tree. Currently, this is set by the \hyperlink{class_designer}{Designer} to be the Experiment Asset. 
+
+Definition at line 38 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_ad9447b01659213315d32929fb3b353c8}{\index{Editor\-State@{Editor\-State}!set\-Window\-Asset@{set\-Window\-Asset}}
+\index{set\-Window\-Asset@{set\-Window\-Asset}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Window\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Window\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset, }
+\item[{bool}]{undoable = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_ad9447b01659213315d32929fb3b353c8}
+
+
+Sets the current asset opened in the editor window to the input asset object. 
+
+If undoable is true, an undo point will be set after changing the window asset (so that undo after a window change will bring you back to the previous window and undo after a window change and other action will keep you in the same window).
+
+This function will emit the \hyperlink{class_editor_state_a8ab4806896be67c7b57ae53f9f02147a}{window\-Asset\-Changed()} signal if the input Asset is a valid W\-Indow Asset. \begin{DoxySeeAlso}{See Also}
+Designer\-::set\-Open\-Asset() 
+\end{DoxySeeAlso}
+
+
+Definition at line 147 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_acdada8168fd8de85fa44c38ffe621b31}{\index{Editor\-State@{Editor\-State}!set\-Window\-Items\-Loaded@{set\-Window\-Items\-Loaded}}
+\index{set\-Window\-Items\-Loaded@{set\-Window\-Items\-Loaded}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Window\-Items\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::set\-Window\-Items\-Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_acdada8168fd8de85fa44c38ffe621b31}
+
+
+Call this to inform the \hyperlink{class_editor_state}{Editor\-State} that all of the items in the current design window (ie. All of the Diagram\-Items and Arrows) have been successfully loaded. 
+
+This emits the \hyperlink{class_editor_state_ac20a26572d858576503acda7d7c7231f}{window\-Items\-Loaded()} signal when called. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_diagram_scene_a2ff8ccaa20060c09d3b6b2cba22a7d79}{Diagram\-Scene\-::set\-Scene\-Asset()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 198 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_ae58330ad315ac63798b5a7f80c9fb9ca}{\index{Editor\-State@{Editor\-State}!set\-Zoom@{set\-Zoom}}
+\index{set\-Zoom@{set\-Zoom}!EditorState@{Editor\-State}}
+\subsubsection[{set\-Zoom}]{\setlength{\rightskip}{0pt plus 5cm}double Editor\-State\-::set\-Zoom (
+\begin{DoxyParamCaption}
+\item[{double}]{zoom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_editor_state_ae58330ad315ac63798b5a7f80c9fb9ca}
+
+
+Call this to set the zoom level of the canvas to the input value. 
+
+The input zoom will be limited to the range (.3,2). When called, this function emits \hyperlink{class_editor_state_af5b7818287993dcab74199b4f71593e3}{zoom\-Changed()} with the new zoom value. The zoom value is essentially a constant by which the size of each object will be multiplied. \begin{DoxyNote}{Note}
+Don't confuse this zoom's functionality with the zoom used in the \hyperlink{class_test_viewer}{Test\-Viewer} and Remote\-Viewr windows to zoom in and out of a running experiment. That zoom is defined differently from this one. 
+\end{DoxyNote}
+
+
+Definition at line 108 of file Editor\-State.\-cpp.
+
+\hypertarget{class_editor_state_a6c7d2c3d7cbc553a674e4fb2ad1011c3}{\index{Editor\-State@{Editor\-State}!text\-Color\-Changed@{text\-Color\-Changed}}
+\index{text\-Color\-Changed@{text\-Color\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{text\-Color\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::text\-Color\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Color}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_a6c7d2c3d7cbc553a674e4fb2ad1011c3}
+
+
+Emitted when the text color currently being used by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} changes. 
+
+\begin{DoxyNote}{Note}
+I believe that this signal, \hyperlink{class_editor_state_a71a280a1ccc7f832b2073dc62936a730}{set\-Text\-Color()}, and \hyperlink{class_editor_state_adce02af07f16a48c21fe37c8db82feaf}{get\-Text\-Color()} are not currently being used. 
+\end{DoxyNote}
+\hypertarget{class_editor_state_a171f60df7de30e116e02eae6e8653143}{\index{Editor\-State@{Editor\-State}!trigger\-Experiment\-Reset@{trigger\-Experiment\-Reset}}
+\index{trigger\-Experiment\-Reset@{trigger\-Experiment\-Reset}!EditorState@{Editor\-State}}
+\subsubsection[{trigger\-Experiment\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::trigger\-Experiment\-Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_editor_state_a171f60df7de30e116e02eae6e8653143}
+
+
+Call to inform the \hyperlink{class_editor_state}{Editor\-State} that this experiment needs to be reloaded from X\-M\-L. 
+
+\begin{DoxySeeAlso}{See Also}
+Designer\-::reset\-Experiment() 
+\end{DoxySeeAlso}
+
+
+Definition at line 210 of file Editor\-State.\-h.
+
+\hypertarget{class_editor_state_a8ab4806896be67c7b57ae53f9f02147a}{\index{Editor\-State@{Editor\-State}!window\-Asset\-Changed@{window\-Asset\-Changed}}
+\index{window\-Asset\-Changed@{window\-Asset\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{window\-Asset\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::window\-Asset\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_a8ab4806896be67c7b57ae53f9f02147a}
+
+
+Emitted when the Window Asset changes. asset is the new Window Asset. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_ad9447b01659213315d32929fb3b353c8}{set\-Window\-Asset()} 
+\end{DoxySeeAlso}
+\hypertarget{class_editor_state_ac20a26572d858576503acda7d7c7231f}{\index{Editor\-State@{Editor\-State}!window\-Items\-Loaded@{window\-Items\-Loaded}}
+\index{window\-Items\-Loaded@{window\-Items\-Loaded}!EditorState@{Editor\-State}}
+\subsubsection[{window\-Items\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::window\-Items\-Loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_ac20a26572d858576503acda7d7c7231f}
+
+
+Emitted when all of the items in the current design window (ie. All of the Diagram\-Items and Arrows) have been successfully loaded. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_diagram_scene_a2ff8ccaa20060c09d3b6b2cba22a7d79}{Diagram\-Scene\-::set\-Scene\-Asset()} 
+\end{DoxySeeAlso}
+\hypertarget{class_editor_state_af5b7818287993dcab74199b4f71593e3}{\index{Editor\-State@{Editor\-State}!zoom\-Changed@{zoom\-Changed}}
+\index{zoom\-Changed@{zoom\-Changed}!EditorState@{Editor\-State}}
+\subsubsection[{zoom\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Editor\-State\-::zoom\-Changed (
+\begin{DoxyParamCaption}
+\item[{double}]{zoom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_editor_state_af5b7818287993dcab74199b4f71593e3}
+
+
+Emitted when the zoom value for the canvas has changed. zoom is the new zoom value. 
+
+The zoom value is essentially a constant by which the size of each object will be multiplied. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_ae58330ad315ac63798b5a7f80c9fb9ca}{set\-Zoom()} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Editor\-State.\-h\item 
+source/common/\-Designer/Editor\-State.\-cpp\end{DoxyCompactItemize}

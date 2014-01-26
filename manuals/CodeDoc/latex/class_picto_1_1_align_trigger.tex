@@ -1,0 +1,72 @@
+\hypertarget{class_picto_1_1_align_trigger}{\section{Picto\-:\-:Align\-Trigger Class Reference}
+\label{class_picto_1_1_align_trigger}\index{Picto\-::\-Align\-Trigger@{Picto\-::\-Align\-Trigger}}
+}
+Inheritance diagram for Picto\-:\-:Align\-Trigger\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_align_trigger}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_align_trigger_ac2cbb2b7fa00d0b2fac192541b55df9f}{virtual Event\-Order\-Index\-::\-I\-D\-Source {\bfseries get\-Data\-Source} ()}\label{class_picto_1_1_align_trigger_ac2cbb2b7fa00d0b2fac192541b55df9f}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_align_trigger_a08ef0ec1733e0370af9f7eddbf6938b8}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_align_trigger_a08ef0ec1733e0370af9f7eddbf6938b8}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_align_trigger_a5077c179044f932c9d3e2acca765168d}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_data_iterator}{Analysis\-Data\-Iterator} $>$ {\bfseries create\-Data\-Iterator} ()}\label{class_picto_1_1_align_trigger_a5077c179044f932c9d3e2acca765168d}
+
+\item 
+virtual void \hyperlink{class_picto_1_1_align_trigger_a3f40a9ee2655d48e49dc8a948ee84a6b}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_align_trigger_a22686abca1d448cf9e31bb72cdf69bd5}{virtual bool \hyperlink{class_picto_1_1_align_trigger_a22686abca1d448cf9e31bb72cdf69bd5}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_align_trigger_a22686abca1d448cf9e31bb72cdf69bd5}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14 of file Align\-Trigger.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_align_trigger_a3f40a9ee2655d48e49dc8a948ee84a6b}{\index{Picto\-::\-Align\-Trigger@{Picto\-::\-Align\-Trigger}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AlignTrigger@{Picto\-::\-Align\-Trigger}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Align\-Trigger\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_align_trigger_a3f40a9ee2655d48e49dc8a948ee84a6b}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_trigger_a05e5bb8c08c529a59bf996497ac6bdf6}{Picto\-::\-Analysis\-Trigger}.
+
+
+
+Definition at line 26 of file Align\-Trigger.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Align\-Trigger.\-h\item 
+source/common/analysis/Align\-Trigger.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,72 @@
+\hypertarget{class_picto_1_1_null_event_code_generator}{\section{Picto\-:\-:Null\-Event\-Code\-Generator Class Reference}
+\label{class_picto_1_1_null_event_code_generator}\index{Picto\-::\-Null\-Event\-Code\-Generator@{Picto\-::\-Null\-Event\-Code\-Generator}}
+}
+
+
+An empty event code generator for testing purposes.  
+
+
+
+
+{\ttfamily \#include $<$Null\-Event\-Code\-Generator.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Null\-Event\-Code\-Generator\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_null_event_code_generator}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_null_event_code_generator_a93c6e223c2c9af8b165662f93389da30}{double \hyperlink{class_picto_1_1_null_event_code_generator_a93c6e223c2c9af8b165662f93389da30}{send\-Event} (unsigned int event\-Code)}\label{class_picto_1_1_null_event_code_generator_a93c6e223c2c9af8b165662f93389da30}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_event_code_generator_adf6a7d68b44bcecec9b7093c723cebb9}{Event\-Code\-Generator\-::send\-Event()} to simply print out the input event\-Code to the debug console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_picto_1_1_null_event_code_generator_aad5a36c8ba429abe180f845a3b03c47b}{get\-Bits\-Per\-Event} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of bits that are available for sending events. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An empty event code generator for testing purposes. 
+
+Since we aren't always running with access to a neural recording device, we don't always need to generate event codes. The \hyperlink{class_picto_1_1_null_event_code_generator}{Null\-Event\-Code\-Generator} serves this purpose. When an event code is \char`\"{}generated\char`\"{}, the null generator sinply outputs its value to the debug console. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Null\-Event\-Code\-Generator.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_null_event_code_generator_aad5a36c8ba429abe180f845a3b03c47b}{\index{Picto\-::\-Null\-Event\-Code\-Generator@{Picto\-::\-Null\-Event\-Code\-Generator}!get\-Bits\-Per\-Event@{get\-Bits\-Per\-Event}}
+\index{get\-Bits\-Per\-Event@{get\-Bits\-Per\-Event}!Picto::NullEventCodeGenerator@{Picto\-::\-Null\-Event\-Code\-Generator}}
+\subsubsection[{get\-Bits\-Per\-Event}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Null\-Event\-Code\-Generator\-::get\-Bits\-Per\-Event (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_null_event_code_generator_aad5a36c8ba429abe180f845a3b03c47b}
+
+
+Returns the number of bits that are available for sending events. 
+
+In \hyperlink{namespace_picto}{Picto}, we have typically used 7 bits. 
+
+Implements \hyperlink{class_picto_1_1_event_code_generator_aa7c20e4bd4c1b3f403ea555e1a2de422}{Picto\-::\-Event\-Code\-Generator}.
+
+
+
+Definition at line 16 of file Null\-Event\-Code\-Generator.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/iodevices/Null\-Event\-Code\-Generator.\-h\item 
+source/common/iodevices/Null\-Event\-Code\-Generator.\-cpp\end{DoxyCompactItemize}

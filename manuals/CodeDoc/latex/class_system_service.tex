@@ -1,0 +1,125 @@
+\hypertarget{class_system_service}{\section{System\-Service Class Reference}
+\label{class_system_service}\index{System\-Service@{System\-Service}}
+}
+
+
+This file is derived from system\-\_\-service.\-h which is part of the i\-T\-A\-L\-C project (\href{http://italc.sourceforge.net}{\tt http\-://italc.\-sourceforge.\-net}) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the Qt\-Service class at some point. For that reason, and since we didn't write almost any of it, we're not going to provide detailed documentation.  
+
+
+
+
+{\ttfamily \#include $<$systemservice.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_system_service_ac937259220b62e8df8182f85bb9fa186}{typedef int($\ast$ {\bfseries service\-\_\-main} )(\hyperlink{class_system_service}{System\-Service} $\ast$)}\label{class_system_service_ac937259220b62e8df8182f85bb9fa186}
+
+\item 
+\hypertarget{class_system_service_ac937259220b62e8df8182f85bb9fa186}{typedef int($\ast$ {\bfseries service\-\_\-main} )(\hyperlink{class_system_service}{System\-Service} $\ast$)}\label{class_system_service_ac937259220b62e8df8182f85bb9fa186}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_system_service_a8e6d9057c5b084217ebe00098d66dd13}{{\bfseries System\-Service} (const Q\-String \&\-\_\-service\-\_\-name, const Q\-String \&\-\_\-service\-\_\-arg=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-display\-\_\-name=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-description=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-dependencies=Q\-String\-::null, service\-\_\-main \-\_\-sm=N\-U\-L\-L, int \-\_\-argc=0, char $\ast$$\ast$\-\_\-argv=N\-U\-L\-L)}\label{class_system_service_a8e6d9057c5b084217ebe00098d66dd13}
+
+\item 
+\hypertarget{class_system_service_a7e2d5e306ebe477ae912af62d1d33f64}{bool {\bfseries install} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a7e2d5e306ebe477ae912af62d1d33f64}
+
+\item 
+\hypertarget{class_system_service_a785360539331618e97da26f5bf8e7986}{bool {\bfseries remove} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a785360539331618e97da26f5bf8e7986}
+
+\item 
+\hypertarget{class_system_service_acc5206dcbece30a5274bccda08f61eae}{bool {\bfseries is\-Installed} ()}\label{class_system_service_acc5206dcbece30a5274bccda08f61eae}
+
+\item 
+\hypertarget{class_system_service_a77088380f6648923d61bd463a6e47e71}{bool {\bfseries reinstall} ()}\label{class_system_service_a77088380f6648923d61bd463a6e47e71}
+
+\item 
+\hypertarget{class_system_service_acf9289ae7719eeb0973500b6ccef9a4d}{bool {\bfseries start} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_acf9289ae7719eeb0973500b6ccef9a4d}
+
+\item 
+\hypertarget{class_system_service_a8bc07f9639b9e494f396c77f17fee7a2}{bool {\bfseries stop} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a8bc07f9639b9e494f396c77f17fee7a2}
+
+\item 
+\hypertarget{class_system_service_ab824ba0600a5402eaa87e83921b9342b}{bool {\bfseries is\-Running} ()}\label{class_system_service_ab824ba0600a5402eaa87e83921b9342b}
+
+\item 
+\hypertarget{class_system_service_a5e038df3aa1fb6126c7c7e953ff018e4}{bool {\bfseries restart} ()}\label{class_system_service_a5e038df3aa1fb6126c7c7e953ff018e4}
+
+\item 
+\hypertarget{class_system_service_ad2dd4ffca97814be7077922b14ac6737}{bool {\bfseries run\-As\-Service} ()}\label{class_system_service_ad2dd4ffca97814be7077922b14ac6737}
+
+\item 
+\hypertarget{class_system_service_aca576c90c82b50eb97106e97b58bb7fa}{bool {\bfseries run\-Interactive} ()}\label{class_system_service_aca576c90c82b50eb97106e97b58bb7fa}
+
+\item 
+\hypertarget{class_system_service_a9bd10b10928c484e96f5f06830f4c59a}{int \& {\bfseries argc} ()}\label{class_system_service_a9bd10b10928c484e96f5f06830f4c59a}
+
+\item 
+\hypertarget{class_system_service_a0954ce8d857694cc75746232370e74a3}{char $\ast$$\ast$ {\bfseries argv} ()}\label{class_system_service_a0954ce8d857694cc75746232370e74a3}
+
+\item 
+\hypertarget{class_system_service_a8e6d9057c5b084217ebe00098d66dd13}{{\bfseries System\-Service} (const Q\-String \&\-\_\-service\-\_\-name, const Q\-String \&\-\_\-service\-\_\-arg=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-display\-\_\-name=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-description=Q\-String\-::null, const Q\-String \&\-\_\-service\-\_\-dependencies=Q\-String\-::null, service\-\_\-main \-\_\-sm=N\-U\-L\-L, int \-\_\-argc=0, char $\ast$$\ast$\-\_\-argv=N\-U\-L\-L)}\label{class_system_service_a8e6d9057c5b084217ebe00098d66dd13}
+
+\item 
+\hypertarget{class_system_service_a7e2d5e306ebe477ae912af62d1d33f64}{bool {\bfseries install} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a7e2d5e306ebe477ae912af62d1d33f64}
+
+\item 
+\hypertarget{class_system_service_a785360539331618e97da26f5bf8e7986}{bool {\bfseries remove} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a785360539331618e97da26f5bf8e7986}
+
+\item 
+\hypertarget{class_system_service_acc5206dcbece30a5274bccda08f61eae}{bool {\bfseries is\-Installed} ()}\label{class_system_service_acc5206dcbece30a5274bccda08f61eae}
+
+\item 
+\hypertarget{class_system_service_a77088380f6648923d61bd463a6e47e71}{bool {\bfseries reinstall} ()}\label{class_system_service_a77088380f6648923d61bd463a6e47e71}
+
+\item 
+\hypertarget{class_system_service_acf9289ae7719eeb0973500b6ccef9a4d}{bool {\bfseries start} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_acf9289ae7719eeb0973500b6ccef9a4d}
+
+\item 
+\hypertarget{class_system_service_a8bc07f9639b9e494f396c77f17fee7a2}{bool {\bfseries stop} (Q\-String $\ast$error\-Description=N\-U\-L\-L)}\label{class_system_service_a8bc07f9639b9e494f396c77f17fee7a2}
+
+\item 
+\hypertarget{class_system_service_ab824ba0600a5402eaa87e83921b9342b}{bool {\bfseries is\-Running} ()}\label{class_system_service_ab824ba0600a5402eaa87e83921b9342b}
+
+\item 
+\hypertarget{class_system_service_a5e038df3aa1fb6126c7c7e953ff018e4}{bool {\bfseries restart} ()}\label{class_system_service_a5e038df3aa1fb6126c7c7e953ff018e4}
+
+\item 
+\hypertarget{class_system_service_ad2dd4ffca97814be7077922b14ac6737}{bool {\bfseries run\-As\-Service} ()}\label{class_system_service_ad2dd4ffca97814be7077922b14ac6737}
+
+\item 
+\hypertarget{class_system_service_aca576c90c82b50eb97106e97b58bb7fa}{bool {\bfseries run\-Interactive} ()}\label{class_system_service_aca576c90c82b50eb97106e97b58bb7fa}
+
+\item 
+\hypertarget{class_system_service_a9bd10b10928c484e96f5f06830f4c59a}{int \& {\bfseries argc} ()}\label{class_system_service_a9bd10b10928c484e96f5f06830f4c59a}
+
+\item 
+\hypertarget{class_system_service_a0954ce8d857694cc75746232370e74a3}{char $\ast$$\ast$ {\bfseries argv} ()}\label{class_system_service_a0954ce8d857694cc75746232370e74a3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file is derived from system\-\_\-service.\-h which is part of the i\-T\-A\-L\-C project (\href{http://italc.sourceforge.net}{\tt http\-://italc.\-sourceforge.\-net}) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the Qt\-Service class at some point. For that reason, and since we didn't write almost any of it, we're not going to provide detailed documentation. 
+
+\begin{DoxyAuthor}{Author}
+Tobias Doerffel, Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file systemservice.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/service/systemservice.\-h\item 
+source/server/service/systemservice.\-h\item 
+source/proxyserver/service/systemservice.\-cpp\item 
+source/server/service/systemservice.\-cpp\end{DoxyCompactItemize}

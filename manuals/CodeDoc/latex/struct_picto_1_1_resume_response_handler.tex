@@ -1,0 +1,56 @@
+\hypertarget{struct_picto_1_1_resume_response_handler}{\section{Picto\-:\-:Resume\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_resume_response_handler}\index{Picto\-::\-Resume\-Response\-Handler@{Picto\-::\-Resume\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-R\-E\-S\-U\-M\-E\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$Resume\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Resume\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_resume_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_resume_response_handler_aa02ab14bbabb11cf9a578fc1b4428ae9}{{\bfseries Resume\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_resume_response_handler_aa02ab14bbabb11cf9a578fc1b4428ae9}
+
+\item 
+\hypertarget{struct_picto_1_1_resume_response_handler_a1679bd6f019fa2fa817bdd4d6803fbfc}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_resume_response_handler_a1679bd6f019fa2fa817bdd4d6803fbfc}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_resume_response_handler_a163fca76da5682d9954aa62e6b72e76b}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_resume_response_handler_a163fca76da5682d9954aa62e6b72e76b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-R\-E\-S\-U\-M\-E\char`\"{} method. 
+
+A R\-E\-S\-U\-M\-E response indicates that a paused \hyperlink{class_picto_1_1_experiment}{Experiment} should resume operation.
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Resume\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Resume\-Response\-Handler.\-h\item 
+source/common/protocol/Resume\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,56 @@
+\hypertarget{class_picto_1_1_frame_reader}{\section{Picto\-:\-:Frame\-Reader Class Reference}
+\label{class_picto_1_1_frame_reader}\index{Picto\-::\-Frame\-Reader@{Picto\-::\-Frame\-Reader}}
+}
+
+
+An base class for classes that can provide Frame data over input time ranges.  
+
+
+
+
+{\ttfamily \#include $<$Playback\-Interfaces.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Frame\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_frame_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_reader_a266475bf248fc8d37302f1e366d014ef}{virtual double \hyperlink{class_picto_1_1_frame_reader_a266475bf248fc8d37302f1e366d014ef}{get\-Prev\-Time} ()=0}\label{class_picto_1_1_frame_reader_a266475bf248fc8d37302f1e366d014ef}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the frame shown before the latest one. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_reader_afd59891270131ac7c5167d83a2a58909}{virtual double \hyperlink{class_picto_1_1_frame_reader_afd59891270131ac7c5167d83a2a58909}{get\-Latest\-Time} ()=0}\label{class_picto_1_1_frame_reader_afd59891270131ac7c5167d83a2a58909}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest frame to have been shown. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_reader_a2bab74f48f5ad35eecc0d8946cec328b}{virtual double \hyperlink{class_picto_1_1_frame_reader_a2bab74f48f5ad35eecc0d8946cec328b}{get\-Next\-Time} ()=0}\label{class_picto_1_1_frame_reader_a2bab74f48f5ad35eecc0d8946cec328b}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next frame to be shown. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_reader_a2309aed7290f38527e2fe93280e06141}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_frame_reader_a2309aed7290f38527e2fe93280e06141}{get\-Times\-Since} (double time)=0}\label{class_picto_1_1_frame_reader_a2309aed7290f38527e2fe93280e06141}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of frame times that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_reader_a73677f4f5bca3ee04eb4593417e69146}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_frame_reader_a73677f4f5bca3ee04eb4593417e69146}{get\-Times\-Until} (double time)=0}\label{class_picto_1_1_frame_reader_a73677f4f5bca3ee04eb4593417e69146}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of values with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An base class for classes that can provide Frame data over input time ranges. 
+
+This class is used with the \hyperlink{class_picto_1_1_analysis}{Analysis} system so that Analyses can gather data over a range of times surrounding a current control state. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Playback\-Interfaces.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/\hyperlink{_playback_interfaces_8h}{Playback\-Interfaces.\-h}\end{DoxyCompactItemize}

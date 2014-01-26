@@ -1,0 +1,98 @@
+\hypertarget{class_state_edit_viewer}{\section{State\-Edit\-Viewer Class Reference}
+\label{class_state_edit_viewer}\index{State\-Edit\-Viewer@{State\-Edit\-Viewer}}
+}
+
+
+The \hyperlink{class_state_edit_viewer}{State\-Edit\-Viewer} is a container for the \hyperlink{class_designer}{Designer} widget which is a development environment for creating \hyperlink{namespace_picto}{Picto} Experiments and Analyses.  
+
+
+
+
+{\ttfamily \#include $<$stateeditviewer.\-h$>$}
+
+Inheritance diagram for State\-Edit\-Viewer\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_state_edit_viewer}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_state_edit_viewer_a3f91d6f48c8765b50663ee0f99edc602}{init} ()
+\begin{DoxyCompactList}\small\item\em Called just before displaying the viewer. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state_edit_viewer_a839c2ae2ce9eba0d96df26cd8ee711dd}{deinit} ()
+\begin{DoxyCompactList}\small\item\em Called just before hiding the viewer. \end{DoxyCompactList}\item 
+\hypertarget{class_state_edit_viewer_a34122ca6799ae1b999746fb7ad9e1289}{virtual void {\bfseries about\-To\-Save} ()}\label{class_state_edit_viewer_a34122ca6799ae1b999746fb7ad9e1289}
+
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_state_edit_viewer_addc226e2aae1c88541f06d7f2efd90b7}{void {\bfseries load\-Design\-Root} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)}\label{class_state_edit_viewer_addc226e2aae1c88541f06d7f2efd90b7}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_state_edit_viewer_aef9b3994818edb2cb2cd56cf4ec8d944}{{\bfseries State\-Edit\-Viewer} (Q\-Widget $\ast$parent=0)}\label{class_state_edit_viewer_aef9b3994818edb2cb2cd56cf4ec8d944}
+
+\item 
+\hypertarget{class_state_edit_viewer_a17c639bb6eee18ca0d4ee4c567106b4b}{virtual Q\-String \hyperlink{class_state_edit_viewer_a17c639bb6eee18ca0d4ee4c567106b4b}{type} ()}\label{class_state_edit_viewer_a17c639bb6eee18ca0d4ee4c567106b4b}
+
+\begin{DoxyCompactList}\small\item\em Returns a string containing the type of this viewer (e.\-g \char`\"{}\-State Edit Viewer\char`\"{}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_state_edit_viewer}{State\-Edit\-Viewer} is a container for the \hyperlink{class_designer}{Designer} widget which is a development environment for creating \hyperlink{namespace_picto}{Picto} Experiments and Analyses. 
+
+Apart from being a container for the \hyperlink{class_designer}{Designer}, this class doesn't do much. It really only implements \hyperlink{class_state_edit_viewer_a3f91d6f48c8765b50663ee0f99edc602}{init()} and \hyperlink{class_state_edit_viewer_a839c2ae2ce9eba0d96df26cd8ee711dd}{deinit()} functions to take care of a number of simple operations whenever this \hyperlink{class_viewer}{Viewer} takes and leaves focus. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 17 of file stateeditviewer.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_state_edit_viewer_a839c2ae2ce9eba0d96df26cd8ee711dd}{\index{State\-Edit\-Viewer@{State\-Edit\-Viewer}!deinit@{deinit}}
+\index{deinit@{deinit}!StateEditViewer@{State\-Edit\-Viewer}}
+\subsubsection[{deinit}]{\setlength{\rightskip}{0pt plus 5cm}void State\-Edit\-Viewer\-::deinit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [slot]}}}\label{class_state_edit_viewer_a839c2ae2ce9eba0d96df26cd8ee711dd}
+
+
+Called just before hiding the viewer. 
+
+Sets an undo point, deactivates the \hyperlink{class_designer}{Designer} widget, stops the Autosave system and emits the \hyperlink{class_viewer_aa8f10afad8094330d363080b275daaeb}{deinit\-Complete()} signal so that the next \hyperlink{class_viewer}{Viewer} can be displayed. 
+
+Definition at line 56 of file stateeditviewer.\-cpp.
+
+\hypertarget{class_state_edit_viewer_a3f91d6f48c8765b50663ee0f99edc602}{\index{State\-Edit\-Viewer@{State\-Edit\-Viewer}!init@{init}}
+\index{init@{init}!StateEditViewer@{State\-Edit\-Viewer}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void State\-Edit\-Viewer\-::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [slot]}}}\label{class_state_edit_viewer_a3f91d6f48c8765b50663ee0f99edc602}
+
+
+Called just before displaying the viewer. 
+
+Moves the Design\-Root out of run mode so that Property changes won't only go into Property run values. Loads the Design\-Root into the \hyperlink{class_designer}{Designer} widget object and activates that widget. Starts the Autosaver so that changes made to the Design\-Root will be backed up in case of a crash. In case we just restarted after a crash, the Auto\-Saver's Design\-Restore\-Dialog is shown here as well. 
+
+Definition at line 33 of file stateeditviewer.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/\-State\-Machine\-Editor/stateeditviewer.\-h\item 
+source/workstation/\-State\-Machine\-Editor/stateeditviewer.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,73 @@
+\hypertarget{struct_proxy_end_session_response_handler}{\section{Proxy\-End\-Session\-Response\-Handler Struct Reference}
+\label{struct_proxy_end_session_response_handler}\index{Proxy\-End\-Session\-Response\-Handler@{Proxy\-End\-Session\-Response\-Handler}}
+}
+
+
+Extends End\-Session\-Response\-Handler but does not actually add any functionality.  
+
+
+
+
+{\ttfamily \#include $<$Proxy\-End\-Session\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Proxy\-End\-Session\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_proxy_end_session_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_proxy_end_session_response_handler_a3ae490f63f139309b4b903654d3d1904}{{\bfseries Proxy\-End\-Session\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel} $>$ command\-Channel)}\label{struct_proxy_end_session_response_handler_a3ae490f63f139309b4b903654d3d1904}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{struct_proxy_end_session_response_handler_a3a3d2ba7dd4265d4722fcd6066002fcd}{process\-Response} (Q\-String directive)
+\begin{DoxyCompactList}\small\item\em Implements Protocol\-Command\-Handler\-::process\-Command() to take care of ending the current session. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Extends End\-Session\-Response\-Handler but does not actually add any functionality. 
+
+Maybe this will be a handy container to have someday though \-:). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file Proxy\-End\-Session\-Response\-Handler.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_proxy_end_session_response_handler_a3a3d2ba7dd4265d4722fcd6066002fcd}{\index{Proxy\-End\-Session\-Response\-Handler@{Proxy\-End\-Session\-Response\-Handler}!process\-Response@{process\-Response}}
+\index{process\-Response@{process\-Response}!ProxyEndSessionResponseHandler@{Proxy\-End\-Session\-Response\-Handler}}
+\subsubsection[{process\-Response}]{\setlength{\rightskip}{0pt plus 5cm}bool Proxy\-End\-Session\-Response\-Handler\-::process\-Response (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{directive}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{struct_proxy_end_session_response_handler_a3a3d2ba7dd4265d4722fcd6066002fcd}
+
+
+Implements Protocol\-Command\-Handler\-::process\-Command() to take care of ending the current session. 
+
+This function sets the \hyperlink{class_component_status_manager}{Component\-Status\-Manager} status to \char`\"{}ending\char`\"{}, then just calls Command\-Channel\-::process\-Responses() over and over until that function finishes sending all the data that it needs to send to the \hyperlink{class_server}{Server} with verification that all of the data was recieved and saved. Once that is all done, the function returns and the Session is over. 
+
+Reimplemented from \hyperlink{struct_picto_1_1_end_session_response_handler_aa8a23275f73e69c89dd2857c64eeaeff}{Picto\-::\-End\-Session\-Response\-Handler}.
+
+
+
+Definition at line 9 of file Proxy\-End\-Session\-Response\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/protocol/Proxy\-End\-Session\-Response\-Handler.\-h\item 
+source/proxyserver/protocol/Proxy\-End\-Session\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

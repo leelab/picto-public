@@ -1,0 +1,139 @@
+\hypertarget{class_picto_1_1_analysis_function}{\section{Picto\-:\-:Analysis\-Function Class Reference}
+\label{class_picto_1_1_analysis_function}\index{Picto\-::\-Analysis\-Function@{Picto\-::\-Analysis\-Function}}
+}
+
+
+A \hyperlink{class_picto_1_1_script_function}{Script\-Function} for Analyses.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Function.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Function\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_analysis_function}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_function_a8faf06ff05f44cbb4fe466e8c8880776}{is\-Part\-Of\-Search} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_function_a18399900e97d5d6aac401e412df39fbe}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_function_a18399900e97d5d6aac401e412df39fbe}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_function_a18399900e97d5d6aac401e412df39fbe}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_function_ac0a9fa7cbc9471ead4d11f069745fb05}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_function_ae1d0baa248b7c0266037de44f9860e9f}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_function_ae1d0baa248b7c0266037de44f9860e9f}{get\-U\-I\-Group} ()}\label{class_picto_1_1_analysis_function_ae1d0baa248b7c0266037de44f9860e9f}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_function_a23b2097c84ca4d7366301be4447f6479}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_analysis_function_a23b2097c84ca4d7366301be4447f6479}{Create} ()}\label{class_picto_1_1_analysis_function_a23b2097c84ca4d7366301be4447f6479}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_analysis_function}{Analysis\-Function} and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_function_abffd30d757e70e11c3dbbdd108c34081}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_function_a0396de92827162ab6fa084eb5c977b34}{virtual void \hyperlink{class_picto_1_1_analysis_function_a0396de92827162ab6fa084eb5c977b34}{post\-Deserialize} ()}\label{class_picto_1_1_analysis_function_a0396de92827162ab6fa084eb5c977b34}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Scriptable\-Container\-::post\-Deserialize()} to set the \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} \hyperlink{class_picto_1_1_property}{Property} invisible since it doesn't do anything in \hyperlink{class_picto_1_1_script_function}{Script\-Function} objects. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_function_ae4f715e2cacddea6b80c734305dcb966}{virtual bool \hyperlink{class_picto_1_1_analysis_function_ae4f715e2cacddea6b80c734305dcb966}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_analysis_function_ae4f715e2cacddea6b80c734305dcb966}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_script_function}{Script\-Function} for Analyses. 
+
+Works exactly like the \hyperlink{class_picto_1_1_script_function}{Script\-Function} with exception that it is part of an \hyperlink{class_picto_1_1_analysis}{Analysis}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_script_function}{Script\-Function} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Analysis\-Function.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_function_abffd30d757e70e11c3dbbdd108c34081}{\index{Picto\-::\-Analysis\-Function@{Picto\-::\-Analysis\-Function}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisFunction@{Picto\-::\-Analysis\-Function}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Function\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_function_abffd30d757e70e11c3dbbdd108c34081}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_script_function_aa2718851ab93401f5efdf6f70df199d0}{Picto\-::\-Script\-Function}.
+
+
+
+Definition at line 37 of file Analysis\-Function.\-h.
+
+\hypertarget{class_picto_1_1_analysis_function_ac0a9fa7cbc9471ead4d11f069745fb05}{\index{Picto\-::\-Analysis\-Function@{Picto\-::\-Analysis\-Function}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisFunction@{Picto\-::\-Analysis\-Function}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Function\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_function_ac0a9fa7cbc9471ead4d11f069745fb05}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_script_function_a6dd0bc6a6aaeeff4b7ccc9238d4b6f1e}{Picto\-::\-Script\-Function}.
+
+
+
+Definition at line 32 of file Analysis\-Function.\-h.
+
+\hypertarget{class_picto_1_1_analysis_function_a8faf06ff05f44cbb4fe466e8c8880776}{\index{Picto\-::\-Analysis\-Function@{Picto\-::\-Analysis\-Function}!is\-Part\-Of\-Search@{is\-Part\-Of\-Search}}
+\index{is\-Part\-Of\-Search@{is\-Part\-Of\-Search}!Picto::AnalysisFunction@{Picto\-::\-Analysis\-Function}}
+\subsubsection[{is\-Part\-Of\-Search}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Function\-::is\-Part\-Of\-Search (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_function_a8faf06ff05f44cbb4fe466e8c8880776}
+
+
+Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a5afdea71e71a791fe1abf97b67050907}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 16 of file Analysis\-Function.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Function.\-h\item 
+source/common/parameter/Analysis\-Function.\-cpp\end{DoxyCompactItemize}

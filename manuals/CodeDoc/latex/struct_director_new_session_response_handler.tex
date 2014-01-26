@@ -1,0 +1,52 @@
+\hypertarget{struct_director_new_session_response_handler}{\section{Director\-New\-Session\-Response\-Handler Struct Reference}
+\label{struct_director_new_session_response_handler}\index{Director\-New\-Session\-Response\-Handler@{Director\-New\-Session\-Response\-Handler}}
+}
+
+
+Extends New\-Session\-Response\-Handler to setup the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} for the new Session.  
+
+
+
+
+{\ttfamily \#include $<$Director\-New\-Session\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Director\-New\-Session\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_director_new_session_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_new_session_response_handler_a40a862711c249b2f0aa1d05823992bdc}{{\bfseries Director\-New\-Session\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_director_status_manager}{Director\-Status\-Manager} $>$ status\-Manager, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel} $>$ command\-Channel)}\label{struct_director_new_session_response_handler_a40a862711c249b2f0aa1d05823992bdc}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_new_session_response_handler_a8cbf7d69389728fbefca4003b822e534}{virtual bool \hyperlink{struct_director_new_session_response_handler_a8cbf7d69389728fbefca4003b822e534}{process\-Response} (Q\-String directive)}\label{struct_director_new_session_response_handler_a8cbf7d69389728fbefca4003b822e534}
+
+\begin{DoxyCompactList}\small\item\em Extends New\-Session\-Response\-Handler\-::process\-Command() to load the new Session's Session\-Id into the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} and display it on screen using \hyperlink{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{Director\-Status\-Manager\-::set\-User\-Info()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Extends New\-Session\-Response\-Handler to setup the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} for the new Session. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 12 of file Director\-New\-Session\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/protocol/Director\-New\-Session\-Response\-Handler.\-h\item 
+source/director/protocol/Director\-New\-Session\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

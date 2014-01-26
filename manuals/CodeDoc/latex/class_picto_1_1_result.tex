@@ -1,0 +1,218 @@
+\hypertarget{class_picto_1_1_result}{\section{Picto\-:\-:Result Class Reference}
+\label{class_picto_1_1_result}\index{Picto\-::\-Result@{Picto\-::\-Result}}
+}
+
+
+A \hyperlink{class_picto_1_1_result}{Result} is the control flow exit point from every element of a \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state_machine}{State\-Machine}.  
+
+
+
+
+{\ttfamily \#include $<$Result.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Result\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_result}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_result_a18fd5df5e2e98295ddf4d6f778fc8761}{Result} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new result. \end{DoxyCompactList}\item 
+\hyperlink{class_picto_1_1_result_a3880bfb5af8bdb550d47c1824dbed1f1}{Result} (Q\-String name)
+\begin{DoxyCompactList}\small\item\em Constructs a new result with input name. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_a8ab0583551a4e9405eaf5f77c4a4adf9}{virtual Q\-String \hyperlink{class_picto_1_1_result_a8ab0583551a4e9405eaf5f77c4a4adf9}{get\-U\-I\-Template} ()}\label{class_picto_1_1_result_a8ab0583551a4e9405eaf5f77c4a4adf9}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_result_a908f8f41cb0c4fc7ffa92ae1c0a77781}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_ab4cc8dfac5b3c92266265060366ad0d4}{virtual Q\-String \hyperlink{class_picto_1_1_result_ab4cc8dfac5b3c92266265060366ad0d4}{get\-U\-I\-Group} ()}\label{class_picto_1_1_result_ab4cc8dfac5b3c92266265060366ad0d4}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_aa9a0df0a918461487e008136a5a84aa1}{virtual void \hyperlink{class_picto_1_1_result_aa9a0df0a918461487e008136a5a84aa1}{run\-Result\-Script} ()}\label{class_picto_1_1_result_aa9a0df0a918461487e008136a5a84aa1}
+
+\begin{DoxyCompactList}\small\item\em Runs this \hyperlink{class_picto_1_1_result}{Result}'s Result\-Script if it is not empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_result_aaf3921cfee9ca798787b2c186c1b15dc}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_result_aaf3921cfee9ca798787b2c186c1b15dc}{Create} ()}\label{class_picto_1_1_result_aaf3921cfee9ca798787b2c186c1b15dc}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_result}{Result} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_result_a559d83849d9112ea474ea8b8bbfa9a8e}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_a180af9876c9579eda252a1c4b8f440c2}{virtual void \hyperlink{class_picto_1_1_result_a180af9876c9579eda252a1c4b8f440c2}{post\-Deserialize} ()}\label{class_picto_1_1_result_a180af9876c9579eda252a1c4b8f440c2}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Scriptable\-Container\-::post\-Deserialize()} to set the \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} \hyperlink{class_picto_1_1_property}{Property} invisible since it doesn't do anything in \hyperlink{class_picto_1_1_result}{Result} objects. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_add19b99738db3cf72ca051d57fbeaf9b}{virtual bool \hyperlink{class_picto_1_1_result_add19b99738db3cf72ca051d57fbeaf9b}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_result_add19b99738db3cf72ca051d57fbeaf9b}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_result_af0144137305b29bc244e2f5c2fe2e17c}{has\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual Q\-Map$<$ Q\-String, Q\-String $>$ \hyperlink{class_picto_1_1_result_a47fc28fbcf0000dda57b5a959977e9f9}{get\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_result_a02d6b44ae59830de082b750882cb7c46}{virtual bool \hyperlink{class_picto_1_1_result_a02d6b44ae59830de082b750882cb7c46}{can\-Have\-Scripts} ()}\label{class_picto_1_1_result_a02d6b44ae59830de082b750882cb7c46}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_result_a362ebd040e65af7b8e8eb57bba13ee2c}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ \hyperlink{class_picto_1_1_result_a362ebd040e65af7b8e8eb57bba13ee2c}{result\-Entry\-Script\-Factory\-\_\-}}\label{class_picto_1_1_result_a362ebd040e65af7b8e8eb57bba13ee2c}
+
+\begin{DoxyCompactList}\small\item\em This appears to be unused and should probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_result}{Result} is the control flow exit point from every element of a \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state_machine}{State\-Machine}. 
+
+In \hyperlink{namespace_picto}{Picto}, the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} contains multiple levels. Regardless of whether the particular level of a \hyperlink{class_picto_1_1_state_machine}{State\-Machine} is another \hyperlink{class_picto_1_1_state_machine}{State\-Machine} or a \hyperlink{class_picto_1_1_state}{State} or an element who's internal logic is defined by C++ code, control flow always leaves that element and returns to the level above through a \hyperlink{class_picto_1_1_result}{Result} element.
+
+Unlike other \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} objects, since Results have no internal logic, they have only an Entry\-Script and no Exit\-Script. When exactly their Entry\-Script is called is of course a function of the \hyperlink{class_picto_1_1_result}{Result}'s parent container since the \hyperlink{class_picto_1_1_result}{Result} does not have its own run() function. With that said, however, all elements that call a results Entry\-Script (\hyperlink{class_picto_1_1_result_aa9a0df0a918461487e008136a5a84aa1}{run\-Result\-Script()}) should do so before calling their own Exit\-Script. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Result.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_result_a18fd5df5e2e98295ddf4d6f778fc8761}{\index{Picto\-::\-Result@{Picto\-::\-Result}!Result@{Result}}
+\index{Result@{Result}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{Result}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Result\-::\-Result (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_result_a18fd5df5e2e98295ddf4d6f778fc8761}
+
+
+Constructs a new result. 
+
+An optional Entry\-Script \hyperlink{class_picto_1_1_property}{Property} defining a Script that will be called when control flow reaches this \hyperlink{class_picto_1_1_result}{Result} is added in this constructor. 
+
+Definition at line 10 of file Result.\-cpp.
+
+\hypertarget{class_picto_1_1_result_a3880bfb5af8bdb550d47c1824dbed1f1}{\index{Picto\-::\-Result@{Picto\-::\-Result}!Result@{Result}}
+\index{Result@{Result}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{Result}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Result\-::\-Result (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_result_a3880bfb5af8bdb550d47c1824dbed1f1}
+
+
+Constructs a new result with input name. 
+
+An optional Entry\-Script \hyperlink{class_picto_1_1_property}{Property} defining a Script that will be called when control flow reaches this \hyperlink{class_picto_1_1_result}{Result} is added in this constructor. \begin{DoxyNote}{Note}
+I think that we aren't using this Constructor anywhere. You should probably get rid of it. 
+\end{DoxyNote}
+
+
+Definition at line 22 of file Result.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_result_a559d83849d9112ea474ea8b8bbfa9a8e}{\index{Picto\-::\-Result@{Picto\-::\-Result}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Result\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_result_a559d83849d9112ea474ea8b8bbfa9a8e}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 43 of file Result.\-h.
+
+\hypertarget{class_picto_1_1_result_a908f8f41cb0c4fc7ffa92ae1c0a77781}{\index{Picto\-::\-Result@{Picto\-::\-Result}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Result\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_result_a908f8f41cb0c4fc7ffa92ae1c0a77781}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_ab3e676a5138ce7f49ab924c98fe3d71e}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_control_target_result_a4c44eb3cf2f923bf9e0cbf4164a50874}{Picto\-::\-Control\-Target\-Result}, and \hyperlink{class_picto_1_1_logic_result_ac50cf46d11bb005735d12f5e230fbf64}{Picto\-::\-Logic\-Result}.
+
+
+
+Definition at line 38 of file Result.\-h.
+
+\hypertarget{class_picto_1_1_result_a47fc28fbcf0000dda57b5a959977e9f9}{\index{Picto\-::\-Result@{Picto\-::\-Result}!get\-Scripts@{get\-Scripts}}
+\index{get\-Scripts@{get\-Scripts}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{get\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<$ Q\-String, Q\-String $>$ Picto\-::\-Result\-::get\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_result_a47fc28fbcf0000dda57b5a959977e9f9}
+
+
+Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. 
+
+\begin{DoxyNote}{Note}
+There is some history here. Originally, these scripts were stored as part of the scripting engine, and so their names had to be unique. Now they are stored in a table of Q\-Script\-Program objects and so there is probably not any real need for their \char`\"{}script names\char`\"{} to be different from the \char`\"{}\-Property names\char`\"{} of the Properties containing the script text. We should probably change this at some point. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a6476dc86309bfa82d6b02b04e7dba4cf}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 75 of file Result.\-cpp.
+
+\hypertarget{class_picto_1_1_result_af0144137305b29bc244e2f5c2fe2e17c}{\index{Picto\-::\-Result@{Picto\-::\-Result}!has\-Scripts@{has\-Scripts}}
+\index{has\-Scripts@{has\-Scripts}!Picto::Result@{Picto\-::\-Result}}
+\subsubsection[{has\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Result\-::has\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_result_af0144137305b29bc244e2f5c2fe2e17c}
+
+
+Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. 
+
+\begin{DoxyNote}{Note}
+If this function returns true, \hyperlink{class_picto_1_1_result_a02d6b44ae59830de082b750882cb7c46}{can\-Have\-Scripts()} should also return true. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acb933156df40af1820e623fa92d051a4}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 68 of file Result.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Result.\-h\item 
+source/common/statemachine/Result.\-cpp\end{DoxyCompactItemize}

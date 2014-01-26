@@ -1,0 +1,42 @@
+\hypertarget{class_picto_1_1_buffer_file_generator}{\section{Picto\-:\-:Buffer\-File\-Generator Class Reference}
+\label{class_picto_1_1_buffer_file_generator}\index{Picto\-::\-Buffer\-File\-Generator@{Picto\-::\-Buffer\-File\-Generator}}
+}
+
+
+Creates temporary files in a temporary directory that is cleared everytime a new Pictoworkstation is opened so long as no other workstations were already open at the time.  
+
+
+
+
+{\ttfamily \#include $<$Buffer\-File\-Generator.\-h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_buffer_file_generator_afa04c82713737e28dc38e0d6d28445d1}{static Q\-Shared\-Pointer$<$ Q\-File $>$ \hyperlink{class_picto_1_1_buffer_file_generator_afa04c82713737e28dc38e0d6d28445d1}{create\-Temp\-File} (Q\-String sub\-Dir\-Name, Q\-String file\-Type)}\label{class_picto_1_1_buffer_file_generator_afa04c82713737e28dc38e0d6d28445d1}
+
+\begin{DoxyCompactList}\small\item\em Creates a temporary file in the sub\-Dir\-Name sub-\/directory of the \char`\"{}\-Temporary\-Files\char`\"{} directory in the \hyperlink{namespace_picto}{Picto} run path and returns a shared pointer to the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Creates temporary files in a temporary directory that is cleared everytime a new Pictoworkstation is opened so long as no other workstations were already open at the time. 
+
+A \char`\"{}\-Temporary\-Files\char`\"{} directory is created in the \hyperlink{namespace_picto}{Picto} run directory and a \char`\"{}lock file\char`\"{} is created and placed inside that isn't closed until the application closes. Each time a Picto\-Workstation is opened, the temporary director is checked, if the lock files can be deleted, the files in the directory are deleted as well. Otherwise temporary files are simply added to the existing temporary directory. \begin{DoxyNote}{Note}
+We need to use this type of set up in a few different places in \hyperlink{namespace_picto}{Picto}. For playback video files, for \hyperlink{class_picto_1_1_analysis_file_output}{Analysis\-File\-Output} files, and for design Auto\-Saved files. So far we have only used this \hyperlink{class_picto_1_1_buffer_file_generator}{Buffer\-File\-Generator} for the playback video files (\hyperlink{class_picto_1_1_recording_visual_target_host}{Recording\-Visual\-Target\-Host}). We should probably reuse it in all those places though. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file Buffer\-File\-Generator.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/iodevices/Buffer\-File\-Generator.\-h\item 
+source/common/iodevices/Buffer\-File\-Generator.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,109 @@
+\hypertarget{class_picto_1_1_port_nums}{\section{Picto\-:\-:Port\-Nums Class Reference}
+\label{class_picto_1_1_port_nums}\index{Picto\-::\-Port\-Nums@{Picto\-::\-Port\-Nums}}
+}
+
+
+Defines which port numbers will be used for Picto applications based on the current \hyperlink{namespace_picto}{Picto} system number.  
+
+
+
+
+{\ttfamily \#include $<$portdefs.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_port_nums_a609db28950169e6a649258de9bb42ad3}{Port\-Nums} (Q\-String app\-Name, bool used\-In\-System\-Service=false)
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_port_nums}{Port\-Nums} object for the application with the input name. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_port_nums_a31ecb0650e5eb7cf1c1d650180ddcf9b}{set\-System\-Number} (Q\-String app\-Exe\-Path, Q\-String\-List app\-Exe\-Args, int system\-Number, bool restart)
+\begin{DoxyCompactList}\small\item\em Sets the system number for this system internally and in the Q\-Settings saved configuration. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_aa3208b7490eb372b8415004ddafbb473}{int \hyperlink{class_picto_1_1_port_nums_aa3208b7490eb372b8415004ddafbb473}{get\-System\-Number} ()}\label{class_picto_1_1_port_nums_aa3208b7490eb372b8415004ddafbb473}
+
+\begin{DoxyCompactList}\small\item\em Returns the current system number. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_a4dafc3718dfeab7ce01cb52ba37aff98}{int \hyperlink{class_picto_1_1_port_nums_a4dafc3718dfeab7ce01cb52ba37aff98}{get\-Update\-Port} ()}\label{class_picto_1_1_port_nums_a4dafc3718dfeab7ce01cb52ba37aff98}
+
+\begin{DoxyCompactList}\small\item\em Returns the current port used for downloading updated versions of the application. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_a308fba1450845a76d9ca93cf0b384fbf}{int \hyperlink{class_picto_1_1_port_nums_a308fba1450845a76d9ca93cf0b384fbf}{get\-Min\-Discover\-Port} ()}\label{class_picto_1_1_port_nums_a308fba1450845a76d9ca93cf0b384fbf}
+
+\begin{DoxyCompactList}\small\item\em Returns the minimum port on which the Picto\-Server is allowed to communicate with client applications. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_a41533afb873594150b50cc982c1b0d28}{int \hyperlink{class_picto_1_1_port_nums_a41533afb873594150b50cc982c1b0d28}{get\-Max\-Discover\-Port} ()}\label{class_picto_1_1_port_nums_a41533afb873594150b50cc982c1b0d28}
+
+\begin{DoxyCompactList}\small\item\em Returns the maximum port on which the Picto\-Server is allowed to communicate with client applications. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_a9d0d94a8fc93b262a4f02623e0e2212d}{int \hyperlink{class_picto_1_1_port_nums_a9d0d94a8fc93b262a4f02623e0e2212d}{get\-Server\-Port} ()}\label{class_picto_1_1_port_nums_a9d0d94a8fc93b262a4f02623e0e2212d}
+
+\begin{DoxyCompactList}\small\item\em Returns the port on which the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server} listens for U\-D\-P D\-I\-S\-C\-O\-V\-E\-R datagrams. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_a708b9dbf38f9368cf101fc65bea466d4}{int \hyperlink{class_picto_1_1_port_nums_a708b9dbf38f9368cf101fc65bea466d4}{get\-L\-C\-D\-Command\-Port} ()}\label{class_picto_1_1_port_nums_a708b9dbf38f9368cf101fc65bea466d4}
+
+\begin{DoxyCompactList}\small\item\em Returns the port on which command packets will be sent between the \hyperlink{class_director}{Director} and the Pictobox Front\-Panel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_port_nums_ae22fd5815fcfc65c9324ce1fcb3d2b03}{int \hyperlink{class_picto_1_1_port_nums_ae22fd5815fcfc65c9324ce1fcb3d2b03}{get\-L\-C\-D\-Event\-Port} ()}\label{class_picto_1_1_port_nums_ae22fd5815fcfc65c9324ce1fcb3d2b03}
+
+\begin{DoxyCompactList}\small\item\em Returns the port on which event packets will be sent between the \hyperlink{class_director}{Director} and the Pictobox Front\-Panel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Defines which port numbers will be used for Picto applications based on the current \hyperlink{namespace_picto}{Picto} system number. 
+
+\hyperlink{namespace_picto}{Picto} is designed such that multiple \hyperlink{namespace_picto}{Picto} Systems can operate independently on the same network so long as they have different system numbers. This parallelism is implemented by defining different communication ports based on the system number being used. Since communication ports are a function of system number, applications with different system numbers never recieve any communications from each other. This class implements this system number mapping. Once the system number is set using \hyperlink{class_picto_1_1_port_nums_a31ecb0650e5eb7cf1c1d650180ddcf9b}{set\-System\-Number()}, that number is saved on the computer's file system and all port numbers are updated internally. To access the correct port number for a particular type of operation, the get$\ast$\-Port() functions are used. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file portdefs.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_port_nums_a609db28950169e6a649258de9bb42ad3}{\index{Picto\-::\-Port\-Nums@{Picto\-::\-Port\-Nums}!Port\-Nums@{Port\-Nums}}
+\index{Port\-Nums@{Port\-Nums}!Picto::PortNums@{Picto\-::\-Port\-Nums}}
+\subsubsection[{Port\-Nums}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Port\-Nums\-::\-Port\-Nums (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{app\-Name, }
+\item[{bool}]{used\-In\-System\-Service = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_port_nums_a609db28950169e6a649258de9bb42ad3}
+
+
+Creates a new \hyperlink{class_picto_1_1_port_nums}{Port\-Nums} object for the application with the input name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em used\-In\-System\-Service} & When the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server} runs as a service, it does not have access to the regular \hyperlink{namespace_picto}{Picto} settings so they need to be saved in the System Scope. All other \hyperlink{namespace_picto}{Picto} applications should save their values in the user scope (because setting system settings requires administrator previleges). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 13 of file portdefs.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_port_nums_a31ecb0650e5eb7cf1c1d650180ddcf9b}{\index{Picto\-::\-Port\-Nums@{Picto\-::\-Port\-Nums}!set\-System\-Number@{set\-System\-Number}}
+\index{set\-System\-Number@{set\-System\-Number}!Picto::PortNums@{Picto\-::\-Port\-Nums}}
+\subsubsection[{set\-System\-Number}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Port\-Nums\-::set\-System\-Number (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{app\-Exe\-Path, }
+\item[{Q\-String\-List}]{app\-Exe\-Args, }
+\item[{int}]{system\-Number, }
+\item[{bool}]{restart}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_port_nums_a31ecb0650e5eb7cf1c1d650180ddcf9b}
+
+
+Sets the system number for this system internally and in the Q\-Settings saved configuration. 
+
+\hyperlink{namespace_picto}{Picto} applications can only communicate with other \hyperlink{namespace_picto}{Picto} applications on their own system. This section sets the system that will be used by the current application. \begin{DoxyNote}{Note}
+If the system number is changing, you will almost definitely need to restart the application. restart, app\-Exe\-Path, app\-Exe\-Args are used to define if the application should restart now that the system\-Number has changed. app\-Exe\-Path is the path to the application executable. app\-Exe\-Args are the arguments that should be provided to run the executable (typically these will be the ones that were used to run the executable that is calling this function. 
+\end{DoxyNote}
+
+
+Definition at line 31 of file portdefs.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\hyperlink{portdefs_8h}{portdefs.\-h}\item 
+source/common/portdefs.\-cpp\end{DoxyCompactItemize}

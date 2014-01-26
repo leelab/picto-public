@@ -1,0 +1,174 @@
+\hypertarget{class_picto_1_1_picture_graphic}{\section{Picto\-:\-:Picture\-Graphic Class Reference}
+\label{class_picto_1_1_picture_graphic}\index{Picto\-::\-Picture\-Graphic@{Picto\-::\-Picture\-Graphic}}
+}
+
+
+This is A\-L\-M\-O\-S\-T an obsolete class that does the same thing as Image\-File but in a less logical way. We can't quite get rid of it yet though because it is being used to display the Block\-Design splash screen.  
+
+
+
+
+{\ttfamily \#include $<$Picture\-Graphic.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Picture\-Graphic\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_picture_graphic}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_picture_graphic_a99e7e3b8d05fb094858ba255cec1ce2b}{Picture\-Graphic} (Q\-Point position=Q\-Point(), Q\-String \hyperlink{class_picto_1_1_picture_graphic_ac154fa6eb2a9b4046da01de691f8b56c}{image\-File}=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Creates a \hyperlink{class_picto_1_1_picture_graphic}{Picture\-Graphic} object at the input position based on the image at the input Image\-File path. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picture_graphic_ac5420c7c2d51b2d9e4563ad0927dc3d1}{void \hyperlink{class_picto_1_1_picture_graphic_ac5420c7c2d51b2d9e4563ad0927dc3d1}{draw} ()}\label{class_picto_1_1_picture_graphic_ac5420c7c2d51b2d9e4563ad0927dc3d1}
+
+\begin{DoxyCompactList}\small\item\em Draws the image represented by this \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} onto the image\-\_\- object based on its current \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picture_graphic_ac68dff0ebb310d532c967d19fac0e9cb}{Q\-String \hyperlink{class_picto_1_1_picture_graphic_ac68dff0ebb310d532c967d19fac0e9cb}{get\-Image\-File} ()}\label{class_picto_1_1_picture_graphic_ac68dff0ebb310d532c967d19fac0e9cb}
+
+\begin{DoxyCompactList}\small\item\em Gets the current image file path. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picture_graphic_aa22a64e7d923b4c16cf918660bf933ae}{void \hyperlink{class_picto_1_1_picture_graphic_aa22a64e7d923b4c16cf918660bf933ae}{set\-Image\-File} (Q\-String file\-Name)}\label{class_picto_1_1_picture_graphic_aa22a64e7d923b4c16cf918660bf933ae}
+
+\begin{DoxyCompactList}\small\item\em Sets the image file path to the input value. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_picture_graphic_a101e4efb181d2f7166ef83bea31b40be}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_picture_graphic_a11a0a10b6d21fe8945b15d200fe33877}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_picture_graphic_a11a0a10b6d21fe8945b15d200fe33877}{Create} ()}\label{class_picto_1_1_picture_graphic_a11a0a10b6d21fe8945b15d200fe33877}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_picture_graphic}{Picture\-Graphic} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picture_graphic_a603f1f17a3012837e7f40e08ac63f7e5}{static \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} $\ast$ \hyperlink{class_picto_1_1_picture_graphic_a603f1f17a3012837e7f40e08ac63f7e5}{New\-Visual\-Element} ()}\label{class_picto_1_1_picture_graphic_a603f1f17a3012837e7f40e08ac63f7e5}
+
+\begin{DoxyCompactList}\small\item\em This is no longer used by parts of \hyperlink{namespace_picto}{Picto} that are being used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_picture_graphic_a68c467b22e7b787ff12181c872819517}{static const Q\-String \hyperlink{class_picto_1_1_picture_graphic_a68c467b22e7b787ff12181c872819517}{type} = \char`\"{}Picture Graphic\char`\"{}}\label{class_picto_1_1_picture_graphic_a68c467b22e7b787ff12181c872819517}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_picture_graphic_a92db57f574c60db5e468276f972903e3}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_picture_graphic_a85cbf24ef376531ab66f10487d16721a}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picture_graphic_acb06b30d3f14c7dbe294e0ae0dae9f60}{virtual bool \hyperlink{class_picto_1_1_picture_graphic_acb06b30d3f14c7dbe294e0ae0dae9f60}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_picture_graphic_acb06b30d3f14c7dbe294e0ae0dae9f60}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_picture_graphic_ac154fa6eb2a9b4046da01de691f8b56c}{Q\-String \hyperlink{class_picto_1_1_picture_graphic_ac154fa6eb2a9b4046da01de691f8b56c}{image\-File}}\label{class_picto_1_1_picture_graphic_ac154fa6eb2a9b4046da01de691f8b56c}
+
+\begin{DoxyCompactList}\small\item\em Sets/\-Gets the current image file path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This is A\-L\-M\-O\-S\-T an obsolete class that does the same thing as Image\-File but in a less logical way. We can't quite get rid of it yet though because it is being used to display the Block\-Design splash screen. 
+
+This class was created long ago as a way to show the Block\-Design splash screen in \hyperlink{namespace_picto}{Picto}. It is very limited though in the fact that it requires the image that it wants to display to actually be loaded on the hard disk of the computer running \hyperlink{namespace_picto}{Picto}. This means that in order to use it for images in experimental designs, we would have to make sure to also copy all of the correct image files to the \hyperlink{class_director}{Director} computer before running the \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_experiment}{Experiment} or else it wouldn't work. The \hyperlink{class_picto_1_1_image_graphic}{Image\-Graphic} class takes care of these issues by embedding the image file code in the Design file itself. The \hyperlink{class_picto_1_1_image_graphic}{Image\-Graphic} system also separated \hyperlink{class_picto_1_1_image_file_parameter}{Image\-File\-Parameter} objects and \hyperlink{class_picto_1_1_image_graphic}{Image\-Graphic} objects so that a given \hyperlink{class_picto_1_1_image_graphic}{Image\-Graphic} can quickly switch the particular graphic that is being displayed.
+
+In summary, this class should be removed, but first we will have to set \hyperlink{namespace_picto}{Picto} up to use the \hyperlink{class_picto_1_1_image_graphic}{Image\-Graphic} for displaying the Block\-Design splash screen. This was never a high proirity so it hasn't happened yet. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 27 of file Picture\-Graphic.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_picture_graphic_a99e7e3b8d05fb094858ba255cec1ce2b}{\index{Picto\-::\-Picture\-Graphic@{Picto\-::\-Picture\-Graphic}!Picture\-Graphic@{Picture\-Graphic}}
+\index{Picture\-Graphic@{Picture\-Graphic}!Picto::PictureGraphic@{Picto\-::\-Picture\-Graphic}}
+\subsubsection[{Picture\-Graphic}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Picture\-Graphic\-::\-Picture\-Graphic (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{position = {\ttfamily QPoint()}, }
+\item[{Q\-String}]{image\-File = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_picture_graphic_a99e7e3b8d05fb094858ba255cec1ce2b}
+
+
+Creates a \hyperlink{class_picto_1_1_picture_graphic}{Picture\-Graphic} object at the input position based on the image at the input Image\-File path. 
+
+Adds an Image\-File \hyperlink{class_picto_1_1_property}{Property} to hold the path to the Image\-File. 
+
+Definition at line 13 of file Picture\-Graphic.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_picture_graphic_a92db57f574c60db5e468276f972903e3}{\index{Picto\-::\-Picture\-Graphic@{Picto\-::\-Picture\-Graphic}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::PictureGraphic@{Picto\-::\-Picture\-Graphic}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Picture\-Graphic\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picture_graphic_a92db57f574c60db5e468276f972903e3}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 47 of file Picture\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_picture_graphic_a101e4efb181d2f7166ef83bea31b40be}{\index{Picto\-::\-Picture\-Graphic@{Picto\-::\-Picture\-Graphic}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::PictureGraphic@{Picto\-::\-Picture\-Graphic}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Picture\-Graphic\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picture_graphic_a101e4efb181d2f7166ef83bea31b40be}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 45 of file Picture\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_picture_graphic_a85cbf24ef376531ab66f10487d16721a}{\index{Picto\-::\-Picture\-Graphic@{Picto\-::\-Picture\-Graphic}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::PictureGraphic@{Picto\-::\-Picture\-Graphic}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Picture\-Graphic\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picture_graphic_a85cbf24ef376531ab66f10487d16721a}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 48 of file Picture\-Graphic.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Picture\-Graphic.\-h\item 
+source/common/stimuli/Picture\-Graphic.\-cpp\end{DoxyCompactItemize}

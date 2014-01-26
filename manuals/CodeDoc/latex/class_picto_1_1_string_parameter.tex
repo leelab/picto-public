@@ -1,0 +1,139 @@
+\hypertarget{class_picto_1_1_string_parameter}{\section{Picto\-:\-:String\-Parameter Class Reference}
+\label{class_picto_1_1_string_parameter}\index{Picto\-::\-String\-Parameter@{Picto\-::\-String\-Parameter}}
+}
+
+
+A parameter for storing strings that is not being used.  
+
+
+
+
+{\ttfamily \#include $<$String\-Parameter.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:String\-Parameter\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{class_picto_1_1_string_parameter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_string_parameter_afe6c7b7ceb0966f4ed31f5fbd1355b8d}{void {\bfseries add\-Option} (\hyperlink{struct_picto_1_1_string_parameter_option}{String\-Parameter\-Option} option)}\label{class_picto_1_1_string_parameter_afe6c7b7ceb0966f4ed31f5fbd1355b8d}
+
+\item 
+\hypertarget{class_picto_1_1_string_parameter_a439cde56cc8a6b77aaf485e525b40e8e}{Q\-String {\bfseries get\-Value} ()}\label{class_picto_1_1_string_parameter_a439cde56cc8a6b77aaf485e525b40e8e}
+
+\item 
+\hypertarget{class_picto_1_1_string_parameter_a0064230c4a9619b8c14b3546351f7c47}{void {\bfseries set\-Value} (Q\-String val)}\label{class_picto_1_1_string_parameter_a0064230c4a9619b8c14b3546351f7c47}
+
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_string_parameter_a4127d8059f5243fc0ec02605fd40a804}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_string_parameter_a932e74490c507c5ac0614057ec98504e}{static \hyperlink{class_picto_1_1_parameter}{Parameter} $\ast$ {\bfseries New\-Parameter} ()}\label{class_picto_1_1_string_parameter_a932e74490c507c5ac0614057ec98504e}
+
+\item 
+\hypertarget{class_picto_1_1_string_parameter_a7085faf96f44d2653464994f448353da}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_string_parameter_a7085faf96f44d2653464994f448353da}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_string_parameter_ac43c3d2830299761848f2faa982e088d}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_string_parameter_ae3f4be0d90aea389c997542255473282}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_string_parameter_ad5af2cfab3812e49b752c9e7f67fcfd1}{Q\-String {\bfseries value}}\label{class_picto_1_1_string_parameter_ad5af2cfab3812e49b752c9e7f67fcfd1}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A parameter for storing strings that is not being used. 
+
+There is a \hyperlink{class_picto_1_1_string_variable}{String\-Variable} for this purpose, so having a separate \hyperlink{class_picto_1_1_parameter}{Parameter} to do it doesn't seem to useful although one could imagine things like showing text messages to test subjects that are updatable during an experiment from the Remote \hyperlink{class_viewer}{Viewer}. This should be easy to implment someday if someone feels the need to do so. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file String\-Parameter.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_string_parameter_a4127d8059f5243fc0ec02605fd40a804}{\index{Picto\-::\-String\-Parameter@{Picto\-::\-String\-Parameter}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::StringParameter@{Picto\-::\-String\-Parameter}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-String\-Parameter\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_string_parameter_a4127d8059f5243fc0ec02605fd40a804}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 51 of file String\-Parameter.\-h.
+
+\hypertarget{class_picto_1_1_string_parameter_ac43c3d2830299761848f2faa982e088d}{\index{Picto\-::\-String\-Parameter@{Picto\-::\-String\-Parameter}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::StringParameter@{Picto\-::\-String\-Parameter}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-String\-Parameter\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_string_parameter_ac43c3d2830299761848f2faa982e088d}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_aacf1829d9c0e0dc44a7854412f3face6}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 53 of file String\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_string_parameter_ae3f4be0d90aea389c997542255473282}{\index{Picto\-::\-String\-Parameter@{Picto\-::\-String\-Parameter}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::StringParameter@{Picto\-::\-String\-Parameter}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-String\-Parameter\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_string_parameter_ae3f4be0d90aea389c997542255473282}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. 
+
+\hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{values\-Are\-Valid()} is used for this. 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a94c0e4191ffcc0bd642b647d24557082}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 59 of file String\-Parameter.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/String\-Parameter.\-h\item 
+source/common/parameter/String\-Parameter.\-cpp\end{DoxyCompactItemize}

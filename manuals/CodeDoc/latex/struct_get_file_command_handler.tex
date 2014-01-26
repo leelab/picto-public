@@ -1,0 +1,92 @@
+\hypertarget{struct_get_file_command_handler}{\section{Get\-File\-Command\-Handler Struct Reference}
+\label{struct_get_file_command_handler}\index{Get\-File\-Command\-Handler@{Get\-File\-Command\-Handler}}
+}
+
+
+Handles the G\-E\-T\-F\-I\-L\-E commands sent by all of the \hyperlink{class_server}{Server}'s clients.  
+
+
+
+
+{\ttfamily \#include $<$Get\-File\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Get\-File\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_get_file_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_get_file_command_handler_a29c87a6457e5980e31ed6ec1a06ef726}{Get\-File\-Command\-Handler} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{struct_get_file_command_handler}{Get\-File\-Command\-Handler}. \end{DoxyCompactList}\item 
+\hypertarget{struct_get_file_command_handler_a847ae1af28c6a51c8a4ba8b0a85f4077}{Q\-String \hyperlink{struct_get_file_command_handler_a847ae1af28c6a51c8a4ba8b0a85f4077}{method} ()}\label{struct_get_file_command_handler_a847ae1af28c6a51c8a4ba8b0a85f4077}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_get_file_command_handler_a30b0e0ab89c22075878ed1fa39ac806d}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)
+\begin{DoxyCompactList}\small\item\em Parses the input Protocol\-Command to check its syntax, responds with a Protocol\-Response including the compressed file with the index that was sent as the command target in the Response content area. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles the G\-E\-T\-F\-I\-L\-E commands sent by all of the \hyperlink{class_server}{Server}'s clients. 
+
+The G\-E\-T\-F\-I\-L\-E command handler works closely with the \hyperlink{class_update_downloader}{Update\-Downloader} class. This handler stores a list of byte arrays each of which contains a compressed version of one of the files in or underneath the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server}'s run directory. Together, these files constitute a complete \hyperlink{namespace_picto}{Picto} installation, so a client can completely update its installation to the version on the server by downloading all of these files, decompressing them, and running the appropriate executable (which is what \hyperlink{class_update_downloader}{Update\-Downloader} does).
+
+G\-E\-T\-F\-I\-L\-E commands include an index in their target area that can be anywhere from zero to the total number of compressed files available. The compressed file who's index is sent is returned in the Protocol\-Response when a G\-E\-T\-F\-I\-L\-E command is sent. Other fields are included in the response like \char`\"{}\-Total\-Files\char`\"{} which tells the client how many files it needs to have a complete updated \hyperlink{namespace_picto}{Picto} installation. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 27 of file Get\-File\-Command\-Handler.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_get_file_command_handler_a29c87a6457e5980e31ed6ec1a06ef726}{\index{Get\-File\-Command\-Handler@{Get\-File\-Command\-Handler}!Get\-File\-Command\-Handler@{Get\-File\-Command\-Handler}}
+\index{Get\-File\-Command\-Handler@{Get\-File\-Command\-Handler}!GetFileCommandHandler@{Get\-File\-Command\-Handler}}
+\subsubsection[{Get\-File\-Command\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}Get\-File\-Command\-Handler\-::\-Get\-File\-Command\-Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_get_file_command_handler_a29c87a6457e5980e31ed6ec1a06ef726}
+
+
+Constructs a \hyperlink{struct_get_file_command_handler}{Get\-File\-Command\-Handler}. 
+
+When the \hyperlink{struct_get_file_command_handler}{Get\-File\-Command\-Handler} is constructed, all files in the run directory are compressed and added to a list. When G\-E\-T\-F\-I\-L\-E commands come in, these files can be downloaded. 
+
+Definition at line 26 of file Get\-File\-Command\-Handler.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_get_file_command_handler_a30b0e0ab89c22075878ed1fa39ac806d}{\index{Get\-File\-Command\-Handler@{Get\-File\-Command\-Handler}!process\-Command@{process\-Command}}
+\index{process\-Command@{process\-Command}!GetFileCommandHandler@{Get\-File\-Command\-Handler}}
+\subsubsection[{process\-Command}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Response} $>$ Get\-File\-Command\-Handler\-::process\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_get_file_command_handler_a30b0e0ab89c22075878ed1fa39ac806d}
+
+
+Parses the input Protocol\-Command to check its syntax, responds with a Protocol\-Response including the compressed file with the index that was sent as the command target in the Response content area. 
+
+The filename, its directory, and the total number of files available (total\-Files) are also sent as fields in the response. 
+
+Implements \hyperlink{struct_picto_1_1_protocol_command_handler_aeeaa16fe40f10fd55996d74e16e29cad}{Picto\-::\-Protocol\-Command\-Handler}.
+
+
+
+Definition at line 83 of file Get\-File\-Command\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Get\-File\-Command\-Handler.\-h\item 
+source/server/protocol/Get\-File\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

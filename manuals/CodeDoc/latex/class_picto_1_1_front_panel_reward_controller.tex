@@ -1,0 +1,189 @@
+\hypertarget{class_picto_1_1_front_panel_reward_controller}{\section{Picto\-:\-:Front\-Panel\-Reward\-Controller Class Reference}
+\label{class_picto_1_1_front_panel_reward_controller}\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+}
+
+
+A reward controller for the Picto\-Box used when running Windows X\-P -\/$>$ Windows 7.  
+
+
+
+
+{\ttfamily \#include $<$Front\-Panel\-Reward\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Front\-Panel\-Reward\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_front_panel_reward_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_front_panel_reward_controller_a1513e93f9813613b861d38ef3f58e74b}{Front\-Panel\-Reward\-Controller} ()
+\begin{DoxyCompactList}\small\item\em Sets up the reward controller. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_picto_1_1_front_panel_reward_controller_a0971824746bbf2e478fde6e03f835b8c}{$\sim$\-Front\-Panel\-Reward\-Controller} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}{start\-Reward} (unsigned int channel, int quantity)
+\begin{DoxyCompactList}\small\item\em Starts a reward an the input channel for the 'quantity' number of milliseconds  Due to the limited capabilities of our current version of the Ni\-Daq card, the way that rewards are precisely timed is that we start a clock with frequency equal to the input quantity. We then start a task that switches the A0.\-0 pin to 0\-V, then 5\-V, then 0\-V, etc, (remember, active low logic) each time the clock triggers. Since we make sure to call \hyperlink{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{reward\-Was\-Supplied()} once every 16ms, we can be sure that the reward task will be shut off after the A0.\-0 pin goes to 5\-V so long as the reward duration is longer than 16ms. Ideally we would set up the Ni\-Daq task to simply bring the A0.\-0 pin to 0\-V, then back to 5\-V after quantity ms, but Nidaq doesn't support this, so we had to create a work around. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{reward\-Was\-Supplied} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Returns true if the latest reward has been fully supplied, also turns off the reward task in this case if it is still active. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_front_panel_reward_controller_aa98123b2113054a5606a634066757e2a}{start\-Flush} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Starts a flush on the input channel. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}{stop\-Flush} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Stops an active flush by setting the A0.\-0 line back to high and then clearing the Ni\-Daq task. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A reward controller for the Picto\-Box used when running Windows X\-P -\/$>$ Windows 7. 
+
+Picto\-Box uses a National Instruments P\-C\-I-\/6221 data acquisition board to deliver rewards (the same board is used for the 8 analog inputs, 8 digital outputs and event code outputs). As long as Picto\-Box is running Windows X\-P-\/$>$Windows 7, we can use the traditional N\-I\-D\-A\-Q M\-X drivers.
+
+The original concept for handling reward controller connections was to simply use the first four lines of port 0 (ie. P0.\-0-\/\-P0.\-3) for to control the relays that handle the reward outputs. The problem with this was that we wanted to be able to use timers to turn off the pins for precise reward delivery timing. We are theoretically supposed to be able to configure the nidaq card so that digital lines can use clocks from other parts of the card, but I have not yet figured out how to do this correctly. Instead, currently we only support one reward controller where the reward trigger line is the analog output A0.\-0. We are using A0.\-1 as the line that enables the relays, so with the current setup we can't use more than one reward line. The reason for using A0.\-1 as a reward enable line is that if we simply connect reward enable to 5\-V, then when the Pictobox is restarted, 5\-V is on the reward enable line, but the A0.\-0 line defaults to 0\-V on startup. Since the Crouznet P\-B-\/4 Digital I/\-O board containing our realays uses active low logic to enable the relays, we would therefore end up basically flushing on the reward controller every time we restarted \hyperlink{namespace_picto}{Picto}, which would be a bad thing. If we ever need to support multiple reward lines, someone will either have to spend a lot more time than I had working through the Ni\-Daq documentation and experimenting, or, more likely, we will need to purchase an updated Ni\-Daq card that has individual clocks available for 4 output lines.
+
+\begin{DoxyNote}{Note}
+The Crouzet P\-B-\/4 Digital I/\-O board uses active low logic to activate the reward relays. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 36 of file Front\-Panel\-Reward\-Controller.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_front_panel_reward_controller_a1513e93f9813613b861d38ef3f58e74b}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!Front\-Panel\-Reward\-Controller@{Front\-Panel\-Reward\-Controller}}
+\index{Front\-Panel\-Reward\-Controller@{Front\-Panel\-Reward\-Controller}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{Front\-Panel\-Reward\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Front\-Panel\-Reward\-Controller\-::\-Front\-Panel\-Reward\-Controller (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_front_panel_reward_controller_a1513e93f9813613b861d38ef3f58e74b}
+
+
+Sets up the reward controller. 
+
+Attempts to set the reward trigger and then reward enable lines high. This way to provide a reward we need only set the reward trigger line low for the input reward duration. \begin{DoxyNote}{Note}
+If the Nidaq reward tasks fail to start, this is not considered an error here. The reason for this is that the \hyperlink{class_picto_1_1_front_panel_reward_controller}{Front\-Panel\-Reward\-Controller} is built to work along side the Legacy Orion application so that there is still the option to run old Orion tasks on Picto\-Box. If Orion is running, it will be taking control of the reward lines whenever it needs to provide a reward, in which case this reward controller might be locked out of using them temporarily. Either way, someone will be enabling the reward relays though, and so even when Orion is running Front Panel rewards can still be provided unless an Orion reward is already in progress (in which case we don't really care that the front panel reward won't work). 
+\end{DoxyNote}
+
+
+Definition at line 51 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_front_panel_reward_controller_a0971824746bbf2e478fde6e03f835b8c}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!$\sim$\-Front\-Panel\-Reward\-Controller@{$\sim$\-Front\-Panel\-Reward\-Controller}}
+\index{$\sim$\-Front\-Panel\-Reward\-Controller@{$\sim$\-Front\-Panel\-Reward\-Controller}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{$\sim$\-Front\-Panel\-Reward\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Front\-Panel\-Reward\-Controller\-::$\sim$\-Front\-Panel\-Reward\-Controller (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_front_panel_reward_controller_a0971824746bbf2e478fde6e03f835b8c}
+This desructor doesn't need to bring the reward enable line back to zero. Since it's an enable line, it will return to zero automatically as soon as things reset 
+
+Definition at line 102 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!reward\-Was\-Supplied@{reward\-Was\-Supplied}}
+\index{reward\-Was\-Supplied@{reward\-Was\-Supplied}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{reward\-Was\-Supplied}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Front\-Panel\-Reward\-Controller\-::reward\-Was\-Supplied (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}
+
+
+Returns true if the latest reward has been fully supplied, also turns off the reward task in this case if it is still active. 
+
+This function should be called at least once every 16ms. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}{start\-Reward()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 161 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_front_panel_reward_controller_aa98123b2113054a5606a634066757e2a}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!start\-Flush@{start\-Flush}}
+\index{start\-Flush@{start\-Flush}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{start\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Front\-Panel\-Reward\-Controller\-::start\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_front_panel_reward_controller_aa98123b2113054a5606a634066757e2a}
+
+
+Starts a flush on the input channel. 
+
+Since flush timing doesn't need to be precise, we don't bother ourselves with creating a clock and using it to control the reward trigger line (as in \hyperlink{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}{start\-Reward()}). Here we simply turn the flush on, and the let the call to \hyperlink{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}{stop\-Flush()}, which the \hyperlink{class_picto_1_1_reward_controller}{Reward\-Controller} should handle, stop it. Since the reward controller should be checking this at least once every 16ms, the resolution is fine as far as the flush is concerned. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}{stop\-Flush()}, \hyperlink{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}{Reward\-Controller\-::trigger\-Rewards()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 184 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!start\-Reward@{start\-Reward}}
+\index{start\-Reward@{start\-Reward}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{start\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Front\-Panel\-Reward\-Controller\-::start\-Reward (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel, }
+\item[{int}]{quantity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}
+
+
+Starts a reward an the input channel for the 'quantity' number of milliseconds  Due to the limited capabilities of our current version of the Ni\-Daq card, the way that rewards are precisely timed is that we start a clock with frequency equal to the input quantity. We then start a task that switches the A0.\-0 pin to 0\-V, then 5\-V, then 0\-V, etc, (remember, active low logic) each time the clock triggers. Since we make sure to call \hyperlink{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{reward\-Was\-Supplied()} once every 16ms, we can be sure that the reward task will be shut off after the A0.\-0 pin goes to 5\-V so long as the reward duration is longer than 16ms. Ideally we would set up the Ni\-Daq task to simply bring the A0.\-0 pin to 0\-V, then back to 5\-V after quantity ms, but Nidaq doesn't support this, so we had to create a work around. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{reward\-Was\-Supplied()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 121 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}{\index{Picto\-::\-Front\-Panel\-Reward\-Controller@{Picto\-::\-Front\-Panel\-Reward\-Controller}!stop\-Flush@{stop\-Flush}}
+\index{stop\-Flush@{stop\-Flush}!Picto::FrontPanelRewardController@{Picto\-::\-Front\-Panel\-Reward\-Controller}}
+\subsubsection[{stop\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Front\-Panel\-Reward\-Controller\-::stop\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}
+
+
+Stops an active flush by setting the A0.\-0 line back to high and then clearing the Ni\-Daq task. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_front_panel_reward_controller_aa98123b2113054a5606a634066757e2a}{start\-Flush()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 214 of file Front\-Panel\-Reward\-Controller.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/Front\-Panel\-Reward\-Controller.\-h\item 
+source/embedded/frontpanel/Front\-Panel\-Reward\-Controller.\-cpp\end{DoxyCompactItemize}

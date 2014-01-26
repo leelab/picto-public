@@ -1,0 +1,215 @@
+\hypertarget{class_picto_1_1_associate_root}{\section{Picto\-:\-:Associate\-Root Class Reference}
+\label{class_picto_1_1_associate_root}\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}}
+}
+
+
+\hyperlink{class_picto_1_1_associate_root}{Associate\-Root} objects are the root of a tree with elements that connect to an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} object's tree and provide additional information about the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} tree that does not affect its basic functionality.  
+
+
+
+
+{\ttfamily \#include $<$Associate\-Root.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Associate\-Root\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_associate_root}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_associate_root_af5e611a1c7476d54dadfd923ed89986f}{Associate\-Root} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_associate_root}{Associate\-Root}. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_associate_root_a2e5c6a730c95a1e2b877eec83f7b8759}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_associate_root_a0064d1b0331ebf9d8264e9e08a945646}{Q\-Uuid \hyperlink{class_picto_1_1_associate_root_a0064d1b0331ebf9d8264e9e08a945646}{get\-Associate\-Id} ()}\label{class_picto_1_1_associate_root_a0064d1b0331ebf9d8264e9e08a945646}
+
+\begin{DoxyCompactList}\small\item\em Returns this object's Associate I\-D. All \hyperlink{class_picto_1_1_associate_element}{Associate\-Element} children of this object are linked to an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s descendants according to this I\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_associate_root_a75434436456954826aee938c4a12f04e}{Q\-Uuid \hyperlink{class_picto_1_1_associate_root_a75434436456954826aee938c4a12f04e}{get\-Linked\-Host\-Id} ()}\label{class_picto_1_1_associate_root_a75434436456954826aee938c4a12f04e}
+
+\begin{DoxyCompactList}\small\item\em Returns the Host I\-D of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} that this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} is linked to. If no \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} is linked, returns an invalid Q\-Uuid. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_associate_root_a4bbc35f5c153218b995fea7141731b0b}{Q\-String \hyperlink{class_picto_1_1_associate_root_a4bbc35f5c153218b995fea7141731b0b}{get\-Linked\-Host\-Name} ()}\label{class_picto_1_1_associate_root_a4bbc35f5c153218b995fea7141731b0b}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} that this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} is linked to. If no \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} is linked, returns an empty name. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_associate_root_a80d93af8ed349ac651be22eaf556d7c8}{Link\-To\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset, Q\-String \&feedback)
+\begin{DoxyCompactList}\small\item\em Links this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} to the input \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_associate_root_a1ed46df9a3a433c39b7ff6466cc8bc6c}{get\-Linked\-Asset} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} to which this object is linked as an \hyperlink{class_picto_1_1_asset}{Asset} shared pointer. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_associate_root_aca6c9178c748f6a4a4fbb83f669138fe}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_associate_root_aca6c9178c748f6a4a4fbb83f669138fe}{get\-Linkable\-Asset} ()}\label{class_picto_1_1_associate_root_aca6c9178c748f6a4a4fbb83f669138fe}
+
+\begin{DoxyCompactList}\small\item\em Searches this object's parent's (\hyperlink{class_picto_1_1_picto_data}{Picto\-Data}) tree for an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} with the linked host I\-D set for this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} and returns it as an \hyperlink{class_picto_1_1_asset}{Asset}. Returns an empty pointer otherwise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_associate_root_a340826a71553495784c3ad2e4cdd9956}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_associate_root_a8b54b44c423e63c6d98091aa3dee108a}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_associate_root_a399158938e3f9c09644a20faece3e2b2}{virtual bool \hyperlink{class_picto_1_1_associate_root_a399158938e3f9c09644a20faece3e2b2}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_associate_root_a399158938e3f9c09644a20faece3e2b2}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_picto_1_1_associate_root}{Associate\-Root} objects are the root of a tree with elements that connect to an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} object's tree and provide additional information about the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} tree that does not affect its basic functionality. 
+
+By separating out the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} from the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}, we can add or remove \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} objects without affecting the integrity of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} and we can keep its size and complexity down to a minimum. The idea is that Associate\-Roots link to Associate\-Root\-Hosts. Each \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} has a Host\-Id and each \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} stores the Host\-Id of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} to which it is linked. Whenever a change occurs in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}, its Host\-Id changes, and any Associate\-Roots that are attached to the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} at the time get their stored Host\-Id's changed too such that we can always tell if an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} is a \char`\"{}perfect match\char`\"{} for an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} if their Host\-Id's match up. In the case where the Host\-Ids differ, there is also the option of attempting to import an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} into and \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}; however, since the match wasn't perfect we will know that the resulting import needs to be viewed with caution in case some of the logic is no longer valid.
+
+Like Associate\-Root\-Hosts, Associate\-Roots also have an I\-D. When \hyperlink{class_picto_1_1_associate_element}{Associate\-Element} children of an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} are linked to elements in an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s tree, they are linked according to their \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} parent's I\-D. This way, even if many different Associate\-Roots are attached to a single \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}, we can quickly enable and disable them by simply telling the Assoicate\-Root\-Host to pay attention to or ignore Associate\-Elements with particular Assoicate I\-Ds.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_associate_root}{Associate\-Root}, \hyperlink{class_picto_1_1_associate_element}{Associate\-Element}, \hyperlink{class_picto_1_1_analysis}{Analysis}, \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data}, \hyperlink{class_picto_1_1_experiment}{Experiment} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 31 of file Associate\-Root.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_associate_root_af5e611a1c7476d54dadfd923ed89986f}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!Associate\-Root@{Associate\-Root}}
+\index{Associate\-Root@{Associate\-Root}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{Associate\-Root}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Associate\-Root\-::\-Associate\-Root (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_associate_root_af5e611a1c7476d54dadfd923ed89986f}
+
+
+Constructs a new \hyperlink{class_picto_1_1_associate_root}{Associate\-Root}. 
+
+Adds \char`\"{}\-Associate\-Id\char`\"{}, \char`\"{}\-Linked\-Host\-Id\char`\"{} and \char`\"{}\-Linked\-Host\-Name\char`\"{} Properties. 
+
+Definition at line 13 of file Associate\-Root.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_associate_root_a340826a71553495784c3ad2e4cdd9956}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Associate\-Root\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_associate_root_a340826a71553495784c3ad2e4cdd9956}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a773e96bb8df73a90d56c1aa8fdc0dfa5}{Picto\-::\-Data\-Store}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_a096a25845ebfe85bd6dde170ef17cb32}{Picto\-::\-Analysis}, and \hyperlink{class_picto_1_1_u_i_data_a56f2dd7a596d619946b94afeef8299f0}{Picto\-::\-U\-I\-Data}.
+
+
+
+Definition at line 61 of file Associate\-Root.\-h.
+
+\hypertarget{class_picto_1_1_associate_root_a2e5c6a730c95a1e2b877eec83f7b8759}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Associate\-Root\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_associate_root_a2e5c6a730c95a1e2b877eec83f7b8759}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a19f94929e12069750b29b87c581024b6}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_ab0e951f09f33b8172387381d18b189d7}{Picto\-::\-Analysis}, and \hyperlink{class_picto_1_1_u_i_data_aa197be2adc238a211ada4fdde83d8480}{Picto\-::\-U\-I\-Data}.
+
+
+
+Definition at line 39 of file Associate\-Root.\-h.
+
+\hypertarget{class_picto_1_1_associate_root_a1ed46df9a3a433c39b7ff6466cc8bc6c}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!get\-Linked\-Asset@{get\-Linked\-Asset}}
+\index{get\-Linked\-Asset@{get\-Linked\-Asset}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{get\-Linked\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<${\bf Asset}$>$ Picto\-::\-Associate\-Root\-::get\-Linked\-Asset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_associate_root_a1ed46df9a3a433c39b7ff6466cc8bc6c}
+
+
+Returns the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} to which this object is linked as an \hyperlink{class_picto_1_1_asset}{Asset} shared pointer. 
+
+\begin{DoxyNote}{Note}
+This should probably be renamed to get\-Linked\-Host() or something like that. It is named this way for historical reasons. 
+\end{DoxyNote}
+
+
+Definition at line 57 of file Associate\-Root.\-h.
+
+\hypertarget{class_picto_1_1_associate_root_a80d93af8ed349ac651be22eaf556d7c8}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!Link\-To\-Asset@{Link\-To\-Asset}}
+\index{Link\-To\-Asset@{Link\-To\-Asset}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{Link\-To\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Associate\-Root\-::\-Link\-To\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset, }
+\item[{Q\-String \&}]{feedback}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_associate_root_a80d93af8ed349ac651be22eaf556d7c8}
+
+
+Links this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} to the input \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}. 
+
+Calls set\-Linked\-Asset() to go through the details of linking this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} to the input Associate\-Root\-Host(). Also goes through all of this \hyperlink{class_picto_1_1_associate_root}{Associate\-Root}'s children and attempts to link them to their corresponding Assets in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s tree using saved \char`\"{}link asset I\-D\char`\"{} and \char`\"{}link asset path\char`\"{} data. Returns true on success, false if the linkage wasn't perfect. On false, the feedback input will be set to a message with more information. \begin{DoxyNote}{Note}
+This could use some debugging. Make sure, for example, that adding an \hyperlink{class_picto_1_1_analysis_script_holder}{Analysis\-Script\-Holder} to a \hyperlink{class_picto_1_1_number_variable}{Number\-Variable} either won't work or at least won't break anything. Possibly fix these types of issues by overloading the \hyperlink{class_picto_1_1_associate_element}{Associate\-Element}'s attach\-To\-Linked\-Asset function for different types of classes depending on whether they can be loaded onto the wrong element or not. 
+
+This function would be better named link\-To\-Host() or something like that. It is called \hyperlink{class_picto_1_1_associate_root_a80d93af8ed349ac651be22eaf556d7c8}{Link\-To\-Asset()} for historic reasons. 
+\end{DoxyNote}
+
+
+Definition at line 38 of file Associate\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_associate_root_a8b54b44c423e63c6d98091aa3dee108a}{\index{Picto\-::\-Associate\-Root@{Picto\-::\-Associate\-Root}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AssociateRoot@{Picto\-::\-Associate\-Root}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Associate\-Root\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_associate_root_a8b54b44c423e63c6d98091aa3dee108a}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_ae1585113a496ff2c8de3293aa884b57b}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_a1495e960c7416afd2f443ae796ed0311}{Picto\-::\-Analysis}, and \hyperlink{class_picto_1_1_u_i_data_a5c9efa47c9f2e57d7c03a5a8f5169a98}{Picto\-::\-U\-I\-Data}.
+
+
+
+Definition at line 118 of file Associate\-Root.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Associate\-Root.\-h\item 
+source/common/parameter/Associate\-Root.\-cpp\end{DoxyCompactItemize}

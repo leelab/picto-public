@@ -1,0 +1,186 @@
+\hypertarget{class_picto_1_1_behavioral_data_unit_package}{\section{Picto\-:\-:Behavioral\-Data\-Unit\-Package Class Reference}
+\label{class_picto_1_1_behavioral_data_unit_package}\index{Picto\-::\-Behavioral\-Data\-Unit\-Package@{Picto\-::\-Behavioral\-Data\-Unit\-Package}}
+}
+
+
+Stores behavioral data (data from a \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel}) as a list Behavioral\-Data\-Units (ie. x,y readings)  
+
+
+
+
+{\ttfamily \#include $<$Behavioral\-Data\-Unit\-Package.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Behavioral\-Data\-Unit\-Package\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_behavioral_data_unit_package}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_behavioral_data_unit_package_af69a863c636394af24e2765c713b7a02}{set\-Descriptor} (Q\-String descriptor)
+\begin{DoxyCompactList}\small\item\em Input a comma separated list of value names for the input data. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_behavioral_data_unit_package_a832cf79f22ecaa3803893674033df07a}{get\-Descriptor} ()
+\begin{DoxyCompactList}\small\item\em Returns a comma separated list of value names for the input data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a2a2727c3798ae85adf5701a721b88193}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a2a2727c3798ae85adf5701a721b88193}{set\-Channel} (Q\-String channel)}\label{class_picto_1_1_behavioral_data_unit_package_a2a2727c3798ae85adf5701a721b88193}
+
+\begin{DoxyCompactList}\small\item\em Sets the signal channel from which this data was drawn. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a730d3ad161cd6191c62727d3feaedfd0}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a730d3ad161cd6191c62727d3feaedfd0}{set\-Offset\-Time} (double t)}\label{class_picto_1_1_behavioral_data_unit_package_a730d3ad161cd6191c62727d3feaedfd0}
+
+\begin{DoxyCompactList}\small\item\em Sets the offset from the time that the Action frame occured to the time that the first sample in thie package was read (as a double). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a45dfac93bd0faed32072f1a0a0d3f8cf}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a45dfac93bd0faed32072f1a0a0d3f8cf}{set\-Offset\-Time} (Q\-String t)}\label{class_picto_1_1_behavioral_data_unit_package_a45dfac93bd0faed32072f1a0a0d3f8cf}
+
+\begin{DoxyCompactList}\small\item\em Sets the offset from the time that the Action frame occured to the time that the first sample in thie package was read (as a string). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_ac335624a6faec29d61997ee72970d948}{Q\-String \hyperlink{class_picto_1_1_behavioral_data_unit_package_ac335624a6faec29d61997ee72970d948}{get\-Offset\-Time} ()}\label{class_picto_1_1_behavioral_data_unit_package_ac335624a6faec29d61997ee72970d948}
+
+\begin{DoxyCompactList}\small\item\em Returns the offset from the time that the Action frame occured to the time that the first sample in thie package was read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a239051443324d1a4afeb4625a2ba4459}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a239051443324d1a4afeb4625a2ba4459}{set\-Resolution} (double r)}\label{class_picto_1_1_behavioral_data_unit_package_a239051443324d1a4afeb4625a2ba4459}
+
+\begin{DoxyCompactList}\small\item\em Sets the number of milliseconds per sample stored here. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_ac8d5bf15ce7ae2e0c32a6bd26be1b61f}{double \hyperlink{class_picto_1_1_behavioral_data_unit_package_ac8d5bf15ce7ae2e0c32a6bd26be1b61f}{get\-Resolution} ()}\label{class_picto_1_1_behavioral_data_unit_package_ac8d5bf15ce7ae2e0c32a6bd26be1b61f}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of milliseconds per sample stored here. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a5147d399351530b0636a52759026237b}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a5147d399351530b0636a52759026237b}{set\-Action\-Frame} (qulonglong frame\-Id)}\label{class_picto_1_1_behavioral_data_unit_package_a5147d399351530b0636a52759026237b}
+
+\begin{DoxyCompactList}\small\item\em Sets the Frame\-Id of the frame after which this object's Behavioral\-Data occured. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_ad4bed533a799c8142d6ca9bb32bb77b7}{qulonglong \hyperlink{class_picto_1_1_behavioral_data_unit_package_ad4bed533a799c8142d6ca9bb32bb77b7}{get\-Action\-Frame} ()}\label{class_picto_1_1_behavioral_data_unit_package_ad4bed533a799c8142d6ca9bb32bb77b7}
+
+\begin{DoxyCompactList}\small\item\em Returns the Frame\-Id of the frame after which this object's Behavioral\-Data occured. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_aef8e8c9f830ee39eba3f83b96707a75c}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_aef8e8c9f830ee39eba3f83b96707a75c}{add\-Data} (double x, double y)}\label{class_picto_1_1_behavioral_data_unit_package_aef8e8c9f830ee39eba3f83b96707a75c}
+
+\begin{DoxyCompactList}\small\item\em Adds a simple (x,y) sample. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_behavioral_data_unit_package_a56d01860a83cf8c13601d669084eb7db}{add\-Data} (Q\-Map$<$ Q\-String, Q\-Vector$<$ double $>$$>$ signal\-Channel\-Data, double frame\-To\-Sample\-Offset)
+\begin{DoxyCompactList}\small\item\em Adds the map returned from a behavioral data signal channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a57aa4043238b3eca2f2e39481a0363d0}{void {\bfseries empty\-Data} ()}\label{class_picto_1_1_behavioral_data_unit_package_a57aa4043238b3eca2f2e39481a0363d0}
+
+\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a25eb32678a26a90e6e13df8e871da8f7}{int \hyperlink{class_picto_1_1_behavioral_data_unit_package_a25eb32678a26a90e6e13df8e871da8f7}{length} ()}\label{class_picto_1_1_behavioral_data_unit_package_a25eb32678a26a90e6e13df8e871da8f7}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of Behavioral\-Data\-Units contained in this object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_aca3684b1dbb6c621f66eb9e5512ce954}{Q\-String \hyperlink{class_picto_1_1_behavioral_data_unit_package_aca3684b1dbb6c621f66eb9e5512ce954}{get\-Channel} ()}\label{class_picto_1_1_behavioral_data_unit_package_aca3684b1dbb6c621f66eb9e5512ce954}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} being handled by this \hyperlink{class_picto_1_1_behavioral_data_unit_package}{Behavioral\-Data\-Unit\-Package}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a3257ec0fa55a01d7b25b86e64bd84963}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_behavioral_data_unit_package_a3257ec0fa55a01d7b25b86e64bd84963}{take\-First\-Data\-Point} ()}\label{class_picto_1_1_behavioral_data_unit_package_a3257ec0fa55a01d7b25b86e64bd84963}
+
+\begin{DoxyCompactList}\small\item\em Returns the first \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} in this list and removes it from the list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a9c609dfb302b35c38ca4a73e4596e4ef}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_behavioral_data_unit_package_a9c609dfb302b35c38ca4a73e4596e4ef}{peek\-First\-Data\-Point} ()}\label{class_picto_1_1_behavioral_data_unit_package_a9c609dfb302b35c38ca4a73e4596e4ef}
+
+\begin{DoxyCompactList}\small\item\em Returns the first \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} in this list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_af952aedf712289e835ffd8e92ffa7a8a}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_behavioral_data_unit_package_af952aedf712289e835ffd8e92ffa7a8a}{take\-Last\-Data\-Point} ()}\label{class_picto_1_1_behavioral_data_unit_package_af952aedf712289e835ffd8e92ffa7a8a}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} in this list and removes it from the list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_ab01fb1e68f935b7182819065b0e285f9}{void \hyperlink{class_picto_1_1_behavioral_data_unit_package_ab01fb1e68f935b7182819065b0e285f9}{clear\-All\-But\-Last\-Data\-Points} ()}\label{class_picto_1_1_behavioral_data_unit_package_ab01fb1e68f935b7182819065b0e285f9}
+
+\begin{DoxyCompactList}\small\item\em Clears all data points apart from the ones at the latest time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a1f507ee7d23ca857f8c511bc00c25c52}{Q\-Byte\-Array \hyperlink{class_picto_1_1_behavioral_data_unit_package_a1f507ee7d23ca857f8c511bc00c25c52}{get\-Data\-As\-Byte\-Array} ()}\label{class_picto_1_1_behavioral_data_unit_package_a1f507ee7d23ca857f8c511bc00c25c52}
+
+\begin{DoxyCompactList}\small\item\em Returns the list of Behavioral\-Data\-Units as a Byte\-Array. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a30584418819b9470c03885c72ab0ea77}{qulonglong \hyperlink{class_picto_1_1_behavioral_data_unit_package_a30584418819b9470c03885c72ab0ea77}{get\-Data\-I\-D\-Of\-Last\-Unit} ()}\label{class_picto_1_1_behavioral_data_unit_package_a30584418819b9470c03885c72ab0ea77}
+
+\begin{DoxyCompactList}\small\item\em Returns the Data\-Id of the last \hyperlink{class_picto_1_1_behavioral_data_unit}{Behavioral\-Data\-Unit} in the list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a601a643bb3b7d9d669d4b9ecd8304db4}{virtual bool \hyperlink{class_picto_1_1_behavioral_data_unit_package_a601a643bb3b7d9d669d4b9ecd8304db4}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_behavioral_data_unit_package_a601a643bb3b7d9d669d4b9ecd8304db4}
+
+\begin{DoxyCompactList}\small\item\em Turns the \hyperlink{class_picto_1_1_behavioral_data_unit_package}{Behavioral\-Data\-Unit\-Package} into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_behavioral_data_unit_package_ad072de1e2e515ffb022b1803370ed435}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a497c73e3ffe801360fa85f9353914740}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_behavioral_data_unit_package_a497c73e3ffe801360fa85f9353914740}
+
+\item 
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_af5b7a952001c7ec2c605850ed0b53795}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_behavioral_data_unit_package_af5b7a952001c7ec2c605850ed0b53795}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores behavioral data (data from a \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel}) as a list Behavioral\-Data\-Units (ie. x,y readings) 
+
+Each Package includes an Action\-Frame which is the frame after which the data was read. It also inclues an Offset\-Time which is the amount of time after the prior frame that the first sample was read on the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Behavioral\-Data\-Unit\-Package.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a56d01860a83cf8c13601d669084eb7db}{\index{Picto\-::\-Behavioral\-Data\-Unit\-Package@{Picto\-::\-Behavioral\-Data\-Unit\-Package}!add\-Data@{add\-Data}}
+\index{add\-Data@{add\-Data}!Picto::BehavioralDataUnitPackage@{Picto\-::\-Behavioral\-Data\-Unit\-Package}}
+\subsubsection[{add\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Behavioral\-Data\-Unit\-Package\-::add\-Data (
+\begin{DoxyParamCaption}
+\item[{Q\-Map$<$ Q\-String, Q\-Vector$<$ double $>$$>$}]{signal\-Channel\-Data, }
+\item[{double}]{frame\-To\-Sample\-Offset}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_behavioral_data_unit_package_a56d01860a83cf8c13601d669084eb7db}
+
+
+Adds the map returned from a behavioral data signal channel. 
+
+The format of the input to this function seems a bit odd, but it is exactly the same Map used by \hyperlink{class_picto_1_1_signal_channel_a6d3da16b7a2233f581617aabdb1c4c72}{Signal\-Channel\-::get\-Values()}, allowing us to add the data directly to our data store.
+
+frame\-To\-Sample\-Offset is the offset time between when the previous frame's phosphor appeared and when the first samples in the input signal\-Channel\-Data were read. 
+
+Definition at line 43 of file Behavioral\-Data\-Unit\-Package.\-cpp.
+
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_ad072de1e2e515ffb022b1803370ed435}{\index{Picto\-::\-Behavioral\-Data\-Unit\-Package@{Picto\-::\-Behavioral\-Data\-Unit\-Package}!deserialize\-From\-Xml@{deserialize\-From\-Xml}}
+\index{deserialize\-From\-Xml@{deserialize\-From\-Xml}!Picto::BehavioralDataUnitPackage@{Picto\-::\-Behavioral\-Data\-Unit\-Package}}
+\subsubsection[{deserialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Behavioral\-Data\-Unit\-Package\-::deserialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_behavioral_data_unit_package_ad072de1e2e515ffb022b1803370ed435}
+Converts X\-M\-L into a \hyperlink{class_picto_1_1_behavioral_data_unit_package}{Behavioral\-Data\-Unit\-Package} object. Note that this deletes any existing data. 
+
+Implements \hyperlink{class_picto_1_1_data_unit_a44ba3155a80dee6c504300b877e944d8}{Picto\-::\-Data\-Unit}.
+
+
+
+Definition at line 128 of file Behavioral\-Data\-Unit\-Package.\-cpp.
+
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_a832cf79f22ecaa3803893674033df07a}{\index{Picto\-::\-Behavioral\-Data\-Unit\-Package@{Picto\-::\-Behavioral\-Data\-Unit\-Package}!get\-Descriptor@{get\-Descriptor}}
+\index{get\-Descriptor@{get\-Descriptor}!Picto::BehavioralDataUnitPackage@{Picto\-::\-Behavioral\-Data\-Unit\-Package}}
+\subsubsection[{get\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Behavioral\-Data\-Unit\-Package\-::get\-Descriptor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_behavioral_data_unit_package_a832cf79f22ecaa3803893674033df07a}
+
+
+Returns a comma separated list of value names for the input data. 
+
+This string is used to identify the number of input values, and is sent along with the data to describe individual data points significance. (ex. \char`\"{}x\-Pos,y\-Pos\char`\"{}) 
+
+Definition at line 36 of file Behavioral\-Data\-Unit\-Package.\-h.
+
+\hypertarget{class_picto_1_1_behavioral_data_unit_package_af69a863c636394af24e2765c713b7a02}{\index{Picto\-::\-Behavioral\-Data\-Unit\-Package@{Picto\-::\-Behavioral\-Data\-Unit\-Package}!set\-Descriptor@{set\-Descriptor}}
+\index{set\-Descriptor@{set\-Descriptor}!Picto::BehavioralDataUnitPackage@{Picto\-::\-Behavioral\-Data\-Unit\-Package}}
+\subsubsection[{set\-Descriptor}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Behavioral\-Data\-Unit\-Package\-::set\-Descriptor (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{descriptor}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_behavioral_data_unit_package_af69a863c636394af24e2765c713b7a02}
+
+
+Input a comma separated list of value names for the input data. 
+
+This string is used to identify the number of input values, and is sent along with the data to describe individual data points significance. (ex. \char`\"{}x\-Pos,y\-Pos\char`\"{}) 
+
+Definition at line 15 of file Behavioral\-Data\-Unit\-Package.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Behavioral\-Data\-Unit\-Package.\-h\item 
+source/common/storage/Behavioral\-Data\-Unit\-Package.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,237 @@
+\hypertarget{class_picto_1_1_lfp_state}{\section{Picto\-:\-:Lfp\-State Class Reference}
+\label{class_picto_1_1_lfp_state}\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract the lfp data and implement functions for traversing through that data.  
+
+
+
+
+{\ttfamily \#include $<$Lfp\-State.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Lfp\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_lfp_state}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_lfp_state_ac3b0a1f8b2e9fe8161f5144d388b2162}{void \hyperlink{class_picto_1_1_lfp_state_ac3b0a1f8b2e9fe8161f5144d388b2162}{lfp\-Changed} (int channel, double value)}\label{class_picto_1_1_lfp_state_ac3b0a1f8b2e9fe8161f5144d388b2162}
+
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{move\-To\-Index()} moves the current time passed a new lfp value. channel is the channel on which the value occured, value is the value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a2e4399f6f5db7a593014352b9c9fa4cb}{void \hyperlink{class_picto_1_1_lfp_state_a2e4399f6f5db7a593014352b9c9fa4cb}{lfp\-Load\-Progress} (int percent)}\label{class_picto_1_1_lfp_state_a2e4399f6f5db7a593014352b9c9fa4cb}
+
+\begin{DoxyCompactList}\small\item\em Emitted to signify the percentage of L\-F\-P data that has been loaded so far in the load\-Data() function. Values are from 0 to 100. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_lfp_state_acc4649b90ed6b75509bbf0cc82dcd701}{{\bfseries Lfp\-State} (bool enabled=true)}\label{class_picto_1_1_lfp_state_acc4649b90ed6b75509bbf0cc82dcd701}
+
+\item 
+void \hyperlink{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}{set\-Enabled} (bool enable)
+\begin{DoxyCompactList}\small\item\em Enables/\-Disables this \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} to make memory / load time savings possible when lfp data is not needed. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_lfp_state_abaf0ee9c27ad1ffc9c2688fa9f173954}{get\-Enabled} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this L\-F\-P\-State is currently set to return lfp data, false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a2bd129131178dfbd4c6868c44b0d3de4}{virtual void \hyperlink{class_picto_1_1_lfp_state_a2bd129131178dfbd4c6868c44b0d3de4}{set\-Database} (Q\-Sql\-Database session)}\label{class_picto_1_1_lfp_state_a2bd129131178dfbd4c6868c44b0d3de4}
+
+\begin{DoxyCompactList}\small\item\em Sets the input Sql Database to this \hyperlink{class_picto_1_1_data_state}{Data\-State} so that it can load all of the data relevant to it into R\-A\-M for quick access. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_lfp_state_a87e3f6635bf617697b1de6a9113f0dfb}{start\-Run} (double run\-Start\-Time, double run\-End\-Time=-\/1)
+\begin{DoxyCompactList}\small\item\em Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_lfp_state_a3d1801b8b1f428fa5927633cb2fe0d10}{get\-Current\-Index} ()
+\begin{DoxyCompactList}\small\item\em Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_lfp_state_ad498c35250a5491f42c57385f0f68da7}{get\-Next\-Index} (double look\-Forward\-Time)
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{move\-To\-Index} (\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} index)
+\begin{DoxyCompactList}\small\item\em Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a78a9ebbf3987f5f7bbbe77b1b5e14a48}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_lfp_state_a78a9ebbf3987f5f7bbbe77b1b5e14a48}{get\-Channels} ()}\label{class_picto_1_1_lfp_state_a78a9ebbf3987f5f7bbbe77b1b5e14a48}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels on which lfp data was captured during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_ad71f4b27e2033d1db0f9d4249ecfe969}{virtual double \hyperlink{class_picto_1_1_lfp_state_ad71f4b27e2033d1db0f9d4249ecfe969}{get\-Sample\-Period} ()}\label{class_picto_1_1_lfp_state_ad71f4b27e2033d1db0f9d4249ecfe969}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period for lfp data capture. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_ad1f465d3d76d271547ae0e2780d13a79}{virtual double \hyperlink{class_picto_1_1_lfp_state_ad1f465d3d76d271547ae0e2780d13a79}{get\-Latest\-Time} ()}\label{class_picto_1_1_lfp_state_ad1f465d3d76d271547ae0e2780d13a79}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest lfp data sample. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a0ded796194c40a928d8fb7964a219b9d}{virtual double \hyperlink{class_picto_1_1_lfp_state_a0ded796194c40a928d8fb7964a219b9d}{get\-Latest\-Value} (int channel)}\label{class_picto_1_1_lfp_state_a0ded796194c40a928d8fb7964a219b9d}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest lfp value on the channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a3659adcfc65cde8be1971b8a2f99f3e4}{virtual double \hyperlink{class_picto_1_1_lfp_state_a3659adcfc65cde8be1971b8a2f99f3e4}{get\-Next\-Time} ()}\label{class_picto_1_1_lfp_state_a3659adcfc65cde8be1971b8a2f99f3e4}
+
+\begin{DoxyCompactList}\small\item\em Returns the time at which the next signal will be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_abe82e38a76a81290dbf209f8e7fce747}{virtual double \hyperlink{class_picto_1_1_lfp_state_abe82e38a76a81290dbf209f8e7fce747}{get\-Next\-Value} (int channel)}\label{class_picto_1_1_lfp_state_abe82e38a76a81290dbf209f8e7fce747}
+
+\begin{DoxyCompactList}\small\item\em Returns the next value that will be read for the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_adc00615a7a96217a74768eaa4ce929cc}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_lfp_state_adc00615a7a96217a74768eaa4ce929cc}{get\-Values\-Since} (int channel, double time)}\label{class_picto_1_1_lfp_state_adc00615a7a96217a74768eaa4ce929cc}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a3f37b279a3fcc62ba348ed29000d24ed}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_lfp_state_a3f37b279a3fcc62ba348ed29000d24ed}{get\-Values\-Until} (int channel, double time)}\label{class_picto_1_1_lfp_state_a3f37b279a3fcc62ba348ed29000d24ed}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that occured with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_a33fdf6ba719525e99ae8ebc3390257ce}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_lfp_state_a33fdf6ba719525e99ae8ebc3390257ce}{get\-Times\-Since} (double time)}\label{class_picto_1_1_lfp_state_a33fdf6ba719525e99ae8ebc3390257ce}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_lfp_state_aca7c7c342ced94f37610fcaa23333d76}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_lfp_state_aca7c7c342ced94f37610fcaa23333d76}{get\-Times\-Until} (double time)}\label{class_picto_1_1_lfp_state_aca7c7c342ced94f37610fcaa23333d76}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that occured with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract the lfp data and implement functions for traversing through that data. 
+
+The class is fairly simple, a Q\-List of Q\-Lists of Local Field Potential data is loaded from the session data where each sub Q\-List represents a single L\-F\-P channel. All sub Q\-Lists are the same length with each index representing a single time, offset by \hyperlink{class_picto_1_1_lfp_state_ad71f4b27e2033d1db0f9d4249ecfe969}{get\-Sample\-Period()} from the prior value and starting from the first lfp data point in the session file. When \hyperlink{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{move\-To\-Index()} is called, we just traverse through the list until we reach the appropriate time. Each time \hyperlink{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{move\-To\-Index()} causes us to pass through an L\-F\-P read time, the \hyperlink{class_picto_1_1_lfp_state_ac3b0a1f8b2e9fe8161f5144d388b2162}{lfp\-Changed()} signal is called for each channel, which tells the rest of the playback system that lfp values changed.
+
+In many cases not all channels start recording at the same time. In these cases the Q\-List values for those channels are stored as zero until their real data starts coming in. This can clearly be optimized at some point by storing a list of start times to save R\-A\-M.
+
+\begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} and \hyperlink{class_picto_1_1_data_state}{Data\-State} classes for data read in from a Session Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding additional function level documentation for many of the functions in this class.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 31 of file Lfp\-State.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_lfp_state_a3d1801b8b1f428fa5927633cb2fe0d10}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!get\-Current\-Index@{get\-Current\-Index}}
+\index{get\-Current\-Index@{get\-Current\-Index}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{get\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Lfp\-State\-::get\-Current\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_lfp_state_a3d1801b8b1f428fa5927633cb2fe0d10}
+
+
+Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+Data\-States, like File objects, have what we can think at as a read pointer. They always have a current position from which we can move. This is for the sake of efficiency and to be sure that every time we move from one state in a \hyperlink{namespace_picto}{Picto} session to another we are not skipping any experimental events in the middle. The value returned from this function is the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} describing the time/order of the value that the \char`\"{}read pointer\char`\"{} is currently pointing at. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}, \hyperlink{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{move\-To\-Index()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_aeb01a1209858dc99ce86d153aeda152a}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 82 of file Lfp\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_lfp_state_abaf0ee9c27ad1ffc9c2688fa9f173954}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!get\-Enabled@{get\-Enabled}}
+\index{get\-Enabled@{get\-Enabled}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{get\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool Lfp\-State\-::get\-Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_lfp_state_abaf0ee9c27ad1ffc9c2688fa9f173954}
+
+
+Returns true if this L\-F\-P\-State is currently set to return lfp data, false otherwise. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}{set\-Enabled()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 49 of file Lfp\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_lfp_state_ad498c35250a5491f42c57385f0f68da7}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!get\-Next\-Index@{get\-Next\-Index}}
+\index{get\-Next\-Index@{get\-Next\-Index}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{get\-Next\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Lfp\-State\-::get\-Next\-Index (
+\begin{DoxyParamCaption}
+\item[{double}]{look\-Forward\-Time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_lfp_state_ad498c35250a5491f42c57385f0f68da7}
+
+
+Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em look\-Forward\-Time} & The timespan to search forward from the current read position for the next value. Using an input value less than zero is equivalent to inputing a value of infinity. The function will look forward as far as it takes until a new value is available (which may cause some significant delay). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When we designed this interface, the idea was that we could use it for live playback and if there was no \char`\"{}next index\char`\"{} available, the system would just wait for one to come in thereby creating an unfortunate but necessary lag in playback. In practice, we are not using Data\-States for live playback, since we don't support \hyperlink{class_picto_1_1_analysis}{Analysis} during live playback. This may be something to think about when we want to start supporting that though. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_a959c083fdf897e2f8d75be596d9db8e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 90 of file Lfp\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!move\-To\-Index@{move\-To\-Index}}
+\index{move\-To\-Index@{move\-To\-Index}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{move\-To\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void Lfp\-State\-::move\-To\-Index (
+\begin{DoxyParamCaption}
+\item[{{\bf Playback\-Index}}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_lfp_state_acd6593b8cb11d4aa974b629871eab6dd}
+
+
+Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. 
+
+It is important that the \hyperlink{class_picto_1_1_data_state}{Data\-State} move step by step up to the input index because all of the changes in its value need to be emitted over signals and sent out to the greater playback system as we move to the new value. If we were to jump over any values and skip them, Analyses that are basing themselves on changes in values underlying this \hyperlink{class_picto_1_1_data_state}{Data\-State} might no longer be valid.
+
+Imagine, for example, if this \hyperlink{class_picto_1_1_data_state}{Data\-State} were tracking transitions. If we skipped over any transitions on the way to the input index, \hyperlink{class_picto_1_1_analysis}{Analysis} scripts that are called when those transitions are traversed would be skipped and the \hyperlink{class_picto_1_1_analysis}{Analysis} would be totally invalid. 
+
+Implements \hyperlink{class_picto_1_1_data_state_af18625b354552d5123f46bde3ded65e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 98 of file Lfp\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!set\-Enabled@{set\-Enabled}}
+\index{set\-Enabled@{set\-Enabled}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{set\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void Lfp\-State\-::set\-Enabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}
+
+
+Enables/\-Disables this \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} to make memory / load time savings possible when lfp data is not needed. 
+
+This function could take quite some time if L\-F\-P data wasn't loaded and it is used to enable lfp data. This is because in this case all lfp data will be loaded before the function returns.
+
+\hyperlink{class_picto_1_1_lfp_state_a2e4399f6f5db7a593014352b9c9fa4cb}{lfp\-Load\-Progress()} signals are emitted as part of this function to indicate when the lfp data loading or unloading is complete. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_lfp_state_abaf0ee9c27ad1ffc9c2688fa9f173954}{get\-Enabled()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 21 of file Lfp\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_lfp_state_a87e3f6635bf617697b1de6a9113f0dfb}{\index{Picto\-::\-Lfp\-State@{Picto\-::\-Lfp\-State}!start\-Run@{start\-Run}}
+\index{start\-Run@{start\-Run}!Picto::LfpState@{Picto\-::\-Lfp\-State}}
+\subsubsection[{start\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void Lfp\-State\-::start\-Run (
+\begin{DoxyParamCaption}
+\item[{double}]{run\-Start\-Time, }
+\item[{double}]{run\-End\-Time = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_lfp_state_a87e3f6635bf617697b1de6a9113f0dfb}
+
+
+Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. 
+
+This is important because \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} values returned from \hyperlink{class_picto_1_1_data_state}{Data\-State} objects are always with respect to the beginning of the run. In otherwords, if a \hyperlink{class_picto_1_1_data_state}{Data\-State} returns a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of something that happened at the same time that the Run\-Started, its \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{Playback\-Index.\-time()} will be zero, even if the run happened at time 213.\-315. 
+
+Implements \hyperlink{class_picto_1_1_data_state_a8338a5e0c034ccd190e2916e4d60a6e8}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 67 of file Lfp\-State.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Lfp\-State.\-h\item 
+source/common/playback/Lfp\-State.\-cpp\end{DoxyCompactItemize}

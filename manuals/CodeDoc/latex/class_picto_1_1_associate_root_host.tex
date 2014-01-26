@@ -1,0 +1,119 @@
+\hypertarget{class_picto_1_1_associate_root_host}{\section{Picto\-:\-:Associate\-Root\-Host Class Reference}
+\label{class_picto_1_1_associate_root_host}\index{Picto\-::\-Associate\-Root\-Host@{Picto\-::\-Associate\-Root\-Host}}
+}
+
+
+An \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} object's tree can be linked to by an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} object's tree. Elements in the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} tree connect to elements in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} tree and provide additional information about them that does not affect their basic functionality.  
+
+
+
+
+{\ttfamily \#include $<$Associate\-Root\-Host.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Associate\-Root\-Host\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_associate_root_host}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_associate_root_host_a87a31a985271beca4baacb262749d80e}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} $>$ \hyperlink{class_picto_1_1_associate_root_host_a87a31a985271beca4baacb262749d80e}{get\-Associate\-Root} (Q\-String type)}\label{class_picto_1_1_associate_root_host_a87a31a985271beca4baacb262749d80e}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} of the input type that is linked to this \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}. \end{DoxyCompactList}\item 
+virtual Q\-Uuid \hyperlink{class_picto_1_1_associate_root_host_a4663f4bd52ae67e5bdfbe46b3e7d1d9a}{get\-Host\-Id} ()=0
+\begin{DoxyCompactList}\small\item\em Returns this \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s Host\-Id. \end{DoxyCompactList}\item 
+virtual Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$ \hyperlink{class_picto_1_1_associate_root_host_a1c35bfa484ad0b31256f52634bd85926}{get\-Host\-Id\-Property} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the \hyperlink{class_picto_1_1_property}{Property} containing this object's Host\-Id. \end{DoxyCompactList}\item 
+virtual Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$ \hyperlink{class_picto_1_1_associate_root_host_a856a87a22cfbd947f9fbf9d433338982}{get\-Name\-Property} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the \hyperlink{class_picto_1_1_property}{Property} containing this object's name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_associate_root_host_a7b08add12992fe7e8e15cd8ed014e61d}{class {\bfseries Associate\-Root}}\label{class_picto_1_1_associate_root_host_a7b08add12992fe7e8e15cd8ed014e61d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} object's tree can be linked to by an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} object's tree. Elements in the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} tree connect to elements in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} tree and provide additional information about them that does not affect their basic functionality. 
+
+By separating out the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} from the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root}, we can add or remove Associate\-Roots without affecting the integrity of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} and we can keep its size and complexity down to a minimum. The idea is that Associate\-Roots link to Associate\-Root\-Hosts. Each \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} has a Host\-Id and each \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} stores the Host\-Id of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} to which it is linked. Whenever a change occurs in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}, its Host\-Id changes, and any Associate\-Roots that are attached to the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} at the time get their stored Host\-Id's changed too such that we can always tell if an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} is a \char`\"{}perfect match\char`\"{} for an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} if their Host\-Id's match up. In the case where the Host\-Ids differ, there is also the option of attempting to import an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} into and \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}; however, since the match wasn't perfect we will know that the resulting import needs to be viewed with caution in case some of the logic is no longer valid.
+
+In order to avoid diamond inheritance issues (a class inherits two classes that both inherit from the same class) we had to cut some corners here. we wanted classes that are already Q\-Objects to inherit from \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} but this would create diamond inheritance if \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} was also a Q\-Object and we needed \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} to inherit from \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} as well, which is a Q\-Object. This means that we couldn't make \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} a Q\-Object. Instead, in order to use some signal/slot functionality that can only be used in Q\-Objects we provide some \#defines and commented code in this file that need to be copied into any class that wants to be an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}.
+
+To implement an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}, do as follows\-:
+\begin{DoxyItemize}
+\item Inherit from \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} and \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} or something that inherits from \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled}.
+\item Put A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N into the public area of your \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s .h file.
+\item Put A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N into the constructor of your \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}.
+\item Put A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E at the end of the post\-Deserialize() function of your \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}.
+\item Copy the following lines of code into the private area of your \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s .h file\-: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{bool} hostIdBeingEdited\_;
+\textcolor{keyword}{private} slots:
+\textcolor{keywordtype}{void} changeHostId()\{\textcolor{keywordflow}{if}(hostIdBeingEdited\_) \textcolor{keywordflow}{return};hostIdBeingEdited\_ = \textcolor{keyword}{true};propertyContainer\_->
+      setPropertyValue(\textcolor{stringliteral}{"HostId"},QUuid::createUuid());hostIdBeingEdited\_ = \textcolor{keyword}{false};\};
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+These copied lines take care of automatically changing the Host\-Id whenever the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s tree is edited and make the data in its \char`\"{}\-Name\char`\"{} \hyperlink{class_picto_1_1_property}{Property} accessible so that the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} can record it. \begin{DoxyNote}{Note}
+The reason that we didn't put the code that goes into the private area of the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s .h file in a \#define is that the Q\-T preprocessor didn't properly understand it when we did this and it led to runtime errors. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_associate_root}{Associate\-Root}, \hyperlink{class_picto_1_1_associate_element}{Associate\-Element}, \hyperlink{class_picto_1_1_analysis}{Analysis}, \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data}, \hyperlink{class_picto_1_1_experiment}{Experiment} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 81 of file Associate\-Root\-Host.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_associate_root_host_a4663f4bd52ae67e5bdfbe46b3e7d1d9a}{\index{Picto\-::\-Associate\-Root\-Host@{Picto\-::\-Associate\-Root\-Host}!get\-Host\-Id@{get\-Host\-Id}}
+\index{get\-Host\-Id@{get\-Host\-Id}!Picto::AssociateRootHost@{Picto\-::\-Associate\-Root\-Host}}
+\subsubsection[{get\-Host\-Id}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Uuid Picto\-::\-Associate\-Root\-Host\-::get\-Host\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_associate_root_host_a4663f4bd52ae67e5bdfbe46b3e7d1d9a}
+
+
+Returns this \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s Host\-Id. 
+
+The Host\-Id changes whenever the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host}'s tree is edited and is a Uuid such that each id uniquely identifys this \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} and its current state. \hypertarget{class_picto_1_1_associate_root_host_a1c35bfa484ad0b31256f52634bd85926}{\index{Picto\-::\-Associate\-Root\-Host@{Picto\-::\-Associate\-Root\-Host}!get\-Host\-Id\-Property@{get\-Host\-Id\-Property}}
+\index{get\-Host\-Id\-Property@{get\-Host\-Id\-Property}!Picto::AssociateRootHost@{Picto\-::\-Associate\-Root\-Host}}
+\subsubsection[{get\-Host\-Id\-Property}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Shared\-Pointer$<${\bf Property}$>$ Picto\-::\-Associate\-Root\-Host\-::get\-Host\-Id\-Property (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_associate_root_host_a1c35bfa484ad0b31256f52634bd85926}
+
+
+Returns a pointer to the \hyperlink{class_picto_1_1_property}{Property} containing this object's Host\-Id. 
+
+This is useful in case an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} wants to be updated whenever the Host\-Id changes. \hypertarget{class_picto_1_1_associate_root_host_a856a87a22cfbd947f9fbf9d433338982}{\index{Picto\-::\-Associate\-Root\-Host@{Picto\-::\-Associate\-Root\-Host}!get\-Name\-Property@{get\-Name\-Property}}
+\index{get\-Name\-Property@{get\-Name\-Property}!Picto::AssociateRootHost@{Picto\-::\-Associate\-Root\-Host}}
+\subsubsection[{get\-Name\-Property}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Shared\-Pointer$<${\bf Property}$>$ Picto\-::\-Associate\-Root\-Host\-::get\-Name\-Property (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_associate_root_host_a856a87a22cfbd947f9fbf9d433338982}
+
+
+Returns a pointer to the \hyperlink{class_picto_1_1_property}{Property} containing this object's name. 
+
+This is useful in case an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} wants to be updated whenever this object's name changes. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/\hyperlink{_associate_root_host_8h}{Associate\-Root\-Host.\-h}\item 
+source/common/parameter/Associate\-Root\-Host.\-cpp\end{DoxyCompactItemize}

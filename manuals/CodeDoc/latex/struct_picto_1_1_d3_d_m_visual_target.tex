@@ -1,0 +1,119 @@
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target}{\section{Picto\-:\-:D3\-D\-M\-Visual\-Target Struct Reference}
+\label{struct_picto_1_1_d3_d_m_visual_target}\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+}
+Inheritance diagram for Picto\-:\-:D3\-D\-M\-Visual\-Target\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_picto_1_1_d3_d_m_visual_target}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_picto_1_1_d3_d_m_visual_target_a0a934abd4ff1799a508bfe8fb487e824}{D3\-D\-M\-Visual\-Target} ()
+\item 
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_a52e680b418f2624819ebd14743e79901}{\hyperlink{struct_picto_1_1_d3_d_m_visual_target_a52e680b418f2624819ebd14743e79901}{$\sim$\-D3\-D\-M\-Visual\-Target} ()}\label{struct_picto_1_1_d3_d_m_visual_target_a52e680b418f2624819ebd14743e79901}
+
+\begin{DoxyCompactList}\small\item\em On destruction, release all of the created C\-O\-M interfaces. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_abf3cb9d3cbabc10065d74a601a51b46b}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ \hyperlink{struct_picto_1_1_d3_d_m_visual_target_abf3cb9d3cbabc10065d74a601a51b46b}{generate\-Compositing\-Surface} ()}\label{struct_picto_1_1_d3_d_m_visual_target_abf3cb9d3cbabc10065d74a601a51b46b}
+
+\begin{DoxyCompactList}\small\item\em Return a D3\-D\-M Compositing surface. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_ae88604334f06ccae5f06ce09d4fa5f98}{Q\-String \hyperlink{struct_picto_1_1_d3_d_m_visual_target_ae88604334f06ccae5f06ce09d4fa5f98}{get\-Type\-Name} ()}\label{struct_picto_1_1_d3_d_m_visual_target_ae88604334f06ccae5f06ce09d4fa5f98}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this type of \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface}. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_d3_d_m_visual_target_ac9bf4cffa25642f3ef00c540ea25d8f8}{draw} (Q\-Point location, Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ compositing\-Surface)
+\item 
+void \hyperlink{struct_picto_1_1_d3_d_m_visual_target_a342f15735e17314837c7bddf36ab6e68}{present} ()
+\item 
+void \hyperlink{struct_picto_1_1_d3_d_m_visual_target_a67c0ba5a787502936c6731f0c11cb22d}{draw\-Non\-Experiment\-Text} (Q\-Font font, Q\-Color color, Q\-Rect rect, Qt\-::\-Alignment\-Flag alignment, Q\-String text)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{struct_picto_1_1_d3_d_m_visual_target_a6e51be74cae45b2b854b027613b8b808}{paint\-Event} (Q\-Paint\-Event $\ast$)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 24 of file D3\-D\-M\-Visual\-Target.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_a0a934abd4ff1799a508bfe8fb487e824}{\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}!D3\-D\-M\-Visual\-Target@{D3\-D\-M\-Visual\-Target}}
+\index{D3\-D\-M\-Visual\-Target@{D3\-D\-M\-Visual\-Target}!Picto::D3DMVisualTarget@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+\subsubsection[{D3\-D\-M\-Visual\-Target}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-D3\-D\-M\-Visual\-Target\-::\-D3\-D\-M\-Visual\-Target (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_d3_d_m_visual_target_a0a934abd4ff1799a508bfe8fb487e824}
+The constructor takes care of initializing Direct3\-D Mobile, and setting up everything that will be needed for rendering textured quads. In a traditional Direct3\-D application, we would break this up into multiple functions (inti\-D3\-D\-M, init\-Geomtry, init\-Matrices, etc). Given the simplicity of our setup (textured quads), all of this is combined into a single function. 
+
+Definition at line 237 of file D3\-D\-M\-Visual\-Target.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_ac9bf4cffa25642f3ef00c540ea25d8f8}{\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}!draw@{draw}}
+\index{draw@{draw}!Picto::D3DMVisualTarget@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-D3\-D\-M\-Visual\-Target\-::draw (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{location, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Compositing\-Surface} $>$}]{compositing\-Surface}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_d3_d_m_visual_target_ac9bf4cffa25642f3ef00c540ea25d8f8}
+draw adds the contents of the compositing surface to the list of textured quads to be rendered. Since the lists are emptied every time present is called, draw must be called on each compositing surface every frame 
+
+Definition at line 424 of file D3\-D\-M\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_a67c0ba5a787502936c6731f0c11cb22d}{\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}!draw\-Non\-Experiment\-Text@{draw\-Non\-Experiment\-Text}}
+\index{draw\-Non\-Experiment\-Text@{draw\-Non\-Experiment\-Text}!Picto::D3DMVisualTarget@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+\subsubsection[{draw\-Non\-Experiment\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-D3\-D\-M\-Visual\-Target\-::draw\-Non\-Experiment\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-Font}]{font, }
+\item[{Q\-Color}]{color, }
+\item[{Q\-Rect}]{rect, }
+\item[{Qt\-::\-Alignment\-Flag}]{alignment, }
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_d3_d_m_visual_target_a67c0ba5a787502936c6731f0c11cb22d}
+implement draw\-Non\-Experiment\-Text for \hyperlink{struct_picto_1_1_d3_d_m_visual_target}{D3\-D\-M\-Visual\-Target} 
+
+Definition at line 524 of file D3\-D\-M\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_a6e51be74cae45b2b854b027613b8b808}{\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}!paint\-Event@{paint\-Event}}
+\index{paint\-Event@{paint\-Event}!Picto::D3DMVisualTarget@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+\subsubsection[{paint\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-D3\-D\-M\-Visual\-Target\-::paint\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Paint\-Event $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{struct_picto_1_1_d3_d_m_visual_target_a6e51be74cae45b2b854b027613b8b808}
+I'm not entirely sure how to do a paint event here... 
+
+Definition at line 518 of file D3\-D\-M\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_d3_d_m_visual_target_a342f15735e17314837c7bddf36ab6e68}{\index{Picto\-::\-D3\-D\-M\-Visual\-Target@{Picto\-::\-D3\-D\-M\-Visual\-Target}!present@{present}}
+\index{present@{present}!Picto::D3DMVisualTarget@{Picto\-::\-D3\-D\-M\-Visual\-Target}}
+\subsubsection[{present}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-D3\-D\-M\-Visual\-Target\-::present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_d3_d_m_visual_target_a342f15735e17314837c7bddf36ab6e68}
+present renders all of the textured quads in the current rendering lists, and then clears out the lists. 
+
+Implements \hyperlink{class_picto_1_1_visual_target_a914177dc74348568b08aed7dc88648e8}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 460 of file D3\-D\-M\-Visual\-Target.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/compositor/D3\-D\-M\-Visual\-Target.\-h\item 
+source/director/compositor/D3\-D\-M\-Visual\-Target.\-cpp\end{DoxyCompactItemize}

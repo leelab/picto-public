@@ -1,0 +1,71 @@
+\hypertarget{struct_e_n_g_e_v_e_n_t_command_handler}{\section{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler Struct Reference}
+\label{struct_e_n_g_e_v_e_n_t_command_handler}\index{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler@{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler}}
+}
+
+
+Handles E\-N\-G\-E\-V\-E\-N\-T commands received. N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D.  
+
+
+
+
+{\ttfamily \#include $<$E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_e_n_g_e_v_e_n_t_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_e_n_g_e_v_e_n_t_command_handler_a8b268d0b19b7529dc69d7cb47843d1ae}{Q\-String \hyperlink{struct_e_n_g_e_v_e_n_t_command_handler_a8b268d0b19b7529dc69d7cb47843d1ae}{method} ()}\label{struct_e_n_g_e_v_e_n_t_command_handler_a8b268d0b19b7529dc69d7cb47843d1ae}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_e_n_g_e_v_e_n_t_command_handler_a02efe2d46dbc2354ed79d95dca82848d}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)
+\item 
+\hypertarget{struct_e_n_g_e_v_e_n_t_command_handler_a15adc2c363f1115acdacffe2ca5ce633}{void {\bfseries set\-Panel\-Info} (\hyperlink{class_front_panel_info}{Front\-Panel\-Info} $\ast$p\-Info)}\label{struct_e_n_g_e_v_e_n_t_command_handler_a15adc2c363f1115acdacffe2ca5ce633}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles E\-N\-G\-E\-V\-E\-N\-T commands received. N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. 
+
+This object used to allow the director to push data to the Front\-Panel application. It is no longer used. The front panel is now set up as the communications master handling both setting and polling data. At a more opportune time, this object should probably be deleted and references to it removed from other parts of the application. \begin{DoxyAuthor}{Author}
+Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_e_n_g_e_v_e_n_t_command_handler_a02efe2d46dbc2354ed79d95dca82848d}{\index{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler@{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler}!process\-Command@{process\-Command}}
+\index{process\-Command@{process\-Command}!ENGEVENTCommandHandler@{E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler}}
+\subsubsection[{process\-Command}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Response} $>$ E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler\-::process\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_e_n_g_e_v_e_n_t_command_handler_a02efe2d46dbc2354ed79d95dca82848d}
+The command handler for engine events takes information from the engine, and updates the front panel software. Generally speaking, incoming events will result in some sort of change on the status display (assuming that the status display is on). Given the speed at which events are generated, I am erring on the side of caution when it comes to processing these events. For example, a trial start event does not change the display other than simply resetting the trial counter (otherwise, the display would be a constant stream of trialstart/reward/trialend...).
+
+Most of the panel info functions are self explanatory, but the \char`\"{}last\-Event\char`\"{} deserves some explanation. Last\-Event is the string that will be displayed on the second line of the status display. For the moment, that string will rarely be changed (again trying to keep the display clean). With real experiments, it is likely that the users will use it to display status info. 
+
+Implements \hyperlink{struct_picto_1_1_protocol_command_handler_aeeaa16fe40f10fd55996d74e16e29cad}{Picto\-::\-Protocol\-Command\-Handler}.
+
+
+
+Definition at line 29 of file E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler.\-h\item 
+source/embedded/frontpanel/E\-N\-G\-E\-V\-E\-N\-T\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,275 @@
+\hypertarget{class_picto_1_1_output_element_container}{\section{Picto\-:\-:Output\-Element\-Container Class Reference}
+\label{class_picto_1_1_output_element_container}\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}}
+}
+
+
+A base class for elements that hold \hyperlink{class_picto_1_1_output_element}{Output\-Element} objects.  
+
+
+
+
+{\ttfamily \#include $<$Output\-Element\-Container.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Output\-Element\-Container\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.484210cm]{class_picto_1_1_output_element_container}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_picto_1_1_output_element_container_a60a3e04e9cb48b5c000c34890c87a234}{has\-Editable\-Descendants} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this object can or does have child objects that are editable. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_output_element_container_a6887ffe6ae5faa914cea3887a310e042}{add\-Output\-Elements} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $>$ output\-Element\-Container)
+\begin{DoxyCompactList}\small\item\em Copies the Output\-Elements from the passed in container. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_output_element_container_a7cb29bd7063ce2240fb00208f6c28221}{add\-Output\-Elements} (\hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $\ast$output\-Element\-Container)
+\begin{DoxyCompactList}\small\item\em Copies the Output\-Elements from the passed in container. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_output_element_container_a840f8ffeb644964b6169f2500c44d1f2}{add\-Child\-Output\-Element\-Container} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $>$ child)
+\begin{DoxyCompactList}\small\item\em Adds the input \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} to this one's list of child Output\-Element\-Containers and uses the child's \hyperlink{class_picto_1_1_output_element_container_a6887ffe6ae5faa914cea3887a310e042}{add\-Output\-Elements()} function to add this one's Output\-Elements to it. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_af80a8acdfee1b95ca4cc9306fb27e8fe}{Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_output_element}{Output\-Element} $>$ $>$ \hyperlink{class_picto_1_1_output_element_container_af80a8acdfee1b95ca4cc9306fb27e8fe}{get\-Output\-Element\-List} ()}\label{class_picto_1_1_output_element_container_af80a8acdfee1b95ca4cc9306fb27e8fe}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of all \hyperlink{class_picto_1_1_output_element}{Output\-Element} objects that are in scope for this object. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_output_element_container_aeb790e110381366623cda30e484eba89}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_a557009c1557ac06b07cd77bf8efc57c8}{virtual void \hyperlink{class_picto_1_1_output_element_container_a557009c1557ac06b07cd77bf8efc57c8}{Clear\-Associate\-Children} (Q\-Uuid associate\-Id)}\label{class_picto_1_1_output_element_container_a557009c1557ac06b07cd77bf8efc57c8}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_aae5dda0b9e1a2e2d8f9e182d28099020}{State\-Machine\-Element\-::\-Clear\-Associate\-Children()} to remove Associate\-Children with the input associate\-Id from this element's in-\/scope output\-Elements\-\_\- list as well. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_ac1895811ea69565d51c1bdd87e05aaa1}{void {\bfseries add\-Output\-Elements} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $>$ output\-Element\-Container)}\label{class_picto_1_1_output_element_container_ac1895811ea69565d51c1bdd87e05aaa1}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a87d298b27888a83b6efb3d2df3f5023e}{void {\bfseries add\-Output\-Elements} (\hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $\ast$output\-Element\-Container)}\label{class_picto_1_1_output_element_container_a87d298b27888a83b6efb3d2df3f5023e}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_ad8d546b050c1884da1b5c5766717d9e2}{void {\bfseries add\-Output\-Element} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_output_element}{Output\-Element} $>$ output\-Element)}\label{class_picto_1_1_output_element_container_ad8d546b050c1884da1b5c5766717d9e2}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a052232ddc52da2b1dc1d8354cbc2bfeb}{void {\bfseries add\-Child\-Output\-Element\-Container} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} $>$ child)}\label{class_picto_1_1_output_element_container_a052232ddc52da2b1dc1d8354cbc2bfeb}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a9035b48d3a5ec06e4f0accc946c57522}{Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_output_element}{Output\-Element} $>$ $>$ {\bfseries get\-Output\-Element\-List} ()}\label{class_picto_1_1_output_element_container_a9035b48d3a5ec06e4f0accc946c57522}
+
+\item 
+bool \hyperlink{class_picto_1_1_output_element_container_a81567510167f97bacac19cca8db7b99d}{init\-Output\-Element\-List} ()
+\begin{DoxyCompactList}\small\item\em Initializes scripting for this and all child Output\-Element\-Containers. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_a69bc07caf15d7835273e19f0ef6a9bbc}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_output_element_container_a69bc07caf15d7835273e19f0ef6a9bbc}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_output_element_container_a0aa8ba5d35859292b2f3365f99c242c3}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_a19905a70272fa330d195ed51bfca1a16}{virtual bool \hyperlink{class_picto_1_1_output_element_container_a19905a70272fa330d195ed51bfca1a16}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_output_element_container_a19905a70272fa330d195ed51bfca1a16}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_output_element_container_a7f6fed29af1fe1a08883109f7f685d52}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_a9117dfc9802f1e19e25f75d7f5ef56a1}{virtual bool \hyperlink{class_picto_1_1_output_element_container_a9117dfc9802f1e19e25f75d7f5ef56a1}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_output_element_container_a9117dfc9802f1e19e25f75d7f5ef56a1}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_output_element_container_a624ba445cfba00b2f3832bc01d460dc0}{virtual void {\bfseries Output\-Element\-Container\-Was\-Reinitialized} ()}\label{class_picto_1_1_output_element_container_a624ba445cfba00b2f3832bc01d460dc0}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a06053bf2033cc326dca71c1c36065dca}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries visual\-Element\-Factory\-\_\-}}\label{class_picto_1_1_output_element_container_a06053bf2033cc326dca71c1c36065dca}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_ac7af3fe4134fdc30ee96ddb8c624e368}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries audio\-Element\-Factory\-\_\-}}\label{class_picto_1_1_output_element_container_ac7af3fe4134fdc30ee96ddb8c624e368}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_aa02bedb7261fba8620d923ab0113ae3b}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries output\-Signal\-Factory\-\_\-}}\label{class_picto_1_1_output_element_container_aa02bedb7261fba8620d923ab0113ae3b}
+
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a056dd5f88cea3cdf95e919b0e7d228b1}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries script\-Function\-Factory\-\_\-}}\label{class_picto_1_1_output_element_container_a056dd5f88cea3cdf95e919b0e7d228b1}
+
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_output_element_container_a1c7ff6e9d726da3de4233947b1c049ff}{class \hyperlink{class_picto_1_1_output_element_container_a1c7ff6e9d726da3de4233947b1c049ff}{Output\-Element\-Container}}\label{class_picto_1_1_output_element_container_a1c7ff6e9d726da3de4233947b1c049ff}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} and adds lots of \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} objects to it for creating all of the various types of Output\-Elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A base class for elements that hold \hyperlink{class_picto_1_1_output_element}{Output\-Element} objects. 
+
+A container for storing Visual Elements.
+
+This class contains the \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} objects for creating Output\-Elements and manages their scoping issues so that descendant classes can easily access all in-\/scope Output\-Elements from a single list. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file Output\-Element\-Container.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_output_element_container_a840f8ffeb644964b6169f2500c44d1f2}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!add\-Child\-Output\-Element\-Container@{add\-Child\-Output\-Element\-Container}}
+\index{add\-Child\-Output\-Element\-Container@{add\-Child\-Output\-Element\-Container}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{add\-Child\-Output\-Element\-Container}]{\setlength{\rightskip}{0pt plus 5cm}void Output\-Element\-Container\-::add\-Child\-Output\-Element\-Container (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Output\-Element\-Container} $>$}]{child}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_output_element_container_a840f8ffeb644964b6169f2500c44d1f2}
+
+
+Adds the input \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container} to this one's list of child Output\-Element\-Containers and uses the child's \hyperlink{class_picto_1_1_output_element_container_a6887ffe6ae5faa914cea3887a310e042}{add\-Output\-Elements()} function to add this one's Output\-Elements to it. 
+
+We need to store child Output\-Element\-Containers so that whenever a new \hyperlink{class_picto_1_1_output_element}{Output\-Element} is added to this container, it can be added automatically to child Output\-Element\-Containers as well. 
+
+Definition at line 130 of file Output\-Element\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_output_element_container_a6887ffe6ae5faa914cea3887a310e042}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!add\-Output\-Elements@{add\-Output\-Elements}}
+\index{add\-Output\-Elements@{add\-Output\-Elements}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{add\-Output\-Elements}]{\setlength{\rightskip}{0pt plus 5cm}void Output\-Element\-Container\-::add\-Output\-Elements (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Output\-Element\-Container} $>$}]{output\-Element\-Container}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_output_element_container_a6887ffe6ae5faa914cea3887a310e042}
+
+
+Copies the Output\-Elements from the passed in container. 
+
+This is used when adding an child element to a parent \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container}. By passing in the parent \hyperlink{class_picto_1_1_output_element}{Output\-Element} container, we now have access to all of the parent's Output\-Elements. This allows us to have Output\-Elements with \hyperlink{namespace_picto}{Picto} scope. 
+
+Definition at line 104 of file Output\-Element\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_output_element_container_a7cb29bd7063ce2240fb00208f6c28221}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!add\-Output\-Elements@{add\-Output\-Elements}}
+\index{add\-Output\-Elements@{add\-Output\-Elements}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{add\-Output\-Elements}]{\setlength{\rightskip}{0pt plus 5cm}void Output\-Element\-Container\-::add\-Output\-Elements (
+\begin{DoxyParamCaption}
+\item[{{\bf Output\-Element\-Container} $\ast$}]{output\-Element\-Container}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_output_element_container_a7cb29bd7063ce2240fb00208f6c28221}
+
+
+Copies the Output\-Elements from the passed in container. 
+
+This is used when adding an child element to a parent \hyperlink{class_picto_1_1_output_element_container}{Output\-Element\-Container}. By passing in the parent \hyperlink{class_picto_1_1_output_element}{Output\-Element} container, we now have access to all of the parent's Output\-Elements. This allows us to have Output\-Elements with \hyperlink{namespace_picto}{Picto} scope. 
+
+Definition at line 116 of file Output\-Element\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_output_element_container_aeb790e110381366623cda30e484eba89}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Output\-Element\-Container\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_output_element_container_aeb790e110381366623cda30e484eba89}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_a71bb8021124ed8ce64e498e767b69e1d}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_state_a852150ca9027d53252cd0cefb04f3c1d}{Picto\-::\-State}, \hyperlink{class_picto_1_1_state_machine_aaa9075f394c70230044f2051c6d04c38}{Picto\-::\-State\-Machine}, and \hyperlink{class_picto_1_1_pause_point_ae574eb10c179e20038dad24dbc2bbc75}{Picto\-::\-Pause\-Point}.
+
+
+
+Definition at line 43 of file Output\-Element\-Container.\-h.
+
+\hypertarget{class_picto_1_1_output_element_container_a60a3e04e9cb48b5c000c34890c87a234}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!has\-Editable\-Descendants@{has\-Editable\-Descendants}}
+\index{has\-Editable\-Descendants@{has\-Editable\-Descendants}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{has\-Editable\-Descendants}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Output\-Element\-Container\-::has\-Editable\-Descendants (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_output_element_container_a60a3e04e9cb48b5c000c34890c87a234}
+
+
+Returns true if this object can or does have child objects that are editable. 
+
+This is useful, for example, so that the \hyperlink{class_designer}{Designer} knows if this object should be opened up when the user double clicks on it or if there's nothing inside that can be changed so it should not be opened. 
+
+Reimplemented from \hyperlink{class_picto_1_1_result_container_af44cb41e834b9975f4a2d5e94609092c}{Picto\-::\-Result\-Container}.
+
+
+
+Definition at line 37 of file Output\-Element\-Container.\-h.
+
+\hypertarget{class_picto_1_1_output_element_container_a81567510167f97bacac19cca8db7b99d}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!init\-Output\-Element\-List@{init\-Output\-Element\-List}}
+\index{init\-Output\-Element\-List@{init\-Output\-Element\-List}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{init\-Output\-Element\-List}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Output\-Element\-Container\-::init\-Output\-Element\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_output_element_container_a81567510167f97bacac19cca8db7b99d}
+
+
+Initializes scripting for this and all child Output\-Element\-Containers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enable\-Debugging} & Enables debugging for this object. Debugging will be triggered if there is a script exception or a \char`\"{}debugger;\char`\"{} line is input into the script. returns false if there was an initialization error. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_picto_1_1_output_element_container_a0aa8ba5d35859292b2f3365f99c242c3}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Output\-Element\-Container\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_output_element_container_a0aa8ba5d35859292b2f3365f99c242c3}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ac71e3f57e16c8be8dc4d6900c836948f}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_state_a8e789d2395df4d047a278f3c09716468}{Picto\-::\-State}, \hyperlink{class_picto_1_1_pause_point_ad0934a59b009d24126005cab68edb641}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_state_machine_a3b28ab6e5310ea16c2dbb19d6e071f80}{Picto\-::\-State\-Machine}, and \hyperlink{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}{Picto\-::\-Machine\-Container}.
+
+
+
+Definition at line 170 of file Output\-Element\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_output_element_container_a7f6fed29af1fe1a08883109f7f685d52}{\index{Picto\-::\-Output\-Element\-Container@{Picto\-::\-Output\-Element\-Container}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::OutputElementContainer@{Picto\-::\-Output\-Element\-Container}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Output\-Element\-Container\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_output_element_container_a7f6fed29af1fe1a08883109f7f685d52}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ac71e3f57e16c8be8dc4d6900c836948f}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_state_a8e789d2395df4d047a278f3c09716468}{Picto\-::\-State}, \hyperlink{class_picto_1_1_pause_point_ad0934a59b009d24126005cab68edb641}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_state_machine_a3b28ab6e5310ea16c2dbb19d6e071f80}{Picto\-::\-State\-Machine}, and \hyperlink{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}{Picto\-::\-Machine\-Container}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Output\-Element\-Container.\-h\item 
+source/common/statemachine/Visual\-Element\-Container.\-h\item 
+source/common/statemachine/Output\-Element\-Container.\-cpp\end{DoxyCompactItemize}

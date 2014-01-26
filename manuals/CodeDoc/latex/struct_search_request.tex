@@ -1,0 +1,138 @@
+\hypertarget{struct_search_request}{\section{Search\-Request Struct Reference}
+\label{struct_search_request}\index{Search\-Request@{Search\-Request}}
+}
+
+
+Defines a request for a search.  
+
+
+
+
+{\ttfamily \#include $<$Search\-Request.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{struct_search_request_a9cbf0fa4db86fccb45d34cc7d254dd53}{Search\-Group} \{ \\*
+{\bfseries I\-N\-V\-A\-L\-I\-D\-\_\-\-G\-R\-O\-U\-P} = 0x01, 
+{\bfseries E\-X\-P\-E\-R\-I\-M\-E\-N\-T} = 0x02, 
+{\bfseries A\-C\-T\-I\-V\-E\-\_\-\-A\-N\-A\-L\-Y\-S\-E\-S} = 0x04, 
+{\bfseries E\-X\-P\-\_\-\-A\-N\-D\-\_\-\-A\-C\-T\-I\-V\-E\-\_\-\-A\-N\-A\-L\-Y\-S\-E\-S} = 0x06, 
+\\*
+{\bfseries I\-N\-A\-C\-T\-I\-V\-E\-\_\-\-A\-N\-A\-L\-Y\-S\-E\-S} = 0x08, 
+{\bfseries A\-L\-L\-\_\-\-A\-N\-A\-L\-Y\-S\-E\-S} = 0x0\-C, 
+{\bfseries E\-V\-E\-R\-Y\-T\-H\-I\-N\-G} = 0x0\-E
+ \}
+\begin{DoxyCompactList}\small\item\em The group of elements to search, ie. Experimental elements, Active Analysis elements, Both, Inactive Analysis elements, etc. \end{DoxyCompactList}\item 
+enum \hyperlink{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}{Search\-Type} \{ {\bfseries I\-N\-V\-A\-L\-I\-D\-\_\-\-T\-Y\-P\-E} = 0x10, 
+{\bfseries S\-C\-R\-I\-P\-T} =0x20, 
+{\bfseries S\-T\-R\-I\-N\-G} =0x40, 
+{\bfseries E\-X\-I\-S\-T\-S} =0x80
+ \}
+\begin{DoxyCompactList}\small\item\em The type of search to perform. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_search_request_a501416cff8d8a32b39d6bde48b8a65b5}{Search\-Request} (\hyperlink{struct_search_request_a9cbf0fa4db86fccb45d34cc7d254dd53}{Search\-Group} s\-Group, \hyperlink{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}{Search\-Type} s\-Type, bool en=true, Q\-String search\-Query=Q\-String(), bool c\-Sensitive=false)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{struct_search_request}{Search\-Request} object. \end{DoxyCompactList}\item 
+\hypertarget{struct_search_request_afdd399870eb853d06f85eaa06d66b589}{int \hyperlink{struct_search_request_afdd399870eb853d06f85eaa06d66b589}{get\-Group\-Type\-Index} ()}\label{struct_search_request_afdd399870eb853d06f85eaa06d66b589}
+
+\begin{DoxyCompactList}\small\item\em This convenience function returns a unique index for every combination of group and type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_search_request_a903b8222a6552167bbd2027386102043}{static int \hyperlink{struct_search_request_a903b8222a6552167bbd2027386102043}{get\-Group\-Type\-Index} (\hyperlink{struct_search_request_a9cbf0fa4db86fccb45d34cc7d254dd53}{Search\-Group} g, \hyperlink{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}{Search\-Type} t)}\label{struct_search_request_a903b8222a6552167bbd2027386102043}
+
+\begin{DoxyCompactList}\small\item\em This convenience function can be used to calculate a group type index based on input Search\-Group / Search\-Type values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_search_request_aca633ba315d9c6c2c635c2b1e8845390}{Q\-String \hyperlink{struct_search_request_aca633ba315d9c6c2c635c2b1e8845390}{query}}\label{struct_search_request_aca633ba315d9c6c2c635c2b1e8845390}
+
+\begin{DoxyCompactList}\small\item\em The current search query string, for the case of Search\-Type\-::\-String. \end{DoxyCompactList}\item 
+\hypertarget{struct_search_request_af1011ddf957c3617a37d47d08c171a9a}{\hyperlink{struct_search_request_a9cbf0fa4db86fccb45d34cc7d254dd53}{Search\-Group} \hyperlink{struct_search_request_af1011ddf957c3617a37d47d08c171a9a}{group}}\label{struct_search_request_af1011ddf957c3617a37d47d08c171a9a}
+
+\begin{DoxyCompactList}\small\item\em The Search\-Group to search. \end{DoxyCompactList}\item 
+\hypertarget{struct_search_request_a40c275baf144a747bc660a22ba9713cf}{\hyperlink{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}{Search\-Type} \hyperlink{struct_search_request_a40c275baf144a747bc660a22ba9713cf}{type}}\label{struct_search_request_a40c275baf144a747bc660a22ba9713cf}
+
+\begin{DoxyCompactList}\small\item\em The Search\-Type to use for this search. \end{DoxyCompactList}\item 
+\hypertarget{struct_search_request_a62864a7f29e2878ed9c87dc063dbb982}{bool \hyperlink{struct_search_request_a62864a7f29e2878ed9c87dc063dbb982}{case\-Sensitive}}\label{struct_search_request_a62864a7f29e2878ed9c87dc063dbb982}
+
+\begin{DoxyCompactList}\small\item\em In the case of Search\-Type\-::\-String, this is whether the search should be case sensitive. \end{DoxyCompactList}\item 
+\hypertarget{struct_search_request_a7cc91f29c41992c02bb1b46a9d4a0cc0}{bool \hyperlink{struct_search_request_a7cc91f29c41992c02bb1b46a9d4a0cc0}{enabled}}\label{struct_search_request_a7cc91f29c41992c02bb1b46a9d4a0cc0}
+
+\begin{DoxyCompactList}\small\item\em If set to false, the current search should be disabled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Defines a request for a search. 
+
+Different types of search can be defined. We can look for query strings, the existance of scripts, or the existance of elements of a certain type. We can also set what type of elements should be searched, Experimental, Active Analysis, Inactive Analysis, etc. Other parameters that can be set are case sensitivity for query string searches and an enable parameter that can be used to disable or enable a particular search query. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file Search\-Request.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}{\index{Search\-Request@{Search\-Request}!Search\-Type@{Search\-Type}}
+\index{Search\-Type@{Search\-Type}!SearchRequest@{Search\-Request}}
+\subsubsection[{Search\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Search\-Request\-::\-Search\-Type}}}\label{struct_search_request_a715ada4359cbb4eacc24e02015445dc7}
+
+
+The type of search to perform. 
+
+
+\begin{DoxyItemize}
+\item S\-C\-R\-I\-P\-T -\/ Search for existance of scripts in of the current Search\-Group type.
+\item S\-T\-R\-I\-N\-G -\/ Search for a matching text string in the current Search\-Group type.
+\item E\-X\-I\-S\-T\-S -\/ Search for the the simple existance of something in the current Search\-Group type. 
+\end{DoxyItemize}
+
+Definition at line 22 of file Search\-Request.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_search_request_a501416cff8d8a32b39d6bde48b8a65b5}{\index{Search\-Request@{Search\-Request}!Search\-Request@{Search\-Request}}
+\index{Search\-Request@{Search\-Request}!SearchRequest@{Search\-Request}}
+\subsubsection[{Search\-Request}]{\setlength{\rightskip}{0pt plus 5cm}Search\-Request\-::\-Search\-Request (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Group}}]{s\-Group, }
+\item[{{\bf Search\-Type}}]{s\-Type, }
+\item[{bool}]{en = {\ttfamily true}, }
+\item[{Q\-String}]{search\-Query = {\ttfamily QString()}, }
+\item[{bool}]{c\-Sensitive = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{struct_search_request_a501416cff8d8a32b39d6bde48b8a65b5}
+
+
+Constructs a \hyperlink{struct_search_request}{Search\-Request} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\-Group} & The Search\-Group to search. \\
+\hline
+{\em s\-Type} & The Search\-Type to use for this search. \\
+\hline
+{\em en} & The Search is currently enabled. \\
+\hline
+{\em search\-Query} & In the case of Search\-Type\-::\-String, this is the search query string. \\
+\hline
+{\em c\-Sensitive} & In the case of Search\-Type\-::\-String, this is whether the search should be case sensitive. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 32 of file Search\-Request.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Search\-Request.\-h\end{DoxyCompactItemize}

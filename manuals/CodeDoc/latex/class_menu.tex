@@ -1,0 +1,106 @@
+\hypertarget{class_menu}{\section{Menu Class Reference}
+\label{class_menu}\index{Menu@{Menu}}
+}
+
+
+The top level object for the front panel that creates all operable Display\-Modes and connects them to the \hyperlink{class_phidgets}{Phidgets} interface.  
+
+
+
+
+{\ttfamily \#include $<$menu.\-h$>$}
+
+Inheritance diagram for Menu\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_menu}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_menu_a3a8a0e8b13f44978f239e280d78b38bd}{user\-Input\-Slot} (int type)
+\begin{DoxyCompactList}\small\item\em Accepts user input from the phidgets interface and routes it to the active \hyperlink{class_display_mode}{Display\-Mode} or appropriate command. \end{DoxyCompactList}\item 
+\hypertarget{class_menu_a83b4027ae502520a6c94891eb2052d02}{void \hyperlink{class_menu_a83b4027ae502520a6c94891eb2052d02}{about\-To\-Quit} ()}\label{class_menu_a83b4027ae502520a6c94891eb2052d02}
+
+\begin{DoxyCompactList}\small\item\em Deinitializes this application just before it closes, essentially by turning off the L\-C\-D display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_menu_ae31aac661b1be50022bb6ef105330573}{void \hyperlink{class_menu_ae31aac661b1be50022bb6ef105330573}{update\-L\-C\-D} (int line, Q\-String text)}\label{class_menu_ae31aac661b1be50022bb6ef105330573}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the output line of the L\-C\-D should be set to the output text where the top line is 1 and the bottom line is 2. \end{DoxyCompactList}\item 
+\hypertarget{class_menu_aa35b1ddd8bd823d70262d8c9d6357dc5}{void \hyperlink{class_menu_aa35b1ddd8bd823d70262d8c9d6357dc5}{toggle\-Backlight} ()}\label{class_menu_aa35b1ddd8bd823d70262d8c9d6357dc5}
+
+\begin{DoxyCompactList}\small\item\em Emitted when L\-C\-D backlight's On/\-Off state should be toggled. \end{DoxyCompactList}\item 
+\hypertarget{class_menu_a1b94ca8578185fc490c0e8bba50305f2}{void \hyperlink{class_menu_a1b94ca8578185fc490c0e8bba50305f2}{turn\-On\-Backlight} ()}\label{class_menu_a1b94ca8578185fc490c0e8bba50305f2}
+
+\begin{DoxyCompactList}\small\item\em Emitted when L\-C\-D's backlight should be turned On. \end{DoxyCompactList}\item 
+\hypertarget{class_menu_a6bb95c088d59c52597a40c0d941ea575}{void \hyperlink{class_menu_a6bb95c088d59c52597a40c0d941ea575}{turn\-Off\-Backlight} ()}\label{class_menu_a6bb95c088d59c52597a40c0d941ea575}
+
+\begin{DoxyCompactList}\small\item\em Emitted when L\-C\-D's backlight should be turned Off. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_menu_aa515edd7f33010c5f9c42a693c79dcc6}{Menu} (\hyperlink{class_front_panel_info}{Front\-Panel\-Info} $\ast$panel\-Info)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_menu}{Menu} object, taking in a panel\-Info object that provides access to the Socket connecting to the \hyperlink{class_director}{Director} application. \end{DoxyCompactList}\item 
+\hypertarget{class_menu_aebc90f39203524becf5ad750269d5d82}{void \hyperlink{class_menu_aebc90f39203524becf5ad750269d5d82}{init\-Menu} ()}\label{class_menu_aebc90f39203524becf5ad750269d5d82}
+
+\begin{DoxyCompactList}\small\item\em Initializes this object by creating all \hyperlink{class_display_mode}{Display\-Mode} objects, turning on the L\-C\-D backlight and setting the active mode to \hyperlink{class_status_mode}{Status\-Mode}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The top level object for the front panel that creates all operable Display\-Modes and connects them to the \hyperlink{class_phidgets}{Phidgets} interface. 
+
+This is the top level object for the Front\-Panel Application. It creates all of the \hyperlink{class_display_mode}{Display\-Mode} objects that can handle user interaction in this application and handles the process of switching between these modes. It also handles things like a set \hyperlink{class_display_mode}{Display\-Mode} timeout after which if the user hasn't done anything, operation returns to the default \hyperlink{class_status_mode}{Status\-Mode} in addition to other minor housekeeping activities. If you are trying to understand the operation of the Front\-Panel Application. This is the place to start. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file menu.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_menu_aa515edd7f33010c5f9c42a693c79dcc6}{\index{Menu@{Menu}!Menu@{Menu}}
+\index{Menu@{Menu}!Menu@{Menu}}
+\subsubsection[{Menu}]{\setlength{\rightskip}{0pt plus 5cm}Menu\-::\-Menu (
+\begin{DoxyParamCaption}
+\item[{{\bf Front\-Panel\-Info} $\ast$}]{panel\-Info}
+\end{DoxyParamCaption}
+)}}\label{class_menu_aa515edd7f33010c5f9c42a693c79dcc6}
+
+
+Constructs a new \hyperlink{class_menu}{Menu} object, taking in a panel\-Info object that provides access to the Socket connecting to the \hyperlink{class_director}{Director} application. 
+
+Initializes various objects within the \hyperlink{class_menu}{Menu} object. This includes an activity\-Timer that allows a limited amount of time without user interaction before any non-\/status Display\-Modes are aborted and the active \hyperlink{class_display_mode}{Display\-Mode} returns to the \hyperlink{class_status_mode}{Status\-Mode}. The \hyperlink{class_director_interface}{Director\-Interface} is also set up here to use the \hyperlink{class_director}{Director} Socket from the input panel\-Info to control all communication with the director. connection\-Timer\-\_\- no longer has any significant effect and should probably be removed at some point. 
+
+Definition at line 27 of file menu.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_menu_a3a8a0e8b13f44978f239e280d78b38bd}{\index{Menu@{Menu}!user\-Input\-Slot@{user\-Input\-Slot}}
+\index{user\-Input\-Slot@{user\-Input\-Slot}!Menu@{Menu}}
+\subsubsection[{user\-Input\-Slot}]{\setlength{\rightskip}{0pt plus 5cm}void Menu\-::user\-Input\-Slot (
+\begin{DoxyParamCaption}
+\item[{int}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_menu_a3a8a0e8b13f44978f239e280d78b38bd}
+
+
+Accepts user input from the phidgets interface and routes it to the active \hyperlink{class_display_mode}{Display\-Mode} or appropriate command. 
+
+User input is handled differently depending on the current mode (eg in menu mode, rotating the knob changes the menu selection, while in \hyperlink{class_reward_dur_mode}{Reward\-Dur\-Mode} modes, it changes the reward duration.) Reward and Flush buttons on the other hand always have the same effect of starting a reward or starting/stopping a flush regardless of the current \hyperlink{class_display_mode}{Display\-Mode}. This function routes all of this user inputs accordingly. 
+
+Definition at line 70 of file menu.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/menu.\-h\item 
+source/embedded/frontpanel/menu.\-cpp\end{DoxyCompactItemize}

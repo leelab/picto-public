@@ -1,0 +1,86 @@
+\hypertarget{class_picto_1_1_compare_to_val_expression}{\section{Picto\-:\-:Compare\-To\-Val\-Expression Class Reference}
+\label{class_picto_1_1_compare_to_val_expression}\index{Picto\-::\-Compare\-To\-Val\-Expression@{Picto\-::\-Compare\-To\-Val\-Expression}}
+}
+
+
+A predicate expression involves a predicate and 2 values.  
+
+
+
+
+{\ttfamily \#include $<$Compare\-To\-Val\-Expression.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Compare\-To\-Val\-Expression\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_compare_to_val_expression}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_compare_to_val_expression_a693f9bbcd231e30e96def7aeea7c6d8b}{{\bfseries Compare\-To\-Val\-Expression} (Q\-String predicate\-Name)}\label{class_picto_1_1_compare_to_val_expression_a693f9bbcd231e30e96def7aeea7c6d8b}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_compare_to_val_expression_ad4e1131801a171c1fd8b366b5c11078f}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_compare_to_val_expression_ad4e1131801a171c1fd8b366b5c11078f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_compare_to_val_expression_a3071487a97a15b80483e5b3d8633a9df}{post\-Serialize} ()
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a predicate expression. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_compare_to_val_expression_a07786067a55a101d71142d01c7ddef7f}{virtual bool \hyperlink{class_picto_1_1_compare_to_val_expression_a07786067a55a101d71142d01c7ddef7f}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_compare_to_val_expression_a07786067a55a101d71142d01c7ddef7f}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A predicate expression involves a predicate and 2 values. 
+
+A \hyperlink{class_picto_1_1_compare_to_val_expression}{Compare\-To\-Val\-Expression} gets evaluated to a boolean value. It should be noted that the predicates and predicate expressions default to false. For example, if you tried to evaluate a predicate expression without having first set the left hand side value, it will automatically return false (as opposed to returning an error flag) 
+
+Definition at line 23 of file Compare\-To\-Val\-Expression.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_compare_to_val_expression_a3071487a97a15b80483e5b3d8633a9df}{\index{Picto\-::\-Compare\-To\-Val\-Expression@{Picto\-::\-Compare\-To\-Val\-Expression}!post\-Serialize@{post\-Serialize}}
+\index{post\-Serialize@{post\-Serialize}!Picto::CompareToValExpression@{Picto\-::\-Compare\-To\-Val\-Expression}}
+\subsubsection[{post\-Serialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Compare\-To\-Val\-Expression\-::post\-Serialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_compare_to_val_expression_a3071487a97a15b80483e5b3d8633a9df}
+
+
+Converts X\-M\-L into a predicate expression. 
+
+Converts a predicate expression into X\-M\-L
+
+This takes the current predicate expression and turns it into an X\-M\-L fragment.
+
+S\-A\-M\-P\-L\-E $<$\-Expression$>$ $<$\-Parameter$>$Trial Number$<$/\-Parameter$>$ $<$\-Comparison$>$Greater than$<$/\-Comparison$>$ 
+
+100
+
+$<$/\-Expression$>$
+
+This takes a predicate expression in unknown state and modifies it to match the X\-M\-L fragment currently being read. The function assumes that the xml stream reader is pointing to an $<$\-Expression$>$ tag upon entry, and returns with the reader pointing to an $<$/\-Expression$>$ 
+
+Reimplemented from \hyperlink{class_picto_1_1_predicate_expression_a5457cc58cb7020d12c304ec1281ebffc}{Picto\-::\-Predicate\-Expression}.
+
+
+
+Definition at line 23 of file Compare\-To\-Val\-Expression.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Compare\-To\-Val\-Expression.\-h\item 
+source/common/statemachine/Compare\-To\-Val\-Expression.\-cpp\end{DoxyCompactItemize}

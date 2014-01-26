@@ -1,0 +1,719 @@
+\hypertarget{class_picto_1_1_property}{\section{Picto\-:\-:Property Class Reference}
+\label{class_picto_1_1_property}\index{Picto\-::\-Property@{Picto\-::\-Property}}
+}
+
+
+Describes the property of a \hyperlink{class_picto_1_1_data_store}{Data\-Store}.  
+
+
+
+
+{\ttfamily \#include $<$Property.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Property\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.786070cm]{class_picto_1_1_property}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_afafa5da20aab9d456225166001427bc4}{void \hyperlink{class_picto_1_1_property_afafa5da20aab9d456225166001427bc4}{set\-Init\-Value} (Q\-Variant \-\_\-value)}\label{class_picto_1_1_property_afafa5da20aab9d456225166001427bc4}
+
+\begin{DoxyCompactList}\small\item\em Sets the value of the init\-Value to the input \-\_\-value. If \hyperlink{class_picto_1_1_property_a3f7c0e0d81e687fccec996072d83418f}{enable\-Init\-Run\-Value\-Sync()} was used to enable init-\/$>$run\-Value syncing, the run\-Value is set as well. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}{set\-Value} (Q\-Variant \-\_\-value)
+\begin{DoxyCompactList}\small\item\em Sets the input value to the appropriate save\-Value, init\-Value and/or run\-Value according to the current run\-Mode and Init\-Run\-Value\-Sync state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_a2139fa411763c70319f66099158e22ed}{void \hyperlink{class_picto_1_1_property_a2139fa411763c70319f66099158e22ed}{init\-Value\-Changed} (\hyperlink{class_picto_1_1_property}{Property} $\ast$changed\-Prop, Q\-Variant new\-Init\-Value)}\label{class_picto_1_1_property_a2139fa411763c70319f66099158e22ed}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever this \hyperlink{class_picto_1_1_property}{Property}'s init\-Value changes. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_afd9c8c1109c94b6817f962291806da38}{void \hyperlink{class_picto_1_1_property_afd9c8c1109c94b6817f962291806da38}{value\-Changed} (\hyperlink{class_picto_1_1_property}{Property} $\ast$changed\-Prop, Q\-Variant new\-Value)}\label{class_picto_1_1_property_afd9c8c1109c94b6817f962291806da38}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever this \hyperlink{class_picto_1_1_property}{Property}'s run\-Value changes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_picto_1_1_property_a0b2715a51a50a94a0c1447597ecd00dd}{type} ()
+\begin{DoxyCompactList}\small\item\em Returns the type of this \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_property_ade246730c24535192f5c0376b85e6581}{get\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_ac70060568119a4c00e23c03a0bc81f41}{set\-Attribute} (Q\-String \-\_\-attribute\-Name, Q\-Variant \-\_\-attribute\-Value)
+\begin{DoxyCompactList}\small\item\em Sets the input \-\_\-attribute\-Name to the input \-\_\-attribute\-Value. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{class_picto_1_1_property_aab81c42dffb16e8729aa4ba98694c944}{attribute\-Value} (Q\-String \-\_\-attribute\-Name) const 
+\item 
+\hypertarget{class_picto_1_1_property_a0114121a1ffd6a3e9e59047dbc3d9948}{Q\-String\-List {\bfseries get\-Attributes} ()}\label{class_picto_1_1_property_a0114121a1ffd6a3e9e59047dbc3d9948}
+
+\item 
+Q\-Variant \hyperlink{class_picto_1_1_property_a13332ce78a9ce11b496d38c13a857dc7}{init\-Value} ()
+\begin{DoxyCompactList}\small\item\em Returns this \hyperlink{class_picto_1_1_property}{Property}'s init\-Value. \end{DoxyCompactList}\item 
+Q\-Variant \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_property}{Property}'s current value as a function of the current run mode. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_property_aa102270174c3620cc62f38dc9b529c89}{enable\-Run\-Mode} (bool enable)
+\begin{DoxyCompactList}\small\item\em Enables/\-Disables run\-Mode for this \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_a3f7c0e0d81e687fccec996072d83418f}{enable\-Init\-Run\-Value\-Sync} (bool enable)
+\begin{DoxyCompactList}\small\item\em When Init\-Run\-Value\-Sync is enabled, changing a \hyperlink{class_picto_1_1_property}{Property}'s init\-Value immediately updates its run\-Value as well, with no need to wait for the \hyperlink{class_picto_1_1_property}{Property} parent to re-\/enter scope. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable} (bool enabled=true)
+\begin{DoxyCompactList}\small\item\em Set this property as changeable during runtime. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_property_acdd6ce7db8943523198af6730aacc9b0}{is\-Runtime\-Enabled} ()
+\begin{DoxyCompactList}\small\item\em Returns whether this \hyperlink{class_picto_1_1_property}{Property} is runtime enabled. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_ad55eb788c4d635b92fa5944c78a1d346}{set\-Visible} (bool visible)
+\begin{DoxyCompactList}\small\item\em Sets whether this \hyperlink{class_picto_1_1_property}{Property} will have an associated widget in G\-U\-I \hyperlink{class_picto_1_1_property}{Property} editors. Default is true. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_property_a05079b688854054f32897067f937a261}{is\-Visible} ()
+\begin{DoxyCompactList}\small\item\em Returns whether this \hyperlink{class_picto_1_1_property}{Property} will have an associated widget in G\-U\-I \hyperlink{class_picto_1_1_property}{Property} editors. Default is true. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_a92f02255ef1c427035b1673d1251c9be}{void \hyperlink{class_picto_1_1_property_a92f02255ef1c427035b1673d1251c9be}{set\-Gui\-Editable} (bool gui\-Editable)}\label{class_picto_1_1_property_a92f02255ef1c427035b1673d1251c9be}
+
+\begin{DoxyCompactList}\small\item\em Sets whether this \hyperlink{class_picto_1_1_property}{Property} will be editable in G\-U\-I property editors or read-\/only. Default is true (editable). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_adeb1e13bb14ed9e05697b0b79cbea0b8}{bool \hyperlink{class_picto_1_1_property_adeb1e13bb14ed9e05697b0b79cbea0b8}{is\-Gui\-Editable} ()}\label{class_picto_1_1_property_adeb1e13bb14ed9e05697b0b79cbea0b8}
+
+\begin{DoxyCompactList}\small\item\em Gets whether this \hyperlink{class_picto_1_1_property}{Property} will be editable in G\-U\-I property editors or read-\/only. Default is true (editable). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_aca8c34b84eb4b8fcfb4011cf0b8fc359}{void \hyperlink{class_picto_1_1_property_aca8c34b84eb4b8fcfb4011cf0b8fc359}{set\-Associate\-Property} (bool is\-Associate)}\label{class_picto_1_1_property_aca8c34b84eb4b8fcfb4011cf0b8fc359}
+
+\begin{DoxyCompactList}\small\item\em Set this to true if this \hyperlink{class_picto_1_1_property}{Property} is the child of an \hyperlink{class_picto_1_1_associate_element}{Associate\-Element}. This is used with read-\/only monitoring for checking whether non-\/experimental scripts attempt to write to experimental Properties at runtime. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_property_ab13f7e111f9d874a8ff00d574d5fa76c}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{Asset\-::serialize\-As\-Xml()} to serializes this \hyperlink{class_picto_1_1_property}{Property} into the input Q\-Xml\-Stream\-Writer. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Asset\-::deserialize\-From\-Xml()} to deserialize this \hyperlink{class_picto_1_1_property}{Property} from the Xml stored in the input Q\-Xml\-Stream\-Reader. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}{init\-Val\-To\-User\-String} ()
+\begin{DoxyCompactList}\small\item\em This is the string that is sent over the network when an init\-Value is changed and its value needs to be sent to a running session. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_ad05cda1e03dbf67d6b44259956120777}{init\-Val\-From\-User\-String} (Q\-String user\-String)
+\begin{DoxyCompactList}\small\item\em Updates the current init\-Value from a string that was output from \hyperlink{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}{init\-Val\-To\-User\-String()}. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{val\-To\-User\-String} ()
+\begin{DoxyCompactList}\small\item\em Converts the current variant run\-Value to a user readable string for serialization purposes. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}{val\-From\-User\-String} (Q\-String user\-String)
+\begin{DoxyCompactList}\small\item\em Updates the current variant run\-Value from a user readable string in the format serialized out from \hyperlink{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{val\-To\-User\-String()}. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_property_aee5beb60f1bc54fbaa2e69745450b476}{identifier} ()
+\begin{DoxyCompactList}\small\item\em Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_property_a81a1fcfb066be63fe887bafd530b959b}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_picto_1_1_property_a9f1c515f9b65afe3da270b00b240ea41}{get\-Asset\-Id} ()
+\begin{DoxyCompactList}\small\item\em Returns this \hyperlink{class_picto_1_1_property}{Property}'s Asset\-Id. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_property_a868534f67ff18012dbec0c922ed2e9a1}{set\-Asset\-Id} (int id)
+\begin{DoxyCompactList}\small\item\em Sets this \hyperlink{class_picto_1_1_property}{Property}'s Asset\-Id. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_aa8cc1b6113b78ef2679adae457dac24d}{static bool \hyperlink{class_picto_1_1_property_aa8cc1b6113b78ef2679adae457dac24d}{encountered\-Obsolete\-Serial\-Syntax} ()}\label{class_picto_1_1_property_aa8cc1b6113b78ef2679adae457dac24d}
+
+\begin{DoxyCompactList}\small\item\em Returns true if a \hyperlink{class_picto_1_1_property}{Property} encountered an Obsolete syntax when it was deserializing itself from X\-M\-L at some point since the last call to \hyperlink{class_picto_1_1_property_a934565d6d21c8600a79ff7d5150a54e2}{clear\-Obsolete\-Serial\-Syntax()}. This is useful for checking whether an automatic syntax upgrade will occur on the next serialization. \end{DoxyCompactList}\item 
+static void \hyperlink{class_picto_1_1_property_a934565d6d21c8600a79ff7d5150a54e2}{clear\-Obsolete\-Serial\-Syntax} ()
+\begin{DoxyCompactList}\small\item\em Resets the had\-Obsolete\-Serial\-Syntax\-\_\- flag to false for a new deserialization. \end{DoxyCompactList}\item 
+static void \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change} ()
+\begin{DoxyCompactList}\small\item\em Start monitoring whether \hyperlink{class_picto_1_1_property}{Property} values are being changed. \end{DoxyCompactList}\item 
+static void \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change} ()
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} except that this function is used to make sure that \hyperlink{class_picto_1_1_analysis}{Analysis} Scripts change only \hyperlink{class_picto_1_1_analysis}{Analysis} and not Experimental \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}{static bool \hyperlink{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}{value\-Was\-Changed} ()}\label{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}
+
+\begin{DoxyCompactList}\small\item\em Returns true if a \hyperlink{class_picto_1_1_property}{Property} value was changed since the last call to \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()}. See \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} for more detail. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_ae384ed764c9cb982d8492376c3f490b7}{static bool \hyperlink{class_picto_1_1_property_ae384ed764c9cb982d8492376c3f490b7}{experimental\-Value\-Was\-Changed} ()}\label{class_picto_1_1_property_ae384ed764c9cb982d8492376c3f490b7}
+
+\begin{DoxyCompactList}\small\item\em Returns true if an Experimental \hyperlink{class_picto_1_1_property}{Property} value was changed since the last call to \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change()}. See \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change()} for more detail. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_aa5eee2c9c28954c9dc430d449eda4689}{static Q\-String \hyperlink{class_picto_1_1_property_aa5eee2c9c28954c9dc430d449eda4689}{changed\-Value\-Name} ()}\label{class_picto_1_1_property_aa5eee2c9c28954c9dc430d449eda4689}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the first \hyperlink{class_picto_1_1_property}{Property} to have its value changed since the last call to \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()}. See \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} for more detail. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_ac40642a7f88c066d229df9e8285e3f49}{static Q\-String \hyperlink{class_picto_1_1_property_ac40642a7f88c066d229df9e8285e3f49}{changed\-Experimental\-Value\-Name} ()}\label{class_picto_1_1_property_ac40642a7f88c066d229df9e8285e3f49}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the first Experimental \hyperlink{class_picto_1_1_property}{Property} to have its value changed since the last call to \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change()}. See \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change()} for more detail. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_property_af3df159ac9f99a9981f6292c518bdcc9}{Property} (int \hyperlink{class_picto_1_1_property_a0b2715a51a50a94a0c1447597ecd00dd}{type}, Q\-String name, Q\-Variant \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value})
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_property}{Property} object. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_property_a53fdd4e0021894ae55854cdcf5277c4a}{variant\-To\-String} (Q\-Variant \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value}) const 
+\begin{DoxyCompactList}\small\item\em Converts the input Q\-Variant value to a string value for various purposes throughout this \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{string\-To\-Variant} (Q\-String string, Q\-String \&error) const 
+\begin{DoxyCompactList}\small\item\em Converts the input Q\-String value to a Q\-Variant value for various purposes throughout this \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_picto_1_1_property_a91505cad6a9848cc849e6cd0bc7641aa}{attribute\-Map\-To\-Variant\-Value} (Q\-Map$<$ Q\-String, Q\-Variant $>$ attr\-Map, Q\-String \&error) const 
+\begin{DoxyCompactList}\small\item\em This is used to upgrade obsolete syntax that stored \hyperlink{class_picto_1_1_property}{Property} value data inside an xml tag's attribute fields during serialization. A map of those attributes is input, and the function should be overriden by child classes to return the appropriate Q\-Variant on the basis of that map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_a7ff968ca40027b2b0500a9260b463e3a}{class {\bfseries Property\-Container}}\label{class_picto_1_1_property_a7ff968ca40027b2b0500a9260b463e3a}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Describes the property of a \hyperlink{class_picto_1_1_data_store}{Data\-Store}. 
+
+All \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s in \hyperlink{namespace_picto}{Picto} must be entirely defined by Properties. They store all of the relevant data to completely reproduce the \hyperlink{class_picto_1_1_data_store}{Data\-Store} given its type. By conforming to this design principle we can store a Design file by serializing only its tree structure and \hyperlink{class_picto_1_1_property}{Property} values and we can save an Experimental Session's complete experimental state by saving all changes to its \hyperlink{class_picto_1_1_property}{Property} values.
+
+An example of typical Properties would be a circle's color, radius, location, visibility, etc. Each \hyperlink{class_picto_1_1_property}{Property} contains a name, a variant value and may include attributes (eg. allowable names for an enum property). Properties may be deserialized from a \hyperlink{namespace_picto}{Picto} X\-M\-L design file using \hyperlink{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}{deserialize\-From\-Xml()}. Their values may also be converted to and from string form using \hyperlink{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{val\-To\-User\-String()} and \hyperlink{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}{val\-From\-User\-String()}. Underlying each \hyperlink{class_picto_1_1_property}{Property} are 3 values. The save\-Value, the init\-Value and the run\-Value. Properties also run in two modes, run mode and design mode. In design mode, all calls to \hyperlink{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}{set\-Value()} write to all three values and calls to \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value()} return the save\-Value. In run mode, calls to \hyperlink{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}{set\-Value()} set the run\-Value and calls to \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value()} return the run\-Value. The init\-Value may also be set by using \hyperlink{class_picto_1_1_property_afafa5da20aab9d456225166001427bc4}{set\-Init\-Value()} and returned from \hyperlink{class_picto_1_1_property_a13332ce78a9ce11b496d38c13a857dc7}{init\-Value()}. By separating these three values in this way, we can act on the same \hyperlink{class_picto_1_1_property}{Property} while designing and running an experiment. Changes to values during an experimental run leave the underlying savable design untouched. Init values are also important to keep the \hyperlink{namespace_picto}{Picto} run model intact. An Operator can change init\-Values during an experimental run, but they are only set to the underlying run\-Values on entering a level in the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} where they are accessible (when their parent enters scope). In some unusual cases (ie. The experiment properties of x\-Offset, y\-Offset, etc), run Properties should be settable by the Operator even while the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} is at a level where they are already in scope. For these cases, use enble\-Init\-Run\-Value\-Sync() which causes these values to be copied to one another every time they are written. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 50 of file Property.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_property_af3df159ac9f99a9981f6292c518bdcc9}{\index{Picto\-::\-Property@{Picto\-::\-Property}!Property@{Property}}
+\index{Property@{Property}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{Property}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Property\-::\-Property (
+\begin{DoxyParamCaption}
+\item[{int}]{type, }
+\item[{Q\-String}]{name, }
+\item[{Q\-Variant}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_picto_1_1_property_af3df159ac9f99a9981f6292c518bdcc9}
+
+
+Constructs a new \hyperlink{class_picto_1_1_property}{Property} object. 
+
+The input type is the type of the Q\-Variant value underlying this \hyperlink{class_picto_1_1_property}{Property} (ie. A Q\-Variant\-::type). The input name is the name of this \hyperlink{class_picto_1_1_property}{Property} (ie. \char`\"{}\-Radius\char`\"{}). The input value is a default value for the \hyperlink{class_picto_1_1_property}{Property} which is set as the default save\-Value, init\-Value and run\-Value for the \hyperlink{class_picto_1_1_property}{Property}. 
+
+Definition at line 21 of file Property.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_property_a91505cad6a9848cc849e6cd0bc7641aa}{\index{Picto\-::\-Property@{Picto\-::\-Property}!attribute\-Map\-To\-Variant\-Value@{attribute\-Map\-To\-Variant\-Value}}
+\index{attribute\-Map\-To\-Variant\-Value@{attribute\-Map\-To\-Variant\-Value}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{attribute\-Map\-To\-Variant\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Property\-::attribute\-Map\-To\-Variant\-Value (
+\begin{DoxyParamCaption}
+\item[{Q\-Map$<$ Q\-String, Q\-Variant $>$}]{attr\-Map, }
+\item[{Q\-String \&}]{error}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_a91505cad6a9848cc849e6cd0bc7641aa}
+
+
+This is used to upgrade obsolete syntax that stored \hyperlink{class_picto_1_1_property}{Property} value data inside an xml tag's attribute fields during serialization. A map of those attributes is input, and the function should be overriden by child classes to return the appropriate Q\-Variant on the basis of that map. 
+
+The error input reference ins filled with an error message if there is some problem with converting the input attribute map to a Q\-Variant. 
+
+Reimplemented in \hyperlink{class_picto_1_1_point_property_a39cb9590e6f361eb991c58d9ef7d4da7}{Picto\-::\-Point\-Property}.
+
+
+
+Definition at line 460 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_aab81c42dffb16e8729aa4ba98694c944}{\index{Picto\-::\-Property@{Picto\-::\-Property}!attribute\-Value@{attribute\-Value}}
+\index{attribute\-Value@{attribute\-Value}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{attribute\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Property\-::attribute\-Value (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-attribute\-Name}
+\end{DoxyParamCaption}
+) const}}\label{class_picto_1_1_property_aab81c42dffb16e8729aa4ba98694c944}
+Returns the value of the attribute with the input \-\_\-attribute\-Name.
+
+If no such \-\_\-attribute\-Name exists, an empty Q\-Variant is returned. For more details on \hyperlink{class_picto_1_1_property}{Property} attibutes, see \hyperlink{class_picto_1_1_property_ac70060568119a4c00e23c03a0bc81f41}{set\-Attribute()} 
+
+Definition at line 139 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a934565d6d21c8600a79ff7d5150a54e2}{\index{Picto\-::\-Property@{Picto\-::\-Property}!clear\-Obsolete\-Serial\-Syntax@{clear\-Obsolete\-Serial\-Syntax}}
+\index{clear\-Obsolete\-Serial\-Syntax@{clear\-Obsolete\-Serial\-Syntax}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{clear\-Obsolete\-Serial\-Syntax}]{\setlength{\rightskip}{0pt plus 5cm}static void Picto\-::\-Property\-::clear\-Obsolete\-Serial\-Syntax (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_picto_1_1_property_a934565d6d21c8600a79ff7d5150a54e2}
+
+
+Resets the had\-Obsolete\-Serial\-Syntax\-\_\- flag to false for a new deserialization. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_aa8cc1b6113b78ef2679adae457dac24d}{encountered\-Obsolete\-Serial\-Syntax()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 129 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}{\index{Picto\-::\-Property@{Picto\-::\-Property}!deserialize\-From\-Xml@{deserialize\-From\-Xml}}
+\index{deserialize\-From\-Xml@{deserialize\-From\-Xml}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{deserialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Property\-::deserialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}
+
+
+Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Asset\-::deserialize\-From\-Xml()} to deserialize this \hyperlink{class_picto_1_1_property}{Property} from the Xml stored in the input Q\-Xml\-Stream\-Reader. 
+
+This function reads in X\-M\-L code as output from \hyperlink{class_picto_1_1_property_ab13f7e111f9d874a8ff00d574d5fa76c}{serialize\-As\-Xml()} and uses it to initialize this \hyperlink{class_picto_1_1_property}{Property}.
+
+\begin{DoxyNote}{Note}
+There is some code here that deals with loading Properties from an obsolete X\-M\-L format. In the past some \hyperlink{class_picto_1_1_property}{Property} types stored their values in X\-M\-L attributes instead of between the opening and closing tags. To deal with these cases, we deserialize all unexpected attributes into an \char`\"{}unexpected\-Attribute\-Map\char`\"{} and then input that map into the \hyperlink{class_picto_1_1_property_a91505cad6a9848cc849e6cd0bc7641aa}{attribute\-Map\-To\-Variant\-Value()} function which can be implemented in child classes to retrieve the value from those attributes. When the \hyperlink{class_picto_1_1_property}{Property} is saved again, it will automatically be upgraded to the current \hyperlink{namespace_picto}{Picto} syntax. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Picto\-::\-Asset}.
+
+
+
+Definition at line 200 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a3f7c0e0d81e687fccec996072d83418f}{\index{Picto\-::\-Property@{Picto\-::\-Property}!enable\-Init\-Run\-Value\-Sync@{enable\-Init\-Run\-Value\-Sync}}
+\index{enable\-Init\-Run\-Value\-Sync@{enable\-Init\-Run\-Value\-Sync}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{enable\-Init\-Run\-Value\-Sync}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::enable\-Init\-Run\-Value\-Sync (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_a3f7c0e0d81e687fccec996072d83418f}
+
+
+When Init\-Run\-Value\-Sync is enabled, changing a \hyperlink{class_picto_1_1_property}{Property}'s init\-Value immediately updates its run\-Value as well, with no need to wait for the \hyperlink{class_picto_1_1_property}{Property} parent to re-\/enter scope. 
+
+This is useful for Properties like the Position signal calibration values. They need to take affect right away. We can't wait for some parent object to come back into scope.
+
+By default, Init\-Run\-Value\-Sync is disabled. 
+
+Definition at line 121 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_aa102270174c3620cc62f38dc9b529c89}{\index{Picto\-::\-Property@{Picto\-::\-Property}!enable\-Run\-Mode@{enable\-Run\-Mode}}
+\index{enable\-Run\-Mode@{enable\-Run\-Mode}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{enable\-Run\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::enable\-Run\-Mode (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_aa102270174c3620cc62f38dc9b529c89}
+
+
+Enables/\-Disables run\-Mode for this \hyperlink{class_picto_1_1_property}{Property}. 
+
+See \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value()} for more detail on what this means. 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a77d1ae8cf767529f2d4fc63d30b98b2d}{Picto\-::\-Asset}.
+
+
+
+Definition at line 108 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a81a1fcfb066be63fe887bafd530b959b}{\index{Picto\-::\-Property@{Picto\-::\-Property}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Property\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_a81a1fcfb066be63fe887bafd530b959b}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a40eaa30ef5b2888d2a72a89bcf334c5f}{Picto\-::\-Asset}.
+
+
+
+Definition at line 116 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a9f1c515f9b65afe3da270b00b240ea41}{\index{Picto\-::\-Property@{Picto\-::\-Property}!get\-Asset\-Id@{get\-Asset\-Id}}
+\index{get\-Asset\-Id@{get\-Asset\-Id}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{get\-Asset\-Id}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Property\-::get\-Asset\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_a9f1c515f9b65afe3da270b00b240ea41}
+
+
+Returns this \hyperlink{class_picto_1_1_property}{Property}'s Asset\-Id. 
+
+It is retreived from the \hyperlink{class_picto_1_1_property}{Property}'s id attribute. 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}{Picto\-::\-Asset}.
+
+
+
+Definition at line 374 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_ade246730c24535192f5c0376b85e6581}{\index{Picto\-::\-Property@{Picto\-::\-Property}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Property\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_ade246730c24535192f5c0376b85e6581}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_property}{Property}. 
+
+This is the name that appears next to widgets with this \hyperlink{class_picto_1_1_property}{Property}'s value (ie. "Radius). 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a1757f208680523df1aedeec039fdd62e}{Picto\-::\-Asset}.
+
+
+
+Definition at line 60 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_aee5beb60f1bc54fbaa2e69745450b476}{\index{Picto\-::\-Property@{Picto\-::\-Property}!identifier@{identifier}}
+\index{identifier@{identifier}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Property\-::identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_aee5beb60f1bc54fbaa2e69745450b476}
+
+
+Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Usually this is the same as this assets serialized X\-M\-L tag name, but it may not be. 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a8d53229beb63862c36858e633dced712}{Picto\-::\-Asset}.
+
+
+
+Definition at line 115 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_ad05cda1e03dbf67d6b44259956120777}{\index{Picto\-::\-Property@{Picto\-::\-Property}!init\-Val\-From\-User\-String@{init\-Val\-From\-User\-String}}
+\index{init\-Val\-From\-User\-String@{init\-Val\-From\-User\-String}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{init\-Val\-From\-User\-String}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::init\-Val\-From\-User\-String (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{user\-String}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_ad05cda1e03dbf67d6b44259956120777}
+
+
+Updates the current init\-Value from a string that was output from \hyperlink{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}{init\-Val\-To\-User\-String()}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}{init\-Val\-To\-User\-String()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 348 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}{\index{Picto\-::\-Property@{Picto\-::\-Property}!init\-Val\-To\-User\-String@{init\-Val\-To\-User\-String}}
+\index{init\-Val\-To\-User\-String@{init\-Val\-To\-User\-String}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{init\-Val\-To\-User\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Property\-::init\-Val\-To\-User\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_a598e6607b9970fcda2b99a60e455c1e3}
+
+
+This is the string that is sent over the network when an init\-Value is changed and its value needs to be sent to a running session. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_ad05cda1e03dbf67d6b44259956120777}{init\-Val\-From\-User\-String()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 341 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a13332ce78a9ce11b496d38c13a857dc7}{\index{Picto\-::\-Property@{Picto\-::\-Property}!init\-Value@{init\-Value}}
+\index{init\-Value@{init\-Value}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{init\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Property\-::init\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_a13332ce78a9ce11b496d38c13a857dc7}
+
+
+Returns this \hyperlink{class_picto_1_1_property}{Property}'s init\-Value. 
+
+A \hyperlink{class_picto_1_1_property}{Property}'s init\-Value is an initial condition for the \hyperlink{class_picto_1_1_property}{Property}. The \hyperlink{class_picto_1_1_property}{Property}'s run\-Value, which is the one that actually takes effect during an experiment, is set to the \hyperlink{class_picto_1_1_property}{Property}'s init\-Value every time the \hyperlink{class_picto_1_1_property}{Property}'s parent enters scope. This value is used during Experimental runs for \hyperlink{class_picto_1_1_experiment}{Experiment} Operator's to be able to change experimental parameters during the run. Since the changes that the Operator makes only take effect when the \hyperlink{class_picto_1_1_property}{Property}'s parent first enters scope, the Operator need not worry that depending on the current run state some invalid logic condition will be created changing a \hyperlink{class_picto_1_1_property}{Property} value. 
+
+Definition at line 80 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_acdd6ce7db8943523198af6730aacc9b0}{\index{Picto\-::\-Property@{Picto\-::\-Property}!is\-Runtime\-Enabled@{is\-Runtime\-Enabled}}
+\index{is\-Runtime\-Enabled@{is\-Runtime\-Enabled}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{is\-Runtime\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Property\-::is\-Runtime\-Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_property_acdd6ce7db8943523198af6730aacc9b0}
+
+
+Returns whether this \hyperlink{class_picto_1_1_property}{Property} is runtime enabled. 
+
+See \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable()} for more details. \begin{DoxyNote}{Note}
+This should really be called is\-Runtime\-Editable() for consistancy with \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable()}. 
+\end{DoxyNote}
+
+
+Definition at line 80 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a05079b688854054f32897067f937a261}{\index{Picto\-::\-Property@{Picto\-::\-Property}!is\-Visible@{is\-Visible}}
+\index{is\-Visible@{is\-Visible}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{is\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Property\-::is\-Visible (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_property_a05079b688854054f32897067f937a261}
+
+
+Returns whether this \hyperlink{class_picto_1_1_property}{Property} will have an associated widget in G\-U\-I \hyperlink{class_picto_1_1_property}{Property} editors. Default is true. 
+
+See \hyperlink{class_picto_1_1_property_ad55eb788c4d635b92fa5944c78a1d346}{set\-Visible()} for more details. 
+
+Definition at line 93 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_ab13f7e111f9d874a8ff00d574d5fa76c}{\index{Picto\-::\-Property@{Picto\-::\-Property}!serialize\-As\-Xml@{serialize\-As\-Xml}}
+\index{serialize\-As\-Xml@{serialize\-As\-Xml}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{serialize\-As\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Property\-::serialize\-As\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$}]{xml\-Stream\-Writer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_ab13f7e111f9d874a8ff00d574d5fa76c}
+
+
+Implements \hyperlink{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{Asset\-::serialize\-As\-Xml()} to serializes this \hyperlink{class_picto_1_1_property}{Property} into the input Q\-Xml\-Stream\-Writer. 
+
+A \hyperlink{class_picto_1_1_property}{Property} is saved to X\-M\-L as follows
+\begin{DoxyCode}
+<[TagName] name=\textcolor{stringliteral}{'someName'} \hyperlink{class_picto_1_1_property_a0b2715a51a50a94a0c1447597ecd00dd}{type}=\textcolor{stringliteral}{'someType'} \textcolor{keywordtype}{id}=[some number]>[some \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value}]</[TagName]> 
+\end{DoxyCode}
+ All Properties use the \char`\"{}name\char`\"{} field. The \char`\"{}type\char`\"{} field may or may not be used. The \char`\"{}id\char`\"{} field is used for every \hyperlink{class_picto_1_1_property}{Property} with an Asset\-Id, which should actually be every \hyperlink{class_picto_1_1_property}{Property} that there is. The id field is saved out as a serialization\-Attribute set in the set\-Serialization\-Attribute\-Value() function though. In theory, every attribute set with this function would be serialized out, but in practice we are only using set\-Serialization\-Attribute\-Value() for the serialization id. It might be worth while cleaning this up at some point.
+
+The actual \hyperlink{class_picto_1_1_property}{Property} value is stored between the opening and closing xml tags according to its string value as returned from \hyperlink{class_picto_1_1_property_a53fdd4e0021894ae55854cdcf5277c4a}{variant\-To\-String()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}{deserialize\-From\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{Picto\-::\-Asset}.
+
+
+
+Definition at line 156 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a868534f67ff18012dbec0c922ed2e9a1}{\index{Picto\-::\-Property@{Picto\-::\-Property}!set\-Asset\-Id@{set\-Asset\-Id}}
+\index{set\-Asset\-Id@{set\-Asset\-Id}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{set\-Asset\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::set\-Asset\-Id (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_property_a868534f67ff18012dbec0c922ed2e9a1}
+
+
+Sets this \hyperlink{class_picto_1_1_property}{Property}'s Asset\-Id. 
+
+It is set into the \hyperlink{class_picto_1_1_property}{Property}'s id attribute. \begin{DoxyNote}{Note}
+This function causes \hyperlink{class_picto_1_1_asset_af9dc9a5935284306615aa5e19a5be49e}{asset\-Id\-Edited()} to be emitted. It also emits \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited()} if the \hyperlink{class_picto_1_1_property}{Property}'s value has been previously edited. If the \hyperlink{class_picto_1_1_property}{Property}'s value has not been previously edited, it is a default \hyperlink{class_picto_1_1_property}{Property} value and changing an Asset\-Id is not a change that should cause this \hyperlink{class_picto_1_1_property}{Property} to need to be serialized out. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}{Picto\-::\-Asset}.
+
+
+
+Definition at line 385 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_ac70060568119a4c00e23c03a0bc81f41}{\index{Picto\-::\-Property@{Picto\-::\-Property}!set\-Attribute@{set\-Attribute}}
+\index{set\-Attribute@{set\-Attribute}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{set\-Attribute}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::set\-Attribute (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-attribute\-Name, }
+\item[{Q\-Variant}]{\-\_\-attribute\-Value}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_ac70060568119a4c00e23c03a0bc81f41}
+
+
+Sets the input \-\_\-attribute\-Name to the input \-\_\-attribute\-Value. 
+
+Some \hyperlink{class_picto_1_1_property}{Property} types require attributes. The \hyperlink{class_picto_1_1_enum_property}{Enum\-Property} for example needs a list of possible enum values so that it can translate between an enum value name and an associate integer. This function is used to set up that type of mapping. 
+
+Definition at line 130 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{\index{Picto\-::\-Property@{Picto\-::\-Property}!set\-Runtime\-Editable@{set\-Runtime\-Editable}}
+\index{set\-Runtime\-Editable@{set\-Runtime\-Editable}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{set\-Runtime\-Editable}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::set\-Runtime\-Editable (
+\begin{DoxyParamCaption}
+\item[{bool}]{enabled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}
+
+
+Set this property as changeable during runtime. 
+
+If this is used and this \hyperlink{class_picto_1_1_property}{Property}'s parent is marked as \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled}, a widget will appear for this \hyperlink{class_picto_1_1_property}{Property} at runtime that will allow its init\-Value to be changed. This should be used on any Properties of a \hyperlink{class_picto_1_1_data_store}{Data\-Store} which the Operator might logically want to change during runtime. A \hyperlink{class_picto_1_1_circle_graphic}{Circle\-Graphic}'s Color \hyperlink{class_picto_1_1_property}{Property} for example should be \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable()}. A \hyperlink{class_picto_1_1_circle_graphic}{Circle\-Graphic}'s Name \hyperlink{class_picto_1_1_property}{Property} should not be \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable()}. 
+
+Definition at line 75 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}{\index{Picto\-::\-Property@{Picto\-::\-Property}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{Q\-Variant}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}
+
+
+Sets the input value to the appropriate save\-Value, init\-Value and/or run\-Value according to the current run\-Mode and Init\-Run\-Value\-Sync state. 
+
+See \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value()} and \hyperlink{class_picto_1_1_property_a3f7c0e0d81e687fccec996072d83418f}{enable\-Init\-Run\-Value\-Sync()} for more details. 
+
+Definition at line 415 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_ad55eb788c4d635b92fa5944c78a1d346}{\index{Picto\-::\-Property@{Picto\-::\-Property}!set\-Visible@{set\-Visible}}
+\index{set\-Visible@{set\-Visible}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{set\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::set\-Visible (
+\begin{DoxyParamCaption}
+\item[{bool}]{visible}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_property_ad55eb788c4d635b92fa5944c78a1d346}
+
+
+Sets whether this \hyperlink{class_picto_1_1_property}{Property} will have an associated widget in G\-U\-I \hyperlink{class_picto_1_1_property}{Property} editors. Default is true. 
+
+\begin{DoxyNote}{Note}
+This is different from \hyperlink{class_picto_1_1_property_add3e9d7a904e0b13242a23a78f698e9f}{set\-Runtime\-Editable()}. If \hyperlink{class_picto_1_1_property_ad55eb788c4d635b92fa5944c78a1d346}{set\-Visible()} sets the \hyperlink{class_picto_1_1_property}{Property} as invisible it will not appear even in the Design window. This is useful in cases where we need a \hyperlink{class_picto_1_1_property}{Property} in order to make sure that a \hyperlink{class_picto_1_1_data_store}{Data\-Store} is fully defined by Properties, but the \hyperlink{class_designer}{Designer} should not be able to alter that \hyperlink{class_picto_1_1_property}{Property}. In the case of Data\-Stores containing lists for example, we can use a \hyperlink{class_picto_1_1_property}{Property} to store a Q\-Variant\-List, but that \hyperlink{class_picto_1_1_property}{Property} should not be editable. 
+\end{DoxyNote}
+
+
+Definition at line 89 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{\index{Picto\-::\-Property@{Picto\-::\-Property}!start\-Monitoring\-For\-Experimental\-Value\-Change@{start\-Monitoring\-For\-Experimental\-Value\-Change}}
+\index{start\-Monitoring\-For\-Experimental\-Value\-Change@{start\-Monitoring\-For\-Experimental\-Value\-Change}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{start\-Monitoring\-For\-Experimental\-Value\-Change}]{\setlength{\rightskip}{0pt plus 5cm}static void Picto\-::\-Property\-::start\-Monitoring\-For\-Experimental\-Value\-Change (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}
+
+
+Functions like \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} except that this function is used to make sure that \hyperlink{class_picto_1_1_analysis}{Analysis} Scripts change only \hyperlink{class_picto_1_1_analysis}{Analysis} and not Experimental \hyperlink{class_picto_1_1_property}{Property} values. 
+
+The functions that are used in this case are \hyperlink{class_picto_1_1_property_a2421feb1da0092567df8dd7bf1e2ea89}{start\-Monitoring\-For\-Experimental\-Value\-Change()}, \hyperlink{class_picto_1_1_property_ae384ed764c9cb982d8492376c3f490b7}{experimental\-Value\-Was\-Changed()} and \hyperlink{class_picto_1_1_property_ac40642a7f88c066d229df9e8285e3f49}{changed\-Experimental\-Value\-Name()}. The procedure is the same as for \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()}. 
+
+Definition at line 150 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{\index{Picto\-::\-Property@{Picto\-::\-Property}!start\-Monitoring\-For\-Value\-Change@{start\-Monitoring\-For\-Value\-Change}}
+\index{start\-Monitoring\-For\-Value\-Change@{start\-Monitoring\-For\-Value\-Change}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{start\-Monitoring\-For\-Value\-Change}]{\setlength{\rightskip}{0pt plus 5cm}static void Picto\-::\-Property\-::start\-Monitoring\-For\-Value\-Change (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}
+
+
+Start monitoring whether \hyperlink{class_picto_1_1_property}{Property} values are being changed. 
+
+This is useful when scripts should be functioning in a \char`\"{}read-\/only\char`\"{} mode. By using this function along with the \hyperlink{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}{value\-Was\-Changed()} and \hyperlink{class_picto_1_1_property_aa5eee2c9c28954c9dc430d449eda4689}{changed\-Value\-Name()}, functions, runtime checking can be done to make sure that read-\/only scripts are not doing any illegal writing.
+
+The procedure is as follows\-:
+\begin{DoxyItemize}
+\item A \hyperlink{namespace_picto}{Picto} element should call \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} just before running the read-\/only script.
+\item After the script code is complete, the element should call \hyperlink{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}{value\-Was\-Changed()}.
+\item If \hyperlink{class_picto_1_1_property_a3cc79cb85c80f026ea93418617b8aa57}{value\-Was\-Changed()} returned true, the element should throw a scripting runtime error.
+\item The first value to have been changed since \hyperlink{class_picto_1_1_property_a59b424f90e965db678b0fe4f8702eb5d}{start\-Monitoring\-For\-Value\-Change()} was called is available from \hyperlink{class_picto_1_1_property_aa5eee2c9c28954c9dc430d449eda4689}{changed\-Value\-Name()}. This can be used to provide more detail in the scripting error message. 
+\end{DoxyItemize}
+
+Definition at line 143 of file Property.\-h.
+
+\hypertarget{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{\index{Picto\-::\-Property@{Picto\-::\-Property}!string\-To\-Variant@{string\-To\-Variant}}
+\index{string\-To\-Variant@{string\-To\-Variant}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{string\-To\-Variant}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Property\-::string\-To\-Variant (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{string, }
+\item[{Q\-String \&}]{error}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}
+
+
+Converts the input Q\-String value to a Q\-Variant value for various purposes throughout this \hyperlink{class_picto_1_1_property}{Property}. 
+
+This function is meant to be overridden by child classes to convert the input value to a Q\-Variant according to the child class's own special criteria. By default it simply creates a Q\-Variant with it's Q\-String constructor and returns that Q\-Variant. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_a53fdd4e0021894ae55854cdcf5277c4a}{variant\-To\-String()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_enum_property_a6c5cce4bad6e9628c081f25ae8a9c14d}{Picto\-::\-Enum\-Property}, \hyperlink{class_picto_1_1_list_property_a3cc9a3dca832e33e170a24c9284f260b}{Picto\-::\-List\-Property}, \hyperlink{class_picto_1_1_map_property_ac190f305445034b64a3f4c2935fda191}{Picto\-::\-Map\-Property}, \hyperlink{class_picto_1_1_size_property_a4297b95cc75821d0a7e194f8c7827dcc}{Picto\-::\-Size\-Property}, \hyperlink{class_picto_1_1_color_property_a71e157fd5122482f81926f17d7f1373b}{Picto\-::\-Color\-Property}, and \hyperlink{class_picto_1_1_point_property_a9e0047b5c75ff8cca820dbac481450f8}{Picto\-::\-Point\-Property}.
+
+
+
+Definition at line 448 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a0b2715a51a50a94a0c1447597ecd00dd}{\index{Picto\-::\-Property@{Picto\-::\-Property}!type@{type}}
+\index{type@{type}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Property\-::type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_a0b2715a51a50a94a0c1447597ecd00dd}
+
+
+Returns the type of this \hyperlink{class_picto_1_1_property}{Property}. 
+
+This is also the type of the Q\-Variant underlying the \hyperlink{class_picto_1_1_property}{Property} defined in terms of Q\-Variant\-::type. 
+
+Definition at line 52 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}{\index{Picto\-::\-Property@{Picto\-::\-Property}!val\-From\-User\-String@{val\-From\-User\-String}}
+\index{val\-From\-User\-String@{val\-From\-User\-String}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{val\-From\-User\-String}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Property\-::val\-From\-User\-String (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{user\-String}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}
+
+
+Updates the current variant run\-Value from a user readable string in the format serialized out from \hyperlink{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{val\-To\-User\-String()}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{val\-To\-User\-String()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 365 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}{\index{Picto\-::\-Property@{Picto\-::\-Property}!val\-To\-User\-String@{val\-To\-User\-String}}
+\index{val\-To\-User\-String@{val\-To\-User\-String}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{val\-To\-User\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Property\-::val\-To\-User\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_ae4acea7db3b5c1ba4fcca8695a343fc0}
+
+
+Converts the current variant run\-Value to a user readable string for serialization purposes. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}{val\-From\-User\-String()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 357 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{\index{Picto\-::\-Property@{Picto\-::\-Property}!value@{value}}
+\index{value@{value}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Property\-::value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}
+
+
+Returns the \hyperlink{class_picto_1_1_property}{Property}'s current value as a function of the current run mode. 
+
+When run mode is enabled, the returned value is the run\-Value, the effective value of the \hyperlink{class_picto_1_1_property}{Property} throughout an experimental run. If run mode is disabled, the returned value is the save\-Value. This is the value that is actually saved to disk when a \hyperlink{namespace_picto}{Picto} Design is saved. It is important to differentiate between save\-Value and run\-Value so that the same Design can be used in the State\-Machine\-Editor and in the \hyperlink{class_test_viewer}{Test\-Viewer}. If we only had a run\-Value, then tests run in the \hyperlink{namespace_picto}{Picto} \hyperlink{class_test_viewer}{Test\-Viewer} would affect the Design file that is saved to disk. By separating these two types of values, we can be sure that testing a design won't affect its saved file. \begin{DoxyNote}{Note}
+We can't use init\-Values as save\-Values because then changes that a test Operator makes to \hyperlink{class_picto_1_1_property}{Property} init\-Values would also affect the saved file. By seperating out the save\-Value though, since every time a Design is deserialized from xml the save\-Values are the ones that are set to the init\-Value and run\-Value fields, we are sure that the initial conditions of a Design before it is run will always be according to the design's save\-Values. 
+\end{DoxyNote}
+
+
+Definition at line 95 of file Property.\-cpp.
+
+\hypertarget{class_picto_1_1_property_a53fdd4e0021894ae55854cdcf5277c4a}{\index{Picto\-::\-Property@{Picto\-::\-Property}!variant\-To\-String@{variant\-To\-String}}
+\index{variant\-To\-String@{variant\-To\-String}!Picto::Property@{Picto\-::\-Property}}
+\subsubsection[{variant\-To\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Property\-::variant\-To\-String (
+\begin{DoxyParamCaption}
+\item[{Q\-Variant}]{value}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_a53fdd4e0021894ae55854cdcf5277c4a}
+
+
+Converts the input Q\-Variant value to a string value for various purposes throughout this \hyperlink{class_picto_1_1_property}{Property}. 
+
+This function is meant to be overridden by child classes to convert the input value to a string according to the child class's own special criteria. By default it simply calls the Q\-Variant\-::to\-String() function and returns that. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{string\-To\-Variant()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_enum_property_afc149e54a48cbe6540166bd2d7685e08}{Picto\-::\-Enum\-Property}, \hyperlink{class_picto_1_1_list_property_ab5b6d855b055256e2a9038f2ed04f1fb}{Picto\-::\-List\-Property}, \hyperlink{class_picto_1_1_map_property_a694260e6826e120bd4dede65ba259432}{Picto\-::\-Map\-Property}, \hyperlink{class_picto_1_1_size_property_a168414cb81e4327050496c4ac8eac5eb}{Picto\-::\-Size\-Property}, \hyperlink{class_picto_1_1_color_property_a70dc856281122de27ff0ab73a1cc3940}{Picto\-::\-Color\-Property}, and \hyperlink{class_picto_1_1_point_property_ab9a69b56cc879ad73c74c8830e70fe34}{Picto\-::\-Point\-Property}.
+
+
+
+Definition at line 437 of file Property.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/property/Property.\-h\item 
+source/common/property/Property.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,138 @@
+\hypertarget{class_picto_1_1_analysis_output_dep}{\section{Picto\-:\-:Analysis\-Output\-Dep Class Reference}
+\label{class_picto_1_1_analysis_output_dep}\index{Picto\-::\-Analysis\-Output\-Dep@{Picto\-::\-Analysis\-Output\-Dep}}
+}
+Inheritance diagram for Picto\-:\-:Analysis\-Output\-Dep\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_analysis_output_dep}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_af589580a41934af93afeee53d46af672}{virtual Q\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_output_widget}{Analysis\-Output\-Widget} $>$ {\bfseries get\-Output\-Widget} ()}\label{class_picto_1_1_analysis_output_dep_af589580a41934af93afeee53d46af672}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a5497bc4563eae59f475993239d91e064}{virtual void {\bfseries finish\-Up} ()}\label{class_picto_1_1_analysis_output_dep_a5497bc4563eae59f475993239d91e064}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a7418cc3011ca4d1a5d55d9b8ac426b69}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_output_dep_a7418cc3011ca4d1a5d55d9b8ac426b69}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_output_dep_a7418cc3011ca4d1a5d55d9b8ac426b69}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_output_dep_a145e2372726de801147b3ee2b9517621}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a29fa7fc1915fcd04426da4606bb9861f}{Q\-String {\bfseries get\-Temp\-Output\-Dir} ()}\label{class_picto_1_1_analysis_output_dep_a29fa7fc1915fcd04426da4606bb9861f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_output_dep_a7a0816ed8dc31e00f009b7055437b63b}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_output_dep_a1f729ac9a11524ee82e89b2725d2eda2}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_ae582bad5894468e6792f10943de73a65}{virtual bool \hyperlink{class_picto_1_1_analysis_output_dep_ae582bad5894468e6792f10943de73a65}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_analysis_output_dep_ae582bad5894468e6792f10943de73a65}
+
+\begin{DoxyCompactList}\small\item\em Verifies that, if the element has scripting elements, its name is valid for use in a script environment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a9097ccd3a7d82a7a391b700906e44d8f}{void {\bfseries set\-Valid} (bool is\-Valid)}\label{class_picto_1_1_analysis_output_dep_a9097ccd3a7d82a7a391b700906e44d8f}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a92abf1baf7d02b72a08d6e2b37639ad0}{bool {\bfseries is\-Valid} ()}\label{class_picto_1_1_analysis_output_dep_a92abf1baf7d02b72a08d6e2b37639ad0}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_dep_a937c6675892827ca61b308c8e9d20bcf}{Q\-String {\bfseries get\-Output\-Name\-Prefix} ()}\label{class_picto_1_1_analysis_output_dep_a937c6675892827ca61b308c8e9d20bcf}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 17 of file Analysis\-Output\-Dep.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_output_dep_a7a0816ed8dc31e00f009b7055437b63b}{\index{Picto\-::\-Analysis\-Output\-Dep@{Picto\-::\-Analysis\-Output\-Dep}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisOutputDep@{Picto\-::\-Analysis\-Output\-Dep}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Output\-Dep\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_output_dep_a7a0816ed8dc31e00f009b7055437b63b}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_tool_ab704f579af1c6aed342c29c839a9ca86}{Picto\-::\-Analysis\-Tool}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_file_output_a6eb7e5ea56b00eb9f04fac1d606fb177}{Picto\-::\-File\-Output}.
+
+
+
+Definition at line 45 of file Analysis\-Output\-Dep.\-h.
+
+\hypertarget{class_picto_1_1_analysis_output_dep_a145e2372726de801147b3ee2b9517621}{\index{Picto\-::\-Analysis\-Output\-Dep@{Picto\-::\-Analysis\-Output\-Dep}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisOutputDep@{Picto\-::\-Analysis\-Output\-Dep}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Output\-Dep\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_output_dep_a145e2372726de801147b3ee2b9517621}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_tool_a97a573c5f8459e976736a4b2c3c145d2}{Picto\-::\-Analysis\-Tool}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_file_output_a44fff0a846a6dd650ed13a56aba8d8f3}{Picto\-::\-File\-Output}.
+
+
+
+Definition at line 38 of file Analysis\-Output\-Dep.\-h.
+
+\hypertarget{class_picto_1_1_analysis_output_dep_a1f729ac9a11524ee82e89b2725d2eda2}{\index{Picto\-::\-Analysis\-Output\-Dep@{Picto\-::\-Analysis\-Output\-Dep}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisOutputDep@{Picto\-::\-Analysis\-Output\-Dep}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Analysis\-Output\-Dep\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_output_dep_a1f729ac9a11524ee82e89b2725d2eda2}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_tool_a4e222c101573aca1ef0e271fab078eaa}{Picto\-::\-Analysis\-Tool}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_file_output_a1bcc204b235bc36066ef69595e390602}{Picto\-::\-File\-Output}.
+
+
+
+Definition at line 29 of file Analysis\-Output\-Dep.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Analysis\-Output\-Dep.\-h\item 
+source/common/analysis/Analysis\-Output\-Dep.\-cpp\end{DoxyCompactItemize}

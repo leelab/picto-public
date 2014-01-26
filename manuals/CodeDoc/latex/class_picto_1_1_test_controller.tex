@@ -1,0 +1,121 @@
+\hypertarget{class_picto_1_1_test_controller}{\section{Picto\-:\-:Test\-Controller Class Reference}
+\label{class_picto_1_1_test_controller}\index{Picto\-::\-Test\-Controller@{Picto\-::\-Test\-Controller}}
+}
+
+
+A simple controller for debugging purposes. This controller is not available in the design viewer.  
+
+
+
+
+{\ttfamily \#include $<$Test\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Test\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_test_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_test_controller_a60da5e71238caac387ff2c43dbc2e6df}{bool \hyperlink{class_picto_1_1_test_controller_a60da5e71238caac387ff2c43dbc2e6df}{is\-Done} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)}\label{class_picto_1_1_test_controller_a60da5e71238caac387ff2c43dbc2e6df}
+
+\begin{DoxyCompactList}\small\item\em is\-Done will return true if the \hyperlink{class_picto_1_1_control_element}{Control\-Element}'s logic determines that some condition has been met. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_test_controller_aabd1ea97e878f78a3487500cc0f09c9f}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_result}{Result} $>$ \hyperlink{class_picto_1_1_test_controller_aabd1ea97e878f78a3487500cc0f09c9f}{get\-Result} ()}\label{class_picto_1_1_test_controller_aabd1ea97e878f78a3487500cc0f09c9f}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest result after a \hyperlink{class_picto_1_1_control_element}{Control\-Element} \hyperlink{class_picto_1_1_test_controller_a60da5e71238caac387ff2c43dbc2e6df}{is\-Done()}. If the \hyperlink{class_picto_1_1_control_element}{Control\-Element} is not done, this returns an empty result pointer. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_test_controller_a1a7e9f6071dace32af5bc50b251fccbc}{start} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_test_controller_af5f8e0966ffb5f809b13f242076d7559}{static \hyperlink{class_picto_1_1_control_element}{Control\-Element} $\ast$ {\bfseries New\-Test\-Controller} ()}\label{class_picto_1_1_test_controller_af5f8e0966ffb5f809b13f242076d7559}
+
+\item 
+\hypertarget{class_picto_1_1_test_controller_a3453205023b16f0dd9649ef45e60bbab}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_test_controller_a3453205023b16f0dd9649ef45e60bbab}
+
+\item 
+\hypertarget{class_picto_1_1_test_controller_a3b2c4bd9a8db4e408844ae0c733056b3}{static Q\-String {\bfseries Controller\-Type} ()}\label{class_picto_1_1_test_controller_a3b2c4bd9a8db4e408844ae0c733056b3}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_test_controller_a5912c981db3d499dbf41e50faec2648d}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_test_controller_aaba0fa543d3dd1f83b60b414226efac1}{virtual bool \hyperlink{class_picto_1_1_test_controller_aaba0fa543d3dd1f83b60b414226efac1}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_test_controller_aaba0fa543d3dd1f83b60b414226efac1}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A simple controller for debugging purposes. This controller is not available in the design viewer. 
+
+This controller is a wrapper that can be modified (in C++) to do whatever is needed for test purposes Currently, it is simply outputing to the debuggin console, and return \hyperlink{class_picto_1_1_test_controller_a60da5e71238caac387ff2c43dbc2e6df}{is\-Done()} == true the 120th time it is called (2 seconds if we're running at 60\-Hz). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Test\-Controller.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_test_controller_a5912c981db3d499dbf41e50faec2648d}{\index{Picto\-::\-Test\-Controller@{Picto\-::\-Test\-Controller}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::TestController@{Picto\-::\-Test\-Controller}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Test\-Controller\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_test_controller_a5912c981db3d499dbf41e50faec2648d}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}{Picto\-::\-Control\-Element}.
+
+
+
+Definition at line 69 of file Test\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_test_controller_a1a7e9f6071dace32af5bc50b251fccbc}{\index{Picto\-::\-Test\-Controller@{Picto\-::\-Test\-Controller}!start@{start}}
+\index{start@{start}!Picto::TestController@{Picto\-::\-Test\-Controller}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Test\-Controller\-::start (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_test_controller_a1a7e9f6071dace32af5bc50b251fccbc}
+
+
+Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+Should be called when a \hyperlink{class_picto_1_1_state}{State} is first entered. \begin{DoxyNote}{Note}
+\hyperlink{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}{activate\-Targets()} should be called by this function if \hyperlink{class_picto_1_1_control_target}{Control\-Target} elements will be used. This will cause their bounding geometries to be highlighted in the operator view until they are deactivated. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+Activate\-Targets() 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_control_element_a29316418d618837adeebf47bb8d58308}{Picto\-::\-Control\-Element}.
+
+
+
+Definition at line 61 of file Test\-Controller.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Test\-Controller.\-h\item 
+source/common/controlelements/Test\-Controller.\-cpp\end{DoxyCompactItemize}

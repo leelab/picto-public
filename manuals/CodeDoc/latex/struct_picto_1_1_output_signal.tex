@@ -1,0 +1,190 @@
+\hypertarget{struct_picto_1_1_output_signal}{\section{Picto\-:\-:Output\-Signal Struct Reference}
+\label{struct_picto_1_1_output_signal}\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}}
+}
+
+
+A Base class for Output\-Elements that output voltage signals.  
+
+
+
+
+{\ttfamily \#include $<$Output\-Signal.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Output\-Signal\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{struct_picto_1_1_output_signal}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_picto_1_1_output_signal_ad30bf5beee68cd41bdc4edf0c75bdbfd}{Output\-Signal} ()
+\begin{DoxyCompactList}\small\item\em Constructs an \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} object. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a1db08b9ca1e1c360ea50598fdc4d7c15}{virtual void \hyperlink{struct_picto_1_1_output_signal_a1db08b9ca1e1c360ea50598fdc4d7c15}{set\-Enabled} (bool active)}\label{struct_picto_1_1_output_signal_a1db08b9ca1e1c360ea50598fdc4d7c15}
+
+\begin{DoxyCompactList}\small\item\em Enables/disables the pins handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} (ie. The values set inside the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} will appear on the Port). \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a0d83ecaba4667407896d4fc8526fdd7a}{virtual bool \hyperlink{struct_picto_1_1_output_signal_a0d83ecaba4667407896d4fc8526fdd7a}{get\-Enabled} ()}\label{struct_picto_1_1_output_signal_a0d83ecaba4667407896d4fc8526fdd7a}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} is enabled (ie. The values set inside the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} will appear on the Port), false otherwise. \end{DoxyCompactList}\item 
+virtual void \hyperlink{struct_picto_1_1_output_signal_a7996c66ede372d437199adbda75f95a5}{set\-Port} (Q\-String port)
+\begin{DoxyCompactList}\small\item\em Sets the name of the Port handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal}. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a3e555bb9dbceaf9686d522b24ab3ed13}{virtual Q\-String \hyperlink{struct_picto_1_1_output_signal_a3e555bb9dbceaf9686d522b24ab3ed13}{get\-Port} ()}\label{struct_picto_1_1_output_signal_a3e555bb9dbceaf9686d522b24ab3ed13}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the Port handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal}. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a4c2f2e3c15269e29231bd903cd5f9ca9}{virtual int \hyperlink{struct_picto_1_1_output_signal_a4c2f2e3c15269e29231bd903cd5f9ca9}{get\-Pin} ()}\label{struct_picto_1_1_output_signal_a4c2f2e3c15269e29231bd903cd5f9ca9}
+
+\begin{DoxyCompactList}\small\item\em Returns the pin number handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} or -\/1 if the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} handles more than one pin. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{struct_picto_1_1_output_signal_ae4ca3f2d3f76dd6979418aba4a256dd7}{get\-Value} ()
+\begin{DoxyCompactList}\small\item\em Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a5216e9b36bfdb7c6f4934d52030cad8f}{bool {\bfseries get\-Visible\-By\-User} (bool subject)}\label{struct_picto_1_1_output_signal_a5216e9b36bfdb7c6f4934d52030cad8f}
+
+\item 
+\hypertarget{struct_picto_1_1_output_signal_ac6a74459af41e7629188b270d620fae7}{virtual Q\-String \hyperlink{struct_picto_1_1_output_signal_ac6a74459af41e7629188b270d620fae7}{get\-U\-I\-Template} ()}\label{struct_picto_1_1_output_signal_ac6a74459af41e7629188b270d620fae7}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_output_signal_a5401d53b65a3664df866aef4455d42fe}{virtual bool \hyperlink{struct_picto_1_1_output_signal_a5401d53b65a3664df866aef4455d42fe}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{struct_picto_1_1_output_signal_a5401d53b65a3664df866aef4455d42fe}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_output_signal_a9ce6698871455bc355d2fab0efa8e317}{bool \hyperlink{struct_picto_1_1_output_signal_a9ce6698871455bc355d2fab0efa8e317}{enabled}}\label{struct_picto_1_1_output_signal_a9ce6698871455bc355d2fab0efa8e317}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets whether this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} is enabled (ie. The values set inside the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} will appear on the Port). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A Base class for Output\-Elements that output voltage signals. 
+
+Frequently, an experiment requires some kind of means to interface with outside devices using T\-T\-L signals. This is the purpose of the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} class. Descendants of \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} allow the Experimental Design to control the physical voltage of Ports on the computer running the \hyperlink{class_director}{Director}. In this base class, we implement functionality for setting the physical port handled by the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} as well as enabling/disabling the port. Enabling/disabling a port sets whether the value set in this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} will actually physically appear on the port or not. It is analogous to visible/invisible in a \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Output\-Signal.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_picto_1_1_output_signal_ad30bf5beee68cd41bdc4edf0c75bdbfd}{\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}!Output\-Signal@{Output\-Signal}}
+\index{Output\-Signal@{Output\-Signal}!Picto::OutputSignal@{Picto\-::\-Output\-Signal}}
+\subsubsection[{Output\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Output\-Signal\-::\-Output\-Signal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_output_signal_ad30bf5beee68cd41bdc4edf0c75bdbfd}
+
+
+Constructs an \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} object. 
+
+Adds a Port \hyperlink{class_picto_1_1_property}{Property} to define the Port on which data will be output (Currently values are B\-N\-C0 -\/ default, and P\-A\-R0 for B\-N\-C and Parallel ports respectively). Adds an Enabled \hyperlink{class_picto_1_1_property}{Property} to define whether the current output value will appears on the output pins. This is analogous to the Visible \hyperlink{class_picto_1_1_property}{Property} in a \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element}. 
+
+Definition at line 12 of file Output\-Signal.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}{\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::OutputSignal@{Picto\-::\-Output\-Signal}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Output\-Signal\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_output_element_add3a6e0fe3d4ee7b4b466171eb437cbc}{Picto\-::\-Output\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_digital_output_a5d8aff3b7a814288c138eafc6aace133}{Picto\-::\-Digital\-Output}, and \hyperlink{class_picto_1_1_binary_data_output_a5cbce303776bfc19b4734db52663c211}{Picto\-::\-Binary\-Data\-Output}.
+
+
+
+Definition at line 59 of file Output\-Signal.\-h.
+
+\hypertarget{struct_picto_1_1_output_signal_ae4ca3f2d3f76dd6979418aba4a256dd7}{\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}!get\-Value@{get\-Value}}
+\index{get\-Value@{get\-Value}!Picto::OutputSignal@{Picto\-::\-Output\-Signal}}
+\subsubsection[{get\-Value}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Variant Picto\-::\-Output\-Signal\-::get\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_output_signal_ae4ca3f2d3f76dd6979418aba4a256dd7}
+
+
+Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. 
+
+\begin{DoxyNote}{Note}
+This depends on the size of the output signal. If it is 8 bits long, we could get a value from 0-\/15, if it is 1 bit long, we could only get 0-\/1. 
+\end{DoxyNote}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_digital_output_a3c367669d07f5c096a34584d87a66c08}{Picto\-::\-Digital\-Output}, and \hyperlink{class_picto_1_1_binary_data_output_a35f6db4f5689148cd9854e67800e0f25}{Picto\-::\-Binary\-Data\-Output}.
+
+
+
+Definition at line 56 of file Output\-Signal.\-h.
+
+\hypertarget{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}{\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::OutputSignal@{Picto\-::\-Output\-Signal}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Output\-Signal\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_digital_output_a44c3cb31438e4cecf53f63edbbd8866b}{Picto\-::\-Digital\-Output}, and \hyperlink{class_picto_1_1_binary_data_output_a325c73f5b09be8f4aa258a3eb3dc696a}{Picto\-::\-Binary\-Data\-Output}.
+
+
+
+Definition at line 22 of file Output\-Signal.\-cpp.
+
+\hypertarget{struct_picto_1_1_output_signal_a7996c66ede372d437199adbda75f95a5}{\index{Picto\-::\-Output\-Signal@{Picto\-::\-Output\-Signal}!set\-Port@{set\-Port}}
+\index{set\-Port@{set\-Port}!Picto::OutputSignal@{Picto\-::\-Output\-Signal}}
+\subsubsection[{set\-Port}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Output\-Signal\-::set\-Port (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_output_signal_a7996c66ede372d437199adbda75f95a5}
+
+
+Sets the name of the Port handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal}. 
+
+Currently values are B\-N\-C0 -\/ default, and P\-A\-R0 for B\-N\-C and Parallel ports respectively. 
+
+Definition at line 44 of file Output\-Signal.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Output\-Signal.\-h\item 
+source/common/stimuli/Output\-Signal.\-cpp\end{DoxyCompactItemize}

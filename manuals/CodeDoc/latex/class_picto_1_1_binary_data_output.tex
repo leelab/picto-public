@@ -1,0 +1,174 @@
+\hypertarget{class_picto_1_1_binary_data_output}{\section{Picto\-:\-:Binary\-Data\-Output Class Reference}
+\label{class_picto_1_1_binary_data_output}\index{Picto\-::\-Binary\-Data\-Output@{Picto\-::\-Binary\-Data\-Output}}
+}
+
+
+An \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} that handles the value of multiple pins over an entire port.  
+
+
+
+
+{\ttfamily \#include $<$Binary\-Data\-Output.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Binary\-Data\-Output\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_binary_data_output}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_binary_data_output_a85df0673a421e535373b56fde27f33db}{Binary\-Data\-Output} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_a33c3c57ec2eb6626a4abb5a3e089ee17}{void \hyperlink{class_picto_1_1_binary_data_output_a33c3c57ec2eb6626a4abb5a3e089ee17}{set\-Bin\-Value} (int \hyperlink{class_picto_1_1_binary_data_output_a05e3080cdbc047b4d8612090e89500bb}{value})}\label{class_picto_1_1_binary_data_output_a33c3c57ec2eb6626a4abb5a3e089ee17}
+
+\begin{DoxyCompactList}\small\item\em Sets the value on the output port to the binary form of the input integer. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_abbc8cbf040b8d19232234d557f692612}{int \hyperlink{class_picto_1_1_binary_data_output_abbc8cbf040b8d19232234d557f692612}{get\-Bin\-Value} ()}\label{class_picto_1_1_binary_data_output_abbc8cbf040b8d19232234d557f692612}
+
+\begin{DoxyCompactList}\small\item\em Returns the value on the output port when interpreted as the binary form of an integer. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_a8db62b3518c9cb0337ff3de01eb794f7}{void \hyperlink{class_picto_1_1_binary_data_output_a8db62b3518c9cb0337ff3de01eb794f7}{set\-Pin} (int pin)}\label{class_picto_1_1_binary_data_output_a8db62b3518c9cb0337ff3de01eb794f7}
+
+\begin{DoxyCompactList}\small\item\em This is a bug and should be removed. This element does not contain a Pin \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_acae817968affafc2dcca116bb05ff44a}{virtual int \hyperlink{class_picto_1_1_binary_data_output_acae817968affafc2dcca116bb05ff44a}{get\-Pin} ()}\label{class_picto_1_1_binary_data_output_acae817968affafc2dcca116bb05ff44a}
+
+\begin{DoxyCompactList}\small\item\em Returns the pin number handled by this \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} or -\/1 if the \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} handles more than one pin. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_picto_1_1_binary_data_output_a35f6db4f5689148cd9854e67800e0f25}{get\-Value} ()
+\begin{DoxyCompactList}\small\item\em Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_ace6cbb604b947ea33a0f86f59841e7cf}{virtual Q\-String \hyperlink{class_picto_1_1_binary_data_output_ace6cbb604b947ea33a0f86f59841e7cf}{get\-U\-I\-Template} ()}\label{class_picto_1_1_binary_data_output_ace6cbb604b947ea33a0f86f59841e7cf}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_binary_data_output_a5cbce303776bfc19b4734db52663c211}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_binary_data_output_ab356dc4cd739742139e36dc2a329390a}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_binary_data_output_ab356dc4cd739742139e36dc2a329390a}{Create} ()}\label{class_picto_1_1_binary_data_output_ab356dc4cd739742139e36dc2a329390a}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_binary_data_output_a9f8bb6ec83b390c96c2e66f5dbf5aa4b}{static const Q\-String \hyperlink{class_picto_1_1_binary_data_output_a9f8bb6ec83b390c96c2e66f5dbf5aa4b}{type} = \char`\"{}Binary Data Output\char`\"{}}\label{class_picto_1_1_binary_data_output_a9f8bb6ec83b390c96c2e66f5dbf5aa4b}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_binary_data_output_a325c73f5b09be8f4aa258a3eb3dc696a}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_binary_data_output_a2ec13542cada30caa5e0f84c3d4aa6c8}{virtual bool \hyperlink{class_picto_1_1_binary_data_output_a2ec13542cada30caa5e0f84c3d4aa6c8}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_binary_data_output_a2ec13542cada30caa5e0f84c3d4aa6c8}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_binary_data_output_a05e3080cdbc047b4d8612090e89500bb}{int \hyperlink{class_picto_1_1_binary_data_output_a05e3080cdbc047b4d8612090e89500bb}{value}}\label{class_picto_1_1_binary_data_output_a05e3080cdbc047b4d8612090e89500bb}
+
+\begin{DoxyCompactList}\small\item\em Gets/sets the value on the output port as an integer in binary form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} that handles the value of multiple pins over an entire port. 
+
+Output values are set as an integer. The integer is intepreted as a binary value and written to the output port accordingly. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 16 of file Binary\-Data\-Output.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_binary_data_output_a85df0673a421e535373b56fde27f33db}{\index{Picto\-::\-Binary\-Data\-Output@{Picto\-::\-Binary\-Data\-Output}!Binary\-Data\-Output@{Binary\-Data\-Output}}
+\index{Binary\-Data\-Output@{Binary\-Data\-Output}!Picto::BinaryDataOutput@{Picto\-::\-Binary\-Data\-Output}}
+\subsubsection[{Binary\-Data\-Output}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Binary\-Data\-Output\-::\-Binary\-Data\-Output (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_binary_data_output_a85df0673a421e535373b56fde27f33db}
+
+
+Constructs a \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object. 
+
+Adds a Value \hyperlink{class_picto_1_1_property}{Property} to store an integer value that will be output in binary form over the output port. 
+
+Definition at line 12 of file Binary\-Data\-Output.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_binary_data_output_a5cbce303776bfc19b4734db52663c211}{\index{Picto\-::\-Binary\-Data\-Output@{Picto\-::\-Binary\-Data\-Output}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::BinaryDataOutput@{Picto\-::\-Binary\-Data\-Output}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Binary\-Data\-Output\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_binary_data_output_a5cbce303776bfc19b4734db52663c211}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 37 of file Binary\-Data\-Output.\-h.
+
+\hypertarget{class_picto_1_1_binary_data_output_a35f6db4f5689148cd9854e67800e0f25}{\index{Picto\-::\-Binary\-Data\-Output@{Picto\-::\-Binary\-Data\-Output}!get\-Value@{get\-Value}}
+\index{get\-Value@{get\-Value}!Picto::BinaryDataOutput@{Picto\-::\-Binary\-Data\-Output}}
+\subsubsection[{get\-Value}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Variant Picto\-::\-Binary\-Data\-Output\-::get\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_binary_data_output_a35f6db4f5689148cd9854e67800e0f25}
+
+
+Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. 
+
+\begin{DoxyNote}{Note}
+This depends on the size of the output signal. If it is 8 bits long, we could get a value from 0-\/15, if it is 1 bit long, we could only get 0-\/1. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_ae4ca3f2d3f76dd6979418aba4a256dd7}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 34 of file Binary\-Data\-Output.\-h.
+
+\hypertarget{class_picto_1_1_binary_data_output_a325c73f5b09be8f4aa258a3eb3dc696a}{\index{Picto\-::\-Binary\-Data\-Output@{Picto\-::\-Binary\-Data\-Output}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::BinaryDataOutput@{Picto\-::\-Binary\-Data\-Output}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Binary\-Data\-Output\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_binary_data_output_a325c73f5b09be8f4aa258a3eb3dc696a}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 24 of file Binary\-Data\-Output.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Binary\-Data\-Output.\-h\item 
+source/common/stimuli/Binary\-Data\-Output.\-cpp\end{DoxyCompactItemize}

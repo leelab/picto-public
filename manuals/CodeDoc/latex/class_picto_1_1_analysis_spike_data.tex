@@ -1,0 +1,390 @@
+\hypertarget{class_picto_1_1_analysis_spike_data}{\section{Picto\-:\-:Analysis\-Spike\-Data Class Reference}
+\label{class_picto_1_1_analysis_spike_data}\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}}
+}
+
+
+An \hyperlink{class_picto_1_1_analysis_data_source}{Analysis\-Data\-Source} for gathering spike data.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Spike\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Spike\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_analysis_spike_data}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_ab7785ff34229a62a7edf25a37a2e97a5}{void \hyperlink{class_picto_1_1_analysis_spike_data_ab7785ff34229a62a7edf25a37a2e97a5}{zero\-Latest\-Frame} ()}\label{class_picto_1_1_analysis_spike_data_ab7785ff34229a62a7edf25a37a2e97a5}
+
+\begin{DoxyCompactList}\small\item\em Sets the time of the latest frame to zero. Spike times will be returned with respect to this latest frame. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_afa42d7bfc42be9d1927363e7d360cb02}{double \hyperlink{class_picto_1_1_analysis_spike_data_afa42d7bfc42be9d1927363e7d360cb02}{get\-Sample\-Period} ()}\label{class_picto_1_1_analysis_spike_data_afa42d7bfc42be9d1927363e7d360cb02}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period in seconds used by the spike data acquisition system. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_ae35e032169c1741d1334f8da44a83934}{double \hyperlink{class_picto_1_1_analysis_spike_data_ae35e032169c1741d1334f8da44a83934}{get\-Latest\-Time} ()}\label{class_picto_1_1_analysis_spike_data_ae35e032169c1741d1334f8da44a83934}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a76bf7b914f883f13018667d35a8955e6}{int \hyperlink{class_picto_1_1_analysis_spike_data_a76bf7b914f883f13018667d35a8955e6}{get\-Latest\-Channel} ()}\label{class_picto_1_1_analysis_spike_data_a76bf7b914f883f13018667d35a8955e6}
+
+\begin{DoxyCompactList}\small\item\em Returns the channel of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a3a797dd7bd8aa22e01807aaa0b58c52e}{int \hyperlink{class_picto_1_1_analysis_spike_data_a3a797dd7bd8aa22e01807aaa0b58c52e}{get\-Latest\-Unit} ()}\label{class_picto_1_1_analysis_spike_data_a3a797dd7bd8aa22e01807aaa0b58c52e}
+
+\begin{DoxyCompactList}\small\item\em Returns the unit of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a5173e408255345fe1a1e431550420667}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a5173e408255345fe1a1e431550420667}{get\-Latest\-Waveform} ()}\label{class_picto_1_1_analysis_spike_data_a5173e408255345fe1a1e431550420667}
+
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the latest spike to have been read. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_analysis_spike_data_a58f2959ebf238883e915ec4c38eb6ded}{get\-Next\-Time} ()
+\begin{DoxyCompactList}\small\item\em Returns the time of the next spike to be read. \end{DoxyCompactList}\item 
+int \hyperlink{class_picto_1_1_analysis_spike_data_aad435cb283f849d2be2fd68bafee9c53}{get\-Next\-Channel} ()
+\begin{DoxyCompactList}\small\item\em Returns the channel of the next spike to be read. \end{DoxyCompactList}\item 
+int \hyperlink{class_picto_1_1_analysis_spike_data_a14c0cc4adf0191c401be4ca6e4d07f2c}{get\-Next\-Unit} ()
+\begin{DoxyCompactList}\small\item\em Returns the unit of the next spike to be read. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a811fee6896b5e6493652a03e7e740908}{get\-Next\-Waveform} ()
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a486d3e1e4eb7989b7cde62012b55a7dd}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a486d3e1e4eb7989b7cde62012b55a7dd}{get\-Prev\-Times} (double secs\-Preceding)}\label{class_picto_1_1_analysis_spike_data_a486d3e1e4eb7989b7cde62012b55a7dd}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_aa1122c333d6dc3199879ac5f9262e859}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_aa1122c333d6dc3199879ac5f9262e859}{get\-Prev\-Channels} (double secs\-Preceding)}\label{class_picto_1_1_analysis_spike_data_aa1122c333d6dc3199879ac5f9262e859}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels of spikes that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_af11c5f4e5b0ffdcc587650d2fa01103e}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_af11c5f4e5b0ffdcc587650d2fa01103e}{get\-Prev\-Units} (double secs\-Preceding)}\label{class_picto_1_1_analysis_spike_data_af11c5f4e5b0ffdcc587650d2fa01103e}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the units of spikes that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_afd0f2d38028b3f6fef76e2d6eae6f2d6}{get\-Prev\-Waveforms} (double secs\-Preceding)
+\begin{DoxyCompactList}\small\item\em Returns a list of the waveforms of spikes that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_ae0829d9e6cde9e3c80f86f95beb48543}{get\-Next\-Times} (double secs\-Following)
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a403275bcc56f351df1290dffb4dd2a19}{get\-Next\-Channels} (double secs\-Following)
+\begin{DoxyCompactList}\small\item\em Returns a list of channels for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_af7bcca3f9facb8503d690bf58abf8653}{get\-Next\-Units} (double secs\-Following)
+\begin{DoxyCompactList}\small\item\em Returns a list of units for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a40d43d9fb67ac53fe348ac695688bc05}{get\-Next\-Waveforms} (double secs\-Following)
+\begin{DoxyCompactList}\small\item\em Returns a list of waveforms for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a3659fccec5dc5311ba17652cad81f65f}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a3659fccec5dc5311ba17652cad81f65f}{get\-Times\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_spike_data_a3659fccec5dc5311ba17652cad81f65f}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_a486d3e1e4eb7989b7cde62012b55a7dd}{get\-Prev\-Times()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_aa3f5dee42c7e016a433fb64af074557e}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_aa3f5dee42c7e016a433fb64af074557e}{get\-Times\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_spike_data_aa3f5dee42c7e016a433fb64af074557e}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_ae0829d9e6cde9e3c80f86f95beb48543}{get\-Next\-Times()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a9b6364e43eba4f798e03d3dec2a379c3}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a9b6364e43eba4f798e03d3dec2a379c3}{get\-Channels\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_spike_data_a9b6364e43eba4f798e03d3dec2a379c3}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_aa1122c333d6dc3199879ac5f9262e859}{get\-Prev\-Channels()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a1970220748e3b0d46731f9fe43adfc34}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a1970220748e3b0d46731f9fe43adfc34}{get\-Channels\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_spike_data_a1970220748e3b0d46731f9fe43adfc34}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_a403275bcc56f351df1290dffb4dd2a19}{get\-Next\-Channels()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a58ba542f9c99d0e6d720d8174a756dcb}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a58ba542f9c99d0e6d720d8174a756dcb}{get\-Units\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_spike_data_a58ba542f9c99d0e6d720d8174a756dcb}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_af11c5f4e5b0ffdcc587650d2fa01103e}{get\-Prev\-Units()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a23f53970177742c4abd00b06282c8e5b}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_a23f53970177742c4abd00b06282c8e5b}{get\-Units\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_spike_data_a23f53970177742c4abd00b06282c8e5b}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_af7bcca3f9facb8503d690bf58abf8653}{get\-Next\-Units()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_aedf78399fd61df9b4501f20fa2fb2cdd}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_aedf78399fd61df9b4501f20fa2fb2cdd}{get\-Waveforms\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_spike_data_aedf78399fd61df9b4501f20fa2fb2cdd}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_afd0f2d38028b3f6fef76e2d6eae6f2d6}{get\-Prev\-Waveforms()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_acaccb63e4d8e1a3aec4ded7f4d3fd5a6}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_spike_data_acaccb63e4d8e1a3aec4ded7f4d3fd5a6}{get\-Waveforms\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_spike_data_acaccb63e4d8e1a3aec4ded7f4d3fd5a6}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_spike_data_a40d43d9fb67ac53fe348ac695688bc05}{get\-Next\-Waveforms()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_spike_data_a6aaa7ca5ea9496ed2117641ce5030bf0}{entered\-Scope} ()
+\begin{DoxyCompactList}\small\item\em Resets this scriptable's data fields to their original values. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_spike_data_a421db4bf624bc6b71e36280f6b4fea55}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_af4e34b8b7613fe653a6bee2facaa6bc7}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_spike_data_af4e34b8b7613fe653a6bee2facaa6bc7}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_spike_data_af4e34b8b7613fe653a6bee2facaa6bc7}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a04cc84815fd7c12682a0c45a829c159f}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_spike_data_a04cc84815fd7c12682a0c45a829c159f}{get\-U\-I\-Group} ()}\label{class_picto_1_1_analysis_spike_data_a04cc84815fd7c12682a0c45a829c159f}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_spike_data_a227d6b13cb2ab02d8b2db13160ffed58}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_analysis_spike_data_a227d6b13cb2ab02d8b2db13160ffed58}{Create} ()}\label{class_picto_1_1_analysis_spike_data_a227d6b13cb2ab02d8b2db13160ffed58}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_analysis_spike_data}{Analysis\-Spike\-Data} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_spike_data_acfd1de9308e3d86b1109a4e7724e588b}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_spike_data_a3e7553a7a5af76724b70500418e1fe25}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_picto_1_1_analysis_data_source}{Analysis\-Data\-Source} for gathering spike data. 
+
+This object can be used to query spike times, channels, units and waveforms as well as metadata (the sample period of the spike acquisition system).
+
+A spike's channel is the electrode number on which is was detected. The unit is the index of the spike detection filter being used on that electrode for cases where multiple spikes are detected on one electrode.
+
+\begin{DoxyNote}{Note}
+For test runs in the testviewer, the data returned from this object will necessarily be fake sample data. For consistency's sake, any functions requesting future data will return meaningless values. 
+
+This class uses a \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} as its main data source. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file Analysis\-Spike\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_spike_data_a6aaa7ca5ea9496ed2117641ce5030bf0}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!entered\-Scope@{entered\-Scope}}
+\index{entered\-Scope@{entered\-Scope}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{entered\-Scope}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Spike\-Data\-::entered\-Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_spike_data_a6aaa7ca5ea9496ed2117641ce5030bf0}
+
+
+Resets this scriptable's data fields to their original values. 
+
+Called when this \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters \hyperlink{namespace_picto}{Picto} Scope (ie. Control flow reaches its parent element).
+
+When a \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters scope, all of its \hyperlink{class_picto_1_1_property}{Property} run values are reset to their init values. This function takes care of that by calling restore\-Properties(). 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}{Picto\-::\-Analysis\-Variable}.
+
+
+
+Definition at line 18 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a421db4bf624bc6b71e36280f6b4fea55}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Spike\-Data\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_spike_data_a421db4bf624bc6b71e36280f6b4fea55}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 41 of file Analysis\-Spike\-Data.\-h.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_aad435cb283f849d2be2fd68bafee9c53}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Channel@{get\-Next\-Channel}}
+\index{get\-Next\-Channel@{get\-Next\-Channel}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Channel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_aad435cb283f849d2be2fd68bafee9c53}
+
+
+Returns the channel of the next spike to be read. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 102 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a403275bcc56f351df1290dffb4dd2a19}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Channels@{get\-Next\-Channels}}
+\index{get\-Next\-Channels@{get\-Next\-Channels}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Channels}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Channels (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Following}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_a403275bcc56f351df1290dffb4dd2a19}
+
+
+Returns a list of channels for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 224 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a58f2959ebf238883e915ec4c38eb6ded}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Time@{get\-Next\-Time}}
+\index{get\-Next\-Time@{get\-Next\-Time}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Time}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_a58f2959ebf238883e915ec4c38eb6ded}
+
+
+Returns the time of the next spike to be read. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 90 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_ae0829d9e6cde9e3c80f86f95beb48543}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Times@{get\-Next\-Times}}
+\index{get\-Next\-Times@{get\-Next\-Times}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Times}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Times (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Following}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_ae0829d9e6cde9e3c80f86f95beb48543}
+
+
+Returns a list of spike times that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 203 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a14c0cc4adf0191c401be4ca6e4d07f2c}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Unit@{get\-Next\-Unit}}
+\index{get\-Next\-Unit@{get\-Next\-Unit}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Unit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_a14c0cc4adf0191c401be4ca6e4d07f2c}
+
+
+Returns the unit of the next spike to be read. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 114 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_af7bcca3f9facb8503d690bf58abf8653}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Units@{get\-Next\-Units}}
+\index{get\-Next\-Units@{get\-Next\-Units}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Units}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Units (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Following}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_af7bcca3f9facb8503d690bf58abf8653}
+
+
+Returns a list of units for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 240 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a811fee6896b5e6493652a03e7e740908}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Waveform@{get\-Next\-Waveform}}
+\index{get\-Next\-Waveform@{get\-Next\-Waveform}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Waveform}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Waveform (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_a811fee6896b5e6493652a03e7e740908}
+
+
+Returns the waveform of the next spike to be read. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 126 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a40d43d9fb67ac53fe348ac695688bc05}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Next\-Waveforms@{get\-Next\-Waveforms}}
+\index{get\-Next\-Waveforms@{get\-Next\-Waveforms}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Next\-Waveforms}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Next\-Waveforms (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Following}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_a40d43d9fb67ac53fe348ac695688bc05}
+
+
+Returns a list of waveforms for spikes that will occur with times $<$= the input \# sec after the latest frame and $>$ the latest frame time. 
+
+This is a list of lists, such that the ith spike's waveform will be at the ith index of the returned list, and that value will itself be a list. \begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 258 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_afd0f2d38028b3f6fef76e2d6eae6f2d6}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!get\-Prev\-Waveforms@{get\-Prev\-Waveforms}}
+\index{get\-Prev\-Waveforms@{get\-Prev\-Waveforms}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{get\-Prev\-Waveforms}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Spike\-Data\-::get\-Prev\-Waveforms (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Preceding}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_spike_data_afd0f2d38028b3f6fef76e2d6eae6f2d6}
+
+
+Returns a list of the waveforms of spikes that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. 
+
+This is a list of lists, such that the ith spike's waveform will be at the ith index of the returned list, and that value will itself be a list. 
+
+Definition at line 188 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_acfd1de9308e3d86b1109a4e7724e588b}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Spike\-Data\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_spike_data_acfd1de9308e3d86b1109a4e7724e588b}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a491e202caec7a1d9f9a0c7466f962f18}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 335 of file Analysis\-Spike\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_spike_data_a3e7553a7a5af76724b70500418e1fe25}{\index{Picto\-::\-Analysis\-Spike\-Data@{Picto\-::\-Analysis\-Spike\-Data}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::AnalysisSpikeData@{Picto\-::\-Analysis\-Spike\-Data}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Spike\-Data\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_spike_data_a3e7553a7a5af76724b70500418e1fe25}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. 
+
+\hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{values\-Are\-Valid()} is used for this. 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a8d43777d1a7d1b1467c9df205d118bb3}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 340 of file Analysis\-Spike\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Spike\-Data.\-h\item 
+source/common/parameter/Analysis\-Spike\-Data.\-cpp\end{DoxyCompactItemize}

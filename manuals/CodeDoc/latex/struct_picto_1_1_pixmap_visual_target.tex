@@ -1,0 +1,277 @@
+\hypertarget{struct_picto_1_1_pixmap_visual_target}{\section{Picto\-:\-:Pixmap\-Visual\-Target Struct Reference}
+\label{struct_picto_1_1_pixmap_visual_target}\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}}
+}
+
+
+The visual target used with a pixmap compositing surface.  
+
+
+
+
+{\ttfamily \#include $<$Pixmap\-Visual\-Target.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Pixmap\-Visual\-Target\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_picto_1_1_pixmap_visual_target}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_picto_1_1_pixmap_visual_target_a3d7badfb82ab0b409950197f2284a129}{Pixmap\-Visual\-Target} (bool \-\_\-b\-Windowed=false, int \-\_\-width=800, int \-\_\-height=600)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{struct_picto_1_1_pixmap_visual_target}{Pixmap\-Visual\-Target}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ \hyperlink{struct_picto_1_1_pixmap_visual_target_a22447d36b31e40ecb6f5ad13f20a5eb4}{generate\-Compositing\-Surface} ()
+\begin{DoxyCompactList}\small\item\em Creates and returns a new \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that can be used to translate a Q\-Image into a graphical data structure that this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} can understand. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a307b27dc2b7556abbacd067ac66d5750}{Q\-String \hyperlink{struct_picto_1_1_pixmap_visual_target_a307b27dc2b7556abbacd067ac66d5750}{get\-Type\-Name} ()}\label{struct_picto_1_1_pixmap_visual_target_a307b27dc2b7556abbacd067ac66d5750}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this type of \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface}. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_pixmap_visual_target_a85cadece274f7f94bd7f36e7fe2f34b0}{draw} (Q\-Point location, Q\-Point compositing\-Surface\-Offset, Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ compositing\-Surface)
+\begin{DoxyCompactList}\small\item\em Draws the compositing surface onto the visual target. The compositing\-Surface\-Offset is the offset at which the compositing surface should be drawn from location to assure that the \char`\"{}zero\char`\"{} point of the compositing surface is at location. For example, a cursor compositing surface might request to be drawn at 0,0, however the center of the cursor might be at position 5,5 or 7,7 within the compositing surface depending on the size of the cursor. The offset tells the system, move the compositing surface up and to the left by 5,5 or 7,7 so that the center of the cursor is at 0,0. We cant simply pass location-\/compositing\-Surface\-Offset into this function because in zooming these two components need to be treated differently (See the pixmap implementation of this function) \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_pixmap_visual_target_a2546a9881bd5ec96685d7e8c09e0f7a8}{present} ()
+\begin{DoxyCompactList}\small\item\em Renders the latest frame to the display. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_pixmap_visual_target_a0f4e934a0efcc50c90718a24157ecd2f}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clears the rendering buffer and display. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_picto_1_1_pixmap_visual_target_a4f1dbd1319f35b1aa295b607b4066510}{latest\-Frame\-Succesfully\-Rendered} ()
+\begin{DoxyCompactList}\small\item\em Returns true if the latest frame was successfully rendered, false otherwise. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_pixmap_visual_target_afa97c03ab5b75d3d3789313f08329062}{draw\-Non\-Experiment\-Text} (Q\-Font font, Q\-Color color, Q\-Rect rect, Qt\-::\-Alignment\-Flag alignment, Q\-String text)
+\item 
+virtual Q\-Point \hyperlink{struct_picto_1_1_pixmap_visual_target_a8f3cb13a38045e2730ac4da01990dd8a}{viewport\-Point\-To\-Target\-Point} (Q\-Point viewport\-Point)
+\begin{DoxyCompactList}\small\item\em Converts a point on the viewport to a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} itself. \end{DoxyCompactList}\item 
+virtual Q\-Point \hyperlink{struct_picto_1_1_pixmap_visual_target_a7c69972fed4a422d1d84dc57c5aa1fef}{target\-Point\-To\-Viewport\-Point} (Q\-Point target\-Point)
+\begin{DoxyCompactList}\small\item\em Converts a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} to a point on the Viewport window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{struct_picto_1_1_pixmap_visual_target_a4b76078115a103d4f1fda8ae8a9812c3}{paint} (Q\-Paint\-Device $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Draws the current frame onto the input widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The visual target used with a pixmap compositing surface. 
+
+This visual target works only with a \hyperlink{class_picto_1_1_pixmap_compositing_surface}{Pixmap\-Compositing\-Surface}. Like all Visual\-Targets, it is responsible for drawing to the screen. Since Pixmaps are so easy to work with, this is a really simple target. It holds 2 pixmap compositing surface, and flips back and forth between them (so that we never draw directly to the screen). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Pixmap\-Visual\-Target.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a3d7badfb82ab0b409950197f2284a129}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!Pixmap\-Visual\-Target@{Pixmap\-Visual\-Target}}
+\index{Pixmap\-Visual\-Target@{Pixmap\-Visual\-Target}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{Pixmap\-Visual\-Target}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Pixmap\-Visual\-Target\-::\-Pixmap\-Visual\-Target (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-b\-Windowed = {\ttfamily false}, }
+\item[{int}]{\-\_\-width = {\ttfamily 800}, }
+\item[{int}]{\-\_\-height = {\ttfamily 600}}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_pixmap_visual_target_a3d7badfb82ab0b409950197f2284a129}
+
+
+Constructs a new \hyperlink{struct_picto_1_1_pixmap_visual_target}{Pixmap\-Visual\-Target}. 
+
+Calls \hyperlink{class_picto_1_1_visual_target_a640b2cbbd611a280f97f88c29eef610a}{Visual\-Target\-::\-Visual\-Target} with the input values, then sets up the various data values used by this object 
+
+Definition at line 15 of file Pixmap\-Visual\-Target.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a0f4e934a0efcc50c90718a24157ecd2f}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!clear@{clear}}
+\index{clear@{clear}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Pixmap\-Visual\-Target\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a0f4e934a0efcc50c90718a24157ecd2f}
+
+
+Clears the rendering buffer and display. 
+
+\begin{DoxyNote}{Note}
+This function calls \hyperlink{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{set\-First\-Phosphor\-Time()} internally and may block execution for up to one frame depending on this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} type's level of accuracy. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_pixmap_visual_target_a85cadece274f7f94bd7f36e7fe2f34b0}{draw()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_visual_target_a84c690c0c08f1e4b64e40c853fcf0d41}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 140 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a85cadece274f7f94bd7f36e7fe2f34b0}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!draw@{draw}}
+\index{draw@{draw}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Pixmap\-Visual\-Target\-::draw (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{location, }
+\item[{Q\-Point}]{compositing\-Surface\-Offset, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Compositing\-Surface} $>$}]{compositing\-Surface}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a85cadece274f7f94bd7f36e7fe2f34b0}
+
+
+Draws the compositing surface onto the visual target. The compositing\-Surface\-Offset is the offset at which the compositing surface should be drawn from location to assure that the \char`\"{}zero\char`\"{} point of the compositing surface is at location. For example, a cursor compositing surface might request to be drawn at 0,0, however the center of the cursor might be at position 5,5 or 7,7 within the compositing surface depending on the size of the cursor. The offset tells the system, move the compositing surface up and to the left by 5,5 or 7,7 so that the center of the cursor is at 0,0. We cant simply pass location-\/compositing\-Surface\-Offset into this function because in zooming these two components need to be treated differently (See the pixmap implementation of this function) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{_pixmap_visual_target_8cpp_source}{Pixmap\-Visual\-Target.\-cpp} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_visual_target_a948764671d6721f4dcfd5c8165b0eb5c}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 80 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_afa97c03ab5b75d3d3789313f08329062}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!draw\-Non\-Experiment\-Text@{draw\-Non\-Experiment\-Text}}
+\index{draw\-Non\-Experiment\-Text@{draw\-Non\-Experiment\-Text}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{draw\-Non\-Experiment\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Pixmap\-Visual\-Target\-::draw\-Non\-Experiment\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-Font}]{font, }
+\item[{Q\-Color}]{color, }
+\item[{Q\-Rect}]{rect, }
+\item[{Qt\-::\-Alignment\-Flag}]{alignment, }
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_pixmap_visual_target_afa97c03ab5b75d3d3789313f08329062}
+brief Draws text overlayed over the rendered frame.. 
+
+Definition at line 115 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a22447d36b31e40ecb6f5ad13f20a5eb4}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!generate\-Compositing\-Surface@{generate\-Compositing\-Surface}}
+\index{generate\-Compositing\-Surface@{generate\-Compositing\-Surface}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{generate\-Compositing\-Surface}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Compositing\-Surface} $>$ Picto\-::\-Pixmap\-Visual\-Target\-::generate\-Compositing\-Surface (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a22447d36b31e40ecb6f5ad13f20a5eb4}
+
+
+Creates and returns a new \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that can be used to translate a Q\-Image into a graphical data structure that this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} can understand. 
+
+The returned \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} should set up with a Q\-Image by the calling function. 
+
+Implements \hyperlink{class_picto_1_1_visual_target_ac4a01741b91fa6a984e18453d47b9da8}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 69 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a4f1dbd1319f35b1aa295b607b4066510}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!latest\-Frame\-Succesfully\-Rendered@{latest\-Frame\-Succesfully\-Rendered}}
+\index{latest\-Frame\-Succesfully\-Rendered@{latest\-Frame\-Succesfully\-Rendered}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{latest\-Frame\-Succesfully\-Rendered}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Pixmap\-Visual\-Target\-::latest\-Frame\-Succesfully\-Rendered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a4f1dbd1319f35b1aa295b607b4066510}
+
+
+Returns true if the latest frame was successfully rendered, false otherwise. 
+
+In the case of \hyperlink{struct_picto_1_1_pixmap_visual_target}{Pixmap\-Visual\-Target}, Q\-Pixmaps are simple enough that we are just always returning true. 
+
+Implements \hyperlink{class_picto_1_1_visual_target_a62d2be22dc12dc3fec6e125bafce53aa}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 42 of file Pixmap\-Visual\-Target.\-h.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a4b76078115a103d4f1fda8ae8a9812c3}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!paint@{paint}}
+\index{paint@{paint}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{paint}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Pixmap\-Visual\-Target\-::paint (
+\begin{DoxyParamCaption}
+\item[{Q\-Paint\-Device $\ast$}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a4b76078115a103d4f1fda8ae8a9812c3}
+
+
+Draws the current frame onto the input widget. 
+
+In the workstation, where precise first phosphor timing isn't important, we draw the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} frame onto a workstation widget according to paint\-Events from the event loop. This would generally just happen in the paint\-Event function, but we use a parent widget (\hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host}) that calls this paint function to paint the latest frame onto itself whenever its paint\-Event is called. I believe that this \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} class is unnecessary and pretty much arose due to an incomplete understanding of the Q\-Widget system. Probably, we can just do away with the \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} class and use this class directly wherever that class is used. In practice however, what we have works and we don't have time to make this change and test it. If you are reading this and you have time, go for it... \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_visual_target_a8f5ca80122c7f624772336c5af0bc618}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 62 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a2546a9881bd5ec96685d7e8c09e0f7a8}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!present@{present}}
+\index{present@{present}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{present}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Pixmap\-Visual\-Target\-::present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a2546a9881bd5ec96685d7e8c09e0f7a8}
+
+
+Renders the latest frame to the display. 
+
+\begin{DoxyNote}{Note}
+This function calls \hyperlink{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{set\-First\-Phosphor\-Time()} internally and may block execution for up to one frame depending on this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} type's level of accuracy. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_visual_target_a914177dc74348568b08aed7dc88648e8}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 103 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a7c69972fed4a422d1d84dc57c5aa1fef}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!target\-Point\-To\-Viewport\-Point@{target\-Point\-To\-Viewport\-Point}}
+\index{target\-Point\-To\-Viewport\-Point@{target\-Point\-To\-Viewport\-Point}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{target\-Point\-To\-Viewport\-Point}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Point Picto\-::\-Pixmap\-Visual\-Target\-::target\-Point\-To\-Viewport\-Point (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{target\-Point}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a7c69972fed4a422d1d84dc57c5aa1fef}
+
+
+Converts a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} to a point on the Viewport window. 
+
+For example, if the viewport has zoomed out, a point at 10,10 in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} might only be at 1,1 in the viewport. 
+
+Reimplemented from \hyperlink{class_picto_1_1_visual_target_ac7e639003d6e8afa2a063447b6beb9d5}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 132 of file Pixmap\-Visual\-Target.\-cpp.
+
+\hypertarget{struct_picto_1_1_pixmap_visual_target_a8f3cb13a38045e2730ac4da01990dd8a}{\index{Picto\-::\-Pixmap\-Visual\-Target@{Picto\-::\-Pixmap\-Visual\-Target}!viewport\-Point\-To\-Target\-Point@{viewport\-Point\-To\-Target\-Point}}
+\index{viewport\-Point\-To\-Target\-Point@{viewport\-Point\-To\-Target\-Point}!Picto::PixmapVisualTarget@{Picto\-::\-Pixmap\-Visual\-Target}}
+\subsubsection[{viewport\-Point\-To\-Target\-Point}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Point Picto\-::\-Pixmap\-Visual\-Target\-::viewport\-Point\-To\-Target\-Point (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{viewport\-Point}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_picto_1_1_pixmap_visual_target_a8f3cb13a38045e2730ac4da01990dd8a}
+
+
+Converts a point on the viewport to a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} itself. 
+
+For example, if the viewport has zoomed out, a point on the top left of the viewport will no longer be at 0,0 within the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} but rather at somewhere below zero like -\/100,-\/100 
+
+Reimplemented from \hyperlink{class_picto_1_1_visual_target_a8374c2da42cf1c438e043317b82b5318}{Picto\-::\-Visual\-Target}.
+
+
+
+Definition at line 124 of file Pixmap\-Visual\-Target.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Pixmap\-Visual\-Target.\-h\item 
+source/common/compositor/Pixmap\-Visual\-Target.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,167 @@
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample}{\section{Picto\-:\-:P\-C\-M\-Mixing\-Sample Class Reference}
+\label{class_picto_1_1_p_c_m_mixing_sample}\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+}
+
+
+A simple pulse code modulation type of mixing sample.  
+
+
+
+
+{\ttfamily \#include $<$P\-C\-M\-Mixing\-Sample.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:P\-C\-M\-Mixing\-Sample\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_p_c_m_mixing_sample}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_afd0039e88682e3466667475b50637cd5}{void {\bfseries playing} (Q\-String mix\-Sample\-Type)}\label{class_picto_1_1_p_c_m_mixing_sample_afd0039e88682e3466667475b50637cd5}
+
+\item 
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_a1539ce4cee5ade8b3b4b9374fd197c52}{void {\bfseries stopping} (Q\-String mix\-Sample\-Type)}\label{class_picto_1_1_p_c_m_mixing_sample_a1539ce4cee5ade8b3b4b9374fd197c52}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_adf5abf5deee65514a8b7345e10033fc2}{Q\-String \hyperlink{class_picto_1_1_p_c_m_mixing_sample_adf5abf5deee65514a8b7345e10033fc2}{get\-Type\-Name} ()}\label{class_picto_1_1_p_c_m_mixing_sample_adf5abf5deee65514a8b7345e10033fc2}
+
+\begin{DoxyCompactList}\small\item\em Returns the type name of this Mixing Sample. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_p_c_m_mixing_sample_ad0b5c52599275d4455c7a876f340a51f}{set\-Sound\-Effect} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$ sound\-Effect)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} underlying this \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a1876bd598742dbe7c47b5cb56758333d}{schedule\-Volume\-Change} (float volume)
+\begin{DoxyCompactList}\small\item\em Schedules a volume change to the underlying sound to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a01bdf31cdb69f75d073ec7f74116d978}{schedule\-Start} ()
+\begin{DoxyCompactList}\small\item\em Schedules a the underlying sound to start at a time to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a5bbf61241bcd000a280bac4fb0970a5e}{schedule\-Stop} ()
+\begin{DoxyCompactList}\small\item\em Schedules a the underlying sound to stop at a time to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}{update} ()
+\begin{DoxyCompactList}\small\item\em Implements the effects of the commands scheduled in \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a01bdf31cdb69f75d073ec7f74116d978}{schedule\-Start()}, \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a5bbf61241bcd000a280bac4fb0970a5e}{schedule\-Stop()} and \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a1876bd598742dbe7c47b5cb56758333d}{schedule\-Volume\-Change()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple pulse code modulation type of mixing sample. 
+
+The original idea for this mixing sample was probably to have some kind of underlying pulse code modulated date type that could then be mixed into a \hyperlink{class_picto_1_1_p_c_m_aural_target}{P\-C\-M\-Aural\-Target} using some P\-C\-M mixing algorithm. In practice, due to time constraints, this was overly complicated and this object now simply stores the underlying \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} and calls its \hyperlink{class_picto_1_1_preloaded_sound_a22fb576f20b369d32f1c6b42d7d00f79}{Preloaded\-Sound\-::play()}, \hyperlink{class_picto_1_1_preloaded_sound_a876b9dd3eb966656503493a59e80554f}{Preloaded\-Sound\-::stop()}, etc at the approriate time. Mixing the sounds is not an issue since Qt allows them to be played in parallel and the computer's sound system figures out how to make all the separate audio sources come out of the speaker at once. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file P\-C\-M\-Mixing\-Sample.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_a01bdf31cdb69f75d073ec7f74116d978}{\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}!schedule\-Start@{schedule\-Start}}
+\index{schedule\-Start@{schedule\-Start}!Picto::PCMMixingSample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+\subsubsection[{schedule\-Start}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-P\-C\-M\-Mixing\-Sample\-::schedule\-Start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_p_c_m_mixing_sample_a01bdf31cdb69f75d073ec7f74116d978}
+
+
+Schedules a the underlying sound to start at a time to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. 
+
+In the \hyperlink{class_picto_1_1_p_c_m_mixing_sample}{P\-C\-M\-Mixing\-Sample} scheduled commands are implemented in the \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}{update()} function. 
+
+Implements \hyperlink{class_picto_1_1_mixing_sample_afe28101bad0e371ad2664220a2f13f61}{Picto\-::\-Mixing\-Sample}.
+
+
+
+Definition at line 36 of file P\-C\-M\-Mixing\-Sample.\-cpp.
+
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_a5bbf61241bcd000a280bac4fb0970a5e}{\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}!schedule\-Stop@{schedule\-Stop}}
+\index{schedule\-Stop@{schedule\-Stop}!Picto::PCMMixingSample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+\subsubsection[{schedule\-Stop}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-P\-C\-M\-Mixing\-Sample\-::schedule\-Stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_p_c_m_mixing_sample_a5bbf61241bcd000a280bac4fb0970a5e}
+
+
+Schedules a the underlying sound to stop at a time to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. 
+
+In the \hyperlink{class_picto_1_1_p_c_m_mixing_sample}{P\-C\-M\-Mixing\-Sample} scheduled commands are implemented in the \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}{update()} function. 
+
+Implements \hyperlink{class_picto_1_1_mixing_sample_a0de99d405334f14682c87b812726a034}{Picto\-::\-Mixing\-Sample}.
+
+
+
+Definition at line 43 of file P\-C\-M\-Mixing\-Sample.\-cpp.
+
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_a1876bd598742dbe7c47b5cb56758333d}{\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}!schedule\-Volume\-Change@{schedule\-Volume\-Change}}
+\index{schedule\-Volume\-Change@{schedule\-Volume\-Change}!Picto::PCMMixingSample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+\subsubsection[{schedule\-Volume\-Change}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-P\-C\-M\-Mixing\-Sample\-::schedule\-Volume\-Change (
+\begin{DoxyParamCaption}
+\item[{float}]{volume}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_p_c_m_mixing_sample_a1876bd598742dbe7c47b5cb56758333d}
+
+
+Schedules a volume change to the underlying sound to be implemented according to the run model of the underlying \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} type. 
+
+In the \hyperlink{class_picto_1_1_p_c_m_mixing_sample}{P\-C\-M\-Mixing\-Sample} scheduled commands are implemented in the \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}{update()} function. 
+
+Implements \hyperlink{class_picto_1_1_mixing_sample_a2bdbed952aef586fd2d3a802aab0e004}{Picto\-::\-Mixing\-Sample}.
+
+
+
+Definition at line 29 of file P\-C\-M\-Mixing\-Sample.\-cpp.
+
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_ad0b5c52599275d4455c7a876f340a51f}{\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}!set\-Sound\-Effect@{set\-Sound\-Effect}}
+\index{set\-Sound\-Effect@{set\-Sound\-Effect}!Picto::PCMMixingSample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+\subsubsection[{set\-Sound\-Effect}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-P\-C\-M\-Mixing\-Sample\-::set\-Sound\-Effect (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Preloaded\-Sound} $>$}]{sound\-Effect}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_p_c_m_mixing_sample_ad0b5c52599275d4455c7a876f340a51f}
+
+
+Sets the \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} underlying this \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample}. 
+
+\begin{DoxyNote}{Note}
+In an S\-A\-T style analogy\-: \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} \-: \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} \-:\-: Q\-Image \-: \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_mixing_sample_a3e35f68b929f1bce4610da3acf4f9bfb}{Picto\-::\-Mixing\-Sample}.
+
+
+
+Definition at line 16 of file P\-C\-M\-Mixing\-Sample.\-cpp.
+
+\hypertarget{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}{\index{Picto\-::\-P\-C\-M\-Mixing\-Sample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}!update@{update}}
+\index{update@{update}!Picto::PCMMixingSample@{Picto\-::\-P\-C\-M\-Mixing\-Sample}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-P\-C\-M\-Mixing\-Sample\-::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_p_c_m_mixing_sample_a6973973ba9ff7d6b72ee47a558df9d55}
+
+
+Implements the effects of the commands scheduled in \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a01bdf31cdb69f75d073ec7f74116d978}{schedule\-Start()}, \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a5bbf61241bcd000a280bac4fb0970a5e}{schedule\-Stop()} and \hyperlink{class_picto_1_1_p_c_m_mixing_sample_a1876bd598742dbe7c47b5cb56758333d}{schedule\-Volume\-Change()}. 
+
+When called, this function calls the play(), stop(), set\-Volue(), etc. functions on the underlying \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object. This assures us that all changes to the sound occur synchronously at a time defined by the experimental presentation system rather than at the particular time that a user script makes a change. At the time that the \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} is stopped or started, this function emits either a stopping() or playing() signal including the type of this mixing sample in order to provide feedback to other parties interested in the current state of the underlying \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object. \begin{DoxyNote}{Note}
+If this object's underlying \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} changes, calling update will stop the old sound and start the new one. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} 
+\end{DoxySeeAlso}
+
+
+Definition at line 61 of file P\-C\-M\-Mixing\-Sample.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/P\-C\-M\-Mixing\-Sample.\-h\item 
+source/common/compositor/P\-C\-M\-Mixing\-Sample.\-cpp\end{DoxyCompactItemize}

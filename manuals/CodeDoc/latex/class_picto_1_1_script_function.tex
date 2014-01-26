@@ -1,0 +1,201 @@
+\hypertarget{class_picto_1_1_script_function}{\section{Picto\-:\-:Script\-Function Class Reference}
+\label{class_picto_1_1_script_function}\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}}
+}
+
+
+An element of the \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state_machine}{State\-Machine} used to define a Script function that can be called from any script for the purpose of reusing the same code in multiple places.  
+
+
+
+
+{\ttfamily \#include $<$Script\-Function.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Script\-Function\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_script_function}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_script_function_a871e00aa80c4d36f8898672c85a4a866}{Script\-Function} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_script_function}{Script\-Function}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_ab4c29cd3f0da8087b0b5a953cdc2095a}{bool \hyperlink{class_picto_1_1_script_function_ab4c29cd3f0da8087b0b5a953cdc2095a}{has\-Contents\-For\-Script\-Engine} ()}\label{class_picto_1_1_script_function_ab4c29cd3f0da8087b0b5a953cdc2095a}
+
+\begin{DoxyCompactList}\small\item\em Returns true if something in this \hyperlink{class_picto_1_1_scriptable}{Scriptable} can be used in a script engine (ie. a script property or script function) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a057f97a5333812ee5ff269b5cb86f403}{bool \hyperlink{class_picto_1_1_script_function_a057f97a5333812ee5ff269b5cb86f403}{bind\-To\-Script\-Engine} (Q\-Script\-Engine \&engine)}\label{class_picto_1_1_script_function_a057f97a5333812ee5ff269b5cb86f403}
+
+\begin{DoxyCompactList}\small\item\em Binds this \hyperlink{class_picto_1_1_scriptable}{Scriptable} to the input Q\-Script\-Engine so that it can be accessed by any scripts running in that Q\-Script\-Engine. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a0af7a31441647632ba9d33c746e1c068}{virtual Q\-String \hyperlink{class_picto_1_1_script_function_a0af7a31441647632ba9d33c746e1c068}{get\-U\-I\-Template} ()}\label{class_picto_1_1_script_function_a0af7a31441647632ba9d33c746e1c068}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_script_function_a6dd0bc6a6aaeeff4b7ccc9238d4b6f1e}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a62949934617959595d863623deb73dcc}{virtual Q\-String \hyperlink{class_picto_1_1_script_function_a62949934617959595d863623deb73dcc}{get\-U\-I\-Group} ()}\label{class_picto_1_1_script_function_a62949934617959595d863623deb73dcc}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_script_function_a7584048defd3fb35a72bd5cece1c9f06}{get\-Scripting\-Info} ()
+\begin{DoxyCompactList}\small\item\em Returns all of the script properties and script function for this \hyperlink{class_picto_1_1_scriptable}{Scriptable} element. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_script_function_a78841d2f9189ace5b828836b14006e31}{upgrade\-Version} (Q\-String deserialized\-Version)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_script_function_afcb47161eb315e4b77f472b59792a76b}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_script_function_afcb47161eb315e4b77f472b59792a76b}{Create} ()}\label{class_picto_1_1_script_function_afcb47161eb315e4b77f472b59792a76b}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_script_function}{Script\-Function} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_script_function_aa2718851ab93401f5efdf6f70df199d0}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a76b4da99c2e46834bc975240f81dee68}{virtual void \hyperlink{class_picto_1_1_script_function_a76b4da99c2e46834bc975240f81dee68}{post\-Deserialize} ()}\label{class_picto_1_1_script_function_a76b4da99c2e46834bc975240f81dee68}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Scriptable\-Container\-::post\-Deserialize()} to set the \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} \hyperlink{class_picto_1_1_property}{Property} invisible since it doesn't do anything in \hyperlink{class_picto_1_1_script_function}{Script\-Function} objects. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a4bd4e7f351bc78806730173f6586e565}{virtual bool \hyperlink{class_picto_1_1_script_function_a4bd4e7f351bc78806730173f6586e565}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_script_function_a4bd4e7f351bc78806730173f6586e565}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_a744c4dfcb105c84fc1d0799b0aa1140e}{virtual bool \hyperlink{class_picto_1_1_script_function_a744c4dfcb105c84fc1d0799b0aa1140e}{can\-Have\-Scripts} ()}\label{class_picto_1_1_script_function_a744c4dfcb105c84fc1d0799b0aa1140e}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_function_afcc5b2f699914d81ead2b54003bc4a85}{virtual bool \hyperlink{class_picto_1_1_script_function_afcc5b2f699914d81ead2b54003bc4a85}{execute\-Search\-Algorithm} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)}\label{class_picto_1_1_script_function_afcc5b2f699914d81ead2b54003bc4a85}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_aae46c50e128e021f5ad66cb8b419c65a}{Scriptable\-Container\-::execute\-Search\-Algorithm()} to search for the search\-Request in this \hyperlink{class_picto_1_1_script_function}{Script\-Function}'s Script \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An element of the \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state_machine}{State\-Machine} used to define a Script function that can be called from any script for the purpose of reusing the same code in multiple places. 
+
+Objects of this class have an Inputs \hyperlink{class_picto_1_1_property}{Property} and a Script \hyperlink{class_picto_1_1_property}{Property}. In the Input \hyperlink{class_picto_1_1_property}{Property} the designer enters a comma separated list of function input parameters. The Script \hyperlink{class_picto_1_1_property}{Property} is the actual logic that is run whenever the \hyperlink{class_picto_1_1_script_function}{Script\-Function} is called. The Script function is called by using its name inside another script, and inputting whatever parameters are needed to match the values in the Inputs \hyperlink{class_picto_1_1_property}{Property}. The Script \hyperlink{class_picto_1_1_property}{Property} logic can then use the parameter values by using the names entered in that field. For example, if a \hyperlink{class_picto_1_1_script_function}{Script\-Function} were called \char`\"{}\-Sample\-Function\char`\"{} and defined with\-:
+\begin{DoxyItemize}
+\item Inputs \-: \char`\"{}input1, input2\char`\"{}
+\item Script\-: \char`\"{}return input1+input2;\char`\"{}
+\end{DoxyItemize}
+
+A script in \hyperlink{namespace_picto}{Picto} for which Sample\-Function is in scope can use the following code\-: 
+\begin{DoxyCode}
+var addedValue = SampleFunction(23,12);
+var isThirtyFive = (addedValue == 35); \textcolor{comment}{//will be true.}
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 35 of file Script\-Function.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_script_function_a871e00aa80c4d36f8898672c85a4a866}{\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}!Script\-Function@{Script\-Function}}
+\index{Script\-Function@{Script\-Function}!Picto::ScriptFunction@{Picto\-::\-Script\-Function}}
+\subsubsection[{Script\-Function}]{\setlength{\rightskip}{0pt plus 5cm}Script\-Function\-::\-Script\-Function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_script_function_a871e00aa80c4d36f8898672c85a4a866}
+
+
+Constructs a new \hyperlink{class_picto_1_1_script_function}{Script\-Function}. 
+
+Adds an Inputs \hyperlink{class_picto_1_1_property}{Property} for defining a comma separated list of input parameter names for the function. Also defines a Script \hyperlink{class_picto_1_1_property}{Property} for defining the Script Function logic. 
+
+Definition at line 11 of file Script\-Function.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_script_function_aa2718851ab93401f5efdf6f70df199d0}{\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::ScriptFunction@{Picto\-::\-Script\-Function}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Script\-Function\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_function_aa2718851ab93401f5efdf6f70df199d0}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_function_abffd30d757e70e11c3dbbdd108c34081}{Picto\-::\-Analysis\-Function}.
+
+
+
+Definition at line 54 of file Script\-Function.\-h.
+
+\hypertarget{class_picto_1_1_script_function_a6dd0bc6a6aaeeff4b7ccc9238d4b6f1e}{\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ScriptFunction@{Picto\-::\-Script\-Function}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Script\-Function\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_function_a6dd0bc6a6aaeeff4b7ccc9238d4b6f1e}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_ab3e676a5138ce7f49ab924c98fe3d71e}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_function_ac0a9fa7cbc9471ead4d11f069745fb05}{Picto\-::\-Analysis\-Function}.
+
+
+
+Definition at line 48 of file Script\-Function.\-h.
+
+\hypertarget{class_picto_1_1_script_function_a7584048defd3fb35a72bd5cece1c9f06}{\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}!get\-Scripting\-Info@{get\-Scripting\-Info}}
+\index{get\-Scripting\-Info@{get\-Scripting\-Info}!Picto::ScriptFunction@{Picto\-::\-Script\-Function}}
+\subsubsection[{get\-Scripting\-Info}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Script\-Function\-::get\-Scripting\-Info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_script_function_a7584048defd3fb35a72bd5cece1c9f06}
+
+
+Returns all of the script properties and script function for this \hyperlink{class_picto_1_1_scriptable}{Scriptable} element. 
+
+We created this before we created the \hyperlink{class_asset_describer}{Asset\-Describer} which includes more complete documentation on \hyperlink{namespace_picto}{Picto} element's scriptable properties and functions. Possibly we should just use data from that class here. Alternatively, we can get rid of this all together along with the \char`\"{}\-Scripting Info\char`\"{} tab in the \hyperlink{class_designer}{Designer} since it isn't really all that useful. In case we do keep this around, it should be noted that since we don't want people to use the various signals and slots from \hyperlink{class_picto_1_1_scriptable}{Scriptable} Superclasses, but we D\-O want to enable hierarchical scripting property/function definitions, when we print out the available scripts we ignore any properties and methods that are available in the \hyperlink{class_picto_1_1_scriptable}{Scriptable} class, leaving all of those in its subclasses. Since these functions are all still technically available to anyone that wants to use them, this is a clear application security risk. For now, we're not going to worry about that though. 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_a728180eeacd1b8611eda1540a9dd1a0f}{Picto\-::\-Scriptable}.
+
+
+
+Definition at line 64 of file Script\-Function.\-cpp.
+
+\hypertarget{class_picto_1_1_script_function_a78841d2f9189ace5b828836b14006e31}{\index{Picto\-::\-Script\-Function@{Picto\-::\-Script\-Function}!upgrade\-Version@{upgrade\-Version}}
+\index{upgrade\-Version@{upgrade\-Version}!Picto::ScriptFunction@{Picto\-::\-Script\-Function}}
+\subsubsection[{upgrade\-Version}]{\setlength{\rightskip}{0pt plus 5cm}void Script\-Function\-::upgrade\-Version (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{deserialized\-Version}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_script_function_a78841d2f9189ace5b828836b14006e31}
+Before Design syntax version 0.\-0.\-1, all U\-I position data was stored in \hyperlink{class_picto_1_1_u_i_info}{U\-I\-Info} objects that were sub-\/elements of \hyperlink{class_picto_1_1_u_i_enabled}{U\-I\-Enabled} objects. At version 0.\-0.\-1, we moved U\-I data out of the Experimental design into a separate U\-I\-Elements of a \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} design. 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a12c0d0357c85854db9220c72c4941b15}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 99 of file Script\-Function.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Script\-Function.\-h\item 
+source/common/statemachine/Script\-Function.\-cpp\end{DoxyCompactItemize}

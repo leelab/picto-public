@@ -1,0 +1,56 @@
+\hypertarget{struct_picto_1_1_start_response_handler}{\section{Picto\-:\-:Start\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_start_response_handler}\index{Picto\-::\-Start\-Response\-Handler@{Picto\-::\-Start\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-S\-T\-A\-R\-T\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$Start\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Start\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_start_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_start_response_handler_a9e5acf71fa38511b2981a6c0033a72c0}{{\bfseries Start\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_start_response_handler_a9e5acf71fa38511b2981a6c0033a72c0}
+
+\item 
+\hypertarget{struct_picto_1_1_start_response_handler_a4fda7f0e797793303c9a75e0fa0b4fcc}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_start_response_handler_a4fda7f0e797793303c9a75e0fa0b4fcc}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_start_response_handler_a8a8040e290bbb11a352f4bea3cf791a0}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_start_response_handler_a8a8040e290bbb11a352f4bea3cf791a0}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-S\-T\-A\-R\-T\char`\"{} method. 
+
+The S\-T\-A\-R\-T response indicates that a \hyperlink{class_picto_1_1_task}{Task} Run should be started. The message includes the name of the \hyperlink{class_picto_1_1_task}{Task} to be run,
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Start\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Start\-Response\-Handler.\-h\item 
+source/common/protocol/Start\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

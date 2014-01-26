@@ -1,0 +1,289 @@
+\hypertarget{class_picto_1_1_analysis_lfp_data}{\section{Picto\-:\-:Analysis\-Lfp\-Data Class Reference}
+\label{class_picto_1_1_analysis_lfp_data}\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}}
+}
+
+
+An \hyperlink{class_picto_1_1_analysis_data_source}{Analysis\-Data\-Source} for gathering lfp data.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Lfp\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Lfp\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_analysis_lfp_data}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_aa169f573782cd2f9a21735e4995aa63f}{void \hyperlink{class_picto_1_1_analysis_lfp_data_aa169f573782cd2f9a21735e4995aa63f}{zero\-Latest\-Frame} ()}\label{class_picto_1_1_analysis_lfp_data_aa169f573782cd2f9a21735e4995aa63f}
+
+\begin{DoxyCompactList}\small\item\em Sets the time of the latest frame to zero. L\-F\-P times will be returned with respect to this latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels} ()}\label{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels on which lfp data was captured during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a4c96e05c4e349b6a0d3be781bdeee401}{double \hyperlink{class_picto_1_1_analysis_lfp_data_a4c96e05c4e349b6a0d3be781bdeee401}{get\-Sample\-Period} ()}\label{class_picto_1_1_analysis_lfp_data_a4c96e05c4e349b6a0d3be781bdeee401}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period for lfp data capture. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_accdab416060a16bd241c02cd773b28e6}{double \hyperlink{class_picto_1_1_analysis_lfp_data_accdab416060a16bd241c02cd773b28e6}{get\-Latest\-Time} ()}\label{class_picto_1_1_analysis_lfp_data_accdab416060a16bd241c02cd773b28e6}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest lfp data sample. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_ad094dd1b756e8a6eb07206dcac379831}{double \hyperlink{class_picto_1_1_analysis_lfp_data_ad094dd1b756e8a6eb07206dcac379831}{get\-Latest\-Value} (int channel)}\label{class_picto_1_1_analysis_lfp_data_ad094dd1b756e8a6eb07206dcac379831}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest lfp value on the channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_af9504f04d9fd580c16ba036f59fc7562}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_af9504f04d9fd580c16ba036f59fc7562}{get\-Latest\-Value} ()}\label{class_picto_1_1_analysis_lfp_data_af9504f04d9fd580c16ba036f59fc7562}
+
+\begin{DoxyCompactList}\small\item\em Returns an list of the latest values ordered according to the channel order returned from \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels()}. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_analysis_lfp_data_a4a21df0d975fd34773346f5ef832eec0}{get\-Next\-Time} ()
+\begin{DoxyCompactList}\small\item\em Returns the time at which the next signal will be read. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_analysis_lfp_data_aeb704a3b56e2249498cc9d980c7f80c0}{get\-Next\-Value} (int channel)
+\begin{DoxyCompactList}\small\item\em Returns the next value that will be read for the input channel. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a6300e10202a9ad223471fe7dcd66e410}{get\-Next\-Value} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of the next values to be read ordered according to the channel order returned from \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_acc674aa0cc3c61731a500372294b6f8b}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_acc674aa0cc3c61731a500372294b6f8b}{get\-Prev\-Times} (double secs\-Preceding)}\label{class_picto_1_1_analysis_lfp_data_acc674aa0cc3c61731a500372294b6f8b}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a9156212e5d358e62a11c7cf0704d9eab}{get\-Next\-Times} (double secs\-Following)
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that will occur with times $>$ the latest frame time and $<$= the input \# sec after the latest frame. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a47baf0ef3ea71ebfd18a079ecb9acf78}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a47baf0ef3ea71ebfd18a079ecb9acf78}{get\-Times\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_lfp_data_a47baf0ef3ea71ebfd18a079ecb9acf78}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_acc674aa0cc3c61731a500372294b6f8b}{get\-Prev\-Times()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a27c5ff94c293c0f9accc2f2db6b3a70b}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a27c5ff94c293c0f9accc2f2db6b3a70b}{get\-Times\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_lfp_data_a27c5ff94c293c0f9accc2f2db6b3a70b}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_a9156212e5d358e62a11c7cf0704d9eab}{get\-Next\-Times()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_abc3fdc4e54b48f6254793ec88c696665}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_abc3fdc4e54b48f6254793ec88c696665}{get\-Prev\-Values} (int channel, double secs\-Preceding)}\label{class_picto_1_1_analysis_lfp_data_abc3fdc4e54b48f6254793ec88c696665}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that occured with times $>$ the input \# sec before the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a399178b9bad5e6e9635c67e708ed6ed7}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a399178b9bad5e6e9635c67e708ed6ed7}{get\-Next\-Values} (int channel, double secs\-Following)}\label{class_picto_1_1_analysis_lfp_data_a399178b9bad5e6e9635c67e708ed6ed7}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that will occur with times $>$ the latest frame time and $<$= the input \# sec after the latest frame and $<$= the latest frame time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_ad38245f741f4edeaccef993008f6778b}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_ad38245f741f4edeaccef993008f6778b}{get\-Prev\-Values} (double secs\-Preceding)}\label{class_picto_1_1_analysis_lfp_data_ad38245f741f4edeaccef993008f6778b}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp value lists (where sub lists are ordered like the result of \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels()}) that will occur with times $>$ the input \# sec before the latest frame time and $<$= the latest frame time. Times should be incremented by one \hyperlink{class_picto_1_1_analysis_lfp_data_a4c96e05c4e349b6a0d3be781bdeee401}{get\-Sample\-Period()} for every new entry in the outer list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a2a3276679bc1ea73f93e1c6e8ddf3229}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a2a3276679bc1ea73f93e1c6e8ddf3229}{get\-Next\-Values} (double secs\-Following)}\label{class_picto_1_1_analysis_lfp_data_a2a3276679bc1ea73f93e1c6e8ddf3229}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp value lists (where sub lists are ordered like the result of \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels()}) that will occur with times $>$ the latest frame time and $<$= the input \# sec after the latest frame and $>$ the latest frame time. Times should be incremented by one \hyperlink{class_picto_1_1_analysis_lfp_data_a4c96e05c4e349b6a0d3be781bdeee401}{get\-Sample\-Period()} for every new entry in the outer list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_ad51ccf2ac9698355184195cb5419003c}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_ad51ccf2ac9698355184195cb5419003c}{get\-Values\-Since} (int channel, double beyond\-Time)}\label{class_picto_1_1_analysis_lfp_data_ad51ccf2ac9698355184195cb5419003c}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_abc3fdc4e54b48f6254793ec88c696665}{get\-Prev\-Values()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a5bfcc3a704d1e31485ac85f8a13861bf}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a5bfcc3a704d1e31485ac85f8a13861bf}{get\-Values\-Until} (int channel, double up\-To\-Time)}\label{class_picto_1_1_analysis_lfp_data_a5bfcc3a704d1e31485ac85f8a13861bf}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_a399178b9bad5e6e9635c67e708ed6ed7}{get\-Next\-Values()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a30dd59b2bfdd0c1c4970d87bf9f4499a}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_a30dd59b2bfdd0c1c4970d87bf9f4499a}{get\-Values\-Since} (double beyond\-Time)}\label{class_picto_1_1_analysis_lfp_data_a30dd59b2bfdd0c1c4970d87bf9f4499a}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_abc3fdc4e54b48f6254793ec88c696665}{get\-Prev\-Values()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_ac491a9b0ffa663f36f27cbccabe1cbec}{Q\-Variant\-List \hyperlink{class_picto_1_1_analysis_lfp_data_ac491a9b0ffa663f36f27cbccabe1cbec}{get\-Values\-Until} (double up\-To\-Time)}\label{class_picto_1_1_analysis_lfp_data_ac491a9b0ffa663f36f27cbccabe1cbec}
+
+\begin{DoxyCompactList}\small\item\em Functions like \hyperlink{class_picto_1_1_analysis_lfp_data_a399178b9bad5e6e9635c67e708ed6ed7}{get\-Next\-Values()} except that the input time is an absolute time with respect to this element's zero time instead of an offset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_lfp_data_ab1421d223a564e857b142d572f575dcf}{entered\-Scope} ()
+\begin{DoxyCompactList}\small\item\em Resets this scriptable's data fields to their original values. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_lfp_data_a2f38f77a96e7f52be6920cbdf7e52906}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a6907190f050ce439d39450e3c931fbb7}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_lfp_data_a6907190f050ce439d39450e3c931fbb7}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_lfp_data_a6907190f050ce439d39450e3c931fbb7}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_a72e8e6f743172efa3bb603bdee2e4f99}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_lfp_data_a72e8e6f743172efa3bb603bdee2e4f99}{get\-U\-I\-Group} ()}\label{class_picto_1_1_analysis_lfp_data_a72e8e6f743172efa3bb603bdee2e4f99}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_lfp_data_aab77ef333d154989cbffb839f95176dc}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_analysis_lfp_data_aab77ef333d154989cbffb839f95176dc}{Create} ()}\label{class_picto_1_1_analysis_lfp_data_aab77ef333d154989cbffb839f95176dc}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_analysis_lfp_data}{Analysis\-Lfp\-Data} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_lfp_data_a2ecc0790a74132a1433a6491b55eafc3}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_lfp_data_ae53fa1010780d301a104e613f93dda1a}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_picto_1_1_analysis_data_source}{Analysis\-Data\-Source} for gathering lfp data. 
+
+This object can be used to query local field potential values as well as metadata (the channels that were recorded in the current run, the sample period etc.) \begin{DoxyNote}{Note}
+For test runs in the testviewer, the data returned from this object will necessarily be fake sample data. For consistency's sake, any functions requesting future data will return meaningless values. 
+
+This class uses a \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} object as its main data source. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Analysis\-Lfp\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_lfp_data_ab1421d223a564e857b142d572f575dcf}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!entered\-Scope@{entered\-Scope}}
+\index{entered\-Scope@{entered\-Scope}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{entered\-Scope}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Lfp\-Data\-::entered\-Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_lfp_data_ab1421d223a564e857b142d572f575dcf}
+
+
+Resets this scriptable's data fields to their original values. 
+
+Called when this \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters \hyperlink{namespace_picto}{Picto} Scope (ie. Control flow reaches its parent element).
+
+When a \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters scope, all of its \hyperlink{class_picto_1_1_property}{Property} run values are reset to their init values. This function takes care of that by calling restore\-Properties(). 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}{Picto\-::\-Analysis\-Variable}.
+
+
+
+Definition at line 18 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_a2f38f77a96e7f52be6920cbdf7e52906}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Lfp\-Data\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_lfp_data_a2f38f77a96e7f52be6920cbdf7e52906}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 37 of file Analysis\-Lfp\-Data.\-h.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_a4a21df0d975fd34773346f5ef832eec0}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!get\-Next\-Time@{get\-Next\-Time}}
+\index{get\-Next\-Time@{get\-Next\-Time}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{get\-Next\-Time}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Analysis\-Lfp\-Data\-::get\-Next\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_lfp_data_a4a21df0d975fd34773346f5ef832eec0}
+
+
+Returns the time at which the next signal will be read. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 91 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_a9156212e5d358e62a11c7cf0704d9eab}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!get\-Next\-Times@{get\-Next\-Times}}
+\index{get\-Next\-Times@{get\-Next\-Times}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{get\-Next\-Times}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Lfp\-Data\-::get\-Next\-Times (
+\begin{DoxyParamCaption}
+\item[{double}]{secs\-Following}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_lfp_data_a9156212e5d358e62a11c7cf0704d9eab}
+
+
+Returns a list of lfp sample times that will occur with times $>$ the latest frame time and $<$= the input \# sec after the latest frame. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return valid values. 
+\end{DoxyNote}
+
+
+Definition at line 148 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_aeb704a3b56e2249498cc9d980c7f80c0}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!get\-Next\-Value@{get\-Next\-Value}}
+\index{get\-Next\-Value@{get\-Next\-Value}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{get\-Next\-Value}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Analysis\-Lfp\-Data\-::get\-Next\-Value (
+\begin{DoxyParamCaption}
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_lfp_data_aeb704a3b56e2249498cc9d980c7f80c0}
+
+
+Returns the next value that will be read for the input channel. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return a valid value. 
+\end{DoxyNote}
+
+
+Definition at line 102 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_a6300e10202a9ad223471fe7dcd66e410}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!get\-Next\-Value@{get\-Next\-Value}}
+\index{get\-Next\-Value@{get\-Next\-Value}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{get\-Next\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant\-List Picto\-::\-Analysis\-Lfp\-Data\-::get\-Next\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_analysis_lfp_data_a6300e10202a9ad223471fe7dcd66e410}
+
+
+Returns a list of the next values to be read ordered according to the channel order returned from \hyperlink{class_picto_1_1_analysis_lfp_data_ad3060e0658f2d7ca36e55fba037cd0ed}{get\-Channels()}. 
+
+\begin{DoxyNote}{Note}
+In a live test, this will not return valid values. 
+\end{DoxyNote}
+
+
+Definition at line 112 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_a2ecc0790a74132a1433a6491b55eafc3}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Lfp\-Data\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_lfp_data_a2ecc0790a74132a1433a6491b55eafc3}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a491e202caec7a1d9f9a0c7466f962f18}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 324 of file Analysis\-Lfp\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_lfp_data_ae53fa1010780d301a104e613f93dda1a}{\index{Picto\-::\-Analysis\-Lfp\-Data@{Picto\-::\-Analysis\-Lfp\-Data}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::AnalysisLfpData@{Picto\-::\-Analysis\-Lfp\-Data}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Lfp\-Data\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_lfp_data_ae53fa1010780d301a104e613f93dda1a}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. 
+
+\hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{values\-Are\-Valid()} is used for this. 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a8d43777d1a7d1b1467c9df205d118bb3}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 329 of file Analysis\-Lfp\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Lfp\-Data.\-h\item 
+source/common/parameter/Analysis\-Lfp\-Data.\-cpp\end{DoxyCompactItemize}

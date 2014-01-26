@@ -1,0 +1,213 @@
+\hypertarget{class_arrow}{\section{Arrow Class Reference}
+\label{class_arrow}\index{Arrow@{Arrow}}
+}
+
+
+An arrow diagram that represents a transition in the Experimental Design's State\-Machine.  
+
+
+
+
+{\ttfamily \#include $<$arrow.\-h$>$}
+
+Inheritance diagram for Arrow\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_arrow}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ {\bfseries Type} = User\-Type + 4
+ \}
+\begin{DoxyCompactList}\small\item\em Every Q\-Graphics\-Item must have its own unique type. Our types are in the Q\-Graphics\-Item\-::\-User\-Type space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_arrow_a2c78180ebf1b7d26cd52ce630ad9f2ac}{void \hyperlink{class_arrow_a2c78180ebf1b7d26cd52ce630ad9f2ac}{update\-Position} ()}\label{class_arrow_a2c78180ebf1b7d26cd52ce630ad9f2ac}
+
+\begin{DoxyCompactList}\small\item\em Updates the line according to the current position of the start and end \hyperlink{class_diagram_item}{Diagram\-Item} objects to which it is attached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_arrow_a59ac428e67bd3a246138af049a62c0f3}{virtual \hyperlink{class_arrow_a59ac428e67bd3a246138af049a62c0f3}{$\sim$\-Arrow} ()}\label{class_arrow_a59ac428e67bd3a246138af049a62c0f3}
+
+\begin{DoxyCompactList}\small\item\em When the \hyperlink{class_arrow}{Arrow} is deleted, it needs to be removed from the Q\-Graphics\-Scene. This takes care of that. \end{DoxyCompactList}\item 
+int \hyperlink{class_arrow_aef6cfdb5dda88ef43c16b34cbd6a0b6f}{type} () const 
+\begin{DoxyCompactList}\small\item\em Every Q\-Graphics\-Item must have its own unique type. This returns our custom type. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_a3b15a4c7ab51e17ade465cb928ff5749}{Q\-Rect\-F \hyperlink{class_arrow_a3b15a4c7ab51e17ade465cb928ff5749}{bounding\-Rect} () const }\label{class_arrow_a3b15a4c7ab51e17ade465cb928ff5749}
+
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Rect\-F that contains this \hyperlink{class_arrow}{Arrow}'s dimensions within its bounds. \end{DoxyCompactList}\item 
+Q\-Painter\-Path \hyperlink{class_arrow_aa51a558d21cfb6bb57578b9e6a745cf3}{shape} () const 
+\begin{DoxyCompactList}\small\item\em Returns the shape of this \hyperlink{class_arrow}{Arrow} as a Q\-Painter\-Path in local coordinates. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_ab7e7333a213b0eb310496b6f815e1824}{void \hyperlink{class_arrow_ab7e7333a213b0eb310496b6f815e1824}{set\-Color} (const Q\-Color \&color)}\label{class_arrow_ab7e7333a213b0eb310496b6f815e1824}
+
+\begin{DoxyCompactList}\small\item\em Sets the color of the arrow. This is currently not used. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_aca1c4bf8681a1449b8e09af3dac9b797}{\hyperlink{class_diagram_item}{Diagram\-Item} $\ast$ \hyperlink{class_arrow_aca1c4bf8681a1449b8e09af3dac9b797}{start\-Item} () const }\label{class_arrow_aca1c4bf8681a1449b8e09af3dac9b797}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_diagram_item}{Diagram\-Item} to which this arrow's tail is connected. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_a363d170cfcc7db0472843a93de7e86d4}{\hyperlink{class_diagram_item}{Diagram\-Item} $\ast$ \hyperlink{class_arrow_a363d170cfcc7db0472843a93de7e86d4}{end\-Item} () const }\label{class_arrow_a363d170cfcc7db0472843a93de7e86d4}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_diagram_item}{Diagram\-Item} to which this arrow's head is connected. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_a35c83e5bd91318017b1edb229b58df76}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_arrow_a35c83e5bd91318017b1edb229b58df76}{get\-Asset} ()}\label{class_arrow_a35c83e5bd91318017b1edb229b58df76}
+
+\begin{DoxyCompactList}\small\item\em Returns the Transition object that this \hyperlink{class_arrow}{Arrow} represents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_arrow}{Arrow} $\ast$ \hyperlink{class_arrow_aad0a27ad145b1ffec4a07a75e7e6cf0c}{Create} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition}{Transition} $>$ transition, \hyperlink{class_diagram_item}{Diagram\-Item} $\ast$\hyperlink{class_arrow_aca1c4bf8681a1449b8e09af3dac9b797}{start\-Item}, \hyperlink{class_diagram_item}{Diagram\-Item} $\ast$\hyperlink{class_arrow_a363d170cfcc7db0472843a93de7e86d4}{end\-Item}, Q\-Menu $\ast$context\-Menu, Q\-Graphics\-Item $\ast$parent)
+\begin{DoxyCompactList}\small\item\em Creates a new arrow representing a transition from one State\-Machine\-Element to another within the current window\-Asset. start\-Item and end\-Item must be passed in because the Design assets don't have pointers to their corresponding U\-I elements or the transitions to which they are connected. The context\-Menu passed in here is the one that will be displayed if the arrow is \char`\"{}right clicked.\char`\"{}. \end{DoxyCompactList}\item 
+static \hyperlink{class_arrow}{Arrow} $\ast$ \hyperlink{class_arrow_afb573565da5d0d13c13bfbe662cc5aa1}{Create} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ window\-Asset, \hyperlink{class_diagram_item}{Diagram\-Item} $\ast$\hyperlink{class_arrow_aca1c4bf8681a1449b8e09af3dac9b797}{start\-Item}, \hyperlink{class_diagram_item}{Diagram\-Item} $\ast$\hyperlink{class_arrow_a363d170cfcc7db0472843a93de7e86d4}{end\-Item}, Q\-Menu $\ast$context\-Menu, Q\-Graphics\-Item $\ast$parent)
+\begin{DoxyCompactList}\small\item\em Creates a new arrow representing a transition from the current window\-Asset's start bar to an element within the window\-Asset. The context\-Menu passed in here is the one that will be displayed if the arrow is \char`\"{}right clicked.\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_arrow_ad6c7cb142beb5b655c95f4da437e2013}{paint} (Q\-Painter $\ast$painter, const Q\-Style\-Option\-Graphics\-Item $\ast$option, Q\-Widget $\ast$widget=0)
+\begin{DoxyCompactList}\small\item\em Draws the \hyperlink{class_arrow}{Arrow} on screen from its start \hyperlink{class_diagram_item}{Diagram\-Item} to its end \hyperlink{class_diagram_item}{Diagram\-Item}. \end{DoxyCompactList}\item 
+\hypertarget{class_arrow_a97a599b254cc8cecd86b2955b1d37a00}{void \hyperlink{class_arrow_a97a599b254cc8cecd86b2955b1d37a00}{context\-Menu\-Event} (Q\-Graphics\-Scene\-Context\-Menu\-Event $\ast$event)}\label{class_arrow_a97a599b254cc8cecd86b2955b1d37a00}
+
+\begin{DoxyCompactList}\small\item\em Shows the context menu passed into the constructor whenever this \hyperlink{class_arrow}{Arrow} is right clicked. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_arrow_a6d9409982fc2ff7f44676c319c3016f2}{item\-Change} (Graphics\-Item\-Change change, const Q\-Variant \&value)
+\begin{DoxyCompactList}\small\item\em Reimplements various selection funtionality. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An arrow diagram that represents a transition in the Experimental Design's State\-Machine. 
+
+An arrow is a long line with an arrowhead on the end whose tail starts either at an element's red result bar or at the current State\-Machine canvas's left hand side Start\-Bar. It must start from a set point in the center of the right hand side of a result bar, but always ends at the nearest vertical point on a State\-Machine\-Element's start bar. If the arrow starts on a canvas start bar, it's start position has the same vertical position as the top left corner of the element that it points to. Currently, arrows do not \char`\"{}path plan.\char`\"{} Arrows go straight over other elements. In the future, it would be nice to add some path planning that would allow the arrows to navigate around other elements as much as possible and attempt to cross other transitions at as large of an angle as possible.
+
+Much of the code for the \hyperlink{class_arrow}{Arrow} is lifted from an example in the Qt toolkit. For this reason there is some functionality that we don't use here. The file has been significantly modified for our purposes. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 75 of file arrow.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_arrow_aad0a27ad145b1ffec4a07a75e7e6cf0c}{\index{Arrow@{Arrow}!Create@{Create}}
+\index{Create@{Create}!Arrow@{Arrow}}
+\subsubsection[{Create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Arrow} $\ast$ Arrow\-::\-Create (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Transition} $>$}]{transition, }
+\item[{{\bf Diagram\-Item} $\ast$}]{start\-Item, }
+\item[{{\bf Diagram\-Item} $\ast$}]{end\-Item, }
+\item[{Q\-Menu $\ast$}]{context\-Menu, }
+\item[{Q\-Graphics\-Item $\ast$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_arrow_aad0a27ad145b1ffec4a07a75e7e6cf0c}
+
+
+Creates a new arrow representing a transition from one State\-Machine\-Element to another within the current window\-Asset. start\-Item and end\-Item must be passed in because the Design assets don't have pointers to their corresponding U\-I elements or the transitions to which they are connected. The context\-Menu passed in here is the one that will be displayed if the arrow is \char`\"{}right clicked.\char`\"{}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}{Diagram\-Scene\-::insert\-Transition()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 59 of file arrow.\-cpp.
+
+\hypertarget{class_arrow_afb573565da5d0d13c13bfbe662cc5aa1}{\index{Arrow@{Arrow}!Create@{Create}}
+\index{Create@{Create}!Arrow@{Arrow}}
+\subsubsection[{Create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Arrow} $\ast$ Arrow\-::\-Create (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{window\-Asset, }
+\item[{{\bf Diagram\-Item} $\ast$}]{start\-Item, }
+\item[{{\bf Diagram\-Item} $\ast$}]{end\-Item, }
+\item[{Q\-Menu $\ast$}]{context\-Menu, }
+\item[{Q\-Graphics\-Item $\ast$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_arrow_afb573565da5d0d13c13bfbe662cc5aa1}
+
+
+Creates a new arrow representing a transition from the current window\-Asset's start bar to an element within the window\-Asset. The context\-Menu passed in here is the one that will be displayed if the arrow is \char`\"{}right clicked.\char`\"{}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}{Diagram\-Scene\-::insert\-Transition()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 74 of file arrow.\-cpp.
+
+\hypertarget{class_arrow_a6d9409982fc2ff7f44676c319c3016f2}{\index{Arrow@{Arrow}!item\-Change@{item\-Change}}
+\index{item\-Change@{item\-Change}!Arrow@{Arrow}}
+\subsubsection[{item\-Change}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Arrow\-::item\-Change (
+\begin{DoxyParamCaption}
+\item[{Graphics\-Item\-Change}]{change, }
+\item[{const Q\-Variant \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_arrow_a6d9409982fc2ff7f44676c319c3016f2}
+
+
+Reimplements various selection funtionality. 
+
+If multiple items are selected at once in the scene, for example, the last one selected ends up being the one whos properties are shown in the right hand property widget. If this arrow is the last one selected, we reset the \char`\"{}selected item\char`\"{} to N\-U\-L\-L, so that the Window\-Asset's information will be displayed. 
+
+Definition at line 249 of file arrow.\-cpp.
+
+\hypertarget{class_arrow_ad6c7cb142beb5b655c95f4da437e2013}{\index{Arrow@{Arrow}!paint@{paint}}
+\index{paint@{paint}!Arrow@{Arrow}}
+\subsubsection[{paint}]{\setlength{\rightskip}{0pt plus 5cm}void Arrow\-::paint (
+\begin{DoxyParamCaption}
+\item[{Q\-Painter $\ast$}]{painter, }
+\item[{const Q\-Style\-Option\-Graphics\-Item $\ast$}]{option, }
+\item[{Q\-Widget $\ast$}]{widget = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_arrow_ad6c7cb142beb5b655c95f4da437e2013}
+
+
+Draws the \hyperlink{class_arrow}{Arrow} on screen from its start \hyperlink{class_diagram_item}{Diagram\-Item} to its end \hyperlink{class_diagram_item}{Diagram\-Item}. 
+
+This function includes all of the detailed calculations to figure out where exactly on the start \hyperlink{class_diagram_item}{Diagram\-Item} the arrow should start, where on the end \hyperlink{class_diagram_item}{Diagram\-Item} the arrow should end, how to draw the arrow head at the necessary angle, etc. It is called by the Qt Q\-Graphics\-Item system whenever the arrow needs to be redrawn. \begin{DoxyNote}{Note}
+It is this code that creates the arrow's sliding effect causing it to be able to slide up and down the \hyperlink{class_diagram_item}{Diagram\-Item} of its destination element and its canvas start bar. 
+\end{DoxyNote}
+
+
+Definition at line 138 of file arrow.\-cpp.
+
+\hypertarget{class_arrow_aa51a558d21cfb6bb57578b9e6a745cf3}{\index{Arrow@{Arrow}!shape@{shape}}
+\index{shape@{shape}!Arrow@{Arrow}}
+\subsubsection[{shape}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Painter\-Path Arrow\-::shape (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_arrow_aa51a558d21cfb6bb57578b9e6a745cf3}
+
+
+Returns the shape of this \hyperlink{class_arrow}{Arrow} as a Q\-Painter\-Path in local coordinates. 
+
+The shape is used by the Q\-Graphics\-Item system for many things, including collision detection, hit tests, and for the Q\-Graphics\-Scene\-::items() functions. 
+
+Definition at line 115 of file arrow.\-cpp.
+
+\hypertarget{class_arrow_aef6cfdb5dda88ef43c16b34cbd6a0b6f}{\index{Arrow@{Arrow}!type@{type}}
+\index{type@{type}!Arrow@{Arrow}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int Arrow\-::type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_arrow_aef6cfdb5dda88ef43c16b34cbd6a0b6f}
+
+
+Every Q\-Graphics\-Item must have its own unique type. This returns our custom type. 
+
+\begin{DoxySeeAlso}{See Also}
+Q\-Graphics\-Item\-::type(), Q\-Graphics\-Item\-::\-User\-Type 
+\end{DoxySeeAlso}
+
+
+Definition at line 88 of file arrow.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/arrow.\-h\item 
+source/common/\-Designer/arrow.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,51 @@
+\hypertarget{class_picto_1_1_pixmap_compositing_surface}{\section{Picto\-:\-:Pixmap\-Compositing\-Surface Class Reference}
+\label{class_picto_1_1_pixmap_compositing_surface}\index{Picto\-::\-Pixmap\-Compositing\-Surface@{Picto\-::\-Pixmap\-Compositing\-Surface}}
+}
+
+
+A compositing surface based on an underlying Q\-Pixmap data structure.  
+
+
+
+
+{\ttfamily \#include $<$Pixmap\-Compositing\-Surface.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Pixmap\-Compositing\-Surface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_pixmap_compositing_surface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_pixmap_compositing_surface_a17c6bdff2b7b241f7ae16ae4dc65a94a}{void \hyperlink{class_picto_1_1_pixmap_compositing_surface_a17c6bdff2b7b241f7ae16ae4dc65a94a}{convert\-Image} (Q\-Image image)}\label{class_picto_1_1_pixmap_compositing_surface_a17c6bdff2b7b241f7ae16ae4dc65a94a}
+
+\begin{DoxyCompactList}\small\item\em Converts the passed in Q\-Image to whatever internal format the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} that created this Composite\-Surface is going to need. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_pixmap_compositing_surface_a7dcc99475758356b34d8bd29d131e138}{Q\-String \hyperlink{class_picto_1_1_pixmap_compositing_surface_a7dcc99475758356b34d8bd29d131e138}{get\-Type\-Name} ()}\label{class_picto_1_1_pixmap_compositing_surface_a7dcc99475758356b34d8bd29d131e138}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the compositing surface (e.\-g. \char`\"{}\-Direct3\-D\char`\"{}) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_pixmap_compositing_surface_a18cfc332c82987d3143ec2d71ad60932}{Q\-Pixmap \hyperlink{class_picto_1_1_pixmap_compositing_surface_a18cfc332c82987d3143ec2d71ad60932}{get\-Pixmap} ()}\label{class_picto_1_1_pixmap_compositing_surface_a18cfc332c82987d3143ec2d71ad60932}
+
+\begin{DoxyCompactList}\small\item\em Returns the pixmap that was created in this \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} based on the Q\-Image input in convert\-Image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A compositing surface based on an underlying Q\-Pixmap data structure. 
+
+Q\-Pixmap is a basic bitmap impage. It can be painted to, and is really easy to work with. The downside is that it is really slow (not surprising for a software bitmap). The \hyperlink{class_picto_1_1_pixmap_compositing_surface}{Pixmap\-Compositing\-Surface} would probably not be used in Picto\-Director, but it is multiplatform compatible and therefore used in the Picto\-Workstation so that the user can see what is being displayed by a \hyperlink{class_director}{Director} instance. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Pixmap\-Compositing\-Surface.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Pixmap\-Compositing\-Surface.\-h\item 
+source/common/compositor/Pixmap\-Compositing\-Surface.\-cpp\end{DoxyCompactItemize}

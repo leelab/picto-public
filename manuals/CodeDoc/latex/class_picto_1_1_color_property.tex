@@ -1,0 +1,80 @@
+\hypertarget{class_picto_1_1_color_property}{\section{Picto\-:\-:Color\-Property Class Reference}
+\label{class_picto_1_1_color_property}\index{Picto\-::\-Color\-Property@{Picto\-::\-Color\-Property}}
+}
+
+
+A \hyperlink{class_picto_1_1_property}{Property} for storing color data. This is useful for storing colors of Visual\-Elements.  
+
+
+
+
+{\ttfamily \#include $<$Color\-Property.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Color\-Property\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_picto_1_1_color_property}
+\end{center}
+\end{figure}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_color_property_a4d51a5ca057cc06d787ae542aff8c930}{\hyperlink{class_picto_1_1_color_property_a4d51a5ca057cc06d787ae542aff8c930}{Color\-Property} (Q\-String name, Q\-Variant \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value})}\label{class_picto_1_1_color_property_a4d51a5ca057cc06d787ae542aff8c930}
+
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_color_property}{Color\-Property} with the input name and color Q\-Variant value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_color_property_a70dc856281122de27ff0ab73a1cc3940}{virtual Q\-String \hyperlink{class_picto_1_1_color_property_a70dc856281122de27ff0ab73a1cc3940}{variant\-To\-String} (Q\-Variant \hyperlink{class_picto_1_1_property_a69540c9d4f9a4b0b128b4c6a876d67ca}{value}) const }\label{class_picto_1_1_color_property_a70dc856281122de27ff0ab73a1cc3940}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{Property\-::string\-To\-Variant} to convert the input Q\-Variant color to a r,g,b,a string like \char`\"{}255,122,0,100\char`\"{}. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_picto_1_1_color_property_a71e157fd5122482f81926f17d7f1373b}{string\-To\-Variant} (Q\-String string, Q\-String \&error) const 
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{Property\-::string\-To\-Variant()} to convert the input string to a variant color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_color_property_a7ff968ca40027b2b0500a9260b463e3a}{class {\bfseries Property\-Container}}\label{class_picto_1_1_color_property_a7ff968ca40027b2b0500a9260b463e3a}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_property}{Property} for storing color data. This is useful for storing colors of Visual\-Elements. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 15 of file Color\-Property.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_color_property_a71e157fd5122482f81926f17d7f1373b}{\index{Picto\-::\-Color\-Property@{Picto\-::\-Color\-Property}!string\-To\-Variant@{string\-To\-Variant}}
+\index{string\-To\-Variant@{string\-To\-Variant}!Picto::ColorProperty@{Picto\-::\-Color\-Property}}
+\subsubsection[{string\-To\-Variant}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Picto\-::\-Color\-Property\-::string\-To\-Variant (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{string, }
+\item[{Q\-String \&}]{error}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_color_property_a71e157fd5122482f81926f17d7f1373b}
+
+
+Implements \hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{Property\-::string\-To\-Variant()} to convert the input string to a variant color. 
+
+The input string may be in the format returned from \hyperlink{class_picto_1_1_color_property_a70dc856281122de27ff0ab73a1cc3940}{variant\-To\-String()} or in the \#rrggbb where rr, gg and bb are hex values from 0 to F\-F. This is supported since Q\-Variant color -\/$>$ Q\-String conversion returns colors in that format. 
+
+Reimplemented from \hyperlink{class_picto_1_1_property_a97d52011d6db190c5c28a21d76ac1d3b}{Picto\-::\-Property}.
+
+
+
+Definition at line 28 of file Color\-Property.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/property/Color\-Property.\-h\item 
+source/common/property/Color\-Property.\-cpp\end{DoxyCompactItemize}

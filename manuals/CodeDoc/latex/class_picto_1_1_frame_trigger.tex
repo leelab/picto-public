@@ -1,0 +1,75 @@
+\hypertarget{class_picto_1_1_frame_trigger}{\section{Picto\-:\-:Frame\-Trigger Class Reference}
+\label{class_picto_1_1_frame_trigger}\index{Picto\-::\-Frame\-Trigger@{Picto\-::\-Frame\-Trigger}}
+}
+Inheritance diagram for Picto\-:\-:Frame\-Trigger\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_frame_trigger}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_trigger_a6b0c266e03024d6a93f9ac28a4652485}{virtual Event\-Order\-Index\-::\-I\-D\-Source {\bfseries get\-Data\-Source} ()}\label{class_picto_1_1_frame_trigger_a6b0c266e03024d6a93f9ac28a4652485}
+
+\item 
+\hypertarget{class_picto_1_1_frame_trigger_a4444e24b9f3911589c6a13db451d0e2a}{virtual Q\-String \hyperlink{class_picto_1_1_frame_trigger_a4444e24b9f3911589c6a13db451d0e2a}{get\-U\-I\-Template} ()}\label{class_picto_1_1_frame_trigger_a4444e24b9f3911589c6a13db451d0e2a}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_trigger_ab89e43b96d9f09627c8c69b2c207fd11}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_frame_trigger_ab89e43b96d9f09627c8c69b2c207fd11}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_trigger_adc16b8d3058a11afba0a9d30227fab78}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_data_iterator}{Analysis\-Data\-Iterator} $>$ {\bfseries create\-Data\-Iterator} ()}\label{class_picto_1_1_frame_trigger_adc16b8d3058a11afba0a9d30227fab78}
+
+\item 
+virtual void \hyperlink{class_picto_1_1_frame_trigger_aa8c2804c29ea2692be117401f9dd97a2}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_trigger_ae8bfb4b9e13de2b68146384c0db79555}{virtual bool \hyperlink{class_picto_1_1_frame_trigger_ae8bfb4b9e13de2b68146384c0db79555}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_frame_trigger_ae8bfb4b9e13de2b68146384c0db79555}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14 of file Frame\-Trigger.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_frame_trigger_aa8c2804c29ea2692be117401f9dd97a2}{\index{Picto\-::\-Frame\-Trigger@{Picto\-::\-Frame\-Trigger}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::FrameTrigger@{Picto\-::\-Frame\-Trigger}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Frame\-Trigger\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_frame_trigger_aa8c2804c29ea2692be117401f9dd97a2}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_trigger_a05e5bb8c08c529a59bf996497ac6bdf6}{Picto\-::\-Analysis\-Trigger}.
+
+
+
+Definition at line 26 of file Frame\-Trigger.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Frame\-Trigger.\-h\item 
+source/common/analysis/Frame\-Trigger.\-cpp\end{DoxyCompactItemize}

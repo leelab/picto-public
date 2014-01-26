@@ -1,0 +1,396 @@
+\hypertarget{class_picto_1_1_design_root}{\section{Picto\-:\-:Design\-Root Class Reference}
+\label{class_picto_1_1_design_root}\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}}
+}
+
+
+The root of the Experiment/\-Analysis Design tree passed between different U\-I Viewers.  
+
+
+
+
+{\ttfamily \#include $<$Design\-Root.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Design\-Root\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_design_root}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_design_root_ace35c7f1300eb13025ec1633742990a5}{void \hyperlink{class_picto_1_1_design_root_ace35c7f1300eb13025ec1633742990a5}{undo\-Available} (bool available)}\label{class_picto_1_1_design_root_ace35c7f1300eb13025ec1633742990a5}
+
+\begin{DoxyCompactList}\small\item\em Emitted when undo operations become available, or stop being available, according to the 'available' boolean parameter. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a078887264137d9a082c7e589b8d749ee}{void \hyperlink{class_picto_1_1_design_root_a078887264137d9a082c7e589b8d749ee}{redo\-Available} (bool available)}\label{class_picto_1_1_design_root_a078887264137d9a082c7e589b8d749ee}
+
+\begin{DoxyCompactList}\small\item\em Emitted when redo operations become available, or stop being available, according to the 'available' boolean parameter. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a64bd2edd0eeed3f8b31d954c0f220fe0}{void \hyperlink{class_picto_1_1_design_root_a64bd2edd0eeed3f8b31d954c0f220fe0}{refreshed\-From\-Xml} ()}\label{class_picto_1_1_design_root_a64bd2edd0eeed3f8b31d954c0f220fe0}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever the underlying design object are reconstructed from xml design text. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_picto_1_1_design_root_acae1228aa37df9dc66c0a05ddbb9129b}{reset\-Design\-Root} (Q\-String Design\-Root\-Text)
+\begin{DoxyCompactList}\small\item\em Rebuilds the Experimental Design from a saved xml string. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_design_root_a8840b2f3c56ba3b6b5bb969b4fce95ff}{import\-Analysis} (Q\-String analysis\-Text)
+\begin{DoxyCompactList}\small\item\em Attempts to create an analysis based on the input design text and import it into the design. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_design_root_a7049bc66947f5b9f36d7670c470356fb}{remove\-Analysis} (int index)
+\begin{DoxyCompactList}\small\item\em Removes the analysis with the input index from the design where index is a function of the creation/import order. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_design_root_a4b69e2bd671f36df8bdd903b664c7471}{get\-Experiment} ()
+\begin{DoxyCompactList}\small\item\em Returns a shared pointer to this design's \hyperlink{class_picto_1_1_experiment}{Experiment}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_aa3fcc78644b5ab4a53423ec8696af56b}{int \hyperlink{class_picto_1_1_design_root_aa3fcc78644b5ab4a53423ec8696af56b}{get\-Num\-Analyses} ()}\label{class_picto_1_1_design_root_aa3fcc78644b5ab4a53423ec8696af56b}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of analyses currently included in this design. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a9a890862b928fa11267489541e381585}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_design_root_a9a890862b928fa11267489541e381585}{get\-Analysis} (int index)}\label{class_picto_1_1_design_root_a9a890862b928fa11267489541e381585}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to attached analysis at the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a4a09a16a474d26bf762b5dfad70f4c3a}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_design_root_a4a09a16a474d26bf762b5dfad70f4c3a}{get\-Open\-Asset} ()}\label{class_picto_1_1_design_root_a4a09a16a474d26bf762b5dfad70f4c3a}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the asset that is set as the one open in the designer window or a null pointer if that asset couldn't be found. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_ab0e486681130b2fc354308dd6c19df6e}{set\-Open\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)
+\begin{DoxyCompactList}\small\item\em Sets the asset that will be considered open in the designer window. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point} ()
+\begin{DoxyCompactList}\small\item\em Sets the current state of the design as an undo point. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_design_root_aed754dcf76ca7ae16f30745f0a895758}{has\-Undo} ()
+\begin{DoxyCompactList}\small\item\em Returns true if there is an undo available. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_design_root_a75959f40e084a4b5a0476cee21fee410}{has\-Redo} ()
+\begin{DoxyCompactList}\small\item\em Returns true if there is an undo available. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo} ()
+\begin{DoxyCompactList}\small\item\em Moves the state of the experiment back to what it was when \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()} was last called. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a9f254dea700b90bc4f27d07cc4aa3bda}{redo} ()
+\begin{DoxyCompactList}\small\item\em Moves the state of the experiment forward to what it was just before the latest \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()} was called. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}{refresh\-From\-Xml} ()
+\begin{DoxyCompactList}\small\item\em Rebuilds the design from the latest underlying serialized X\-M\-L design text (see \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}). \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_design_root_a7adddf09b9189a2cd5e37dd4313e39a8}{is\-Modified} ()
+\begin{DoxyCompactList}\small\item\em Returns true if the design has been modified by the designer. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a796f283227a5a979194349991990bf22}{set\-Unmodified} ()
+\begin{DoxyCompactList}\small\item\em Sets the latest version of the design as unmodified. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a3b6c039da1c86d1a80bc7be28129d1d9}{Q\-String \hyperlink{class_picto_1_1_design_root_a3b6c039da1c86d1a80bc7be28129d1d9}{get\-Design\-Root\-Text} ()}\label{class_picto_1_1_design_root_a3b6c039da1c86d1a80bc7be28129d1d9}
+
+\begin{DoxyCompactList}\small\item\em Returns an xml serialized version of this experiment. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_design_root_aa0fbfa60b431b196b01616f4107d101c}{compiles} (Q\-String $\ast$errors=\&Q\-String())
+\begin{DoxyCompactList}\small\item\em Returns true if the current Design succesfully compiles without errors (ie. has valid syntax). \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_design_root_a602921939c89f471772431dae8c3281a}{enable\-Run\-Mode} (bool run\-Mode)
+\begin{DoxyCompactList}\small\item\em Enables/\-Disables run mode for all assets in the design. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a9265a1d94d1863fa5c68f02be5b9cb26}{Q\-String \hyperlink{class_picto_1_1_design_root_a9265a1d94d1863fa5c68f02be5b9cb26}{get\-Design\-Name} ()}\label{class_picto_1_1_design_root_a9265a1d94d1863fa5c68f02be5b9cb26}
+
+\begin{DoxyCompactList}\small\item\em Returns a Q\-String containing the name of the experimental design. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_adfff39e66048dab08b5e4155e2dc6aaa}{void \hyperlink{class_picto_1_1_design_root_adfff39e66048dab08b5e4155e2dc6aaa}{set\-Design\-Name} (Q\-String name)}\label{class_picto_1_1_design_root_adfff39e66048dab08b5e4155e2dc6aaa}
+
+\begin{DoxyCompactList}\small\item\em Sets a new name for the experimental design. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_af894a34186ddb3f4efd20433a004610b}{bool \hyperlink{class_picto_1_1_design_root_af894a34186ddb3f4efd20433a004610b}{has\-Error} ()}\label{class_picto_1_1_design_root_af894a34186ddb3f4efd20433a004610b}
+
+\begin{DoxyCompactList}\small\item\em Returns true if an error occured in deserializing xml into a design since the last time \hyperlink{class_picto_1_1_design_root_a280904c282f73dce02d654d06a0ebb3b}{get\-Last\-Error()} was called., false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a280904c282f73dce02d654d06a0ebb3b}{\hyperlink{struct_picto_1_1_design_message}{Design\-Message} \hyperlink{class_picto_1_1_design_root_a280904c282f73dce02d654d06a0ebb3b}{get\-Last\-Error} ()}\label{class_picto_1_1_design_root_a280904c282f73dce02d654d06a0ebb3b}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest deserialization error message, and clears it out in the process. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_design_root_a92b713a874879cc6d6ae3f4f90cd92ac}{bool \hyperlink{class_picto_1_1_design_root_a92b713a874879cc6d6ae3f4f90cd92ac}{has\-Warning} ()}\label{class_picto_1_1_design_root_a92b713a874879cc6d6ae3f4f90cd92ac}
+
+\begin{DoxyCompactList}\small\item\em Returns true if a warning occured in deserializing xml into a design since the last time \hyperlink{class_picto_1_1_design_root_ae51a2bad89a82242374c605c075ce233}{get\-Last\-Warning()} was called., false otherwise. \end{DoxyCompactList}\item 
+\hyperlink{struct_picto_1_1_design_message}{Design\-Message} \hyperlink{class_picto_1_1_design_root_ae51a2bad89a82242374c605c075ce233}{get\-Last\-Warning} ()
+\begin{DoxyCompactList}\small\item\em Returns the latest deserialization warning message, and clears it out in the process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The root of the Experiment/\-Analysis Design tree passed between different U\-I Viewers. 
+
+the \hyperlink{class_picto_1_1_design_root}{Design\-Root} is a high level class that can be passed between different components and viewers in \hyperlink{namespace_picto}{Picto} and provides easy to access to the experimental design and analyses as well as undo/redo operations and serialization/deserialization methods that include automatic upgrading. It is essentially the user-\/friendly wrapper for the experimental design. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Design\-Root.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_design_root_aa0fbfa60b431b196b01616f4107d101c}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!compiles@{compiles}}
+\index{compiles@{compiles}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{compiles}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::compiles (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{errors = {\ttfamily \&QString()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_aa0fbfa60b431b196b01616f4107d101c}
+
+
+Returns true if the current Design succesfully compiles without errors (ie. has valid syntax). 
+
+If the function returns true, a descriptiong of the compilation errors will appear in the string pointed to by the errors input.
+
+\begin{DoxyNote}{Note}
+Rather than recompiling every time this function is called, a compiled\-\_\- flag is maintained to mark if a new compiliation needs to occur or not. The run time of this function is therefore highly dependent on whether the design has been changed since the last time it was called. It should also be pointed out that there is no need to actually \char`\"{}compile\char`\"{} \hyperlink{namespace_picto}{Picto} design code. The code is simply interpreted by \hyperlink{namespace_picto}{Picto} and turned into a design tree in R\-A\-M that is run to perform an experiment. Compiling is therefore simply checking for valid syntax. If a design has valid syntax we say that it compiles. This does not preclude runtime errors in Javascript however. Javascript is so flexible that it is notoriously hard to catch javascript syntax errors before run time. Any syntax errors that are catchable will be caught in this function; however, runtime errors will not be exposed until the experiment is tested, and these will show up in the debug viewer during the test run. 
+\end{DoxyNote}
+
+
+Definition at line 292 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a602921939c89f471772431dae8c3281a}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!enable\-Run\-Mode@{enable\-Run\-Mode}}
+\index{enable\-Run\-Mode@{enable\-Run\-Mode}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{enable\-Run\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::enable\-Run\-Mode (
+\begin{DoxyParamCaption}
+\item[{bool}]{run\-Mode}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a602921939c89f471772431dae8c3281a}
+
+
+Enables/\-Disables run mode for all assets in the design. 
+
+Since every property has 3 underlying values, saved\-Value, init\-Value and run\-Value, we need to set the operation mode of the properties depending on what we are doing. When we are designing the experiment, we can alter any of the values that we want, by default we just set all 3 at once. When we are running an experiment, scripts update only the run\-Value and parameter changes by the operator change the init\-Value which is then set to the run\-Value each time a property's parent enters scope. Depending on which run\-Mode we are in, the standard set\-Value function on \hyperlink{class_picto_1_1_property}{Property} objects functions differenlty, setting the appropriate underlying value, so we need to make sure to use this function to assure that our updates are going to the right place. This is important because, for example, if we are building a Design and testing it during the course of development, we want to make sure that when we save the design out nothing that happened during a test will affect the saved file. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_property_a5554f476de8000d1da1b399d9f32d5ca}{Property\-::set\-Value()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 326 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a4b69e2bd671f36df8bdd903b664c7471}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!get\-Experiment@{get\-Experiment}}
+\index{get\-Experiment@{get\-Experiment}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{get\-Experiment}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset} $>$ Design\-Root\-::get\-Experiment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a4b69e2bd671f36df8bdd903b664c7471}
+
+
+Returns a shared pointer to this design's \hyperlink{class_picto_1_1_experiment}{Experiment}. 
+
+\begin{DoxyNote}{Note}
+While a design may contain any number of Analyses, it contains only one \hyperlink{class_picto_1_1_experiment}{Experiment}. 
+\end{DoxyNote}
+
+
+Definition at line 106 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_ae51a2bad89a82242374c605c075ce233}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!get\-Last\-Warning@{get\-Last\-Warning}}
+\index{get\-Last\-Warning@{get\-Last\-Warning}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{get\-Last\-Warning}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Design\-Message} Picto\-::\-Design\-Root\-::get\-Last\-Warning (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_design_root_ae51a2bad89a82242374c605c075ce233}
+
+
+Returns the latest deserialization warning message, and clears it out in the process. 
+
+A \hyperlink{class_picto_1_1_design_root}{Design\-Root} warning indicates that Deserialization was successful, but there is something that the user should know about. \begin{DoxyNote}{Note}
+This is currently used to inform the user that design contents were automatically upgraded. 
+\end{DoxyNote}
+
+
+Definition at line 76 of file Design\-Root.\-h.
+
+\hypertarget{class_picto_1_1_design_root_a75959f40e084a4b5a0476cee21fee410}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!has\-Redo@{has\-Redo}}
+\index{has\-Redo@{has\-Redo}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{has\-Redo}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::has\-Redo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a75959f40e084a4b5a0476cee21fee410}
+
+
+Returns true if there is an undo available. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_a9f254dea700b90bc4f27d07cc4aa3bda}{redo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 193 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_aed754dcf76ca7ae16f30745f0a895758}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!has\-Undo@{has\-Undo}}
+\index{has\-Undo@{has\-Undo}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{has\-Undo}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::has\-Undo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_aed754dcf76ca7ae16f30745f0a895758}
+
+
+Returns true if there is an undo available. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 186 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a8840b2f3c56ba3b6b5bb969b4fce95ff}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!import\-Analysis@{import\-Analysis}}
+\index{import\-Analysis@{import\-Analysis}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{import\-Analysis}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset} $>$ Design\-Root\-::import\-Analysis (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{analysis\-Text}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a8840b2f3c56ba3b6b5bb969b4fce95ff}
+
+
+Attempts to create an analysis based on the input design text and import it into the design. 
+
+If the import fails, the function returns an empty pointer. If it succeeds it returns the imported analysis object. 
+
+Definition at line 80 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a7adddf09b9189a2cd5e37dd4313e39a8}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!is\-Modified@{is\-Modified}}
+\index{is\-Modified@{is\-Modified}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{is\-Modified}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::is\-Modified (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a7adddf09b9189a2cd5e37dd4313e39a8}
+
+
+Returns true if the design has been modified by the designer. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 255 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a9f254dea700b90bc4f27d07cc4aa3bda}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!redo@{redo}}
+\index{redo@{redo}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{redo}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::redo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a9f254dea700b90bc4f27d07cc4aa3bda}
+
+
+Moves the state of the experiment forward to what it was just before the latest \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()} was called. 
+
+As described in the \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()} comments, what we actually do here is redo the serialized design document, then refresh the entire experiment from the X\-M\-L design code. Its inefficient. It should be improved. But it works, and it fit our schedule. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_a75959f40e084a4b5a0476cee21fee410}{has\-Redo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 216 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!refresh\-From\-Xml@{refresh\-From\-Xml}}
+\index{refresh\-From\-Xml@{refresh\-From\-Xml}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{refresh\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::refresh\-From\-Xml (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}
+
+
+Rebuilds the design from the latest underlying serialized X\-M\-L design text (see \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}). 
+
+Since currently, deleting assets just sets a deleted flag which causes them to not be serialized out, truly deleting asset objects from a design means, setting their deleted flag, serializing the experiment to xml, the reloading the experiment from that text. At some point, this should be made more efficient, in which case this function won't be necessary. 
+
+Definition at line 229 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a7049bc66947f5b9f36d7670c470356fb}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!remove\-Analysis@{remove\-Analysis}}
+\index{remove\-Analysis@{remove\-Analysis}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{remove\-Analysis}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::remove\-Analysis (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a7049bc66947f5b9f36d7670c470356fb}
+
+
+Removes the analysis with the input index from the design where index is a function of the creation/import order. 
+
+The removal is performed by marking the analysis as deleted. This means that it will not be serialized out with the rest of the design, so if you \hyperlink{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}{refresh\-From\-Xml()} the analysis will dissappear. If you don't \hyperlink{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}{refresh\-From\-Xml()} though, the analysis will remain until you do so. /sa \hyperlink{class_picto_1_1_design_root_a3fed86206f2accefe56685239e5ff391}{refresh\-From\-Xml()}, \hyperlink{class_picto_1_1_design_root_aa3fcc78644b5ab4a53423ec8696af56b}{get\-Num\-Analyses()},\hyperlink{class_picto_1_1_design_root_a9a890862b928fa11267489541e381585}{get\-Analysis()} 
+
+Definition at line 94 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_acae1228aa37df9dc66c0a05ddbb9129b}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!reset\-Design\-Root@{reset\-Design\-Root}}
+\index{reset\-Design\-Root@{reset\-Design\-Root}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{reset\-Design\-Root}]{\setlength{\rightskip}{0pt plus 5cm}bool Design\-Root\-::reset\-Design\-Root (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{Design\-Root\-Text}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_acae1228aa37df9dc66c0a05ddbb9129b}
+
+
+Rebuilds the Experimental Design from a saved xml string. 
+
+Returns true if the deserialization was successful, and false otherwise. If false was returned, the deserialization error can be checked with \hyperlink{class_picto_1_1_design_root_a280904c282f73dce02d654d06a0ebb3b}{get\-Last\-Error()}. If deserialization was successful, there still may be a warning message that the designer should see. Check for this using \hyperlink{class_picto_1_1_design_root_a92b713a874879cc6d6ae3f4f90cd92ac}{has\-Warning()} and read it using \hyperlink{class_picto_1_1_design_root_ae51a2bad89a82242374c605c075ce233}{get\-Last\-Warning()}.
+
+This function also has the capability to automatically upgrade the input design text. If it does so, a warning string will be available to that effect. Obviously, the original design file remains untouched until the designer saves these changes back out. 
+
+Definition at line 26 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_ab0e486681130b2fc354308dd6c19df6e}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!set\-Open\-Asset@{set\-Open\-Asset}}
+\index{set\-Open\-Asset@{set\-Open\-Asset}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{set\-Open\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::set\-Open\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_ab0e486681130b2fc354308dd6c19df6e}
+
+
+Sets the asset that will be considered open in the designer window. 
+
+\begin{DoxyNote}{Note}
+This information will be saved along with the other U\-I information (element positions on the canvas) as part of a \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} category in the serialized xml design. 
+\end{DoxyNote}
+
+
+Definition at line 177 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!set\-Undo\-Point@{set\-Undo\-Point}}
+\index{set\-Undo\-Point@{set\-Undo\-Point}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{set\-Undo\-Point}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::set\-Undo\-Point (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}
+
+
+Sets the current state of the design as an undo point. 
+
+This means that once the next change is made, if someone calls undo, the experiment will return to the state that it was in when this function was called. There are certainly vastly more efficient ways to handle undo than what we're doing here, but in the interest of saving time, we are simply serializaing out the entire design every time this function is called, and changing an underlying Q\-Text\-Document (which knows how to handle undo and redo) accordingly. To perform an undo, we simply call undo on the Q\-Text\-Document and then \hyperlink{class_picto_1_1_design_root_acae1228aa37df9dc66c0a05ddbb9129b}{reset\-Design\-Root()} from the new text. Its incredibly inefficient, but it works, albeit slowly. This would be a good thing to upgrade in the future. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()}, \hyperlink{class_picto_1_1_design_root_a9f254dea700b90bc4f27d07cc4aa3bda}{redo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 140 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a796f283227a5a979194349991990bf22}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!set\-Unmodified@{set\-Unmodified}}
+\index{set\-Unmodified@{set\-Unmodified}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{set\-Unmodified}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::set\-Unmodified (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a796f283227a5a979194349991990bf22}
+
+
+Sets the latest version of the design as unmodified. 
+
+Calling \hyperlink{class_picto_1_1_design_root_a796f283227a5a979194349991990bf22}{set\-Unmodified()} has the result of removing all undo/redo points. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{undo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 264 of file Design\-Root.\-cpp.
+
+\hypertarget{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}{\index{Picto\-::\-Design\-Root@{Picto\-::\-Design\-Root}!undo@{undo}}
+\index{undo@{undo}!Picto::DesignRoot@{Picto\-::\-Design\-Root}}
+\subsubsection[{undo}]{\setlength{\rightskip}{0pt plus 5cm}void Design\-Root\-::undo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_design_root_a8f57a2f9ebb4fd5065a6f36b4d8a4b90}
+
+
+Moves the state of the experiment back to what it was when \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()} was last called. 
+
+As described in the \hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()} comments, what we actually do here is undo the serialized design document, then refresh the entire experiment from the X\-M\-L design code. Its inefficient. It should be improved. But it works, and it fit our schedule. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a0be90b8e58e958fea095f0650f865c46}{set\-Undo\-Point()}, \hyperlink{class_picto_1_1_design_root_aed754dcf76ca7ae16f30745f0a895758}{has\-Undo()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 203 of file Design\-Root.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/design/Design\-Root.\-h\item 
+source/common/design/Design\-Root.\-cpp\end{DoxyCompactItemize}

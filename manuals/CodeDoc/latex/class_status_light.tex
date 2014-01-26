@@ -1,0 +1,81 @@
+\hypertarget{class_status_light}{\section{Status\-Light Class Reference}
+\label{class_status_light}\index{Status\-Light@{Status\-Light}}
+}
+
+
+A status light widget.  
+
+
+
+
+{\ttfamily \#include $<$Status\-Light.\-h$>$}
+
+Inheritance diagram for Status\-Light\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_status_light}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_status_light_ac386582cc63be97e9d89de40d1bc6695}{void \hyperlink{class_status_light_ac386582cc63be97e9d89de40d1bc6695}{turn\-Green} ()}\label{class_status_light_ac386582cc63be97e9d89de40d1bc6695}
+
+\begin{DoxyCompactList}\small\item\em Changes the color of the \hyperlink{class_status_light}{Status\-Light} to green. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_a506d58535796f3de633a9c94e0d9ff50}{void \hyperlink{class_status_light_a506d58535796f3de633a9c94e0d9ff50}{turn\-Yellow} ()}\label{class_status_light_a506d58535796f3de633a9c94e0d9ff50}
+
+\begin{DoxyCompactList}\small\item\em Changes the color of the \hyperlink{class_status_light}{Status\-Light} to yellow. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_a6d86f6ae871039417d737d160c63b012}{void \hyperlink{class_status_light_a6d86f6ae871039417d737d160c63b012}{turn\-Red} ()}\label{class_status_light_a6d86f6ae871039417d737d160c63b012}
+
+\begin{DoxyCompactList}\small\item\em Changes the color of the \hyperlink{class_status_light}{Status\-Light} to red. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_status_light_aff4a7c41196fdce68aead25282b3034f}{\hyperlink{class_status_light_aff4a7c41196fdce68aead25282b3034f}{Status\-Light} (Q\-Widget $\ast$parent=0, Q\-Color color=Qt\-::red, int radius=30)}\label{class_status_light_aff4a7c41196fdce68aead25282b3034f}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_status_light}{Status\-Light} widget with the input parent, color and radius. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_ab7e9afad3864345c54df433b86f2dcae}{Q\-Color \hyperlink{class_status_light_ab7e9afad3864345c54df433b86f2dcae}{get\-Color} ()}\label{class_status_light_ab7e9afad3864345c54df433b86f2dcae}
+
+\begin{DoxyCompactList}\small\item\em Returns the color of the \hyperlink{class_status_light}{Status\-Light}. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_adeaa93e9fdd419ac63e55c850eab730f}{void \hyperlink{class_status_light_adeaa93e9fdd419ac63e55c850eab730f}{set\-Color} (Q\-Color color)}\label{class_status_light_adeaa93e9fdd419ac63e55c850eab730f}
+
+\begin{DoxyCompactList}\small\item\em Sets the color of the \hyperlink{class_status_light}{Status\-Light} to the input value. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_a1f3d42cafc56e862980960ffb4f4eb90}{void \hyperlink{class_status_light_a1f3d42cafc56e862980960ffb4f4eb90}{set\-Radius} (int radius)}\label{class_status_light_a1f3d42cafc56e862980960ffb4f4eb90}
+
+\begin{DoxyCompactList}\small\item\em Sets the radius of the \hyperlink{class_status_light}{Status\-Light} to the input value. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_aec8873097154efb946e9ca5c4db68195}{int \hyperlink{class_status_light_aec8873097154efb946e9ca5c4db68195}{get\-Radius} ()}\label{class_status_light_aec8873097154efb946e9ca5c4db68195}
+
+\begin{DoxyCompactList}\small\item\em Returns the radius of the \hyperlink{class_status_light}{Status\-Light}. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_ad5abf52d521cc7fcb3a4f48b0f668901}{Q\-Size \hyperlink{class_status_light_ad5abf52d521cc7fcb3a4f48b0f668901}{size\-Hint} () const }\label{class_status_light_ad5abf52d521cc7fcb3a4f48b0f668901}
+
+\begin{DoxyCompactList}\small\item\em Implements Q\-Widget\-::size\-Hint() to provide the correct size for the \hyperlink{class_status_light}{Status\-Light} according to the current radius value. \end{DoxyCompactList}\item 
+\hypertarget{class_status_light_a8732663a4f376410f8682469f8571f1e}{void \hyperlink{class_status_light_a8732663a4f376410f8682469f8571f1e}{draw} (Q\-Painter $\ast$painter)}\label{class_status_light_a8732663a4f376410f8682469f8571f1e}
+
+\begin{DoxyCompactList}\small\item\em Colors the \hyperlink{class_status_light}{Status\-Light} widget with the correct color and the correct shape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_status_light_a77c894c226de02c7a8b6faa6fb2c6801}{void \hyperlink{class_status_light_a77c894c226de02c7a8b6faa6fb2c6801}{paint\-Event} (Q\-Paint\-Event $\ast$event)}\label{class_status_light_a77c894c226de02c7a8b6faa6fb2c6801}
+
+\begin{DoxyCompactList}\small\item\em Implements Q\-Widget\-::paint\-Event() to correctly paint this widget by calling \hyperlink{class_status_light_a8732663a4f376410f8682469f8571f1e}{draw()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A status light widget. 
+
+We couldn't find any good stock status light widgets so we made our own. The status light is used in the proxy server's G\-U\-I. It is just a circle that changes colors (red, yellow, green) to indicate status. This was an early attempt at writing a Qt G\-U\-I, so it's a bit crude. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Status\-Light.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/Status\-Light.\-h\item 
+source/proxyserver/Status\-Light.\-cpp\end{DoxyCompactItemize}

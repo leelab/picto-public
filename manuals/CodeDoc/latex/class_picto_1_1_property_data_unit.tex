@@ -1,0 +1,110 @@
+\hypertarget{class_picto_1_1_property_data_unit}{\section{Picto\-:\-:Property\-Data\-Unit Class Reference}
+\label{class_picto_1_1_property_data_unit}\index{Picto\-::\-Property\-Data\-Unit@{Picto\-::\-Property\-Data\-Unit}}
+}
+
+
+Stores data about a particular change to a \hyperlink{class_picto_1_1_property}{Property}'s value.  
+
+
+
+
+{\ttfamily \#include $<$Property\-Data\-Unit.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Property\-Data\-Unit\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_property_data_unit}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_property_data_unit_ac79e8114c6ddee2ca640cd1892fe1412}{Property\-Data\-Unit} (int index, bool init\-Value, Q\-String value)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_property_data_unit}{Property\-Data\-Unit} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a2b3f546d713a3fbac846003a6d881657}{void \hyperlink{class_picto_1_1_property_data_unit_a2b3f546d713a3fbac846003a6d881657}{set\-Action\-Frame} (qulonglong frame\-Id)}\label{class_picto_1_1_property_data_unit_a2b3f546d713a3fbac846003a6d881657}
+
+\begin{DoxyCompactList}\small\item\em Sets the Frame\-Id of the next frame to be presented after the \hyperlink{class_picto_1_1_property}{Property} value change occurs. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_aae99d6686027fc64bca58ac67e4272b6}{qulonglong \hyperlink{class_picto_1_1_property_data_unit_aae99d6686027fc64bca58ac67e4272b6}{get\-Action\-Frame} ()}\label{class_picto_1_1_property_data_unit_aae99d6686027fc64bca58ac67e4272b6}
+
+\begin{DoxyCompactList}\small\item\em Returns the Frame\-Id of the next frame to be presented after the \hyperlink{class_picto_1_1_property}{Property} value change occurs. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a95e9094b43ea437e1abf6c6067afb0c3}{virtual bool \hyperlink{class_picto_1_1_property_data_unit_a95e9094b43ea437e1abf6c6067afb0c3}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_property_data_unit_a95e9094b43ea437e1abf6c6067afb0c3}
+
+\begin{DoxyCompactList}\small\item\em Turns the \hyperlink{class_picto_1_1_property_data_unit}{Property\-Data\-Unit} into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a9fdfa4591dac16beb4120afb010db5e5}{virtual bool \hyperlink{class_picto_1_1_property_data_unit_a9fdfa4591dac16beb4120afb010db5e5}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_property_data_unit_a9fdfa4591dac16beb4120afb010db5e5}
+
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a \hyperlink{class_picto_1_1_property_data_unit}{Property\-Data\-Unit} object. Note that this deletes any existing data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_data_unit_a67e14419d8a5e7455a0777027f9f9fb0}{int \hyperlink{class_picto_1_1_property_data_unit_a67e14419d8a5e7455a0777027f9f9fb0}{index\-\_\-}}\label{class_picto_1_1_property_data_unit_a67e14419d8a5e7455a0777027f9f9fb0}
+
+\begin{DoxyCompactList}\small\item\em The Asset\-Id of the \hyperlink{class_picto_1_1_property}{Property} whose value changed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a78f59cd7d6bc3d4388f769e63b74f562}{bool \hyperlink{class_picto_1_1_property_data_unit_a78f59cd7d6bc3d4388f769e63b74f562}{init\-Value\-\_\-}}\label{class_picto_1_1_property_data_unit_a78f59cd7d6bc3d4388f769e63b74f562}
+
+\begin{DoxyCompactList}\small\item\em True if the change was to an init\-Value, false if its a run\-Value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a0c8db6c3bad8d413f45762d78f0b18f9}{Q\-String \hyperlink{class_picto_1_1_property_data_unit_a0c8db6c3bad8d413f45762d78f0b18f9}{value\-\_\-}}\label{class_picto_1_1_property_data_unit_a0c8db6c3bad8d413f45762d78f0b18f9}
+
+\begin{DoxyCompactList}\small\item\em The new \hyperlink{class_picto_1_1_property}{Property} value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_unit_a771b69a435485d410c4bdd61c13b6fb9}{qulonglong \hyperlink{class_picto_1_1_property_data_unit_a771b69a435485d410c4bdd61c13b6fb9}{action\-Frame\-\_\-}}\label{class_picto_1_1_property_data_unit_a771b69a435485d410c4bdd61c13b6fb9}
+
+\begin{DoxyCompactList}\small\item\em The Frame\-Id of the next Frame to be presented after the \hyperlink{class_picto_1_1_property}{Property} change takes place. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_data_unit_a877eb5d7babb535544ebb3292000423e}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_property_data_unit_a877eb5d7babb535544ebb3292000423e}
+
+\item 
+\hypertarget{class_picto_1_1_property_data_unit_ac83f023f4bb09600c6b01b6173edbae7}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_property_data_unit_ac83f023f4bb09600c6b01b6173edbae7}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores data about a particular change to a \hyperlink{class_picto_1_1_property}{Property}'s value. 
+
+This class holds data about a single \hyperlink{class_picto_1_1_property}{Property} value change. The \hyperlink{class_picto_1_1_property}{Property} whose value changed is referenced by its Asset\-Id. The changed value can be either a run\-Value or an init\-Value, as indicated by the init\-Value\-\_\- field. The Value itself is stored in a string form that can be converted to a \hyperlink{class_picto_1_1_property}{Property} value by using \hyperlink{class_picto_1_1_property_ac895b7d7c8a015e18deed4a71443b29a}{Property\-::val\-From\-User\-String()}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Property\-Data\-Unit.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_property_data_unit_ac79e8114c6ddee2ca640cd1892fe1412}{\index{Picto\-::\-Property\-Data\-Unit@{Picto\-::\-Property\-Data\-Unit}!Property\-Data\-Unit@{Property\-Data\-Unit}}
+\index{Property\-Data\-Unit@{Property\-Data\-Unit}!Picto::PropertyDataUnit@{Picto\-::\-Property\-Data\-Unit}}
+\subsubsection[{Property\-Data\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Property\-Data\-Unit\-::\-Property\-Data\-Unit (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{bool}]{init\-Value, }
+\item[{Q\-String}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_property_data_unit_ac79e8114c6ddee2ca640cd1892fe1412}
+
+
+Constructs a \hyperlink{class_picto_1_1_property_data_unit}{Property\-Data\-Unit} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The Asset\-Id of the \hyperlink{class_picto_1_1_property}{Property} whose value changed. \\
+\hline
+{\em init\-Value} & True if the change was to an init\-Value, false if its a run\-Value. \\
+\hline
+{\em value} & The new \hyperlink{class_picto_1_1_property}{Property} value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 15 of file Property\-Data\-Unit.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Property\-Data\-Unit.\-h\item 
+source/common/storage/Property\-Data\-Unit.\-cpp\end{DoxyCompactItemize}

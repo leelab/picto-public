@@ -1,0 +1,113 @@
+\hypertarget{class_director}{\section{Director Class Reference}
+\label{class_director}\index{Director@{Director}}
+}
+
+
+Defines an object that runs a \hyperlink{namespace_picto}{Picto} Experiment for a test subject, transmits experimental data to the \hyperlink{namespace_picto}{Picto} server and sends timing alignment events to a Neural data acquisition system.  
+
+
+
+
+{\ttfamily \#include $<$Director.\-h$>$}
+
+Inheritance diagram for Director\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_director}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_director_a0e111a20f337fe453a6e4d7d72a60745}{Director} (Q\-String \hyperlink{class_director_a757af6de79d8409b98d3d29db654ebf1}{name}=\char`\"{}\char`\"{}, \hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}{Hardware\-Setup\-::\-Signal\-Channel\-Type} sig\-Channel=\hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa0e71632c05842ebd76e1cf2d3e9d03e}{Hardware\-Setup\-::\-Mouse}, \hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005}{Hardware\-Setup\-::\-Visual\-Target\-Type} visual\-Target=\hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005a907396ec61e0de7775ba86d887af5457}{Hardware\-Setup\-::\-Pixmap}, \hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}{Hardware\-Setup\-::\-Reward\-Controller\-Type} reward\-Controller=\hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa6d983e58d740737e1054ee313b2771a0}{Hardware\-Setup\-::\-Null\-Reward}, \hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625b}{Hardware\-Setup\-::\-Output\-Signal\-Controller\-Type} out\-Sig\-Controller=\hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625ba64fe06dc1692650e0396f9577e0eac9a}{Hardware\-Setup\-::\-Null\-Out\-Sig}, \hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{Hardware\-Setup\-::\-Event\-Code\-Generator\-Type} event\-Code\-Generator=\hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a68b2acabc843c750fdd9297f65959c39}{Hardware\-Setup\-::\-Null\-Gen}, int x\-Eye\-Channel=0, int y\-Eye\-Channel=1, int x\-Diam\-Channel=-\/1, int y\-Diam\-Channel=-\/1, int pos\-Samp\-Per=2, int diam\-Samp\-Per=4)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_director}{Director} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_director_a757af6de79d8409b98d3d29db654ebf1}{virtual Q\-String \hyperlink{class_director_a757af6de79d8409b98d3d29db654ebf1}{name} ()}\label{class_director_a757af6de79d8409b98d3d29db654ebf1}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_component_interface}{Component\-Interface}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_aaa04b504d37eef09cbb636e118301a58}{virtual int \hyperlink{class_director_aaa04b504d37eef09cbb636e118301a58}{open\-Device} ()}\label{class_director_aaa04b504d37eef09cbb636e118301a58}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_component_interface_a93b77c54abbcd8ea42afb9fd204049bd}{Component\-Interface\-::open\-Device()} to setup the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}, start a Front\-Panel process (if requested in constructor), setup the \hyperlink{class_director_status_manager}{Director\-Status\-Manager}, and add Protocol\-Response\-Handler objects to the \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel}. \end{DoxyCompactList}\item 
+\hypertarget{class_director_afcbff5563cfc3e8577d8fb83023f543d}{virtual int \hyperlink{class_director_afcbff5563cfc3e8577d8fb83023f543d}{close\-Device} ()}\label{class_director_afcbff5563cfc3e8577d8fb83023f543d}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_component_interface_ab4433362fe7d1e5c09dc556e7105f775}{Component\-Interface\-::close\-Device()} to close all visible \hyperlink{class_picto_1_1_visual_target}{Picto\-::\-Visual\-Target} objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Defines an object that runs a \hyperlink{namespace_picto}{Picto} Experiment for a test subject, transmits experimental data to the \hyperlink{namespace_picto}{Picto} server and sends timing alignment events to a Neural data acquisition system. 
+
+This class implements a \hyperlink{class_component_interface}{Component\-Interface} to setup a \hyperlink{class_director_status_manager}{Director\-Status\-Manager}, a \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} and a Command\-Channel that work together to run Experiments that come in from the Picto\-Server. When running on a Pictobox it also starts an instance of the Embedded\-Front\-Panel process which functions as a simple control panel for things like supplying rewards and displaying feedback to the Experiment operator. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Director.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_director_a0e111a20f337fe453a6e4d7d72a60745}{\index{Director@{Director}!Director@{Director}}
+\index{Director@{Director}!Director@{Director}}
+\subsubsection[{Director}]{\setlength{\rightskip}{0pt plus 5cm}Director\-::\-Director (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{{\bf Hardware\-Setup\-::\-Signal\-Channel\-Type}}]{sig\-Channel = {\ttfamily {\bf Hardware\-Setup\-::\-Mouse}}, }
+\item[{{\bf Hardware\-Setup\-::\-Visual\-Target\-Type}}]{visual\-Target = {\ttfamily {\bf Hardware\-Setup\-::\-Pixmap}}, }
+\item[{{\bf Hardware\-Setup\-::\-Reward\-Controller\-Type}}]{reward\-Controller = {\ttfamily {\bf Hardware\-Setup\-::\-Null\-Reward}}, }
+\item[{{\bf Hardware\-Setup\-::\-Output\-Signal\-Controller\-Type}}]{out\-Sig\-Controller = {\ttfamily {\bf Hardware\-Setup\-::\-Null\-Out\-Sig}}, }
+\item[{{\bf Hardware\-Setup\-::\-Event\-Code\-Generator\-Type}}]{event\-Code\-Generator = {\ttfamily {\bf Hardware\-Setup\-::\-Null\-Gen}}, }
+\item[{int}]{x\-Eye\-Channel = {\ttfamily 0}, }
+\item[{int}]{y\-Eye\-Channel = {\ttfamily 1}, }
+\item[{int}]{x\-Diam\-Channel = {\ttfamily -\/1}, }
+\item[{int}]{y\-Diam\-Channel = {\ttfamily -\/1}, }
+\item[{int}]{pos\-Samp\-Per = {\ttfamily 2}, }
+\item[{int}]{diam\-Samp\-Per = {\ttfamily 4}}
+\end{DoxyParamCaption}
+)}}\label{class_director_a0e111a20f337fe453a6e4d7d72a60745}
+
+
+Constructs a \hyperlink{class_director}{Director} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of this \hyperlink{class_director}{Director} \\
+\hline
+{\em sig\-Channel} & The \hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}{Hardware\-Setup\-::\-Signal\-Channel\-Type} of signal channels that will be used by this \hyperlink{class_director}{Director} (ie. Mouse, legacy eye, Pictobox eye) \\
+\hline
+{\em visual\-Target} & The \hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005}{Hardware\-Setup\-::\-Visual\-Target\-Type} that will be used by this \hyperlink{class_director}{Director} (ie. Pixmap or Direct3d) \\
+\hline
+{\em reward\-Controller} & The \hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}{Hardware\-Setup\-::\-Reward\-Controller\-Type} that will be used by this \hyperlink{class_director}{Director} (ie. Pictobox Solenoid, audio, etc). \\
+\hline
+{\em out\-Sig\-C\-Ontroller} & The \hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625b}{Hardware\-Setup\-::\-Output\-Signal\-Controller\-Type} that will be used by this \hyperlink{class_director}{Director} (ie. Pictobox, none) \\
+\hline
+{\em event\-Code\-Generator} & The \hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{Hardware\-Setup\-::\-Event\-Code\-Generator\-Type} that will be used to deliver event codes (ie. Pictobox, legacy, none) \\
+\hline
+{\em x\-Eye\-Channel} & The input channel on which x eye position data will be delivered \\
+\hline
+{\em y\-Eye\-Channel} & The input channel on which y eye position data will be delivered \\
+\hline
+{\em x\-Diam\-Channel} & The input channel on which x eye diameter data will be delivered \\
+\hline
+{\em y\-Diam\-Channel} & The input channel on which y eye diameter data will be delivered \\
+\hline
+{\em pos\-Samp\-Per} & The number of milliseconds per reading of position data (position sample period) \\
+\hline
+{\em diam\-Samp\-Per} & The number of milliseconds per reading of diameter data (diameter sample period)\\
+\hline
+\end{DoxyParams}
+Stores the input data and writes it to a configuration file. 
+
+Definition at line 46 of file Director.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/Director.\-h\item 
+source/director/Director.\-cpp\end{DoxyCompactItemize}

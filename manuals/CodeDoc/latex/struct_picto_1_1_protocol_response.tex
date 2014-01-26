@@ -1,0 +1,387 @@
+\hypertarget{struct_picto_1_1_protocol_response}{\section{Picto\-:\-:Protocol\-Response Struct Reference}
+\label{struct_picto_1_1_protocol_response}\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}}
+}
+
+
+A response, issued as the result of a command.  
+
+
+
+
+{\ttfamily \#include $<$Protocol\-Response.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_picto_1_1_protocol_response_ac07f926cb55d8bc7c10fba9cd1b12a21}{Protocol\-Response} (Q\-String server\-Type=\char`\"{}Picto\-Server\char`\"{}, Q\-String protocol=\char`\"{}P\-I\-C\-T\-O\char`\"{}, Q\-String version=\char`\"{}1.\-0\char`\"{}, Protocol\-Response\-Type\-::\-Protocol\-Response\-Type protocol\-Response\-Type=Protocol\-Response\-Type\-::\-Uninitialized\-Response)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{struct_picto_1_1_protocol_response_a16144f811255d4450ec81142145d6ea9}{generate\-Headers\-String} ()
+\begin{DoxyCompactList}\small\item\em Generates a header string for the response based on \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} data values and returns it. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{struct_picto_1_1_protocol_response_a175376b892e329528d5db6b8318f68b4}{get\-Multi\-Part\-Headers} ()
+\begin{DoxyCompactList}\small\item\em In the case of a multipart response, after the initial headers are sent, we would send this header with the next piece of content. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a2fab73b8683ab2ca637bcf2d2927e6d7}{Q\-Byte\-Array \hyperlink{struct_picto_1_1_protocol_response_a2fab73b8683ab2ca637bcf2d2927e6d7}{get\-Content} ()}\label{struct_picto_1_1_protocol_response_a2fab73b8683ab2ca637bcf2d2927e6d7}
+
+\begin{DoxyCompactList}\small\item\em Returns a byte array with the content of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a68053b6ce1feb22f3f78033428537eb6}{Q\-Byte\-Array \hyperlink{struct_picto_1_1_protocol_response_a68053b6ce1feb22f3f78033428537eb6}{get\-Encoded\-Content} ()}\label{struct_picto_1_1_protocol_response_a68053b6ce1feb22f3f78033428537eb6}
+
+\begin{DoxyCompactList}\small\item\em This function does not appear to be used and should probably be removed in my opinion. On the other hand, its documentation used to be\-: \char`\"{}\-Yes, this is identical to get\-Content, but it makes things a bit clearer.\char`\"{}. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a3c1ec9136c91f050ee4498ee7f7d3841}{Q\-Byte\-Array \hyperlink{struct_picto_1_1_protocol_response_a3c1ec9136c91f050ee4498ee7f7d3841}{get\-Decoded\-Content} ()}\label{struct_picto_1_1_protocol_response_a3c1ec9136c91f050ee4498ee7f7d3841}
+
+\begin{DoxyCompactList}\small\item\em This class used to support zip/unzip of message content, but that support was removed. This function used to return the unizipped content of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. Now it is really just the same as \hyperlink{struct_picto_1_1_protocol_response_a2fab73b8683ab2ca637bcf2d2927e6d7}{get\-Content()}. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_a59aba20feeebb72e03682f06ccad5f39}{set\-Content} (Q\-Byte\-Array \-\_\-content)
+\begin{DoxyCompactList}\small\item\em Sets this response's content to the input byte array and updates the \char`\"{}\-Content-\/\-Length\char`\"{} field. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a9fa9c893189686ea4da560db89efaca9}{void \hyperlink{struct_picto_1_1_protocol_response_a9fa9c893189686ea4da560db89efaca9}{add\-Field} (Q\-String field, Q\-String value)}\label{struct_picto_1_1_protocol_response_a9fa9c893189686ea4da560db89efaca9}
+
+\begin{DoxyCompactList}\small\item\em Adds the input value to the input field of this response. If the field doesn't exist yet, it is created. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_aaaeb043be858c4675cb4e0bbcf65edc5}{void \hyperlink{struct_picto_1_1_protocol_response_aaaeb043be858c4675cb4e0bbcf65edc5}{set\-Should\-Terminate\-Connection} (bool terminate\-Connection)}\label{struct_picto_1_1_protocol_response_aaaeb043be858c4675cb4e0bbcf65edc5}
+
+\begin{DoxyCompactList}\small\item\em Sets whether the server sending this response should terminate its connection to the client after this response is delivered. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a2df0c477e8ced59318846c2c100ff90f}{void \hyperlink{struct_picto_1_1_protocol_response_a2df0c477e8ced59318846c2c100ff90f}{set\-Content\-Type} (Q\-String content\-Type\-String)}\label{struct_picto_1_1_protocol_response_a2df0c477e8ced59318846c2c100ff90f}
+
+\begin{DoxyCompactList}\small\item\em Sets the type of the contents in this response. (ie. \char`\"{}text/html; charset=\textbackslash{}\char`\"{}utf-\/8""). \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_a4bceedb58f5729094946451616292c2a}{set\-Multi\-Part\-Content\-Type} (Q\-String multi\-Part\-Content\-Type\-String)
+\begin{DoxyCompactList}\small\item\em For a multipart response, this function sets the type of data being sent (ie. \char`\"{}image/jpeg\char`\"{}). \end{DoxyCompactList}\item 
+Q\-String \hyperlink{struct_picto_1_1_protocol_response_aa3f7376e9eef615d0e069d4fe56f7a09}{get\-Multi\-Part\-Content\-Type} ()
+\begin{DoxyCompactList}\small\item\em For a multipart response, this function gets the type of data that being sent (ie. \char`\"{}image/jpeg\char`\"{}). \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a9f6913c5490b7dfde04aef40be040cd5}{void \hyperlink{struct_picto_1_1_protocol_response_a9f6913c5490b7dfde04aef40be040cd5}{set\-Content\-Encoding} (Content\-Encoding\-Type\-::\-Content\-Encoding\-Type content\-Encoding)}\label{struct_picto_1_1_protocol_response_a9f6913c5490b7dfde04aef40be040cd5}
+
+\begin{DoxyCompactList}\small\item\em This class used to support zip/unzip of message content. When that was supported, this function took a content encoding type (ie. Content\-Encoding\-Type\-::gzip), set that type to appropriate fields (ie. Content\-Encoding\-Type\-::gzip), and performed the encoding if content was not empty. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_ada2645e8c1083fadb3ac396bdc51c504}{set\-Multi\-Part\-Boundary} (Q\-String multi\-Part\-Boundary\-String)
+\begin{DoxyCompactList}\small\item\em Sets the string that is used to separate the content of this multipart response. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{struct_picto_1_1_protocol_response_a39b1e563150d1da66ae6a57e435eef3b}{get\-Multi\-Part\-Boundary} ()
+\begin{DoxyCompactList}\small\item\em Gets the string that is used to separate the content of this multipart response. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a9321eae9c54cf3c3ff3c4be52debc842}{bool \hyperlink{struct_picto_1_1_protocol_response_a9321eae9c54cf3c3ff3c4be52debc842}{has\-Content} ()}\label{struct_picto_1_1_protocol_response_a9321eae9c54cf3c3ff3c4be52debc842}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this response's content is not empty. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a491cb931b28950121a8b669c8cecc378}{bool \hyperlink{struct_picto_1_1_protocol_response_a491cb931b28950121a8b669c8cecc378}{should\-Terminate\-Connection} ()}\label{struct_picto_1_1_protocol_response_a491cb931b28950121a8b669c8cecc378}
+
+\begin{DoxyCompactList}\small\item\em Gets whether the server sending this response should terminate its connection to the client after this response is delivered. \end{DoxyCompactList}\item 
+bool \hyperlink{struct_picto_1_1_protocol_response_a3c320aa18ca6e34f3f7307d622505db1}{should\-Stream} ()
+\begin{DoxyCompactList}\small\item\em Gets whether this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} should stream. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_a55fdab74a0a0ce20a399a6718032d83b}{set\-Multi\-Part} (Multi\-Part\-Response\-Type\-::\-Multi\-Part\-Response\-Type multi\-Part\-State)
+\begin{DoxyCompactList}\small\item\em Sets the type of multipart response that this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} constitutes. \end{DoxyCompactList}\item 
+Multi\-Part\-Response\-Type\-::\-Multi\-Part\-Response\-Type \hyperlink{struct_picto_1_1_protocol_response_aa80084e9a7b484e944142cdac18145ea}{get\-Multi\-Part} ()
+\begin{DoxyCompactList}\small\item\em Gets the type of multipart response that this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} constitutes. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_aa5910317b77d6d533f975d55d54cfe9b}{set\-Registered\-Type} (\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2}{Registered\-Response\-Type\-::\-Registered\-Response\-Type} type)
+\begin{DoxyCompactList}\small\item\em Registered\-Response\-Types are used as part of the command-\/id confirmation system. This function sets the \hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} of this response. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_afc7c3b300135dd90203860c85d59d4dc}{\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2}{Registered\-Response\-Type\-::\-Registered\-Response\-Type} \hyperlink{struct_picto_1_1_protocol_response_afc7c3b300135dd90203860c85d59d4dc}{get\-Registered\-Type} ()}\label{struct_picto_1_1_protocol_response_afc7c3b300135dd90203860c85d59d4dc}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. See \hyperlink{struct_picto_1_1_protocol_response_aa5910317b77d6d533f975d55d54cfe9b}{set\-Registered\-Type()} for more detail. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_protocol_response_ab6c434488e4661d2917618dfdb8977f4}{set\-Should\-Stream} (bool \hyperlink{struct_picto_1_1_protocol_response_a3c320aa18ca6e34f3f7307d622505db1}{should\-Stream})
+\begin{DoxyCompactList}\small\item\em Sets whether this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} should stream. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_acb1dcfcf369c0c22466d2983450bc0c4}{Q\-String \hyperlink{struct_picto_1_1_protocol_response_acb1dcfcf369c0c22466d2983450bc0c4}{get\-Field\-Value} (Q\-String field)}\label{struct_picto_1_1_protocol_response_acb1dcfcf369c0c22466d2983450bc0c4}
+
+\begin{DoxyCompactList}\small\item\em Gets the value of the input field. If the field is not found, an empty string is returned. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a282039f53393f6dc96b466ad41208422}{void \hyperlink{struct_picto_1_1_protocol_response_a282039f53393f6dc96b466ad41208422}{set\-Field\-Value} (Q\-String field, Q\-String value)}\label{struct_picto_1_1_protocol_response_a282039f53393f6dc96b466ad41208422}
+
+\begin{DoxyCompactList}\small\item\em This does the exact same thing as \hyperlink{struct_picto_1_1_protocol_response_a9fa9c893189686ea4da560db89efaca9}{add\-Field()}. One of them should really be removed. \end{DoxyCompactList}\item 
+int \hyperlink{struct_picto_1_1_protocol_response_a71d3134d2731be4a5cd53a0ce3ad4790}{get\-Response\-Code} ()
+\begin{DoxyCompactList}\small\item\em Returns the type of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_aea9aabab39e1307740db8bb732b5d49c}{Q\-String \hyperlink{struct_picto_1_1_protocol_response_aea9aabab39e1307740db8bb732b5d49c}{get\-Response\-Type} ()}\label{struct_picto_1_1_protocol_response_aea9aabab39e1307740db8bb732b5d49c}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the type of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} as a string. \end{DoxyCompactList}\item 
+int \hyperlink{struct_picto_1_1_protocol_response_ace13e43b1f086e84cf6f9d782fe1ce70}{read} (Q\-Abstract\-Socket $\ast$socket, int timeout\-Ms=0)
+\begin{DoxyCompactList}\small\item\em Reads an incoming \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} from the input socket and returns the number of content bytes that were read. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_protocol_response_a8ef58e6dae323f1258626b5825a52b24}{int \hyperlink{struct_picto_1_1_protocol_response_a8ef58e6dae323f1258626b5825a52b24}{write} (Q\-Abstract\-Socket $\ast$socket)}\label{struct_picto_1_1_protocol_response_a8ef58e6dae323f1258626b5825a52b24}
+
+\begin{DoxyCompactList}\small\item\em Writes this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} to the passed in socket. Returns the total number of bytes written. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A response, issued as the result of a command. 
+
+\hyperlink{struct_picto_1_1_protocol}{Protocol} responses are the object that gets returned after a command is received. The response can simply be an empty 200\-:O\-K, in response to a simple command, or it can be much more complex. Although there is functionality in place for streaming responses, \hyperlink{namespace_picto}{Picto} doesn't currently use it. Multipart responses are also supported but not used. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 85 of file Protocol\-Response.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_picto_1_1_protocol_response_ac07f926cb55d8bc7c10fba9cd1b12a21}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!Protocol\-Response@{Protocol\-Response}}
+\index{Protocol\-Response@{Protocol\-Response}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{Protocol\-Response}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Protocol\-Response\-::\-Protocol\-Response (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-server\-Type = {\ttfamily \char`\"{}PictoServer\char`\"{}}, }
+\item[{Q\-String}]{\-\_\-protocol = {\ttfamily \char`\"{}PICTO\char`\"{}}, }
+\item[{Q\-String}]{\-\_\-version = {\ttfamily \char`\"{}1.0\char`\"{}}, }
+\item[{Protocol\-Response\-Type\-::\-Protocol\-Response\-Type}]{protocol\-Response\-Type = {\ttfamily ProtocolResponseType\-:\-:UninitializedResponse}}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_ac07f926cb55d8bc7c10fba9cd1b12a21}
+
+
+Constructs a new \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. 
+
+\-\_\-server\-Type is the type of server that is responding (ie. \char`\"{}\-Picto\-Server\char`\"{}). \-\_\-protocol is the name of the protocol being used (ie. \char`\"{}\-Picto\char`\"{}). \-\_\-version is the version of the \hyperlink{struct_picto_1_1_protocol}{Protocol} being used (ie. \char`\"{}1.\-0\char`\"{}). protocol\-Response\-Type is the type of response being returned (see Protocol\-Response\-Type\-::\-Protocol\-Response\-Type). 
+
+Definition at line 20 of file Protocol\-Response.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_protocol_response_a16144f811255d4450ec81142145d6ea9}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!generate\-Headers\-String@{generate\-Headers\-String}}
+\index{generate\-Headers\-String@{generate\-Headers\-String}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{generate\-Headers\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Protocol\-Response\-::generate\-Headers\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a16144f811255d4450ec81142145d6ea9}
+
+
+Generates a header string for the response based on \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} data values and returns it. 
+
+\begin{DoxyNote}{Note}
+This function includes a line that changes the \char`\"{}\-Date\char`\"{} field of the Protocol\-Respose, but otherwise it appears to act as a const function. This is misleading and we should look into removing that line. 
+\end{DoxyNote}
+
+
+Definition at line 58 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_aa80084e9a7b484e944142cdac18145ea}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!get\-Multi\-Part@{get\-Multi\-Part}}
+\index{get\-Multi\-Part@{get\-Multi\-Part}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{get\-Multi\-Part}]{\setlength{\rightskip}{0pt plus 5cm}Multi\-Part\-Response\-Type\-::\-Multi\-Part\-Response\-Type Picto\-::\-Protocol\-Response\-::get\-Multi\-Part (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_aa80084e9a7b484e944142cdac18145ea}
+
+
+Gets the type of multipart response that this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} constitutes. 
+
+\begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 387 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a39b1e563150d1da66ae6a57e435eef3b}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!get\-Multi\-Part\-Boundary@{get\-Multi\-Part\-Boundary}}
+\index{get\-Multi\-Part\-Boundary@{get\-Multi\-Part\-Boundary}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{get\-Multi\-Part\-Boundary}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Protocol\-Response\-::get\-Multi\-Part\-Boundary (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a39b1e563150d1da66ae6a57e435eef3b}
+
+
+Gets the string that is used to separate the content of this multipart response. 
+
+This string defines the split point in multipart messages and should not appear in any other part of the content. \begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 155 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_aa3f7376e9eef615d0e069d4fe56f7a09}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!get\-Multi\-Part\-Content\-Type@{get\-Multi\-Part\-Content\-Type}}
+\index{get\-Multi\-Part\-Content\-Type@{get\-Multi\-Part\-Content\-Type}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{get\-Multi\-Part\-Content\-Type}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Protocol\-Response\-::get\-Multi\-Part\-Content\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_aa3f7376e9eef615d0e069d4fe56f7a09}
+
+
+For a multipart response, this function gets the type of data that being sent (ie. \char`\"{}image/jpeg\char`\"{}). 
+
+\begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 129 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a175376b892e329528d5db6b8318f68b4}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!get\-Multi\-Part\-Headers@{get\-Multi\-Part\-Headers}}
+\index{get\-Multi\-Part\-Headers@{get\-Multi\-Part\-Headers}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{get\-Multi\-Part\-Headers}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Protocol\-Response\-::get\-Multi\-Part\-Headers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a175376b892e329528d5db6b8318f68b4}
+
+
+In the case of a multipart response, after the initial headers are sent, we would send this header with the next piece of content. 
+
+\begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 101 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a71d3134d2731be4a5cd53a0ce3ad4790}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!get\-Response\-Code@{get\-Response\-Code}}
+\index{get\-Response\-Code@{get\-Response\-Code}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{get\-Response\-Code}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Protocol\-Response\-::get\-Response\-Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a71d3134d2731be4a5cd53a0ce3ad4790}
+
+
+Returns the type of this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. 
+
+The returned value is a Protocol\-Response\-Type\-::\-Protocol\-Response\-Type 
+
+Definition at line 163 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_ace13e43b1f086e84cf6f9d782fe1ce70}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!read@{read}}
+\index{read@{read}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Protocol\-Response\-::read (
+\begin{DoxyParamCaption}
+\item[{Q\-Abstract\-Socket $\ast$}]{socket, }
+\item[{int}]{timeout\-Ms = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_ace13e43b1f086e84cf6f9d782fe1ce70}
+
+
+Reads an incoming \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} from the input socket and returns the number of content bytes that were read. 
+
+The timeout\-Ms parameter is used to determine how long we should wait for incoming data on the socket. The default is 0. \begin{DoxyNote}{Note}
+Although we no longer use multi-\/part responses, since the code is still here we have maintained the documentation that was written about them with respect to this function below\-:
+\end{DoxyNote}
+\hyperlink{struct_picto_1_1_protocol_response_ace13e43b1f086e84cf6f9d782fe1ce70}{read()} faces some interesting challenges, since it may not be easy to tell what an incoming response actually is. For example, if an incoming response is part of a multi-\/part response, the response will start with a boundary string, but if we haven't set the boundary string for the response, we won't know what to do with it. So, the following rules should be followed when reading\-:
+\begin{DoxyEnumerate}
+\item If you know anything about the incoming response, tell the object (ie if it's part of a multi-\/part response, set the multi-\/part response type)
+\item You can't assume that write will create an exact copy of the response that was sent. For example, the original response may have had the should\-Terminate\-Connection value set, but there is no way for us to tell if this was the case on the receiving end. The safest way to use a response that you have just read is to look at the fields directly 
+\end{DoxyEnumerate}
+
+Definition at line 462 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a59aba20feeebb72e03682f06ccad5f39}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Content@{set\-Content}}
+\index{set\-Content@{set\-Content}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Content}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Content (
+\begin{DoxyParamCaption}
+\item[{Q\-Byte\-Array}]{\-\_\-content}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a59aba20feeebb72e03682f06ccad5f39}
+
+
+Sets this response's content to the input byte array and updates the \char`\"{}\-Content-\/\-Length\char`\"{} field. 
+
+When zipping was supported, this function would also zip the content. 
+
+Definition at line 295 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a55fdab74a0a0ce20a399a6718032d83b}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Multi\-Part@{set\-Multi\-Part}}
+\index{set\-Multi\-Part@{set\-Multi\-Part}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Multi\-Part}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Multi\-Part (
+\begin{DoxyParamCaption}
+\item[{Multi\-Part\-Response\-Type\-::\-Multi\-Part\-Response\-Type}]{multi\-Part\-State}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a55fdab74a0a0ce20a399a6718032d83b}
+
+
+Sets the type of multipart response that this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} constitutes. 
+
+\begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 358 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_ada2645e8c1083fadb3ac396bdc51c504}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Multi\-Part\-Boundary@{set\-Multi\-Part\-Boundary}}
+\index{set\-Multi\-Part\-Boundary@{set\-Multi\-Part\-Boundary}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Multi\-Part\-Boundary}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Multi\-Part\-Boundary (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{multi\-Part\-Boundary\-String}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_ada2645e8c1083fadb3ac396bdc51c504}
+
+
+Sets the string that is used to separate the content of this multipart response. 
+
+This string defines the split point in multipart messages and should not appear in any other part of the content. It should also be pointed out that this does not affect the Content-\/\-Type field. So, if for example you were starting to build a mutlipart response, and this was the first piece of it, you would use the following functions\-: 
+\begin{DoxyCode}
+response->setContentType(\textcolor{stringliteral}{"multipart/x-mixed-replace; boundary=--pictoboundary"});
+response->setMultiPartBoundary(\textcolor{stringliteral}{"--pictoboundary"});
+\end{DoxyCode}
+ \begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 145 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a4bceedb58f5729094946451616292c2a}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Multi\-Part\-Content\-Type@{set\-Multi\-Part\-Content\-Type}}
+\index{set\-Multi\-Part\-Content\-Type@{set\-Multi\-Part\-Content\-Type}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Multi\-Part\-Content\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Multi\-Part\-Content\-Type (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{multi\-Part\-Content\-Type\-String}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a4bceedb58f5729094946451616292c2a}
+
+
+For a multipart response, this function sets the type of data being sent (ie. \char`\"{}image/jpeg\char`\"{}). 
+
+\begin{DoxyNote}{Note}
+We are not currently using Multipart responses in \hyperlink{namespace_picto}{Picto}. They may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 120 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_aa5910317b77d6d533f975d55d54cfe9b}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Registered\-Type@{set\-Registered\-Type}}
+\index{set\-Registered\-Type@{set\-Registered\-Type}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Registered\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Registered\-Type (
+\begin{DoxyParamCaption}
+\item[{{\bf Registered\-Response\-Type\-::\-Registered\-Response\-Type}}]{type}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_aa5910317b77d6d533f975d55d54cfe9b}
+
+
+Registered\-Response\-Types are used as part of the command-\/id confirmation system. This function sets the \hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} of this response. 
+
+The \hyperlink{namespace_picto}{Picto} server tells its client whenever data from a \char`\"{}registered command\char`\"{} that was received has been written to disk. Whenever a Protocol\-Reseponse is sent, the command id of the command to which it is responding is added to a list. The \hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} on a \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} is used to piggyback information about whether the data from the commands with command-\/ids in that list has been written to disk. When that has happened that list of command-\/ids is attached to the \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} to tell the client which data was written to disk.
+
+This function is used to add that \char`\"{}piggybacked\char`\"{} information to this protocol response. 
+
+Definition at line 371 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_ab6c434488e4661d2917618dfdb8977f4}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!set\-Should\-Stream@{set\-Should\-Stream}}
+\index{set\-Should\-Stream@{set\-Should\-Stream}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{set\-Should\-Stream}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Protocol\-Response\-::set\-Should\-Stream (
+\begin{DoxyParamCaption}
+\item[{bool}]{should\-Stream}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_ab6c434488e4661d2917618dfdb8977f4}
+
+
+Sets whether this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} should stream. 
+
+\begin{DoxyNote}{Note}
+We are not currently using \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} streaming in any part of \hyperlink{namespace_picto}{Picto} that is actually being used. It may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 336 of file Protocol\-Response.\-cpp.
+
+\hypertarget{struct_picto_1_1_protocol_response_a3c320aa18ca6e34f3f7307d622505db1}{\index{Picto\-::\-Protocol\-Response@{Picto\-::\-Protocol\-Response}!should\-Stream@{should\-Stream}}
+\index{should\-Stream@{should\-Stream}!Picto::ProtocolResponse@{Picto\-::\-Protocol\-Response}}
+\subsubsection[{should\-Stream}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Protocol\-Response\-::should\-Stream (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_protocol_response_a3c320aa18ca6e34f3f7307d622505db1}
+
+
+Gets whether this \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} should stream. 
+
+\begin{DoxyNote}{Note}
+We are not currently using \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} streaming in any part of \hyperlink{namespace_picto}{Picto} that is actually being used. It may be useful though at some point, so we have kept this code here. 
+\end{DoxyNote}
+
+
+Definition at line 349 of file Protocol\-Response.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Protocol\-Response.\-h\item 
+source/common/protocol/Protocol\-Response.\-cpp\end{DoxyCompactItemize}

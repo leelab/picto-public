@@ -1,0 +1,327 @@
+\hypertarget{class_connection_manager}{\section{Connection\-Manager Class Reference}
+\label{class_connection_manager}\index{Connection\-Manager@{Connection\-Manager}}
+}
+
+
+Keeps track of all active Components (Director/\-Proxy) as well as all active and recently timed out Sessions. The Components used with each Session, active or timed out, are tracked as well.  
+
+
+
+
+{\ttfamily \#include $<$Connection\-Manager.\-h$>$}
+
+Inheritance diagram for Connection\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_connection_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_connection_manager_ab4d8f848dd065a478a6123f8d400c712}{update\-Component} (Q\-Uuid uuid, Q\-Host\-Address addr, Q\-Uuid session\-Id, Q\-String name, Q\-String type, Component\-Status\-::\-Component\-Status status, Q\-String details)
+\begin{DoxyCompactList}\small\item\em Updates the list of connected Components with the input Component information. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_ab21f514f743abe71fe4d7aaa0c598ccc}{Component\-Status\-::\-Component\-Status \hyperlink{class_connection_manager_ab21f514f743abe71fe4d7aaa0c598ccc}{get\-Component\-Status} (Q\-Uuid uuid)}\label{class_connection_manager_ab21f514f743abe71fe4d7aaa0c598ccc}
+
+\begin{DoxyCompactList}\small\item\em Returns the status of the component instance with the passed in Unique User I\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_a12b04c4bb99b3def7483695123317d34}{Component\-Status\-::\-Component\-Status \hyperlink{class_connection_manager_a12b04c4bb99b3def7483695123317d34}{get\-Component\-Status} (Q\-String uuid\-Str)}\label{class_connection_manager_a12b04c4bb99b3def7483695123317d34}
+
+\begin{DoxyCompactList}\small\item\em Returns the status of the component instance with the passed in Unique User I\-D String. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_a6009f2afd5adfd7dc30611866bca1171}{Component\-Status\-::\-Component\-Status \hyperlink{class_connection_manager_a6009f2afd5adfd7dc30611866bca1171}{get\-Component\-Status\-By\-Session} (Q\-Uuid session\-Id, Q\-String component\-Type)}\label{class_connection_manager_a6009f2afd5adfd7dc30611866bca1171}
+
+\begin{DoxyCompactList}\small\item\em Returns the status of the component instance with the passed in component\-Type that is part of the session with the passed in session\-Id. \end{DoxyCompactList}\item 
+void \hyperlink{class_connection_manager_a8622ab351976620118e4effc54522291}{set\-Component\-Status} (Q\-Uuid session\-Id, Q\-String component\-Type, Component\-Status\-::\-Component\-Status status)
+\begin{DoxyCompactList}\small\item\em Sets the component status for the component instance of the input type that is running in the session with the input session id. \end{DoxyCompactList}\item 
+Q\-Uuid \hyperlink{class_connection_manager_a05d82ba38c7e11e4a23bcd5749713e2f}{Get\-Components\-Session\-Id} (Q\-Uuid component\-Id)
+\begin{DoxyCompactList}\small\item\em Returns the session\-I\-D associated with the input Component\-I\-D. \end{DoxyCompactList}\item 
+Q\-Uuid \hyperlink{class_connection_manager_a99e60a314f4bce6953499ba2375fcd14}{Get\-Components\-Session\-Id} (Q\-String component\-Id)
+\begin{DoxyCompactList}\small\item\em Returns the session\-I\-D associated with the input Component\-I\-D string. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_connection_manager_aa5d9b89543c27e9640f3544150a0f31b}{get\-Director\-List} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of director instances as an xml fragment. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_connection_manager_aad3eaf716a61bdfb93caaf68eb46cf14}{get\-Proxy\-List} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of proxy instances as an xml fragment. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_session_info}{Session\-Info} $>$ \hyperlink{class_connection_manager_aa0e821de2a8b6578a121ba64e999b7e5}{create\-Session} (Q\-Uuid director\-I\-D, Q\-Uuid proxy\-I\-D, Q\-String design\-Name, Q\-Byte\-Array design\-Xml, Q\-Byte\-Array Design\-Config, Q\-Uuid initial\-Observer\-Id, Q\-String password)
+\begin{DoxyCompactList}\small\item\em Creates a new session and returns a pointer to the \hyperlink{class_session_info}{Session\-Info} object. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_a86811fb45f5dc933975acecf6bf7788a}{Q\-Shared\-Pointer$<$ \hyperlink{class_session_info}{Session\-Info} $>$ \hyperlink{class_connection_manager_a86811fb45f5dc933975acecf6bf7788a}{load\-Session} (Q\-String session\-Id, Q\-String file\-Path)}\label{class_connection_manager_a86811fb45f5dc933975acecf6bf7788a}
+
+\begin{DoxyCompactList}\small\item\em Load's a previously timed out Session with the input session\-Id from the file at file\-Path. If the file does not exist, the session is removed from the input \hyperlink{class_server_config}{Server\-Config} object. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_session_info}{Session\-Info} $>$ \hyperlink{class_connection_manager_aff1c3942e20523922e9ef264bce83c77}{get\-Session\-Info\-By\-Component} (Q\-String component\-I\-D)
+\begin{DoxyCompactList}\small\item\em Returns the session info for the session attached to the component with the input component I\-D string. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_session_info}{Session\-Info} $>$ \hyperlink{class_connection_manager_a3248768ab6c18c6cceed2a024924dd1e}{get\-Session\-Info\-By\-Component} (Q\-Uuid component\-I\-D)
+\begin{DoxyCompactList}\small\item\em Returns the session info for the session attached to the component with the input component I\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_a6608548da05a185b1e7a4a3361974766}{Q\-Shared\-Pointer$<$ \hyperlink{class_session_info}{Session\-Info} $>$ \hyperlink{class_connection_manager_a6608548da05a185b1e7a4a3361974766}{get\-Session\-Info} (Q\-Uuid uuid)}\label{class_connection_manager_a6608548da05a185b1e7a4a3361974766}
+
+\begin{DoxyCompactList}\small\item\em Returns the session info for the open session with the passed in session id. If no such session is open, returns an empty pointer. \end{DoxyCompactList}\item 
+\hypertarget{class_connection_manager_a6a6e5a39b29a164c12b72dfe33a767e9}{bool \hyperlink{class_connection_manager_a6a6e5a39b29a164c12b72dfe33a767e9}{session\-Is\-Valid} (Q\-String session\-Id)}\label{class_connection_manager_a6a6e5a39b29a164c12b72dfe33a767e9}
+
+\begin{DoxyCompactList}\small\item\em Returns true if a session with the input session\-Id is open or previously timed out on this \hyperlink{class_server}{Server}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_connection_manager_ad70ceceadb24b53fc7bf9c04526dcbf5}{end\-Session} (Q\-Uuid session\-Id)
+\begin{DoxyCompactList}\small\item\em Ends a currently running session. \end{DoxyCompactList}\item 
+Q\-Uuid \hyperlink{class_connection_manager_aab7005e98b0721aa376e3ad37e96bd7f}{pending\-Session} (Q\-Uuid component\-I\-D)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_connection_manager}{Connection\-Manager} $\ast$ \hyperlink{class_connection_manager_aa4061f5b6a3cb842f3ecce80d776db0d}{Instance} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_connection_manager}{Connection\-Manager} instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Keeps track of all active Components (Director/\-Proxy) as well as all active and recently timed out Sessions. The Components used with each Session, active or timed out, are tracked as well. 
+
+The server talks to the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director}, Proxy and Workstation applications over the network. These applications are related in that they may or may not be involved with the same Session. The Connection Manager keeps track of all of these components and categorize them by their activity, the session to which they are attached and whether it is active. It also provides functions for updating information about specific components.
+
+The \hyperlink{class_connection_manager}{Connection\-Manager} is a singleton object that is accessed by multiple threads. The actual object will be held by the \hyperlink{class_server}{Server}, but we can grab an instance of it anywhere we need it (such as in the command handlers). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 30 of file Connection\-Manager.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_connection_manager_aa0e821de2a8b6578a121ba64e999b7e5}{\index{Connection\-Manager@{Connection\-Manager}!create\-Session@{create\-Session}}
+\index{create\-Session@{create\-Session}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{create\-Session}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Session\-Info} $>$ Connection\-Manager\-::create\-Session (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{director\-I\-D, }
+\item[{Q\-Uuid}]{proxy\-I\-D, }
+\item[{Q\-String}]{design\-Name, }
+\item[{Q\-Byte\-Array}]{design\-Xml, }
+\item[{Q\-Byte\-Array}]{Design\-Config, }
+\item[{Q\-Uuid}]{initial\-Observer\-Id, }
+\item[{Q\-String}]{password}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_aa0e821de2a8b6578a121ba64e999b7e5}
+
+
+Creates a new session and returns a pointer to the \hyperlink{class_session_info}{Session\-Info} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em director\-Id} & The Uuid of the \hyperlink{class_director}{Director} to be used in the session. \\
+\hline
+{\em proxy\-I\-D} & The Uuid of the Proxy to be used in the session. \\
+\hline
+{\em design\-Name} & The name of the design that will be used in the Session. \\
+\hline
+{\em design\-Xml} & The contents of the Design file that will be used in the Session. \\
+\hline
+{\em Design\-Config} & The serialized Design\-Config object that manages the Design used in this session. This contains information for identifying Assets from the Asset\-Ids and is useful for building Element/\-Transition/etc lookup tables in the session file. \\
+\hline
+{\em initial\-Observer\-Id} & The Uuid of the workstation that is starting this Session. It will be considered an Authorized observer (ie. It is authorized to make state changes to the Session). \\
+\hline
+{\em password} & The password that gives workstations authorization to change the Session state. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When D\-E\-V\-E\-L\-O\-P\-M\-E\-N\-T\-B\-U\-I\-L\-D is not defined, password may not be empty. 
+\end{DoxyNote}
+
+
+Definition at line 492 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_ad70ceceadb24b53fc7bf9c04526dcbf5}{\index{Connection\-Manager@{Connection\-Manager}!end\-Session@{end\-Session}}
+\index{end\-Session@{end\-Session}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{end\-Session}]{\setlength{\rightskip}{0pt plus 5cm}bool Connection\-Manager\-::end\-Session (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{session\-Id}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_ad70ceceadb24b53fc7bf9c04526dcbf5}
+
+
+Ends a currently running session. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_session_info_ae647cb4d792607c866654e8c908014e1}{Session\-Info\-::end\-Session()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 612 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_a05d82ba38c7e11e4a23bcd5749713e2f}{\index{Connection\-Manager@{Connection\-Manager}!Get\-Components\-Session\-Id@{Get\-Components\-Session\-Id}}
+\index{Get\-Components\-Session\-Id@{Get\-Components\-Session\-Id}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Get\-Components\-Session\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Uuid Connection\-Manager\-::\-Get\-Components\-Session\-Id (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{component\-Id}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_a05d82ba38c7e11e4a23bcd5749713e2f}
+
+
+Returns the session\-I\-D associated with the input Component\-I\-D. 
+
+Unlike \hyperlink{class_connection_manager_aff1c3942e20523922e9ef264bce83c77}{get\-Session\-Info\-By\-Component()}, this function looks up the session\-I\-D That the component thinks its associated with rather than looking through all sessions to see if any session is associated with the input component. There is a distinction because in the case of sessions that were run before and have timed out, there may be more than one session associated with a given component, but the component itself will only ever report that it is associated with the session that it is running. 
+
+Definition at line 378 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_a99e60a314f4bce6953499ba2375fcd14}{\index{Connection\-Manager@{Connection\-Manager}!Get\-Components\-Session\-Id@{Get\-Components\-Session\-Id}}
+\index{Get\-Components\-Session\-Id@{Get\-Components\-Session\-Id}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Get\-Components\-Session\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Uuid Connection\-Manager\-::\-Get\-Components\-Session\-Id (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{component\-Id}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_a99e60a314f4bce6953499ba2375fcd14}
+
+
+Returns the session\-I\-D associated with the input Component\-I\-D string. 
+
+Unlike \hyperlink{class_connection_manager_aff1c3942e20523922e9ef264bce83c77}{get\-Session\-Info\-By\-Component()}, this function looks up the session\-I\-D That the component thinks its associated with rather than looking through all sessions to see if any session is associated with the input component. There is a distinction because in the case of sessions that were run before and have timed out, there may be more than one session associated with a given component, but the component itself will only ever report that it is associated with the session that it is running. 
+
+Definition at line 399 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_aa5d9b89543c27e9640f3544150a0f31b}{\index{Connection\-Manager@{Connection\-Manager}!get\-Director\-List@{get\-Director\-List}}
+\index{get\-Director\-List@{get\-Director\-List}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{get\-Director\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Connection\-Manager\-::get\-Director\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_aa5d9b89543c27e9640f3544150a0f31b}
+
+
+Returns a list of director instances as an xml fragment. 
+
+The X\-M\-L fragment will look like this\-: $<$\-Director\-Instances$>$ $<$\-Director$>$ $<$\-Address$>$192.\-168.\-3.\-51$<$/\-Address$>$ $<$\-Id$>$\{550e8400-\/e29b-\/41d4-\/a716-\/446655440000\}$<$/\-Id$>$ $<$\-Name$>$Picto\-Director Room 408$<$/\-Name$>$ $<$\-Status$>$Idle$<$/\-Status$>$ $<$Session-\/\-I\-D$>$\{12345600-\/e29b-\/41d4-\/a716-\/446655440000\}$<$/\-Session-\/\-I\-D$>$ $<$\-Details$>$$<$/\-Details$>$ $<$/\-Director$>$ $<$\-Director$>$ $<$\-Address$>$192.\-168.\-3.\-164$<$/\-Address$>$ $<$\-Id$>$\{950e8400-\/e29b-\/41d4-\/a716-\/446655440000\}$<$/\-Id$>$ $<$\-Name$>$Picto\-Director Room 407$<$/\-Name$>$ $<$\-Status$>$Running$<$/\-Status$>$ $<$Session-\/\-I\-D$>$\{65432100-\/e29b-\/41d4-\/a716-\/446655440000\}$<$/\-Session-\/\-I\-D$>$ $<$\-Details$>$$<$/\-Details$>$ $<$/\-Director$>$ $<$/\-Director\-Instances$>$ 
+
+Definition at line 270 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_aad3eaf716a61bdfb93caaf68eb46cf14}{\index{Connection\-Manager@{Connection\-Manager}!get\-Proxy\-List@{get\-Proxy\-List}}
+\index{get\-Proxy\-List@{get\-Proxy\-List}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{get\-Proxy\-List}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Connection\-Manager\-::get\-Proxy\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_aad3eaf716a61bdfb93caaf68eb46cf14}
+
+
+Returns a list of proxy instances as an xml fragment. 
+
+The X\-M\-L fragment will look like this\-: 
+\begin{DoxyCode}
+<ProxyInstances>
+    <Proxy>
+        <Address>192.168.3.51</Address>
+        <Id>\{550e8400-e29b-41d4-a716-446655440000\}</Id>
+        <Name>Proxy Room 408</Name>
+        <Status>Idle</Status>
+    </Proxy>
+    <Proxy>
+        <Address>192.168.3.164</Address>
+         <Id>\{5650e8400-e29b-41d4-a716-446655340000\}</Id>
+        <Name>Proxy Room 407</Name>
+        <Status>Running</Status>
+    </Proxy>
+</ProxyInstances>
+\end{DoxyCode}
+ 
+
+Definition at line 213 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_aff1c3942e20523922e9ef264bce83c77}{\index{Connection\-Manager@{Connection\-Manager}!get\-Session\-Info\-By\-Component@{get\-Session\-Info\-By\-Component}}
+\index{get\-Session\-Info\-By\-Component@{get\-Session\-Info\-By\-Component}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{get\-Session\-Info\-By\-Component}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Session\-Info} $>$ Connection\-Manager\-::get\-Session\-Info\-By\-Component (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{component\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_aff1c3942e20523922e9ef264bce83c77}
+
+
+Returns the session info for the session attached to the component with the input component I\-D string. 
+
+This looks through all open sessions for the one that includes the component with the input component\-I\-D. If an open session is not found, old timed out sessions are checked as well. If more than one timed out session was associated with the component, a randomly selected one will be chosen. 
+
+Definition at line 435 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_a3248768ab6c18c6cceed2a024924dd1e}{\index{Connection\-Manager@{Connection\-Manager}!get\-Session\-Info\-By\-Component@{get\-Session\-Info\-By\-Component}}
+\index{get\-Session\-Info\-By\-Component@{get\-Session\-Info\-By\-Component}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{get\-Session\-Info\-By\-Component}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Session\-Info} $>$ Connection\-Manager\-::get\-Session\-Info\-By\-Component (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{component\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_a3248768ab6c18c6cceed2a024924dd1e}
+
+
+Returns the session info for the session attached to the component with the input component I\-D. 
+
+This looks through all open sessions for the one that includes the component with the input component\-I\-D. If an open session is not found, old timed out sessions are checked as well. If more than one timed out session was associated with the component, a randomly selected one will be chosen. 
+
+Definition at line 409 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_aa4061f5b6a3cb842f3ecce80d776db0d}{\index{Connection\-Manager@{Connection\-Manager}!Instance@{Instance}}
+\index{Instance@{Instance}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Connection\-Manager} $\ast$ Connection\-Manager\-::\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_connection_manager_aa4061f5b6a3cb842f3ecce80d776db0d}
+
+
+Returns the \hyperlink{class_connection_manager}{Connection\-Manager} instance. 
+
+Since this is a singleton, there is only one \hyperlink{class_connection_manager}{Connection\-Manager} instance. This function creates that instance if needed, and then returns it. 
+
+Definition at line 42 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_aab7005e98b0721aa376e3ad37e96bd7f}{\index{Connection\-Manager@{Connection\-Manager}!pending\-Session@{pending\-Session}}
+\index{pending\-Session@{pending\-Session}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{pending\-Session}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Uuid Connection\-Manager\-::pending\-Session (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{component\-I\-D}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_aab7005e98b0721aa376e3ad37e96bd7f}
+/\-Brief Returns the session U\-U\-I\-D if the component with the input component\-Id needs to join a new session
+
+Since all communication with proxy and director component instances is indirect (we have to wait for an incoming C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E command), there is a delay between starting session and telling the component what it's session I\-D is. This function is used by the C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E command handler to figure out if the component instance needs to start a new session. 
+
+Definition at line 465 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_a8622ab351976620118e4effc54522291}{\index{Connection\-Manager@{Connection\-Manager}!set\-Component\-Status@{set\-Component\-Status}}
+\index{set\-Component\-Status@{set\-Component\-Status}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{set\-Component\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void Connection\-Manager\-::set\-Component\-Status (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{session\-Id, }
+\item[{Q\-String}]{component\-Type, }
+\item[{Component\-Status\-::\-Component\-Status}]{status}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_a8622ab351976620118e4effc54522291}
+
+
+Sets the component status for the component instance of the input type that is running in the session with the input session id. 
+
+This function also calls set\-Activity() on the component to indicate that the connection to that component is active. 
+
+Definition at line 353 of file Connection\-Manager.\-cpp.
+
+\hypertarget{class_connection_manager_ab4d8f848dd065a478a6123f8d400c712}{\index{Connection\-Manager@{Connection\-Manager}!update\-Component@{update\-Component}}
+\index{update\-Component@{update\-Component}!ConnectionManager@{Connection\-Manager}}
+\subsubsection[{update\-Component}]{\setlength{\rightskip}{0pt plus 5cm}void Connection\-Manager\-::update\-Component (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{uuid, }
+\item[{Q\-Host\-Address}]{addr, }
+\item[{Q\-Uuid}]{session\-Id, }
+\item[{Q\-String}]{name, }
+\item[{Q\-String}]{type, }
+\item[{Component\-Status\-::\-Component\-Status}]{status, }
+\item[{Q\-String}]{details}
+\end{DoxyParamCaption}
+)}}\label{class_connection_manager_ab4d8f848dd065a478a6123f8d400c712}
+
+
+Updates the list of connected Components with the input Component information. 
+
+Everytime the C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E command is received by the server, this function gets called. The function checks to see if the component instance referenced is in our list, and if not adds it. If the instance already exists, the function makes any needed changes. This function also calls set\-Activity() for the component to indicate that communication with that component is active. \begin{DoxyNote}{Note}
+The component's Uuid is being used as a primary key here. 
+\end{DoxyNote}
+
+
+Definition at line 143 of file Connection\-Manager.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/connections/Connection\-Manager.\-h\item 
+source/server/connections/Connection\-Manager.\-cpp\end{DoxyCompactItemize}

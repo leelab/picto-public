@@ -1,0 +1,98 @@
+\hypertarget{class_picto_1_1_d3_d_compositing_surface}{\section{Picto\-:\-:D3\-D\-Compositing\-Surface Class Reference}
+\label{class_picto_1_1_d3_d_compositing_surface}\index{Picto\-::\-D3\-D\-Compositing\-Surface@{Picto\-::\-D3\-D\-Compositing\-Surface}}
+}
+
+
+A \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that converts a Q\-Image to a L\-P\-D\-I\-R\-E\-C\-T3\-D\-T\-E\-X\-T\-U\-R\-E9 for Direct3\-D.  
+
+
+
+
+{\ttfamily \#include $<$D3\-D\-Compositing\-Surface.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:D3\-D\-Compositing\-Surface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_d3_d_compositing_surface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_d3_d_compositing_surface_ad13ea262a3a1165ac6c2098a11816405}{D3\-D\-Compositing\-Surface} (I\-Direct3\-D\-Device9 $\ast$\-\_\-p\-D3d\-Device)
+\begin{DoxyCompactList}\small\item\em Creates a \hyperlink{class_picto_1_1_d3_d_compositing_surface}{D3\-D\-Compositing\-Surface} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_afa0df367f0ea3500dd135968ebb174e4}{virtual \hyperlink{class_picto_1_1_d3_d_compositing_surface_afa0df367f0ea3500dd135968ebb174e4}{$\sim$\-D3\-D\-Compositing\-Surface} ()}\label{class_picto_1_1_d3_d_compositing_surface_afa0df367f0ea3500dd135968ebb174e4}
+
+\begin{DoxyCompactList}\small\item\em Deallocates R\-A\-M used for this object's D3\-D Texture object. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_d3_d_compositing_surface_a843af9d14affbb813878c5289c223782}{convert\-Image} (Q\-Image image)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{struct_picto_1_1_compositing_surface_ae19679a1e4ba977ce0e353ed841fc77e}{Compositing\-Surface\-::convert\-Image()} to convert a Q\-Image to a D3\-D Texture. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_a42827c980224cf6c3bd813c5efa7e7c9}{Q\-String \hyperlink{class_picto_1_1_d3_d_compositing_surface_a42827c980224cf6c3bd813c5efa7e7c9}{get\-Type\-Name} ()}\label{class_picto_1_1_d3_d_compositing_surface_a42827c980224cf6c3bd813c5efa7e7c9}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the compositing surface (e.\-g. \char`\"{}\-Direct3\-D\char`\"{}) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_a18dac94238cb68b7c779bff4fe4af069}{L\-P\-D\-I\-R\-E\-C\-T3\-D\-T\-E\-X\-T\-U\-R\-E9 \hyperlink{class_picto_1_1_d3_d_compositing_surface_a18dac94238cb68b7c779bff4fe4af069}{get\-Texture} ()}\label{class_picto_1_1_d3_d_compositing_surface_a18dac94238cb68b7c779bff4fe4af069}
+
+\begin{DoxyCompactList}\small\item\em Returns the Q\-Image that was passed into \hyperlink{class_picto_1_1_d3_d_compositing_surface_a843af9d14affbb813878c5289c223782}{convert\-Image()} in L\-P\-D\-I\-R\-E\-C\-T3\-D\-T\-E\-X\-T\-U\-R\-E9 form. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_a9ca4b719398dfb3e3d51eeee23590627}{unsigned int \hyperlink{class_picto_1_1_d3_d_compositing_surface_a9ca4b719398dfb3e3d51eeee23590627}{get\-Image\-Height} ()}\label{class_picto_1_1_d3_d_compositing_surface_a9ca4b719398dfb3e3d51eeee23590627}
+
+\begin{DoxyCompactList}\small\item\em image\-Hight is neccessary, since once the Q\-Image is placed on a texture, we can't tell how big the original image was \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that converts a Q\-Image to a L\-P\-D\-I\-R\-E\-C\-T3\-D\-T\-E\-X\-T\-U\-R\-E9 for Direct3\-D. 
+
+The \hyperlink{class_picto_1_1_d3_d_compositing_surface}{D3\-D\-Compositing\-Surface} is located in the Picto\-Director source tree (as opposed to the lib\-Picto Tree) because it is platform dependant. The compositing surface uses Direct3\-D Textures to store image data, and then pases them to the \hyperlink{class_picto_1_1_d3_d_visual_target}{D3\-D\-Visual\-Target}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file D3\-D\-Compositing\-Surface.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_ad13ea262a3a1165ac6c2098a11816405}{\index{Picto\-::\-D3\-D\-Compositing\-Surface@{Picto\-::\-D3\-D\-Compositing\-Surface}!D3\-D\-Compositing\-Surface@{D3\-D\-Compositing\-Surface}}
+\index{D3\-D\-Compositing\-Surface@{D3\-D\-Compositing\-Surface}!Picto::D3DCompositingSurface@{Picto\-::\-D3\-D\-Compositing\-Surface}}
+\subsubsection[{D3\-D\-Compositing\-Surface}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-D3\-D\-Compositing\-Surface\-::\-D3\-D\-Compositing\-Surface (
+\begin{DoxyParamCaption}
+\item[{I\-Direct3\-D\-Device9 $\ast$}]{\-\_\-p\-D3d\-Device}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_d3_d_compositing_surface_ad13ea262a3a1165ac6c2098a11816405}
+
+
+Creates a \hyperlink{class_picto_1_1_d3_d_compositing_surface}{D3\-D\-Compositing\-Surface} object. 
+
+\-\_\-p\-D3d\-Device is the Direct3d device which will be used in \hyperlink{class_picto_1_1_d3_d_compositing_surface_a843af9d14affbb813878c5289c223782}{convert\-Image()} to convert Q\-Image objects into D3\-D textures. 
+
+Definition at line 14 of file D3\-D\-Compositing\-Surface.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_d3_d_compositing_surface_a843af9d14affbb813878c5289c223782}{\index{Picto\-::\-D3\-D\-Compositing\-Surface@{Picto\-::\-D3\-D\-Compositing\-Surface}!convert\-Image@{convert\-Image}}
+\index{convert\-Image@{convert\-Image}!Picto::D3DCompositingSurface@{Picto\-::\-D3\-D\-Compositing\-Surface}}
+\subsubsection[{convert\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-D3\-D\-Compositing\-Surface\-::convert\-Image (
+\begin{DoxyParamCaption}
+\item[{Q\-Image}]{image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_d3_d_compositing_surface_a843af9d14affbb813878c5289c223782}
+
+
+Implements \hyperlink{struct_picto_1_1_compositing_surface_ae19679a1e4ba977ce0e353ed841fc77e}{Compositing\-Surface\-::convert\-Image()} to convert a Q\-Image to a D3\-D Texture. 
+
+We use D\-I\-R\-E\-C\-T3\-D\-T\-E\-X\-T\-U\-R\-E9 objects to store the image data. What convert\-Image is called, the passed in Q\-Image gets written to a texture of the appropriate size. This texture is then eventually returned to the \hyperlink{class_picto_1_1_d3_d_visual_target}{D3\-D\-Visual\-Target} which draws it on a quad. 
+
+Implements \hyperlink{struct_picto_1_1_compositing_surface_ae19679a1e4ba977ce0e353ed841fc77e}{Picto\-::\-Compositing\-Surface}.
+
+
+
+Definition at line 40 of file D3\-D\-Compositing\-Surface.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/compositor/D3\-D\-Compositing\-Surface.\-h\item 
+source/director/compositor/D3\-D\-Compositing\-Surface.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,71 @@
+\hypertarget{class_property_browser}{\section{Property\-Browser Class Reference}
+\label{class_property_browser}\index{Property\-Browser@{Property\-Browser}}
+}
+
+
+This Widget contains all property widgets for setting/getting Property values of the currently selected Asset in the \hyperlink{class_designer}{Designer}.  
+
+
+
+
+{\ttfamily \#include $<$Property\-Browser.\-h$>$}
+
+Inheritance diagram for Property\-Browser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_property_browser}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_property_browser_ac546dc8fd8e9dae3e95b05b58604276d}{void \hyperlink{class_property_browser_ac546dc8fd8e9dae3e95b05b58604276d}{asset\-Selected} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_property_browser_ac546dc8fd8e9dae3e95b05b58604276d}
+
+\begin{DoxyCompactList}\small\item\em Called when a new Asset is selected in the \hyperlink{class_designer}{Designer} to find all of its non-\/script Properties and add them to the \hyperlink{class_property_group_widget}{Property\-Group\-Widget} for display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_property_browser_a70d0636d05b2fce5a95437f61b41e3b9}{Property\-Browser} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_property_browser}{Property\-Browser}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This Widget contains all property widgets for setting/getting Property values of the currently selected Asset in the \hyperlink{class_designer}{Designer}. 
+
+The \hyperlink{class_editor_state}{Editor\-State} is passed into the constructor so that this widget can detect exactly what has been selected in the \hyperlink{class_designer}{Designer} Canvas and display the correct Property widgets accordingly. If the main body of the \hyperlink{class_asset_item}{Asset\-Item} are selected, the Asset Property widgets are shown. If the start bar of the \hyperlink{class_asset_item}{Asset\-Item} is selected, the Asset's Script Property widgets are shown. If a result bar of an asset item is selected, the particular selected result's script is shown.
+
+This widget's job is essentially figuring out which property widgets need to be displayed. It includes a \hyperlink{class_property_group_widget}{Property\-Group\-Widget} which takes care of actually creating and displaying those widgets. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Property\-Browser.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_property_browser_a70d0636d05b2fce5a95437f61b41e3b9}{\index{Property\-Browser@{Property\-Browser}!Property\-Browser@{Property\-Browser}}
+\index{Property\-Browser@{Property\-Browser}!PropertyBrowser@{Property\-Browser}}
+\subsubsection[{Property\-Browser}]{\setlength{\rightskip}{0pt plus 5cm}Property\-Browser\-::\-Property\-Browser (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_property_browser_a70d0636d05b2fce5a95437f61b41e3b9}
+
+
+Constructs a new \hyperlink{class_property_browser}{Property\-Browser}. 
+
+The editor\-State is used to detect what exactly is being selected in the \hyperlink{class_designer}{Designer} canvas and select the appropriate Property Widgets for display accordingly. 
+
+Definition at line 12 of file Property\-Browser.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Property\-Browser.\-h\item 
+source/common/\-Designer/Property\-Browser.\-cpp\end{DoxyCompactItemize}

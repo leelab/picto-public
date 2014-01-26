@@ -1,0 +1,146 @@
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory}{\section{Picto\-:\-:Controller\-:\-:Frame\-Timer\-Factory Class Reference}
+\label{class_picto_1_1_controller_1_1_frame_timer_factory}\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+}
+
+
+A Factory object used to create \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} object while maintaing a single \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} object to keep them update with the latest frame times.  
+
+
+
+
+{\ttfamily \#include $<$Frame\-Timer\-Factory.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a01bf2951e8420e507d62620dad7c8cb7}{Frame\-Timer\-Factory} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_ae4e28c03f1435682a5d24ed672bfcb6c}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} $>$ {\bfseries create\-Timer} ()}\label{class_picto_1_1_controller_1_1_frame_timer_factory_ae4e28c03f1435682a5d24ed672bfcb6c}
+
+\item 
+void \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a48b482038330b609b0cf18be2e415b96}{set\-Last\-Frame\-Time} (double frame\-Time)
+\begin{DoxyCompactList}\small\item\em Called by the rendering engine to mark the time at which the latest frame occured. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_ab94d0e1bc28b824dc4371a705d186d6e}{set\-Next\-Frame\-Time} (double frame\-Time)
+\begin{DoxyCompactList}\small\item\em Called to set the time of the upcoming frame, when this is known in advance (ie. When replaying an experiment) \end{DoxyCompactList}\item 
+int \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a513187b8cad30b19cd6957862523cb84}{effective\-Absolute\-Time} (Timer\-Units\-::\-Timer\-Units units)
+\begin{DoxyCompactList}\small\item\em effective\-Absolute\-Time is the time at which changes in the current experiment are expected to take place. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a2855b0073d525a2b4a7eb4c4ed2db2fd}{reset\-All\-Timers} ()
+\begin{DoxyCompactList}\small\item\em Resets all Frame\-Resolution\-Timers that were created by this \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_a7d968874245a85c6ac89c27f034a8a06}{Q\-Vector$<$ Q\-Weak\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} $>$ $>$ {\bfseries timer\-List\-\_\-}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_a7d968874245a85c6ac89c27f034a8a06}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A Factory object used to create \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} object while maintaing a single \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} object to keep them update with the latest frame times. 
+
+An Experimental Design's \hyperlink{class_picto_1_1_design_config}{Design\-Config} object creates and stores a single \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory} object for its Design. All elements in the design that need a \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} use this single factory to create it, and since The \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory} creates a single \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} and uses it to create all of its Frame\-Resolution\-Timers, only the single \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} needs to be updated each time new first phosphor times are detected in order to provide timing data for all Frame\-Resolution\-Timers throughout the experiment. \begin{DoxyNote}{Note}
+We could not simply use a static function in \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} to update times because there can be multiple designs running simultaneously within the same application; ie. In the \hyperlink{class_replay_viewer}{Replay\-Viewer} and \hyperlink{class_test_viewer}{Test\-Viewer}. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Frame\-Timer\-Factory.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_a01bf2951e8420e507d62620dad7c8cb7}{\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}!Frame\-Timer\-Factory@{Frame\-Timer\-Factory}}
+\index{Frame\-Timer\-Factory@{Frame\-Timer\-Factory}!Picto::Controller::FrameTimerFactory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+\subsubsection[{Frame\-Timer\-Factory}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Controller\-::\-Frame\-Timer\-Factory\-::\-Frame\-Timer\-Factory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_a01bf2951e8420e507d62620dad7c8cb7}
+
+
+Constructs a new \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}. 
+
+A \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} is created in the constructor. This \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} will be used with all \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} objects created by this factory. 
+
+Definition at line 11 of file Frame\-Timer\-Factory.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_a513187b8cad30b19cd6957862523cb84}{\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}!effective\-Absolute\-Time@{effective\-Absolute\-Time}}
+\index{effective\-Absolute\-Time@{effective\-Absolute\-Time}!Picto::Controller::FrameTimerFactory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+\subsubsection[{effective\-Absolute\-Time}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Controller\-::\-Frame\-Timer\-Factory\-::effective\-Absolute\-Time (
+\begin{DoxyParamCaption}
+\item[{Timer\-Units\-::\-Timer\-Units}]{units}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_a513187b8cad30b19cd6957862523cb84}
+
+
+effective\-Absolute\-Time is the time at which changes in the current experiment are expected to take place. 
+
+If we change the color of a dot in the experiment, the subject doesn't experience that change until the next frame; therefore, at least conceptually, it would be useful for our frame\-Resolution\-Timer objects to know when the next frame will be, though this is only possible in playback when we know what will happen in the future. The \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a513187b8cad30b19cd6957862523cb84}{effective\-Absolute\-Time()} is this \char`\"{}next frame time.\char`\"{} It should be accurate on playback, and is estimated by adding 16.\-666ms to the last frame during a live experiment. In practice, during a live experiment, it shouldn't be important to know when the next frame will be, and in a played back experiment, our \hyperlink{class_picto_1_1_analysis_frame_data}{Analysis\-Frame\-Data} object provides timing of future frames, so the data is available without using this function. We put it in because it seemed to make sense while we were in the design process. It isn't being used in practice, and if you do decide to start using it in practice, make sure to think twice, especially considering that it doesn't return a precise value during live experiments.
+
+The value returned is according to the units that are passed in. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_controller_1_1_frame_tracker_a55a588cd7360b14f1be88b4f9214c258}{Frame\-Tracker\-::effective\-Absolute\-Time} 
+\end{DoxySeeAlso}
+
+
+Definition at line 60 of file Frame\-Timer\-Factory.\-cpp.
+
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_a2855b0073d525a2b4a7eb4c4ed2db2fd}{\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}!reset\-All\-Timers@{reset\-All\-Timers}}
+\index{reset\-All\-Timers@{reset\-All\-Timers}!Picto::Controller::FrameTimerFactory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+\subsubsection[{reset\-All\-Timers}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Controller\-::\-Frame\-Timer\-Factory\-::reset\-All\-Timers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_a2855b0073d525a2b4a7eb4c4ed2db2fd}
+
+
+Resets all Frame\-Resolution\-Timers that were created by this \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}. 
+
+This factory keeps track of the pointers to all of the Frame\-Resolution\-Timers that it creates, which allows it to reset all of them when this function is called. This is useful in the \hyperlink{class_replay_viewer}{Replay\-Viewer} where we may playback the same experimental run more than once without recreating the \hyperlink{class_picto_1_1_experiment}{Experiment} from xml. 
+
+Definition at line 71 of file Frame\-Timer\-Factory.\-cpp.
+
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_a48b482038330b609b0cf18be2e415b96}{\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}!set\-Last\-Frame\-Time@{set\-Last\-Frame\-Time}}
+\index{set\-Last\-Frame\-Time@{set\-Last\-Frame\-Time}!Picto::Controller::FrameTimerFactory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+\subsubsection[{set\-Last\-Frame\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Controller\-::\-Frame\-Timer\-Factory\-::set\-Last\-Frame\-Time (
+\begin{DoxyParamCaption}
+\item[{double}]{frame\-Time}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_a48b482038330b609b0cf18be2e415b96}
+
+
+Called by the rendering engine to mark the time at which the latest frame occured. 
+
+This sets the last frame time to the \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} that is used by all timers created by this factory in calculating elapsed\-Time 
+
+Definition at line 30 of file Frame\-Timer\-Factory.\-cpp.
+
+\hypertarget{class_picto_1_1_controller_1_1_frame_timer_factory_ab94d0e1bc28b824dc4371a705d186d6e}{\index{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}!set\-Next\-Frame\-Time@{set\-Next\-Frame\-Time}}
+\index{set\-Next\-Frame\-Time@{set\-Next\-Frame\-Time}!Picto::Controller::FrameTimerFactory@{Picto\-::\-Controller\-::\-Frame\-Timer\-Factory}}
+\subsubsection[{set\-Next\-Frame\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Controller\-::\-Frame\-Timer\-Factory\-::set\-Next\-Frame\-Time (
+\begin{DoxyParamCaption}
+\item[{double}]{frame\-Time}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_controller_1_1_frame_timer_factory_ab94d0e1bc28b824dc4371a705d186d6e}
+
+
+Called to set the time of the upcoming frame, when this is known in advance (ie. When replaying an experiment) 
+
+Currently we are not using the effective\-Absolute\-Time in \hyperlink{namespace_picto}{Picto}; however, it could come in handy at some point so we have included it here. The 'next frame' is used in the calculation of effective\-Absolute\-Frame 
+
+Definition at line 40 of file Frame\-Timer\-Factory.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Frame\-Timer\-Factory.\-h\item 
+source/common/controlelements/Frame\-Timer\-Factory.\-cpp\end{DoxyCompactItemize}

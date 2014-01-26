@@ -1,0 +1,168 @@
+\hypertarget{class_picto_1_1_compound_expression}{\section{Picto\-:\-:Compound\-Expression Class Reference}
+\label{class_picto_1_1_compound_expression}\index{Picto\-::\-Compound\-Expression@{Picto\-::\-Compound\-Expression}}
+}
+
+
+A compund\-Expression is made up of multiple Predicate\-Expressions combined with A\-N\-D, O\-R, and N\-O\-T.  
+
+
+
+
+{\ttfamily \#include $<$Compound\-Expression.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Compound\-Expression\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_picto_1_1_compound_expression}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a5b878d7a88332058eb6eee94afafdd65}{void {\bfseries set\-L\-H\-S\-Compound\-Exp} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} $>$ exp, bool invert=false)}\label{class_picto_1_1_compound_expression_a5b878d7a88332058eb6eee94afafdd65}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a6a4d4b2793760a1f66322d88c57cb01e}{void {\bfseries set\-R\-H\-S\-Compound\-Exp} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} $>$ exp, bool invert=false)}\label{class_picto_1_1_compound_expression_a6a4d4b2793760a1f66322d88c57cb01e}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a51ec44709c82af6e3a665462c7d40ce0}{void {\bfseries set\-L\-H\-S\-Predicate\-Exp} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression} $>$ exp, bool invert=false)}\label{class_picto_1_1_compound_expression_a51ec44709c82af6e3a665462c7d40ce0}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_ab4f38bc01f21787f14a437c903c1d05c}{void {\bfseries set\-R\-H\-S\-Predicate\-Exp} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression} $>$ exp, bool invert=false)}\label{class_picto_1_1_compound_expression_ab4f38bc01f21787f14a437c903c1d05c}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_afcd3c086eae1cc037ecb068fa7f1c1da}{void {\bfseries set\-Operator} (Compound\-Expression\-Operator\-::\-Compound\-Expression\-Operator op)}\label{class_picto_1_1_compound_expression_afcd3c086eae1cc037ecb068fa7f1c1da}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a747d834255761713985cad4cc8f3309e}{void {\bfseries set\-Order} (int order)}\label{class_picto_1_1_compound_expression_a747d834255761713985cad4cc8f3309e}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_ad6c6a469ccb2bd6c0edaa75e474cb22b}{int {\bfseries order} ()}\label{class_picto_1_1_compound_expression_ad6c6a469ccb2bd6c0edaa75e474cb22b}
+
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a540916ef58b49ef9fa39a687d9397810}{bool {\bfseries evaluate} ()}\label{class_picto_1_1_compound_expression_a540916ef58b49ef9fa39a687d9397810}
+
+\item 
+Q\-String \hyperlink{class_picto_1_1_compound_expression_a18112ac309b96a520b5f2aedf80f3040}{to\-String} (bool use\-L\-H\-S\-Names=false, bool use\-R\-H\-S\-Names=false)
+\begin{DoxyCompactList}\small\item\em Converts the compound expression into a string. \end{DoxyCompactList}\item 
+Q\-Image \hyperlink{class_picto_1_1_compound_expression_a9f0fa06128e31c9d3301b4a746fbc417}{to\-Q\-Image} (bool use\-L\-H\-S\-Names=false, bool use\-R\-H\-S\-Names=false)
+\begin{DoxyCompactList}\small\item\em Converts the compound expression into a Q\-Image. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_compound_expression_ab8f2b03c3ac5214207f10642d3c487b5}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_compound_expression_ab8f2b03c3ac5214207f10642d3c487b5}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_compound_expression_a3eb5bb6718de47e2215d72b10044be03}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_compound_expression_a3eb5bb6718de47e2215d72b10044be03}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_compound_expression_a494e82e75fc2bde09d7ae6e6987065f2}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_compound_expression_a135fb968c2d88783aea74acf14eeb500}{post\-Serialize} ()
+\begin{DoxyCompactList}\small\item\em Converts a \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} into X\-M\-L. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_compound_expression_a2d52af5fa101b25fc8b86c87ed02f1f2}{virtual bool \hyperlink{class_picto_1_1_compound_expression_a2d52af5fa101b25fc8b86c87ed02f1f2}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_compound_expression_a2d52af5fa101b25fc8b86c87ed02f1f2}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A compund\-Expression is made up of multiple Predicate\-Expressions combined with A\-N\-D, O\-R, and N\-O\-T. 
+
+The compound\-Expression object is used to combine multiple predicate expressions into a single larger expression. For example, the predicate expressions \char`\"{}x$<$3\char`\"{} and \char`\"{}y$>$5\char`\"{} can be combined into a more complex compound expression like\-: x$<$3 \& y$>$5 The \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression} object supports A\-N\-D, O\-R, and N\-O\-T as well as the ability to create sub expressions like (x$<$3) \& ( (y$>$5) $|$ (y$<$1) ).
+
+In addition to creating compound expressions from Predicate\-Expressions, it is also possible to create a compound expression with other compound expressions. This allows the creation of complex expressions with parenthesis (effectively).
+
+A compound expression consists of left and right sides (which can be either predicate expressions, or compound expressions). Both sides can be inverted (the N\-O\-T operator) and the two sides are joind by A\-N\-D or O\-R (additional operators like X\-O\-R aren't really neccessary, since they can be created from A\-N\-D, O\-R, and N\-O\-T). 
+
+Definition at line 41 of file Compound\-Expression.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_compound_expression_a494e82e75fc2bde09d7ae6e6987065f2}{\index{Picto\-::\-Compound\-Expression@{Picto\-::\-Compound\-Expression}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::CompoundExpression@{Picto\-::\-Compound\-Expression}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Compound\-Expression\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_compound_expression_a494e82e75fc2bde09d7ae6e6987065f2}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a773e96bb8df73a90d56c1aa8fdc0dfa5}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 76 of file Compound\-Expression.\-h.
+
+\hypertarget{class_picto_1_1_compound_expression_a135fb968c2d88783aea74acf14eeb500}{\index{Picto\-::\-Compound\-Expression@{Picto\-::\-Compound\-Expression}!post\-Serialize@{post\-Serialize}}
+\index{post\-Serialize@{post\-Serialize}!Picto::CompoundExpression@{Picto\-::\-Compound\-Expression}}
+\subsubsection[{post\-Serialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Compound\-Expression\-::post\-Serialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_compound_expression_a135fb968c2d88783aea74acf14eeb500}
+
+
+Converts a \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} into X\-M\-L. 
+
+The X\-M\-L output of a compound expression will look like this\-:
+
+$<$\hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} boolean=\char`\"{}and\char`\"{} invert\-Left=\char`\"{}true\char`\"{} invert\-Right = "false$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$\hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} boolean=\char`\"{}or\char`\"{} invert\-Left=\char`\"{}false\char`\"{} invert\-Right = "false$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$/\-Compound\-Expression$>$ $<$/\-Compound\-Expression$>$
+
+Converts an X\-M\-L fragment into a \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression}
+
+The X\-M\-L fragment of a compound expression will look like this\-:
+
+$<$\hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} boolean=\char`\"{}and\char`\"{} invert\-Left=\char`\"{}true\char`\"{} invert\-Right = "false$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$\hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} boolean=\char`\"{}or\char`\"{} invert\-Left=\char`\"{}false\char`\"{} invert\-Right = "false$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$\-Expression$>$ ... $<$/\-Expression$>$ $<$/\-Compound\-Expression$>$ $<$/\-Compound\-Expression$>$ 
+
+Definition at line 561 of file Compound\-Expression.\-cpp.
+
+\hypertarget{class_picto_1_1_compound_expression_a9f0fa06128e31c9d3301b4a746fbc417}{\index{Picto\-::\-Compound\-Expression@{Picto\-::\-Compound\-Expression}!to\-Q\-Image@{to\-Q\-Image}}
+\index{to\-Q\-Image@{to\-Q\-Image}!Picto::CompoundExpression@{Picto\-::\-Compound\-Expression}}
+\subsubsection[{to\-Q\-Image}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Image Picto\-::\-Compound\-Expression\-::to\-Q\-Image (
+\begin{DoxyParamCaption}
+\item[{bool}]{use\-L\-H\-S\-Names = {\ttfamily false}, }
+\item[{bool}]{use\-R\-H\-S\-Names = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_compound_expression_a9f0fa06128e31c9d3301b4a746fbc417}
+
+
+Converts the compound expression into a Q\-Image. 
+
+As with the to\-String function, this function allows us to determine whether to display the name or value for all left and right sides (but not individual ones) 
+
+Definition at line 178 of file Compound\-Expression.\-cpp.
+
+\hypertarget{class_picto_1_1_compound_expression_a18112ac309b96a520b5f2aedf80f3040}{\index{Picto\-::\-Compound\-Expression@{Picto\-::\-Compound\-Expression}!to\-String@{to\-String}}
+\index{to\-String@{to\-String}!Picto::CompoundExpression@{Picto\-::\-Compound\-Expression}}
+\subsubsection[{to\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Compound\-Expression\-::to\-String (
+\begin{DoxyParamCaption}
+\item[{bool}]{use\-L\-H\-S\-Names = {\ttfamily false}, }
+\item[{bool}]{use\-R\-H\-S\-Names = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_compound_expression_a18112ac309b96a520b5f2aedf80f3040}
+
+
+Converts the compound expression into a string. 
+
+Converting a compound expression into a string is generally a simple recursive call. However, the use of names vs values is a real challenge. Even in a simple compound expression, there are four possible values that could be names or values. In a larger expression, there are a limitless number of possibilities. So, to simplify matters, the parameters will apply to all L\-H\-S values and all R\-H\-S values in the compound expression. This is less limiting than it sounds, since if the name is an empty string, the program will print the value instead. 
+
+Definition at line 143 of file Compound\-Expression.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Compound\-Expression.\-h\item 
+source/common/statemachine/Compound\-Expression.\-cpp\end{DoxyCompactItemize}

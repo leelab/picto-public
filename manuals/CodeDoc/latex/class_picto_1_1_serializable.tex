@@ -1,0 +1,120 @@
+\hypertarget{class_picto_1_1_serializable}{\section{Picto\-:\-:Serializable Class Reference}
+\label{class_picto_1_1_serializable}\index{Picto\-::\-Serializable@{Picto\-::\-Serializable}}
+}
+
+
+The top level class of the \hyperlink{namespace_picto}{Picto} Design class hierarchy, and the \hyperlink{namespace_picto}{Picto} network transferrable data hierarchy, providing an interface for serialization/deserialization.  
+
+
+
+
+{\ttfamily \#include $<$Serializable.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Serializable\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=11.146919cm]{class_picto_1_1_serializable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_serializable_a2715cc957dfee3198e54643f546eba26}{Q\-String \hyperlink{class_picto_1_1_serializable_a2715cc957dfee3198e54643f546eba26}{to\-Xml} ()}\label{class_picto_1_1_serializable_a2715cc957dfee3198e54643f546eba26}
+
+\begin{DoxyCompactList}\small\item\em Converts this \hyperlink{class_picto_1_1_serializable}{Serializable} to an X\-M\-L based Q\-String that can be saved, transferred over the network, etc. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{from\-Xml} (Q\-String xml\-Text)
+\begin{DoxyCompactList}\small\item\em Loads this object from a descriptive xml\-Text X\-M\-L Q\-String. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_serializable_a0357f9be4b2b92f7b1d63a7b353e56c1}{virtual bool \hyperlink{class_picto_1_1_serializable_a0357f9be4b2b92f7b1d63a7b353e56c1}{to\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)=0}\label{class_picto_1_1_serializable_a0357f9be4b2b92f7b1d63a7b353e56c1}
+
+\begin{DoxyCompactList}\small\item\em The same as \hyperlink{class_picto_1_1_serializable_a2715cc957dfee3198e54643f546eba26}{to\-Xml()} except that it takes in a Q\-Xml\-Stream\-Writer pointer to which the output X\-M\-L is written and returns a boolean indicating serialization success. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_serializable_aa328e85f57f163795bf4be7388719031}{virtual bool \hyperlink{class_picto_1_1_serializable_aa328e85f57f163795bf4be7388719031}{from\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)=0}\label{class_picto_1_1_serializable_aa328e85f57f163795bf4be7388719031}
+
+\begin{DoxyCompactList}\small\item\em The same as \hyperlink{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{from\-Xml(\-Q\-String)} except that it takes in a Q\-X\-M\-L\-Stream\-Reader pointer from which it reads the descriptive X\-M\-L data. The returned value indicates whether deserialization was successful. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Q\-String \hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{get\-Errors} ()
+\begin{DoxyCompactList}\small\item\em Returns the latest deserialization errors that were reported from any deserialization event. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_serializable_a6c5644865540a1e1e8951895c836b5cf}{static void \hyperlink{class_picto_1_1_serializable_a6c5644865540a1e1e8951895c836b5cf}{clear\-Errors} ()}\label{class_picto_1_1_serializable_a6c5644865540a1e1e8951895c836b5cf}
+
+\begin{DoxyCompactList}\small\item\em Clears the static list of errors\-\_\- to prepare for a new \hyperlink{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{from\-Xml()} call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_serializable_a96d216d572c87de0e7b2ba4ae1c6ea17}{add\-Error\-To\-List} (Q\-String error\-Msg)
+\begin{DoxyCompactList}\small\item\em Adds an error message to the static list of errors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The top level class of the \hyperlink{namespace_picto}{Picto} Design class hierarchy, and the \hyperlink{namespace_picto}{Picto} network transferrable data hierarchy, providing an interface for serialization/deserialization. 
+
+Everything element of the \hyperlink{namespace_picto}{Picto} design and of network transferrable \hyperlink{class_picto_1_1_data_unit}{Data\-Unit} objects must be savable and loadable, so we put that functionality into this hierarchical root class. An interface to retrieve serialization errors is also provided. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Serializable.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_serializable_a96d216d572c87de0e7b2ba4ae1c6ea17}{\index{Picto\-::\-Serializable@{Picto\-::\-Serializable}!add\-Error\-To\-List@{add\-Error\-To\-List}}
+\index{add\-Error\-To\-List@{add\-Error\-To\-List}!Picto::Serializable@{Picto\-::\-Serializable}}
+\subsubsection[{add\-Error\-To\-List}]{\setlength{\rightskip}{0pt plus 5cm}void Serializable\-::add\-Error\-To\-List (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{error\-Msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_picto_1_1_serializable_a96d216d572c87de0e7b2ba4ae1c6ea17}
+
+
+Adds an error message to the static list of errors. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{get\-Errors()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 58 of file Serializable.\-cpp.
+
+\hypertarget{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{\index{Picto\-::\-Serializable@{Picto\-::\-Serializable}!from\-Xml@{from\-Xml}}
+\index{from\-Xml@{from\-Xml}!Picto::Serializable@{Picto\-::\-Serializable}}
+\subsubsection[{from\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Serializable\-::from\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{xml\-Text}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}
+
+
+Loads this object from a descriptive xml\-Text X\-M\-L Q\-String. 
+
+Typically the input xml\-Text would have been created by \hyperlink{class_picto_1_1_serializable_a2715cc957dfee3198e54643f546eba26}{to\-Xml()} 
+
+Definition at line 45 of file Serializable.\-cpp.
+
+\hypertarget{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{\index{Picto\-::\-Serializable@{Picto\-::\-Serializable}!get\-Errors@{get\-Errors}}
+\index{get\-Errors@{get\-Errors}!Picto::Serializable@{Picto\-::\-Serializable}}
+\subsubsection[{get\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Serializable\-::get\-Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}
+
+
+Returns the latest deserialization errors that were reported from any deserialization event. 
+
+Since Deserialization of \hyperlink{namespace_picto}{Picto} designs is not something that happens simultaneously in multiple threads, we can just use a static function along with a static list of errors\-\_\- to track serialization errors. The procedure is to call \hyperlink{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{from\-Xml()} on the node that you want to deserialize then if that function returns false, indicating that deserialization falied, to call \hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{get\-Errors()} to find out what the errors were and \hyperlink{class_picto_1_1_serializable_a6c5644865540a1e1e8951895c836b5cf}{clear\-Errors()} to clear out the error report for next time. \begin{DoxyNote}{Note}
+In the typical scenario, \hyperlink{class_picto_1_1_serializable_acbaf02a158b3440a16bc1a84ebaa4481}{from\-Xml()} would be called with the entire \hyperlink{namespace_picto}{Picto} Design X\-M\-L document, and \hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{get\-Errors()} would only be used after the entire design had been loaded to report all of the deserialization errors at once. 
+\end{DoxyNote}
+
+
+Definition at line 22 of file Serializable.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Serializable.\-h\item 
+source/common/storage/Serializable.\-cpp\end{DoxyCompactItemize}

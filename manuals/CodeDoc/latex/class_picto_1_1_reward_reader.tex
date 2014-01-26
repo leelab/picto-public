@@ -1,0 +1,65 @@
+\hypertarget{class_picto_1_1_reward_reader}{\section{Picto\-:\-:Reward\-Reader Class Reference}
+\label{class_picto_1_1_reward_reader}\index{Picto\-::\-Reward\-Reader@{Picto\-::\-Reward\-Reader}}
+}
+
+
+An base class for classes that can provide \hyperlink{class_picto_1_1_reward}{Reward} data over input time ranges.  
+
+
+
+
+{\ttfamily \#include $<$Playback\-Interfaces.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Reward\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_reward_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_reader_a507ac1e152e02e4f4c1e0d2f510c652c}{virtual double \hyperlink{class_picto_1_1_reward_reader_a507ac1e152e02e4f4c1e0d2f510c652c}{get\-Latest\-Time} ()=0}\label{class_picto_1_1_reward_reader_a507ac1e152e02e4f4c1e0d2f510c652c}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest reward to have been supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_a993319a9b8fcb136faf23ec7a4bed7ee}{virtual double \hyperlink{class_picto_1_1_reward_reader_a993319a9b8fcb136faf23ec7a4bed7ee}{get\-Next\-Time} ()=0}\label{class_picto_1_1_reward_reader_a993319a9b8fcb136faf23ec7a4bed7ee}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next reward to be supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_aa678cac031bd53ebbdc5dc7633957cdc}{virtual int \hyperlink{class_picto_1_1_reward_reader_aa678cac031bd53ebbdc5dc7633957cdc}{get\-Latest\-Duration} ()=0}\label{class_picto_1_1_reward_reader_aa678cac031bd53ebbdc5dc7633957cdc}
+
+\begin{DoxyCompactList}\small\item\em Returns the duration of the latest reward to have been supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_a37826c973b9350f8a8450e04e40125dc}{virtual int \hyperlink{class_picto_1_1_reward_reader_a37826c973b9350f8a8450e04e40125dc}{get\-Next\-Duration} ()=0}\label{class_picto_1_1_reward_reader_a37826c973b9350f8a8450e04e40125dc}
+
+\begin{DoxyCompactList}\small\item\em Returns the duration of the next reward to be supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_ac5cbb012865d274c25a3def3c0ef150c}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_reader_ac5cbb012865d274c25a3def3c0ef150c}{get\-Times\-Since} (double time)=0}\label{class_picto_1_1_reward_reader_ac5cbb012865d274c25a3def3c0ef150c}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward times that occured with times $>$ the input time and $<$= the current time. From the input reward channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_a30fc72e4b54ce56a3ae4464d9ad22cff}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_reader_a30fc72e4b54ce56a3ae4464d9ad22cff}{get\-Times\-Until} (double time)=0}\label{class_picto_1_1_reward_reader_a30fc72e4b54ce56a3ae4464d9ad22cff}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward times that occured with times $>$ the current time and $<$= the input time. From the input reward channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_a4d502f594b1ae3c267ffc72c1f0ce42f}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_reader_a4d502f594b1ae3c267ffc72c1f0ce42f}{get\-Durations\-Since} (double time)=0}\label{class_picto_1_1_reward_reader_a4d502f594b1ae3c267ffc72c1f0ce42f}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward durations that occured with times $>$ the input time and $<$= the current time. From the input reward channel. There is a one to one matchup of values from this function to times from the \hyperlink{class_picto_1_1_reward_reader_ac5cbb012865d274c25a3def3c0ef150c}{get\-Times\-Since()} function. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_reader_a47b8b27246396f9b6cbc88e52168c8da}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_reader_a47b8b27246396f9b6cbc88e52168c8da}{get\-Durations\-Until} (double time)=0}\label{class_picto_1_1_reward_reader_a47b8b27246396f9b6cbc88e52168c8da}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward durations that occured with times $>$ the current time and $<$= the input time. From the input reward channel. There is a one to one matchup of values from this function to times from the \hyperlink{class_picto_1_1_reward_reader_a30fc72e4b54ce56a3ae4464d9ad22cff}{get\-Times\-Until()} function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An base class for classes that can provide \hyperlink{class_picto_1_1_reward}{Reward} data over input time ranges. 
+
+This class is used with the \hyperlink{class_picto_1_1_analysis}{Analysis} system so that Analyses can gather data over a range of times surrounding a current control state. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 112 of file Playback\-Interfaces.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/\hyperlink{_playback_interfaces_8h}{Playback\-Interfaces.\-h}\end{DoxyCompactItemize}

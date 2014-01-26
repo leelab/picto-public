@@ -1,0 +1,135 @@
+\hypertarget{class_picto_1_1_u_i_info}{\section{Picto\-:\-:U\-I\-Info Class Reference}
+\label{class_picto_1_1_u_i_info}\index{Picto\-::\-U\-I\-Info@{Picto\-::\-U\-I\-Info}}
+}
+
+
+This class used to hold information about the U\-I associated with each \hyperlink{class_picto_1_1_asset}{Asset} (position of icon in canvas, etc) as part of the \hyperlink{class_picto_1_1_experiment}{Experiment} design tree. Since then we have moved U\-I Data out into its own separate tree with \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} and \hyperlink{class_picto_1_1_u_i_element}{U\-I\-Element} classes rendering this class obsolete. It should probably be deleted.  
+
+
+
+
+{\ttfamily \#include $<$U\-I\-Info.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:U\-I\-Info\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_picto_1_1_u_i_info}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_u_i_info_a93e2ec25cb3e0f32c2e7b620e00fa985}{void {\bfseries set\-Pos} (Q\-Point pos)}\label{class_picto_1_1_u_i_info_a93e2ec25cb3e0f32c2e7b620e00fa985}
+
+\item 
+\hypertarget{class_picto_1_1_u_i_info_ae5ceea586fcbde81ffd892733faef741}{Q\-Point {\bfseries get\-Pos} ()}\label{class_picto_1_1_u_i_info_ae5ceea586fcbde81ffd892733faef741}
+
+\item 
+\hypertarget{class_picto_1_1_u_i_info_abe14a6dc31e61ec2ae23bf9a17975773}{void {\bfseries set\-Open\-Descendant} (int asset\-Id)}\label{class_picto_1_1_u_i_info_abe14a6dc31e61ec2ae23bf9a17975773}
+
+\item 
+\hypertarget{class_picto_1_1_u_i_info_a8c70a0e62d92d4c853f118258e05e5af}{int {\bfseries get\-Open\-Descendant} ()}\label{class_picto_1_1_u_i_info_a8c70a0e62d92d4c853f118258e05e5af}
+
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_u_i_info_a44ee9f9669175ced959e5689a4d3f9ba}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_u_i_info_abbc2331acc798db78aa63739105f4d2e}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_u_i_info_abbc2331acc798db78aa63739105f4d2e}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_u_i_info_ad3e5289eda4fb9d0d1f28a3fe8b10894}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_u_i_info_a4e68484037ffb5b94e6f9b49c5ae0384}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class used to hold information about the U\-I associated with each \hyperlink{class_picto_1_1_asset}{Asset} (position of icon in canvas, etc) as part of the \hyperlink{class_picto_1_1_experiment}{Experiment} design tree. Since then we have moved U\-I Data out into its own separate tree with \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} and \hyperlink{class_picto_1_1_u_i_element}{U\-I\-Element} classes rendering this class obsolete. It should probably be deleted. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file U\-I\-Info.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_u_i_info_a44ee9f9669175ced959e5689a4d3f9ba}{\index{Picto\-::\-U\-I\-Info@{Picto\-::\-U\-I\-Info}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::UIInfo@{Picto\-::\-U\-I\-Info}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-U\-I\-Info\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_u_i_info_a44ee9f9669175ced959e5689a4d3f9ba}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a964af19f287fffb7efb36a5f818704ab}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 33 of file U\-I\-Info.\-h.
+
+\hypertarget{class_picto_1_1_u_i_info_ad3e5289eda4fb9d0d1f28a3fe8b10894}{\index{Picto\-::\-U\-I\-Info@{Picto\-::\-U\-I\-Info}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::UIInfo@{Picto\-::\-U\-I\-Info}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-U\-I\-Info\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_u_i_info_ad3e5289eda4fb9d0d1f28a3fe8b10894}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_aaa194a5392d79cefe701c163564efd52}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 34 of file U\-I\-Info.\-cpp.
+
+\hypertarget{class_picto_1_1_u_i_info_a4e68484037ffb5b94e6f9b49c5ae0384}{\index{Picto\-::\-U\-I\-Info@{Picto\-::\-U\-I\-Info}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::UIInfo@{Picto\-::\-U\-I\-Info}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-U\-I\-Info\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_u_i_info_a4e68484037ffb5b94e6f9b49c5ae0384}
+
+
+Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. 
+
+If invalid syntax is found, this function uses add\-Error to report a syntax violation and returns false. The Q\-Xml\-Stream\-Reader is passed in so that the \hyperlink{class_picto_1_1_asset}{Asset} can reference it in any error messages.
+
+In the case of the \hyperlink{class_picto_1_1_data_store}{Data\-Store}, this function checks for uniqueness of child names when \hyperlink{class_picto_1_1_data_store_af4853c8c9ec20506d352b1c1bd01360a}{needs\-Unique\-Child\-Names()} and any child or associate child \hyperlink{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{needs\-Unique\-Name()} 
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a077c9284e2d18d50b72e0fea1a5eeacb}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 40 of file U\-I\-Info.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/U\-I\-Info.\-h\item 
+source/common/statemachine/U\-I\-Info.\-cpp\end{DoxyCompactItemize}

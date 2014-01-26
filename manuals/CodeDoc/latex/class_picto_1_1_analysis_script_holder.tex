@@ -1,0 +1,490 @@
+\hypertarget{class_picto_1_1_analysis_script_holder}{\section{Picto\-:\-:Analysis\-Script\-Holder Class Reference}
+\label{class_picto_1_1_analysis_script_holder}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}
+}
+
+
+An analysis variable parameter.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Script\-Container.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Script\-Holder\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.531792cm]{class_picto_1_1_analysis_script_holder}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} \{ \\*
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}, 
+\\*
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}
+ \}
+\item 
+enum \hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} \{ \\*
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}, 
+\\*
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}, 
+\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}
+ \}
+\begin{DoxyCompactList}\small\item\em An enum describing the types of scripts available in this class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_analysis_script_holder_a89065a594ecf7740b50e5dfc54ea80c2}{Analysis\-Script\-Holder} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_analysis_script_holder}{Analysis\-Script\-Holder}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_aed0746382fb977857a020e81e9dcaa8e}{void \hyperlink{class_picto_1_1_analysis_script_holder_aed0746382fb977857a020e81e9dcaa8e}{run\-Script} (\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} type)}\label{class_picto_1_1_analysis_script_holder_aed0746382fb977857a020e81e9dcaa8e}
+
+\begin{DoxyCompactList}\small\item\em Runs the input script type if it exists. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_ab70342310801b98348c0eb44b02531a5}{bool \hyperlink{class_picto_1_1_analysis_script_holder_ab70342310801b98348c0eb44b02531a5}{has\-Script\-Property\-Type} (\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} type)}\label{class_picto_1_1_analysis_script_holder_ab70342310801b98348c0eb44b02531a5}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this object contains a \hyperlink{class_picto_1_1_property}{Property} of the input type, whether or not it is empty. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_ac4c0788def2bb19c831a64d56cc199d7}{is\-Part\-Of\-Search} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_aed0746382fb977857a020e81e9dcaa8e}{void {\bfseries run\-Script} (\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} type)}\label{class_picto_1_1_analysis_script_holder_aed0746382fb977857a020e81e9dcaa8e}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_ab70342310801b98348c0eb44b02531a5}{bool {\bfseries has\-Script\-Property\-Type} (\hyperlink{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{Script\-Type} type)}\label{class_picto_1_1_analysis_script_holder_ab70342310801b98348c0eb44b02531a5}
+
+\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a4ade6ad76bbce6806f1f3bb31823b26b}{is\-Part\-Of\-Search} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_analysis_script_holder_af065bdc2608f64a8abce333853246ddd}{Create} ()
+\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_a55093672a32488a2c8a7b6f9230eaf95}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_analysis_script_holder_a55093672a32488a2c8a7b6f9230eaf95}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_script_holder_a18c4144aa6c25fcb6e1ec01304d5ed2b}{get\-Return\-Value\-Error} (Q\-String script\-Name, const Q\-Script\-Value \&return\-Value)
+\begin{DoxyCompactList}\small\item\em Emits a runtime error if an \hyperlink{class_picto_1_1_analysis}{Analysis} Script causes an Experimental \hyperlink{class_picto_1_1_property}{Property} value to change. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_script_holder_a02b68cce54cb16c264cdc91afe442517}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_a98ebdcd9a4c026715b350bb24f181a48}{virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a98ebdcd9a4c026715b350bb24f181a48}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_analysis_script_holder_a98ebdcd9a4c026715b350bb24f181a48}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{can\-Have\-Scripts} ()}\label{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a2b488511105b335b8b06310647a9284b}{has\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual Q\-Map$<$ Q\-String, Q\-String $>$ \hyperlink{class_picto_1_1_analysis_script_holder_af6cfd31c85621d8c6658b4a6954615ca}{get\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_ade68c9359a6d5c0782bfb5ee8650c0c7}{execute\-Search\-Algorithm} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Extends the search algorithm so that we don't have false positives in certain types of searches. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_script_holder_a5f965ead2a8e7ddcced309a860c5901c}{get\-Return\-Value\-Error} (Q\-String script\-Name, const Q\-Script\-Value \&return\-Value)
+\begin{DoxyCompactList}\small\item\em This function returns an error string if the input return\-Value is invalid or there was some other problem with the latest script that was run. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_script_holder_ae0d42be0c831a16dfea55803fa124e92}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_aecdb2b312b52fe6c9575fb0e6dc0f844}{virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_aecdb2b312b52fe6c9575fb0e6dc0f844}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_analysis_script_holder_aecdb2b312b52fe6c9575fb0e6dc0f844}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{can\-Have\-Scripts} ()}\label{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_a3ff34c1c1c1a0461c068f961f6f29b0a}{has\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual Q\-Map$<$ Q\-String, Q\-String $>$ \hyperlink{class_picto_1_1_analysis_script_holder_aadde5d4100fddf0d32120b1a374d7507}{get\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_script_holder_aacaedd6a2ec3fddeaa4c6b50f548a167}{virtual bool \hyperlink{class_picto_1_1_analysis_script_holder_aacaedd6a2ec3fddeaa4c6b50f548a167}{execute\-Search\-Algorithm} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)}\label{class_picto_1_1_analysis_script_holder_aacaedd6a2ec3fddeaa4c6b50f548a167}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_u_i_enabled_a97cb540bf9702a5af91a9eeddde39db9}{Scriptable\-::execute\-Search\-Algorithm} to check for the input search\-Request in this object's scripts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An analysis variable parameter. 
+
+A container for scripts that are used in an \hyperlink{class_picto_1_1_analysis}{Analysis}.
+
+This class doesn't have an analogy in the experimental design. In the experimental design, \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} objects contain Entry,Exit and Frame (for \hyperlink{class_picto_1_1_state}{State} objects) script Properties that are directly used by the \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element}. With Analyses, we want to be able to dynamically add and remove \hyperlink{class_picto_1_1_analysis}{Analysis} Entry, Exit and Frame scripts depending on whether an Analyisis is enabled or not. For this reason, we created this container class that holds the Entry, Exit and Frame Scripts and can be added or removed from a \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} just like any other \hyperlink{class_picto_1_1_associate_element}{Associate\-Element}. The \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} can then simply check if it has a child \hyperlink{class_picto_1_1_associate_element}{Associate\-Element} that is an \hyperlink{class_picto_1_1_analysis_script_holder}{Analysis\-Script\-Holder} with an active Associate I\-D in order to decide if it needs to run the \hyperlink{class_picto_1_1_analysis}{Analysis} scripts or not.
+
+Since it does contain scripts and needs to be able to run them in the script engine, this class inherits \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container}, \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file Analysis\-Script\-Container.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!Script\-Type@{Script\-Type}}
+\index{Script\-Type@{Script\-Type}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{Script\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Picto\-::\-Analysis\-Script\-Holder\-::\-Script\-Type}}}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}
+}]An entry script that runs just before the design entry script. \index{F\-R\-A\-M\-E@{F\-R\-A\-M\-E}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!F\-R\-A\-M\-E@{F\-R\-A\-M\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}
+}]A frame script that runs just after each frame is presented. \index{E\-X\-I\-T@{E\-X\-I\-T}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-X\-I\-T@{E\-X\-I\-T}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}
+}]An exit script that runs just after the design exit script. \index{E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}
+}]An entry script that runs just before the design entry script. \index{F\-R\-A\-M\-E@{F\-R\-A\-M\-E}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!F\-R\-A\-M\-E@{F\-R\-A\-M\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}
+}]A frame script that runs just after each frame is presented. \index{E\-X\-I\-T@{E\-X\-I\-T}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-X\-I\-T@{E\-X\-I\-T}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}
+}]An exit script that runs just after the design exit script. \end{description}
+\end{Desc}
+
+
+Definition at line 28 of file Analysis\-Script\-Container.\-h.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!Script\-Type@{Script\-Type}}
+\index{Script\-Type@{Script\-Type}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{Script\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Picto\-::\-Analysis\-Script\-Holder\-::\-Script\-Type}}}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8}
+
+
+An enum describing the types of scripts available in this class. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}
+}]An entry script that runs just before the design entry script. \index{F\-R\-A\-M\-E@{F\-R\-A\-M\-E}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!F\-R\-A\-M\-E@{F\-R\-A\-M\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}
+}]A frame script that runs just after each frame is presented. \index{E\-X\-I\-T@{E\-X\-I\-T}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-X\-I\-T@{E\-X\-I\-T}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}
+}]An exit script that runs just after the design exit script. \index{E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-N\-T\-R\-Y@{E\-N\-T\-R\-Y}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}{E\-N\-T\-R\-Y}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a846481317c09c2a856e86dfbdf51aa78}
+}]An entry script that runs just before the design entry script. \index{F\-R\-A\-M\-E@{F\-R\-A\-M\-E}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!F\-R\-A\-M\-E@{F\-R\-A\-M\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}{F\-R\-A\-M\-E}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8a3b6e2a4d655300f7f8d35a3bd21a2a29}
+}]A frame script that runs just after each frame is presented. \index{E\-X\-I\-T@{E\-X\-I\-T}!Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}}\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!E\-X\-I\-T@{E\-X\-I\-T}}\item[{\em 
+\hypertarget{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}{E\-X\-I\-T}\label{class_picto_1_1_analysis_script_holder_adb6ac71422633de2c46dc223551338d8aa13ebfac34799360eaaa67240f4b63fd}
+}]An exit script that runs just after the design exit script. \end{description}
+\end{Desc}
+
+
+Definition at line 38 of file Analysis\-Script\-Holder.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_analysis_script_holder_a89065a594ecf7740b50e5dfc54ea80c2}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!Analysis\-Script\-Holder@{Analysis\-Script\-Holder}}
+\index{Analysis\-Script\-Holder@{Analysis\-Script\-Holder}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{Analysis\-Script\-Holder}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Analysis\-Script\-Holder\-::\-Analysis\-Script\-Holder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_script_holder_a89065a594ecf7740b50e5dfc54ea80c2}
+
+
+Constructs a new \hyperlink{class_picto_1_1_analysis_script_holder}{Analysis\-Script\-Holder}. 
+
+Adds three Properties, Analysis\-Entry\-Script, Analysis\-Frame\-Script, Analysis\-Exit\-Script 
+
+Definition at line 6 of file Analysis\-Script\-Container.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_script_holder_af065bdc2608f64a8abce333853246ddd}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!Create@{Create}}
+\index{Create@{Create}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{Create}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset} $>$ Picto\-::\-Analysis\-Script\-Holder\-::\-Create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_analysis_script_holder_af065bdc2608f64a8abce333853246ddd}
+brief Creates a new \hyperlink{class_picto_1_1_analysis_script_holder}{Analysis\-Script\-Holder} and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. 
+
+Definition at line 18 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Script\-Holder\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 37 of file Analysis\-Script\-Container.\-h.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Script\-Holder\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a8424afe1832f1b1b7c0753a9b19d3bc9}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 51 of file Analysis\-Script\-Holder.\-h.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_ade68c9359a6d5c0782bfb5ee8650c0c7}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!execute\-Search\-Algorithm@{execute\-Search\-Algorithm}}
+\index{execute\-Search\-Algorithm@{execute\-Search\-Algorithm}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{execute\-Search\-Algorithm}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Script\-Holder\-::execute\-Search\-Algorithm (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_ade68c9359a6d5c0782bfb5ee8650c0c7}
+
+
+Extends the search algorithm so that we don't have false positives in certain types of searches. 
+
+Since this object gets created as soon as a script is written and sticks around even if that script is deleted, in cases where its scripts are all empty and a search for its simple existance comes through, we need to overload the default behavior and return false. If all scripts are empty, this element might as well not exist and should not be considered a relavent \hyperlink{class_picto_1_1_analysis_element}{Analysis\-Element} in the U\-I. 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_aae46c50e128e021f5ad66cb8b419c65a}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 164 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a18c4144aa6c25fcb6e1ec01304d5ed2b}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!get\-Return\-Value\-Error@{get\-Return\-Value\-Error}}
+\index{get\-Return\-Value\-Error@{get\-Return\-Value\-Error}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{get\-Return\-Value\-Error}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Analysis\-Script\-Holder\-::get\-Return\-Value\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{script\-Name, }
+\item[{const Q\-Script\-Value \&}]{return\-Value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a18c4144aa6c25fcb6e1ec01304d5ed2b}
+
+
+Emits a runtime error if an \hyperlink{class_picto_1_1_analysis}{Analysis} Script causes an Experimental \hyperlink{class_picto_1_1_property}{Property} value to change. 
+
+Analyses should not change Experimental \hyperlink{class_picto_1_1_property}{Property} values since it is analyzing, not affecting the run. If it does so then some kind of design error occured and the integrity of the \hyperlink{class_picto_1_1_analysis}{Analysis} output may be compromised, so we emit a runtime error. 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a1e0264aee7ce551d450dc07a6b369d56}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 88 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a5f965ead2a8e7ddcced309a860c5901c}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!get\-Return\-Value\-Error@{get\-Return\-Value\-Error}}
+\index{get\-Return\-Value\-Error@{get\-Return\-Value\-Error}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{get\-Return\-Value\-Error}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Script\-Holder\-::get\-Return\-Value\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{script\-Name, }
+\item[{const Q\-Script\-Value \&}]{return\-Value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a5f965ead2a8e7ddcced309a860c5901c}
+
+
+This function returns an error string if the input return\-Value is invalid or there was some other problem with the latest script that was run. 
+
+The Q\-String scipt\-Name entry is the name of the script that was just run as returned by \hyperlink{class_picto_1_1_analysis_script_holder_af6cfd31c85621d8c6658b4a6954615ca}{get\-Scripts()}. This function is called by check\-Script\-Results() which will trigger a runtime error with the returned string as an error message if the returned string is not empty. \begin{DoxySeeAlso}{See Also}
+check\-Script\-Results(), \hyperlink{class_picto_1_1_scriptable_container_ab3d900d7a5403b8795b0edb54e50a750}{init\-Scripting()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a1e0264aee7ce551d450dc07a6b369d56}{Picto\-::\-Scriptable\-Container}.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_af6cfd31c85621d8c6658b4a6954615ca}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!get\-Scripts@{get\-Scripts}}
+\index{get\-Scripts@{get\-Scripts}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{get\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<$ Q\-String, Q\-String $>$ Picto\-::\-Analysis\-Script\-Holder\-::get\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_af6cfd31c85621d8c6658b4a6954615ca}
+
+
+Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. 
+
+\begin{DoxyNote}{Note}
+There is some history here. Originally, these scripts were stored as part of the scripting engine, and so their names had to be unique. Now they are stored in a table of Q\-Script\-Program objects and so there is probably not any real need for their \char`\"{}script names\char`\"{} to be different from the \char`\"{}\-Property names\char`\"{} of the Properties containing the script text. We should probably change this at some point. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a6476dc86309bfa82d6b02b04e7dba4cf}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 131 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_aadde5d4100fddf0d32120b1a374d7507}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!get\-Scripts@{get\-Scripts}}
+\index{get\-Scripts@{get\-Scripts}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{get\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Map$<$Q\-String,Q\-String$>$ Picto\-::\-Analysis\-Script\-Holder\-::get\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_aadde5d4100fddf0d32120b1a374d7507}
+
+
+Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. 
+
+\begin{DoxyNote}{Note}
+There is some history here. Originally, these scripts were stored as part of the scripting engine, and so their names had to be unique. Now they are stored in a table of Q\-Script\-Program objects and so there is probably not any real need for their \char`\"{}script names\char`\"{} to be different from the \char`\"{}\-Property names\char`\"{} of the Properties containing the script text. We should probably change this at some point. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a6476dc86309bfa82d6b02b04e7dba4cf}{Picto\-::\-Scriptable\-Container}.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a2b488511105b335b8b06310647a9284b}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!has\-Scripts@{has\-Scripts}}
+\index{has\-Scripts@{has\-Scripts}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{has\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Script\-Holder\-::has\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a2b488511105b335b8b06310647a9284b}
+
+
+Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. 
+
+\begin{DoxyNote}{Note}
+If this function returns true, \hyperlink{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{can\-Have\-Scripts()} should also return true. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acb933156df40af1820e623fa92d051a4}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 121 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a3ff34c1c1c1a0461c068f961f6f29b0a}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!has\-Scripts@{has\-Scripts}}
+\index{has\-Scripts@{has\-Scripts}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{has\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Analysis\-Script\-Holder\-::has\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a3ff34c1c1c1a0461c068f961f6f29b0a}
+
+
+Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. 
+
+\begin{DoxyNote}{Note}
+If this function returns true, \hyperlink{class_picto_1_1_analysis_script_holder_a11d11762bc1afd555b1e7f92d29dffcd}{can\-Have\-Scripts()} should also return true. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acb933156df40af1820e623fa92d051a4}{Picto\-::\-Scriptable\-Container}.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_ac4c0788def2bb19c831a64d56cc199d7}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!is\-Part\-Of\-Search@{is\-Part\-Of\-Search}}
+\index{is\-Part\-Of\-Search@{is\-Part\-Of\-Search}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{is\-Part\-Of\-Search}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Script\-Holder\-::is\-Part\-Of\-Search (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_ac4c0788def2bb19c831a64d56cc199d7}
+
+
+Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a5afdea71e71a791fe1abf97b67050907}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 75 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a4ade6ad76bbce6806f1f3bb31823b26b}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!is\-Part\-Of\-Search@{is\-Part\-Of\-Search}}
+\index{is\-Part\-Of\-Search@{is\-Part\-Of\-Search}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{is\-Part\-Of\-Search}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Analysis\-Script\-Holder\-::is\-Part\-Of\-Search (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a4ade6ad76bbce6806f1f3bb31823b26b}
+
+
+Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a5afdea71e71a791fe1abf97b67050907}{Picto\-::\-Data\-Store}.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_a02b68cce54cb16c264cdc91afe442517}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Script\-Holder\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_a02b68cce54cb16c264cdc91afe442517}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 107 of file Analysis\-Script\-Container.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_script_holder_ae0d42be0c831a16dfea55803fa124e92}{\index{Picto\-::\-Analysis\-Script\-Holder@{Picto\-::\-Analysis\-Script\-Holder}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisScriptHolder@{Picto\-::\-Analysis\-Script\-Holder}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Analysis\-Script\-Holder\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_script_holder_ae0d42be0c831a16dfea55803fa124e92}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Script\-Container.\-h\item 
+source/common/parameter/Analysis\-Script\-Holder.\-h\item 
+source/common/parameter/Analysis\-Script\-Container.\-cpp\item 
+source/common/parameter/Analysis\-Script\-Holder.\-cpp\end{DoxyCompactItemize}

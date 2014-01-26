@@ -1,0 +1,157 @@
+\hypertarget{class_neural_data_acq_interface}{\section{Neural\-Data\-Acq\-Interface Class Reference}
+\label{class_neural_data_acq_interface}\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}}
+}
+
+
+Interface used for all proxy server plugins.  
+
+
+
+
+{\ttfamily \#include $<$Neural\-Data\-Acq\-Interface.\-h$>$}
+
+Inheritance diagram for Neural\-Data\-Acq\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_neural_data_acq_interface}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{device\-Status} \{ \hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a179221e026143c59c99f8398ecc52bc6}{not\-Started}, 
+\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a62e57d351961602cba73fe13896e3e0b}{started}, 
+\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449ab7cf1e66c69714385eb173c0fa0e5a7b}{no\-Data}, 
+\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a1991e24a6bc1467ad41dfacb32c580b8}{has\-Data}
+ \}
+\begin{DoxyCompactList}\small\item\em The status of the Neural Data Acquisition device handles by this Interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_neural_data_acq_interface_a45d5b4ca74321f8dcb42fb9b1cbbb5af}{virtual Q\-String \hyperlink{class_neural_data_acq_interface_a45d5b4ca74321f8dcb42fb9b1cbbb5af}{device} () const =0}\label{class_neural_data_acq_interface_a45d5b4ca74321f8dcb42fb9b1cbbb5af}
+
+\begin{DoxyCompactList}\small\item\em The name of the device handled by this interface. \end{DoxyCompactList}\item 
+\hypertarget{class_neural_data_acq_interface_aef94eca149e9cf0c1102aa071cfd7f07}{virtual void \hyperlink{class_neural_data_acq_interface_aef94eca149e9cf0c1102aa071cfd7f07}{device\-Selected} ()}\label{class_neural_data_acq_interface_aef94eca149e9cf0c1102aa071cfd7f07}
+
+\begin{DoxyCompactList}\small\item\em Called when this device is first selected by the Proxy application. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{device\-Status} \hyperlink{class_neural_data_acq_interface_afaece5bd061753aa9a4b1e05c0d1e61d}{start\-Device} ()=0
+\begin{DoxyCompactList}\small\item\em Starts interfacing with the device and gathering data. Returns the device\-Status after the function was called. \end{DoxyCompactList}\item 
+\hypertarget{class_neural_data_acq_interface_aabca3fa3e737a42c158960d98c541bb8}{virtual \hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{device\-Status} \hyperlink{class_neural_data_acq_interface_aabca3fa3e737a42c158960d98c541bb8}{stop\-Device} ()=0}\label{class_neural_data_acq_interface_aabca3fa3e737a42c158960d98c541bb8}
+
+\begin{DoxyCompactList}\small\item\em Stops gathering data from the device handled by this interface. \end{DoxyCompactList}\item 
+\hypertarget{class_neural_data_acq_interface_abbbf0983f4f2b240d92f4ad3b619cab0}{virtual \hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{device\-Status} \hyperlink{class_neural_data_acq_interface_abbbf0983f4f2b240d92f4ad3b619cab0}{get\-Device\-Status} ()=0}\label{class_neural_data_acq_interface_abbbf0983f4f2b240d92f4ad3b619cab0}
+
+\begin{DoxyCompactList}\small\item\em Returns the current device\-Status of this \hyperlink{class_neural_data_acq_interface}{Neural\-Data\-Acq\-Interface}. \end{DoxyCompactList}\item 
+\hypertarget{class_neural_data_acq_interface_ab5de05e0b1bd90ac37d0fd7e317e85e3}{virtual float \hyperlink{class_neural_data_acq_interface_ab5de05e0b1bd90ac37d0fd7e317e85e3}{sampling\-Rate} ()=0}\label{class_neural_data_acq_interface_ab5de05e0b1bd90ac37d0fd7e317e85e3}
+
+\begin{DoxyCompactList}\small\item\em Returns the rate at which spike waveforms are sampled by the device handled by this interface. \end{DoxyCompactList}\item 
+virtual Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_unit}{Picto\-::\-Data\-Unit} $>$ $>$ \hyperlink{class_neural_data_acq_interface_a5726ef21daaedd9947640b146e554c97}{dump\-Data} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a list of Data\-Units read from the Neural data device since the last call to this function. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_neural_data_acq_interface_ae2a18728d2a56fe1a65a66e10a33282f}{acq\-Data\-After\-Now} ()=0
+\begin{DoxyCompactList}\small\item\em Causes the interface to throw out all data collected before now. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface used for all proxy server plugins. 
+
+This defines the interface used by proxy server plugins. If you want to build a new plugin (for a different device), you'll need to make sure that it extends this class and has these functions. Also, make sure to include\-: 
+\begin{DoxyCode}
+Q\_OBJECT
+Q\_INTERFACES(\hyperlink{class_neural_data_acq_interface}{NeuralDataAcqInterface})
+Q\_PLUGIN\_METADATA(IID "org.blockdesign.Picto.\hyperlink{class_proxy_server}{ProxyServer}.
+      \hyperlink{class_neural_data_acq_interface}{NeuralDataAcqInterface}/1.0")
+\end{DoxyCode}
+ at the beginning of the class definition. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Neural\-Data\-Acq\-Interface.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!device\-Status@{device\-Status}}
+\index{device\-Status@{device\-Status}!NeuralDataAcqInterface@{Neural\-Data\-Acq\-Interface}}
+\subsubsection[{device\-Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Neural\-Data\-Acq\-Interface\-::device\-Status}}}\label{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}
+
+
+The status of the Neural Data Acquisition device handles by this Interface. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{not\-Started@{not\-Started}!Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}}\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!not\-Started@{not\-Started}}\item[{\em 
+\hypertarget{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a179221e026143c59c99f8398ecc52bc6}{not\-Started}\label{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a179221e026143c59c99f8398ecc52bc6}
+}]Device is not ready. \index{started@{started}!Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}}\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!started@{started}}\item[{\em 
+\hypertarget{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a62e57d351961602cba73fe13896e3e0b}{started}\label{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a62e57d351961602cba73fe13896e3e0b}
+}]Device is ready to provide data. \index{no\-Data@{no\-Data}!Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}}\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!no\-Data@{no\-Data}}\item[{\em 
+\hypertarget{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449ab7cf1e66c69714385eb173c0fa0e5a7b}{no\-Data}\label{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449ab7cf1e66c69714385eb173c0fa0e5a7b}
+}]Device is running but no data is currently available. \index{has\-Data@{has\-Data}!Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}}\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!has\-Data@{has\-Data}}\item[{\em 
+\hypertarget{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a1991e24a6bc1467ad41dfacb32c580b8}{has\-Data}\label{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449a1991e24a6bc1467ad41dfacb32c580b8}
+}]Device is running and data is available to be read. \end{description}
+\end{Desc}
+
+
+Definition at line 28 of file Neural\-Data\-Acq\-Interface.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_neural_data_acq_interface_ae2a18728d2a56fe1a65a66e10a33282f}{\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!acq\-Data\-After\-Now@{acq\-Data\-After\-Now}}
+\index{acq\-Data\-After\-Now@{acq\-Data\-After\-Now}!NeuralDataAcqInterface@{Neural\-Data\-Acq\-Interface}}
+\subsubsection[{acq\-Data\-After\-Now}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Neural\-Data\-Acq\-Interface\-::acq\-Data\-After\-Now (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_neural_data_acq_interface_ae2a18728d2a56fe1a65a66e10a33282f}
+
+
+Causes the interface to throw out all data collected before now. 
+
+No data gathered before this point should be returned by \hyperlink{class_neural_data_acq_interface_a5726ef21daaedd9947640b146e554c97}{dump\-Data()}. This function returns true if the data before this point was successfully thrown out, false otherwise. 
+
+Implemented in \hyperlink{class_virtual_device_plugin_af7891e45e88097d17e3de1cb71cbbf0c}{Virtual\-Device\-Plugin}, \hyperlink{class_tdt_plugin_abd4555dee2a147e85cc47493bf038a0d}{Tdt\-Plugin}, and \hyperlink{class_plexon_plugin_ad1a9a2a999a14125f17016ca64a6f197}{Plexon\-Plugin}.
+
+\hypertarget{class_neural_data_acq_interface_a5726ef21daaedd9947640b146e554c97}{\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!dump\-Data@{dump\-Data}}
+\index{dump\-Data@{dump\-Data}!NeuralDataAcqInterface@{Neural\-Data\-Acq\-Interface}}
+\subsubsection[{dump\-Data}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-List$<$Q\-Shared\-Pointer$<${\bf Picto\-::\-Data\-Unit}$>$ $>$ Neural\-Data\-Acq\-Interface\-::dump\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_neural_data_acq_interface_a5726ef21daaedd9947640b146e554c97}
+
+
+Returns a list of Data\-Units read from the Neural data device since the last call to this function. 
+
+The returned list includes Neural\-Data\-Unit, Alignment\-Data\-Unit, and L\-F\-P\-Data\-Unit\-Package objects. The Neural\-Data\-Unit and Alignment\-Data\-Unit objects represent individual spikes and alignment events, but the L\-F\-P\-Data\-Unit\-Package represents a list of L\-F\-P readings for a particular channel. To keep the load on the server low but balance that with fresh data on the workstation, the typical L\-F\-P\-Data\-Unit\-Package should include about a half second's worth of data. 
+
+Implemented in \hyperlink{class_virtual_device_plugin_af350fb193b7948691aa36b32d1e9a4ef}{Virtual\-Device\-Plugin}, \hyperlink{class_tdt_plugin_a4491478b3dc7498e73967896a38244c2}{Tdt\-Plugin}, and \hyperlink{class_plexon_plugin_a4fd861a9a63521256a2cd5a97511853f}{Plexon\-Plugin}.
+
+\hypertarget{class_neural_data_acq_interface_afaece5bd061753aa9a4b1e05c0d1e61d}{\index{Neural\-Data\-Acq\-Interface@{Neural\-Data\-Acq\-Interface}!start\-Device@{start\-Device}}
+\index{start\-Device@{start\-Device}!NeuralDataAcqInterface@{Neural\-Data\-Acq\-Interface}}
+\subsubsection[{start\-Device}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf device\-Status} Neural\-Data\-Acq\-Interface\-::start\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_neural_data_acq_interface_afaece5bd061753aa9a4b1e05c0d1e61d}
+
+
+Starts interfacing with the device and gathering data. Returns the device\-Status after the function was called. 
+
+\begin{DoxyNote}{Note}
+The returned device\-Status should be at least Started unless there was some error. 
+\end{DoxyNote}
+
+
+Implemented in \hyperlink{class_virtual_device_plugin_a7d6176c8c4b58857c33dbc309a99478d}{Virtual\-Device\-Plugin}, \hyperlink{class_tdt_plugin_a67319b997851288c25ee517e8c2eaad4}{Tdt\-Plugin}, and \hyperlink{class_plexon_plugin_afa5c5fe29b60abd12760537baf972746}{Plexon\-Plugin}.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/Neural\-Data\-Acq\-Interface.\-h\end{DoxyCompactItemize}

@@ -1,0 +1,73 @@
+\hypertarget{class_picto_1_1_run_notes_reader}{\section{Picto\-:\-:Run\-Notes\-Reader Class Reference}
+\label{class_picto_1_1_run_notes_reader}\index{Picto\-::\-Run\-Notes\-Reader@{Picto\-::\-Run\-Notes\-Reader}}
+}
+
+
+An base class for classes that can provide Run Notes data.  
+
+
+
+
+{\ttfamily \#include $<$Playback\-Interfaces.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Run\-Notes\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_run_notes_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_run_notes_reader_aa11971931900ca6456e1cd92891a2f05}{get\-Name} ()=0
+\begin{DoxyCompactList}\small\item\em Gets the name of the current run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_run_notes_reader_a988b8b115c76c1e4d92249c09541008f}{virtual double \hyperlink{class_picto_1_1_run_notes_reader_a988b8b115c76c1e4d92249c09541008f}{get\-Start\-Time} ()=0}\label{class_picto_1_1_run_notes_reader_a988b8b115c76c1e4d92249c09541008f}
+
+\begin{DoxyCompactList}\small\item\em Returns the time that this run started in seconds where time zero is the beginning of the session. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_run_notes_reader_a91ae3ae21960bbb583b31341e6b6dd9f}{virtual double \hyperlink{class_picto_1_1_run_notes_reader_a91ae3ae21960bbb583b31341e6b6dd9f}{get\-End\-Time} ()=0}\label{class_picto_1_1_run_notes_reader_a91ae3ae21960bbb583b31341e6b6dd9f}
+
+\begin{DoxyCompactList}\small\item\em Returns the time that this run ends in seconds where time zero is the beginning of the session. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_run_notes_reader_ac4fd0456fee5ef31b026aa5404cfdb33}{virtual Q\-String \hyperlink{class_picto_1_1_run_notes_reader_ac4fd0456fee5ef31b026aa5404cfdb33}{get\-Notes} ()=0}\label{class_picto_1_1_run_notes_reader_ac4fd0456fee5ef31b026aa5404cfdb33}
+
+\begin{DoxyCompactList}\small\item\em Returns the notes string that was saved by the operator during the session. If no notes were saved, an empty string is returned. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_run_notes_reader_ad065e80b6ba051bf5218e82cb45f225d}{virtual int \hyperlink{class_picto_1_1_run_notes_reader_ad065e80b6ba051bf5218e82cb45f225d}{get\-Run\-Index} ()=0}\label{class_picto_1_1_run_notes_reader_ad065e80b6ba051bf5218e82cb45f225d}
+
+\begin{DoxyCompactList}\small\item\em Returns the index of this run in this sessions list of task runs, where the first run has an index of zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An base class for classes that can provide Run Notes data. 
+
+This class allows Analyses to gather data about the current run, so that it can be used to provide meta-\/data in \hyperlink{class_picto_1_1_analysis}{Analysis} outputs. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 152 of file Playback\-Interfaces.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_run_notes_reader_aa11971931900ca6456e1cd92891a2f05}{\index{Picto\-::\-Run\-Notes\-Reader@{Picto\-::\-Run\-Notes\-Reader}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Picto::RunNotesReader@{Picto\-::\-Run\-Notes\-Reader}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Run\-Notes\-Reader\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_run_notes_reader_aa11971931900ca6456e1cd92891a2f05}
+
+
+Gets the name of the current run. 
+
+This name is either a default one based on the start time of the run, or the one set by the operator in the run info section during a session. 
+
+Implemented in \hyperlink{class_picto_1_1_live_run_notes_reader_a6b14e378550b593fca52e72070e7a65a}{Picto\-::\-Live\-Run\-Notes\-Reader}, and \hyperlink{class_picto_1_1_run_notes_state_aaf555f4d511914d7659cb74dec2a24af}{Picto\-::\-Run\-Notes\-State}.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/\hyperlink{_playback_interfaces_8h}{Playback\-Interfaces.\-h}\end{DoxyCompactItemize}

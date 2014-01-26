@@ -1,0 +1,50 @@
+\hypertarget{embedded_2frontpanel_2main_8cpp}{\section{source/embedded/frontpanel/main.cpp File Reference}
+\label{embedded_2frontpanel_2main_8cpp}\index{source/embedded/frontpanel/main.\-cpp@{source/embedded/frontpanel/main.\-cpp}}
+}
+
+
+This application controls the front panel on Picto\-Box.  
+
+
+{\ttfamily \#include $<$Q\-Application$>$}\\*
+{\ttfamily \#include $<$Q\-Timer$>$}\\*
+{\ttfamily \#include $<$Q\-Tcp\-Server$>$}\\*
+{\ttfamily \#include $<$Q\-Text\-Stream$>$}\\*
+{\ttfamily \#include \char`\"{}../../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../../common/globals.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../../common/namedefs.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}phidgets.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}engineconnections.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Front\-Panel\-Info.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{embedded_2frontpanel_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main method for the \hyperlink{namespace_picto}{Picto} Front Panel application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This application controls the front panel on Picto\-Box. The front panel on Picto\-Box consists of a 2 line L\-C\-D and a rotary encoder plus button input device (a Phidget\-Encoder, part number 1052). The application handles user input and communicates with the \hyperlink{namespace_picto}{Picto} engine via a simple T\-C\-P/\-I\-P connection. 
+
+Definition in file \hyperlink{embedded_2frontpanel_2main_8cpp_source}{main.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{embedded_2frontpanel_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{\index{embedded/frontpanel/main.\-cpp@{embedded/frontpanel/main.\-cpp}!main@{main}}
+\index{main@{main}!embedded/frontpanel/main.cpp@{embedded/frontpanel/main.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{embedded_2frontpanel_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
+
+
+The main method for the \hyperlink{namespace_picto}{Picto} Front Panel application. 
+
+This function initializes various \hyperlink{namespace_picto}{Picto} libraries, creates a \hyperlink{class_phidgets}{Phidgets} object which supplied the input from the \hyperlink{class_phidgets}{Phidgets} knob and an interface to the output L\-C\-D display and creates the Front Panel objects that handle the display and I\-O logic (\hyperlink{class_menu}{Menu}) and the connection between the front panel and the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director} application (\hyperlink{class_front_panel_info}{Front\-Panel\-Info}, \hyperlink{class_engine_connections}{Engine\-Connections}), then it starts the application running 
+
+Definition at line 34 of file main.\-cpp.
+

@@ -1,0 +1,225 @@
+\hypertarget{class_picto_1_1_shape_shifter_graphic}{\section{Picto\-:\-:Shape\-Shifter\-Graphic Class Reference}
+\label{class_picto_1_1_shape_shifter_graphic}\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+}
+
+
+Represents a shape shifter graphic that can change its shape at runtime between Ellipse, Rectangle, and Diamond.  
+
+
+
+
+{\ttfamily \#include $<$Shape\-Shifter\-Graphic.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Shape\-Shifter\-Graphic\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_shape_shifter_graphic}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a362cb2fb5e1422737c1fc26e89792986}{void \hyperlink{class_picto_1_1_shape_shifter_graphic_a362cb2fb5e1422737c1fc26e89792986}{set\-Dimensions} (int w, int h)}\label{class_picto_1_1_shape_shifter_graphic_a362cb2fb5e1422737c1fc26e89792986}
+
+\begin{DoxyCompactList}\small\item\em Set the dimensions (width, height) of this graphic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_shape_shifter_graphic_a0039721ac2f95380eaaa98032d35ed5d}{Shape\-Shifter\-Graphic} (Q\-Point position=Q\-Point(), Q\-Rect dimensions=Q\-Rect(), Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color}=Q\-Color())
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_shape_shifter_graphic}{Shape\-Shifter\-Graphic} object at the input position and with the input dimensions and color. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a9ed1325d26324c24dc7dccb4622ce3d7}{void \hyperlink{class_picto_1_1_shape_shifter_graphic_a9ed1325d26324c24dc7dccb4622ce3d7}{draw} ()}\label{class_picto_1_1_shape_shifter_graphic_a9ed1325d26324c24dc7dccb4622ce3d7}
+
+\begin{DoxyCompactList}\small\item\em Draws the image represented by this \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} onto the image\-\_\- object based on its current \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+Q\-Rect \hyperlink{class_picto_1_1_shape_shifter_graphic_a563be0d126e77169f77e4810f8c42212}{get\-Dimensions} ()
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Rect with the dimensions (width, height) of this graphic. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_shape_shifter_graphic_a87eb1da9657f1d0b1aa1d8b3e4c4abad}{set\-Dimensions} (Q\-Rect dimensions)
+\begin{DoxyCompactList}\small\item\em Set the dimensions (width, height) of this graphic. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a3192adefe5cb68657dff90fb2091da79}{int \hyperlink{class_picto_1_1_shape_shifter_graphic_a3192adefe5cb68657dff90fb2091da79}{get\-Width} ()}\label{class_picto_1_1_shape_shifter_graphic_a3192adefe5cb68657dff90fb2091da79}
+
+\begin{DoxyCompactList}\small\item\em Returns the width of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_aeb566ce5753f26c55bc83ebafa82eabc}{int \hyperlink{class_picto_1_1_shape_shifter_graphic_aeb566ce5753f26c55bc83ebafa82eabc}{get\-Height} ()}\label{class_picto_1_1_shape_shifter_graphic_aeb566ce5753f26c55bc83ebafa82eabc}
+
+\begin{DoxyCompactList}\small\item\em Returns the height of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ab24eff84a77f7f407dcda3d9fddf06e2}{void \hyperlink{class_picto_1_1_shape_shifter_graphic_ab24eff84a77f7f407dcda3d9fddf06e2}{set\-Width} (int w)}\label{class_picto_1_1_shape_shifter_graphic_ab24eff84a77f7f407dcda3d9fddf06e2}
+
+\begin{DoxyCompactList}\small\item\em Sets the width of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ae03de550106a223a04413008a1f07464}{void \hyperlink{class_picto_1_1_shape_shifter_graphic_ae03de550106a223a04413008a1f07464}{set\-Height} (int h)}\label{class_picto_1_1_shape_shifter_graphic_ae03de550106a223a04413008a1f07464}
+
+\begin{DoxyCompactList}\small\item\em Sets the height of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a2031443815ea02c9e75fbe9b898f24e0}{Q\-Point \hyperlink{class_picto_1_1_shape_shifter_graphic_a2031443815ea02c9e75fbe9b898f24e0}{get\-Position\-Offset} ()}\label{class_picto_1_1_shape_shifter_graphic_a2031443815ea02c9e75fbe9b898f24e0}
+
+\begin{DoxyCompactList}\small\item\em This returns the offset from the top left corner of the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} image to the point in the image which should be used for positioning. For example, in a circle whose center should be positioned at the point entered into \hyperlink{struct_picto_1_1_visual_element_a454cc96862097e96a0b0f1d2c83e23ed}{set\-Position()}, this function would return Q\-Point(radius,radius). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_aac3794880ea796ee23fb65d76f5cc746}{Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_aac3794880ea796ee23fb65d76f5cc746}{get\-Shape} ()}\label{class_picto_1_1_shape_shifter_graphic_aac3794880ea796ee23fb65d76f5cc746}
+
+\begin{DoxyCompactList}\small\item\em Gets the current shape of this graphic as a string (\char`\"{}\-Ellipse\char`\"{}, \char`\"{}\-Rectangle\char`\"{} or \char`\"{}\-Diamond\char`\"{}). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a9e2a15bbc329bf9eea2d842d84940f36}{void \hyperlink{class_picto_1_1_shape_shifter_graphic_a9e2a15bbc329bf9eea2d842d84940f36}{set\-Shape} (Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_ace966c77442da340b866a2992552c59e}{shape})}\label{class_picto_1_1_shape_shifter_graphic_a9e2a15bbc329bf9eea2d842d84940f36}
+
+\begin{DoxyCompactList}\small\item\em Sets the current shape of this graphic as a string (\char`\"{}\-Ellipse\char`\"{}, \char`\"{}\-Rectangle\char`\"{} or \char`\"{}\-Diamond\char`\"{}). \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_aeecbc2e28b1d1f24694d9e34d404aaf3}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ad7b00a9bafd4de894627e5d3cb6ed929}{virtual Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_ad7b00a9bafd4de894627e5d3cb6ed929}{get\-U\-I\-Template} ()}\label{class_picto_1_1_shape_shifter_graphic_ad7b00a9bafd4de894627e5d3cb6ed929}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ad269371f063fad474fe57fcb8c11f1bb}{static \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} $\ast$ \hyperlink{class_picto_1_1_shape_shifter_graphic_ad269371f063fad474fe57fcb8c11f1bb}{New\-Visual\-Element} ()}\label{class_picto_1_1_shape_shifter_graphic_ad269371f063fad474fe57fcb8c11f1bb}
+
+\begin{DoxyCompactList}\small\item\em This is no longer used by parts of \hyperlink{namespace_picto}{Picto} that are being used. It sbould probably be deleted. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a66cce2ae6c76f6cb015ca03bc882d268}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_shape_shifter_graphic_a66cce2ae6c76f6cb015ca03bc882d268}{Create} ()}\label{class_picto_1_1_shape_shifter_graphic_a66cce2ae6c76f6cb015ca03bc882d268}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_shape_shifter_graphic}{Shape\-Shifter\-Graphic} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ae98c1fa76ca434eec118e124415e7883}{static const Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_ae98c1fa76ca434eec118e124415e7883}{type} = \char`\"{}Shape Shifter Graphic\char`\"{}}\label{class_picto_1_1_shape_shifter_graphic_ae98c1fa76ca434eec118e124415e7883}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_shape_shifter_graphic_aabea39fc799b129f5c47cb2606e186ed}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a0384106b9b8613f29cff7852664cb10e}{virtual bool \hyperlink{class_picto_1_1_shape_shifter_graphic_a0384106b9b8613f29cff7852664cb10e}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_shape_shifter_graphic_a0384106b9b8613f29cff7852664cb10e}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a0b7a77f83e77957fe2fea1575eabab5e}{int \hyperlink{class_picto_1_1_shape_shifter_graphic_a0b7a77f83e77957fe2fea1575eabab5e}{width}}\label{class_picto_1_1_shape_shifter_graphic_a0b7a77f83e77957fe2fea1575eabab5e}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the width of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a116e77570cc75d352ed51d76a41a4529}{int \hyperlink{class_picto_1_1_shape_shifter_graphic_a116e77570cc75d352ed51d76a41a4529}{height}}\label{class_picto_1_1_shape_shifter_graphic_a116e77570cc75d352ed51d76a41a4529}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the height of this graphic in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_shape_shifter_graphic_ace966c77442da340b866a2992552c59e}{Q\-String \hyperlink{class_picto_1_1_shape_shifter_graphic_ace966c77442da340b866a2992552c59e}{shape}}\label{class_picto_1_1_shape_shifter_graphic_ace966c77442da340b866a2992552c59e}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the current shape of this graphic as a string (\char`\"{}\-Ellipse\char`\"{}, \char`\"{}\-Rectangle\char`\"{} or \char`\"{}\-Diamond\char`\"{}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Represents a shape shifter graphic that can change its shape at runtime between Ellipse, Rectangle, and Diamond. 
+
+In addition to the Properties provided by the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} class, this class provides size, outline and outline thickness Properties. The size is just the total width and height of the graphic. The outline \hyperlink{class_picto_1_1_property}{Property} determines if only the outline of the graphic will be drawn. The outline thickness \hyperlink{class_picto_1_1_property}{Property} determines the thickness of the graphic outline if the outline \hyperlink{class_picto_1_1_property}{Property} is true. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Shape\-Shifter\-Graphic.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a0039721ac2f95380eaaa98032d35ed5d}{\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}!Shape\-Shifter\-Graphic@{Shape\-Shifter\-Graphic}}
+\index{Shape\-Shifter\-Graphic@{Shape\-Shifter\-Graphic}!Picto::ShapeShifterGraphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+\subsubsection[{Shape\-Shifter\-Graphic}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Shape\-Shifter\-Graphic\-::\-Shape\-Shifter\-Graphic (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{position = {\ttfamily QPoint()}, }
+\item[{Q\-Rect}]{dimensions = {\ttfamily QRect()}, }
+\item[{Q\-Color}]{color = {\ttfamily QColor()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_shape_shifter_graphic_a0039721ac2f95380eaaa98032d35ed5d}
+
+
+Creates a new \hyperlink{class_picto_1_1_shape_shifter_graphic}{Shape\-Shifter\-Graphic} object at the input position and with the input dimensions and color. 
+
+Adds the following Properties\-:
+\begin{DoxyItemize}
+\item \hyperlink{class_shape}{Shape}\-: Stores the shape of the graphic (Ellipse, Rectangle, or Diamond).
+\item Outline\-: Stores whether only the graphics outline will be shown.
+\item Outline\-Thickness\-: Stores the thickness of the outline that will be shown if \char`\"{}\-Outline\char`\"{} is true.
+\item Size\-: Stores the size of the graphic (width, height). 
+\end{DoxyItemize}
+
+Definition at line 17 of file Shape\-Shifter\-Graphic.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_shape_shifter_graphic_aeecbc2e28b1d1f24694d9e34d404aaf3}{\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ShapeShifterGraphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Shape\-Shifter\-Graphic\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_shape_shifter_graphic_aeecbc2e28b1d1f24694d9e34d404aaf3}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 53 of file Shape\-Shifter\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a563be0d126e77169f77e4810f8c42212}{\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}!get\-Dimensions@{get\-Dimensions}}
+\index{get\-Dimensions@{get\-Dimensions}!Picto::ShapeShifterGraphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+\subsubsection[{get\-Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Rect Picto\-::\-Shape\-Shifter\-Graphic\-::get\-Dimensions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_shape_shifter_graphic_a563be0d126e77169f77e4810f8c42212}
+
+
+Returns a Q\-Rect with the dimensions (width, height) of this graphic. 
+
+\begin{DoxyNote}{Note}
+The returned value contains no position information. Only the Width, Height values should be used. 
+\end{DoxyNote}
+
+
+Definition at line 31 of file Shape\-Shifter\-Graphic.\-cpp.
+
+\hypertarget{class_picto_1_1_shape_shifter_graphic_aabea39fc799b129f5c47cb2606e186ed}{\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::ShapeShifterGraphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Shape\-Shifter\-Graphic\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_shape_shifter_graphic_aabea39fc799b129f5c47cb2606e186ed}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 123 of file Shape\-Shifter\-Graphic.\-cpp.
+
+\hypertarget{class_picto_1_1_shape_shifter_graphic_a87eb1da9657f1d0b1aa1d8b3e4c4abad}{\index{Picto\-::\-Shape\-Shifter\-Graphic@{Picto\-::\-Shape\-Shifter\-Graphic}!set\-Dimensions@{set\-Dimensions}}
+\index{set\-Dimensions@{set\-Dimensions}!Picto::ShapeShifterGraphic@{Picto\-::\-Shape\-Shifter\-Graphic}}
+\subsubsection[{set\-Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Shape\-Shifter\-Graphic\-::set\-Dimensions (
+\begin{DoxyParamCaption}
+\item[{Q\-Rect}]{dimensions}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_shape_shifter_graphic_a87eb1da9657f1d0b1aa1d8b3e4c4abad}
+
+
+Set the dimensions (width, height) of this graphic. 
+
+\begin{DoxyNote}{Note}
+Only the width and height of the input Q\-Rect are used. x,y position values will be ignored. 
+\end{DoxyNote}
+
+
+Definition at line 39 of file Shape\-Shifter\-Graphic.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Shape\-Shifter\-Graphic.\-h\item 
+source/common/stimuli/Shape\-Shifter\-Graphic.\-cpp\end{DoxyCompactItemize}

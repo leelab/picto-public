@@ -1,0 +1,391 @@
+\hypertarget{class_picto_1_1_experiment}{\section{Picto\-:\-:Experiment Class Reference}
+\label{class_picto_1_1_experiment}\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}}
+}
+
+
+The \hyperlink{class_picto_1_1_experiment}{Experiment} object contains the complete definition of an \hyperlink{class_picto_1_1_experiment}{Experiment} for running in the \hyperlink{class_director}{Director}, \hyperlink{class_test_viewer}{Test\-Viewer}, \hyperlink{class_remote_viewer}{Remote\-Viewer} or \hyperlink{class_replay_viewer}{Replay\-Viewer}.  
+
+
+
+
+{\ttfamily \#include $<$Experiment.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Experiment\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{class_picto_1_1_experiment}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_experiment_aaa7ef4c154cdae56f140caa7456e6342}{get\-Name} ()
+\begin{DoxyCompactList}\small\item\em Overrides \hyperlink{class_picto_1_1_u_i_enabled_a98007f02abd55321577ef5db5460caba}{U\-I\-Enabled\-::get\-Name()} to return the name of this \hyperlink{class_picto_1_1_experiment}{Experiment} as \char`\"{}\-Experiment\char`\"{} for the purpose of scripting, regardless of the design file name or anything like that. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_experiment_a91af2b7dfc7a85d50a84605c5efa35e0}{set\-Name} (Q\-String new\-Name)
+\begin{DoxyCompactList}\small\item\em Overrides \hyperlink{class_picto_1_1_u_i_enabled_a0fd1659233b0cf46ede8cbaa2c8034df}{U\-I\-Enabled\-::set\-Name()} to do nothing since the \hyperlink{class_picto_1_1_experiment}{Experiment}'s name for scripting purposes is always \char`\"{}\-Experiment\char`\"{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_experiment_a567673ce1a500a661712458086612005}{set\-Engine} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} that will be used in running this \hyperlink{class_picto_1_1_experiment}{Experiment} to the input object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_experiment_af1f0c10174056338e9624638453029f6}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ \hyperlink{class_picto_1_1_experiment_af1f0c10174056338e9624638453029f6}{get\-Engine} ()}\label{class_picto_1_1_experiment_af1f0c10174056338e9624638453029f6}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} set in \hyperlink{class_picto_1_1_experiment_a567673ce1a500a661712458086612005}{set\-Engine()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_experiment_a4d859a7212d947c9f165d5fe9e2ee1ab}{void \hyperlink{class_picto_1_1_experiment_a4d859a7212d947c9f165d5fe9e2ee1ab}{add\-Task} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_task}{Task} $>$ task)}\label{class_picto_1_1_experiment_a4d859a7212d947c9f165d5fe9e2ee1ab}
+
+\begin{DoxyCompactList}\small\item\em Adds the input task to this \hyperlink{class_picto_1_1_experiment}{Experiment}'s \hyperlink{class_picto_1_1_task}{Task} list. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_experiment_a6cfd77559307223a8121a6a016b489c2}{run\-Task} (Q\-String task\-Name)
+\begin{DoxyCompactList}\small\item\em Runs the \hyperlink{class_picto_1_1_task}{Task} with the input task\-Name starting with the initial transition in its top level \hyperlink{class_picto_1_1_state_machine}{State\-Machine}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_experiment_a1e696d6c81bbd72e006185817e01c948}{jump\-To\-State} (Q\-String\-List path, Q\-String state)
+\begin{DoxyCompactList}\small\item\em This function appears to no longer be used. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_experiment_a094a9739d52a077a80a67b77f0579ba8}{Q\-String\-List \hyperlink{class_picto_1_1_experiment_a094a9739d52a077a80a67b77f0579ba8}{get\-Task\-Names} ()}\label{class_picto_1_1_experiment_a094a9739d52a077a80a67b77f0579ba8}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of this \hyperlink{class_picto_1_1_experiment}{Experiment}'s \hyperlink{class_picto_1_1_task}{Task} names. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_task}{Task} $>$ \hyperlink{class_picto_1_1_experiment_af79bc0fccd19fd675bf9c9492d95501e}{get\-Task\-By\-Name} (Q\-String task\-Name)
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_task}{Task} object with the input task\-Name. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_experiment_a90ea1002f6952278bdce9cc74bf9bc31}{has\-Editable\-Descendants} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this object can or does have child objects that are editable. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_experiment_a6eda7dedb22f49b65f8dec6af9539850}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_experiment_af5187fdba5d861369f9e07c0ff511967}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Experiment} $>$ \hyperlink{class_picto_1_1_experiment_af5187fdba5d861369f9e07c0ff511967}{Create} ()}\label{class_picto_1_1_experiment_af5187fdba5d861369f9e07c0ff511967}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_experiment}{Experiment} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_experiment_a48d8fbffdb96bb5022e0daba4c6dad72}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_experiment_a10627698429845c8bd88e3d7b3fa104a}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_experiment_a7005de1c10b50a481b5ca4e6225d5a44}{virtual bool \hyperlink{class_picto_1_1_experiment_a7005de1c10b50a481b5ca4e6225d5a44}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_experiment_a7005de1c10b50a481b5ca4e6225d5a44}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{class_picto_1_1_experiment_a0c8a2615fdcb36dc6ff76c572b718750}{x\-Offset}
+\begin{DoxyCompactList}\small\item\em Sets/gets the offset that will be added to the input signal value before it is scaled (by x\-Gain) for the x\-Position. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_experiment_a26e13838e01181ba7504742f4034336f}{y\-Offset}
+\begin{DoxyCompactList}\small\item\em Sets/gets the offset that will be added to the input signal value before it is scaled (by y\-Gain) for the y\-Position. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_experiment_acd2fd30373eb8c9050be4de8541a1576}{x\-Gain}
+\begin{DoxyCompactList}\small\item\em Sets/gets the gain by which the input signal value plus x\-Offset will be scaled for the x\-Position. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_experiment_a9200e0644a2c450dad16aaa59864fcf9}{y\-Gain}
+\begin{DoxyCompactList}\small\item\em Sets/gets the gain by which the input signal value plus y\-Offset will be scaled for the y\-Position. \end{DoxyCompactList}\item 
+double \hyperlink{class_picto_1_1_experiment_a46cb8ba580d801935254ab8c7d684c0b}{xy\-Signal\-Shear}
+\begin{DoxyCompactList}\small\item\em Sets/gets the shear factor that will be used to shear x as a function of y. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_picto_1_1_experiment}{Experiment} object contains the complete definition of an \hyperlink{class_picto_1_1_experiment}{Experiment} for running in the \hyperlink{class_director}{Director}, \hyperlink{class_test_viewer}{Test\-Viewer}, \hyperlink{class_remote_viewer}{Remote\-Viewer} or \hyperlink{class_replay_viewer}{Replay\-Viewer}. 
+
+This is the top level object in the \hyperlink{class_picto_1_1_experiment}{Experiment} tree. Its parent is the \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} object which holds \hyperlink{class_picto_1_1_analysis}{Analysis} objects and \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} objects as well. Each \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} object must contain one and only one \hyperlink{class_picto_1_1_experiment}{Experiment}, and this \hyperlink{class_picto_1_1_experiment}{Experiment} holds all of the \hyperlink{class_picto_1_1_task}{Task} objects that may be run during a session. \hyperlink{class_picto_1_1_experiment}{Experiment} objects also hold a pointer to an \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} object which \char`\"{}runs\char`\"{} the experiment, interfacing it with the various hardware being used in a particular session and with the network infrastructure that sends \hyperlink{class_picto_1_1_experiment}{Experiment} data to the Picto\-Server.
+
+The \hyperlink{class_picto_1_1_experiment}{Experiment} is an \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} so that \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} and \hyperlink{class_picto_1_1_analysis}{Analysis} objects can attach to it and be informed when something about the \hyperlink{class_picto_1_1_experiment}{Experiment} changes. It also contains all of the Properties needed for position \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} calibration for two reasons\-:
+\begin{DoxyItemize}
+\item The calibration Properties need to be attached to an object that is always in scope and whose name never changes (it is always \char`\"{}\-Experiment\char`\"{}) for the purpose of script access.
+\item The calibration Properties need to maintain their values regardless of which \hyperlink{class_picto_1_1_task}{Task} is running and where control flow is in a \hyperlink{class_picto_1_1_task}{Task} \hyperlink{class_picto_1_1_state_machine}{State\-Machine}, so their owner can never lose scope.
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Unlike all other \hyperlink{class_picto_1_1_property}{Property} values in \hyperlink{namespace_picto}{Picto}, \hyperlink{class_picto_1_1_experiment}{Experiment} calibration \hyperlink{class_picto_1_1_property}{Property} init\-Values are linked to their run\-Values so that as soon as the operator changes a calibration value it changes the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} calibration and takes affect on the \hyperlink{class_picto_1_1_experiment}{Experiment}'s position signal. This is necessary since the \hyperlink{class_picto_1_1_experiment}{Experiment} never leaves scope. If these Properties funcitoned like all other Properties, changes to their init\-Values would never actually take affect. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel}, \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine}, \hyperlink{class_picto_1_1_task}{Task} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 59 of file Experiment.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_experiment_a48d8fbffdb96bb5022e0daba4c6dad72}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Experiment\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_a48d8fbffdb96bb5022e0daba4c6dad72}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 127 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a6eda7dedb22f49b65f8dec6af9539850}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Experiment\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_a6eda7dedb22f49b65f8dec6af9539850}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_ab3e676a5138ce7f49ab924c98fe3d71e}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 122 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_aaa7ef4c154cdae56f140caa7456e6342}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Experiment\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_aaa7ef4c154cdae56f140caa7456e6342}
+
+
+Overrides \hyperlink{class_picto_1_1_u_i_enabled_a98007f02abd55321577ef5db5460caba}{U\-I\-Enabled\-::get\-Name()} to return the name of this \hyperlink{class_picto_1_1_experiment}{Experiment} as \char`\"{}\-Experiment\char`\"{} for the purpose of scripting, regardless of the design file name or anything like that. 
+
+This way, any javascript code that wants to change position offsets and gains can do so by using code like
+\begin{DoxyCode}
+Experiment.xOffset = # 
+\end{DoxyCode}
+. 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a98007f02abd55321577ef5db5460caba}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 107 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_af79bc0fccd19fd675bf9c9492d95501e}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!get\-Task\-By\-Name@{get\-Task\-By\-Name}}
+\index{get\-Task\-By\-Name@{get\-Task\-By\-Name}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{get\-Task\-By\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Task} $>$ Picto\-::\-Experiment\-::get\-Task\-By\-Name (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{task\-Name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_experiment_af79bc0fccd19fd675bf9c9492d95501e}
+
+
+Returns the \hyperlink{class_picto_1_1_task}{Task} object with the input task\-Name. 
+
+If no \hyperlink{class_picto_1_1_task}{Task} with the input task\-Name is found, returns an empty shared pointer. 
+
+Definition at line 102 of file Experiment.\-cpp.
+
+\hypertarget{class_picto_1_1_experiment_a90ea1002f6952278bdce9cc74bf9bc31}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!has\-Editable\-Descendants@{has\-Editable\-Descendants}}
+\index{has\-Editable\-Descendants@{has\-Editable\-Descendants}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{has\-Editable\-Descendants}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Experiment\-::has\-Editable\-Descendants (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_a90ea1002f6952278bdce9cc74bf9bc31}
+
+
+Returns true if this object can or does have child objects that are editable. 
+
+This is useful, for example, so that the \hyperlink{class_designer}{Designer} knows if this object should be opened up when the user double clicks on it or if there's nothing inside that can be changed so it should not be opened. 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_aa9146adb2bb548fd5763be8d7a6f97d1}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 121 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a1e696d6c81bbd72e006185817e01c948}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!jump\-To\-State@{jump\-To\-State}}
+\index{jump\-To\-State@{jump\-To\-State}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{jump\-To\-State}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Experiment\-::jump\-To\-State (
+\begin{DoxyParamCaption}
+\item[{Q\-String\-List}]{path, }
+\item[{Q\-String}]{state}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_experiment_a1e696d6c81bbd72e006185817e01c948}
+
+
+This function appears to no longer be used. 
+
+The function was once used when attaching the \hyperlink{class_picto_1_1_experiment}{Experiment} to a remote \hyperlink{class_picto_1_1_experiment}{Experiment} that was already running to jump to the currently running state. Since then, we have created the \hyperlink{class_picto_1_1_state_updater}{State\-Updater}, \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} system that allows us to run \char`\"{}\-Slave\char`\"{} Experiments from within the Qt event loop based on information coming from the Master, and not only from within the blocking \hyperlink{class_picto_1_1_experiment_a6cfd77559307223a8121a6a016b489c2}{run\-Task()} function.
+
+This function should probably be removed. 
+
+Definition at line 208 of file Experiment.\-cpp.
+
+\hypertarget{class_picto_1_1_experiment_a10627698429845c8bd88e3d7b3fa104a}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Experiment\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_a10627698429845c8bd88e3d7b3fa104a}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 223 of file Experiment.\-cpp.
+
+\hypertarget{class_picto_1_1_experiment_a6cfd77559307223a8121a6a016b489c2}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!run\-Task@{run\-Task}}
+\index{run\-Task@{run\-Task}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{run\-Task}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Experiment\-::run\-Task (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{task\-Name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_experiment_a6cfd77559307223a8121a6a016b489c2}
+
+
+Runs the \hyperlink{class_picto_1_1_task}{Task} with the input task\-Name starting with the initial transition in its top level \hyperlink{class_picto_1_1_state_machine}{State\-Machine}. 
+
+This function blocks until the \hyperlink{class_picto_1_1_task}{Task} is done running, then returns true. if it returns false, the \hyperlink{class_picto_1_1_task}{Task} could not be found, or an \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} was not yet addded to this \hyperlink{class_picto_1_1_experiment}{Experiment} using \hyperlink{class_picto_1_1_experiment_a567673ce1a500a661712458086612005}{set\-Engine()}. 
+
+Definition at line 128 of file Experiment.\-cpp.
+
+\hypertarget{class_picto_1_1_experiment_a567673ce1a500a661712458086612005}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!set\-Engine@{set\-Engine}}
+\index{set\-Engine@{set\-Engine}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{set\-Engine}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Experiment\-::set\-Engine (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_experiment_a567673ce1a500a661712458086612005}
+
+
+Sets the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} that will be used in running this \hyperlink{class_picto_1_1_experiment}{Experiment} to the input object. 
+
+This must be called before attempting to run a task or any of its descendant objects. 
+
+Definition at line 59 of file Experiment.\-cpp.
+
+\hypertarget{class_picto_1_1_experiment_a91af2b7dfc7a85d50a84605c5efa35e0}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!set\-Name@{set\-Name}}
+\index{set\-Name@{set\-Name}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Experiment\-::set\-Name (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{new\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_experiment_a91af2b7dfc7a85d50a84605c5efa35e0}
+
+
+Overrides \hyperlink{class_picto_1_1_u_i_enabled_a0fd1659233b0cf46ede8cbaa2c8034df}{U\-I\-Enabled\-::set\-Name()} to do nothing since the \hyperlink{class_picto_1_1_experiment}{Experiment}'s name for scripting purposes is always \char`\"{}\-Experiment\char`\"{}. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_experiment_aaa7ef4c154cdae56f140caa7456e6342}{get\-Name()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a0fd1659233b0cf46ede8cbaa2c8034df}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 111 of file Experiment.\-h.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_picto_1_1_experiment_acd2fd30373eb8c9050be4de8541a1576}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!x\-Gain@{x\-Gain}}
+\index{x\-Gain@{x\-Gain}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{x\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Experiment\-::x\-Gain\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_experiment_acd2fd30373eb8c9050be4de8541a1576}
+
+
+Sets/gets the gain by which the input signal value plus x\-Offset will be scaled for the x\-Position. 
+
+The equation is
+\begin{DoxyCode}
+xPos = screenWidth/2 + \hyperlink{class_picto_1_1_experiment_acd2fd30373eb8c9050be4de8541a1576}{xGain}(\hyperlink{class_picto_1_1_experiment_a0c8a2615fdcb36dc6ff76c572b718750}{xOffset}+xSignalValue) 
+\end{DoxyCode}
+
+
+By using this equation, we are assured that when the x\-Pos is in the center of the screen, changing x\-Gain will not cause the current x\-Pos to change. This way, to calibrate the position we can use x\-Offset to move the x\-Pos to the center of the screen, then change x\-Gain until x\-Pos movements are accurate. 
+
+Definition at line 76 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a0c8a2615fdcb36dc6ff76c572b718750}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!x\-Offset@{x\-Offset}}
+\index{x\-Offset@{x\-Offset}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{x\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Experiment\-::x\-Offset\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_experiment_a0c8a2615fdcb36dc6ff76c572b718750}
+
+
+Sets/gets the offset that will be added to the input signal value before it is scaled (by x\-Gain) for the x\-Position. 
+
+The equation is
+\begin{DoxyCode}
+xPos = screenWidth/2 + \hyperlink{class_picto_1_1_experiment_acd2fd30373eb8c9050be4de8541a1576}{xGain}(\hyperlink{class_picto_1_1_experiment_a0c8a2615fdcb36dc6ff76c572b718750}{xOffset}+xSignalValue) 
+\end{DoxyCode}
+
+
+By using this equation, we are assured that when the x\-Pos is in the center of the screen, changing x\-Gain will not cause the current x\-Pos to change. This way, to calibrate the position we can use x\-Offset to move the x\-Pos to the center of the screen, then change x\-Gain until x\-Pos movements are accurate. 
+
+Definition at line 69 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a46cb8ba580d801935254ab8c7d684c0b}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!xy\-Signal\-Shear@{xy\-Signal\-Shear}}
+\index{xy\-Signal\-Shear@{xy\-Signal\-Shear}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{xy\-Signal\-Shear}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Experiment\-::xy\-Signal\-Shear\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_experiment_a46cb8ba580d801935254ab8c7d684c0b}
+
+
+Sets/gets the shear factor that will be used to shear x as a function of y. 
+
+The x value will be sheared as a function of y after applying regular linear scale factors such that the new value will be\-:
+\begin{DoxyCode}
+xPos = scaledXPos + shearFactor*scaledYPos 
+\end{DoxyCode}
+ This is useful for cases where there is some non linearity in the x,y position values. Often, when position is accurate in the y=0 line, but not toward the top/bottom display boundaries, this value can be used to clean up the signal enough to make diagonal jumps relatively accurate 
+
+Definition at line 90 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a9200e0644a2c450dad16aaa59864fcf9}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!y\-Gain@{y\-Gain}}
+\index{y\-Gain@{y\-Gain}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{y\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Experiment\-::y\-Gain\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_experiment_a9200e0644a2c450dad16aaa59864fcf9}
+
+
+Sets/gets the gain by which the input signal value plus y\-Offset will be scaled for the y\-Position. 
+
+The equation is
+\begin{DoxyCode}
+yPos = screenHeight/2 + \hyperlink{class_picto_1_1_experiment_a9200e0644a2c450dad16aaa59864fcf9}{yGain}(\hyperlink{class_picto_1_1_experiment_a26e13838e01181ba7504742f4034336f}{yOffset}+ySignalValue) 
+\end{DoxyCode}
+
+
+By using this equation, we are assured that when the y\-Pos is in the center of the screen, changing y\-Gain will not cause the current y\-Pos to change. This way, to calibrate the position we can use y\-Offset to move the y\-Pos to the center of the screen, then change y\-Gain until y\-Pos movements are accurate. 
+
+Definition at line 83 of file Experiment.\-h.
+
+\hypertarget{class_picto_1_1_experiment_a26e13838e01181ba7504742f4034336f}{\index{Picto\-::\-Experiment@{Picto\-::\-Experiment}!y\-Offset@{y\-Offset}}
+\index{y\-Offset@{y\-Offset}!Picto::Experiment@{Picto\-::\-Experiment}}
+\subsubsection[{y\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}double Picto\-::\-Experiment\-::y\-Offset\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_experiment_a26e13838e01181ba7504742f4034336f}
+
+
+Sets/gets the offset that will be added to the input signal value before it is scaled (by y\-Gain) for the y\-Position. 
+
+The equation is
+\begin{DoxyCode}
+yPos = screenHeight/2 + \hyperlink{class_picto_1_1_experiment_a9200e0644a2c450dad16aaa59864fcf9}{yGain}(\hyperlink{class_picto_1_1_experiment_a26e13838e01181ba7504742f4034336f}{yOffset}+ySignalValue) 
+\end{DoxyCode}
+
+
+By using this equation, we are assured that when the y\-Pos is in the center of the screen, changing y\-Gain will not cause the current y\-Pos to change. This way, to calibrate the position we can use y\-Offset to move the y\-Pos to the center of the screen, then change y\-Gain until y\-Pos movements are accurate. 
+
+Definition at line 69 of file Experiment.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/experiment/Experiment.\-h\item 
+source/common/experiment/Experiment.\-cpp\end{DoxyCompactItemize}

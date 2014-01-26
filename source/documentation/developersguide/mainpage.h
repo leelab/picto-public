@@ -5,9 +5,7 @@
 
 This is the Developer's Guide for the Picto suite of experimental control applications
 and associated PictoBox hardware.  If you are an investigator utilizing the software as
-part of your research then you probably want the User Manual.  If you are interested in
-learning how the system itself works and/or modifying the system, then this guide is
-the right place to start.
+part of your research then you probably want the PictoManual.docx located in Picto\manuals.  If you are modifying or attempting to build a Pictobox, you want the PictoboxDocumentation.docx from Picto\manuals.  If you are interested in learning how the system itself works and/or modifying the system, then this guide is the right place to start.
 
 \section devdocs_getting_started_introduction Introduction
 The Picto suite of experimental control applications is utilized by researchers to perform neurobiological experiments in the study of decision making.  The system consists of serveral components:

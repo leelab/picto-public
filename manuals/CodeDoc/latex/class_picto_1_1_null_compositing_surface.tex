@@ -1,0 +1,38 @@
+\hypertarget{class_picto_1_1_null_compositing_surface}{\section{Picto\-:\-:Null\-Compositing\-Surface Class Reference}
+\label{class_picto_1_1_null_compositing_surface}\index{Picto\-::\-Null\-Compositing\-Surface@{Picto\-::\-Null\-Compositing\-Surface}}
+}
+
+
+A compositing surface that doesn't do anything.  
+
+
+
+
+{\ttfamily \#include $<$Null\-Compositing\-Surface.\-h$>$}
+
+
+
+\subsection{Detailed Description}
+A compositing surface that doesn't do anything. 
+
+This would seem to be a total waste of time, but a null compositing surface can actually be really useful. With a traditional compositing surface, an experiment can only run as fast as we can render it. With a null surface the engine can run an experiment as fast as the C\-P\-U allows. This means that we can use a null compositing surface while analyzing an experiment.
+
+\begin{DoxyNote}{Note}
+Joey\-: When actually creating the \hyperlink{class_picto_1_1_analysis}{Analysis} system, we didn't actually use this, but it might be interesting to see if using this type of method could speed things up when using Run\-To\-End in the Playback\-Viewer. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Null\-Compositing\-Surface.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Null\-Compositing\-Surface.\-h\item 
+source/common/compositor/Null\-Compositing\-Surface.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,63 @@
+\hypertarget{class_element_notes_widget}{\section{Element\-Notes\-Widget Class Reference}
+\label{class_element_notes_widget}\index{Element\-Notes\-Widget@{Element\-Notes\-Widget}}
+}
+
+
+A widget used to enter notes that are saved with elements of the design. This is how comments are entered in \hyperlink{namespace_picto}{Picto} Designs.  
+
+
+
+
+{\ttfamily \#include $<$Element\-Notes\-Widget.\-h$>$}
+
+Inheritance diagram for Element\-Notes\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_element_notes_widget}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_element_notes_widget_a6d32294df9e2171fc0eca9cc3b0bc588}{Element\-Notes\-Widget} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State=Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$(), Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_element_notes_widget}{Element\-Notes\-Widget}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A widget used to enter notes that are saved with elements of the design. This is how comments are entered in \hyperlink{namespace_picto}{Picto} Designs. 
+
+Obviously it is extremely important to comment code. This is how we \char`\"{}comment code\char`\"{} in the \hyperlink{namespace_picto}{Picto} Design. Text entered into this widget is saved with the currently selected element and displayed in its tooltip. It is also searched when a search string is typed into the \hyperlink{namespace_picto}{Picto} search box. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Element\-Notes\-Widget.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_element_notes_widget_a6d32294df9e2171fc0eca9cc3b0bc588}{\index{Element\-Notes\-Widget@{Element\-Notes\-Widget}!Element\-Notes\-Widget@{Element\-Notes\-Widget}}
+\index{Element\-Notes\-Widget@{Element\-Notes\-Widget}!ElementNotesWidget@{Element\-Notes\-Widget}}
+\subsubsection[{Element\-Notes\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}Element\-Notes\-Widget\-::\-Element\-Notes\-Widget (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State = {\ttfamily QSharedPointer$<${\bf Editor\-State}$>$()}, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_element_notes_widget_a6d32294df9e2171fc0eca9cc3b0bc588}
+
+
+Constructs a new \hyperlink{class_element_notes_widget}{Element\-Notes\-Widget}. 
+
+The \hyperlink{class_editor_state}{Editor\-State} needs to be passed in so that this widget knows when the selected Asset changes and what the latest \hyperlink{struct_search_request}{Search\-Request} is. The notes entered into this widget are also saved with the Design, so the widget uses the \hyperlink{class_editor_state}{Editor\-State} to report \hyperlink{class_editor_state_a3246c06c7cf7caba24c8eb2597ec5780}{Editor\-State\-::undoable\-Action\-Performed()}. 
+
+Definition at line 14 of file Element\-Notes\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Element\-Notes\-Widget.\-h\item 
+source/common/\-Designer/Element\-Notes\-Widget.\-cpp\end{DoxyCompactItemize}

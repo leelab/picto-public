@@ -1,0 +1,354 @@
+\hypertarget{class_diagram_scene}{\section{Diagram\-Scene Class Reference}
+\label{class_diagram_scene}\index{Diagram\-Scene@{Diagram\-Scene}}
+}
+
+
+The Q\-Graphics\-Scene shown in the \hyperlink{class_designer}{Designer}'s central widget to display the children of the current element of the Design's State Machine.  
+
+
+
+
+{\ttfamily \#include $<$diagramscene.\-h$>$}
+
+Inheritance diagram for Diagram\-Scene\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_diagram_scene}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_diagram_scene_a2ff8ccaa20060c09d3b6b2cba22a7d79}{set\-Scene\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)
+\begin{DoxyCompactList}\small\item\em Sets the current scene asset (ie. The asset who's canvas we are looking at) to the input. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_a08973cbba3a89b1803ac1bc8da064dd6}{void \hyperlink{class_diagram_scene_a08973cbba3a89b1803ac1bc8da064dd6}{set\-Line\-Color} (const Q\-Color \&color)}\label{class_diagram_scene_a08973cbba3a89b1803ac1bc8da064dd6}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_a4e7a6208be88eea58687001abbc2fbff}{void \hyperlink{class_diagram_scene_a4e7a6208be88eea58687001abbc2fbff}{set\-Text\-Color} (const Q\-Color \&color)}\label{class_diagram_scene_a4e7a6208be88eea58687001abbc2fbff}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_a479732f4ab6aac056fdb52ac925e36e3}{void \hyperlink{class_diagram_scene_a479732f4ab6aac056fdb52ac925e36e3}{set\-Item\-Color} (const Q\-Color \&color)}\label{class_diagram_scene_a479732f4ab6aac056fdb52ac925e36e3}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_aed84773b8ec32d8cc9e44517773ff235}{void \hyperlink{class_diagram_scene_aed84773b8ec32d8cc9e44517773ff235}{set\-Font} (const Q\-Font \&font)}\label{class_diagram_scene_aed84773b8ec32d8cc9e44517773ff235}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_a886b38fb6a6709e95167f8aeef6f4da7}{void \hyperlink{class_diagram_scene_a886b38fb6a6709e95167f8aeef6f4da7}{set\-Background\-Pattern} (Q\-Pixmap pattern)}\label{class_diagram_scene_a886b38fb6a6709e95167f8aeef6f4da7}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_ae2081d68dfe8931bf47aa9e9ecf6807c}{void \hyperlink{class_diagram_scene_ae2081d68dfe8931bf47aa9e9ecf6807c}{editor\-Lost\-Focus} (\hyperlink{class_diagram_text_item}{Diagram\-Text\-Item} $\ast$item)}\label{class_diagram_scene_ae2081d68dfe8931bf47aa9e9ecf6807c}
+
+\begin{DoxyCompactList}\small\item\em This function is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_a4a463735358fcd9fca7648348f96a32a}{delete\-Selected\-Items} ()
+\begin{DoxyCompactList}\small\item\em Deletes all currently selected Diagram\-Items and Arrows along with their referenced Asset and Transition objects. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_ac38f698fcd6dca66acf8df321aa82d45}{copy\-Selected\-Items} ()
+\begin{DoxyCompactList}\small\item\em Uses a \hyperlink{class_copier}{Copier} object to copy the Asset objects referenced by all selected Diagram\-Items. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_a9f8ac14992a88d2403e2f5eb6e80d574}{analysis\-Import\-Selected\-Item} ()
+\begin{DoxyCompactList}\small\item\em Imports Analysis\-Elements that were just exported into the currently selected Asset. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_a54b33b144bdd967932d0c8ee8adad55b}{analysis\-Export\-Selected\-Item} ()
+\begin{DoxyCompactList}\small\item\em Exports all Analysis\-Elements from the selected items. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_ade8b52a60feaa793d0903362384554d5}{paste\-Items} ()
+\begin{DoxyCompactList}\small\item\em Pastes any Assets whose data was stored in the Clipboard (this should have been done by \hyperlink{class_diagram_scene_ac38f698fcd6dca66acf8df321aa82d45}{copy\-Selected\-Items()}) into the current Window Asset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_diagram_scene_af831d659c3c3b3427a1376a738d27df1}{void \hyperlink{class_diagram_scene_af831d659c3c3b3427a1376a738d27df1}{item\-Inserted} (\hyperlink{class_diagram_item}{Diagram\-Item} $\ast$item)}\label{class_diagram_scene_af831d659c3c3b3427a1376a738d27df1}
+
+\begin{DoxyCompactList}\small\item\em Emitted every time that a \hyperlink{class_diagram_item}{Diagram\-Item} is created and inserted into the \hyperlink{class_diagram_scene}{Diagram\-Scene}. item is the newly created \hyperlink{class_diagram_item}{Diagram\-Item}. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_abfeb12f9e0368690459884893109ce69}{void \hyperlink{class_diagram_scene_abfeb12f9e0368690459884893109ce69}{text\-Inserted} (Q\-Graphics\-Text\-Item $\ast$item)}\label{class_diagram_scene_abfeb12f9e0368690459884893109ce69}
+
+\begin{DoxyCompactList}\small\item\em This signal is never used and left over from the Qt\-Toolkit sample. It should probably be removed unless you want to keep it for reference. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_aa0f1ec983181d9513829d99c0666e415}{void \hyperlink{class_diagram_scene_aa0f1ec983181d9513829d99c0666e415}{item\-Selected} (Q\-Graphics\-Item $\ast$item)}\label{class_diagram_scene_aa0f1ec983181d9513829d99c0666e415}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_diagram_item}{Diagram\-Item} or \hyperlink{class_arrow}{Arrow} is selected. item is a Q\-Graphics\-Item pointer to the selected Item. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_ac13d67a0f03c7e5dab4723c20cc51f60}{void \hyperlink{class_diagram_scene_ac13d67a0f03c7e5dab4723c20cc51f60}{asset\-Selected} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_diagram_scene_ac13d67a0f03c7e5dab4723c20cc51f60}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever an Asset is selected. asset is a Q\-Graphics\-Item pointer to the selected Item. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_a0e767e85d5cfa3b7142ecb81e763dfc9}{void \hyperlink{class_diagram_scene_a0e767e85d5cfa3b7142ecb81e763dfc9}{scene\-Asset\-Changed} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_diagram_scene_a0e767e85d5cfa3b7142ecb81e763dfc9}
+
+\begin{DoxyCompactList}\small\item\em This signal is never used and left over from older code. It should probably be removed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_diagram_scene_a9b9d7a9929d09db1eb9ae8b88e3489eb}{{\bfseries Diagram\-Scene} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Menu $\ast$item\-Context\-Menu, Q\-Menu $\ast$scene\-Context\-Menu, Q\-Object $\ast$parent=0)}\label{class_diagram_scene_a9b9d7a9929d09db1eb9ae8b88e3489eb}
+
+\item 
+Q\-Graphics\-Line\-Item $\ast$ \hyperlink{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}{insert\-Transition} (\hyperlink{class_diagram_item}{Diagram\-Item} $\ast$source, \hyperlink{class_diagram_item}{Diagram\-Item} $\ast$dest, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ transition=Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$())
+\begin{DoxyCompactList}\small\item\em Creates an \hyperlink{class_arrow}{Arrow} to represent the input transition from the source \hyperlink{class_diagram_item}{Diagram\-Item} to the dest \hyperlink{class_diagram_item}{Diagram\-Item} and adds it to the scene. \end{DoxyCompactList}\item 
+\hypertarget{class_diagram_scene_adf0f92ac89ed29358b2a2f7b4b479877}{\hyperlink{class_diagram_item}{Diagram\-Item} $\ast$ \hyperlink{class_diagram_scene_adf0f92ac89ed29358b2a2f7b4b479877}{insert\-Diagram\-Item} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset, Q\-Point\-F pos)}\label{class_diagram_scene_adf0f92ac89ed29358b2a2f7b4b479877}
+
+\begin{DoxyCompactList}\small\item\em Creates a diagram item for the input Asset according to its type and adds it to the scene.  If the input Asset already has an attached U\-I\-Element including its position, that position will be used to position it, otherwise it will be positioned based on the input pos value. After the \hyperlink{class_diagram_item}{Diagram\-Item} is added \hyperlink{class_diagram_scene_af831d659c3c3b3427a1376a738d27df1}{item\-Inserted()} is emitted and the \hyperlink{class_diagram_item}{Diagram\-Item} is returned from the function. \end{DoxyCompactList}\item 
+Q\-Rect\-F \hyperlink{class_diagram_scene_ada3bc85f1770830b379ffc70d5aeb60d}{get\-Default\-Zoom\-Rect} ()
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Rect\-F that contains all items in this scene except the start bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_diagram_scene_a56249136dab559afa4f840a5c92acf73}{mouse\-Press\-Event} (Q\-Graphics\-Scene\-Mouse\-Event $\ast$mouse\-Event)
+\begin{DoxyCompactList}\small\item\em Extends the Q\-Graphics\-Scene\-::mouse\-Press\-Event() to allow the designer to start drawing a Transition \hyperlink{class_arrow}{Arrow}. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_a4c0f6af69a806c55da083a110a4eb820}{mouse\-Move\-Event} (Q\-Graphics\-Scene\-Mouse\-Event $\ast$mouse\-Event)
+\begin{DoxyCompactList}\small\item\em Extends the Q\-Graphics\-Scene\-::mouse\-Move\-Event() as part of the \hyperlink{class_diagram_scene}{Diagram\-Scene}'s context aware tools logic. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_a361512439a7cf2bcd0388c78eb1bb301}{mouse\-Release\-Event} (Q\-Graphics\-Scene\-Mouse\-Event $\ast$mouse\-Event)
+\begin{DoxyCompactList}\small\item\em Extends the Q\-Graphics\-Scene\-::mouse\-Release\-Event() for placing new Diagram\-Items and finishing the Transition \hyperlink{class_arrow}{Arrow} creation process. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_diagram_scene_a17a8c291a5140207c913c4bb9e2969f0}{key\-Press\-Event} (Q\-Key\-Event $\ast$event)
+\begin{DoxyCompactList}\small\item\em Extends the Q\-Graphics\-Scene\-::key\-Press\-Event() for moving the \hyperlink{class_editor_state}{Editor\-State} between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} and \hyperlink{class_editor_state}{Editor\-State}\-:Select mode. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_diagram_scene_ae797c572d7c9a89ed6d5207497ebd879}{key\-Release\-Event} (Q\-Key\-Event $\ast$event)
+\begin{DoxyCompactList}\small\item\em Extends the Q\-Graphics\-Scene\-::key\-Release\-Event() for moving the \hyperlink{class_editor_state}{Editor\-State} between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} and \hyperlink{class_editor_state}{Editor\-State}\-:Select mode. \end{DoxyCompactList}\item 
+void \hyperlink{class_diagram_scene_adfe114873fac1d13077a1c72deb58a1c}{context\-Menu\-Event} (Q\-Graphics\-Scene\-Context\-Menu\-Event $\ast$event)
+\begin{DoxyCompactList}\small\item\em Captures the position at which the designer right clicked for a Context\-Menu in order to use it as the paste position should the designer choose the paste action. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The Q\-Graphics\-Scene shown in the \hyperlink{class_designer}{Designer}'s central widget to display the children of the current element of the Design's State Machine. 
+
+We sometimes refer to this element as a canvas and it is the surface on which all of the Diagram\-Items and arrows are drawn to represent the current level of the State\-Machine. The Scene handles things like creating and inserting new Diagram\-Items for new Assets that are added to the current Window Asset. It handles copying, deleting, and selecting of elements, navigation and zooming, adding of new assets and transitions to the window element, etc. It is the foundation on which all of the graphical State\-Machine U\-I is based. \begin{DoxyNote}{Note}
+There are some functions here that we don't use. This is due to the fact that much of the code for this and other elements of the graphical State\-Machine U\-I were lifted from Qt Toolkit samples. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 34 of file diagramscene.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_diagram_scene_a54b33b144bdd967932d0c8ee8adad55b}{\index{Diagram\-Scene@{Diagram\-Scene}!analysis\-Export\-Selected\-Item@{analysis\-Export\-Selected\-Item}}
+\index{analysis\-Export\-Selected\-Item@{analysis\-Export\-Selected\-Item}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{analysis\-Export\-Selected\-Item}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::analysis\-Export\-Selected\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_a54b33b144bdd967932d0c8ee8adad55b}
+
+
+Exports all Analysis\-Elements from the selected items. 
+
+Exported text is stored in the computer's clipboard for importing. This function uses the \hyperlink{class_copier_a48f1c6d5c6f49438f7c7b870b3151490}{Copier\-::copy()} function. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_copier_a48f1c6d5c6f49438f7c7b870b3151490}{Copier\-::copy()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 465 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a9f8ac14992a88d2403e2f5eb6e80d574}{\index{Diagram\-Scene@{Diagram\-Scene}!analysis\-Import\-Selected\-Item@{analysis\-Import\-Selected\-Item}}
+\index{analysis\-Import\-Selected\-Item@{analysis\-Import\-Selected\-Item}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{analysis\-Import\-Selected\-Item}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::analysis\-Import\-Selected\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_a9f8ac14992a88d2403e2f5eb6e80d574}
+
+
+Imports Analysis\-Elements that were just exported into the currently selected Asset. 
+
+Shows a warning and returns if no Assets or more than one Asset are selected. Warnings will also be displayed by the \hyperlink{class_copier}{Copier} object if there are other problems with the import. For more information see \hyperlink{class_copier_a6a6988c2aac1c00888200f9f1c63e0c4}{Copier\-::paste()}. 
+
+Definition at line 443 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_adfe114873fac1d13077a1c72deb58a1c}{\index{Diagram\-Scene@{Diagram\-Scene}!context\-Menu\-Event@{context\-Menu\-Event}}
+\index{context\-Menu\-Event@{context\-Menu\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{context\-Menu\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::context\-Menu\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Scene\-Context\-Menu\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_diagram_scene_adfe114873fac1d13077a1c72deb58a1c}
+
+
+Captures the position at which the designer right clicked for a Context\-Menu in order to use it as the paste position should the designer choose the paste action. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_diagram_scene_ade8b52a60feaa793d0903362384554d5}{paste\-Items()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 685 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_ac38f698fcd6dca66acf8df321aa82d45}{\index{Diagram\-Scene@{Diagram\-Scene}!copy\-Selected\-Items@{copy\-Selected\-Items}}
+\index{copy\-Selected\-Items@{copy\-Selected\-Items}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{copy\-Selected\-Items}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::copy\-Selected\-Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_ac38f698fcd6dca66acf8df321aa82d45}
+
+
+Uses a \hyperlink{class_copier}{Copier} object to copy the Asset objects referenced by all selected Diagram\-Items. 
+
+\begin{DoxyNote}{Note}
+Transitions are not copied even if they are selected. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+get\-Selected\-Assets() 
+\end{DoxySeeAlso}
+
+
+Definition at line 433 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a4a463735358fcd9fca7648348f96a32a}{\index{Diagram\-Scene@{Diagram\-Scene}!delete\-Selected\-Items@{delete\-Selected\-Items}}
+\index{delete\-Selected\-Items@{delete\-Selected\-Items}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{delete\-Selected\-Items}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::delete\-Selected\-Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_a4a463735358fcd9fca7648348f96a32a}
+
+
+Deletes all currently selected Diagram\-Items and Arrows along with their referenced Asset and Transition objects. 
+
+If a deletion actually took place, this function calls \hyperlink{class_editor_state_a171f60df7de30e116e02eae6e8653143}{Editor\-State\-::trigger\-Experiment\-Reset()} to cause the design to be reloaded from X\-M\-L thereby removing deleted elements and reloading this scene with the correct diagrams. \begin{DoxySeeAlso}{See Also}
+Designer\-::reset\-Experiment() 
+\end{DoxySeeAlso}
+
+
+Definition at line 351 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_ada3bc85f1770830b379ffc70d5aeb60d}{\index{Diagram\-Scene@{Diagram\-Scene}!get\-Default\-Zoom\-Rect@{get\-Default\-Zoom\-Rect}}
+\index{get\-Default\-Zoom\-Rect@{get\-Default\-Zoom\-Rect}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{get\-Default\-Zoom\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Rect\-F Diagram\-Scene\-::get\-Default\-Zoom\-Rect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_diagram_scene_ada3bc85f1770830b379ffc70d5aeb60d}
+
+
+Returns a Q\-Rect\-F that contains all items in this scene except the start bar. 
+
+If we didn't have the start bar, we could just used items\-Bounding\-Rect(), but we do, so we use this 
+
+Definition at line 138 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}{\index{Diagram\-Scene@{Diagram\-Scene}!insert\-Transition@{insert\-Transition}}
+\index{insert\-Transition@{insert\-Transition}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{insert\-Transition}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Graphics\-Line\-Item $\ast$ Diagram\-Scene\-::insert\-Transition (
+\begin{DoxyParamCaption}
+\item[{{\bf Diagram\-Item} $\ast$}]{source, }
+\item[{{\bf Diagram\-Item} $\ast$}]{dest, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{transition = {\ttfamily QSharedPointer$<${\bf Asset}$>$()}}
+\end{DoxyParamCaption}
+)}}\label{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}
+
+
+Creates an \hyperlink{class_arrow}{Arrow} to represent the input transition from the source \hyperlink{class_diagram_item}{Diagram\-Item} to the dest \hyperlink{class_diagram_item}{Diagram\-Item} and adds it to the scene. 
+
+If the input transition is N\-U\-L\-L, a new transition object will be created and added as a child of the current Window Asset as well. 
+
+Definition at line 95 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a17a8c291a5140207c913c4bb9e2969f0}{\index{Diagram\-Scene@{Diagram\-Scene}!key\-Press\-Event@{key\-Press\-Event}}
+\index{key\-Press\-Event@{key\-Press\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{key\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::key\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Key\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_diagram_scene_a17a8c291a5140207c913c4bb9e2969f0}
+
+
+Extends the Q\-Graphics\-Scene\-::key\-Press\-Event() for moving the \hyperlink{class_editor_state}{Editor\-State} between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} and \hyperlink{class_editor_state}{Editor\-State}\-:Select mode. 
+
+We use the Shift key state to transition between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Editor\-State\-::\-Select} mode and \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} mode. In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer to drag the canvas position. In \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Editor\-State\-::\-Select} mode, clicking on a \hyperlink{class_diagram_item}{Diagram\-Item} causes it to be selected. 
+
+Definition at line 649 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_ae797c572d7c9a89ed6d5207497ebd879}{\index{Diagram\-Scene@{Diagram\-Scene}!key\-Release\-Event@{key\-Release\-Event}}
+\index{key\-Release\-Event@{key\-Release\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{key\-Release\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::key\-Release\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Key\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_diagram_scene_ae797c572d7c9a89ed6d5207497ebd879}
+
+
+Extends the Q\-Graphics\-Scene\-::key\-Release\-Event() for moving the \hyperlink{class_editor_state}{Editor\-State} between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} and \hyperlink{class_editor_state}{Editor\-State}\-:Select mode. 
+
+We use the Shift key state to transition between \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Editor\-State\-::\-Select} mode and \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd}{Editor\-State\-::\-Navigate} mode. In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer to drag the canvas position. In \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16}{Editor\-State\-::\-Select} mode, clicking on a \hyperlink{class_diagram_item}{Diagram\-Item} causes it to be selected. 
+
+Definition at line 668 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a4c0f6af69a806c55da083a110a4eb820}{\index{Diagram\-Scene@{Diagram\-Scene}!mouse\-Move\-Event@{mouse\-Move\-Event}}
+\index{mouse\-Move\-Event@{mouse\-Move\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{mouse\-Move\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::mouse\-Move\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Scene\-Mouse\-Event $\ast$}]{mouse\-Event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_diagram_scene_a4c0f6af69a806c55da083a110a4eb820}
+
+
+Extends the Q\-Graphics\-Scene\-::mouse\-Move\-Event() as part of the \hyperlink{class_diagram_scene}{Diagram\-Scene}'s context aware tools logic. 
+
+This function allows the designer to continue drawing a Transition \hyperlink{class_arrow}{Arrow} after they started doing this in the \hyperlink{class_diagram_scene_a56249136dab559afa4f840a5c92acf73}{mouse\-Press\-Event()}. The \hyperlink{class_diagram_scene}{Diagram\-Scene} knows if the designer is in the midst of drawing an \hyperlink{class_arrow}{Arrow} by looking for the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28a575ea0fbd4fa6f8baa98a8f9817acb79}{Editor\-State\-::\-Draw\-Line} mode. It also handles other context aware issues like changing the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} depending on the current mouse position. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_editor_state_adc415e8403fef1a8888c995201a54d5b}{Editor\-State\-::get\-Edit\-Mode()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 525 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a56249136dab559afa4f840a5c92acf73}{\index{Diagram\-Scene@{Diagram\-Scene}!mouse\-Press\-Event@{mouse\-Press\-Event}}
+\index{mouse\-Press\-Event@{mouse\-Press\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{mouse\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::mouse\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Scene\-Mouse\-Event $\ast$}]{mouse\-Event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_diagram_scene_a56249136dab559afa4f840a5c92acf73}
+
+
+Extends the Q\-Graphics\-Scene\-::mouse\-Press\-Event() to allow the designer to start drawing a Transition \hyperlink{class_arrow}{Arrow}. 
+
+The designer can draw a Transition \hyperlink{class_arrow}{Arrow} when the \hyperlink{class_editor_state_adc415e8403fef1a8888c995201a54d5b}{Editor\-State\-::get\-Edit\-Mode()} is the Editor\-State\-::\-Inser\-Line mode which occurs when the mouse hovers over a result bar hanging off of a State\-Machine\-Element. 
+
+Definition at line 501 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a361512439a7cf2bcd0388c78eb1bb301}{\index{Diagram\-Scene@{Diagram\-Scene}!mouse\-Release\-Event@{mouse\-Release\-Event}}
+\index{mouse\-Release\-Event@{mouse\-Release\-Event}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{mouse\-Release\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::mouse\-Release\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Scene\-Mouse\-Event $\ast$}]{mouse\-Event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_diagram_scene_a361512439a7cf2bcd0388c78eb1bb301}
+
+
+Extends the Q\-Graphics\-Scene\-::mouse\-Release\-Event() for placing new Diagram\-Items and finishing the Transition \hyperlink{class_arrow}{Arrow} creation process. 
+
+The designer's release of the mouse is the event trigger for consructing Diagram\-Items that were selected in the \hyperlink{class_toolbox}{Toolbox} as well as adding Transitions for Arrows that were started during a \hyperlink{class_diagram_scene_a56249136dab559afa4f840a5c92acf73}{mouse\-Press\-Event()}. This logic is handled here. 
+
+Definition at line 560 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_ade8b52a60feaa793d0903362384554d5}{\index{Diagram\-Scene@{Diagram\-Scene}!paste\-Items@{paste\-Items}}
+\index{paste\-Items@{paste\-Items}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{paste\-Items}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::paste\-Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_ade8b52a60feaa793d0903362384554d5}
+
+
+Pastes any Assets whose data was stored in the Clipboard (this should have been done by \hyperlink{class_diagram_scene_ac38f698fcd6dca66acf8df321aa82d45}{copy\-Selected\-Items()}) into the current Window Asset. 
+
+When \hyperlink{class_diagram_scene_ade8b52a60feaa793d0903362384554d5}{paste\-Items()} was initiated from a \hyperlink{class_diagram_scene_adfe114873fac1d13077a1c72deb58a1c}{context\-Menu\-Event()}, the copied Asset's Diagram\-Items are pasted at the position where the user created the context menu. Otherwise, they are pasted to the right side of the currently visible Diagram\-Items. 
+
+Definition at line 474 of file diagramscene.\-cpp.
+
+\hypertarget{class_diagram_scene_a2ff8ccaa20060c09d3b6b2cba22a7d79}{\index{Diagram\-Scene@{Diagram\-Scene}!set\-Scene\-Asset@{set\-Scene\-Asset}}
+\index{set\-Scene\-Asset@{set\-Scene\-Asset}!DiagramScene@{Diagram\-Scene}}
+\subsubsection[{set\-Scene\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Diagram\-Scene\-::set\-Scene\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_diagram_scene_a2ff8ccaa20060c09d3b6b2cba22a7d79}
+
+
+Sets the current scene asset (ie. The asset who's canvas we are looking at) to the input. 
+
+This function is called when the \hyperlink{class_editor_state}{Editor\-State} object's window\-Asset\-Changed() signal is called. What we refer to here as the Scene\-Asset, is referred to everywhere else as the Window\-Asset. The function goes through all of the input asset's children, creates \hyperlink{class_diagram_item}{Diagram\-Item} objects for them using \hyperlink{class_diagram_scene_adf0f92ac89ed29358b2a2f7b4b479877}{insert\-Diagram\-Item()}, adds the necessary transition \hyperlink{class_arrow}{Arrow} objects using \hyperlink{class_diagram_scene_aa8b98aea4192297641cb2347106fa31d}{insert\-Transition()} adds the necessary \hyperlink{class_analysis_item}{Analysis\-Item} objects using \hyperlink{class_diagram_scene_adf0f92ac89ed29358b2a2f7b4b479877}{insert\-Diagram\-Item()}, then tells the \hyperlink{class_editor_state}{Editor\-State} that the asset was loaded into the current window using \hyperlink{class_editor_state_acdada8168fd8de85fa44c38ffe621b31}{Editor\-State\-::set\-Window\-Items\-Loaded()}. 
+
+Definition at line 193 of file diagramscene.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/diagramscene.\-h\item 
+source/common/\-Designer/diagramscene.\-cpp\end{DoxyCompactItemize}

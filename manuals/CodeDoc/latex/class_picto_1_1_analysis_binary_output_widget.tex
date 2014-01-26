@@ -1,0 +1,95 @@
+\hypertarget{class_picto_1_1_analysis_binary_output_widget}{\section{Picto\-:\-:Analysis\-Binary\-Output\-Widget Class Reference}
+\label{class_picto_1_1_analysis_binary_output_widget}\index{Picto\-::\-Analysis\-Binary\-Output\-Widget@{Picto\-::\-Analysis\-Binary\-Output\-Widget}}
+}
+
+
+An \hyperlink{class_picto_1_1_analysis_output_widget}{Analysis\-Output\-Widget} for displaying binary files.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Binary\-Output\-Widget.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Binary\-Output\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_analysis_binary_output_widget}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_binary_output_widget_ae9294e0880e9c6c03418b37d127adb45}{{\bfseries Analysis\-Binary\-Output\-Widget} (Q\-Widget $\ast$parent=0)}\label{class_picto_1_1_analysis_binary_output_widget_ae9294e0880e9c6c03418b37d127adb45}
+
+\item 
+bool \hyperlink{class_picto_1_1_analysis_binary_output_widget_aa51004cdf746bf6f6427ba87eeb77c39}{set\-File} (Q\-String filename)
+\begin{DoxyCompactList}\small\item\em Sets the file who's contents this widget will display (once the widget actually starts to display binary contents) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_binary_output_widget_a3671594534285878ae930448706d56d6}{virtual bool {\bfseries is\-Saveable} ()}\label{class_picto_1_1_analysis_binary_output_widget_a3671594534285878ae930448706d56d6}
+
+\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_binary_output_widget_ae2c682093f0a615be65e9aadd99ecf24}{save\-Output\-To} (Q\-Dir directory)
+\begin{DoxyCompactList}\small\item\em Copies the underlying temporary data file to the input directory, returns true if successful, false otherwise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_picto_1_1_analysis_output_widget}{Analysis\-Output\-Widget} for displaying binary files. 
+
+At some point we may fill this in with something more meaningful. Currently, this simply shows a text box that says \char`\"{}\-Preview is not supported for binary files.\char`\"{} \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_analysis_file_output_widget}{Analysis\-File\-Output\-Widget} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Analysis\-Binary\-Output\-Widget.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_binary_output_widget_ae2c682093f0a615be65e9aadd99ecf24}{\index{Picto\-::\-Analysis\-Binary\-Output\-Widget@{Picto\-::\-Analysis\-Binary\-Output\-Widget}!save\-Output\-To@{save\-Output\-To}}
+\index{save\-Output\-To@{save\-Output\-To}!Picto::AnalysisBinaryOutputWidget@{Picto\-::\-Analysis\-Binary\-Output\-Widget}}
+\subsubsection[{save\-Output\-To}]{\setlength{\rightskip}{0pt plus 5cm}bool Analysis\-Binary\-Output\-Widget\-::save\-Output\-To (
+\begin{DoxyParamCaption}
+\item[{Q\-Dir}]{directory}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_binary_output_widget_ae2c682093f0a615be65e9aadd99ecf24}
+
+
+Copies the underlying temporary data file to the input directory, returns true if successful, false otherwise. 
+
+If the copy operation fails, a message box pops up to that affect. 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_output_widget}{Picto\-::\-Analysis\-Output\-Widget}.
+
+
+
+Definition at line 45 of file Analysis\-Binary\-Output\-Widget.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_binary_output_widget_aa51004cdf746bf6f6427ba87eeb77c39}{\index{Picto\-::\-Analysis\-Binary\-Output\-Widget@{Picto\-::\-Analysis\-Binary\-Output\-Widget}!set\-File@{set\-File}}
+\index{set\-File@{set\-File}!Picto::AnalysisBinaryOutputWidget@{Picto\-::\-Analysis\-Binary\-Output\-Widget}}
+\subsubsection[{set\-File}]{\setlength{\rightskip}{0pt plus 5cm}bool Analysis\-Binary\-Output\-Widget\-::set\-File (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{filename}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_binary_output_widget_aa51004cdf746bf6f6427ba87eeb77c39}
+
+
+Sets the file who's contents this widget will display (once the widget actually starts to display binary contents) 
+
+\begin{DoxyNote}{Note}
+The input filename should be the full name including filepath. 
+\end{DoxyNote}
+
+
+Definition at line 28 of file Analysis\-Binary\-Output\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Binary\-Output\-Widget.\-h\item 
+source/common/parameter/Analysis\-Binary\-Output\-Widget.\-cpp\end{DoxyCompactItemize}

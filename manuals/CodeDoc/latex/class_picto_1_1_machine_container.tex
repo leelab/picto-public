@@ -1,0 +1,141 @@
+\hypertarget{class_picto_1_1_machine_container}{\section{Picto\-:\-:Machine\-Container Class Reference}
+\label{class_picto_1_1_machine_container}\index{Picto\-::\-Machine\-Container@{Picto\-::\-Machine\-Container}}
+}
+
+
+A base class for everything that can contain transitions and other elements.  
+
+
+
+
+{\ttfamily \#include $<$Machine\-Container.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Machine\-Container\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.484210cm]{class_picto_1_1_machine_container}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_machine_container_ad038f9042442d026b1a48f58c0ebfedc}{Machine\-Container} (Q\-String transition\-Tag, Q\-String element\-Tag)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_machine_container}{Machine\-Container} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_machine_container_a6269dc1f507e14af1d27c91a6c04cfc9}{bool \hyperlink{class_picto_1_1_machine_container_a6269dc1f507e14af1d27c91a6c04cfc9}{add\-Transition} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition}{Transition} $>$ transition)}\label{class_picto_1_1_machine_container_a6269dc1f507e14af1d27c91a6c04cfc9}
+
+\begin{DoxyCompactList}\small\item\em Adds a transition to this \hyperlink{class_picto_1_1_machine_container}{Machine\-Container}'s list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_machine_container_a9bd04896f5eb5e55cb144d2d1b780834}{void \hyperlink{class_picto_1_1_machine_container_a9bd04896f5eb5e55cb144d2d1b780834}{add\-Element} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_result_container}{Result\-Container} $>$ element)}\label{class_picto_1_1_machine_container_a9bd04896f5eb5e55cb144d2d1b780834}
+
+\begin{DoxyCompactList}\small\item\em Adds the input \hyperlink{class_picto_1_1_result_container}{Result\-Container} element to this \hyperlink{class_picto_1_1_machine_container}{Machine\-Container}'s elements\-\_\- lookup table, with the element's name as the table key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_machine_container_a53ea9684c79a21ff959dfaf3a3bc73ae}{virtual bool \hyperlink{class_picto_1_1_machine_container_a53ea9684c79a21ff959dfaf3a3bc73ae}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_machine_container_a53ea9684c79a21ff959dfaf3a3bc73ae}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_output_element_container_a19905a70272fa330d195ed51bfca1a16}{Output\-Element\-Container\-::validate\-Object()} to add checking for valid \hyperlink{class_picto_1_1_transition}{Transition} definitions, checking that all child element's results are connected to a transition, and checking to make sure no two elements have the same name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_machine_container_ac682abf8e80e278e573ee94bc9040fbf}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries element\-Factory\-\_\-}}\label{class_picto_1_1_machine_container_ac682abf8e80e278e573ee94bc9040fbf}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_af556da8e06839e3c6e769dd2cb2b446e}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries transition\-Factory\-\_\-}}\label{class_picto_1_1_machine_container_af556da8e06839e3c6e769dd2cb2b446e}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_ab969ca5f54fdbe7dbc79058f9b506f17}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries control\-Target\-Factory\-\_\-}}\label{class_picto_1_1_machine_container_ab969ca5f54fdbe7dbc79058f9b506f17}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_a32dd054332e81c34234a040c3354503c}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries variable\-Factory\-\_\-}}\label{class_picto_1_1_machine_container_a32dd054332e81c34234a040c3354503c}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_a5a019bf4ec4a03be905c57ecfbb63dc3}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset_factory}{Asset\-Factory} $>$ {\bfseries parameter\-Factory\-\_\-}}\label{class_picto_1_1_machine_container_a5a019bf4ec4a03be905c57ecfbb63dc3}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_afe9ce7f50195f0bd65fe776f71b6ad03}{Q\-Map$<$ Q\-String, Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_result_container}{Result\-Container} $>$ $>$ {\bfseries elements\-\_\-}}\label{class_picto_1_1_machine_container_afe9ce7f50195f0bd65fe776f71b6ad03}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_a396a1b9e009a6482ef73971c36ca3582}{Q\-Multi\-Map$<$ Q\-String, \\*
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition}{Transition} $>$ $>$ {\bfseries transitions\-\_\-}}\label{class_picto_1_1_machine_container_a396a1b9e009a6482ef73971c36ca3582}
+
+\item 
+\hypertarget{class_picto_1_1_machine_container_aad1523c8eb419361bcb3a1fab4c48096}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition}{Transition} $>$ {\bfseries init\-Transition\-\_\-}}\label{class_picto_1_1_machine_container_aad1523c8eb419361bcb3a1fab4c48096}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A base class for everything that can contain transitions and other elements. 
+
+This class should be refactored. It appears the way it does mainly for historical reasons, but essentially what it does is manage transitions and objects in the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} that are not State\-Machine\-Elements or Output\-Elements. There should probably be one class that handles Transitions, and one or more that handles Variables, Parameters, etc.
+
+As it stands however, this is a fairly important class that handles a lot of the code necessary for elements that contain \char`\"{}machines\char`\"{} that includes some form of state transfer. Currently these include \hyperlink{class_picto_1_1_state_machine}{State\-Machine} and \hyperlink{class_picto_1_1_state}{State}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Machine\-Container.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_machine_container_ad038f9042442d026b1a48f58c0ebfedc}{\index{Picto\-::\-Machine\-Container@{Picto\-::\-Machine\-Container}!Machine\-Container@{Machine\-Container}}
+\index{Machine\-Container@{Machine\-Container}!Picto::MachineContainer@{Picto\-::\-Machine\-Container}}
+\subsubsection[{Machine\-Container}]{\setlength{\rightskip}{0pt plus 5cm}Machine\-Container\-::\-Machine\-Container (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{transition\-Tag, }
+\item[{Q\-String}]{element\-Tag}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_machine_container_ad038f9042442d026b1a48f58c0ebfedc}
+
+
+Constructs a new \hyperlink{class_picto_1_1_machine_container}{Machine\-Container} object. 
+
+transition\-Tag is the name that will be used by this object for serialization of Transitions. element\-Tag is the name that will be used by this object for serialization of other elements of the \hyperlink{class_picto_1_1_state_machine}{State\-Machine}. \begin{DoxyNote}{Note}
+This system of passing in tag names for xml serializations is mostly for historical reasons, and it would be a good idea to clean this type of thing up at some point. In general, the Factory design pattern can be improved pretty significantly in Data\-Stores overall. 
+\end{DoxyNote}
+
+
+Definition at line 34 of file Machine\-Container.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}{\index{Picto\-::\-Machine\-Container@{Picto\-::\-Machine\-Container}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::MachineContainer@{Picto\-::\-Machine\-Container}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Machine\-Container\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_output_element_container_a0aa8ba5d35859292b2f3365f99c242c3}{Picto\-::\-Output\-Element\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_state_a8e789d2395df4d047a278f3c09716468}{Picto\-::\-State}, and \hyperlink{class_picto_1_1_state_machine_a3b28ab6e5310ea16c2dbb19d6e071f80}{Picto\-::\-State\-Machine}.
+
+
+
+Definition at line 156 of file Machine\-Container.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Machine\-Container.\-h\item 
+source/common/statemachine/Machine\-Container.\-cpp\end{DoxyCompactItemize}

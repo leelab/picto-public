@@ -1,0 +1,156 @@
+\hypertarget{class_picto_1_1_win_sound}{\section{Picto\-:\-:Win\-Sound Class Reference}
+\label{class_picto_1_1_win_sound}\index{Picto\-::\-Win\-Sound@{Picto\-::\-Win\-Sound}}
+}
+
+
+\hyperlink{class_picto_1_1_win_sound}{Win\-Sound} is a windows api based object for playing sounds.  
+
+
+
+
+{\ttfamily \#include $<$Win\-Sound.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Win\-Sound\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_win_sound}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_win_sound_abc181ccb88233d5914d4ef8fa03614f1}{Win\-Sound} (Q\-String path)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} with the .wav file at the input path. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_win_sound_a2911ad5d6ac3fe13553bd822dc5828a1}{void \hyperlink{class_picto_1_1_win_sound_a2911ad5d6ac3fe13553bd822dc5828a1}{play} ()}\label{class_picto_1_1_win_sound_a2911ad5d6ac3fe13553bd822dc5828a1}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to start playing over the computer's sound card. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_win_sound_a1f273752e3cf6bbea7c2f1cb9387eed7}{void \hyperlink{class_picto_1_1_win_sound_a1f273752e3cf6bbea7c2f1cb9387eed7}{stop} ()}\label{class_picto_1_1_win_sound_a1f273752e3cf6bbea7c2f1cb9387eed7}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to stop playing over the computer's sound card. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_win_sound_aa8d01ac782a50c2109ce4f0b5125cd23}{set\-Volume} (int percent)
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound's volume to be set to the input percentage (0-\/100). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_win_sound_a22beef5e96cee1973aa4bbbea44e0565}{bool \hyperlink{class_picto_1_1_win_sound_a22beef5e96cee1973aa4bbbea44e0565}{playing} ()}\label{class_picto_1_1_win_sound_a22beef5e96cee1973aa4bbbea44e0565}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound is playing. \end{DoxyCompactList}\item 
+int \hyperlink{class_picto_1_1_win_sound_ae6791975508598ea0a237a2baf1b4836}{volume} ()
+\begin{DoxyCompactList}\small\item\em Returns the level of the underlying sound's volume (0-\/100 percent) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_win_sound_af20b657cf88d9df112473d22f925b868}{bool \hyperlink{class_picto_1_1_win_sound_af20b657cf88d9df112473d22f925b868}{is\-Ready} ()}\label{class_picto_1_1_win_sound_af20b657cf88d9df112473d22f925b868}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound was succesfully loaded and is ready to play. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}{error\-String} ()
+\begin{DoxyCompactList}\small\item\em Returns a string describing an error that kept the underlying sound from being loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_win_sound_af0d832621f432aa8b0259320ff8ec844}{static Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$ \hyperlink{class_picto_1_1_win_sound_af0d832621f432aa8b0259320ff8ec844}{create\-Win\-Sound} (Q\-String path)}\label{class_picto_1_1_win_sound_af0d832621f432aa8b0259320ff8ec844}
+
+\begin{DoxyCompactList}\small\item\em Creates a \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} to play the audio file at the input path.  This function is meant to be used with \hyperlink{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{Preloaded\-Sound\-::set\-Sound\-Constructor()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_picto_1_1_win_sound}{Win\-Sound} is a windows api based object for playing sounds. 
+
+Qt's multiplatform sound functionality requires a running event loop in order to work. Due to older processor speeds, the \hyperlink{namespace_picto}{Picto} director was originally designed to run without an event loop in order to avoid skipped frames and low latency effects. This is probably no longer necessary, but until we put in the effort to rewrite the \hyperlink{class_director}{Director} with an event driven design, there is no event loop available to drive sound playback. For this reason, we are currently using the windows A\-P\-I to play sounds in the \hyperlink{class_director}{Director}. This is not a huge issue because we already are using Direct\-X in the director for for precise timing of display presentation, so it already doesn't support multiplatform operation. In the workstation, though, there are no Windows dependencies and we can still use the Q\-T audio framework (used by \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound}) since the workstation operates with an event loop. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{Preloaded\-Sound\-::set\-Sound\-Constructor()} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 27 of file Win\-Sound.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_win_sound_abc181ccb88233d5914d4ef8fa03614f1}{\index{Picto\-::\-Win\-Sound@{Picto\-::\-Win\-Sound}!Win\-Sound@{Win\-Sound}}
+\index{Win\-Sound@{Win\-Sound}!Picto::WinSound@{Picto\-::\-Win\-Sound}}
+\subsubsection[{Win\-Sound}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Win\-Sound\-::\-Win\-Sound (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{path}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_win_sound_abc181ccb88233d5914d4ef8fa03614f1}
+
+
+Constructs a new \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} with the .wav file at the input path. 
+
+This constructor attempts to load the .wav file at the input path. If it fails to load the file, \hyperlink{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}{error\-String()} will return an error message. Otherwise, \hyperlink{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}{error\-String()} returns an empty string. 
+
+Definition at line 11 of file Win\-Sound.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}{\index{Picto\-::\-Win\-Sound@{Picto\-::\-Win\-Sound}!error\-String@{error\-String}}
+\index{error\-String@{error\-String}!Picto::WinSound@{Picto\-::\-Win\-Sound}}
+\subsubsection[{error\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Win\-Sound\-::error\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}
+
+
+Returns a string describing an error that kept the underlying sound from being loaded. 
+
+Returned value is only valid if \hyperlink{class_picto_1_1_win_sound_af20b657cf88d9df112473d22f925b868}{is\-Ready()} returned true. 
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_a4681726539ed0e4f493860d487ef3f59}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 106 of file Win\-Sound.\-cpp.
+
+\hypertarget{class_picto_1_1_win_sound_aa8d01ac782a50c2109ce4f0b5125cd23}{\index{Picto\-::\-Win\-Sound@{Picto\-::\-Win\-Sound}!set\-Volume@{set\-Volume}}
+\index{set\-Volume@{set\-Volume}!Picto::WinSound@{Picto\-::\-Win\-Sound}}
+\subsubsection[{set\-Volume}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Win\-Sound\-::set\-Volume (
+\begin{DoxyParamCaption}
+\item[{int}]{percent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_win_sound_aa8d01ac782a50c2109ce4f0b5125cd23}
+
+
+Causes the underlying sound's volume to be set to the input percentage (0-\/100). 
+
+\begin{DoxyAttention}{Attention}
+Currently, the \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} does not support volume changes. We can probably figure out a way to do this, but since \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} doesn't support it there wasn't much point. This is why we have not yet added a \hyperlink{class_picto_1_1_win_sound_aa8d01ac782a50c2109ce4f0b5125cd23}{set\-Volume()} script function to the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} class. 
+\end{DoxyAttention}
+
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_abd5f14d441d6063b1ea2bd141e4023bc}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 75 of file Win\-Sound.\-cpp.
+
+\hypertarget{class_picto_1_1_win_sound_ae6791975508598ea0a237a2baf1b4836}{\index{Picto\-::\-Win\-Sound@{Picto\-::\-Win\-Sound}!volume@{volume}}
+\index{volume@{volume}!Picto::WinSound@{Picto\-::\-Win\-Sound}}
+\subsubsection[{volume}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Win\-Sound\-::volume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_win_sound_ae6791975508598ea0a237a2baf1b4836}
+
+
+Returns the level of the underlying sound's volume (0-\/100 percent) 
+
+\begin{DoxyAttention}{Attention}
+Currently, the \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} does not support volume changes. We can probably figure out a way to do this, but since \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} doesn't support it there wasn't much point. This is why we have not yet added a \hyperlink{class_picto_1_1_win_sound_aa8d01ac782a50c2109ce4f0b5125cd23}{set\-Volume()} script function to the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} class. This function will always return 100\%. 
+\end{DoxyAttention}
+
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_a6383e1a60e25b51815d1876b1b29a899}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 96 of file Win\-Sound.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/iodevices/Win\-Sound.\-h\item 
+source/director/iodevices/Win\-Sound.\-cpp\end{DoxyCompactItemize}

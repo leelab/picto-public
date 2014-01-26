@@ -1,0 +1,788 @@
+\hypertarget{class_picto_1_1_asset}{\section{Picto\-:\-:Asset Class Reference}
+\label{class_picto_1_1_asset}\index{Picto\-::\-Asset@{Picto\-::\-Asset}}
+}
+
+
+The base class for all elements of a \hyperlink{namespace_picto}{Picto} experiment/analysis design.  
+
+
+
+
+{\ttfamily \#include $<$Asset.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Asset\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.105263cm]{class_picto_1_1_asset}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{void \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited} ()}\label{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever something in this asset changes. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}{deleted} ()
+\begin{DoxyCompactList}\small\item\em Emitted when this \hyperlink{class_picto_1_1_asset}{Asset} is marked to be deleted. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_asset_af9dc9a5935284306615aa5e19a5be49e}{void \hyperlink{class_picto_1_1_asset_af9dc9a5935284306615aa5e19a5be49e}{asset\-Id\-Edited} ()}\label{class_picto_1_1_asset_af9dc9a5935284306615aa5e19a5be49e}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever this \hyperlink{class_picto_1_1_asset}{Asset}'s \hyperlink{class_picto_1_1_asset}{Asset} I\-D changes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_picto_1_1_asset_a7cff8f6cde1f8fe85d4322a79469a7ba}{to\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)
+\begin{DoxyCompactList}\small\item\em Converts this \hyperlink{class_picto_1_1_asset}{Asset} into an X\-M\-L based Q\-String using the input Q\-Xml\-Stream\-Writer. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Converts the X\-M\-L code passed in inside a Q\-X\-M\-L\-Stream\-Reader into an \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_ae39fd27817fd498d9e197b77bb942fe3}{initialize\-To\-Default} (Q\-String tag\-Name=\char`\"{}\char`\"{}, Q\-String type=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Initializes this asset into its default state. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_addca39719cf9832ebadbc0dd7083f53e}{initialize\-From\-Xml} (Q\-String xml)
+\begin{DoxyCompactList}\small\item\em Initializes the asset from the input X\-M\-L without marking it as \char`\"{}not new\char`\"{} as would generally occurs as soon was deserialized from X\-M\-L. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_a77d1ae8cf767529f2d4fc63d30b98b2d}{enable\-Run\-Mode} (bool enable)
+\begin{DoxyCompactList}\small\item\em Lets this asset know if the \hyperlink{class_picto_1_1_asset}{Asset} is being used in a Design mode or an experimental execution mode. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)=0
+\begin{DoxyCompactList}\small\item\em Saves this object to descriptive X\-M\-L text using the input Q\-Xml\-String\-Writer. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)=0
+\begin{DoxyCompactList}\small\item\em Loads this object from a Q\-Xml\-String\-Reader containing descriptive X\-M\-L text with the read pointer located at this \hyperlink{class_picto_1_1_asset}{Asset}'s start tag. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_asset_a348f19144d26a035faebd628734038dd}{validate\-Tree} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this asset and all of its children have valid syntax. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_a18d0b5155b57ca24254afde1dfb765cd}{set\-Deleted} ()
+\begin{DoxyCompactList}\small\item\em Emits the \hyperlink{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}{deleted()} signal when called to inform interested parties that this asset needs to be removed from the design. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_a3463b8bd3c8b62837c0fcf4ceee533dc}{set\-Edited} ()
+\begin{DoxyCompactList}\small\item\em Emits the \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited()} signal when called to inform interested parties that something about this asset has changed. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_a0937b75a65094505ea69b00be1aaab7b}{was\-Edited} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this object was edited since it was deserialized. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_acfc9be521ca981e8b839b1dae57e5d55}{is\-New} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this asset was created from scratch and was not configured according X\-M\-L code from some previously edited asset. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_af4c73b724fc6b6b6313228d2bdec092e}{is\-Deleted} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this asset was set as deleted. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_a2b073c1153a417abdc3a467446015ed1}{set\-Parent\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ parent)
+\begin{DoxyCompactList}\small\item\em Assets are meant to be part of a tree structure. This function sets this \hyperlink{class_picto_1_1_asset}{Asset} object's parent to the input. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_asset_a1757f208680523df1aedeec039fdd62e}{virtual Q\-String \hyperlink{class_picto_1_1_asset_a1757f208680523df1aedeec039fdd62e}{get\-Name} ()}\label{class_picto_1_1_asset_a1757f208680523df1aedeec039fdd62e}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this asset. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_asset_a8d53229beb63862c36858e633dced712}{identifier} ()
+\begin{DoxyCompactList}\small\item\em Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_asset_a40eaa30ef5b2888d2a72a89bcf334c5f}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_asset_addb1a1f161ef3640c206c4d568a41716}{get\-Parent\-Asset} ()
+\begin{DoxyCompactList}\small\item\em Returns a pointer to this \hyperlink{class_picto_1_1_asset}{Asset} object's parent \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_aa0e64136d6a51d342a55cd56a8bacd24}{set\-Self\-Ptr} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_asset_ac6727fc4ef394103880e570c4b40d091}{self\-Ptr})
+\begin{DoxyCompactList}\small\item\em Sets a Q\-Shared\-Pointer to this \hyperlink{class_picto_1_1_asset}{Asset} to this \hyperlink{class_picto_1_1_asset}{Asset} so that it will be able to give others Q\-Shared\-Pointers to itself, and not just regular pointers. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_asset_a58f9e828e755d32d2a32918b0adeb76b}{void \hyperlink{class_picto_1_1_asset_a58f9e828e755d32d2a32918b0adeb76b}{reinitialize} ()}\label{class_picto_1_1_asset_a58f9e828e755d32d2a32918b0adeb76b}
+
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R O\-P\-E\-R\-A\-T\-I\-O\-N\-A\-L. This function is no longer used and should be removed. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_asset_a7dbcf2a6375ba18aa3a489f3fea2d71a}{get\-Info} ()
+\begin{DoxyCompactList}\small\item\em Returns information about this object for the user. In practice, the \hyperlink{class_asset_describer}{Asset\-Describer} has taken ove this functionality to a great extent. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_asset_a809157b144c05d01b3a2bd839e9298a0}{virtual Q\-String \hyperlink{class_picto_1_1_asset_a809157b144c05d01b3a2bd839e9298a0}{get\-Description} ()}\label{class_picto_1_1_asset_a809157b144c05d01b3a2bd839e9298a0}
+
+\begin{DoxyCompactList}\small\item\em U\-N\-U\-S\-E\-D. This function appears to be completely unused in \hyperlink{namespace_picto}{Picto}. We should probably delete it. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_asset_a310a0e5ffab1adff37039f27b998684a}{get\-Path} ()
+\begin{DoxyCompactList}\small\item\em Returns the \char`\"{}\-::\char`\"{} separated path to this \hyperlink{class_picto_1_1_asset}{Asset} in the \hyperlink{class_picto_1_1_asset}{Asset} tree. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{needs\-Unique\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this object's name is required to be unique within its parent. \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}{get\-Asset\-Id} ()
+\begin{DoxyCompactList}\small\item\em Return's this \hyperlink{class_picto_1_1_asset}{Asset}'s unique \hyperlink{class_picto_1_1_asset}{Asset} I\-D. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}{set\-Asset\-Id} (int)
+\begin{DoxyCompactList}\small\item\em Sets this asset's asset I\-D. For more detail, see \hyperlink{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}{get\-Asset\-Id()}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}{set\-Design\-Config} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_config}{Design\-Config} $>$ design\-Config)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_design_config}{Design\-Config} object managing the current Design to this \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_config}{Design\-Config} $>$ \hyperlink{class_picto_1_1_asset_a44b0ef3025e5bb5f0712fc176c769e5d}{get\-Design\-Config} ()
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Shared\-Pointer to the \hyperlink{class_picto_1_1_design_config}{Design\-Config} managing this asset. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_aacaaedf9d76c3af2c7168d5c14fed914}{upgrade\-Version} (Q\-String deserialized\-Version)
+\begin{DoxyCompactList}\small\item\em Upgrades the version of this asset from the input version to the current version. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_asset_ac6727fc4ef394103880e570c4b40d091}{self\-Ptr} ()
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Shared\-Pointer to this \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_aabba6c76cc003a76e65be7b96390fdd9}{pre\-Serialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called before an asset is serialized in to\-X\-M\-L(). \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_a3ea72c7a57437c7371d791277b39aa41}{pre\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} before deserialization and is used to prepare the \hyperlink{class_picto_1_1_asset}{Asset} for deserialization. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_asset_a2b2cc1ab81322b5280d66b020205f6aa}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_ab39eeff6773463836ac5f0397f4374f7}{add\-Error} (Q\-String error\-Message)
+\begin{DoxyCompactList}\small\item\em A convenience function for adding an error to the list returned by \hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{Serializable\-::get\-Errors()}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_a7419ed75ae864febd703b9ebd9346d16}{set\-Unedited} ()
+\begin{DoxyCompactList}\small\item\em In some cases, an asset may not want to be considered edited, even if it already has been, unless it gets changed after a certain point. This allows for that. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_asset_ac36a8ea172fc566e31a4c2946f78eb59}{require\-Unique\-Name} (bool require=true)
+\begin{DoxyCompactList}\small\item\em Set this to true if this object's name is required to be unique within its parent or false otherwise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_asset_a70fb85473984a1c8dc2f9a9079364f73}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_config}{Design\-Config} $>$ \hyperlink{class_picto_1_1_asset_a70fb85473984a1c8dc2f9a9079364f73}{design\-Config\-\_\-}}\label{class_picto_1_1_asset_a70fb85473984a1c8dc2f9a9079364f73}
+
+\begin{DoxyCompactList}\small\item\em The design config managing this \hyperlink{class_picto_1_1_asset}{Asset} and the Design containing it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The base class for all elements of a \hyperlink{namespace_picto}{Picto} experiment/analysis design. 
+
+Every component in a \hyperlink{namespace_picto}{Picto} design is an asset. The entire design needs to be serializable, which is why \hyperlink{class_picto_1_1_asset}{Asset} extends \hyperlink{class_picto_1_1_serializable}{Serializable}. We also need to know when an asset is changed or deleted. We need to be able to check the validity of its data. We need to know where it lies in the Design tree, how to load it from a deprecated X\-M\-L design, and we need to be able to access it quickly from a Hash table if need be, meaning that it has to have a unique I\-D. The \hyperlink{class_picto_1_1_asset}{Asset} class adds all of this functionality and more. It is of key importance in the experimental design system and to \hyperlink{namespace_picto}{Picto} as a whole. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Asset.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_asset_ab39eeff6773463836ac5f0397f4374f7}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!add\-Error@{add\-Error}}
+\index{add\-Error@{add\-Error}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{add\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::add\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{error\-Message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_picto_1_1_asset_ab39eeff6773463836ac5f0397f4374f7}
+
+
+A convenience function for adding an error to the list returned by \hyperlink{class_picto_1_1_serializable_a9b14c771646820d10e082d351cd4cf50}{Serializable\-::get\-Errors()}. 
+
+This function takes the input error message, adds the path to this asset, formats a new 'pretty' error message accordingly, and calls \hyperlink{class_picto_1_1_serializable_a96d216d572c87de0e7b2ba4ae1c6ea17}{Serializable\-::add\-Error\-To\-List()} with the formatted message. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_serializable_a96d216d572c87de0e7b2ba4ae1c6ea17}{Serializable\-::add\-Error\-To\-List()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 237 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!deleted@{deleted}}
+\index{deleted@{deleted}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{deleted}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::deleted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}
+
+
+Emitted when this \hyperlink{class_picto_1_1_asset}{Asset} is marked to be deleted. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_a18d0b5155b57ca24254afde1dfb765cd}{set\-Deleted()}, \hyperlink{class_picto_1_1_asset_af4c73b724fc6b6b6313228d2bdec092e}{is\-Deleted()} 
+\end{DoxySeeAlso}
+\hypertarget{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!deserialize\-From\-Xml@{deserialize\-From\-Xml}}
+\index{deserialize\-From\-Xml@{deserialize\-From\-Xml}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{deserialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Asset\-::deserialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}
+
+
+Loads this object from a Q\-Xml\-String\-Reader containing descriptive X\-M\-L text with the read pointer located at this \hyperlink{class_picto_1_1_asset}{Asset}'s start tag. 
+
+Returns true if serialization was successful, false otherwise 
+
+Implemented in \hyperlink{class_picto_1_1_property_a8db200ce04af32ce77a77ea5dd8fba7c}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_obsolete_asset_a89766dd18a16e9368a4e737df8798310}{Picto\-::\-Obsolete\-Asset}, and \hyperlink{class_picto_1_1_obsolete_name_asset_a4b599e076cac6ff2004ac637c54f9a17}{Picto\-::\-Obsolete\-Name\-Asset}.
+
+\hypertarget{class_picto_1_1_asset_a77d1ae8cf767529f2d4fc63d30b98b2d}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!enable\-Run\-Mode@{enable\-Run\-Mode}}
+\index{enable\-Run\-Mode@{enable\-Run\-Mode}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{enable\-Run\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::enable\-Run\-Mode (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a77d1ae8cf767529f2d4fc63d30b98b2d}
+
+
+Lets this asset know if the \hyperlink{class_picto_1_1_asset}{Asset} is being used in a Design mode or an experimental execution mode. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root_a602921939c89f471772431dae8c3281a}{Design\-Root\-::enable\-Run\-Mode()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_property_aa102270174c3620cc62f38dc9b529c89}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_state_a8aba2f6f77d66d14ca3ae5973af7584c}{Picto\-::\-State}, and \hyperlink{class_picto_1_1_pause_point_a98a4284c765565291b94931f68cfb8f5}{Picto\-::\-Pause\-Point}.
+
+
+
+Definition at line 114 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a40eaa30ef5b2888d2a72a89bcf334c5f}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Asset\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a40eaa30ef5b2888d2a72a89bcf334c5f}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a41bdd3b670d2b5092ec5d68a44dc8ed6}{Picto\-::\-Target\-Controller}, \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}, \hyperlink{class_picto_1_1_experiment_a6eda7dedb22f49b65f8dec6af9539850}{Picto\-::\-Experiment}, \hyperlink{class_picto_1_1_property_a81a1fcfb066be63fe887bafd530b959b}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_token_tray_graphic_a48b88c6744dd1dde8e92a588b984df1a}{Picto\-::\-Token\-Tray\-Graphic}, \hyperlink{class_picto_1_1_operator_click_parameter_a1ef65b48a76eca3b323a78d52bdac515}{Picto\-::\-Operator\-Click\-Parameter}, \hyperlink{class_picto_1_1_data_store_a964af19f287fffb7efb36a5f818704ab}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_pseudorandom_int_parameter_a774a526380ae8a78827c2ecd8206d15c}{Picto\-::\-Pseudorandom\-Int\-Parameter}, \hyperlink{class_picto_1_1_token_factory_graphic_ace0b9f5d8d2e1f3097672d70cff1598d}{Picto\-::\-Token\-Factory\-Graphic}, \hyperlink{class_picto_1_1_control_element_ad9a828f49943e34a15a69138c64ac4da}{Picto\-::\-Control\-Element}, \hyperlink{class_picto_1_1_state_machine_element_a71bb8021124ed8ce64e498e767b69e1d}{Picto\-::\-State\-Machine\-Element}, \hyperlink{class_picto_1_1_analysis_trigger_aabe96e5baffc4e521022b1c7f6ec4b53}{Picto\-::\-Analysis\-Trigger}, \hyperlink{class_picto_1_1_timer_parameter_a76af2957d25d0197a32d4d207f51b3c2}{Picto\-::\-Timer\-Parameter}, \hyperlink{class_picto_1_1_grid_graphic_a21a64033e378941162800c45d7cb5f24}{Picto\-::\-Grid\-Graphic}, \hyperlink{class_picto_1_1_color_parameter_a6b76ec438bbaa6b46af6aa1ca9c9bd9c}{Picto\-::\-Color\-Parameter}, \hyperlink{class_picto_1_1_text_graphic_adf12e486b4a6a42adbc3fa85d7d27f8f}{Picto\-::\-Text\-Graphic}, \hyperlink{class_picto_1_1_choice_controller_ac0ba6f4a836f383ddda56b484bd96c22}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_scriptable_container_ab3e676a5138ce7f49ab924c98fe3d71e}{Picto\-::\-Scriptable\-Container}, \hyperlink{class_picto_1_1_ellipse_graphic_aaef193b78f2354a43ced06317d17c2bc}{Picto\-::\-Ellipse\-Graphic}, \hyperlink{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}{Picto\-::\-Output\-Signal}, \hyperlink{class_picto_1_1_transition_a186f341ac2591346ca6a343ecc61c920}{Picto\-::\-Transition}, \hyperlink{class_picto_1_1_image_graphic_a3e6f1a40c361657e0fbbd30d25e6a9ae}{Picto\-::\-Image\-Graphic}, \hyperlink{class_picto_1_1_choice_parameter_aa2ad97d4bfaabfebab1b641e661efe18}{Picto\-::\-Choice\-Parameter}, \hyperlink{class_picto_1_1_numeric_parameter_aef9dcc6a73d7ce206b3e94c8ba906a4c}{Picto\-::\-Numeric\-Parameter}, \hyperlink{class_picto_1_1_state_a852150ca9027d53252cd0cefb04f3c1d}{Picto\-::\-State}, \hyperlink{class_picto_1_1_box_graphic_a3e15fbb0ef4250c4f35902b0268f247b}{Picto\-::\-Box\-Graphic}, \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_aed954b5c044b267c4da5a7869f55c9c5}{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}, \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}, \hyperlink{class_picto_1_1_state_machine_aaa9075f394c70230044f2051c6d04c38}{Picto\-::\-State\-Machine}, \hyperlink{class_picto_1_1_random_double_parameter_a9886159308d177c9c0b2d660944a3524}{Picto\-::\-Random\-Double\-Parameter}, \hyperlink{class_picto_1_1_random_int_parameter_a2b1e77e3555630fb0186741893327681}{Picto\-::\-Random\-Int\-Parameter}, \hyperlink{class_picto_1_1_arrow_graphic_a60ca65b25990b13a2174cc9e38c7e530}{Picto\-::\-Arrow\-Graphic}, \hyperlink{class_picto_1_1_diamond_graphic_aeb5cca8bc8625611fdc1623596a43f43}{Picto\-::\-Diamond\-Graphic}, \hyperlink{class_picto_1_1_shape_shifter_graphic_aeecbc2e28b1d1f24694d9e34d404aaf3}{Picto\-::\-Shape\-Shifter\-Graphic}, \hyperlink{class_picto_1_1_task_a113fbbe20cce93b87fabe1221c0e7c70}{Picto\-::\-Task}, \hyperlink{class_picto_1_1_analysis_container_a0e12a7b8c9e87c5c89bed790fa334fc2}{Picto\-::\-Analysis\-Container}, \hyperlink{class_picto_1_1_analysis_period_ae5e82cde88b37db31663861e9f0d9ad3}{Picto\-::\-Analysis\-Period}, \hyperlink{class_picto_1_1_string_parameter_a4127d8059f5243fc0ec02605fd40a804}{Picto\-::\-String\-Parameter}, \hyperlink{class_picto_1_1_audio_element_acdc7b75fe3f0f438b23f7d770fb4ec9f}{Picto\-::\-Audio\-Element}, \hyperlink{class_picto_1_1_reward_a6a96e2e9cf2ad16ed5553adb9a72ca3e}{Picto\-::\-Reward}, \hyperlink{class_picto_1_1_stopwatch_controller_a34394665524759705fefcc001ea68dba}{Picto\-::\-Stopwatch\-Controller}, \hyperlink{class_picto_1_1_boolean_parameter_ab7a23ee3a18abbf86efff0931f5de198}{Picto\-::\-Boolean\-Parameter}, \hyperlink{class_picto_1_1_pause_point_ae574eb10c179e20038dad24dbc2bbc75}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_range_parameter_a916973a7766df58640dcaab22756603b}{Picto\-::\-Range\-Parameter}, \hyperlink{class_picto_1_1_script_element_a3b5169fa49d2ae3ada252453abb30014}{Picto\-::\-Script\-Element}, \hyperlink{class_picto_1_1_script_function_a6dd0bc6a6aaeeff4b7ccc9238d4b6f1e}{Picto\-::\-Script\-Function}, \hyperlink{class_picto_1_1_u_i_enabled_a19f94929e12069750b29b87c581024b6}{Picto\-::\-U\-I\-Enabled}, \hyperlink{class_picto_1_1_analysis_timer_af529f909624a1dd1dfac1faae8f81c0d}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_analysis_data_source_dep_ae9bc7a224836bd87f396209d91fb897a}{Picto\-::\-Analysis\-Data\-Source\-Dep}, \hyperlink{class_picto_1_1_analysis_definition_a5c70a91ca75af47092a71709c8189c39}{Picto\-::\-Analysis\-Definition}, \hyperlink{class_picto_1_1_analysis_ab0e951f09f33b8172387381d18b189d7}{Picto\-::\-Analysis}, \hyperlink{class_picto_1_1_signal_value_parameter_a46e61720bc44c1ca8de8df10347a1cf0}{Picto\-::\-Signal\-Value\-Parameter}, \hyperlink{class_picto_1_1_picture_graphic_a101e4efb181d2f7166ef83bea31b40be}{Picto\-::\-Picture\-Graphic}, \hyperlink{class_picto_1_1_analysis_run_notes_data_af80ae0d630bf10082a799c4e6b168ad6}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_audio_file_parameter_ad13096076295bbd9e81d62401643eb63}{Picto\-::\-Audio\-File\-Parameter}, \hyperlink{class_picto_1_1_u_i_element_a907203861ddc4daa9676fdf5db9e56ca}{Picto\-::\-U\-I\-Element}, \hyperlink{class_picto_1_1_circle_graphic_afb3d4cb1c8d9709d9612793762178be6}{Picto\-::\-Circle\-Graphic}, \hyperlink{class_picto_1_1_obsolete_asset_af9d35c6a769cca86ed56a8bab7f8a735}{Picto\-::\-Obsolete\-Asset}, \hyperlink{class_picto_1_1_analysis_file_output_aaf859ca4eccd3f735c8a4690e7357b6c}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_double_parameter_aa501e011a63d3b44f45009ba9f8219f6}{Picto\-::\-Double\-Parameter}, \hyperlink{class_picto_1_1_output_element_container_aeb790e110381366623cda30e484eba89}{Picto\-::\-Output\-Element\-Container}, \hyperlink{class_picto_1_1_switch_element_a8541f08fab2a26c8ee4edce5a9abe3f1}{Picto\-::\-Switch\-Element}, \hyperlink{class_picto_1_1_digital_output_a5d8aff3b7a814288c138eafc6aace133}{Picto\-::\-Digital\-Output}, \hyperlink{class_picto_1_1_script_controller_a2620db63182fd3554e7dc61d8d0e6408}{Picto\-::\-Script\-Controller}, \hyperlink{class_picto_1_1_analysis_spike_data_a421db4bf624bc6b71e36280f6b4fea55}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_cursor_graphic_aa9c53a08fbe9884c0fd4429a03c7deb9}{Picto\-::\-Cursor\-Graphic}, \hyperlink{class_picto_1_1_operator_info_graphic_abb462c96c24feac2fa4d4c5223bc327c}{Picto\-::\-Operator\-Info\-Graphic}, \hyperlink{class_picto_1_1_line_graphic_aa6ce32df42927c970d971cf4be297755}{Picto\-::\-Line\-Graphic}, \hyperlink{class_picto_1_1_output_element_add3a6e0fe3d4ee7b4b466171eb437cbc}{Picto\-::\-Output\-Element}, \hyperlink{class_picto_1_1_variable_list_a49263e98e91504462b3cf717666da998}{Picto\-::\-Variable\-List}, \hyperlink{class_picto_1_1_analysis_frame_data_aa06024709a9b4e2c20039e7257b14d3a}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_associate_root_a2e5c6a730c95a1e2b877eec83f7b8759}{Picto\-::\-Associate\-Root}, \hyperlink{class_picto_1_1_obsolete_name_asset_a9a825d957e6a0ec13fe3fcfa89f4a235}{Picto\-::\-Obsolete\-Name\-Asset}, \hyperlink{class_picto_1_1_variable_map_a56de651ffd82d88346309a4bfee6bd85}{Picto\-::\-Variable\-Map}, \hyperlink{class_picto_1_1_analysis_output_dep_a145e2372726de801147b3ee2b9517621}{Picto\-::\-Analysis\-Output\-Dep}, \hyperlink{class_picto_1_1_analysis_signal_data_a0edb8e94cc696a17e719ca7d134ff192}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_file_parameter_a4f53c44dc540d01757ef457525a50557}{Picto\-::\-File\-Parameter}, \hyperlink{class_picto_1_1_image_file_parameter_aad67d9dd6c261f85f4b7be6132c19736}{Picto\-::\-Image\-File\-Parameter}, \hyperlink{class_picto_1_1_result_a908f8f41cb0c4fc7ffa92ae1c0a77781}{Picto\-::\-Result}, \hyperlink{class_picto_1_1_analysis_lfp_data_a2f38f77a96e7f52be6920cbdf7e52906}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_number_variable_ad11a9471bdb19e88dd5d9da2dc46f6a0}{Picto\-::\-Analysis\-Number\-Variable}, \hyperlink{class_picto_1_1_analysis_string_variable_a01b54b63739dd911cbb093aad4a53282}{Picto\-::\-Analysis\-String\-Variable}, \hyperlink{class_picto_1_1_binary_data_output_a5cbce303776bfc19b4734db52663c211}{Picto\-::\-Binary\-Data\-Output}, \hyperlink{class_picto_1_1_number_variable_a5184a95861f786c2068e85b9eb190724}{Picto\-::\-Number\-Variable}, \hyperlink{class_picto_1_1_string_variable_ae14fdea0cf5e80dd976985208dc64fcc}{Picto\-::\-String\-Variable}, \hyperlink{class_picto_1_1_u_i_data_aa197be2adc238a211ada4fdde83d8480}{Picto\-::\-U\-I\-Data}, \hyperlink{class_picto_1_1_variable_abf83dc0e4cfbfe89c43720eca1c49664}{Picto\-::\-Variable}, \hyperlink{class_picto_1_1_file_output_a44fff0a846a6dd650ed13a56aba8d8f3}{Picto\-::\-File\-Output}, \hyperlink{class_picto_1_1_analysis_variable_list_a66330dfe781d4cfba0cc30c11d7824f2}{Picto\-::\-Analysis\-Variable\-List}, \hyperlink{class_picto_1_1_analysis_variable_map_a885cd581e660bf703e1130bbb1df50d7}{Picto\-::\-Analysis\-Variable\-Map}, \hyperlink{class_picto_1_1_u_i_info_a44ee9f9669175ced959e5689a4d3f9ba}{Picto\-::\-U\-I\-Info}, \hyperlink{class_picto_1_1_analysis_function_ac0a9fa7cbc9471ead4d11f069745fb05}{Picto\-::\-Analysis\-Function}, \hyperlink{class_picto_1_1_analysis_reward_data_a3aa8477664d8f79f83570d43d18f5ad5}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_control_target_result_a4c44eb3cf2f923bf9e0cbf4164a50874}{Picto\-::\-Control\-Target\-Result}, \hyperlink{class_picto_1_1_rect_target_a13dd96ae3f77ed63405f184d1b8c45ff}{Picto\-::\-Rect\-Target}, \hyperlink{class_picto_1_1_picto_data_a88086b3dc71b030ba09c55953c605a4a}{Picto\-::\-Picto\-Data}, \hyperlink{class_picto_1_1_control_target_a4a46d2b0d80b07a439be0fcaa84dc18d}{Picto\-::\-Control\-Target}, \hyperlink{class_picto_1_1_control_link_aabf0bf910f45302c121c2457ae50e980}{Picto\-::\-Control\-Link}, \hyperlink{class_picto_1_1_numeric_variable_a1fa66100606d136122d41a065fdf14d8}{Picto\-::\-Numeric\-Variable}, \hyperlink{class_picto_1_1_logic_result_ac50cf46d11bb005735d12f5e230fbf64}{Picto\-::\-Logic\-Result}, \hyperlink{class_picto_1_1_analysis_tool_a97a573c5f8459e976736a4b2c3c145d2}{Picto\-::\-Analysis\-Tool}, and \hyperlink{class_picto_1_1_circle_target_ae7518ab3a7f181990598c0830aa48e31}{Picto\-::\-Circle\-Target}.
+
+
+
+Definition at line 93 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!from\-Xml@{from\-Xml}}
+\index{from\-Xml@{from\-Xml}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{from\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::from\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}
+
+
+Converts the X\-M\-L code passed in inside a Q\-X\-M\-L\-Stream\-Reader into an \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Before deserialization starts, the \hyperlink{class_picto_1_1_asset_a3ea72c7a57437c7371d791277b39aa41}{pre\-Deserialize()} function is called. After serialization, edited\-\_\-, is\-New\-\_\- and deleted\-\_\- flags are all set to false, and if deserialization was successful, \hyperlink{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}{post\-Deserialize()} is called and true returned. If deserialization was not successful, false is returned and post\-Deserialize is not called. 
+
+Implements \hyperlink{class_picto_1_1_serializable_aa328e85f57f163795bf4be7388719031}{Picto\-::\-Serializable}.
+
+
+
+Definition at line 40 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!get\-Asset\-Id@{get\-Asset\-Id}}
+\index{get\-Asset\-Id@{get\-Asset\-Id}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{get\-Asset\-Id}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Picto\-::\-Asset\-::get\-Asset\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}
+
+
+Return's this \hyperlink{class_picto_1_1_asset}{Asset}'s unique \hyperlink{class_picto_1_1_asset}{Asset} I\-D. 
+
+Every \hyperlink{class_picto_1_1_asset}{Asset} has a unique \hyperlink{class_picto_1_1_asset}{Asset} I\-D. This is used wherever \hyperlink{class_picto_1_1_asset}{Asset} objects are entered into Hash tables for quick access. It is also very useful in the Session Databases as a means to store information about assets and how their data changes without constantly referencing the \hyperlink{class_picto_1_1_asset}{Asset} object's path. \hyperlink{class_picto_1_1_asset}{Asset} I\-D's should be serialized out and deserialized in to assure for example that Data stored in a Session Database referencing a particular asset id, can be correctly connected with a loaded \hyperlink{class_picto_1_1_asset}{Asset} in the Workstation Playback viewer. Descendant classes that implement serialization should also implement setting of this asset\-I\-D. Original asset I\-D generation when an \hyperlink{class_picto_1_1_asset}{Asset} is first generated; however, is handled by the \hyperlink{class_picto_1_1_design_config}{Design\-Config} class since it tracks all Assets in a Design and is unique over the whole design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}{set\-Asset\-Id()}, \hyperlink{class_picto_1_1_design_config_aa974bbd3d6288f50264f6a3c932743da}{Design\-Config\-::disallow\-Id\-Duplication()}, \hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()}, \hyperlink{class_picto_1_1_design_config_a3583860f876fe8bbfff59942f2b1ad83}{Design\-Config\-::add\-Managed\-Asset()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_property_a9f1c515f9b65afe3da270b00b240ea41}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_data_store_a11656f0aa7242846c3119037aab91674}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_obsolete_asset_ae7d9e033b20f1e1bd8e6ae297c73a58c}{Picto\-::\-Obsolete\-Asset}, and \hyperlink{class_picto_1_1_obsolete_name_asset_a7804bff1f7092b0185434fe60cee0c01}{Picto\-::\-Obsolete\-Name\-Asset}.
+
+
+
+Definition at line 133 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a44b0ef3025e5bb5f0712fc176c769e5d}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!get\-Design\-Config@{get\-Design\-Config}}
+\index{get\-Design\-Config@{get\-Design\-Config}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{get\-Design\-Config}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<${\bf Design\-Config}$>$ Picto\-::\-Asset\-::get\-Design\-Config (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_a44b0ef3025e5bb5f0712fc176c769e5d}
+
+
+Returns a Q\-Shared\-Pointer to the \hyperlink{class_picto_1_1_design_config}{Design\-Config} managing this asset. 
+
+Every Design has a single \hyperlink{class_picto_1_1_design_config}{Design\-Config} object that manages global issues affecting the entire design. It can access every asset in the design and is accessable from every asset in the design. It is set to an asset using the set\-Design\-Config function. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}{set\-Design\-Config}, \hyperlink{class_picto_1_1_design_config}{Design\-Config} 
+\end{DoxySeeAlso}
+
+
+Definition at line 148 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a7dbcf2a6375ba18aa3a489f3fea2d71a}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!get\-Info@{get\-Info}}
+\index{get\-Info@{get\-Info}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{get\-Info}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Asset\-::get\-Info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a7dbcf2a6375ba18aa3a489f3fea2d71a}
+
+
+Returns information about this object for the user. In practice, the \hyperlink{class_asset_describer}{Asset\-Describer} has taken ove this functionality to a great extent. 
+
+Originally, we planned to use this to store information describing an \hyperlink{class_picto_1_1_asset}{Asset} inside its class description. We are still using it to automatically generate script information in the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}'s \char`\"{}\-Scripting Info\char`\"{} tab which shows all available in scope elements along with their scripts, but this tab has not been well maintained and should either be updated or removed since scripting documentation is clearly available in the \char`\"{}\-About Element\char`\"{} box which gathers much clearer and fully documented information from the \hyperlink{class_asset_describer}{Asset\-Describer}. We should consider removing that tab and this function. 
+
+Reimplemented in \hyperlink{class_picto_1_1_scriptable_container_a4cb05271d66a66d63560f95b1f9d0c61}{Picto\-::\-Scriptable\-Container}, and \hyperlink{class_picto_1_1_scriptable_a0d8664f35c5127e7d5e861306e76c6bf}{Picto\-::\-Scriptable}.
+
+
+
+Definition at line 111 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_addb1a1f161ef3640c206c4d568a41716}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!get\-Parent\-Asset@{get\-Parent\-Asset}}
+\index{get\-Parent\-Asset@{get\-Parent\-Asset}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{get\-Parent\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<${\bf Asset}$>$ Picto\-::\-Asset\-::get\-Parent\-Asset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_addb1a1f161ef3640c206c4d568a41716}
+
+
+Returns a pointer to this \hyperlink{class_picto_1_1_asset}{Asset} object's parent \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+If the parent was never set, was already deleted, or doesn't exist, an empty Q\-Shared\-Pointer will be returned. 
+
+Definition at line 97 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a310a0e5ffab1adff37039f27b998684a}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!get\-Path@{get\-Path}}
+\index{get\-Path@{get\-Path}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{get\-Path}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Asset\-::get\-Path (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_asset_a310a0e5ffab1adff37039f27b998684a}
+
+
+Returns the \char`\"{}\-::\char`\"{} separated path to this \hyperlink{class_picto_1_1_asset}{Asset} in the \hyperlink{class_picto_1_1_asset}{Asset} tree. 
+
+The path is returned up to the level of the experiment or \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} those levels are not included in the path. \begin{DoxyNote}{Note}
+\hyperlink{class_picto_1_1_experiment}{Experiment}=Test\-Exp, \hyperlink{class_picto_1_1_task}{Task}=A\-Task, Top\-State\-Machine=Top, Element=First\-State would have path\-: \char`\"{}\-A\-Task\-::\-Top\-::\-First\-State\char`\"{} 
+\end{DoxyNote}
+
+
+Definition at line 157 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a8d53229beb63862c36858e633dced712}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!identifier@{identifier}}
+\index{identifier@{identifier}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Asset\-::identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a8d53229beb63862c36858e633dced712}
+
+
+Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Usually this is the same as this assets serialized X\-M\-L tag name, but it may not be. 
+
+Reimplemented in \hyperlink{class_picto_1_1_property_aee5beb60f1bc54fbaa2e69745450b476}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_data_store_a15740a59d6164f14648355bfcb993b50}{Picto\-::\-Data\-Store}, and \hyperlink{class_picto_1_1_obsolete_asset_a8cc99b68a745a111472a3ae1bf3f1112}{Picto\-::\-Obsolete\-Asset}.
+
+
+
+Definition at line 88 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_addca39719cf9832ebadbc0dd7083f53e}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!initialize\-From\-Xml@{initialize\-From\-Xml}}
+\index{initialize\-From\-Xml@{initialize\-From\-Xml}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{initialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::initialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{xml}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_asset_addca39719cf9832ebadbc0dd7083f53e}
+
+
+Initializes the asset from the input X\-M\-L without marking it as \char`\"{}not new\char`\"{} as would generally occurs as soon was deserialized from X\-M\-L. 
+
+Essentially, this function just calls \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} and then sets is\-New\-\_\- to true. This way the serialization system can recognize that this asset was initialized to some value but wasn't actually serialized in from scratch. This is useful in some of the complex Serialization logic, particularly in \hyperlink{class_picto_1_1_data_store}{Data\-Store}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Data\-Store\-::deserialize\-From\-Xml()}, \hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Data\-Store\-::serialize\-As\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 97 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_ae39fd27817fd498d9e197b77bb942fe3}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!initialize\-To\-Default@{initialize\-To\-Default}}
+\index{initialize\-To\-Default@{initialize\-To\-Default}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{initialize\-To\-Default}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::initialize\-To\-Default (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{tag\-Name = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{Q\-String}]{type = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_asset_ae39fd27817fd498d9e197b77bb942fe3}
+
+
+Initializes this asset into its default state. 
+
+Assets are not ready to be used when they are first created. Much of their initialization occurs in the \hyperlink{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}{post\-Deserialize()} function that is only called when serialization is complete. They therefore need to have some X\-M\-L deserialized even if it is just an empty tag in order to be sure that they are initialized and ready to be used. This function essentially creates an empty tag using the passed in tag\-Name and type and deserializes this asset from that X\-M\-L. When deserialization from the empty tag is complete, the \hyperlink{class_picto_1_1_asset}{Asset} is marked as\-New\-\_\- since no actual saved X\-M\-L data had to be used in setting it up. In some cases, the fact that the \hyperlink{class_picto_1_1_asset}{Asset} is marked as\-New\-\_\- will mean that it does not need to be serialized out. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Data\-Store\-::deserialize\-From\-Xml()}, \hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Data\-Store\-::serialize\-As\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 77 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_af4c73b724fc6b6b6313228d2bdec092e}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!is\-Deleted@{is\-Deleted}}
+\index{is\-Deleted@{is\-Deleted}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{is\-Deleted}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::is\-Deleted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_af4c73b724fc6b6b6313228d2bdec092e}
+
+
+Returns true if this asset was set as deleted. 
+
+Currently in \hyperlink{namespace_picto}{Picto}, in order to delete an asset we just set it as deleted, then when the time comes for serialization, we don't serialize out any of the \char`\"{}delete marked\char`\"{} assets. Doing things this way helps us maintain a general order and structure in xml design files from one serialization to the next to aid in comparison of different versions of a design file. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Data\-Store\-::serialize\-As\-Xml()}, \hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Data\-Store\-::deserialize\-From\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 76 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_acfc9be521ca981e8b839b1dae57e5d55}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!is\-New@{is\-New}}
+\index{is\-New@{is\-New}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{is\-New}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::is\-New (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_acfc9be521ca981e8b839b1dae57e5d55}
+
+
+Returns true if this asset was created from scratch and was not configured according X\-M\-L code from some previously edited asset. 
+
+An asset may be both new and edited if it was created in the designer and then configured. Having separate new and edited flags is useful in order to limit the size of serialized data and also for the purpose of maintaining a general order and structure in xml design files from one serialization to the next to aid in comparison of different versions of a design file. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Data\-Store\-::serialize\-As\-Xml()}, \hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Data\-Store\-::deserialize\-From\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 69 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!needs\-Unique\-Name@{needs\-Unique\-Name}}
+\index{needs\-Unique\-Name@{needs\-Unique\-Name}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{needs\-Unique\-Name}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::needs\-Unique\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}
+
+
+Returns true if this object's name is required to be unique within its parent. 
+
+If an object is the parent of more than one asset with the same name and at least one of them has this flag set, the parent should report a syntax violation. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_ac36a8ea172fc566e31a4c2946f78eb59}{require\-Unique\-Name()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 120 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}, \hyperlink{class_picto_1_1_data_store_aaa194a5392d79cefe701c163564efd52}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_target_controller_a47559ed2d4c00422a3fc84e80620f4fc}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_token_tray_graphic_a8435a6569e216cff2d1ca7e5c113b6e4}{Picto\-::\-Token\-Tray\-Graphic}, \hyperlink{class_picto_1_1_experiment_a10627698429845c8bd88e3d7b3fa104a}{Picto\-::\-Experiment}, \hyperlink{class_picto_1_1_token_factory_graphic_a4ae62593cf690db4a25630fb5a6f9d71}{Picto\-::\-Token\-Factory\-Graphic}, \hyperlink{class_picto_1_1_operator_click_parameter_a452be1b9e53895dfc8aa0c61d45a18b1}{Picto\-::\-Operator\-Click\-Parameter}, \hyperlink{class_picto_1_1_pseudorandom_int_parameter_a21f8619871a924acf5539535f4ebfc5a}{Picto\-::\-Pseudorandom\-Int\-Parameter}, \hyperlink{class_picto_1_1_state_a8e789d2395df4d047a278f3c09716468}{Picto\-::\-State}, \hyperlink{class_picto_1_1_variable_list_affb7de311b36cc25414b6386ac401467}{Picto\-::\-Variable\-List}, \hyperlink{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}{Picto\-::\-Control\-Element}, \hyperlink{class_picto_1_1_state_machine_element_ac71e3f57e16c8be8dc4d6900c836948f}{Picto\-::\-State\-Machine\-Element}, \hyperlink{class_picto_1_1_analysis_trigger_a05e5bb8c08c529a59bf996497ac6bdf6}{Picto\-::\-Analysis\-Trigger}, \hyperlink{class_picto_1_1_timer_parameter_a927a09a69a33a95beccfe2c1132ba6f2}{Picto\-::\-Timer\-Parameter}, \hyperlink{class_picto_1_1_pause_point_ad0934a59b009d24126005cab68edb641}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_analysis_variable_list_a90f4446bd3f54918c492243e91d0bb8d}{Picto\-::\-Analysis\-Variable\-List}, \hyperlink{class_picto_1_1_text_graphic_a9489867ab4f18b66e16a21db5bfef5fb}{Picto\-::\-Text\-Graphic}, \hyperlink{class_picto_1_1_color_parameter_aa58e21d2e99f41a146e63b61abecb4f8}{Picto\-::\-Color\-Parameter}, \hyperlink{class_picto_1_1_choice_controller_a98308dba448abcbb46044533a3e6a56a}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_analysis_spike_data_acfd1de9308e3d86b1109a4e7724e588b}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}, \hyperlink{class_picto_1_1_grid_graphic_aafa2aa763c403ab8f6bbec220683ebe0}{Picto\-::\-Grid\-Graphic}, \hyperlink{class_picto_1_1_analysis_output_a2a9b708fdcd043db3239c267a8fa3418}{Picto\-::\-Analysis\-Output}, \hyperlink{class_picto_1_1_ellipse_graphic_a8cbf2ff32c39f86989335b8371063586}{Picto\-::\-Ellipse\-Graphic}, \hyperlink{class_picto_1_1_scriptable_a5d36462b3e5c89f0d6ae8fe466c1b060}{Picto\-::\-Scriptable}, \hyperlink{class_picto_1_1_operator_info_graphic_a0efe632b6c2aca2ec08c9321d60bd3b9}{Picto\-::\-Operator\-Info\-Graphic}, \hyperlink{class_picto_1_1_parameter_aacf1829d9c0e0dc44a7854412f3face6}{Picto\-::\-Parameter}, \hyperlink{class_picto_1_1_numeric_parameter_a4fc2328b188b54a0f4a075878c288144}{Picto\-::\-Numeric\-Parameter}, \hyperlink{class_picto_1_1_reward_a4c2d4714bba0e99537fa9438b7acc9c0}{Picto\-::\-Reward}, \hyperlink{class_picto_1_1_image_graphic_a466cb8ab04110a29cf38135b13f94d3f}{Picto\-::\-Image\-Graphic}, \hyperlink{class_picto_1_1_analysis_lfp_data_a2ecc0790a74132a1433a6491b55eafc3}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_signal_data_a104001f38f5ba6c27ea844a96cc7a1d9}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_box_graphic_acef799f248641dedc7c2b7c2b9af2fab}{Picto\-::\-Box\-Graphic}, \hyperlink{class_picto_1_1_choice_parameter_a84651aa9681bf61924b0e83baee5a851}{Picto\-::\-Choice\-Parameter}, \hyperlink{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}{Picto\-::\-Output\-Signal}, \hyperlink{class_picto_1_1_task_a4709ec0c131f873b026ef40b49792863}{Picto\-::\-Task}, \hyperlink{class_picto_1_1_associate_root_a8b54b44c423e63c6d98091aa3dee108a}{Picto\-::\-Associate\-Root}, \hyperlink{class_picto_1_1_state_machine_a3b28ab6e5310ea16c2dbb19d6e071f80}{Picto\-::\-State\-Machine}, \hyperlink{class_picto_1_1_transition_a6a2b3a1550acfd02ce687c4244b78137}{Picto\-::\-Transition}, \hyperlink{class_picto_1_1_analysis_container_ab9db1ec523d07af8e6128573ce4c45f1}{Picto\-::\-Analysis\-Container}, \hyperlink{class_picto_1_1_random_double_parameter_a829224c9299a0f14b32915cf99d38086}{Picto\-::\-Random\-Double\-Parameter}, \hyperlink{class_picto_1_1_random_int_parameter_a37e7252e426fae2a8d5f59c8385bd97a}{Picto\-::\-Random\-Int\-Parameter}, \hyperlink{class_picto_1_1_audio_element_ae8847ae3b72666aae30c60bf045afda8}{Picto\-::\-Audio\-Element}, \hyperlink{class_picto_1_1_diamond_graphic_a7b83e565f6ad575c7d4668820dae0898}{Picto\-::\-Diamond\-Graphic}, \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a0aba9d31a08ad997a9d2016a275015db}{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}, \hyperlink{class_picto_1_1_shape_shifter_graphic_aabea39fc799b129f5c47cb2606e186ed}{Picto\-::\-Shape\-Shifter\-Graphic}, \hyperlink{class_picto_1_1_variable_map_a8f40e1a04708e7632fa51b25e4eb4850}{Picto\-::\-Variable\-Map}, \hyperlink{class_picto_1_1_u_i_enabled_ae1585113a496ff2c8de3293aa884b57b}{Picto\-::\-U\-I\-Enabled}, \hyperlink{class_picto_1_1_arrow_graphic_a385938660fb35e494308717593b12631}{Picto\-::\-Arrow\-Graphic}, \hyperlink{class_picto_1_1_analysis_period_a2d97ef81e5edcc7f6875a2e86d8d8e50}{Picto\-::\-Analysis\-Period}, \hyperlink{class_picto_1_1_analysis_data_source_dep_a3e0d7b3b0c784e17c8fa3504705367ba}{Picto\-::\-Analysis\-Data\-Source\-Dep}, \hyperlink{class_picto_1_1_analysis_run_notes_data_a2be0449a871ae70d98d5b53c45aa3857}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_analysis_frame_data_affa393fdbe9a1cd847f3d66a8fc9fc9e}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_script_function_a76b4da99c2e46834bc975240f81dee68}{Picto\-::\-Script\-Function}, \hyperlink{class_picto_1_1_stopwatch_controller_ac7fd86cd42abe3a6474966ccc9f8ff94}{Picto\-::\-Stopwatch\-Controller}, \hyperlink{class_picto_1_1_analysis_variable_map_abfb12a9e91fb6c3f0dc1baed7305e789}{Picto\-::\-Analysis\-Variable\-Map}, \hyperlink{class_picto_1_1_range_parameter_a8ff94bb77dd0cd5a807f63ea2b71bfa0}{Picto\-::\-Range\-Parameter}, \hyperlink{class_picto_1_1_script_element_a673c95614169016369b9f69516a73134}{Picto\-::\-Script\-Element}, \hyperlink{class_picto_1_1_file_output_a1bcc204b235bc36066ef69595e390602}{Picto\-::\-File\-Output}, \hyperlink{class_picto_1_1_analysis_script_holder_ae0d42be0c831a16dfea55803fa124e92}{Picto\-::\-Analysis\-Script\-Holder}, \hyperlink{class_picto_1_1_analysis_timer_af97de4c2bfcfb47209eafdc5d1e0c6ab}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_associate_host_link_aa1ca0d868d35551b9d1aa33d234bf439}{Picto\-::\-Associate\-Host\-Link}, \hyperlink{class_picto_1_1_signal_value_parameter_acedeba8e307f25ffa1dc2f4feaa1de09}{Picto\-::\-Signal\-Value\-Parameter}, \hyperlink{class_picto_1_1_string_parameter_ac43c3d2830299761848f2faa982e088d}{Picto\-::\-String\-Parameter}, \hyperlink{class_picto_1_1_analysis_definition_a107015fb2ff2c49fc4dad6c41b100fcc}{Picto\-::\-Analysis\-Definition}, \hyperlink{class_picto_1_1_analysis_a1495e960c7416afd2f443ae796ed0311}{Picto\-::\-Analysis}, \hyperlink{class_picto_1_1_boolean_parameter_a189473e24b9688ece1003c7282887ea6}{Picto\-::\-Boolean\-Parameter}, \hyperlink{class_picto_1_1_control_target_a0cd5e40f668903b31db033efdf31829b}{Picto\-::\-Control\-Target}, \hyperlink{class_picto_1_1_analysis_file_output_a1f03bef9d6e5395471475d685f1e918c}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_analysis_reward_data_ad2054bf00b94fe3449dd46ce2c9245b2}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_u_i_element_ab3ee48eff0c98d5ea16d6c38d261715d}{Picto\-::\-U\-I\-Element}, \hyperlink{class_picto_1_1_double_parameter_a9bc0ba6583175dfc34736098ca496fd0}{Picto\-::\-Double\-Parameter}, \hyperlink{class_picto_1_1_audio_file_parameter_ad4e30ad3080b19a5dc73a38ff460ef95}{Picto\-::\-Audio\-File\-Parameter}, \hyperlink{class_picto_1_1_picture_graphic_a85cbf24ef376531ab66f10487d16721a}{Picto\-::\-Picture\-Graphic}, \hyperlink{class_picto_1_1_script_controller_a8f67155393f4a6ee394120b5008befab}{Picto\-::\-Script\-Controller}, \hyperlink{class_picto_1_1_output_element_container_a0aa8ba5d35859292b2f3365f99c242c3}{Picto\-::\-Output\-Element\-Container}, \hyperlink{class_picto_1_1_switch_element_a7b8c8d832b705b234f18badcf1ec31bb}{Picto\-::\-Switch\-Element}, \hyperlink{class_picto_1_1_output_element_container_a7f6fed29af1fe1a08883109f7f685d52}{Picto\-::\-Output\-Element\-Container}, \hyperlink{class_picto_1_1_circle_graphic_a1e8bbb263c5da6cf68d4575f603c1fe6}{Picto\-::\-Circle\-Graphic}, \hyperlink{class_picto_1_1_analysis_output_dep_a1f729ac9a11524ee82e89b2725d2eda2}{Picto\-::\-Analysis\-Output\-Dep}, \hyperlink{class_picto_1_1_result_container_ad0e8001bc4f03291cfd65c0c903c88f3}{Picto\-::\-Result\-Container}, \hyperlink{class_picto_1_1_rect_target_a3e49cfeaf2c0247b1881cd377f8a4a2e}{Picto\-::\-Rect\-Target}, \hyperlink{class_picto_1_1_test_controller_a5912c981db3d499dbf41e50faec2648d}{Picto\-::\-Test\-Controller}, \hyperlink{class_picto_1_1_result_a180af9876c9579eda252a1c4b8f440c2}{Picto\-::\-Result}, \hyperlink{class_picto_1_1_cursor_graphic_ac2e7c774d4ce4df03b47e2095c400a3e}{Picto\-::\-Cursor\-Graphic}, \hyperlink{class_picto_1_1_digital_output_a44c3cb31438e4cecf53f63edbbd8866b}{Picto\-::\-Digital\-Output}, \hyperlink{class_picto_1_1_picto_data_ad6a34eb605a263ff1f69aa87e2095c2f}{Picto\-::\-Picto\-Data}, \hyperlink{class_picto_1_1_line_graphic_ae17b91123b57bec526e5172d739bc18e}{Picto\-::\-Line\-Graphic}, \hyperlink{class_picto_1_1_file_parameter_a0c5b14270f5486397d2bc0d71b64bcd4}{Picto\-::\-File\-Parameter}, \hyperlink{class_picto_1_1_image_file_parameter_a6a60bb4aa2f72c20c534b3ffc08dc8cc}{Picto\-::\-Image\-File\-Parameter}, \hyperlink{class_picto_1_1_u_i_data_a5c9efa47c9f2e57d7c03a5a8f5169a98}{Picto\-::\-U\-I\-Data}, \hyperlink{class_picto_1_1_obsolete_asset_a2317c155f6d4f933380955645bf22147}{Picto\-::\-Obsolete\-Asset}, \hyperlink{class_picto_1_1_analysis_number_variable_a66376560630c67d8616d27baec9df56f}{Picto\-::\-Analysis\-Number\-Variable}, \hyperlink{class_picto_1_1_analysis_string_variable_ad1d229ad548ade0f6cacc5be895a9d27}{Picto\-::\-Analysis\-String\-Variable}, \hyperlink{class_picto_1_1_number_variable_a6ab9b74741c023e43dab955a975cc6c4}{Picto\-::\-Number\-Variable}, \hyperlink{class_picto_1_1_string_variable_a1a1628007dc860d2f092f9fbb03944f1}{Picto\-::\-String\-Variable}, \hyperlink{class_picto_1_1_analysis_script_holder_a02b68cce54cb16c264cdc91afe442517}{Picto\-::\-Analysis\-Script\-Holder}, \hyperlink{class_picto_1_1_binary_data_output_a325c73f5b09be8f4aa258a3eb3dc696a}{Picto\-::\-Binary\-Data\-Output}, \hyperlink{class_picto_1_1_variable_a447e12ef138cdd99ae9ba870ed3b5174}{Picto\-::\-Variable}, \hyperlink{class_picto_1_1_analysis_function_a0396de92827162ab6fa084eb5c977b34}{Picto\-::\-Analysis\-Function}, \hyperlink{class_picto_1_1_machine_container_a36591811c50d2086866100c246d751d0}{Picto\-::\-Machine\-Container}, \hyperlink{class_picto_1_1_obsolete_name_asset_adea0d9fe85cf6530f7b605c241af087a}{Picto\-::\-Obsolete\-Name\-Asset}, \hyperlink{class_picto_1_1_analysis_variable_a1c211501a9805870703207eb9b305bc1}{Picto\-::\-Analysis\-Variable}, \hyperlink{class_picto_1_1_control_target_result_aaa7e33f8afbc169c652a1aba180a968e}{Picto\-::\-Control\-Target\-Result}, \hyperlink{class_picto_1_1_u_i_info_ad3e5289eda4fb9d0d1f28a3fe8b10894}{Picto\-::\-U\-I\-Info}, \hyperlink{class_picto_1_1_analysis_tool_a4e222c101573aca1ef0e271fab078eaa}{Picto\-::\-Analysis\-Tool}, \hyperlink{class_picto_1_1_numeric_variable_a58e42e534efa6b84f4e23dead549604d}{Picto\-::\-Numeric\-Variable}, \hyperlink{class_picto_1_1_analysis_data_source_a491e202caec7a1d9f9a0c7466f962f18}{Picto\-::\-Analysis\-Data\-Source}, \hyperlink{class_picto_1_1_default_data_source_a834d1e2071c178afdaca4fca5a36ed81}{Picto\-::\-Default\-Data\-Source}, \hyperlink{class_picto_1_1_circle_target_ad736fe02668f504c8635d48b7cef3d40}{Picto\-::\-Circle\-Target}, \hyperlink{class_picto_1_1_control_target_result_a46d36f8cd048d2ffbfcbb99308c9e5cd}{Picto\-::\-Control\-Target\-Result}, \hyperlink{class_picto_1_1_element_trigger_a54054bcc4ce411c4161d92d41e2bfc8f}{Picto\-::\-Element\-Trigger}, \hyperlink{class_picto_1_1_ender_container_a7b56846cfdce3cd9ffe2efe2bea3b49f}{Picto\-::\-Ender\-Container}, \hyperlink{class_picto_1_1_frame_trigger_aa8c2804c29ea2692be117401f9dd97a2}{Picto\-::\-Frame\-Trigger}, \hyperlink{class_picto_1_1_l_f_p_trigger_ad7b53e79688098d11d0de78abeed679b}{Picto\-::\-L\-F\-P\-Trigger}, \hyperlink{class_picto_1_1_property_trigger_a835a9153687106357cbaa654d4e27a89}{Picto\-::\-Property\-Trigger}, \hyperlink{class_picto_1_1_signal_trigger_a55d46c3c72ff98b9b6ed856ba1af384a}{Picto\-::\-Signal\-Trigger}, \hyperlink{class_picto_1_1_spike_trigger_aeae85dbaa68d96406f5563db52a02967}{Picto\-::\-Spike\-Trigger}, \hyperlink{class_picto_1_1_starter_container_af70a20b1c3ea88047a83098a985338e8}{Picto\-::\-Starter\-Container}, \hyperlink{class_picto_1_1_transition_trigger_a8c851d4237e1f6c74c144a92dd3d03f8}{Picto\-::\-Transition\-Trigger}, \hyperlink{class_picto_1_1_align_trigger_a3f40a9ee2655d48e49dc8a948ee84a6b}{Picto\-::\-Align\-Trigger}, \hyperlink{class_picto_1_1_frame_data_source_a4e96fe48935f89dadedb100fd35ef9f6}{Picto\-::\-Frame\-Data\-Source}, \hyperlink{class_picto_1_1_property_data_source_a8370e743f3590aeee82486757d2df307}{Picto\-::\-Property\-Data\-Source}, \hyperlink{class_picto_1_1_signal_data_source_a1ed324bf825b1967283042624c70d820}{Picto\-::\-Signal\-Data\-Source}, \hyperlink{class_picto_1_1_time_data_source_a0faac272d18e79ed02f8bd49326150a4}{Picto\-::\-Time\-Data\-Source}, \hyperlink{class_picto_1_1_time_trigger_a6d3df7f29aacc9f7dc67f5db96a682af}{Picto\-::\-Time\-Trigger}, \hyperlink{class_picto_1_1_element_data_source_a8a7867cdc6d572fd167ac0b554935d41}{Picto\-::\-Element\-Data\-Source}, \hyperlink{class_picto_1_1_spike_data_source_aa0265d8bab873ee4e3b84a2150ce36e5}{Picto\-::\-Spike\-Data\-Source}, \hyperlink{class_picto_1_1_align_data_source_ac13d9419b22333299c93daa964b0d855}{Picto\-::\-Align\-Data\-Source}, \hyperlink{class_picto_1_1_l_f_p_data_source_a4f1fcdb1684600a267ae897cf5799e48}{Picto\-::\-L\-F\-P\-Data\-Source}, and \hyperlink{class_picto_1_1_state_machine_editor_data_af001fdfd8af85db7e351d2625252bded}{Picto\-::\-State\-Machine\-Editor\-Data}.
+
+
+
+Definition at line 219 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a3ea72c7a57437c7371d791277b39aa41}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!pre\-Deserialize@{pre\-Deserialize}}
+\index{pre\-Deserialize@{pre\-Deserialize}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{pre\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::pre\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a3ea72c7a57437c7371d791277b39aa41}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} before deserialization and is used to prepare the \hyperlink{class_picto_1_1_asset}{Asset} for deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during pre\-Deserialize we get the object's parent object's \hyperlink{class_picto_1_1_design_config}{Design\-Config} and set it to this \hyperlink{class_picto_1_1_asset}{Asset}. \begin{DoxyAttention}{Attention}
+Any descendant classes extending this function should begin the function by calling their parent's implementation of \hyperlink{class_picto_1_1_asset_a3ea72c7a57437c7371d791277b39aa41}{pre\-Deserialize()}. 
+\end{DoxyAttention}
+
+
+Definition at line 203 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_aabba6c76cc003a76e65be7b96390fdd9}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!pre\-Serialize@{pre\-Serialize}}
+\index{pre\-Serialize@{pre\-Serialize}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{pre\-Serialize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Asset\-::pre\-Serialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_aabba6c76cc003a76e65be7b96390fdd9}
+
+
+This function is called before an asset is serialized in to\-X\-M\-L(). 
+
+This is a convenience function that is called before serialization and should be used for any set up needs to occur before serialization starts. 
+
+Reimplemented in \hyperlink{class_picto_1_1_u_i_enabled_aa465db35db425df38af40754218249d7}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 172 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_ac36a8ea172fc566e31a4c2946f78eb59}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!require\-Unique\-Name@{require\-Unique\-Name}}
+\index{require\-Unique\-Name@{require\-Unique\-Name}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{require\-Unique\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::require\-Unique\-Name (
+\begin{DoxyParamCaption}
+\item[{bool}]{require = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{class_picto_1_1_asset_ac36a8ea172fc566e31a4c2946f78eb59}
+
+
+Set this to true if this object's name is required to be unique within its parent or false otherwise. 
+
+If an object is the parent of more than one asset with the same name and at least one of them has this flag set, the parent should report a syntax violation. By default, \hyperlink{class_picto_1_1_asset}{Asset}'s don't require unique names. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{needs\-Unique\-Name()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 194 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_ac6727fc4ef394103880e570c4b40d091}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!self\-Ptr@{self\-Ptr}}
+\index{self\-Ptr@{self\-Ptr}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{self\-Ptr}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<${\bf Asset}$>$ Picto\-::\-Asset\-::self\-Ptr (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{class_picto_1_1_asset_ac6727fc4ef394103880e570c4b40d091}
+
+
+Returns a Q\-Shared\-Pointer to this \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+If this returns an empty Q\-Shared\-Pointer, it means that \hyperlink{class_picto_1_1_asset_aa0e64136d6a51d342a55cd56a8bacd24}{set\-Self\-Ptr()} was never called and this \hyperlink{class_picto_1_1_asset}{Asset}'s self pointer was never set. 
+
+Definition at line 167 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!serialize\-As\-Xml@{serialize\-As\-Xml}}
+\index{serialize\-As\-Xml@{serialize\-As\-Xml}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{serialize\-As\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Asset\-::serialize\-As\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$}]{xml\-Stream\-Writer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}
+
+
+Saves this object to descriptive X\-M\-L text using the input Q\-Xml\-String\-Writer. 
+
+Returns true if serialization was successful, false otherwise. 
+
+Implemented in \hyperlink{class_picto_1_1_property_ab13f7e111f9d874a8ff00d574d5fa76c}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_obsolete_asset_a0fa27acdc34bf7fdac3dedd6493733f8}{Picto\-::\-Obsolete\-Asset}, and \hyperlink{class_picto_1_1_obsolete_name_asset_abded9d73a89f4d428ea8f2209db52116}{Picto\-::\-Obsolete\-Name\-Asset}.
+
+\hypertarget{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Asset\-Id@{set\-Asset\-Id}}
+\index{set\-Asset\-Id@{set\-Asset\-Id}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Asset\-Id}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Asset\-::set\-Asset\-Id (
+\begin{DoxyParamCaption}
+\item[{int}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}
+
+
+Sets this asset's asset I\-D. For more detail, see \hyperlink{class_picto_1_1_asset_a0b7664712f1479de7da32623bc47d6a8}{get\-Asset\-Id()}. 
+
+\begin{DoxyNote}{Note}
+I'm not sure why we didn't make this a pure virtual function... but we probably should. This should be looked into. 
+\end{DoxyNote}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_property_a868534f67ff18012dbec0c922ed2e9a1}{Picto\-::\-Property}, \hyperlink{class_picto_1_1_data_store_afc91c6a4c8d69bc3b3b8ef3be9bb761c}{Picto\-::\-Data\-Store}, and \hyperlink{class_picto_1_1_obsolete_asset_a839526979e9024e1858cb881ebef743e}{Picto\-::\-Obsolete\-Asset}.
+
+
+
+Definition at line 138 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a18d0b5155b57ca24254afde1dfb765cd}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Deleted@{set\-Deleted}}
+\index{set\-Deleted@{set\-Deleted}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Deleted}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Deleted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a18d0b5155b57ca24254afde1dfb765cd}
+
+
+Emits the \hyperlink{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}{deleted()} signal when called to inform interested parties that this asset needs to be removed from the design. 
+
+Since internally we connect \hyperlink{class_picto_1_1_asset_a5a96aa71c14a5de4a24aea183660147a}{deleted()} to received\-Deleted\-Signal(), it also causes our deleted\-\_\- flag to be set so that this object itself will know if it has been deleted\-\_\-. \begin{DoxyNote}{Note}
+Currently in \hyperlink{namespace_picto}{Picto}, in order to delete an asset we just set it as deleted, then when the time comes for serialization, we don't serialize out any of the \char`\"{}delete marked\char`\"{} assets. Doing things this way helps us maintain a general order and structure in xml design files from one serialization to the next to aid in comparison of different versions of a design file. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_data_store_a691063f5662f5db9c48deabc0f2e972b}{Data\-Store\-::serialize\-As\-Xml()}, \hyperlink{class_picto_1_1_data_store_a37bb8f90b4d8c2e12970a276e6a6ec91}{Data\-Store\-::deserialize\-From\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_data_store_a114c737439034a916c9ae50c88da27d7}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 126 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Design\-Config@{set\-Design\-Config}}
+\index{set\-Design\-Config@{set\-Design\-Config}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Design\-Config}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Design\-Config (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Design\-Config} $>$}]{design\-Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}
+
+
+Sets the \hyperlink{class_picto_1_1_design_config}{Design\-Config} object managing the current Design to this \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Every Design has a single \hyperlink{class_picto_1_1_design_config}{Design\-Config} object that manages global issues affecting the entire design. It can access every asset in the design and is accessable from every asset in the design. It is set to an asset using the set\-Design\-Config function, typically by the \hyperlink{class_picto_1_1_asset}{Asset}'s parent. \begin{DoxyNote}{Note}
+There is high potential here for a memory leak due to circular shared pointers. To avoid this, Assets maintain Shared\-Pointers to the \hyperlink{class_picto_1_1_design_config}{Design\-Config} but the \hyperlink{class_picto_1_1_design_config}{Design\-Config} uses Weak\-Pointers to all assets. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}{set\-Design\-Config}, \hyperlink{class_picto_1_1_design_config}{Design\-Config} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_state_a7b662aa2303578c599af93e656b4c42a}{Picto\-::\-State}, \hyperlink{class_picto_1_1_analysis_output_a068aed3428378e4e910b586ded987902}{Picto\-::\-Analysis\-Output}, \hyperlink{class_picto_1_1_pause_point_a1a7127028b14f51978107f9d3fe1bafd}{Picto\-::\-Pause\-Point}, and \hyperlink{class_picto_1_1_analysis_timer_a8a76727aa775f6a61654d432a2784ef6}{Picto\-::\-Analysis\-Timer}.
+
+
+
+Definition at line 191 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a3463b8bd3c8b62837c0fcf4ceee533dc}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Edited@{set\-Edited}}
+\index{set\-Edited@{set\-Edited}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Edited}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Edited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_a3463b8bd3c8b62837c0fcf4ceee533dc}
+
+
+Emits the \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited()} signal when called to inform interested parties that something about this asset has changed. 
+
+Since internally we connect \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited()} to received\-Edited\-Signal(), it also causes our edited\-\_\- flag to be set so that this object itself will know if it has been edited. 
+
+Definition at line 56 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a2b073c1153a417abdc3a467446015ed1}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Parent\-Asset@{set\-Parent\-Asset}}
+\index{set\-Parent\-Asset@{set\-Parent\-Asset}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Parent\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Parent\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_a2b073c1153a417abdc3a467446015ed1}
+
+
+Assets are meant to be part of a tree structure. This function sets this \hyperlink{class_picto_1_1_asset}{Asset} object's parent to the input. 
+
+The parent is stored locally as a weak pointer to avoid circular smart pointer references between parent and child. In the \hyperlink{namespace_picto}{Picto} Design, parents maintain smart pointers to children, such that deleting the top level node has the affect of deleting the entire tree underneath it. 
+
+Definition at line 82 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_aa0e64136d6a51d342a55cd56a8bacd24}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Self\-Ptr@{set\-Self\-Ptr}}
+\index{set\-Self\-Ptr@{set\-Self\-Ptr}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Self\-Ptr}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Self\-Ptr (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{self\-Ptr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_aa0e64136d6a51d342a55cd56a8bacd24}
+
+
+Sets a Q\-Shared\-Pointer to this \hyperlink{class_picto_1_1_asset}{Asset} to this \hyperlink{class_picto_1_1_asset}{Asset} so that it will be able to give others Q\-Shared\-Pointers to itself, and not just regular pointers. 
+
+Locally, the self pointer is stored as a Q\-Weak\-Pointer (otherwise the object could never be deleted). 
+
+Definition at line 102 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a7419ed75ae864febd703b9ebd9346d16}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!set\-Unedited@{set\-Unedited}}
+\index{set\-Unedited@{set\-Unedited}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{set\-Unedited}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::set\-Unedited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{class_picto_1_1_asset_a7419ed75ae864febd703b9ebd9346d16}
+
+
+In some cases, an asset may not want to be considered edited, even if it already has been, unless it gets changed after a certain point. This allows for that. 
+
+\begin{DoxyNote}{Note}
+Currently the only usage of this is in creating default results that hang off of various elements and need a name but don't need to be serialized out. 
+\end{DoxyNote}
+
+
+Definition at line 187 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a7cff8f6cde1f8fe85d4322a79469a7ba}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!to\-Xml@{to\-Xml}}
+\index{to\-Xml@{to\-Xml}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{to\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::to\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$}]{xml\-Stream\-Writer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a7cff8f6cde1f8fe85d4322a79469a7ba}
+
+
+Converts this \hyperlink{class_picto_1_1_asset}{Asset} into an X\-M\-L based Q\-String using the input Q\-Xml\-Stream\-Writer. 
+
+If the asset has been marked deleted, its returned X\-M\-L code is empty. Also, \hyperlink{class_picto_1_1_asset_aabba6c76cc003a76e65be7b96390fdd9}{pre\-Serialize()} is called before the actual serialization begins and a boolean is returned indicating whether the \hyperlink{class_picto_1_1_asset}{Asset} was successfully serialized. 
+
+Implements \hyperlink{class_picto_1_1_serializable_a0357f9be4b2b92f7b1d63a7b353e56c1}{Picto\-::\-Serializable}.
+
+
+
+Definition at line 25 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_aacaaedf9d76c3af2c7168d5c14fed914}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!upgrade\-Version@{upgrade\-Version}}
+\index{upgrade\-Version@{upgrade\-Version}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{upgrade\-Version}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Asset\-::upgrade\-Version (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{deserialized\-Version}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_aacaaedf9d76c3af2c7168d5c14fed914}
+
+
+Upgrades the version of this asset from the input version to the current version. 
+
+\begin{DoxyAttention}{Attention}
+Classes that extend this function must always start the function by calling their parent class's implementation of \hyperlink{class_picto_1_1_asset_aacaaedf9d76c3af2c7168d5c14fed914}{upgrade\-Version()}. 
+\end{DoxyAttention}
+
+
+Reimplemented in \hyperlink{struct_picto_1_1_visual_element_a0e38e859761d1fd7c6285cb2c82f2704}{Picto\-::\-Visual\-Element}, \hyperlink{class_picto_1_1_data_store_a760957a345502801d58030af95eaaf75}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_token_tray_graphic_a5ec79aa5e8ba418a86fccff306788b25}{Picto\-::\-Token\-Tray\-Graphic}, \hyperlink{class_picto_1_1_state_a465f0b44d0bc636a48efdefb2e5ee82f}{Picto\-::\-State}, \hyperlink{class_picto_1_1_target_controller_afa263db7e833a2317be5d8411d217c33}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_state_machine_ab59beba932c283fa8dcb2c0f355542a7}{Picto\-::\-State\-Machine}, \hyperlink{class_picto_1_1_choice_controller_a7ccbb75f73b3d06a368a344a9b0818d2}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_u_i_enabled_a12c0d0357c85854db9220c72c4941b15}{Picto\-::\-U\-I\-Enabled}, \hyperlink{class_picto_1_1_pause_point_a625ce981ccecd8ce3efc0b38264c49a7}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_script_function_a78841d2f9189ace5b828836b14006e31}{Picto\-::\-Script\-Function}, \hyperlink{class_picto_1_1_analysis_a7ba14912e639d8730c19b3b491d49e8a}{Picto\-::\-Analysis}, \hyperlink{class_picto_1_1_grid_graphic_a1e597bb8d934abcc95dad8e47e102b56}{Picto\-::\-Grid\-Graphic}, and \hyperlink{class_picto_1_1_script_controller_a78d4532ff6719d9252f1b993636b19b9}{Picto\-::\-Script\-Controller}.
+
+
+
+Definition at line 177 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a2b2cc1ab81322b5280d66b020205f6aa}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Asset\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a2b2cc1ab81322b5280d66b020205f6aa}
+
+
+Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. 
+
+If invalid syntax is found, this function uses add\-Error to report a syntax violation and returns false. The Q\-Xml\-Stream\-Reader is passed in so that the \hyperlink{class_picto_1_1_asset}{Asset} can reference it in any error messages. 
+
+Reimplemented in \hyperlink{struct_picto_1_1_visual_element_a681b115b3f3ea6d24ab803cab9d6ee5b}{Picto\-::\-Visual\-Element}, \hyperlink{class_picto_1_1_data_store_a077c9284e2d18d50b72e0fea1a5eeacb}{Picto\-::\-Data\-Store}, \hyperlink{class_picto_1_1_target_controller_ad8cc347e220989bc087de49e64efa18a}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_token_tray_graphic_a7e7d1ad93fb52220630fc18804c3a5d6}{Picto\-::\-Token\-Tray\-Graphic}, \hyperlink{class_picto_1_1_experiment_a7005de1c10b50a481b5ca4e6225d5a44}{Picto\-::\-Experiment}, \hyperlink{class_picto_1_1_token_factory_graphic_a58b7fc8159f457b4a69bf20aa41b99f0}{Picto\-::\-Token\-Factory\-Graphic}, \hyperlink{class_picto_1_1_operator_click_parameter_a0204b211e581f5d66079d6d543eeb038}{Picto\-::\-Operator\-Click\-Parameter}, \hyperlink{class_picto_1_1_pseudorandom_int_parameter_a9d9a900f07829737adc2f29cb1169f30}{Picto\-::\-Pseudorandom\-Int\-Parameter}, \hyperlink{class_picto_1_1_state_a644ad6fdb5af053d31c8284fd81d4158}{Picto\-::\-State}, \hyperlink{class_picto_1_1_variable_list_ac5f0fa81d75a474c4ac974fbe88f9500}{Picto\-::\-Variable\-List}, \hyperlink{class_picto_1_1_control_element_ae17985c70c242e936bef4d5079235861}{Picto\-::\-Control\-Element}, \hyperlink{class_picto_1_1_state_machine_element_a52a176b16cf803ed3e7f82f3e1a4dfb7}{Picto\-::\-State\-Machine\-Element}, \hyperlink{class_picto_1_1_analysis_trigger_ad945dba1a9aad0ab0dc13913e1698810}{Picto\-::\-Analysis\-Trigger}, \hyperlink{class_picto_1_1_timer_parameter_ad55dd12854d49e9c2d4eb4bd5c706e36}{Picto\-::\-Timer\-Parameter}, \hyperlink{class_picto_1_1_compound_expression_a2d52af5fa101b25fc8b86c87ed02f1f2}{Picto\-::\-Compound\-Expression}, \hyperlink{class_picto_1_1_pause_point_aea2bb7d2a12c263796508f90744a3220}{Picto\-::\-Pause\-Point}, \hyperlink{class_picto_1_1_analysis_variable_list_a5c16695870b3749708991034bc70990f}{Picto\-::\-Analysis\-Variable\-List}, \hyperlink{class_picto_1_1_text_graphic_aff3aa13a13b124b6e28a0b26cc8ad398}{Picto\-::\-Text\-Graphic}, \hyperlink{class_picto_1_1_color_parameter_a2facb5a978973a54583ccb0951dacfd7}{Picto\-::\-Color\-Parameter}, \hyperlink{class_picto_1_1_choice_controller_a56c6ea768c91091c2f76b80d026c6c83}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_analysis_spike_data_a3e7553a7a5af76724b70500418e1fe25}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_scriptable_container_a127c17469b1823ce4368bbf9d5df7b78}{Picto\-::\-Scriptable\-Container}, \hyperlink{class_picto_1_1_grid_graphic_a26c4ce421e3c198a3c4698f2bd86d1fd}{Picto\-::\-Grid\-Graphic}, \hyperlink{class_picto_1_1_ellipse_graphic_ab5f8013b8f141e0063e6e228582f87a7}{Picto\-::\-Ellipse\-Graphic}, \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Picto\-::\-Scriptable}, \hyperlink{class_picto_1_1_operator_info_graphic_ab297013765d250245728cc1c631006a3}{Picto\-::\-Operator\-Info\-Graphic}, \hyperlink{class_picto_1_1_parameter_a94c0e4191ffcc0bd642b647d24557082}{Picto\-::\-Parameter}, \hyperlink{class_picto_1_1_numeric_parameter_a5521077980f558300f920f39d7be7eed}{Picto\-::\-Numeric\-Parameter}, \hyperlink{class_picto_1_1_reward_ad88c181f048c98bbc457f2c6b1b49ba3}{Picto\-::\-Reward}, \hyperlink{class_picto_1_1_image_graphic_a65a45164a3be65e08b97a747bb542c3f}{Picto\-::\-Image\-Graphic}, \hyperlink{class_picto_1_1_analysis_lfp_data_ae53fa1010780d301a104e613f93dda1a}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_signal_data_a1e2a5e3c64e9b456e5074baec23e0cf6}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_box_graphic_ad2b6f512b285b38df785af760eb69527}{Picto\-::\-Box\-Graphic}, \hyperlink{class_picto_1_1_choice_parameter_ab3f2a380621c79d187d6f7d9433e53c9}{Picto\-::\-Choice\-Parameter}, \hyperlink{struct_picto_1_1_output_signal_a5401d53b65a3664df866aef4455d42fe}{Picto\-::\-Output\-Signal}, \hyperlink{class_picto_1_1_task_a453654d7c802d3c2bd37041643bf0616}{Picto\-::\-Task}, \hyperlink{class_picto_1_1_associate_root_a399158938e3f9c09644a20faece3e2b2}{Picto\-::\-Associate\-Root}, \hyperlink{class_picto_1_1_state_machine_a0f52f44365e6b7ba4e5c4ff92e092208}{Picto\-::\-State\-Machine}, \hyperlink{class_picto_1_1_transition_a3ea97a2146936adc89113e0325a6f91d}{Picto\-::\-Transition}, \hyperlink{class_picto_1_1_analysis_container_aa28b71ea9f0f4ea4eaf6a3c17b04dedc}{Picto\-::\-Analysis\-Container}, \hyperlink{class_picto_1_1_random_double_parameter_a02544c24f46db51ec92e76e5f99969ab}{Picto\-::\-Random\-Double\-Parameter}, \hyperlink{class_picto_1_1_random_int_parameter_afd2f01e2fafd298168812862b0718d65}{Picto\-::\-Random\-Int\-Parameter}, \hyperlink{class_picto_1_1_predicate_expression_a0f94f40e7cbc20b22744fb3efe577dc1}{Picto\-::\-Predicate\-Expression}, \hyperlink{class_picto_1_1_audio_element_a77706885502e3c734a9f43db5ee40d9b}{Picto\-::\-Audio\-Element}, \hyperlink{class_picto_1_1_diamond_graphic_a39062fdac53dd41838656276e069de64}{Picto\-::\-Diamond\-Graphic}, \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a9c2ebca96f54fe0d1b254f738a5bd572}{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}, \hyperlink{class_picto_1_1_shape_shifter_graphic_a0384106b9b8613f29cff7852664cb10e}{Picto\-::\-Shape\-Shifter\-Graphic}, \hyperlink{class_picto_1_1_variable_map_ac8284493461722d9d51f459de6e387e3}{Picto\-::\-Variable\-Map}, \hyperlink{class_picto_1_1_u_i_enabled_a64686f0f0e7608905a61259a8b31bb7b}{Picto\-::\-U\-I\-Enabled}, \hyperlink{class_picto_1_1_arrow_graphic_a42ea12aff4743356a2763cd8b4daf797}{Picto\-::\-Arrow\-Graphic}, \hyperlink{class_picto_1_1_analysis_period_a9fab160031ab8115f5a9e83d93b1fe39}{Picto\-::\-Analysis\-Period}, \hyperlink{class_picto_1_1_flow_element_a45e730febc1c7b914956fed188fd7db5}{Picto\-::\-Flow\-Element}, \hyperlink{class_picto_1_1_analysis_data_source_dep_a1867f1cb91c2f5e24c93816a93460260}{Picto\-::\-Analysis\-Data\-Source\-Dep}, \hyperlink{class_picto_1_1_analysis_run_notes_data_ae58942e718660c9caeb73d2dab934540}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_analysis_frame_data_a935dac68ae9c34e8faddcfabff4ff4be}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_script_function_a4bd4e7f351bc78806730173f6586e565}{Picto\-::\-Script\-Function}, \hyperlink{class_picto_1_1_stopwatch_controller_a96e5d85e8af64b5b284aa9906f82cd51}{Picto\-::\-Stopwatch\-Controller}, \hyperlink{class_picto_1_1_analysis_variable_map_aa3e515949e9225ac6655095b981bb910}{Picto\-::\-Analysis\-Variable\-Map}, \hyperlink{class_picto_1_1_range_parameter_a1b1ffb07ce7cd71a2a37b56196d9b10d}{Picto\-::\-Range\-Parameter}, \hyperlink{class_picto_1_1_script_element_a1af92afd8e8b081c8f394ea51449419f}{Picto\-::\-Script\-Element}, \hyperlink{class_picto_1_1_file_output_a50396165a477df3c1b39ebd3b0be0e0c}{Picto\-::\-File\-Output}, \hyperlink{class_picto_1_1_analysis_script_holder_aecdb2b312b52fe6c9575fb0e6dc0f844}{Picto\-::\-Analysis\-Script\-Holder}, \hyperlink{class_picto_1_1_analysis_timer_ac3e36dbc727da6f3aa6304b4d1878e3d}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_associate_host_link_a5369a9879eb508a0fadea06a5f56ce94}{Picto\-::\-Associate\-Host\-Link}, \hyperlink{class_picto_1_1_signal_value_parameter_ad04878f10c4ed0960ccf3ea89dd99fe4}{Picto\-::\-Signal\-Value\-Parameter}, \hyperlink{class_picto_1_1_string_parameter_ae3f4be0d90aea389c997542255473282}{Picto\-::\-String\-Parameter}, \hyperlink{class_picto_1_1_analysis_definition_a0b86a233577525d55cca4b033f49f0dd}{Picto\-::\-Analysis\-Definition}, \hyperlink{class_picto_1_1_analysis_aef182947f1ef6c4020b1f39bade19d3a}{Picto\-::\-Analysis}, \hyperlink{class_picto_1_1_boolean_parameter_a3ef6da062fc65cd28000615c27ad3f17}{Picto\-::\-Boolean\-Parameter}, \hyperlink{class_picto_1_1_control_target_a708c1e33dd901e2295116e9881dd981e}{Picto\-::\-Control\-Target}, \hyperlink{class_picto_1_1_analysis_file_output_a5a892bff91012d5818e0cfcfae485242}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_analysis_reward_data_a04595898ba52980c6f48755178c546ee}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_layer_a676ead3b97985d8ca64770c1ed34512f}{Picto\-::\-Layer}, \hyperlink{class_picto_1_1_u_i_element_ade6fd5f061f44ac8d87fc320cf77c4af}{Picto\-::\-U\-I\-Element}, \hyperlink{class_picto_1_1_double_parameter_a9c0c23222d1dacbe7f4a8d0914c52188}{Picto\-::\-Double\-Parameter}, \hyperlink{class_picto_1_1_audio_file_parameter_ab486817cbca0fd528df3d8fec0998bed}{Picto\-::\-Audio\-File\-Parameter}, \hyperlink{class_picto_1_1_picture_graphic_acb06b30d3f14c7dbe294e0ae0dae9f60}{Picto\-::\-Picture\-Graphic}, \hyperlink{class_picto_1_1_script_controller_a98107f46374aa1980fcba656d2f5fb97}{Picto\-::\-Script\-Controller}, \hyperlink{class_picto_1_1_output_element_container_a19905a70272fa330d195ed51bfca1a16}{Picto\-::\-Output\-Element\-Container}, \hyperlink{class_picto_1_1_switch_element_ac45d51381bd2aec3dfa5aa6847ccb817}{Picto\-::\-Switch\-Element}, \hyperlink{class_picto_1_1_output_element_container_a9117dfc9802f1e19e25f75d7f5ef56a1}{Picto\-::\-Output\-Element\-Container}, \hyperlink{class_picto_1_1_circle_graphic_a0954a798467ec7f98d66c400813ce1cb}{Picto\-::\-Circle\-Graphic}, \hyperlink{class_picto_1_1_analysis_output_dep_ae582bad5894468e6792f10943de73a65}{Picto\-::\-Analysis\-Output\-Dep}, \hyperlink{class_picto_1_1_result_container_a9c2987bcce16718221d1902c9f781532}{Picto\-::\-Result\-Container}, \hyperlink{class_picto_1_1_rect_target_a5adb0786838bf59e20c6ace988c50857}{Picto\-::\-Rect\-Target}, \hyperlink{class_picto_1_1_test_controller_aaba0fa543d3dd1f83b60b414226efac1}{Picto\-::\-Test\-Controller}, \hyperlink{class_picto_1_1_canvas_a584e05795bbbe555563a6ffefe3e38cf}{Picto\-::\-Canvas}, \hyperlink{class_picto_1_1_result_add19b99738db3cf72ca051d57fbeaf9b}{Picto\-::\-Result}, \hyperlink{class_picto_1_1_cursor_graphic_acd8db3afbc8485e4563f1fbafe61911d}{Picto\-::\-Cursor\-Graphic}, \hyperlink{class_picto_1_1_digital_output_a41b29997a13c465b0485923480c0255a}{Picto\-::\-Digital\-Output}, \hyperlink{class_picto_1_1_picto_data_ad3c904629ebd1ecc9bd488b3bc53ee95}{Picto\-::\-Picto\-Data}, \hyperlink{class_picto_1_1_line_graphic_a5cad9a7211dbd29c5c38c01bec88ec48}{Picto\-::\-Line\-Graphic}, \hyperlink{class_picto_1_1_file_parameter_ac8e70960eed0516f77c731a415b364be}{Picto\-::\-File\-Parameter}, \hyperlink{class_picto_1_1_image_file_parameter_aafb5a4fd1059db86aaf754b0948f2847}{Picto\-::\-Image\-File\-Parameter}, \hyperlink{class_picto_1_1_u_i_data_aaf5dd8851655e8d181441364d6125836}{Picto\-::\-U\-I\-Data}, \hyperlink{class_picto_1_1_analysis_number_variable_a8bd41a1ccf35063cc5cef779ee3197cc}{Picto\-::\-Analysis\-Number\-Variable}, \hyperlink{class_picto_1_1_analysis_string_variable_a3b3172492d3a79994f08bb2f412a39a0}{Picto\-::\-Analysis\-String\-Variable}, \hyperlink{class_picto_1_1_number_variable_a4ee142237d5b7c7c35371225b6d464e0}{Picto\-::\-Number\-Variable}, \hyperlink{class_picto_1_1_string_variable_adbcca2dfd2b76a8d312f08cc14f7be6b}{Picto\-::\-String\-Variable}, \hyperlink{class_picto_1_1_analysis_script_holder_a98ebdcd9a4c026715b350bb24f181a48}{Picto\-::\-Analysis\-Script\-Holder}, \hyperlink{class_picto_1_1_binary_data_output_a2ec13542cada30caa5e0f84c3d4aa6c8}{Picto\-::\-Binary\-Data\-Output}, \hyperlink{class_picto_1_1_analysis_function_ae4f715e2cacddea6b80c734305dcb966}{Picto\-::\-Analysis\-Function}, \hyperlink{class_picto_1_1_parameter_container_ac6d51674b3c137df04536991b3d08a48}{Picto\-::\-Parameter\-Container}, \hyperlink{class_picto_1_1_machine_container_a53ea9684c79a21ff959dfaf3a3bc73ae}{Picto\-::\-Machine\-Container}, \hyperlink{class_picto_1_1_analysis_variable_a4279b4c9eca4a7ef60de8e4db91dc6f3}{Picto\-::\-Analysis\-Variable}, \hyperlink{class_picto_1_1_control_target_result_a8c5964c5d142af68f1a3ef59379cf963}{Picto\-::\-Control\-Target\-Result}, \hyperlink{class_picto_1_1_u_i_info_a4e68484037ffb5b94e6f9b49c5ae0384}{Picto\-::\-U\-I\-Info}, \hyperlink{class_picto_1_1_analysis_tool_a4a54799d41c1e07137cbea3d25d6a6bf}{Picto\-::\-Analysis\-Tool}, \hyperlink{class_picto_1_1_numeric_variable_a9507fbddffd7321c6194b97e6b279c51}{Picto\-::\-Numeric\-Variable}, \hyperlink{class_picto_1_1_compare_to_param_expression_a94c5b9ccf6c5ea02d33f84508934b20e}{Picto\-::\-Compare\-To\-Param\-Expression}, \hyperlink{class_picto_1_1_compare_to_val_expression_a07786067a55a101d71142d01c7ddef7f}{Picto\-::\-Compare\-To\-Val\-Expression}, \hyperlink{class_picto_1_1_analysis_data_source_a8d43777d1a7d1b1467c9df205d118bb3}{Picto\-::\-Analysis\-Data\-Source}, \hyperlink{class_picto_1_1_default_data_source_af90179d2a1f124a81b0728bbf4897700}{Picto\-::\-Default\-Data\-Source}, \hyperlink{class_picto_1_1_circle_target_a5bcb5062df8831568f43a452ad5c7160}{Picto\-::\-Circle\-Target}, \hyperlink{class_picto_1_1_control_target_result_ab9de740ffbe40f637b60b76bf3b71ad9}{Picto\-::\-Control\-Target\-Result}, \hyperlink{class_picto_1_1_element_trigger_adcd54cab116ab4fcdf50afc560f63b20}{Picto\-::\-Element\-Trigger}, \hyperlink{class_picto_1_1_ender_container_ac1a471ca77488321f1d4ac77e243c7c4}{Picto\-::\-Ender\-Container}, \hyperlink{class_picto_1_1_frame_trigger_ae8bfb4b9e13de2b68146384c0db79555}{Picto\-::\-Frame\-Trigger}, \hyperlink{class_picto_1_1_l_f_p_trigger_a025cb963d3f768be72e9f77120e0d7c1}{Picto\-::\-L\-F\-P\-Trigger}, \hyperlink{class_picto_1_1_property_trigger_a9214c01d93bcdc36e2409aed4c737333}{Picto\-::\-Property\-Trigger}, \hyperlink{class_picto_1_1_signal_trigger_ab40ec576a63376e26fc96da66953fce5}{Picto\-::\-Signal\-Trigger}, \hyperlink{class_picto_1_1_spike_trigger_a89dba39ea8d5fcaf0ce39c0dbabda2ca}{Picto\-::\-Spike\-Trigger}, \hyperlink{class_picto_1_1_starter_container_a53a89fc8bb75a5cc2cee113c45a44015}{Picto\-::\-Starter\-Container}, \hyperlink{class_picto_1_1_transition_trigger_a8f8ec8656b311127912ab7d93b57f40a}{Picto\-::\-Transition\-Trigger}, \hyperlink{class_picto_1_1_align_trigger_a22686abca1d448cf9e31bb72cdf69bd5}{Picto\-::\-Align\-Trigger}, \hyperlink{class_picto_1_1_frame_data_source_a6f47e262d35d3a9d9034303fec703663}{Picto\-::\-Frame\-Data\-Source}, \hyperlink{class_picto_1_1_property_data_source_ac51a648a0e82ecf3d15ab9725e38e92a}{Picto\-::\-Property\-Data\-Source}, \hyperlink{class_picto_1_1_signal_data_source_a5ef013d7fa0078cdc66306a45746a2cf}{Picto\-::\-Signal\-Data\-Source}, \hyperlink{class_picto_1_1_time_data_source_a1fdaec937912151f48aaf39410f11258}{Picto\-::\-Time\-Data\-Source}, \hyperlink{class_picto_1_1_time_trigger_aaf1915d6b5c4c9544b88c86845be6bcb}{Picto\-::\-Time\-Trigger}, \hyperlink{class_picto_1_1_element_data_source_af49f3d4cc7142358d9593bc18ca2d34d}{Picto\-::\-Element\-Data\-Source}, \hyperlink{class_picto_1_1_spike_data_source_a8657cb8fd2a246e2d50df7a2858dca36}{Picto\-::\-Spike\-Data\-Source}, \hyperlink{class_picto_1_1_align_data_source_af81f83b2691119af53ffcbaa5e6ac1ac}{Picto\-::\-Align\-Data\-Source}, \hyperlink{class_picto_1_1_l_f_p_data_source_af246826d556df8c246478d4327e072ea}{Picto\-::\-L\-F\-P\-Data\-Source}, and \hyperlink{class_picto_1_1_state_machine_editor_data_ace4e1b873c7606f6b771daf57e1ee132}{Picto\-::\-State\-Machine\-Editor\-Data}.
+
+
+
+Definition at line 180 of file Asset.\-h.
+
+\hypertarget{class_picto_1_1_asset_a348f19144d26a035faebd628734038dd}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!validate\-Tree@{validate\-Tree}}
+\index{validate\-Tree@{validate\-Tree}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{validate\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::validate\-Tree (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_asset_a348f19144d26a035faebd628734038dd}
+
+
+Returns true if this asset and all of its children have valid syntax. 
+
+It is awkward to call validate\-Tree on an \hyperlink{class_picto_1_1_asset}{Asset} which has no way to store children. Probably, this function should be in the \hyperlink{class_picto_1_1_data_store}{Data\-Store} class and \hyperlink{class_picto_1_1_asset}{Asset} should only expose \hyperlink{class_picto_1_1_asset_a2b2cc1ab81322b5280d66b020205f6aa}{validate\-Object()}. It might be a good idea to change that at some point, but be very careful. This all results from the fact \hyperlink{class_picto_1_1_asset}{Asset} object's can all have parents but can't all have kids. 
+
+Reimplemented in \hyperlink{class_picto_1_1_data_store_a1e5bb3fb88fcfaa2a17920a7457bcbe9}{Picto\-::\-Data\-Store}, and \hyperlink{class_picto_1_1_analysis_container_af6f0f3307b57e468ee6331c2470c70a3}{Picto\-::\-Analysis\-Container}.
+
+
+
+Definition at line 59 of file Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_asset_a0937b75a65094505ea69b00be1aaab7b}{\index{Picto\-::\-Asset@{Picto\-::\-Asset}!was\-Edited@{was\-Edited}}
+\index{was\-Edited@{was\-Edited}!Picto::Asset@{Picto\-::\-Asset}}
+\subsubsection[{was\-Edited}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Asset\-::was\-Edited (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_asset_a0937b75a65094505ea69b00be1aaab7b}
+
+
+Returns true if this object was edited since it was deserialized. 
+
+Deserialization obviously changes the asset as well; however, we reset the underlying edited\-\_\- flag back to false when deserialization completes so that we can tell if the asset is the same or different from the one described by the input descriptive xml. 
+
+Definition at line 62 of file Asset.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Asset.\-h\item 
+source/common/storage/Asset.\-cpp\end{DoxyCompactItemize}

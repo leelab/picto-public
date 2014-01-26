@@ -1,0 +1,93 @@
+\hypertarget{class_picto_1_1_data_state_list}{\section{Picto\-:\-:Data\-State\-List$<$ T $>$ Class Template Reference}
+\label{class_picto_1_1_data_state_list}\index{Picto\-::\-Data\-State\-List$<$ T $>$@{Picto\-::\-Data\-State\-List$<$ T $>$}}
+}
+
+
+A lot has changed since the original \hyperlink{namespace_picto}{Picto} Playback Design, this class was part of an attempt to make code of different \hyperlink{class_picto_1_1_data_state}{Data\-State} types very reusable. In the end, more code reusability led to less efficiency in terms of timing and memory space and we opted for a more tailored approach with each of the \hyperlink{class_picto_1_1_data_state}{Data\-State} classes doing a lot more of its own work to handle the \hyperlink{class_picto_1_1_data_state}{Data\-State} interface in the most efficient way possible.  
+
+
+
+
+{\ttfamily \#include $<$Data\-State\-List.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a73165bfb14ec65f38a11d9881fc57908}{void {\bfseries clear} ()}\label{class_picto_1_1_data_state_list_a73165bfb14ec65f38a11d9881fc57908}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a1ce0223ed543778e6b0f796c15949d88}{int {\bfseries size} ()}\label{class_picto_1_1_data_state_list_a1ce0223ed543778e6b0f796c15949d88}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_aa80fdabfd3ef4813f1b286ad591404b9}{void {\bfseries append} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ data)}\label{class_picto_1_1_data_state_list_aa80fdabfd3ef4813f1b286ad591404b9}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_ab1468b6e770a7d5ac63489185e5dd302}{void {\bfseries clear\-Before} (double time)}\label{class_picto_1_1_data_state_list_ab1468b6e770a7d5ac63489185e5dd302}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a44eecb3da8e1260fb6e183cfe779a654}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ {\bfseries curr\-Value} ()}\label{class_picto_1_1_data_state_list_a44eecb3da8e1260fb6e183cfe779a654}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a537505e2507b482dfe16c4f02b685e59}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ {\bfseries next\-Value} ()}\label{class_picto_1_1_data_state_list_a537505e2507b482dfe16c4f02b685e59}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_acbf4a057f3c5aac414df78e7b2403494}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ {\bfseries next2\-Value} ()}\label{class_picto_1_1_data_state_list_acbf4a057f3c5aac414df78e7b2403494}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_aa55b0e4ebc4a14ae7390a4395c4a5947}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ {\bfseries first\-Value} ()}\label{class_picto_1_1_data_state_list_aa55b0e4ebc4a14ae7390a4395c4a5947}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a80572d47e0adf8310448b969e01cd251}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ {\bfseries last\-Value} ()}\label{class_picto_1_1_data_state_list_a80572d47e0adf8310448b969e01cd251}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a65a070480156cd51b5b55ec5ac317d43}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries curr\-Index} ()}\label{class_picto_1_1_data_state_list_a65a070480156cd51b5b55ec5ac317d43}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a5ec87ed401c22cf7da06999029465e36}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries next\-Index} ()}\label{class_picto_1_1_data_state_list_a5ec87ed401c22cf7da06999029465e36}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a332584998a1ac8e2194d2a0dbf4aef7f}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries next2\-Index} ()}\label{class_picto_1_1_data_state_list_a332584998a1ac8e2194d2a0dbf4aef7f}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a3431936936cc04bddf7ea0c75ba168f1}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries first\-Index} ()}\label{class_picto_1_1_data_state_list_a3431936936cc04bddf7ea0c75ba168f1}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_ad7189d5a620c12eb09bb6e9703c7bff5}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries last\-Index} ()}\label{class_picto_1_1_data_state_list_ad7189d5a620c12eb09bb6e9703c7bff5}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_ac7667d2e8b54f7217caa4025c46e775f}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries move\-To\-Cell} (\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} index)}\label{class_picto_1_1_data_state_list_ac7667d2e8b54f7217caa4025c46e775f}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a6b0707a9893a82a1374d099ee8d6e135}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} {\bfseries move\-To\-Next} ()}\label{class_picto_1_1_data_state_list_a6b0707a9893a82a1374d099ee8d6e135}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a4be659f33938d15859906afc50d5195d}{Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ $>$ {\bfseries get\-Values\-Since} (double time)}\label{class_picto_1_1_data_state_list_a4be659f33938d15859906afc50d5195d}
+
+\item 
+\hypertarget{class_picto_1_1_data_state_list_a8d33dd9c9d20df3406ac31ef45053544}{Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_indexed_data}{Indexed\-Data} $>$ $>$ {\bfseries get\-Values\-Until} (double time)}\label{class_picto_1_1_data_state_list_a8d33dd9c9d20df3406ac31ef45053544}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$template$<$ typename $>$ class T$>$class Picto\-::\-Data\-State\-List$<$ T $>$}
+
+A lot has changed since the original \hyperlink{namespace_picto}{Picto} Playback Design, this class was part of an attempt to make code of different \hyperlink{class_picto_1_1_data_state}{Data\-State} types very reusable. In the end, more code reusability led to less efficiency in terms of timing and memory space and we opted for a more tailored approach with each of the \hyperlink{class_picto_1_1_data_state}{Data\-State} classes doing a lot more of its own work to handle the \hyperlink{class_picto_1_1_data_state}{Data\-State} interface in the most efficient way possible. 
+
+We should probably remove this code. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Data\-State\-List.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Data\-State\-List.\-h\end{DoxyCompactItemize}

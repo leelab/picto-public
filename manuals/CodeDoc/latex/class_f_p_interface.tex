@@ -1,0 +1,107 @@
+\hypertarget{class_f_p_interface}{\section{F\-P\-Interface Class Reference}
+\label{class_f_p_interface}\index{F\-P\-Interface@{F\-P\-Interface}}
+}
+
+
+The interface between the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director} and the application managing the Pictobox Front Panel.  
+
+
+
+
+{\ttfamily \#include $<$F\-P\-Interface.\-h$>$}
+
+Inheritance diagram for F\-P\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_f_p_interface}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_f_p_interface_a1cf315b0168842fe2feb997ed910c08e}{do\-Incoming\-Commands} ()
+\begin{DoxyCompactList}\small\item\em Causes the commands coming in from the front panel to be read, handled, and responded to. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_f_p_interface_a649ddbc8475e0abbd519df5676dbe1e1}{F\-P\-Interface} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_f_p_interface}{F\-P\-Interface} object. \end{DoxyCompactList}\item 
+\hypertarget{class_f_p_interface_aa88d34be9018d01baba0ca938f6c70ae}{void \hyperlink{class_f_p_interface_aa88d34be9018d01baba0ca938f6c70ae}{run\-Experiment} (int trials\-Per\-Block, int blocks)}\label{class_f_p_interface_aa88d34be9018d01baba0ca938f6c70ae}
+
+\begin{DoxyCompactList}\small\item\em N\-O\-T U\-S\-E\-D. This is no longer used and should probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_p_interface_a4582783afa21edafe30d900889324ca1}{virtual void \hyperlink{class_f_p_interface_a4582783afa21edafe30d900889324ca1}{name\-Was\-Changed} ()}\label{class_f_p_interface_a4582783afa21edafe30d900889324ca1}
+
+\begin{DoxyCompactList}\small\item\em Called when someone on the \hyperlink{class_director}{Director} side changed the \hyperlink{class_director}{Director} name. Stores the value so that it will be available to the Front Panel when requested. \end{DoxyCompactList}\item 
+\hypertarget{class_f_p_interface_ada309d75eefe2043318d0d3c203b0cfd}{virtual void \hyperlink{class_f_p_interface_ada309d75eefe2043318d0d3c203b0cfd}{ip\-Was\-Changed} ()}\label{class_f_p_interface_ada309d75eefe2043318d0d3c203b0cfd}
+
+\begin{DoxyCompactList}\small\item\em Called when someone on the \hyperlink{class_director}{Director} side changed the I\-P address. Stores the value so that it will be available to the Front Panel when requested. \end{DoxyCompactList}\item 
+\hypertarget{class_f_p_interface_ac5732fcfe16d3a3a4dfa5aaae9658663}{virtual void \hyperlink{class_f_p_interface_ac5732fcfe16d3a3a4dfa5aaae9658663}{reward\-Duration\-Was\-Changed} (int controller)}\label{class_f_p_interface_ac5732fcfe16d3a3a4dfa5aaae9658663}
+
+\begin{DoxyCompactList}\small\item\em Called when someone on the \hyperlink{class_director}{Director} side changed the default reward duration. Stores the value so that it will be available to the Front Panel when requested. \end{DoxyCompactList}\item 
+\hypertarget{class_f_p_interface_a79917bfd3c4cf7cfd35c0c38bd91ca44}{virtual void \hyperlink{class_f_p_interface_a79917bfd3c4cf7cfd35c0c38bd91ca44}{flush\-Duration\-Was\-Changed} (int controller)}\label{class_f_p_interface_a79917bfd3c4cf7cfd35c0c38bd91ca44}
+
+\begin{DoxyCompactList}\small\item\em Called when someone on the \hyperlink{class_director}{Director} side changed the default flush duration. Stores the value so that it will be available to the Front Panel when requested. \end{DoxyCompactList}\item 
+\hypertarget{class_f_p_interface_ae096571c8ac5e609915ddab1a8608be9}{virtual void \hyperlink{class_f_p_interface_ae096571c8ac5e609915ddab1a8608be9}{status\-Was\-Changed} (Q\-String status)}\label{class_f_p_interface_ae096571c8ac5e609915ddab1a8608be9}
+
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director} status changes. Stores the value so that it will be available to the Front Panel when requested. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The interface between the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director} and the application managing the Pictobox Front Panel. 
+
+This class implements the \hyperlink{class_control_panel_interface}{Control\-Panel\-Interface} for communication with the Embedded\-Front\-Panel application. The interface is through a local socket and simple http style commands (ie. F\-P\-P\-U\-T, F\-P\-G\-E\-T, etc). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file F\-P\-Interface.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_f_p_interface_a649ddbc8475e0abbd519df5676dbe1e1}{\index{F\-P\-Interface@{F\-P\-Interface}!F\-P\-Interface@{F\-P\-Interface}}
+\index{F\-P\-Interface@{F\-P\-Interface}!FPInterface@{F\-P\-Interface}}
+\subsubsection[{F\-P\-Interface}]{\setlength{\rightskip}{0pt plus 5cm}F\-P\-Interface\-::\-F\-P\-Interface (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_f_p_interface_a649ddbc8475e0abbd519df5676dbe1e1}
+
+
+Constructs a \hyperlink{class_f_p_interface}{F\-P\-Interface} object. 
+
+Creates Q\-Tcp\-Socket interfaces and sets up Picto\-::\-Protocol\-Command\-Hander object to handle the command interface. 
+
+Definition at line 10 of file F\-P\-Interface.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f_p_interface_a1cf315b0168842fe2feb997ed910c08e}{\index{F\-P\-Interface@{F\-P\-Interface}!do\-Incoming\-Commands@{do\-Incoming\-Commands}}
+\index{do\-Incoming\-Commands@{do\-Incoming\-Commands}!FPInterface@{F\-P\-Interface}}
+\subsubsection[{do\-Incoming\-Commands}]{\setlength{\rightskip}{0pt plus 5cm}void F\-P\-Interface\-::do\-Incoming\-Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [slot]}}}\label{class_f_p_interface_a1cf315b0168842fe2feb997ed910c08e}
+
+
+Causes the commands coming in from the front panel to be read, handled, and responded to. 
+
+This function Should be called a lot, like every frame to avoid lag in the control panel. 
+
+Definition at line 66 of file F\-P\-Interface.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/frontpanel/F\-P\-Interface.\-h\item 
+source/director/frontpanel/F\-P\-Interface.\-cpp\end{DoxyCompactItemize}

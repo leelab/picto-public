@@ -1,0 +1,210 @@
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic}{\section{Picto\-:\-:Randomly\-Filled\-Grid\-Graphic Class Reference}
+\label{class_picto_1_1_randomly_filled_grid_graphic}\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+}
+
+
+A graphic that contains a grid filled with two separate colors of squares. The positions of the different square colors is random and rerandomized at a preset frequency. The relative number of each color of squares is maintained over randomization.  
+
+
+
+
+{\ttfamily \#include $<$Randomly\-Filled\-Grid\-Graphic.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Randomly\-Filled\-Grid\-Graphic\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.038278cm]{class_picto_1_1_randomly_filled_grid_graphic}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_randomly_filled_grid_graphic_ad05324d26543dd9f22e0b12f6f6f2043}{Randomly\-Filled\-Grid\-Graphic} (Q\-Point position=Q\-Point(), Q\-Rect dimensions=Q\-Rect(), Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color}=Q\-Color(), Q\-Color color2=Q\-Color(), int num\-Horiz\-Squares=1, int num\-Vert\-Squares=1, int num\-Color2=1, int update\-Frame\-Rate=0)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_randomly_filled_grid_graphic}{Randomly\-Filled\-Grid\-Graphic} at the input position with the input dimensions (only size component is used), with the primary color and secondary color2, the input number of horizontal and vertical squares in the grid, and the total number of color2 squares at a given frame. Randomization happens once per update\-Frame\-Rate Frames. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a995008d405989ad9a65583ce819b7144}{void \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a995008d405989ad9a65583ce819b7144}{draw} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_a995008d405989ad9a65583ce819b7144}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{struct_picto_1_1_visual_element_ad4a2003a51dadee2e5867abfafba68c1}{Visual\-Element\-::draw()} to randomize the color\-List\-\_\- built in build\-Color\-List() and draw it onto a grid for rendering. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a0a4553545d058cd58a8eae97e6bc5c9f}{void \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a0a4553545d058cd58a8eae97e6bc5c9f}{update\-Animation} (int frame, Q\-Time elapsed\-Time)}\label{class_picto_1_1_randomly_filled_grid_graphic_a0a4553545d058cd58a8eae97e6bc5c9f}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{struct_picto_1_1_visual_element_a598c8f6e33c58b85b80197e3743b0e91}{Visual\-Element\-::update\-Animation()} to rerandomize and draw the grid graphic once every Frames\-Per\-Update. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a5e43e785071b79026b583968c9f83e36}{void \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a5e43e785071b79026b583968c9f83e36}{set\-Color2} (Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color})}\label{class_picto_1_1_randomly_filled_grid_graphic_a5e43e785071b79026b583968c9f83e36}
+
+\begin{DoxyCompactList}\small\item\em Sets the color of the second set of squares that are displayed in this graphic. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a39737e2eb0c755f1c006f76df8314381}{Q\-Color \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a39737e2eb0c755f1c006f76df8314381}{get\-Color2} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_a39737e2eb0c755f1c006f76df8314381}
+
+\begin{DoxyCompactList}\small\item\em Gets the color of the second set of squares that are displayed in this graphic. \end{DoxyCompactList}\item 
+Q\-Rect \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_af2c1d9be95dcbe00c4c5aa8917bdbdb0}{get\-Dimensions} ()
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Rect with the dimensions (width, height) of this graphic. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a2d8c5afb5cd60cab80d5ef325f83f780}{set\-Dimensions} (Q\-Rect dimensions)
+\begin{DoxyCompactList}\small\item\em Set the dimensions (width, height) of this graphic. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_ae78a7a82bc7c563f4ad8afb5c6e82076}{Q\-Point \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_ae78a7a82bc7c563f4ad8afb5c6e82076}{get\-Position\-Offset} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_ae78a7a82bc7c563f4ad8afb5c6e82076}
+
+\begin{DoxyCompactList}\small\item\em This returns the offset from the top left corner of the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} image to the point in the image which should be used for positioning. For example, in a circle whose center should be positioned at the point entered into \hyperlink{struct_picto_1_1_visual_element_a454cc96862097e96a0b0f1d2c83e23ed}{set\-Position()}, this function would return Q\-Point(radius,radius). \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_aed954b5c044b267c4da5a7869f55c9c5}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a02db53d5e936e69ef1c49f11e9ed8af9}{virtual Q\-String \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a02db53d5e936e69ef1c49f11e9ed8af9}{get\-U\-I\-Template} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_a02db53d5e936e69ef1c49f11e9ed8af9}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a098f91c918916a5f7d052ae4b02ef86c}{static \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} $\ast$ \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a098f91c918916a5f7d052ae4b02ef86c}{New\-Visual\-Element} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_a098f91c918916a5f7d052ae4b02ef86c}
+
+\begin{DoxyCompactList}\small\item\em This is no longer used by parts of \hyperlink{namespace_picto}{Picto} that are being used. It sbould probably be deleted. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a1c1441973a462a2abf3f96ac29e70e02}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a1c1441973a462a2abf3f96ac29e70e02}{Create} ()}\label{class_picto_1_1_randomly_filled_grid_graphic_a1c1441973a462a2abf3f96ac29e70e02}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_randomly_filled_grid_graphic}{Randomly\-Filled\-Grid\-Graphic} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a7d512e1c379a5da7ca1ac2c3bda6e8c5}{static const Q\-String \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a7d512e1c379a5da7ca1ac2c3bda6e8c5}{type} = \char`\"{}Randomly Filled Grid Graphic\char`\"{}}\label{class_picto_1_1_randomly_filled_grid_graphic_a7d512e1c379a5da7ca1ac2c3bda6e8c5}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a0aba9d31a08ad997a9d2016a275015db}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a9c2ebca96f54fe0d1b254f738a5bd572}{virtual bool \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a9c2ebca96f54fe0d1b254f738a5bd572}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_randomly_filled_grid_graphic_a9c2ebca96f54fe0d1b254f738a5bd572}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A graphic that contains a grid filled with two separate colors of squares. The positions of the different square colors is random and rerandomized at a preset frequency. The relative number of each color of squares is maintained over randomization. 
+
+Randomly filled grids are used in many neuro physiology experiments. These are rectangular grids in which each space in the grid is filled with one of two colors, at random, according to a set distribution. The two colors, the number of squares in the grid and how it is split up into rows and columns can all be set. The designer can also set the rate at which the grid colors are re-\/randomized, and of course things like the grid size and position.
+
+This is one of those graphics that was created toward the beginning of the \hyperlink{namespace_picto}{Picto} project but wasn't used in any actual experiments. For this reason it is missing some important things like Script Properties. It should really be brought up to date. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Randomly\-Filled\-Grid\-Graphic.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_ad05324d26543dd9f22e0b12f6f6f2043}{\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}!Randomly\-Filled\-Grid\-Graphic@{Randomly\-Filled\-Grid\-Graphic}}
+\index{Randomly\-Filled\-Grid\-Graphic@{Randomly\-Filled\-Grid\-Graphic}!Picto::RandomlyFilledGridGraphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+\subsubsection[{Randomly\-Filled\-Grid\-Graphic}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Randomly\-Filled\-Grid\-Graphic\-::\-Randomly\-Filled\-Grid\-Graphic (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{position = {\ttfamily QPoint()}, }
+\item[{Q\-Rect}]{dimensions = {\ttfamily QRect()}, }
+\item[{Q\-Color}]{color = {\ttfamily QColor()}, }
+\item[{Q\-Color}]{color2 = {\ttfamily QColor()}, }
+\item[{int}]{num\-Horiz\-Squares = {\ttfamily 1}, }
+\item[{int}]{num\-Vert\-Squares = {\ttfamily 1}, }
+\item[{int}]{num\-Color2 = {\ttfamily 1}, }
+\item[{int}]{update\-Frame\-Rate = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_randomly_filled_grid_graphic_ad05324d26543dd9f22e0b12f6f6f2043}
+
+
+Constructs a \hyperlink{class_picto_1_1_randomly_filled_grid_graphic}{Randomly\-Filled\-Grid\-Graphic} at the input position with the input dimensions (only size component is used), with the primary color and secondary color2, the input number of horizontal and vertical squares in the grid, and the total number of color2 squares at a given frame. Randomization happens once per update\-Frame\-Rate Frames. 
+
+Adds the following Properties\-:
+\begin{DoxyItemize}
+\item Color2\-: Every randomly filled grid graphic has two separate colors of squares, this is the second square color.
+\item Size\-: The size of the grid graphic in pixels.
+\item Horizontal\-Squares\-: The number of columns in the grid.
+\item Vertical\-Squares\-: The number of rows in the grid.
+\item Color2\-Squares\-: The number of squares that will have Color2 at a given time.
+\item Frames\-Per\-Update\-: The number of frames that will pass before the grid is randomized and colored squares are redistributed. \begin{DoxyNote}{Note}
+If the number of squares requested doesn't evenly divide the total size, the graphic will not render properly. It's the responsibility of the user to ensure this doesn't happen. This should be easlly fixed by putting a check into \hyperlink{class_picto_1_1_randomly_filled_grid_graphic_a9c2ebca96f54fe0d1b254f738a5bd572}{validate\-Object()}, but we haven't done it yet. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+Definition at line 26 of file Randomly\-Filled\-Grid\-Graphic.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_aed954b5c044b267c4da5a7869f55c9c5}{\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::RandomlyFilledGridGraphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Randomly\-Filled\-Grid\-Graphic\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_randomly_filled_grid_graphic_aed954b5c044b267c4da5a7869f55c9c5}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 57 of file Randomly\-Filled\-Grid\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_af2c1d9be95dcbe00c4c5aa8917bdbdb0}{\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}!get\-Dimensions@{get\-Dimensions}}
+\index{get\-Dimensions@{get\-Dimensions}!Picto::RandomlyFilledGridGraphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+\subsubsection[{get\-Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Rect Picto\-::\-Randomly\-Filled\-Grid\-Graphic\-::get\-Dimensions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_randomly_filled_grid_graphic_af2c1d9be95dcbe00c4c5aa8917bdbdb0}
+
+
+Returns a Q\-Rect with the dimensions (width, height) of this graphic. 
+
+\begin{DoxyNote}{Note}
+The returned value contains no position information. Only the Width, Height values should be used. 
+\end{DoxyNote}
+
+
+Definition at line 50 of file Randomly\-Filled\-Grid\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a0aba9d31a08ad997a9d2016a275015db}{\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::RandomlyFilledGridGraphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Randomly\-Filled\-Grid\-Graphic\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_randomly_filled_grid_graphic_a0aba9d31a08ad997a9d2016a275015db}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 178 of file Randomly\-Filled\-Grid\-Graphic.\-cpp.
+
+\hypertarget{class_picto_1_1_randomly_filled_grid_graphic_a2d8c5afb5cd60cab80d5ef325f83f780}{\index{Picto\-::\-Randomly\-Filled\-Grid\-Graphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}!set\-Dimensions@{set\-Dimensions}}
+\index{set\-Dimensions@{set\-Dimensions}!Picto::RandomlyFilledGridGraphic@{Picto\-::\-Randomly\-Filled\-Grid\-Graphic}}
+\subsubsection[{set\-Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Randomly\-Filled\-Grid\-Graphic\-::set\-Dimensions (
+\begin{DoxyParamCaption}
+\item[{Q\-Rect}]{dimensions}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_randomly_filled_grid_graphic_a2d8c5afb5cd60cab80d5ef325f83f780}
+
+
+Set the dimensions (width, height) of this graphic. 
+
+\begin{DoxyNote}{Note}
+Only the width and height of the input Q\-Rect are used. x,y position values will be ignored. 
+\end{DoxyNote}
+
+
+Definition at line 54 of file Randomly\-Filled\-Grid\-Graphic.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Randomly\-Filled\-Grid\-Graphic.\-h\item 
+source/common/stimuli/Randomly\-Filled\-Grid\-Graphic.\-cpp\end{DoxyCompactItemize}

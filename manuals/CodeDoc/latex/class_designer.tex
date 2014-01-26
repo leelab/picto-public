@@ -1,0 +1,115 @@
+\hypertarget{class_designer}{\section{Designer Class Reference}
+\label{class_designer}\index{Designer@{Designer}}
+}
+
+
+A Graphical State Machine Integrated Development Environment for creating \hyperlink{namespace_picto}{Picto} Experiments and Analyses.  
+
+
+
+
+{\ttfamily \#include $<$Designer.\-h$>$}
+
+Inheritance diagram for Designer\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_designer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_designer_a4fe366907b33810289ff6dbfec92bb6b}{Designer} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_designer}{Designer} widget with the input parent. \end{DoxyCompactList}\item 
+void \hyperlink{class_designer_a88737acaeeaf7223fdd2f928df93ba8d}{load\-Design} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)
+\begin{DoxyCompactList}\small\item\em Called before displaying the \hyperlink{class_designer}{Designer} on screen to set the Design\-Root on which it will operate. \end{DoxyCompactList}\item 
+void \hyperlink{class_designer_a75f663af7babbf620ddf571f53371b50}{activate} (bool enable)
+\begin{DoxyCompactList}\small\item\em Use this function instead of set\-Enabled() to enable/disable the \hyperlink{class_designer}{Designer}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A Graphical State Machine Integrated Development Environment for creating \hyperlink{namespace_picto}{Picto} Experiments and Analyses. 
+
+This is the top level widget of the \hyperlink{namespace_picto}{Picto} Graphical State Machine I\-D\-E for creating \hyperlink{namespace_picto}{Picto} designs. The \hyperlink{class_designer}{Designer} includes a central canvas where State\-Machine\-Elements, Variables, Stimuli, Analysis\-Elements, etc can be dragged and dropped and linked together with \char`\"{}\-Arrow\char`\"{} transitions.
+
+On the right hand side is a \hyperlink{class_property_browser}{Property\-Browser} that displays the properties defining the currently selected Asset.
+
+On the left hand side is a contextually aware \hyperlink{class_toolbox}{Toolbox} that provides drag-\/and-\/drop tools for creating all elements that are addable in the current designer context.
+
+Underneath the \hyperlink{namespace_picto}{Picto} canvas is an information box including tabs to display the results of the latest compilation, information about the currently selected element in the canvas or toolbox, and contextual scripting information listing all of the script properties and functions available from the currently selected element.
+
+Underneath the \hyperlink{class_property_browser}{Property\-Browser} is an \hyperlink{class_element_notes_widget}{Element\-Notes\-Widget} that displays any notes that the user added describing the currently selected experimental element (these note also appear in the element's tooltip).
+
+A Toolbar appears at the top of the screen providing copy/paste, undo/redo, search and compilation functionality. Analyses can also be created/selected from this Toolbar and whether or not an Analysis is selected changes the \hyperlink{class_designer}{Designer} context as to whether Experimental elements are editable or not along with whether Experimental or Analysis elements appear in the left hand Tool\-Box.
+
+Context menus are also provided for all elements that contain simple operations like copy/paste.
+
+In the designer, the mouse is contextually aware. When hovering over an elements body, clicking the mouse selects the element. When hovering over a result bar, clicking the mouse starts creating a transition, etc.
+
+In essence, the designer is a G\-U\-I for interacting with the Design\-Root loaded in load\-Design. A design could be created entirely in a text editor, but the U\-I makes things astronomically easier. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 83 of file Designer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_designer_a4fe366907b33810289ff6dbfec92bb6b}{\index{Designer@{Designer}!Designer@{Designer}}
+\index{Designer@{Designer}!Designer@{Designer}}
+\subsubsection[{Designer}]{\setlength{\rightskip}{0pt plus 5cm}Designer\-::\-Designer (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_designer_a4fe366907b33810289ff6dbfec92bb6b}
+
+
+Constructs a new \hyperlink{class_designer}{Designer} widget with the input parent. 
+
+This function initializes the U\-I and all variables. It also creates the \hyperlink{class_editor_state}{Editor\-State} object used throughout the designer to maintain the current state and allow different components to communicate with one another. 
+
+Definition at line 27 of file Designer.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_designer_a75f663af7babbf620ddf571f53371b50}{\index{Designer@{Designer}!activate@{activate}}
+\index{activate@{activate}!Designer@{Designer}}
+\subsubsection[{activate}]{\setlength{\rightskip}{0pt plus 5cm}void Designer\-::activate (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{class_designer_a75f663af7babbf620ddf571f53371b50}
+
+
+Use this function instead of set\-Enabled() to enable/disable the \hyperlink{class_designer}{Designer}. 
+
+This function not only enable/disables user interaction with the \hyperlink{class_designer}{Designer} like set\-Enabled() does, it also disables some of the internal operations of the \hyperlink{class_designer}{Designer} such that editing of the Design from other locations will not have undesirable side effects. 
+
+Definition at line 139 of file Designer.\-cpp.
+
+\hypertarget{class_designer_a88737acaeeaf7223fdd2f928df93ba8d}{\index{Designer@{Designer}!load\-Design@{load\-Design}}
+\index{load\-Design@{load\-Design}!Designer@{Designer}}
+\subsubsection[{load\-Design}]{\setlength{\rightskip}{0pt plus 5cm}void Designer\-::load\-Design (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Design\-Root} $>$}]{design\-Root}
+\end{DoxyParamCaption}
+)}}\label{class_designer_a88737acaeeaf7223fdd2f928df93ba8d}
+
+
+Called before displaying the \hyperlink{class_designer}{Designer} on screen to set the Design\-Root on which it will operate. 
+
+In essence, a \hyperlink{class_designer}{Designer}'s entire purpose is to operate on a Design\-Root. Call this function to initialize it for operation with the input Design\-Root. 
+
+Definition at line 105 of file Designer.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Designer.\-h\item 
+source/common/\-Designer/Designer.\-cpp\end{DoxyCompactItemize}

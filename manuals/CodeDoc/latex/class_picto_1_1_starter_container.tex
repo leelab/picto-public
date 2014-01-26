@@ -1,0 +1,74 @@
+\hypertarget{class_picto_1_1_starter_container}{\section{Picto\-:\-:Starter\-Container Class Reference}
+\label{class_picto_1_1_starter_container}\index{Picto\-::\-Starter\-Container@{Picto\-::\-Starter\-Container}}
+}
+Inheritance diagram for Picto\-:\-:Starter\-Container\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_picto_1_1_starter_container}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_starter_container_a8bb19c2e26f8298222a0edba9602b93e}{Q\-List$<$ Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ $>$ {\bfseries get\-Triggers} ()}\label{class_picto_1_1_starter_container_a8bb19c2e26f8298222a0edba9602b93e}
+
+\item 
+\hypertarget{class_picto_1_1_starter_container_a04c5ed5bd0bb507108ddb4230939ecf6}{\hyperlink{class_picto_1_1_event_order_index}{Event\-Order\-Index} {\bfseries get\-Next\-Trigger\-In\-List} (\hyperlink{class_picto_1_1_event_order_index}{Event\-Order\-Index} after\-Index)}\label{class_picto_1_1_starter_container_a04c5ed5bd0bb507108ddb4230939ecf6}
+
+\item 
+\hypertarget{class_picto_1_1_starter_container_ade09ea95c06829bdd9e835491cfbf47a}{virtual Q\-String \hyperlink{class_picto_1_1_starter_container_ade09ea95c06829bdd9e835491cfbf47a}{get\-U\-I\-Template} ()}\label{class_picto_1_1_starter_container_ade09ea95c06829bdd9e835491cfbf47a}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_starter_container_a992630be1edeff7950f47ef3dec1b41d}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_starter_container_a992630be1edeff7950f47ef3dec1b41d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_starter_container_af70a20b1c3ea88047a83098a985338e8}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_starter_container_a53a89fc8bb75a5cc2cee113c45a44015}{virtual bool \hyperlink{class_picto_1_1_starter_container_a53a89fc8bb75a5cc2cee113c45a44015}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_starter_container_a53a89fc8bb75a5cc2cee113c45a44015}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 13 of file Starter\-Container.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_starter_container_af70a20b1c3ea88047a83098a985338e8}{\index{Picto\-::\-Starter\-Container@{Picto\-::\-Starter\-Container}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::StarterContainer@{Picto\-::\-Starter\-Container}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Starter\-Container\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_starter_container_af70a20b1c3ea88047a83098a985338e8}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_ae1585113a496ff2c8de3293aa884b57b}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 83 of file Starter\-Container.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Starter\-Container.\-h\item 
+source/common/analysis/Starter\-Container.\-cpp\end{DoxyCompactItemize}

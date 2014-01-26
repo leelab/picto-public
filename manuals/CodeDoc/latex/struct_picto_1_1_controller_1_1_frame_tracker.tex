@@ -1,0 +1,97 @@
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker}{\section{Picto\-:\-:Controller\-:\-:Frame\-Tracker Struct Reference}
+\label{struct_picto_1_1_controller_1_1_frame_tracker}\index{Picto\-::\-Controller\-::\-Frame\-Tracker@{Picto\-::\-Controller\-::\-Frame\-Tracker}}
+}
+
+
+Stores frame timing information for use by \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} objects. The \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} object used in a particular experiment is created by the \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}.  
+
+
+
+
+{\ttfamily \#include $<$Frame\-Tracker.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_a2e8649fbc2e3ba894a0d5823241a48f9}{void \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker_a2e8649fbc2e3ba894a0d5823241a48f9}{set\-Last\-Frame\-Time} (double frame\-Time)}\label{struct_picto_1_1_controller_1_1_frame_tracker_a2e8649fbc2e3ba894a0d5823241a48f9}
+
+\begin{DoxyCompactList}\small\item\em Stores the latest frame time in this object. \end{DoxyCompactList}\item 
+void \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker_acbf95c0460cbcb9a6c2d37a4fbcf7877}{set\-Next\-Frame\-Time} (double frame\-Time)
+\begin{DoxyCompactList}\small\item\em Sets the time of the next frame that will appear. \end{DoxyCompactList}\item 
+int \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker_a55a588cd7360b14f1be88b4f9214c258}{effective\-Absolute\-Time} (Timer\-Units\-::\-Timer\-Units units)
+\begin{DoxyCompactList}\small\item\em Returns the time that the next frame will occur relative to the beginning of the experiment. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_ac75619800627a2081fe0aba7c7eece12}{void \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker_ac75619800627a2081fe0aba7c7eece12}{reset} ()}\label{struct_picto_1_1_controller_1_1_frame_tracker_ac75619800627a2081fe0aba7c7eece12}
+
+\begin{DoxyCompactList}\small\item\em Resets all frame time values to their initial conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_a872a8e71dc8974d25c2b758c6714c9c9}{double {\bfseries last\-Frame\-Time\-\_\-}}\label{struct_picto_1_1_controller_1_1_frame_tracker_a872a8e71dc8974d25c2b758c6714c9c9}
+
+\item 
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_abf3f47840c7b6196799b1f5ab1287035}{double {\bfseries first\-Frame\-Time\-\_\-}}\label{struct_picto_1_1_controller_1_1_frame_tracker_abf3f47840c7b6196799b1f5ab1287035}
+
+\item 
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_a05742eac8454a7e95b83a3bd2680938c}{double {\bfseries next\-Frame\-Time\-\_\-}}\label{struct_picto_1_1_controller_1_1_frame_tracker_a05742eac8454a7e95b83a3bd2680938c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Stores frame timing information for use by \hyperlink{class_picto_1_1_controller_1_1_frame_resolution_timer}{Frame\-Resolution\-Timer} objects. The \hyperlink{struct_picto_1_1_controller_1_1_frame_tracker}{Frame\-Tracker} object used in a particular experiment is created by the \hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory}{Frame\-Timer\-Factory}. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 27 of file Frame\-Tracker.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_a55a588cd7360b14f1be88b4f9214c258}{\index{Picto\-::\-Controller\-::\-Frame\-Tracker@{Picto\-::\-Controller\-::\-Frame\-Tracker}!effective\-Absolute\-Time@{effective\-Absolute\-Time}}
+\index{effective\-Absolute\-Time@{effective\-Absolute\-Time}!Picto::Controller::FrameTracker@{Picto\-::\-Controller\-::\-Frame\-Tracker}}
+\subsubsection[{effective\-Absolute\-Time}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Controller\-::\-Frame\-Tracker\-::effective\-Absolute\-Time (
+\begin{DoxyParamCaption}
+\item[{Timer\-Units\-::\-Timer\-Units}]{units}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_controller_1_1_frame_tracker_a55a588cd7360b14f1be88b4f9214c258}
+
+
+Returns the time that the next frame will occur relative to the beginning of the experiment. 
+
+If a live experiment is running, this time will be estimated as 16.\-666ms after the current time. \begin{DoxyNote}{Note}
+Currently, we are not actually using effective\-Absolute\-Time anywhere meaningful. Think twice before starting to use this. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_controller_1_1_frame_timer_factory_a513187b8cad30b19cd6957862523cb84}{Frame\-Timer\-Factory\-::effective\-Absolute\-Time()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 40 of file Frame\-Tracker.\-cpp.
+
+\hypertarget{struct_picto_1_1_controller_1_1_frame_tracker_acbf95c0460cbcb9a6c2d37a4fbcf7877}{\index{Picto\-::\-Controller\-::\-Frame\-Tracker@{Picto\-::\-Controller\-::\-Frame\-Tracker}!set\-Next\-Frame\-Time@{set\-Next\-Frame\-Time}}
+\index{set\-Next\-Frame\-Time@{set\-Next\-Frame\-Time}!Picto::Controller::FrameTracker@{Picto\-::\-Controller\-::\-Frame\-Tracker}}
+\subsubsection[{set\-Next\-Frame\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Controller\-::\-Frame\-Tracker\-::set\-Next\-Frame\-Time (
+\begin{DoxyParamCaption}
+\item[{double}]{frame\-Time}
+\end{DoxyParamCaption}
+)}}\label{struct_picto_1_1_controller_1_1_frame_tracker_acbf95c0460cbcb9a6c2d37a4fbcf7877}
+
+
+Sets the time of the next frame that will appear. 
+
+This is not available in live experiments, but during playback it can be provided. 
+
+Definition at line 29 of file Frame\-Tracker.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Frame\-Tracker.\-h\item 
+source/common/controlelements/Frame\-Tracker.\-cpp\end{DoxyCompactItemize}

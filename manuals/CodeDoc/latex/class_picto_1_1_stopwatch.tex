@@ -1,0 +1,70 @@
+\hypertarget{class_picto_1_1_stopwatch}{\section{Picto\-:\-:Stopwatch Class Reference}
+\label{class_picto_1_1_stopwatch}\index{Picto\-::\-Stopwatch@{Picto\-::\-Stopwatch}}
+}
+
+
+A simple timer class that can return elapsed time in seconds, milliseconds or microsecond.  
+
+
+
+
+{\ttfamily \#include $<$Stopwatch.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{start\-Watch} ()
+\begin{DoxyCompactList}\small\item\em Starts the stopwatch. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_a030cfa07068ce5068bd5d34cd79d9a7e}{double \hyperlink{class_picto_1_1_stopwatch_a030cfa07068ce5068bd5d34cd79d9a7e}{elapsed\-Sec} ()}\label{class_picto_1_1_stopwatch_a030cfa07068ce5068bd5d34cd79d9a7e}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time since \hyperlink{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{start\-Watch()} was called in units of seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_ad37de9601018587e08ee1b80cc2c3680}{double \hyperlink{class_picto_1_1_stopwatch_ad37de9601018587e08ee1b80cc2c3680}{elapsed\-Ms} ()}\label{class_picto_1_1_stopwatch_ad37de9601018587e08ee1b80cc2c3680}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time since \hyperlink{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{start\-Watch()} was called in units of milliseconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_a2d759749b8b269e10c9f4c28aa8e5ad7}{double \hyperlink{class_picto_1_1_stopwatch_a2d759749b8b269e10c9f4c28aa8e5ad7}{elapsed\-Us} ()}\label{class_picto_1_1_stopwatch_a2d759749b8b269e10c9f4c28aa8e5ad7}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time since \hyperlink{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{start\-Watch()} was called in units of microseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple timer class that can return elapsed time in seconds, milliseconds or microsecond. 
+
+Reports time since starting the watch in as accurate units as possible on the current os. Currently we have implemented this for Windows by using the performance counter. On other O\-S the Q\-T Q\-Data\-Time system will be used, which I believe is only accurate to the millisecond level. To use the stopwatch, start/restart it by using \hyperlink{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{start\-Watch()} and then check the ellapsed time by using one of the \hyperlink{class_picto_1_1_stopwatch_a030cfa07068ce5068bd5d34cd79d9a7e}{elapsed\-Sec()}, \hyperlink{class_picto_1_1_stopwatch_ad37de9601018587e08ee1b80cc2c3680}{elapsed\-Ms()}, or \hyperlink{class_picto_1_1_stopwatch_a2d759749b8b269e10c9f4c28aa8e5ad7}{elapsed\-Us()} functions.
+
+\begin{DoxyNote}{Note}
+This class is pretty much the same as the \hyperlink{class_picto_1_1_timestamper}{Timestamper} with one exception. All \hyperlink{class_picto_1_1_timestamper}{Timestamper} objects have the same start time, whereas Stop\-Watch objects all have their own object dependent start time. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file Stopwatch.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}{\index{Picto\-::\-Stopwatch@{Picto\-::\-Stopwatch}!start\-Watch@{start\-Watch}}
+\index{start\-Watch@{start\-Watch}!Picto::Stopwatch@{Picto\-::\-Stopwatch}}
+\subsubsection[{start\-Watch}]{\setlength{\rightskip}{0pt plus 5cm}void Stopwatch\-::start\-Watch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_stopwatch_a273a701ce01dc1f6b51f10d03ced6ee0}
+
+
+Starts the stopwatch. 
+
+Internally all this is doing is recording a start\-Time that will be subtracted from the current time when an elapsed time value is requested. 
+
+Definition at line 18 of file Stopwatch.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/timing/Stopwatch.\-h\item 
+source/common/timing/Stopwatch.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,134 @@
+\hypertarget{class_property_editor_factory}{\section{Property\-Editor\-Factory Class Reference}
+\label{class_property_editor_factory}\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}}
+}
+
+
+Extends the Qt\-Variant\-Editor\-Factory to create extra widgets needed by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} and track the relationship between those widgets, their underlying Qt\-Properties and the Property objects that they represent.  
+
+
+
+
+{\ttfamily \#include $<$Property\-Editor\-Factory.\-h$>$}
+
+Inheritance diagram for Property\-Editor\-Factory\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_property_editor_factory}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_property_editor_factory_af08e17ed7bfc43dee7cbce5ed9e00e7f}{property\-Edited} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$ prop, Q\-Variant val)
+\begin{DoxyCompactList}\small\item\em Emitted when the prop Property's value was edited. val is the value which should now be set to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_property_editor_factory_a38e3b903d6f9d5fedb2958994fe11c0c}{{\bfseries Property\-Editor\-Factory} (Q\-Widget $\ast$parent=0)}\label{class_property_editor_factory_a38e3b903d6f9d5fedb2958994fe11c0c}
+
+\item 
+\hyperlink{class_property_editor_factory_ab4a16c5976aefef936f22e2b4729ecdc}{Property\-Editor\-Factory} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory}. \end{DoxyCompactList}\item 
+void \hyperlink{class_property_editor_factory_ad20c4ac65214aebae5d340042b32231e}{set\-Next\-Property} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$ next\-Prop)
+\begin{DoxyCompactList}\small\item\em Sets the next Property who's Qt\-Properties will be requested in create editor. \end{DoxyCompactList}\item 
+\hypertarget{class_property_editor_factory_aba0c6f15c9175af8e93a7ff0006fe2e7}{void \hyperlink{class_property_editor_factory_aba0c6f15c9175af8e93a7ff0006fe2e7}{clear} ()}\label{class_property_editor_factory_aba0c6f15c9175af8e93a7ff0006fe2e7}
+
+\begin{DoxyCompactList}\small\item\em Whenever we want to create more Property Widgets, if previously created Property Widgets are no longer visible, clear should be called first to remove data tracked from previous widgets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-Widget $\ast$ \hyperlink{class_property_editor_factory_af068c58e375e5541762d73f379b657d0}{create\-Editor} (Qt\-Variant\-Property\-Manager $\ast$manager, Qt\-Property $\ast$property, Q\-Widget $\ast$parent)
+\begin{DoxyCompactList}\small\item\em Creates an editor widget for the input Qt\-Property that was created by the input manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Extends the Qt\-Variant\-Editor\-Factory to create extra widgets needed by the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} and track the relationship between those widgets, their underlying Qt\-Properties and the Property objects that they represent. 
+
+The \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer} uses the Qt\-Property\-Browser system to automatically generate and display groups of widgets tailored specifically to different types of values. The Qt\-Variant\-Editor\-Factory is the object within the Qt\-Property\-Browser system that actually takes care of generating the type specific widgets. There are some widgets that we need that aren't offered by the Qt\-Property\-Browser system like syntax highlighted textboxes for scripts and file selection buttons, so we use this class to add those to the regular Qt\-Variant\-Editor\-Factory widgets. Additionally, in order to get the Qt\-Property\-Browser system to work with \hyperlink{namespace_picto}{Picto} Property objects instead of its own Qt\-Property objects, we need to go through some roundabout logic where we keep lookup tables of Property objects indexed by the Qt\-Property objects representing them, then tell the world when a widget value was edited and use the lookup table to figure out which Property we should say was represented by the edited widget. This class takes care of all of these issues. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Property\-Editor\-Factory.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_property_editor_factory_ab4a16c5976aefef936f22e2b4729ecdc}{\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}!Property\-Editor\-Factory@{Property\-Editor\-Factory}}
+\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}!PropertyEditorFactory@{Property\-Editor\-Factory}}
+\subsubsection[{Property\-Editor\-Factory}]{\setlength{\rightskip}{0pt plus 5cm}Property\-Editor\-Factory\-::\-Property\-Editor\-Factory (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_property_editor_factory_ab4a16c5976aefef936f22e2b4729ecdc}
+
+
+Constructs a new \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory}. 
+
+The \hyperlink{class_editor_state}{Editor\-State} is needed in the constructor of searchable widgets as well as in order to detect whether there is an active analysis so that non-\/analysis Properties can be set as read-\/only. 
+
+Definition at line 23 of file Property\-Editor\-Factory.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_property_editor_factory_af068c58e375e5541762d73f379b657d0}{\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}!create\-Editor@{create\-Editor}}
+\index{create\-Editor@{create\-Editor}!PropertyEditorFactory@{Property\-Editor\-Factory}}
+\subsubsection[{create\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Widget $\ast$ Property\-Editor\-Factory\-::create\-Editor (
+\begin{DoxyParamCaption}
+\item[{Qt\-Variant\-Property\-Manager $\ast$}]{manager, }
+\item[{Qt\-Property $\ast$}]{property, }
+\item[{Q\-Widget $\ast$}]{parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_property_editor_factory_af068c58e375e5541762d73f379b657d0}
+
+
+Creates an editor widget for the input Qt\-Property that was created by the input manager. 
+
+This function extends the Qt\-Variant\-Editor\-Factory\-::create\-Editor() function to generate some specific widgets needed for \hyperlink{namespace_picto}{Picto}, configure generated widgets for the current \hyperlink{class_designer}{Designer} mode, and store which \hyperlink{namespace_picto}{Picto} Property objects are related to which Qt\-Property objects. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_property_editor_factory_ad20c4ac65214aebae5d340042b32231e}{set\-Next\-Property()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 56 of file Property\-Editor\-Factory.\-cpp.
+
+\hypertarget{class_property_editor_factory_af08e17ed7bfc43dee7cbce5ed9e00e7f}{\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}!property\-Edited@{property\-Edited}}
+\index{property\-Edited@{property\-Edited}!PropertyEditorFactory@{Property\-Editor\-Factory}}
+\subsubsection[{property\-Edited}]{\setlength{\rightskip}{0pt plus 5cm}void Property\-Editor\-Factory\-::property\-Edited (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Property} $>$}]{prop, }
+\item[{Q\-Variant}]{val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_property_editor_factory_af08e17ed7bfc43dee7cbce5ed9e00e7f}
+
+
+Emitted when the prop Property's value was edited. val is the value which should now be set to it. 
+
+\begin{DoxyNote}{Note}
+Some outside receiver of this signal must actually set val to the prop Property. That is not handled by this widget. 
+\end{DoxyNote}
+\hypertarget{class_property_editor_factory_ad20c4ac65214aebae5d340042b32231e}{\index{Property\-Editor\-Factory@{Property\-Editor\-Factory}!set\-Next\-Property@{set\-Next\-Property}}
+\index{set\-Next\-Property@{set\-Next\-Property}!PropertyEditorFactory@{Property\-Editor\-Factory}}
+\subsubsection[{set\-Next\-Property}]{\setlength{\rightskip}{0pt plus 5cm}void Property\-Editor\-Factory\-::set\-Next\-Property (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Property} $>$}]{next\-Prop}
+\end{DoxyParamCaption}
+)}}\label{class_property_editor_factory_ad20c4ac65214aebae5d340042b32231e}
+
+
+Sets the next Property who's Qt\-Properties will be requested in create editor. 
+
+This should be called just before callind a Qt\-Property\-Browser's add\-Property function. It tells this object which Property the next Qt\-Property is associated with, allowing the \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory} to look up that Property when Qt\-Property values are edited by widgets so that the Property can be included in the \hyperlink{class_property_editor_factory_af08e17ed7bfc43dee7cbce5ed9e00e7f}{property\-Edited()} signal. 
+
+Definition at line 36 of file Property\-Editor\-Factory.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Property\-Editor\-Factory.\-h\item 
+source/common/\-Designer/Property\-Editor\-Factory.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,96 @@
+\hypertarget{class_picto_1_1_slave_event}{\section{Picto\-:\-:Slave\-Event Class Reference}
+\label{class_picto_1_1_slave_event}\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}}
+}
+
+
+Holds information about an experimental state change event. Used by \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}.  
+
+
+
+
+{\ttfamily \#include $<$Slave\-Event.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4}{Event\-Type} \{ \hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a493b424c41715d3713e4bd68658653f9}{I\-N\-V\-A\-L\-I\-D}, 
+\hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4afb990fae9e3e7caac8287944c9f3e0a6}{P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}, 
+\hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a77e5ce75f66238c8a3872a66ec7b7684}{I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}, 
+\hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4add958a7663c6ffb3d2ab4cfacf30d82b}{T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D}
+ \}
+\begin{DoxyCompactList}\small\item\em The type of this \hyperlink{class_picto_1_1_slave_event}{Slave\-Event}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_slave_event_a6f23fcc3bcb3b3ed19c5afd64151bf55}{void \hyperlink{class_picto_1_1_slave_event_a6f23fcc3bcb3b3ed19c5afd64151bf55}{set\-As\-Prop} (const int \&asset\-Id, const Q\-String \&val)}\label{class_picto_1_1_slave_event_a6f23fcc3bcb3b3ed19c5afd64151bf55}
+
+\begin{DoxyCompactList}\small\item\em Sets \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} data fields for a P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E event. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_ade71eb5c8c27dc3f5fc468fffc902ef5}{void \hyperlink{class_picto_1_1_slave_event_ade71eb5c8c27dc3f5fc468fffc902ef5}{set\-As\-Init\-Prop} (const int \&asset\-Id, const Q\-String \&val)}\label{class_picto_1_1_slave_event_ade71eb5c8c27dc3f5fc468fffc902ef5}
+
+\begin{DoxyCompactList}\small\item\em Sets \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} data fields for a I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E event. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_a03cd1f872d51ac1b6c5cafd1bc0141cf}{void \hyperlink{class_picto_1_1_slave_event_a03cd1f872d51ac1b6c5cafd1bc0141cf}{set\-As\-Trans} (const int \&asset\-Id)}\label{class_picto_1_1_slave_event_a03cd1f872d51ac1b6c5cafd1bc0141cf}
+
+\begin{DoxyCompactList}\small\item\em Sets \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} data fields for a T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_slave_event_a29834f206ba925ab1d2061f635a5527e}{\hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4}{Event\-Type} \hyperlink{class_picto_1_1_slave_event_a29834f206ba925ab1d2061f635a5527e}{type}}\label{class_picto_1_1_slave_event_a29834f206ba925ab1d2061f635a5527e}
+
+\begin{DoxyCompactList}\small\item\em The type of event that occured. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_a434b428954206b7499ec0f78d2ee3e3c}{int \hyperlink{class_picto_1_1_slave_event_a434b428954206b7499ec0f78d2ee3e3c}{id}}\label{class_picto_1_1_slave_event_a434b428954206b7499ec0f78d2ee3e3c}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{class_picto_1_1_asset}{Asset} I\-D of the \hyperlink{class_picto_1_1_property}{Property} whose value/init\-Value changed or of the \hyperlink{class_picto_1_1_transition}{Transition} that was traversed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_a815af87173cf3f5bb3cf575fd7b72fd4}{Q\-String \hyperlink{class_picto_1_1_slave_event_a815af87173cf3f5bb3cf575fd7b72fd4}{value}}\label{class_picto_1_1_slave_event_a815af87173cf3f5bb3cf575fd7b72fd4}
+
+\begin{DoxyCompactList}\small\item\em For \hyperlink{class_picto_1_1_property}{Property} events, the new value of the value/init\-Value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds information about an experimental state change event. Used by \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}. 
+
+\hyperlink{class_picto_1_1_property}{Property} value, \hyperlink{class_picto_1_1_property}{Property} init value and \hyperlink{class_picto_1_1_transition}{Transition} activation event times are included. Each \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} has a type, an I\-D representing the affected \hyperlink{class_picto_1_1_property}{Property} or \hyperlink{class_picto_1_1_transition}{Transition}'s \hyperlink{class_picto_1_1_asset}{Asset} I\-D, and a string value which is not used by T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D events but holds a \hyperlink{class_picto_1_1_property}{Property}'s value/init\-Value for P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E and I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E events. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue}, \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file Slave\-Event.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4}{\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}!Event\-Type@{Event\-Type}}
+\index{Event\-Type@{Event\-Type}!Picto::SlaveEvent@{Picto\-::\-Slave\-Event}}
+\subsubsection[{Event\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Picto\-::\-Slave\-Event\-::\-Event\-Type}}}\label{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4}
+
+
+The type of this \hyperlink{class_picto_1_1_slave_event}{Slave\-Event}. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\-N\-V\-A\-L\-I\-D@{I\-N\-V\-A\-L\-I\-D}!Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}}\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}!I\-N\-V\-A\-L\-I\-D@{I\-N\-V\-A\-L\-I\-D}}\item[{\em 
+\hypertarget{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a493b424c41715d3713e4bd68658653f9}{I\-N\-V\-A\-L\-I\-D}\label{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a493b424c41715d3713e4bd68658653f9}
+}]Event\-Type is invalid. \index{P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E@{P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}!Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}}\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}!P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E@{P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4afb990fae9e3e7caac8287944c9f3e0a6}{P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}\label{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4afb990fae9e3e7caac8287944c9f3e0a6}
+}]A \hyperlink{class_picto_1_1_property}{Property} object's run value changed. \index{I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E@{I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}!Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}}\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}!I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E@{I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}}\item[{\em 
+\hypertarget{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a77e5ce75f66238c8a3872a66ec7b7684}{I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E}\label{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a77e5ce75f66238c8a3872a66ec7b7684}
+}]A \hyperlink{class_picto_1_1_property}{Property} object's init value changed. \index{T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D@{T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D}!Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}}\index{Picto\-::\-Slave\-Event@{Picto\-::\-Slave\-Event}!T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D@{T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D}}\item[{\em 
+\hypertarget{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4add958a7663c6ffb3d2ab4cfacf30d82b}{T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D}\label{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4add958a7663c6ffb3d2ab4cfacf30d82b}
+}]A \hyperlink{class_picto_1_1_transition}{Transition} was traversed. \end{description}
+\end{Desc}
+
+
+Definition at line 22 of file Slave\-Event.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/engine/Slave\-Event.\-h\item 
+source/common/engine/Slave\-Event.\-cpp\end{DoxyCompactItemize}

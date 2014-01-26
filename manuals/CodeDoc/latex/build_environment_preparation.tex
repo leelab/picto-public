@@ -1,0 +1,148 @@
+\hypertarget{build_environment_preparation_assumptions}{}\section{Assumptions}\label{build_environment_preparation_assumptions}
+
+\begin{DoxyItemize}
+\item You are running Windows
+\item You have a valid Github account that has been added to the \hyperlink{namespace_picto}{Picto} project on Github. If you don't have one already, set up an account through Github. After that, Leelab has a Leelab.\-Admin account with administration control that can be used to give your account access to the repository.
+\end{DoxyItemize}\hypertarget{build_environment_preparation_installing_prerequisites}{}\section{Installing Prerequisite Applications}\label{build_environment_preparation_installing_prerequisites}
+\hypertarget{build_environment_preparation_get_install_binary}{}\subsection{Get and Install Binary Distributions}\label{build_environment_preparation_get_install_binary}
+Just about everything you need to create an old version of the development environment (apart from the actual \hyperlink{namespace_picto}{Picto} source) is available in \textbackslash{}cog if you're on the Leelab network. To build the latest and greatest version based on newer versions of the various libraries underlying \hyperlink{namespace_picto}{Picto}, you will need to use the links throughout this document to download locations for each required software package.
+
+
+\begin{DoxyEnumerate}
+\item Install Visual Studio 2010.
+\item Install the latest version of Tortoise Git. This is currently available at \href{https://code.google.com/p/tortoisegit/}{\tt https\-://code.\-google.\-com/p/tortoisegit/}.
+\item Install Qt 5.\-1.\-1 for Windows 32-\/bit (V\-S 2010 505 M\-B). This is currently available at \href{http://qt-project.org/downloads}{\tt http\-://qt-\/project.\-org/downloads}. When asked, specify that Qt 5.\-1.\-1 be installed at c\-:\textbackslash{}Qt\textbackslash{}\-Qt5.\-1.\-1. When you reach the \char`\"{}\-Select Components\char`\"{} window, use the \char`\"{}\-Select All\char`\"{} button to make sure that all components are selected (this is not the default setting).
+\item Install the Ni-\/\-Daq 9.\-1 A\-P\-I. The \hyperlink{namespace_picto}{Picto} director uses a National Instruments card and the \hyperlink{class_director}{Director} needs to link to this card's libraries. The Ni-\/\-Daq 9.\-1 installer is currently available at\-: \href{http://joule.ni.com/nidu/cds/view/p/id/1614/lang/en}{\tt http\-://joule.\-ni.\-com/nidu/cds/view/p/id/1614/lang/en}. Even as of this writing, this is not the newest version. You are welcome to (encouraged) to install the newest version of the A\-P\-I; however, be warned that this may require some upgrade of the \hyperlink{namespace_picto}{Picto} code if their have been changes in the Ni-\/\-Daq A\-P\-I. This installation takes a while. Something like an hour.
+\item Install the \hyperlink{class_phidgets}{Phidgets} libraries. These are the libraries used by the \hyperlink{class_director}{Director} to control the Pictobox's L\-C\-D display and input dial.
+\begin{DoxyEnumerate}
+\item Get the \hyperlink{class_phidgets}{Phidgets} library zip. It is available at\-: \href{http://www.phidgets.com/docs/OS_-_Windows#Quick_Downloads}{\tt http\-://www.\-phidgets.\-com/docs/\-O\-S\-\_\--\/\-\_\-\-Windows\#\-Quick\-\_\-\-Downloads} under the name \char`\"{}\-Phidget21 Libraries\char`\"{} as of this writing.
+\item Copy the top level directory inside the zip file to c\-:\textbackslash{} and change its name to \char`\"{}phidgets\char`\"{}
+\end{DoxyEnumerate}
+\item Install Direct\-X. The current version of the Picto\-Director uses Direct\-X to speed up its frame rate. This means that the current director only works on windows. Until we work out a better platform independent way to do this, you will only be able to build the \hyperlink{class_director}{Director} project in the \hyperlink{namespace_picto}{Picto} solution correctly if you install the Direct\-X S\-D\-K first. As of this writing, the latest version was available from \href{http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=6812}{\tt http\-://www.\-microsoft.\-com/download/en/details.\-aspx?displaylang=en\&id=6812}. Download it and install it.
+\item Install Perl. We use Active\-Perl (currently at version 5.\-16.\-2.\-1602) which you can find at \href{http://www.activestate.com/activeperl}{\tt http\-://www.\-activestate.\-com/activeperl}. The Active\-Perl website is also linked to from the Perl website \href{http://www.perl.org/get.html}{\tt http\-://www.\-perl.\-org/get.\-html}. After installation, make sure that the perl.\-exe is in your path.
+\item Install 7-\/\-Zip (\href{http://www.7-zip.org/}{\tt http\-://www.\-7-\/zip.\-org/}) or some other application that knows how to open .gz and .tar files.
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_get_source_dist}{}\subsection{Get Source Distributions}\label{build_environment_preparation_get_source_dist}
+\hypertarget{build_environment_preparation_get_openssl}{}\subsection{Get Open\-S\-S\-L}\label{build_environment_preparation_get_openssl}
+
+\begin{DoxyEnumerate}
+\item Since there is not an official dependable link for Open\-S\-S\-L binary distributions, we build Open\-S\-S\-L from source. Get the latest version of the Open\-S\-S\-L source from \href{http://www.openssl.org/source/}{\tt http\-://www.\-openssl.\-org/source/}. The most up to date version as of this writing was openssl-\/1.\-0.\-1c.
+\item Decompress the zipped tarballed Open\-S\-S\-L source and copy the top level directory (in our case \char`\"{}openssl-\/1.\-0.\-1c\char`\"{}) to c\-:
+\item Rename the \char`\"{}openssl-\/?.?.??\char`\"{} directory that you just copied to \char`\"{}openssl\char`\"{}.
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_get_qwt}{}\subsection{Get Q\-W\-T}\label{build_environment_preparation_get_qwt}
+At the time of this writing, Q\-T 6.\-1 was the latest version and it offered support for Q\-T 5. It is important to remember that Q\-W\-T is updated after Q\-T such that it is possible that the latest stable version may not support the latest version of Q\-T. Make sure to check for this when you are selecting Q\-T and Q\-W\-T versions. Information on the latest version of Q\-W\-T is available at \href{http://qwt.sourceforge.net/index.html}{\tt http\-://qwt.\-sourceforge.\-net/index.\-html}.
+
+
+\begin{DoxyEnumerate}
+\item Download qwt-\/6.\-1.\-0 (or the latest available version)
+\begin{DoxyEnumerate}
+\item Go to \href{http://sourceforge.net/projects/qwt/files/qwt/}{\tt http\-://sourceforge.\-net/projects/qwt/files/qwt/} and drill down in the directory tree of the latest version to the level where a zipped archive of the code is available. At the time of this writing, this was qwt-\/6.\-1.\-0.\-zip available at \href{http://sourceforge.net/projects/qwt/files/qwt/6.1.0/}{\tt http\-://sourceforge.\-net/projects/qwt/files/qwt/6.\-1.\-0/}.
+\item Download the zip archive and extract it.
+\end{DoxyEnumerate}
+\item In the downloaded qwt-\/\# .\#.\# folder, drill down to the top level containing lots of directories (src, doc, etc) and files (qwt.\-pro, R\-E\-A\-D\-M\-E, etc). In our case this was in\-: (Download Location)-\/6.\-1.\-0-\/6.\-1.\-0.
+\item Create a c\-:\textbackslash{}qwt directory, and copy all of the contents of the folder found in the last step to that folder.
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_get_picto_src}{}\subsection{Get Picto Source}\label{build_environment_preparation_get_picto_src}
+
+\begin{DoxyEnumerate}
+\item Create directories to form the path c\-:\textbackslash{}Projects.
+\item You have two options for getting the \hyperlink{namespace_picto}{Picto} source. Use option A in a normal scenario and option B in a scenario where you have no direct access to an existing \hyperlink{namespace_picto}{Picto} source tree.
+\begin{DoxyEnumerate}
+\item Option A
+\begin{DoxyEnumerate}
+\item Copy everything including the hiddin .git reporitory folder from the c\-:\textbackslash{}Projects directory of an existing \hyperlink{namespace_picto}{Picto} development environment.
+\item When the directory is finished being copied, right click on the c\-:\textbackslash{}Projects directory and select the \char`\"{}\-Git Sync...\char`\"{} option that was installed with Tortoise\-Git.
+\item In the dialog that opens, if the \char`\"{}\-Remote U\-R\-L\-:\char`\"{} field is blank (ie. doesn't say 'origin'), use the U\-R\-L of the \hyperlink{namespace_picto}{Picto} repository \char`\"{}https\-://github.\-com/leelab/picto.\-git\char`\"{}.
+\item Press the \char`\"{}\-Pull\char`\"{} button.
+\item An \char`\"{}\-Authentication\char`\"{} dialog will come up. Enter the Github Username and Password that we assumed you have at the beginning of this document and press O\-K.
+\item Once the Git Pull is done, you'll have access to all of the latest and greatest \hyperlink{namespace_picto}{Picto} code in your local copy of the Git repository, but your actual source tree will not have changed. You'll probably want to get rid of any local source changes that were copied from the machine where you got your \hyperlink{namespace_picto}{Picto} source. To do this, right click the \hyperlink{namespace_picto}{Picto} directory and select \char`\"{}\-Tortoise\-Git\char`\"{}$>$\char`\"{}\-Revert...\char`\"{}, then check \char`\"{}\-Select / deselect all\char`\"{}, then \char`\"{}\-O\-K\char`\"{}.
+\end{DoxyEnumerate}
+\item Option B
+\begin{DoxyEnumerate}
+\item Right click on c\-:\textbackslash{}Projects and use the \char`\"{}\-Git Clone...\char`\"{} option that was installed with Tortoise\-Git to get the \hyperlink{namespace_picto}{Picto} source.
+\item For \char`\"{}\-U\-R\-L\-:\char`\"{} use \char`\"{}https\-://github.\-com/leelab/picto.\-git\char`\"{}
+\item Press O\-K.
+\item An \char`\"{}\-Authentication\char`\"{} dialog will come up. Enter the Github Username and Password that we assumed you have at the beginning of this document and press O\-K.
+\item The \hyperlink{namespace_picto}{Picto} source will begin downloading. The download will depend on your internet connection. In our case with a fairly good connection, this took around 10 minutes. When the download is complete, you will have a fully set up source tree with local git repository in \char`\"{}c\-:\textbackslash{}\textbackslash{}projects\textbackslash{}\-Picto\char`\"{}.
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_get_prop_browser}{}\subsection{Get Qt Property Browser}\label{build_environment_preparation_get_prop_browser}
+The Qt\-Property\-Browser library is actually included with the Q\-T 5.\-1.\-1 installation, but in source form only. We use this library in our code for our Property view/update widgets. In the Qt 5.\-1.\-1 installation this library does not include any file specifying build configuration so we created one that should be manually copied in.
+
+
+\begin{DoxyEnumerate}
+\item Copy c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}3rdparty\textbackslash{}qtpropertybrowser.\-pro to the c\-:\textbackslash{}Qt\textbackslash{}\-Qt5.\-1.\-1\textbackslash{}5.\-1.\-1\textbackslash{} directory.
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_build_src_dist}{}\subsection{Build Source Distributions}\label{build_environment_preparation_build_src_dist}
+\hypertarget{build_environment_preparation_build_openssl}{}\subsection{Build Open\-S\-S\-L}\label{build_environment_preparation_build_openssl}
+
+\begin{DoxyEnumerate}
+\item In a Visual Studio command prompt type the following\-:
+\begin{DoxyEnumerate}
+\item cd c\-:\textbackslash{}openssl
+\item perl Configure V\-C-\/\-W\-I\-N32
+\item ms\textbackslash{}do\-\_\-ms.\-bat
+\item nmake -\/f ms\textbackslash{}ntdll.\-mak
+\end{DoxyEnumerate}
+\item Check that there is a out32dll folder and that it contains a bunch of Open\-S\-S\-L dlls, exe's, etc.
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_qt_upgrade}{}\subsection{In Case of Q\-T Upgrade}\label{build_environment_preparation_qt_upgrade}
+
+\begin{DoxyEnumerate}
+\item If you are using a version of Q\-T that is not Qt 5.\-1.\-1, you will need to change the path variable that we use to tell everything where to find the Qt binaries.
+\begin{DoxyEnumerate}
+\item Open c\-:\textbackslash{}Projects\textbackslash{}picto\textbackslash{}tools\textbackslash{}qt.\-config.cmd in a text editor.
+\item Find the line that says\-: set Q\-T\-T\-O\-P=... and change the path to point to the current version of Qt. In the latest upgrade for example, we changed \char`\"{}set Q\-T\-T\-O\-P=\%\-P\-I\-C\-T\-O\-\_\-\-T\-H\-I\-R\-D\-\_\-\-P\-A\-R\-T\-Y\%\textbackslash{}\-Q\-T\textbackslash{}\-Qt5.\-0.\-2\textbackslash{}5.\-0.\-2\char`\"{} to \char`\"{}set Q\-T\-T\-O\-P=\%\-P\-I\-C\-T\-O\-\_\-\-T\-H\-I\-R\-D\-\_\-\-P\-A\-R\-T\-Y\%\textbackslash{}\-Q\-T\textbackslash{}\-Qt5.\-1.\-1\textbackslash{}5.\-1.\-1\char`\"{}.
+\item Save your changes
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_build_qwt}{}\subsection{Build Q\-W\-T}\label{build_environment_preparation_build_qwt}
+
+\begin{DoxyEnumerate}
+\item In a Visual Studio 2010 command prompt type the following\-:
+\begin{DoxyEnumerate}
+\item cd c\-:\textbackslash{}qwt
+\item c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}\-Configure\-Windows\-X86.\-cmd
+\item c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}tools\textbackslash{}qt.\-config.cmd
+\item qmake
+\item nmake install
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_build_qt_prop_browser}{}\subsection{Build Qt Property Browser}\label{build_environment_preparation_build_qt_prop_browser}
+The Qt\-Property\-Browser library is included with the Q\-T 5.\-1.\-1 installation in source form only. We use this library in our code for our Property view/update widgets.
+
+
+\begin{DoxyEnumerate}
+\item In a Visual Studio 2010 command prompt type the following\-:
+\begin{DoxyEnumerate}
+\item cd c\-:\textbackslash{}Qt\textbackslash{}\-Qt5.\-1.\-1\textbackslash{}5.\-1.\-1
+\item c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}\-Configure\-Windows\-X86.\-cmd
+\item c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}tools\textbackslash{}qt.\-config.cmd
+\item qmake
+\item nmake all
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_build_picto}{}\subsection{Build Picto}\label{build_environment_preparation_build_picto}
+While \hyperlink{namespace_picto}{Picto} is theoretically multiplatform (except for the \hyperlink{class_director}{Director} due to Direct\-X), we have only ever built \hyperlink{namespace_picto}{Picto} for Windows x86. To do this we first use qmake to create a visual studio solution where developement takes place. We can then build \hyperlink{namespace_picto}{Picto} either from that solution or from the command line.
+
+
+\begin{DoxyEnumerate}
+\item In a Visual Studio 2010 command prompt type the following\-:
+\begin{DoxyEnumerate}
+\item cd c\-:\textbackslash{}Projects
+\item Configure\-Windows\-X86.\-cmd
+\item tools\textbackslash{}qt.\-config.cmd
+\item tools\textbackslash{}win.\-common.cmd
+\end{DoxyEnumerate}
+\item You should now have a Picto.\-sln file in the  directory.
+\begin{DoxyEnumerate}
+\item To build from the command line, run \char`\"{}nmake all\char`\"{}. Otherwise, open and build the c\-:\textbackslash{}Projects\textbackslash{}\-Picto\textbackslash{}\-Picto.\-sln solution that was just created and build it from within visual studio.
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_copy_3rd_party_dlls}{}\subsection{Copy Third Party D\-L\-Ls to Run Directories}\label{build_environment_preparation_copy_3rd_party_dlls}
+There are a number of third party dlls used by \hyperlink{namespace_picto}{Picto} that come from the libraries installed above. At this point, we simply copy them into our run directories to allow the \hyperlink{namespace_picto}{Picto} applications to start correctly. Assuming that you copied everything to the locations described above and that version names and directory structures haven't changed, you can run a getlibraries.\-bat file that will take care of this process for you. If the names of the libraries have changed too significantly, it may be necessary to update the getlibraries.\-bat file to copy them correctly.
+
+
+\begin{DoxyEnumerate}
+\item In a Visual Studio 2010 command prompt type the following\-:
+\begin{DoxyEnumerate}
+\item cd c\-:\textbackslash{}Projects
+\item Configure\-Windows\-X86.\-cmd
+\item tools\textbackslash{}qt.\-config.cmd
+\item tools\textbackslash{}win.\-common.cmd
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{build_environment_preparation_install_qt_plugin}{}\subsection{Install Qt Plugin for Visual Studio}\label{build_environment_preparation_install_qt_plugin}
+Qt has a number of data types that are difficult to debug using a clean Visual Studio installation. When debugging an application using Qt5, for example, Q\-String's actual text values cannot be viewed. To fix this and other similar issues, install the \char`\"{}\-Visual Studio Add-\/in 1.\-2.\-2 for Qt5\char`\"{} (or newer version if available) which can be found as of this writing at \href{http://qt-project.org/downloads#qt-other}{\tt http\-://qt-\/project.\-org/downloads\#qt-\/other}.\hypertarget{build_environment_preparation_problems}{}\subsection{Problems?}\label{build_environment_preparation_problems}
+If you encounter problems, most of the tools we are using are well-\/supported online, so you can probably find your answers there. Otherwise, call someone who has done this before. 

@@ -1,0 +1,262 @@
+\hypertarget{class_picto_1_1_switch_element}{\section{Picto\-:\-:Switch\-Element Class Reference}
+\label{class_picto_1_1_switch_element}\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}}
+}
+
+
+A state machine element that switches the control flow path based on the results of a script.  
+
+
+
+
+{\ttfamily \#include $<$Switch\-Element.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Switch\-Element\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_switch_element}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_switch_element_ac7afae1f220ab96c7381f3888fec28bd}{Switch\-Element} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_switch_element_aebeedb240401d632a95305b049245969}{run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Runs this \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s execution logic within the framework of the input Picto\-Engine. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_switch_element_a7e1271d534baafee851628f3f366211e}{slave\-Run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em When a \hyperlink{class_picto_1_1_switch_element}{Switch\-Element} is run as a slave, it really doesn't do anything since the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} handles changing of \hyperlink{class_picto_1_1_property}{Property} values and transitioning control flow based on what happened in the Master experiment. This function therefore does nothing and should probably be removed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_switch_element_a8a7f427b8bb7ebf91a698ce0199b68fb}{void \hyperlink{class_picto_1_1_switch_element_a8a7f427b8bb7ebf91a698ce0199b68fb}{set\-Script} (Q\-String script)}\label{class_picto_1_1_switch_element_a8a7f427b8bb7ebf91a698ce0199b68fb}
+
+\begin{DoxyCompactList}\small\item\em Sets the content of this \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s Script \hyperlink{class_picto_1_1_property}{Property} to the input value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_switch_element_a51c11ef1c1bdd6375b0b645a93ae1ec4}{virtual Q\-String \hyperlink{class_picto_1_1_switch_element_a51c11ef1c1bdd6375b0b645a93ae1ec4}{get\-U\-I\-Template} ()}\label{class_picto_1_1_switch_element_a51c11ef1c1bdd6375b0b645a93ae1ec4}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_switch_element_a8541f08fab2a26c8ee4edce5a9abe3f1}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_switch_element_a2df72a725f9217da6862c629a930ea10}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_switch_element_a2df72a725f9217da6862c629a930ea10}{Create} ()}\label{class_picto_1_1_switch_element_a2df72a725f9217da6862c629a930ea10}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_switch_element}{Switch\-Element} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_switch_element_a5e85db73b4d74a5c5301579d9212ca83}{get\-Return\-Value\-Error} (Q\-String script\-Name, const Q\-Script\-Value \&return\-Value)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_scriptable_container_a1e0264aee7ce551d450dc07a6b369d56}{State\-Machine\-Element\-::get\-Return\-Value\-Error()} to verify that the \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s Script didn't cause any \hyperlink{class_picto_1_1_property}{Property} values to change and trigger a runtime error if it did. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_switch_element_a7b8c8d832b705b234f18badcf1ec31bb}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_switch_element_ac45d51381bd2aec3dfa5aa6847ccb817}{virtual bool \hyperlink{class_picto_1_1_switch_element_ac45d51381bd2aec3dfa5aa6847ccb817}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_switch_element_ac45d51381bd2aec3dfa5aa6847ccb817}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_state_machine_element_a52a176b16cf803ed3e7f82f3e1a4dfb7}{State\-Machine\-Element\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s Script is not empty. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_switch_element_a8eeadd3533c946a5063492a1fe9c9b85}{virtual bool \hyperlink{class_picto_1_1_switch_element_a8eeadd3533c946a5063492a1fe9c9b85}{can\-Have\-Scripts} ()}\label{class_picto_1_1_switch_element_a8eeadd3533c946a5063492a1fe9c9b85}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_switch_element_a922a7a3a109d7d64dd51456a4c180995}{has\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual Q\-Map$<$ Q\-String, Q\-String $>$ \hyperlink{class_picto_1_1_switch_element_ada1e29453548af292d1fb1b6db02b64e}{get\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A state machine element that switches the control flow path based on the results of a script. 
+
+\hyperlink{class_picto_1_1_switch_element}{Switch\-Element} objects are used when a \hyperlink{class_picto_1_1_state_machine}{State\-Machine} needs to switch its control flow path based on the \hyperlink{class_picto_1_1_experiment}{Experiment}'s current data state. A script is run that has access to all of the in scope data in its \hyperlink{class_picto_1_1_state_machine}{State\-Machine}. This script must return a value that is equal to the name of one of its child results. The selected result is used as the source for the next transition in control flow.
+
+\begin{DoxyNote}{Note}
+For the purpose of design clarity we don't allow the \hyperlink{class_picto_1_1_switch_element}{Switch\-Element} Script to change any of the \hyperlink{class_picto_1_1_state_machine}{State\-Machine}'s data. If it does so a runtime error is triggered. In testing, we found that this greatly improved design clarity by assuring that all logic that can affect \hyperlink{class_picto_1_1_state_machine}{State\-Machine} data is located in Entry, Exit, or Frame Scripts. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Switch\-Element.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_switch_element_ac7afae1f220ab96c7381f3888fec28bd}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!Switch\-Element@{Switch\-Element}}
+\index{Switch\-Element@{Switch\-Element}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{Switch\-Element}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Switch\-Element\-::\-Switch\-Element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_switch_element_ac7afae1f220ab96c7381f3888fec28bd}
+
+
+Constructs a new \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}. 
+
+Adds a Script \hyperlink{class_picto_1_1_property}{Property} that defines which \hyperlink{class_picto_1_1_result}{Result} control flow will continue from. Sets up the \hyperlink{class_picto_1_1_result_container}{Result\-Container} ancestor class so that the object can have multiple \hyperlink{class_picto_1_1_logic_result}{Logic\-Result} objects which will be triggerable from the Script logic. 
+
+Definition at line 14 of file Switch\-Element.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_switch_element_a8541f08fab2a26c8ee4edce5a9abe3f1}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Switch\-Element\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_a8541f08fab2a26c8ee4edce5a9abe3f1}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_a71bb8021124ed8ce64e498e767b69e1d}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 43 of file Switch\-Element.\-h.
+
+\hypertarget{class_picto_1_1_switch_element_a5e85db73b4d74a5c5301579d9212ca83}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!get\-Return\-Value\-Error@{get\-Return\-Value\-Error}}
+\index{get\-Return\-Value\-Error@{get\-Return\-Value\-Error}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{get\-Return\-Value\-Error}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Switch\-Element\-::get\-Return\-Value\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{script\-Name, }
+\item[{const Q\-Script\-Value \&}]{return\-Value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_a5e85db73b4d74a5c5301579d9212ca83}
+
+
+Implements \hyperlink{class_picto_1_1_scriptable_container_a1e0264aee7ce551d450dc07a6b369d56}{State\-Machine\-Element\-::get\-Return\-Value\-Error()} to verify that the \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s Script didn't cause any \hyperlink{class_picto_1_1_property}{Property} values to change and trigger a runtime error if it did. 
+
+We do this to make sure that the \hyperlink{class_picto_1_1_switch_element}{Switch\-Element} Script's purpose is entirely to manage control flow branching and not to change any \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} data. This keeps the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} code much cleaner and easier to read because it means that all logic that affects the \hyperlink{class_picto_1_1_state_machine}{State\-Machine}'s data is located in Entry, Exit or Frame Scripts. 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a1e0264aee7ce551d450dc07a6b369d56}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 89 of file Switch\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_switch_element_ada1e29453548af292d1fb1b6db02b64e}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!get\-Scripts@{get\-Scripts}}
+\index{get\-Scripts@{get\-Scripts}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{get\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<$ Q\-String, Q\-String $>$ Picto\-::\-Switch\-Element\-::get\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_ada1e29453548af292d1fb1b6db02b64e}
+
+
+Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. 
+
+\begin{DoxyNote}{Note}
+There is some history here. Originally, these scripts were stored as part of the scripting engine, and so their names had to be unique. Now they are stored in a table of Q\-Script\-Program objects and so there is probably not any real need for their \char`\"{}script names\char`\"{} to be different from the \char`\"{}\-Property names\char`\"{} of the Properties containing the script text. We should probably change this at some point. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_a2cea850bd3c3e7cd40a0b4b09984db70}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 139 of file Switch\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_switch_element_a922a7a3a109d7d64dd51456a4c180995}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!has\-Scripts@{has\-Scripts}}
+\index{has\-Scripts@{has\-Scripts}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{has\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Switch\-Element\-::has\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_a922a7a3a109d7d64dd51456a4c180995}
+
+
+Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. 
+
+\begin{DoxyNote}{Note}
+If this function returns true, \hyperlink{class_picto_1_1_switch_element_a8eeadd3533c946a5063492a1fe9c9b85}{can\-Have\-Scripts()} should also return true. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ab93cc37be3b570575b812e13ec4f806a}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 132 of file Switch\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_switch_element_a7b8c8d832b705b234f18badcf1ec31bb}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Switch\-Element\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_a7b8c8d832b705b234f18badcf1ec31bb}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ac71e3f57e16c8be8dc4d6900c836948f}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 113 of file Switch\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_switch_element_aebeedb240401d632a95305b049245969}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!run@{run}}
+\index{run@{run}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Switch\-Element\-::run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_aebeedb240401d632a95305b049245969}
+
+
+Runs this \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s execution logic within the framework of the input Picto\-Engine. 
+
+This function more or less performs the following run procedure\-:
+\begin{DoxyItemize}
+\item Run Entry\-Script
+\item Tell the \hyperlink{class_picto_1_1_property}{Property} class to start checking for any \hyperlink{class_picto_1_1_property}{Property} value changes.
+\item Run the Script contained in the Script \hyperlink{class_picto_1_1_property}{Property}.
+\item \hyperlink{class_picto_1_1_switch_element_a5e85db73b4d74a5c5301579d9212ca83}{get\-Return\-Value\-Error()} is automatically called as part of Script execution to verify that no \hyperlink{class_picto_1_1_property}{Property} values were changed by the Script and trigger a runtime error if they were.
+\item Picks out a \hyperlink{class_picto_1_1_result}{Result} based on the String returned from the Script.
+\item Runs that \hyperlink{class_picto_1_1_result}{Result}'s Entry\-Script.
+\item Runs this \hyperlink{class_picto_1_1_switch_element}{Switch\-Element}'s Exit\-Script.
+\item Returns the name of the triggered \hyperlink{class_picto_1_1_result}{Result}. When an \hyperlink{class_picto_1_1_analysis}{Analysis} is active during the live experiment (in the \hyperlink{class_test_viewer}{Test\-Viewer}), Analysis\-Scripts are run before and after the Entry and Exit Scripts. 
+\end{DoxyItemize}
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a7a1f1ca8905c111dd043178b9132c770}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 47 of file Switch\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_switch_element_a7e1271d534baafee851628f3f366211e}{\index{Picto\-::\-Switch\-Element@{Picto\-::\-Switch\-Element}!slave\-Run@{slave\-Run}}
+\index{slave\-Run@{slave\-Run}!Picto::SwitchElement@{Picto\-::\-Switch\-Element}}
+\subsubsection[{slave\-Run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Switch\-Element\-::slave\-Run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_switch_element_a7e1271d534baafee851628f3f366211e}
+
+
+When a \hyperlink{class_picto_1_1_switch_element}{Switch\-Element} is run as a slave, it really doesn't do anything since the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} handles changing of \hyperlink{class_picto_1_1_property}{Property} values and transitioning control flow based on what happened in the Master experiment. This function therefore does nothing and should probably be removed. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_state_machine_element_a0dbfefa77a60c323a285626bf6057c2b}{State\-Machine\-Element\-::slave\-Run()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a0dbfefa77a60c323a285626bf6057c2b}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 76 of file Switch\-Element.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Switch\-Element.\-h\item 
+source/common/statemachine/Switch\-Element.\-cpp\end{DoxyCompactItemize}

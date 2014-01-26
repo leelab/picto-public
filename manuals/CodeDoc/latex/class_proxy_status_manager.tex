@@ -1,0 +1,92 @@
+\hypertarget{class_proxy_status_manager}{\section{Proxy\-Status\-Manager Class Reference}
+\label{class_proxy_status_manager}\index{Proxy\-Status\-Manager@{Proxy\-Status\-Manager}}
+}
+
+
+Handles overall status operations for a \hyperlink{class_proxy_main_window}{Proxy\-Main\-Window} object.  
+
+
+
+
+{\ttfamily \#include $<$Proxy\-Status\-Manager.\-h$>$}
+
+Inheritance diagram for Proxy\-Status\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_proxy_status_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_proxy_status_manager_ab95427d41862a5f2600d56d0c71ab1a9}{Proxy\-Status\-Manager} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel} $>$ command\-Channel)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_proxy_status_manager}{Proxy\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_proxy_status_manager_a28286636ff4af48e31098cefa8fef498}{void \hyperlink{class_proxy_status_manager_a28286636ff4af48e31098cefa8fef498}{set\-Plugin} (Q\-Object $\ast$acq\-Plugin)}\label{class_proxy_status_manager_a28286636ff4af48e31098cefa8fef498}
+
+\begin{DoxyCompactList}\small\item\em Sets the plugin that will be used to gather data from the Neural Data Acquisition system for sending to the Picto\-Server. \end{DoxyCompactList}\item 
+\hypertarget{class_proxy_status_manager_aae67ce985e975f6a7ad31428fc761365}{\hyperlink{class_neural_data_acq_interface}{Neural\-Data\-Acq\-Interface} $\ast$ \hyperlink{class_proxy_status_manager_aae67ce985e975f6a7ad31428fc761365}{get\-Plugin} ()}\label{class_proxy_status_manager_aae67ce985e975f6a7ad31428fc761365}
+
+\begin{DoxyCompactList}\small\item\em Gets the plugin that is being used to gather data from the Neural Data Acquisition system for sending to the Picto\-Server. \end{DoxyCompactList}\item 
+\hypertarget{class_proxy_status_manager_a2910b14e07438ac70ec9badc2a821f13}{void \hyperlink{class_proxy_status_manager_a2910b14e07438ac70ec9badc2a821f13}{set\-Name} (Q\-String name)}\label{class_proxy_status_manager_a2910b14e07438ac70ec9badc2a821f13}
+
+\begin{DoxyCompactList}\small\item\em Sets the name of the object. \end{DoxyCompactList}\item 
+\hypertarget{class_proxy_status_manager_a4e8cfd1539377dd308fb3551b7d0b17f}{virtual Q\-String \hyperlink{class_proxy_status_manager_a4e8cfd1539377dd308fb3551b7d0b17f}{get\-Name} ()}\label{class_proxy_status_manager_a4e8cfd1539377dd308fb3551b7d0b17f}
+
+\begin{DoxyCompactList}\small\item\em Returns a name representing the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_proxy_status_manager_a15e5fad493d1861cfd49e4a5d69ab9ad}{virtual void \hyperlink{class_proxy_status_manager_a15e5fad493d1861cfd49e4a5d69ab9ad}{new\-Session} ()}\label{class_proxy_status_manager_a15e5fad493d1861cfd49e4a5d69ab9ad}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}{Component\-Status\-Manager\-::new\-Session()} to... do nothing. \end{DoxyCompactList}\item 
+\hypertarget{class_proxy_status_manager_a08b1d3111d19c5fa7fddedf9799577da}{virtual void \hyperlink{class_proxy_status_manager_a08b1d3111d19c5fa7fddedf9799577da}{do\-Server\-Update} ()}\label{class_proxy_status_manager_a08b1d3111d19c5fa7fddedf9799577da}
+
+\begin{DoxyCompactList}\small\item\em Implements Component\-Status\-Manager\-::do\-Server\-Update() to send a C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E command to the Picto\-Server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Handles overall status operations for a \hyperlink{class_proxy_main_window}{Proxy\-Main\-Window} object. 
+
+This class adds to the default \hyperlink{class_component_status_manager}{Component\-Status\-Manager} functionality by implimenting \hyperlink{class_proxy_status_manager_a08b1d3111d19c5fa7fddedf9799577da}{do\-Server\-Update()} to send C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E commands to the \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server}. It also provides functions for setting/getting the neural data acquisition plugin that will be used to gather data from the Neural D\-A\-Q software for sending to the \hyperlink{class_server}{Server}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_component_status_manager}{Component\-Status\-Manager} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 17 of file Proxy\-Status\-Manager.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_proxy_status_manager_ab95427d41862a5f2600d56d0c71ab1a9}{\index{Proxy\-Status\-Manager@{Proxy\-Status\-Manager}!Proxy\-Status\-Manager@{Proxy\-Status\-Manager}}
+\index{Proxy\-Status\-Manager@{Proxy\-Status\-Manager}!ProxyStatusManager@{Proxy\-Status\-Manager}}
+\subsubsection[{Proxy\-Status\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}Proxy\-Status\-Manager\-::\-Proxy\-Status\-Manager (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Command\-Channel} $>$}]{command\-Channel}
+\end{DoxyParamCaption}
+)}}\label{class_proxy_status_manager_ab95427d41862a5f2600d56d0c71ab1a9}
+
+
+Constructs a \hyperlink{class_proxy_status_manager}{Proxy\-Status\-Manager}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command\-Channel} & The Command\-Channel that will be used to send data and C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E \char`\"{}keep alive\char`\"{} commands to the Picto\-Server. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 9 of file Proxy\-Status\-Manager.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/network/Proxy\-Status\-Manager.\-h\item 
+source/proxyserver/network/Proxy\-Status\-Manager.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,50 @@
+\hypertarget{struct_picto_1_1_o_k_response_handler}{\section{Picto\-:\-:O\-K\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_o_k_response_handler}\index{Picto\-::\-O\-K\-Response\-Handler@{Picto\-::\-O\-K\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-O\-K\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$O\-K\-Response\-Handler.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_o_k_response_handler_abe1ff1642811d44c430848628ada4add}{{\bfseries O\-K\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_o_k_response_handler_abe1ff1642811d44c430848628ada4add}
+
+\item 
+\hypertarget{struct_picto_1_1_o_k_response_handler_a1b2665738a8cde9880b8b9d3cf2d9e40}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_o_k_response_handler_a1b2665738a8cde9880b8b9d3cf2d9e40}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_o_k_response_handler_a7200691c6a52fb3562ca2fe75c4721ef}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_o_k_response_handler_a7200691c6a52fb3562ca2fe75c4721ef}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-O\-K\char`\"{} method. 
+
+O\-K responses are just an all clear message and don't include any information beyong that.
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file O\-K\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/O\-K\-Response\-Handler.\-h\item 
+source/common/protocol/O\-K\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

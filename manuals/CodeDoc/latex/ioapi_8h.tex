@@ -1,0 +1,120 @@
+\hypertarget{ioapi_8h}{\section{source/common/archives/ioapi.h File Reference}
+\label{ioapi_8h}\index{source/common/archives/ioapi.\-h@{source/common/archives/ioapi.\-h}}
+}
+
+
+\hyperlink{ioapi_8h}{ioapi.\-h} -- I\-O base function header for compress/uncompress .zip  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structzlib__filefunc__def__s}{zlib\-\_\-filefunc\-\_\-def\-\_\-s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ioapi_8h_a740e5a75e0d5ca1b093661d263f82e99}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-S\-E\-E\-K\-\_\-\-C\-U\-R}~(1)}\label{ioapi_8h_a740e5a75e0d5ca1b093661d263f82e99}
+
+\item 
+\hypertarget{ioapi_8h_ace27d6d19b1005424d1fb4bd0c7c9602}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-S\-E\-E\-K\-\_\-\-E\-N\-D}~(2)}\label{ioapi_8h_ace27d6d19b1005424d1fb4bd0c7c9602}
+
+\item 
+\hypertarget{ioapi_8h_a962e25bd3652f31479b855be08836c16}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-S\-E\-E\-K\-\_\-\-S\-E\-T}~(0)}\label{ioapi_8h_a962e25bd3652f31479b855be08836c16}
+
+\item 
+\hypertarget{ioapi_8h_ae7bc575ca0cef5d90c7d5d093137d901}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-M\-O\-D\-E\-\_\-\-R\-E\-A\-D}~(1)}\label{ioapi_8h_ae7bc575ca0cef5d90c7d5d093137d901}
+
+\item 
+\hypertarget{ioapi_8h_acb1ad2741eafcd1541c22553225146c6}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-M\-O\-D\-E\-\_\-\-W\-R\-I\-T\-E}~(2)}\label{ioapi_8h_acb1ad2741eafcd1541c22553225146c6}
+
+\item 
+\hypertarget{ioapi_8h_a389d35aa169a682776910718fad29487}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-M\-O\-D\-E\-\_\-\-R\-E\-A\-D\-W\-R\-I\-T\-E\-F\-I\-L\-T\-E\-R}~(3)}\label{ioapi_8h_a389d35aa169a682776910718fad29487}
+
+\item 
+\hypertarget{ioapi_8h_a726af69b3b72f7485db98fd06352761f}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-M\-O\-D\-E\-\_\-\-E\-X\-I\-S\-T\-I\-N\-G}~(4)}\label{ioapi_8h_a726af69b3b72f7485db98fd06352761f}
+
+\item 
+\hypertarget{ioapi_8h_aca55322d595862ec1c298ec87e8ea225}{\#define {\bfseries Z\-L\-I\-B\-\_\-\-F\-I\-L\-E\-F\-U\-N\-C\-\_\-\-M\-O\-D\-E\-\_\-\-C\-R\-E\-A\-T\-E}~(8)}\label{ioapi_8h_aca55322d595862ec1c298ec87e8ea225}
+
+\item 
+\hypertarget{ioapi_8h_aace96475a6dd2915bc55bc542d7aa8a5}{\#define {\bfseries Z\-C\-A\-L\-L\-B\-A\-C\-K}}\label{ioapi_8h_aace96475a6dd2915bc55bc542d7aa8a5}
+
+\item 
+\hypertarget{ioapi_8h_ad59236c559eb21dbdc40f86d2e97d65d}{\#define {\bfseries Z\-R\-E\-A\-D}(filefunc, filestream, buf, size)~(($\ast$((filefunc).zread\-\_\-file))((filefunc).opaque,filestream,buf,size))}\label{ioapi_8h_ad59236c559eb21dbdc40f86d2e97d65d}
+
+\item 
+\hypertarget{ioapi_8h_a440d7e7546b628b36ae22ab621d43d8c}{\#define {\bfseries Z\-W\-R\-I\-T\-E}(filefunc, filestream, buf, size)~(($\ast$((filefunc).zwrite\-\_\-file))((filefunc).opaque,filestream,buf,size))}\label{ioapi_8h_a440d7e7546b628b36ae22ab621d43d8c}
+
+\item 
+\hypertarget{ioapi_8h_a6010b5be81cd016bf0fe649cea4cf2c2}{\#define {\bfseries Z\-T\-E\-L\-L}(filefunc, filestream)~(($\ast$((filefunc).ztell\-\_\-file))((filefunc).opaque,filestream))}\label{ioapi_8h_a6010b5be81cd016bf0fe649cea4cf2c2}
+
+\item 
+\hypertarget{ioapi_8h_a150463ba2515263515f68599c580b64e}{\#define {\bfseries Z\-S\-E\-E\-K}(filefunc, filestream, pos, mode)~(($\ast$((filefunc).zseek\-\_\-file))((filefunc).opaque,filestream,pos,mode))}\label{ioapi_8h_a150463ba2515263515f68599c580b64e}
+
+\item 
+\hypertarget{ioapi_8h_a715986c0415785fdc35877402429a366}{\#define {\bfseries Z\-C\-L\-O\-S\-E}(filefunc, filestream)~(($\ast$((filefunc).zclose\-\_\-file))((filefunc).opaque,filestream))}\label{ioapi_8h_a715986c0415785fdc35877402429a366}
+
+\item 
+\hypertarget{ioapi_8h_ac2c1539d88acceb31040e20b85ce2d6c}{\#define {\bfseries Z\-E\-R\-R\-O\-R}(filefunc, filestream)~(($\ast$((filefunc).zerror\-\_\-file))((filefunc).opaque,filestream))}\label{ioapi_8h_ac2c1539d88acceb31040e20b85ce2d6c}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ioapi_8h_a7a03a664b090ce5c848ecb31cb4a2fa8}{typedef const char $\ast$ {\bfseries filename}}\label{ioapi_8h_a7a03a664b090ce5c848ecb31cb4a2fa8}
+
+\item 
+\hypertarget{ioapi_8h_ac964b0cf0c94deb3fd1b75f58fe84c11}{typedef const char int {\bfseries mode}}\label{ioapi_8h_ac964b0cf0c94deb3fd1b75f58fe84c11}
+
+\item 
+\hypertarget{ioapi_8h_a4ed0a20697a8c37f8af699a8ec6d76a8}{typedef voidpf {\bfseries stream}}\label{ioapi_8h_a4ed0a20697a8c37f8af699a8ec6d76a8}
+
+\item 
+\hypertarget{ioapi_8h_a8ad8a13c88886b9f623034ff88570adb}{typedef voidpf void $\ast$ {\bfseries buf}}\label{ioapi_8h_a8ad8a13c88886b9f623034ff88570adb}
+
+\item 
+\hypertarget{ioapi_8h_a014d89bd76f74ef3a29c8f04b473eb76}{typedef voidpf void u\-Long {\bfseries size}}\label{ioapi_8h_a014d89bd76f74ef3a29c8f04b473eb76}
+
+\item 
+\hypertarget{ioapi_8h_af69bf0eca00f413fb4808febcbaf6f5c}{typedef voidpf u\-Long {\bfseries offset}}\label{ioapi_8h_af69bf0eca00f413fb4808febcbaf6f5c}
+
+\item 
+\hypertarget{ioapi_8h_a6ad5e17860121e666df109329b95c83e}{typedef voidpf u\-Long int {\bfseries origin}}\label{ioapi_8h_a6ad5e17860121e666df109329b95c83e}
+
+\item 
+\hypertarget{ioapi_8h_a269f2bded66a7ee4052a60025afebd7e}{typedef struct \hyperlink{structzlib__filefunc__def__s}{zlib\-\_\-filefunc\-\_\-def\-\_\-s} {\bfseries zlib\-\_\-filefunc\-\_\-def}}\label{ioapi_8h_a269f2bded66a7ee4052a60025afebd7e}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{ioapi_8h_a39ab6d73c1cd44bc17064c2dcbb3e753}{typedef {\bfseries voidpf} (Z\-C\-A\-L\-L\-B\-A\-C\-K $\ast$open\-\_\-file\-\_\-func) O\-F((voidpf opaque}\label{ioapi_8h_a39ab6d73c1cd44bc17064c2dcbb3e753}
+
+\item 
+\hypertarget{ioapi_8h_a50e9e9d5c30e481de822ad68fe537986}{typedef {\bfseries u\-Long} (Z\-C\-A\-L\-L\-B\-A\-C\-K $\ast$read\-\_\-file\-\_\-func) O\-F((voidpf opaque}\label{ioapi_8h_a50e9e9d5c30e481de822ad68fe537986}
+
+\item 
+\hypertarget{ioapi_8h_a3c7b35ad9dab18b8310343c201f7b27e}{typedef {\bfseries long} (Z\-C\-A\-L\-L\-B\-A\-C\-K $\ast$tell\-\_\-file\-\_\-func) O\-F((voidpf opaque}\label{ioapi_8h_a3c7b35ad9dab18b8310343c201f7b27e}
+
+\item 
+\hypertarget{ioapi_8h_a787fa3cf048117ba7123753c1e74fcd6}{typedef {\bfseries int} (Z\-C\-A\-L\-L\-B\-A\-C\-K $\ast$close\-\_\-file\-\_\-func) O\-F((voidpf opaque}\label{ioapi_8h_a787fa3cf048117ba7123753c1e74fcd6}
+
+\item 
+\hypertarget{ioapi_8h_a3f615f0884c860540da7fdafb0beaecb}{void fill\-\_\-fopen\-\_\-filefunc {\bfseries O\-F} ((\hyperlink{structzlib__filefunc__def__s}{zlib\-\_\-filefunc\-\_\-def} $\ast$pzlib\-\_\-filefunc\-\_\-def))}\label{ioapi_8h_a3f615f0884c860540da7fdafb0beaecb}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{ioapi_8h}{ioapi.\-h} -- I\-O base function header for compress/uncompress .zip \begin{DoxyAttention}{Attention}
+Joey\-: We are not currently using this, however it may become useful in the future.
+\end{DoxyAttention}
+files using zlib + zip or unzip A\-P\-I
+
+Version 1.\-01e, February 12th, 2005
+
+Copyright (C) 1998-\/2005 Gilles Vollant 
+
+Definition in file \hyperlink{ioapi_8h_source}{ioapi.\-h}.
+

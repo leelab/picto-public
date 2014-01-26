@@ -1,0 +1,51 @@
+\hypertarget{struct_director_click_response_handler}{\section{Director\-Click\-Response\-Handler Struct Reference}
+\label{struct_director_click_response_handler}\index{Director\-Click\-Response\-Handler@{Director\-Click\-Response\-Handler}}
+}
+
+
+Implements the Click\-Response\-Handler class by extracting click data when it arrives and delivering it to the Operator\-Click\-Parameter class.  
+
+
+
+
+{\ttfamily \#include $<$Director\-Click\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Director\-Click\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_director_click_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_click_response_handler_ad0e4686081d6fea8e349218fa55b65d0}{{\bfseries Director\-Click\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_director_status_manager}{Director\-Status\-Manager} $>$ status\-Manager)}\label{struct_director_click_response_handler_ad0e4686081d6fea8e349218fa55b65d0}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_click_response_handler_a34b38a742d0c4f1ca810a4208165aadf}{virtual bool \hyperlink{struct_director_click_response_handler_a34b38a742d0c4f1ca810a4208165aadf}{process\-Response} (Q\-String directive)}\label{struct_director_click_response_handler_a34b38a742d0c4f1ca810a4208165aadf}
+
+\begin{DoxyCompactList}\small\item\em Implements Click\-Response\-Hander\-::process\-Response() to read the x,y click position data from the input directive and add it to the Operator\-Click\-Parameter class using Operator\-Click\-Parameter\-::add\-Click(). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the Click\-Response\-Handler class by extracting click data when it arrives and delivering it to the Operator\-Click\-Parameter class. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 12 of file Director\-Click\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/protocol/Director\-Click\-Response\-Handler.\-h\item 
+source/director/protocol/Director\-Click\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

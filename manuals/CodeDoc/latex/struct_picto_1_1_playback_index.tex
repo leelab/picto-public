@@ -1,0 +1,110 @@
+\hypertarget{struct_picto_1_1_playback_index}{\section{Picto\-:\-:Playback\-Index Struct Reference}
+\label{struct_picto_1_1_playback_index}\index{Picto\-::\-Playback\-Index@{Picto\-::\-Playback\-Index}}
+}
+
+
+This class stores an index used to capture the ordering of different Session events for playback purposes.  
+
+
+
+
+{\ttfamily \#include $<$Indexed\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Playback\-Index\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_playback_index}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_playback_index_a84fe62af2a226c426453e349913dd7b4}{\hyperlink{struct_picto_1_1_playback_index_a84fe62af2a226c426453e349913dd7b4}{Playback\-Index} ()}\label{struct_picto_1_1_playback_index_a84fe62af2a226c426453e349913dd7b4}
+
+\begin{DoxyCompactList}\small\item\em Constructs an invalid \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} (time $<$ 0, data\-Id = 0). \end{DoxyCompactList}\item 
+\hyperlink{struct_picto_1_1_playback_index_ae4dec9366224c1c3085266d8bc324961}{Playback\-Index} (double \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{time}, qulonglong \hyperlink{struct_picto_1_1_playback_index_a1a046d21d2744bbb5e35431307819e02}{pos})
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} with the input time and data\-Id (called pos to indicate that this is the position within the input time). \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_playback_index_a1771a73cc40e9fb0e0ae31e2080ff266}{bool \hyperlink{struct_picto_1_1_playback_index_a1771a73cc40e9fb0e0ae31e2080ff266}{is\-Valid} ()}\label{struct_picto_1_1_playback_index_a1771a73cc40e9fb0e0ae31e2080ff266}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} contains a valid value. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{double \& \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{time} ()}\label{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}
+
+\begin{DoxyCompactList}\small\item\em Returns the time component of this \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}. \end{DoxyCompactList}\item 
+qulonglong \& \hyperlink{struct_picto_1_1_playback_index_a1a046d21d2744bbb5e35431307819e02}{pos} ()
+\begin{DoxyCompactList}\small\item\em Returns the pos component of this playback index (called pos to indicate that this is the position within the input time). \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_playback_index_a4dd007f475c7a32c39797caddab3d4c9}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{struct_picto_1_1_playback_index_a4dd007f475c7a32c39797caddab3d4c9}{next\-Index\-Same\-Time} ()}\label{struct_picto_1_1_playback_index_a4dd007f475c7a32c39797caddab3d4c9}
+
+\begin{DoxyCompactList}\small\item\em Returns the next \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} after this one for the same time. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_playback_index_a0d1657002a6a2b64d62089825cbe7430}{\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{struct_picto_1_1_playback_index_a0d1657002a6a2b64d62089825cbe7430}{prev\-Index\-Same\-Time} ()}\label{struct_picto_1_1_playback_index_a0d1657002a6a2b64d62089825cbe7430}
+
+\begin{DoxyCompactList}\small\item\em Returns the previous \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} before this one for the same time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_playback_index_a4e258793e5728ac68f0c58037955e4c3}{static \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{struct_picto_1_1_playback_index_a4e258793e5728ac68f0c58037955e4c3}{min\-For\-Time} (double \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{time})}\label{struct_picto_1_1_playback_index_a4e258793e5728ac68f0c58037955e4c3}
+
+\begin{DoxyCompactList}\small\item\em Returns the lowest possible \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} for the input time. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_playback_index_a87e6a7f297deaada4698add28d39476e}{static \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{struct_picto_1_1_playback_index_a87e6a7f297deaada4698add28d39476e}{max\-For\-Time} (double \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{time})}\label{struct_picto_1_1_playback_index_a87e6a7f297deaada4698add28d39476e}
+
+\begin{DoxyCompactList}\small\item\em Returns the highest possible \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} for the input time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class stores an index used to capture the ordering of different Session events for playback purposes. 
+
+This class is extremely important for the Playback system. Every event in \hyperlink{namespace_picto}{Picto} occurs with some kind of a timestamp, or if doesn't have a timestamp it has a reference to something with a timestamp like a frame\-Id. The timestamp itself is not enough to capture the precise ordering of \hyperlink{namespace_picto}{Picto} events however. For example, any two Properties who's values changed during the same frame are marked with the same frame\-Id and therefore the same timestamp. It is important to know which \hyperlink{class_picto_1_1_property}{Property} value changed first though, and whether it occured before or after a particular transition for the purposes of \hyperlink{class_picto_1_1_analysis}{Analysis}. For this reason, we need a second index that we can use to capture ordering of behavioral events. This is the Data\-Id field that is stored along with every row of session data in the session file. By using both of these indeces, time and Data\-Id we can capture the precise ordering of events in the session file.
+
+There are some data points that don't have data\-Id's however, such as spikes and lfp values which come from a different computer all together. Input signals like position also don't come with a data\-Id, but are marked only with the time that they came in. In the case of these signals, for comparison purposes we can simply use a \hyperlink{struct_picto_1_1_playback_index_a4e258793e5728ac68f0c58037955e4c3}{min\-For\-Time()} or \hyperlink{struct_picto_1_1_playback_index_a87e6a7f297deaada4698add28d39476e}{max\-For\-Time()} function to create a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} with the minimum or maximum Data\-I\-D values. That way we can be sure that a particular value will be either the first or last marked event for a given time.
+
+This class extends Q\-Pair$<$double,qulonglong$>$ which provides all of the necessary comparison operators so that comparison of two \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} values will look first at the time value and then at the data\-Id. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Indexed\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_picto_1_1_playback_index_ae4dec9366224c1c3085266d8bc324961}{\index{Picto\-::\-Playback\-Index@{Picto\-::\-Playback\-Index}!Playback\-Index@{Playback\-Index}}
+\index{Playback\-Index@{Playback\-Index}!Picto::PlaybackIndex@{Picto\-::\-Playback\-Index}}
+\subsubsection[{Playback\-Index}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Playback\-Index\-::\-Playback\-Index (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{qulonglong}]{pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{struct_picto_1_1_playback_index_ae4dec9366224c1c3085266d8bc324961}
+
+
+Constructs a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} with the input time and data\-Id (called pos to indicate that this is the position within the input time). 
+
+Possibly the pos input name should be changed to data\-Id for clarity. 
+
+Definition at line 35 of file Indexed\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_picto_1_1_playback_index_a1a046d21d2744bbb5e35431307819e02}{\index{Picto\-::\-Playback\-Index@{Picto\-::\-Playback\-Index}!pos@{pos}}
+\index{pos@{pos}!Picto::PlaybackIndex@{Picto\-::\-Playback\-Index}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}qulonglong\& Picto\-::\-Playback\-Index\-::pos (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{struct_picto_1_1_playback_index_a1a046d21d2744bbb5e35431307819e02}
+
+
+Returns the pos component of this playback index (called pos to indicate that this is the position within the input time). 
+
+Possibly this function should be renamed to data\-Id() for clarity. 
+
+Definition at line 43 of file Indexed\-Data.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Indexed\-Data.\-h\end{DoxyCompactItemize}

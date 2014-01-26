@@ -1,0 +1,75 @@
+\hypertarget{class_background_tool_group}{\section{Background\-Tool\-Group Class Reference}
+\label{class_background_tool_group}\index{Background\-Tool\-Group@{Background\-Tool\-Group}}
+}
+
+
+An early class in \hyperlink{class_designer}{Designer} development that was going to allow us to change the canvas background in the designer... until we realized \char`\"{}who cares about the canvas background.\char`\"{}.  
+
+
+
+
+{\ttfamily \#include $<$Background\-Tool\-Group.\-h$>$}
+
+Inheritance diagram for Background\-Tool\-Group\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_background_tool_group}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_background_tool_group_aa9d3e6979f249c5de5136b8568cad42e}{{\bfseries Background\-Tool\-Group} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Widget $\ast$parent=0)}\label{class_background_tool_group_aa9d3e6979f249c5de5136b8568cad42e}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_background_tool_group_a4bd76e6ee62d01a9da923038dd5dd96b}{virtual void \hyperlink{class_background_tool_group_a4bd76e6ee62d01a9da923038dd5dd96b}{do\-Button\-Action} (int button\-Id)}\label{class_background_tool_group_a4bd76e6ee62d01a9da923038dd5dd96b}
+
+\begin{DoxyCompactList}\small\item\em Called when the a button is pressed so that the button can do whatever it's supposed to do. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_background_tool_group_ae1f380cbc416556ae99a0a16a524d39c}{is\-Enabled} (int)
+\begin{DoxyCompactList}\small\item\em Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An early class in \hyperlink{class_designer}{Designer} development that was going to allow us to change the canvas background in the designer... until we realized \char`\"{}who cares about the canvas background.\char`\"{}. 
+
+This class is no longer used. You may delete it if you want. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 10 of file Background\-Tool\-Group.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_background_tool_group_ae1f380cbc416556ae99a0a16a524d39c}{\index{Background\-Tool\-Group@{Background\-Tool\-Group}!is\-Enabled@{is\-Enabled}}
+\index{is\-Enabled@{is\-Enabled}!BackgroundToolGroup@{Background\-Tool\-Group}}
+\subsubsection[{is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Background\-Tool\-Group\-::is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{button\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_background_tool_group_ae1f380cbc416556ae99a0a16a524d39c}
+
+
+Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. 
+
+For example, if the number of child assets of a certain type is limited in a particular window, this would return false for that asset's button once the limit is reached. 
+
+Implements \hyperlink{class_tool_group_adf3e25748f41ba5490aac857e375260d}{Tool\-Group}.
+
+
+
+Definition at line 19 of file Background\-Tool\-Group.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Background\-Tool\-Group.\-h\item 
+source/common/\-Designer/Background\-Tool\-Group.\-cpp\end{DoxyCompactItemize}

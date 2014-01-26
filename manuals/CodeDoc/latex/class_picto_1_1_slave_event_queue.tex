@@ -1,0 +1,54 @@
+\hypertarget{class_picto_1_1_slave_event_queue}{\section{Picto\-:\-:Slave\-Event\-Queue Class Reference}
+\label{class_picto_1_1_slave_event_queue}\index{Picto\-::\-Slave\-Event\-Queue@{Picto\-::\-Slave\-Event\-Queue}}
+}
+
+
+A F\-I\-F\-O for storing ordered \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} objects.  
+
+
+
+
+{\ttfamily \#include $<$Slave\-Event\-Queue.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_slave_event_queue_a6d8c7af8805b185f08a9f2d12f950ff1}{void \hyperlink{class_picto_1_1_slave_event_queue_a6d8c7af8805b185f08a9f2d12f950ff1}{reset} ()}\label{class_picto_1_1_slave_event_queue_a6d8c7af8805b185f08a9f2d12f950ff1}
+
+\begin{DoxyCompactList}\small\item\em Resets the \hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue} as if no event was ever added to it. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_queue_a99158db26e2d137b3d3fc4c2d9593538}{void \hyperlink{class_picto_1_1_slave_event_queue_a99158db26e2d137b3d3fc4c2d9593538}{add\-Prop\-Change} (const int \&asset\-Id, const Q\-String \&val)}\label{class_picto_1_1_slave_event_queue_a99158db26e2d137b3d3fc4c2d9593538}
+
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4afb990fae9e3e7caac8287944c9f3e0a6}{Slave\-Event\-::\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E} event to the \hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue} indicating that the \hyperlink{class_picto_1_1_property}{Property} with the input assetid changed its value to the input val. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_queue_a7ed77020ce552990cdf84f8f41283949}{void \hyperlink{class_picto_1_1_slave_event_queue_a7ed77020ce552990cdf84f8f41283949}{add\-Init\-Prop\-Change} (const int \&asset\-Id, const Q\-String \&val)}\label{class_picto_1_1_slave_event_queue_a7ed77020ce552990cdf84f8f41283949}
+
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4a77e5ce75f66238c8a3872a66ec7b7684}{Slave\-Event\-::\-I\-N\-I\-T\-\_\-\-P\-R\-O\-P\-\_\-\-V\-A\-L\-\_\-\-C\-H\-A\-N\-G\-E} change event to the \hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue} indicating that the \hyperlink{class_picto_1_1_property}{Property} with the input assetid changed its init\-Value to the input val. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_queue_a1196dac6d07baefc65c52167aa3e93f6}{void \hyperlink{class_picto_1_1_slave_event_queue_a1196dac6d07baefc65c52167aa3e93f6}{add\-Trans\-Activation} (const int \&asset\-Id)}\label{class_picto_1_1_slave_event_queue_a1196dac6d07baefc65c52167aa3e93f6}
+
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{class_picto_1_1_slave_event_a5e2557edef42f1cfd7ae98463166c4a4add958a7663c6ffb3d2ab4cfacf30d82b}{Slave\-Event\-::\-T\-R\-A\-N\-S\-\_\-\-A\-C\-T\-I\-V\-A\-T\-E\-D} activation event to the \hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue} indicating that the \hyperlink{class_picto_1_1_transition}{Transition} with the input asset\-Id was traversed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_slave_event_queue_aef57823f47a577d8bb8291815f4ef86b}{\hyperlink{class_picto_1_1_slave_event}{Slave\-Event} \hyperlink{class_picto_1_1_slave_event_queue_aef57823f47a577d8bb8291815f4ef86b}{take\-First\-Event} ()}\label{class_picto_1_1_slave_event_queue_aef57823f47a577d8bb8291815f4ef86b}
+
+\begin{DoxyCompactList}\small\item\em Removes and returns the first \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} from the \hyperlink{class_picto_1_1_slave_event_queue}{Slave\-Event\-Queue}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A F\-I\-F\-O for storing ordered \hyperlink{class_picto_1_1_slave_event}{Slave\-Event} objects. 
+
+This class is used by \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} to hold all \hyperlink{class_picto_1_1_state}{State} changes to a master experiment in between new frame events. It is implemented as a circular buffered F\-I\-F\-O that expands as necessary to increasing storage needs. Slave\-Events are added using \hyperlink{class_picto_1_1_slave_event_queue_a99158db26e2d137b3d3fc4c2d9593538}{add\-Prop\-Change()}, \hyperlink{class_picto_1_1_slave_event_queue_a7ed77020ce552990cdf84f8f41283949}{add\-Init\-Prop\-Change()} and \hyperlink{class_picto_1_1_slave_event_queue_a1196dac6d07baefc65c52167aa3e93f6}{add\-Trans\-Activation()}. Slave\-Events are popped using \hyperlink{class_picto_1_1_slave_event_queue_aef57823f47a577d8bb8291815f4ef86b}{take\-First\-Event()}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_slave_event}{Slave\-Event}, \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file Slave\-Event\-Queue.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/engine/Slave\-Event\-Queue.\-h\item 
+source/common/engine/Slave\-Event\-Queue.\-cpp\end{DoxyCompactItemize}

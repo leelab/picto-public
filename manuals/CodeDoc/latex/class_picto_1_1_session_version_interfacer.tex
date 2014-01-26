@@ -1,0 +1,126 @@
+\hypertarget{class_picto_1_1_session_version_interfacer}{\section{Picto\-:\-:Session\-Version\-Interfacer Class Reference}
+\label{class_picto_1_1_session_version_interfacer}\index{Picto\-::\-Session\-Version\-Interfacer@{Picto\-::\-Session\-Version\-Interfacer}}
+}
+
+
+Resets the \hyperlink{class_picto_1_1_asset}{Asset} I\-D values of an \hyperlink{class_picto_1_1_experiment}{Experiment} to those used in a Session file.  
+
+
+
+
+{\ttfamily \#include $<$Session\-Version\-Interfacer.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_session_version_interfacer_a1aa560edb0ed8850b8191846a5510d31}{Session\-Version\-Interfacer} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Experiment} $>$ initialized\-Experiment)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{Q\-String \hyperlink{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{add\-Session\-Property} (Q\-String name, int asset\-Id, int parent\-Asset\-Id)}\label{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}
+
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{class_picto_1_1_property}{Property} from the current Session file which will be used to correct the asset id of the corresponding \hyperlink{class_picto_1_1_property}{Property} in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer}. Returns an empty string on success and an error message on failure. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{Q\-String \hyperlink{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{add\-Session\-Transition} (Q\-String source, Q\-String source\-Result, int asset\-Id, int parent\-Asset\-Id)}\label{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}
+
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{class_picto_1_1_transition}{Transition} from the current Session file which will be used to correct the asset id of the corresponding \hyperlink{class_picto_1_1_transition}{Transition} in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer}. Returns an empty string on success and an error message on failure. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{add\-Session\-Element} (int asset\-Id, Q\-String path)
+\begin{DoxyCompactList}\small\item\em Adds an Experimental Element from the current Session file which will be used to correct the asset id of the corresponding Experimental Element in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer}. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_session_version_interfacer_ab41b3eb8c80b1760f03b7871deea95e7}{update\-Session\-Config\-From\-Session\-Assets} ()
+\begin{DoxyCompactList}\small\item\em Updates all of the \hyperlink{class_picto_1_1_asset}{Asset} I\-D values in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} to be equal to the \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds of assets input in the \hyperlink{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{add\-Session\-Property()}, \hyperlink{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{add\-Session\-Transition()}, and \hyperlink{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{add\-Session\-Element()} functions. \end{DoxyCompactList}\item 
+Q\-Hash$<$ int, bool $>$ \hyperlink{class_picto_1_1_session_version_interfacer_a226ca2af73c8ebbd2c475a38b791b50a}{get\-Obsolete\-Assets} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table of Asset\-I\-Ds from the Session. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Resets the \hyperlink{class_picto_1_1_asset}{Asset} I\-D values of an \hyperlink{class_picto_1_1_experiment}{Experiment} to those used in a Session file. 
+
+Since Session files could have been recorded at any time in the past, they may contain Designs that use an old version of the \hyperlink{namespace_picto}{Picto} Design Syntax. In those cases, the Designs will be automatically upgraded, but this upgrade process can sometimes result in changes to \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds of some of the Design Assets.
+
+For an example of this, consider a case where a particular type of \hyperlink{class_picto_1_1_asset}{Asset} has become obsolete, so it is deleted and the experiment is rebuilt from X\-M\-L for an automatic upgrade. While being rebuilt, there may be a \hyperlink{class_picto_1_1_property}{Property} whose default value was never changed in the design but whose value does change as part of the experimental run. Since a new hole in the continous series of \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds opened up due to the deletion of the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}, this \hyperlink{class_picto_1_1_property}{Property}, which is generated automatically and does not appear in the design file since its value was never changed, takes on one of the \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds of the freed up \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}. Now, when the value of that \hyperlink{class_picto_1_1_property}{Property} changes in the session file, the Playback system will have no way to know which \hyperlink{class_picto_1_1_property}{Property} was being referred to since the asset I\-D stored in the session file for the changed \hyperlink{class_picto_1_1_property}{Property} won't match up to a real \hyperlink{class_picto_1_1_property}{Property} in the design.
+
+This class takes care of that problem. We simply construct it with a passed in pointer to the \hyperlink{class_picto_1_1_experiment}{Experiment} that we want to upgrade, then we add all Session Properties, Transitions, and Elements according to the data in the Session tables. This is used internally to build up an \hyperlink{class_picto_1_1_asset}{Asset} tree, then that \hyperlink{class_picto_1_1_asset}{Asset} tree is traversed alongside the \hyperlink{class_picto_1_1_experiment}{Experiment} asset tree, and all of the \hyperlink{class_picto_1_1_experiment}{Experiment} \hyperlink{class_picto_1_1_asset}{Asset}'s Asset\-I\-Ds are updated according to the corresponding ones from the session. Any Properties, Transitions or Elements from the session that cannot be identified in the \hyperlink{class_picto_1_1_experiment}{Experiment} are added to an obsolete\-Assets lookup table. That lookup table contains all asset I\-Ds for which no proper Experimental Element can be found and therefore when changes come in for asset\-Ids in the obsolete\-Assets table, we know that we should just skip them before their corresponding Assets were found to be obsolete. That table is accessible from \hyperlink{class_picto_1_1_session_version_interfacer_a226ca2af73c8ebbd2c475a38b791b50a}{get\-Obsolete\-Assets()}.
+
+\begin{DoxyNote}{Note}
+Theoretically, the situation could come up at some point where a \hyperlink{class_picto_1_1_property}{Property} value from an obsolete asset needs to get mapped into a \hyperlink{class_picto_1_1_property}{Property} of a new \hyperlink{class_picto_1_1_asset}{Asset} created to replace the obsolete one. That hasn't come up yet, but when it does we will have to come up with a solution for that scenario. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 44 of file Session\-Version\-Interfacer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_session_version_interfacer_a1aa560edb0ed8850b8191846a5510d31}{\index{Picto\-::\-Session\-Version\-Interfacer@{Picto\-::\-Session\-Version\-Interfacer}!Session\-Version\-Interfacer@{Session\-Version\-Interfacer}}
+\index{Session\-Version\-Interfacer@{Session\-Version\-Interfacer}!Picto::SessionVersionInterfacer@{Picto\-::\-Session\-Version\-Interfacer}}
+\subsubsection[{Session\-Version\-Interfacer}]{\setlength{\rightskip}{0pt plus 5cm}Session\-Version\-Interfacer\-::\-Session\-Version\-Interfacer (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Experiment} $>$}]{initialized\-Experiment}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_version_interfacer_a1aa560edb0ed8850b8191846a5510d31}
+
+
+Constructs a new \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} object. 
+
+The input \hyperlink{class_picto_1_1_experiment}{Experiment} is the one who's tree will have its \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds corrected according to the values input in the \hyperlink{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{add\-Session\-Property()}, \hyperlink{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{add\-Session\-Transition()}, and \hyperlink{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{add\-Session\-Element()} functions. 
+
+Definition at line 10 of file Session\-Version\-Interfacer.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{\index{Picto\-::\-Session\-Version\-Interfacer@{Picto\-::\-Session\-Version\-Interfacer}!add\-Session\-Element@{add\-Session\-Element}}
+\index{add\-Session\-Element@{add\-Session\-Element}!Picto::SessionVersionInterfacer@{Picto\-::\-Session\-Version\-Interfacer}}
+\subsubsection[{add\-Session\-Element}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Session\-Version\-Interfacer\-::add\-Session\-Element (
+\begin{DoxyParamCaption}
+\item[{int}]{asset\-Id, }
+\item[{Q\-String}]{path}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}
+
+
+Adds an Experimental Element from the current Session file which will be used to correct the asset id of the corresponding Experimental Element in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer}. 
+
+An Experimental Element is anything that is not a \hyperlink{class_picto_1_1_property}{Property} or a \hyperlink{class_picto_1_1_transition}{Transition} but is part of the \hyperlink{class_picto_1_1_experiment}{Experiment} design, ie. State\-Machine\-Elements, Variables, Parameters, etc. Returns an empty string on success and an error message on failure. 
+
+Definition at line 53 of file Session\-Version\-Interfacer.\-cpp.
+
+\hypertarget{class_picto_1_1_session_version_interfacer_a226ca2af73c8ebbd2c475a38b791b50a}{\index{Picto\-::\-Session\-Version\-Interfacer@{Picto\-::\-Session\-Version\-Interfacer}!get\-Obsolete\-Assets@{get\-Obsolete\-Assets}}
+\index{get\-Obsolete\-Assets@{get\-Obsolete\-Assets}!Picto::SessionVersionInterfacer@{Picto\-::\-Session\-Version\-Interfacer}}
+\subsubsection[{get\-Obsolete\-Assets}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Hash$<$ int, bool $>$ Session\-Version\-Interfacer\-::get\-Obsolete\-Assets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_version_interfacer_a226ca2af73c8ebbd2c475a38b791b50a}
+
+
+Returns a lookup table of Asset\-I\-Ds from the Session. 
+
+Assets that were added through the \hyperlink{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{add\-Session\-Property()}, \hyperlink{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{add\-Session\-Transition()}, and \hyperlink{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{add\-Session\-Element()} functions that could not be identified in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} must have been removed due to an \hyperlink{class_picto_1_1_experiment}{Experiment} version upgrade. Use this lookup table to identify these Assets so that changes in their values can be ignored. 
+
+Definition at line 208 of file Session\-Version\-Interfacer.\-cpp.
+
+\hypertarget{class_picto_1_1_session_version_interfacer_ab41b3eb8c80b1760f03b7871deea95e7}{\index{Picto\-::\-Session\-Version\-Interfacer@{Picto\-::\-Session\-Version\-Interfacer}!update\-Session\-Config\-From\-Session\-Assets@{update\-Session\-Config\-From\-Session\-Assets}}
+\index{update\-Session\-Config\-From\-Session\-Assets@{update\-Session\-Config\-From\-Session\-Assets}!Picto::SessionVersionInterfacer@{Picto\-::\-Session\-Version\-Interfacer}}
+\subsubsection[{update\-Session\-Config\-From\-Session\-Assets}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Session\-Version\-Interfacer\-::update\-Session\-Config\-From\-Session\-Assets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_version_interfacer_ab41b3eb8c80b1760f03b7871deea95e7}
+
+
+Updates all of the \hyperlink{class_picto_1_1_asset}{Asset} I\-D values in the \hyperlink{class_picto_1_1_experiment}{Experiment} handled by this \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} to be equal to the \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds of assets input in the \hyperlink{class_picto_1_1_session_version_interfacer_a85fa3836fd8d081936dfecd74424e220}{add\-Session\-Property()}, \hyperlink{class_picto_1_1_session_version_interfacer_a65d97b008ff49d9b9451687d8cc178ec}{add\-Session\-Transition()}, and \hyperlink{class_picto_1_1_session_version_interfacer_a159bb9cf03088be02f43d30022914ee4}{add\-Session\-Element()} functions. 
+
+Any Session Assets input through the various functions that can't be matched up to an Experimental \hyperlink{class_picto_1_1_asset}{Asset} will be considered to be Obsolete Assets, a list of their \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds can be returned from \hyperlink{class_picto_1_1_session_version_interfacer_a226ca2af73c8ebbd2c475a38b791b50a}{get\-Obsolete\-Assets()} so that changes to their values or their descendnants \hyperlink{class_picto_1_1_property}{Property} values can be ignored. Returns an empty string on success and an error message on failure. 
+
+Definition at line 74 of file Session\-Version\-Interfacer.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Session\-Version\-Interfacer.\-h\item 
+source/common/playback/Session\-Version\-Interfacer.\-cpp\end{DoxyCompactItemize}

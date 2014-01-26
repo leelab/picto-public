@@ -1,0 +1,82 @@
+\hypertarget{class_picto_1_1_analysis_output_widget}{\section{Picto\-:\-:Analysis\-Output\-Widget Class Reference}
+\label{class_picto_1_1_analysis_output_widget}\index{Picto\-::\-Analysis\-Output\-Widget@{Picto\-::\-Analysis\-Output\-Widget}}
+}
+
+
+The base class of widgets that display a representation of the output of an \hyperlink{class_picto_1_1_analysis_output}{Analysis\-Output} object.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Output\-Widget.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Output\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.616822cm]{class_picto_1_1_analysis_output_widget}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a1cb5d5b9b1b9f22b4571577c89327d4f}{{\bfseries Analysis\-Output\-Widget} (Q\-Widget $\ast$parent=0)}\label{class_picto_1_1_analysis_output_widget_a1cb5d5b9b1b9f22b4571577c89327d4f}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a9cdc9a514cdbeaaf747654cae6215bf5}{virtual bool {\bfseries is\-Saveable} ()}\label{class_picto_1_1_analysis_output_widget_a9cdc9a514cdbeaaf747654cae6215bf5}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a02b8a713faebd966c1a72565de9eb73d}{virtual bool {\bfseries save\-Output\-To} (Q\-Dir directory)}\label{class_picto_1_1_analysis_output_widget_a02b8a713faebd966c1a72565de9eb73d}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a2f337434edfed55fa23ab974bad399c9}{{\bfseries Analysis\-Output\-Widget} (Q\-Widget $\ast$parent=0)}\label{class_picto_1_1_analysis_output_widget_a2f337434edfed55fa23ab974bad399c9}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a9cdc9a514cdbeaaf747654cae6215bf5}{virtual bool \hyperlink{class_picto_1_1_analysis_output_widget_a9cdc9a514cdbeaaf747654cae6215bf5}{is\-Saveable} ()}\label{class_picto_1_1_analysis_output_widget_a9cdc9a514cdbeaaf747654cae6215bf5}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the data represented in this widget is saveable to disk, false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_output_widget_a02b8a713faebd966c1a72565de9eb73d}{virtual bool \hyperlink{class_picto_1_1_analysis_output_widget_a02b8a713faebd966c1a72565de9eb73d}{save\-Output\-To} (Q\-Dir directory)}\label{class_picto_1_1_analysis_output_widget_a02b8a713faebd966c1a72565de9eb73d}
+
+\begin{DoxyCompactList}\small\item\em Saves the data represnted in this widget to the input directory, returns true if successful, false otherwise. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_output_widget_ab41bc2f661ea3d7afc2fef6774019efb}{get\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The base class of widgets that display a representation of the output of an \hyperlink{class_picto_1_1_analysis_output}{Analysis\-Output} object. 
+
+These widgets are displayed in an \hyperlink{class_picto_1_1_analysis_output_widget_container}{Analysis\-Output\-Widget\-Container} for monitoring of \hyperlink{class_picto_1_1_analysis}{Analysis} outputs from within the \hyperlink{namespace_picto}{Picto} application. Different \hyperlink{class_picto_1_1_analysis_output}{Analysis\-Output} classes will be associated with different Analysis\-Widgets, for example, an \hyperlink{class_picto_1_1_analysis_file_output}{Analysis\-File\-Output} will be associated with an \hyperlink{class_picto_1_1_analysis_file_output_widget}{Analysis\-File\-Output\-Widget}, whereas an Analysis\-Raster\-Output might still save its data to file, but be viewable using an Analysis\-Raster\-Plot\-Widget. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file Analysis\-Output\-Widget.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_output_widget_ab41bc2f661ea3d7afc2fef6774019efb}{\index{Picto\-::\-Analysis\-Output\-Widget@{Picto\-::\-Analysis\-Output\-Widget}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Picto::AnalysisOutputWidget@{Picto\-::\-Analysis\-Output\-Widget}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Output\-Widget\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_output_widget_ab41bc2f661ea3d7afc2fef6774019efb}
+
+
+Returns the name of this widget. 
+
+This will be the name used as its title in a tabbed layout. 
+
+Definition at line 35 of file Analysis\-Output\-Widget.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Analysis\-Output\-Widget.\-h\item 
+source/common/parameter/Analysis\-Output\-Widget.\-h\item 
+source/common/analysis/Analysis\-Output\-Widget.\-cpp\item 
+source/common/parameter/Analysis\-Output\-Widget.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,230 @@
+\hypertarget{class_picto_1_1_script_element}{\section{Picto\-:\-:Script\-Element Class Reference}
+\label{class_picto_1_1_script_element}\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}}
+}
+
+
+This class is obsolete. In design syntax version \char`\"{}0.\-0.\-1\char`\"{}, we removed \char`\"{}\-Script\-Elements\char`\"{} and replaced them with \char`\"{}\-Switch\-Elements\char`\"{} since \char`\"{}\-Script\-Element\char`\"{} were essentially \char`\"{}\-Switch\-Elements\char`\"{} that contained only two results, \char`\"{}true\char`\"{} and \char`\"{}false\char`\"{} that were triggered with a boolean value.  
+
+
+
+
+{\ttfamily \#include $<$Script\-Element.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Script\-Element\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_script_element}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String \hyperlink{class_picto_1_1_script_element_aedaade30e89d76bf3381e8143bc2e1a4}{run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Called when control flow reaches this \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} to trigger its internal execution logic. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_script_element_a6044e7e03b1690093bd84f40e3b7eb0a}{slave\-Run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em This function comes from back before we were using the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_element_ac5c0ca0b81a31b52e36305bed256668a}{void {\bfseries set\-Script} (Q\-String script)}\label{class_picto_1_1_script_element_ac5c0ca0b81a31b52e36305bed256668a}
+
+\item 
+\hypertarget{class_picto_1_1_script_element_a23659e3350bcf61291946eb624cef261}{virtual Q\-String \hyperlink{class_picto_1_1_script_element_a23659e3350bcf61291946eb624cef261}{get\-U\-I\-Template} ()}\label{class_picto_1_1_script_element_a23659e3350bcf61291946eb624cef261}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_script_element_a3b5169fa49d2ae3ada252453abb30014}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_script_element_a9c83fda35febde0e98a5ff19ed8a9bd0}{Create} ()
+\begin{DoxyCompactList}\small\item\em Sets up the \hyperlink{class_picto_1_1_script_element}{Script\-Element} so it is ready to run scripts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_script_element_a673c95614169016369b9f69516a73134}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_element_a1af92afd8e8b081c8f394ea51449419f}{virtual bool \hyperlink{class_picto_1_1_script_element_a1af92afd8e8b081c8f394ea51449419f}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_script_element_a1af92afd8e8b081c8f394ea51449419f}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_script_element_ad385c5c2dc81243a112fc21afda710cc}{virtual bool \hyperlink{class_picto_1_1_script_element_ad385c5c2dc81243a112fc21afda710cc}{can\-Have\-Scripts} ()}\label{class_picto_1_1_script_element_ad385c5c2dc81243a112fc21afda710cc}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} can potentially include scripts that would need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_script_element_a6823bbcbdfaa8a2035c55f78523441be}{has\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. \end{DoxyCompactList}\item 
+virtual Q\-Map$<$ Q\-String, Q\-String $>$ \hyperlink{class_picto_1_1_script_element_af86fb66166dcdb35966b148ab16bf3f1}{get\-Scripts} ()
+\begin{DoxyCompactList}\small\item\em Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class is obsolete. In design syntax version \char`\"{}0.\-0.\-1\char`\"{}, we removed \char`\"{}\-Script\-Elements\char`\"{} and replaced them with \char`\"{}\-Switch\-Elements\char`\"{} since \char`\"{}\-Script\-Element\char`\"{} were essentially \char`\"{}\-Switch\-Elements\char`\"{} that contained only two results, \char`\"{}true\char`\"{} and \char`\"{}false\char`\"{} that were triggered with a boolean value. 
+
+We should probably look into deleting this class. For reference, I have included the classes original documentation below\-:
+
+\hyperlink{class_picto_1_1_script_element}{Script\-Element}\-: A state machine element that runs a script
+
+Script elements are used when a script needs to be run. The script being run will have access to all of the parameters of the state machine that contains the \hyperlink{class_picto_1_1_script_element}{Script\-Element}.
+
+There are some additional features that I have considered adding\-:
+\begin{DoxyEnumerate}
+\item Multiple results. At the moment, the \hyperlink{class_picto_1_1_script_element}{Script\-Element} has a single return value of \char`\"{}done\char`\"{}
+\item Access to more than just the parameters. It might be interesting to provide the script access to the Visual\-Elements contained in Scenes. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+\end{DoxyEnumerate}
+
+Definition at line 34 of file Script\-Element.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_script_element_a9c83fda35febde0e98a5ff19ed8a9bd0}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!Create@{Create}}
+\index{Create@{Create}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{Create}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset} $>$ Picto\-::\-Script\-Element\-::\-Create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_script_element_a9c83fda35febde0e98a5ff19ed8a9bd0}
+
+
+Sets up the \hyperlink{class_picto_1_1_script_element}{Script\-Element} so it is ready to run scripts. 
+
+Setting up the element involves two steps\-:
+\begin{DoxyEnumerate}
+\item Adding our script as a function to the passed in engine
+\item Storing a pointer to the passed in engine 
+\end{DoxyEnumerate}
+
+Definition at line 64 of file Script\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_script_element_a3b5169fa49d2ae3ada252453abb30014}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Script\-Element\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_a3b5169fa49d2ae3ada252453abb30014}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_a71bb8021124ed8ce64e498e767b69e1d}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 48 of file Script\-Element.\-h.
+
+\hypertarget{class_picto_1_1_script_element_af86fb66166dcdb35966b148ab16bf3f1}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!get\-Scripts@{get\-Scripts}}
+\index{get\-Scripts@{get\-Scripts}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{get\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<$ Q\-String, Q\-String $>$ Picto\-::\-Script\-Element\-::get\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_af86fb66166dcdb35966b148ab16bf3f1}
+
+
+Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible. 
+
+\begin{DoxyNote}{Note}
+There is some history here. Originally, these scripts were stored as part of the scripting engine, and so their names had to be unique. Now they are stored in a table of Q\-Script\-Program objects and so there is probably not any real need for their \char`\"{}script names\char`\"{} to be different from the \char`\"{}\-Property names\char`\"{} of the Properties containing the script text. We should probably change this at some point. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_a2cea850bd3c3e7cd40a0b4b09984db70}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 111 of file Script\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_script_element_a6823bbcbdfaa8a2035c55f78523441be}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!has\-Scripts@{has\-Scripts}}
+\index{has\-Scripts@{has\-Scripts}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{has\-Scripts}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Script\-Element\-::has\-Scripts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_a6823bbcbdfaa8a2035c55f78523441be}
+
+
+Returns true if this \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} has scripts that need access to the scripting engine. 
+
+\begin{DoxyNote}{Note}
+If this function returns true, \hyperlink{class_picto_1_1_script_element_ad385c5c2dc81243a112fc21afda710cc}{can\-Have\-Scripts()} should also return true. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ab93cc37be3b570575b812e13ec4f806a}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 104 of file Script\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_script_element_a673c95614169016369b9f69516a73134}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Script\-Element\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_a673c95614169016369b9f69516a73134}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_state_machine_element_ac71e3f57e16c8be8dc4d6900c836948f}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 92 of file Script\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_script_element_aedaade30e89d76bf3381e8143bc2e1a4}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!run@{run}}
+\index{run@{run}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Script\-Element\-::run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_aedaade30e89d76bf3381e8143bc2e1a4}
+
+
+Called when control flow reaches this \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} to trigger its internal execution logic. 
+
+The returned value is the name of the \hyperlink{class_picto_1_1_result}{Result} of the \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element}'s execution logic. 
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a7a1f1ca8905c111dd043178b9132c770}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 69 of file Script\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_script_element_a6044e7e03b1690093bd84f40e3b7eb0a}{\index{Picto\-::\-Script\-Element@{Picto\-::\-Script\-Element}!slave\-Run@{slave\-Run}}
+\index{slave\-Run@{slave\-Run}!Picto::ScriptElement@{Picto\-::\-Script\-Element}}
+\subsubsection[{slave\-Run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Script\-Element\-::slave\-Run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_script_element_a6044e7e03b1690093bd84f40e3b7eb0a}
+
+
+This function comes from back before we were using the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}. 
+
+Since the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} handles changing of \hyperlink{class_picto_1_1_property}{Property} values and transitioning control flow based on what happened in the Master experiment, and \hyperlink{class_picto_1_1_state_machine_element_ab993f13815701b3dc47a7f50985d29bf}{slave\-Render\-Frame()} handles the rendering component, the \hyperlink{class_picto_1_1_script_element_a6044e7e03b1690093bd84f40e3b7eb0a}{slave\-Run()} function itself is pretty much obsolete at this point. It should probably be removed, but since some classes use it to perform various minor operations, we will need to assure that they are moved to more appropriate functions first. 
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a0dbfefa77a60c323a285626bf6057c2b}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 86 of file Script\-Element.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Script\-Element.\-h\item 
+source/common/statemachine/Script\-Element.\-cpp\end{DoxyCompactItemize}

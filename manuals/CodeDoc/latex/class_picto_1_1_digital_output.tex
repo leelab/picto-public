@@ -1,0 +1,177 @@
+\hypertarget{class_picto_1_1_digital_output}{\section{Picto\-:\-:Digital\-Output Class Reference}
+\label{class_picto_1_1_digital_output}\index{Picto\-::\-Digital\-Output@{Picto\-::\-Digital\-Output}}
+}
+
+
+An \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} that handles the value of single pins of an entire port.  
+
+
+
+
+{\ttfamily \#include $<$Digital\-Output.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Digital\-Output\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_digital_output}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_digital_output_aee766b5ba8f3e317044cfdef56ff3b14}{Digital\-Output} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_a8708f6d695b01f18357c498290755848}{void \hyperlink{class_picto_1_1_digital_output_a8708f6d695b01f18357c498290755848}{set\-Bin\-Value} (bool active)}\label{class_picto_1_1_digital_output_a8708f6d695b01f18357c498290755848}
+
+\begin{DoxyCompactList}\small\item\em Sets the value on the pin handled by this object to the input boolean. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_a850479d8884af72765192471fe4045ac}{bool \hyperlink{class_picto_1_1_digital_output_a850479d8884af72765192471fe4045ac}{get\-Bin\-Value} ()}\label{class_picto_1_1_digital_output_a850479d8884af72765192471fe4045ac}
+
+\begin{DoxyCompactList}\small\item\em Returns the value on the pin handled by this object. True or false. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_a8b9ecb78333d14adad90defc5a0bca8f}{void \hyperlink{class_picto_1_1_digital_output_a8b9ecb78333d14adad90defc5a0bca8f}{set\-Pin} (int \hyperlink{class_picto_1_1_digital_output_aeedde6eb50dc034c32c0803cd623e78f}{pin})}\label{class_picto_1_1_digital_output_a8b9ecb78333d14adad90defc5a0bca8f}
+
+\begin{DoxyCompactList}\small\item\em Sets the index of the pin handled by this object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_ac6d32b516efdce133379f26d939e1442}{virtual int \hyperlink{class_picto_1_1_digital_output_ac6d32b516efdce133379f26d939e1442}{get\-Pin} ()}\label{class_picto_1_1_digital_output_ac6d32b516efdce133379f26d939e1442}
+
+\begin{DoxyCompactList}\small\item\em Returns the index of the pin handled by this object within its port. \end{DoxyCompactList}\item 
+virtual Q\-Variant \hyperlink{class_picto_1_1_digital_output_a3c367669d07f5c096a34584d87a66c08}{get\-Value} ()
+\begin{DoxyCompactList}\small\item\em Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_digital_output_a5d8aff3b7a814288c138eafc6aace133}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_digital_output_a176091c43cad039e1f0a164cec224dad}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_digital_output_a176091c43cad039e1f0a164cec224dad}{Create} ()}\label{class_picto_1_1_digital_output_a176091c43cad039e1f0a164cec224dad}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_digital_output}{Digital\-Output} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_digital_output_a9a5b00eee2e4b6f968940cf05cfd9612}{static const Q\-String \hyperlink{class_picto_1_1_digital_output_a9a5b00eee2e4b6f968940cf05cfd9612}{type} = \char`\"{}Digital Output\char`\"{}}\label{class_picto_1_1_digital_output_a9a5b00eee2e4b6f968940cf05cfd9612}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_digital_output_a44c3cb31438e4cecf53f63edbbd8866b}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_a41b29997a13c465b0485923480c0255a}{virtual bool \hyperlink{class_picto_1_1_digital_output_a41b29997a13c465b0485923480c0255a}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_digital_output_a41b29997a13c465b0485923480c0255a}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{struct_picto_1_1_output_signal_a5401d53b65a3664df866aef4455d42fe}{Output\-Signal\-::validate\-Object()} to verify that the stored Pin value is not negative. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_digital_output_a26bc10df93b98a92243f23bc8515ecb2}{bool \hyperlink{class_picto_1_1_digital_output_a26bc10df93b98a92243f23bc8515ecb2}{value}}\label{class_picto_1_1_digital_output_a26bc10df93b98a92243f23bc8515ecb2}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets boolean the value on the pin handled by this object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_digital_output_aeedde6eb50dc034c32c0803cd623e78f}{int \hyperlink{class_picto_1_1_digital_output_aeedde6eb50dc034c32c0803cd623e78f}{pin}}\label{class_picto_1_1_digital_output_aeedde6eb50dc034c32c0803cd623e78f}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the index of the pin handled by this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} that handles the value of single pins of an entire port. 
+
+The pin's voltage value is set as a bolean. \begin{DoxyNote}{Note}
+Using a \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object and a \hyperlink{class_picto_1_1_digital_output}{Digital\-Output} object with the same port is undefined. We might want to check for this at some point in validate\-Object. More than one \hyperlink{class_picto_1_1_digital_output}{Digital\-Output} can be used with the same port so long as eash one handles a different pin. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Digital\-Output.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_digital_output_aee766b5ba8f3e317044cfdef56ff3b14}{\index{Picto\-::\-Digital\-Output@{Picto\-::\-Digital\-Output}!Digital\-Output@{Digital\-Output}}
+\index{Digital\-Output@{Digital\-Output}!Picto::DigitalOutput@{Picto\-::\-Digital\-Output}}
+\subsubsection[{Digital\-Output}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Digital\-Output\-::\-Digital\-Output (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_digital_output_aee766b5ba8f3e317044cfdef56ff3b14}
+
+
+Constructs a \hyperlink{class_picto_1_1_binary_data_output}{Binary\-Data\-Output} object. 
+
+Adds a Value \hyperlink{class_picto_1_1_property}{Property} to store a boolean value that will be output to the output pin. Adds a Pin \hyperlink{class_picto_1_1_property}{Property} to define the pin that is handled by this object within the Port defined in the parent \hyperlink{struct_picto_1_1_output_signal}{Output\-Signal} class. 
+
+Definition at line 14 of file Digital\-Output.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_digital_output_a5d8aff3b7a814288c138eafc6aace133}{\index{Picto\-::\-Digital\-Output@{Picto\-::\-Digital\-Output}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::DigitalOutput@{Picto\-::\-Digital\-Output}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Digital\-Output\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_digital_output_a5d8aff3b7a814288c138eafc6aace133}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_a3603021461f1c250702a5a5aa0eee3a5}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 42 of file Digital\-Output.\-h.
+
+\hypertarget{class_picto_1_1_digital_output_a3c367669d07f5c096a34584d87a66c08}{\index{Picto\-::\-Digital\-Output@{Picto\-::\-Digital\-Output}!get\-Value@{get\-Value}}
+\index{get\-Value@{get\-Value}!Picto::DigitalOutput@{Picto\-::\-Digital\-Output}}
+\subsubsection[{get\-Value}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Variant Picto\-::\-Digital\-Output\-::get\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_digital_output_a3c367669d07f5c096a34584d87a66c08}
+
+
+Returns the current integer value of the output \hyperlink{class_picto_1_1_signal}{Signal} if we interpret it as a binary integer. 
+
+\begin{DoxyNote}{Note}
+This depends on the size of the output signal. If it is 8 bits long, we could get a value from 0-\/15, if it is 1 bit long, we could only get 0-\/1. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_ae4ca3f2d3f76dd6979418aba4a256dd7}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 40 of file Digital\-Output.\-h.
+
+\hypertarget{class_picto_1_1_digital_output_a44c3cb31438e4cecf53f63edbbd8866b}{\index{Picto\-::\-Digital\-Output@{Picto\-::\-Digital\-Output}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::DigitalOutput@{Picto\-::\-Digital\-Output}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Digital\-Output\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_digital_output_a44c3cb31438e4cecf53f63edbbd8866b}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_output_signal_af6516d590c0adf04a169d15cce762368}{Picto\-::\-Output\-Signal}.
+
+
+
+Definition at line 27 of file Digital\-Output.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Digital\-Output.\-h\item 
+source/common/stimuli/Digital\-Output.\-cpp\end{DoxyCompactItemize}

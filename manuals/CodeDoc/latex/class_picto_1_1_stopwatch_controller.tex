@@ -1,0 +1,178 @@
+\hypertarget{class_picto_1_1_stopwatch_controller}{\section{Picto\-:\-:Stopwatch\-Controller Class Reference}
+\label{class_picto_1_1_stopwatch_controller}\index{Picto\-::\-Stopwatch\-Controller@{Picto\-::\-Stopwatch\-Controller}}
+}
+
+
+A time based controller.  
+
+
+
+
+{\ttfamily \#include $<$Stopwatch\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Stopwatch\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_stopwatch_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_aa388a0ce16f4c09c8ce884ad5f006f0a}{bool \hyperlink{class_picto_1_1_stopwatch_controller_aa388a0ce16f4c09c8ce884ad5f006f0a}{is\-Done} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)}\label{class_picto_1_1_stopwatch_controller_aa388a0ce16f4c09c8ce884ad5f006f0a}
+
+\begin{DoxyCompactList}\small\item\em is\-Done will return true if the \hyperlink{class_picto_1_1_control_element}{Control\-Element}'s logic determines that some condition has been met. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_ac63ea0ca9ba624044711f35dc5269885}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_result}{Result} $>$ \hyperlink{class_picto_1_1_stopwatch_controller_ac63ea0ca9ba624044711f35dc5269885}{get\-Result} ()}\label{class_picto_1_1_stopwatch_controller_ac63ea0ca9ba624044711f35dc5269885}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest result after a \hyperlink{class_picto_1_1_control_element}{Control\-Element} \hyperlink{class_picto_1_1_stopwatch_controller_aa388a0ce16f4c09c8ce884ad5f006f0a}{is\-Done()}. If the \hyperlink{class_picto_1_1_control_element}{Control\-Element} is not done, this returns an empty result pointer. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_stopwatch_controller_a15e0f1023c0667695614e6b7f7848369}{start} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_stopwatch_controller_a26c956d6ac3b08626b2f48ddaaca028e}{set\-Time} (int time, Controller\-::\-Timer\-Units\-::\-Timer\-Units units)
+\begin{DoxyCompactList}\small\item\em Sets values for the Time property along with the current time units. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_a4079d394ed6387b44fa794824045f743}{void \hyperlink{class_picto_1_1_stopwatch_controller_a4079d394ed6387b44fa794824045f743}{set\-Time} (int time)}\label{class_picto_1_1_stopwatch_controller_a4079d394ed6387b44fa794824045f743}
+
+\begin{DoxyCompactList}\small\item\em Sets the current value of the Time property which defines the time at which 'Success' will be triggered. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_a76a4c842c3654e41e56299b72265f045}{int \hyperlink{class_picto_1_1_stopwatch_controller_a76a4c842c3654e41e56299b72265f045}{get\-Time} ()}\label{class_picto_1_1_stopwatch_controller_a76a4c842c3654e41e56299b72265f045}
+
+\begin{DoxyCompactList}\small\item\em Gets the current value of the Time property which defines the time at which 'Success' will be triggered. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_a916e02b165773be2942f8bc738193b13}{virtual Q\-String \hyperlink{class_picto_1_1_stopwatch_controller_a916e02b165773be2942f8bc738193b13}{get\-U\-I\-Template} ()}\label{class_picto_1_1_stopwatch_controller_a916e02b165773be2942f8bc738193b13}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_stopwatch_controller_a34394665524759705fefcc001ea68dba}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_ae845ab63e70fa9e4c91ea22278fca4ba}{static \hyperlink{class_picto_1_1_control_element}{Control\-Element} $\ast$ \hyperlink{class_picto_1_1_stopwatch_controller_ae845ab63e70fa9e4c91ea22278fca4ba}{New\-Stopwatch\-Controller} ()}\label{class_picto_1_1_stopwatch_controller_ae845ab63e70fa9e4c91ea22278fca4ba}
+
+\begin{DoxyCompactList}\small\item\em Creates and returns a pointer to a new \hyperlink{class_picto_1_1_stopwatch_controller}{Stopwatch\-Controller}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_addcb9d437ed72621e14ea9287138130f}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_stopwatch_controller_addcb9d437ed72621e14ea9287138130f}{Create} ()}\label{class_picto_1_1_stopwatch_controller_addcb9d437ed72621e14ea9287138130f}
+
+\begin{DoxyCompactList}\small\item\em Creates and returns a shared pointer to a new \hyperlink{class_picto_1_1_stopwatch_controller}{Stopwatch\-Controller}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_ad81d4ac7b16a0da6b656393df6c679f9}{static Q\-String \hyperlink{class_picto_1_1_stopwatch_controller_ad81d4ac7b16a0da6b656393df6c679f9}{Controller\-Type} ()}\label{class_picto_1_1_stopwatch_controller_ad81d4ac7b16a0da6b656393df6c679f9}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this type of \hyperlink{class_picto_1_1_control_element}{Control\-Element}. Namely, \char`\"{}\-Stopwatch Controller\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_stopwatch_controller_ac7fd86cd42abe3a6474966ccc9f8ff94}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_a96e5d85e8af64b5b284aa9906f82cd51}{virtual bool \hyperlink{class_picto_1_1_stopwatch_controller_a96e5d85e8af64b5b284aa9906f82cd51}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_stopwatch_controller_a96e5d85e8af64b5b284aa9906f82cd51}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_stopwatch_controller_a8e9b556e2d43235b00159019f742c5c2}{int \hyperlink{class_picto_1_1_stopwatch_controller_a8e9b556e2d43235b00159019f742c5c2}{timeout}}\label{class_picto_1_1_stopwatch_controller_a8e9b556e2d43235b00159019f742c5c2}
+
+\begin{DoxyCompactList}\small\item\em Sets/\-Gets the current value of the Time property which defines the time at which 'Success' will be triggered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A time based controller. 
+
+This is a simple timer controller that triggers its Success result as soon as its set timeout runs out. Please note that since time is checked only once per frame the time that the next frame from a state following this one will appear will be anywhere from one to two frames beyond the set 'Time'. This is true of all time based conditions in \hyperlink{class_picto_1_1_control_element}{Control\-Element} objects. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Stopwatch\-Controller.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_stopwatch_controller_a34394665524759705fefcc001ea68dba}{\index{Picto\-::\-Stopwatch\-Controller@{Picto\-::\-Stopwatch\-Controller}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::StopwatchController@{Picto\-::\-Stopwatch\-Controller}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Stopwatch\-Controller\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_stopwatch_controller_a34394665524759705fefcc001ea68dba}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_control_element_ad9a828f49943e34a15a69138c64ac4da}{Picto\-::\-Control\-Element}.
+
+
+
+Definition at line 49 of file Stopwatch\-Controller.\-h.
+
+\hypertarget{class_picto_1_1_stopwatch_controller_ac7fd86cd42abe3a6474966ccc9f8ff94}{\index{Picto\-::\-Stopwatch\-Controller@{Picto\-::\-Stopwatch\-Controller}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::StopwatchController@{Picto\-::\-Stopwatch\-Controller}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Stopwatch\-Controller\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_stopwatch_controller_ac7fd86cd42abe3a6474966ccc9f8ff94}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}{Picto\-::\-Control\-Element}.
+
+
+
+Definition at line 97 of file Stopwatch\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_stopwatch_controller_a26c956d6ac3b08626b2f48ddaaca028e}{\index{Picto\-::\-Stopwatch\-Controller@{Picto\-::\-Stopwatch\-Controller}!set\-Time@{set\-Time}}
+\index{set\-Time@{set\-Time}!Picto::StopwatchController@{Picto\-::\-Stopwatch\-Controller}}
+\subsubsection[{set\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Stopwatch\-Controller\-::set\-Time (
+\begin{DoxyParamCaption}
+\item[{int}]{time, }
+\item[{Controller\-::\-Timer\-Units\-::\-Timer\-Units}]{units}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_stopwatch_controller_a26c956d6ac3b08626b2f48ddaaca028e}
+
+
+Sets values for the Time property along with the current time units. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_stopwatch_controller_a4079d394ed6387b44fa794824045f743}{set\-Time(int)} 
+\end{DoxySeeAlso}
+
+
+Definition at line 38 of file Stopwatch\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_stopwatch_controller_a15e0f1023c0667695614e6b7f7848369}{\index{Picto\-::\-Stopwatch\-Controller@{Picto\-::\-Stopwatch\-Controller}!start@{start}}
+\index{start@{start}!Picto::StopwatchController@{Picto\-::\-Stopwatch\-Controller}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Stopwatch\-Controller\-::start (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_stopwatch_controller_a15e0f1023c0667695614e6b7f7848369}
+
+
+Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+Should be called when a \hyperlink{class_picto_1_1_state}{State} is first entered. \begin{DoxyNote}{Note}
+\hyperlink{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}{activate\-Targets()} should be called by this function if \hyperlink{class_picto_1_1_control_target}{Control\-Target} elements will be used. This will cause their bounding geometries to be highlighted in the operator view until they are deactivated. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+Activate\-Targets() 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_control_element_a29316418d618837adeebf47bb8d58308}{Picto\-::\-Control\-Element}.
+
+
+
+Definition at line 57 of file Stopwatch\-Controller.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Stopwatch\-Controller.\-h\item 
+source/common/controlelements/Stopwatch\-Controller.\-cpp\end{DoxyCompactItemize}

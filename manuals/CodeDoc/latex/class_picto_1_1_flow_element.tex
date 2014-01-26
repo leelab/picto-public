@@ -1,0 +1,140 @@
+\hypertarget{class_picto_1_1_flow_element}{\section{Picto\-:\-:Flow\-Element Class Reference}
+\label{class_picto_1_1_flow_element}\index{Picto\-::\-Flow\-Element@{Picto\-::\-Flow\-Element}}
+}
+
+
+A state machine element for branching based on \hyperlink{class_picto_1_1_parameter}{Parameter} values.  
+
+
+
+
+{\ttfamily \#include $<$Flow\-Element.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Flow\-Element\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_flow_element}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_picto_1_1_flow_element_1_1_condition}{Condition}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_flow_element_ac77e2d038a07886eb94d8b8ebf82a18f}{Flow\-Element} ()
+\item 
+Q\-String \hyperlink{class_picto_1_1_flow_element_a4cc23957b12f5bd8b39fbd0de6d64cd1}{run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Called when control flow reaches this \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} to trigger its internal execution logic. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_flow_element_a305d68e8cefb00cbb1f0d7f1c9026fc4}{slave\-Run} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em This function comes from back before we were using the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_flow_element_a22d65b4776e329aa2b850380944b2d5e}{bool {\bfseries add\-Condition} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression} $>$ pred\-Expr)}\label{class_picto_1_1_flow_element_a22d65b4776e329aa2b850380944b2d5e}
+
+\item 
+\hypertarget{class_picto_1_1_flow_element_a36c031f355d26a5af85a28cd08d72d54}{bool {\bfseries add\-Condition} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression} $>$ comp\-Expr)}\label{class_picto_1_1_flow_element_a36c031f355d26a5af85a28cd08d72d54}
+
+\item 
+\hypertarget{class_picto_1_1_flow_element_a9664a54050db633481557a3af491b772}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_flow_element_a9664a54050db633481557a3af491b772}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_flow_element_a91d314fc37bcdc5d69bebbc7b33b6b8f}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_flow_element_a91d314fc37bcdc5d69bebbc7b33b6b8f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_flow_element_afd4f429341aaf7a9898e493193b34bdc}{post\-Serialize} ()
+\begin{DoxyCompactList}\small\item\em Converts an X\-M\-L fragment into a \hyperlink{class_picto_1_1_flow_element}{Flow\-Element} $\ast$/. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_flow_element_a45e730febc1c7b914956fed188fd7db5}{virtual bool \hyperlink{class_picto_1_1_flow_element_a45e730febc1c7b914956fed188fd7db5}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_flow_element_a45e730febc1c7b914956fed188fd7db5}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A state machine element for branching based on \hyperlink{class_picto_1_1_parameter}{Parameter} values. 
+
+Flow Elements are used for branching in a state machine. Each flow element contains multiple \char`\"{}conditions\char`\"{} Each condition contains a predicate based expression (either a simple \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression}, or a mor complex \hyperlink{class_picto_1_1_compound_expression}{Compound\-Expression}) When the run is called on a flow element, it works throw the conditions (in a user defined order) until one of them evaluates true. The element then returns the name of the condition that evaluated true as its result. If none of the conditions evaluate true, then a default value is returned. 
+
+Definition at line 27 of file Flow\-Element.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_flow_element_ac77e2d038a07886eb94d8b8ebf82a18f}{\index{Picto\-::\-Flow\-Element@{Picto\-::\-Flow\-Element}!Flow\-Element@{Flow\-Element}}
+\index{Flow\-Element@{Flow\-Element}!Picto::FlowElement@{Picto\-::\-Flow\-Element}}
+\subsubsection[{Flow\-Element}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Flow\-Element\-::\-Flow\-Element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_flow_element_ac77e2d038a07886eb94d8b8ebf82a18f}
+this shouldn't be a D\-E\-F\-I\-N\-A\-B\-L\-E property, but it needs to be here so that in \hyperlink{class_picto_1_1_state_machine}{State\-Machine}, element-\/$>$type() gives the correct value. Do something about this. 
+
+Definition at line 14 of file Flow\-Element.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_flow_element_afd4f429341aaf7a9898e493193b34bdc}{\index{Picto\-::\-Flow\-Element@{Picto\-::\-Flow\-Element}!post\-Serialize@{post\-Serialize}}
+\index{post\-Serialize@{post\-Serialize}!Picto::FlowElement@{Picto\-::\-Flow\-Element}}
+\subsubsection[{post\-Serialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Flow\-Element\-::post\-Serialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_flow_element_afd4f429341aaf7a9898e493193b34bdc}
+
+
+Converts an X\-M\-L fragment into a \hyperlink{class_picto_1_1_flow_element}{Flow\-Element} $\ast$/. 
+
+
+\begin{DoxyItemize}
+\item 
+\end{DoxyItemize}
+
+Definition at line 354 of file Flow\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_flow_element_a4cc23957b12f5bd8b39fbd0de6d64cd1}{\index{Picto\-::\-Flow\-Element@{Picto\-::\-Flow\-Element}!run@{run}}
+\index{run@{run}!Picto::FlowElement@{Picto\-::\-Flow\-Element}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Flow\-Element\-::run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_flow_element_a4cc23957b12f5bd8b39fbd0de6d64cd1}
+
+
+Called when control flow reaches this \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} to trigger its internal execution logic. 
+
+The returned value is the name of the \hyperlink{class_picto_1_1_result}{Result} of the \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element}'s execution logic. 
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a7a1f1ca8905c111dd043178b9132c770}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+Definition at line 35 of file Flow\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_flow_element_a305d68e8cefb00cbb1f0d7f1c9026fc4}{\index{Picto\-::\-Flow\-Element@{Picto\-::\-Flow\-Element}!slave\-Run@{slave\-Run}}
+\index{slave\-Run@{slave\-Run}!Picto::FlowElement@{Picto\-::\-Flow\-Element}}
+\subsubsection[{slave\-Run}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Flow\-Element\-::slave\-Run (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_flow_element_a305d68e8cefb00cbb1f0d7f1c9026fc4}
+
+
+This function comes from back before we were using the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver}. 
+
+Since the \hyperlink{class_picto_1_1_slave_experiment_driver}{Slave\-Experiment\-Driver} handles changing of \hyperlink{class_picto_1_1_property}{Property} values and transitioning control flow based on what happened in the Master experiment, and \hyperlink{class_picto_1_1_state_machine_element_ab993f13815701b3dc47a7f50985d29bf}{slave\-Render\-Frame()} handles the rendering component, the \hyperlink{class_picto_1_1_flow_element_a305d68e8cefb00cbb1f0d7f1c9026fc4}{slave\-Run()} function itself is pretty much obsolete at this point. It should probably be removed, but since some classes use it to perform various minor operations, we will need to assure that they are moved to more appropriate functions first. 
+
+Implements \hyperlink{class_picto_1_1_state_machine_element_a0dbfefa77a60c323a285626bf6057c2b}{Picto\-::\-State\-Machine\-Element}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Flow\-Element.\-h\item 
+source/common/statemachine/Flow\-Element.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,49 @@
+\hypertarget{namespace_picto_1_1_registered_response_type}{\section{Picto\-:\-:Registered\-Response\-Type Namespace Reference}
+\label{namespace_picto_1_1_registered_response_type}\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}}
+}
+
+
+The registration type of the current \hyperlink{namespace_picto}{Picto} response.  
+
+
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2}{Registered\-Response\-Type} \{ \\*
+\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2af54745285b7dc318c71a812af572842f}{Not\-Registered} = 0x0, 
+\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a4599296bd74ceb907b8b73da07ed5d04}{Immediate} = 0x1, 
+\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2afa5b8e09071330ae9cd04907a7abb174}{First\-In\-Command\-Package} = 0x2, 
+\hyperlink{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a05e7bf540c641f55b7cb237ad5f46161}{Send\-Last\-Command\-Package} = 0x4, 
+\\*
+{\bfseries First\-In\-Pack\-And\-Send\-Last} = 0x6
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The registration type of the current \hyperlink{namespace_picto}{Picto} response. The \hyperlink{namespace_picto}{Picto} server tells its client whenever data from a \char`\"{}registered command\char`\"{} that was received has been written to disk. Whenever a \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} is sent, the command id of the command to which it is responding is added to a list. The \hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} on a \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} is used to piggyback information about whether the data from the commands with command-\/ids in that list has been written to disk. When that has happened that list of command-\/ids is attached to the \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} to tell the client which data was written to disk. \begin{DoxyNote}{Note}
+\hyperlink{namespace_picto_1_1_registered_response_type}{Registered\-Response\-Type} on Protocol\-Responses is complicated by the fact that commands/responses live in one thread while flushing to disk occurs in another thread. That is the source of some of the complexity involved in correctly replying to registered commands. 
+\end{DoxyNote}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2}{\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}!Registered\-Response\-Type@{Registered\-Response\-Type}}
+\index{Registered\-Response\-Type@{Registered\-Response\-Type}!Picto::RegisteredResponseType@{Picto\-::\-Registered\-Response\-Type}}
+\subsubsection[{Registered\-Response\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Picto\-::\-Registered\-Response\-Type\-::\-Registered\-Response\-Type}}}\label{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Not\-Registered@{Not\-Registered}!Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}}\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}!Not\-Registered@{Not\-Registered}}\item[{\em 
+\hypertarget{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2af54745285b7dc318c71a812af572842f}{Not\-Registered}\label{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2af54745285b7dc318c71a812af572842f}
+}]This type of response doesn't include the command id of the command that it's responding to. The command id from this type is appended to an unconfirmed command id list. \index{Immediate@{Immediate}!Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}}\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}!Immediate@{Immediate}}\item[{\em 
+\hypertarget{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a4599296bd74ceb907b8b73da07ed5d04}{Immediate}\label{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a4599296bd74ceb907b8b73da07ed5d04}
+}]This type of response includes the command id of all commands in any list that preceded it. It is used when all activities that needed to occur on the any previous responses all occured within the same thread in which they arrived. \index{First\-In\-Command\-Package@{First\-In\-Command\-Package}!Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}}\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}!First\-In\-Command\-Package@{First\-In\-Command\-Package}}\item[{\em 
+\hypertarget{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2afa5b8e09071330ae9cd04907a7abb174}{First\-In\-Command\-Package}\label{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2afa5b8e09071330ae9cd04907a7abb174}
+}]This type of response indicates that the current command is the first in a new unconfirmed command id list. From this point on, new commands should go in this new list. If this type of response is detected while there is already a closed unconfirmed command id list, that list is erased and replaced by the latest list. \index{Send\-Last\-Command\-Package@{Send\-Last\-Command\-Package}!Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}}\index{Picto\-::\-Registered\-Response\-Type@{Picto\-::\-Registered\-Response\-Type}!Send\-Last\-Command\-Package@{Send\-Last\-Command\-Package}}\item[{\em 
+\hypertarget{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a05e7bf540c641f55b7cb237ad5f46161}{Send\-Last\-Command\-Package}\label{namespace_picto_1_1_registered_response_type_abc60624d7d7b5a5d029fdaf2404311d2a05e7bf540c641f55b7cb237ad5f46161}
+}]This type of response indicates that the current command should include a comma separated list of commands in the latest complete unconfirmed command list. It is used when the thread handling the activities of the commands in Last\-In\-Command\-Package is complete. \end{description}
+\end{Desc}
+
+
+Definition at line 60 of file Protocol\-Response.\-h.
+

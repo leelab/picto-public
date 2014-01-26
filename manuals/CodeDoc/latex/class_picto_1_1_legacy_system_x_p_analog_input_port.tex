@@ -1,0 +1,130 @@
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port}{\section{Picto\-:\-:Legacy\-System\-X\-P\-Analog\-Input\-Port Class Reference}
+\label{class_picto_1_1_legacy_system_x_p_analog_input_port}\index{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}}
+}
+
+
+An \hyperlink{class_picto_1_1_input_port}{Input\-Port} object for collecting analog input data when running \hyperlink{namespace_picto}{Picto} on a Legacy\-System\-X\-P (ie. an old Orion machine).  
+
+
+
+
+{\ttfamily \#include $<$legacysystemxpanaloginputport.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Legacy\-System\-X\-P\-Analog\-Input\-Port\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_legacy_system_x_p_analog_input_port}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_a24f69bafd4a2601a5018956547762b71}{\hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_a24f69bafd4a2601a5018956547762b71}{Legacy\-System\-X\-P\-Analog\-Input\-Port} ()}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_a24f69bafd4a2601a5018956547762b71}
+
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port}{Legacy\-System\-X\-P\-Analog\-Input\-Port}. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_a316f1a839eefb91fbf6b4b346eeb6351}{$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port} ()
+\begin{DoxyCompactList}\small\item\em Called when this \hyperlink{class_picto_1_1_input_port}{Input\-Port} is deleted. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_aabf69d49f4fd9b0ed5b557a9dff431c3}{virtual Q\-String \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_aabf69d49f4fd9b0ed5b557a9dff431c3}{type} ()}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_aabf69d49f4fd9b0ed5b557a9dff431c3}
+
+\begin{DoxyCompactList}\small\item\em Returns a string with the name of this type of \hyperlink{class_picto_1_1_input_port}{Input\-Port}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_a5815ed96c757adbcb7bb25ddf59f8393}{start\-Sampling} ()
+\begin{DoxyCompactList}\small\item\em Starts sampling of the D\-A\-Q hardware. Returns false if sampling can't be started. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_afb580c736fa6e629c1af5ac7bdd3931a}{virtual void \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_afb580c736fa6e629c1af5ac7bdd3931a}{stop\-Sampling} ()}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_afb580c736fa6e629c1af5ac7bdd3931a}
+
+\begin{DoxyCompactList}\small\item\em Stops sampling of the D\-A\-Q hardware. Returns false if sampling can't be stopped. \end{DoxyCompactList}\item 
+virtual double \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_abbf26628849bbc0ce4946d577bc0db5e}{update\-Data\-Buffer} ()
+\begin{DoxyCompactList}\small\item\em Loads channel\-Buffers\-\_\- with data, returns the precise time when the data was actually read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_picto_1_1_input_port}{Input\-Port} object for collecting analog input data when running \hyperlink{namespace_picto}{Picto} on a Legacy\-System\-X\-P (ie. an old Orion machine). 
+
+This \hyperlink{class_picto_1_1_input_port}{Input\-Port} is designed to collect analog data from the inputs to the N\-I\-D\-A\-Q board in the Legacy\-System.
+
+The following assumptions are made in the code\-:
+\begin{DoxyItemize}
+\item Legacy\-System is running Windows X\-P
+\item Legacy\-System has a P\-C\-I-\/\-M\-I\-O-\/16\-X\-E-\/50 card installed, with some number of A\-I channels connected
+\item The D\-A\-Q card is \char`\"{}\-Dev2\char`\"{}
+\item The development box has the N\-I\-D\-A\-Qmx libraries and headers installed \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+\end{DoxyItemize}
+
+Definition at line 23 of file legacysystemxpanaloginputport.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_a316f1a839eefb91fbf6b4b346eeb6351}{\index{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}!$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port}}
+\index{$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port}!Picto::LegacySystemXPAnalogInputPort@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}}
+\subsubsection[{$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port}]{\setlength{\rightskip}{0pt plus 5cm}virtual Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port\-::$\sim$\-Legacy\-System\-X\-P\-Analog\-Input\-Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_a316f1a839eefb91fbf6b4b346eeb6351}
+
+
+Called when this \hyperlink{class_picto_1_1_input_port}{Input\-Port} is deleted. 
+
+Calls \hyperlink{class_picto_1_1_legacy_system_x_p_analog_input_port_afb580c736fa6e629c1af5ac7bdd3931a}{stop\-Sampling()} to make sure that the Ni\-Daq card is properly deinitialized. 
+
+Definition at line 30 of file legacysystemxpanaloginputport.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_a5815ed96c757adbcb7bb25ddf59f8393}{\index{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}!start\-Sampling@{start\-Sampling}}
+\index{start\-Sampling@{start\-Sampling}!Picto::LegacySystemXPAnalogInputPort@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}}
+\subsubsection[{start\-Sampling}]{\setlength{\rightskip}{0pt plus 5cm}bool Legacy\-System\-X\-P\-Analog\-Input\-Port\-::start\-Sampling (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_a5815ed96c757adbcb7bb25ddf59f8393}
+
+
+Starts sampling of the D\-A\-Q hardware. Returns false if sampling can't be started. 
+
+In the case of Ni\-Daq systems, we create a Ni\-Daq analog input capture \char`\"{}\-Task\char`\"{} (D\-A\-Qmx\-Create\-A\-I\-Voltage\-Chan()) and run it whenever we want to sample input data (D\-A\-Qmx\-Start\-Task()).
+
+Sample rate is configured using D\-A\-Qmx\-Cfg\-Samp\-Clk\-Timing(). 
+
+Implements \hyperlink{class_picto_1_1_input_port_aefd4ff8fcdb966e2d39c47d244ed6925}{Picto\-::\-Input\-Port}.
+
+
+
+Definition at line 38 of file Legacy\-System\-X\-P\-Analog\-Input\-Port.\-cpp.
+
+\hypertarget{class_picto_1_1_legacy_system_x_p_analog_input_port_abbf26628849bbc0ce4946d577bc0db5e}{\index{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}!update\-Data\-Buffer@{update\-Data\-Buffer}}
+\index{update\-Data\-Buffer@{update\-Data\-Buffer}!Picto::LegacySystemXPAnalogInputPort@{Picto\-::\-Legacy\-System\-X\-P\-Analog\-Input\-Port}}
+\subsubsection[{update\-Data\-Buffer}]{\setlength{\rightskip}{0pt plus 5cm}double Legacy\-System\-X\-P\-Analog\-Input\-Port\-::update\-Data\-Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_analog_input_port_abbf26628849bbc0ce4946d577bc0db5e}
+
+
+Loads channel\-Buffers\-\_\- with data, returns the precise time when the data was actually read. 
+
+The latest data is read in from the Ni\-Daq's buffer using D\-A\-Qmx\-Read\-Binary\-I16(). We estimate the precise read time by storing the time just after that function is called. That is the time that is returned from the function, 
+
+Implements \hyperlink{class_picto_1_1_input_port_a885502b8712d339b918ac0c6ba418957}{Picto\-::\-Input\-Port}.
+
+
+
+Definition at line 97 of file Legacy\-System\-X\-P\-Analog\-Input\-Port.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/engine/legacysystemxpanaloginputport.\-h\item 
+source/director/engine/\hyperlink{_legacy_system_x_p_analog_input_port_8cpp}{Legacy\-System\-X\-P\-Analog\-Input\-Port.\-cpp}\end{DoxyCompactItemize}

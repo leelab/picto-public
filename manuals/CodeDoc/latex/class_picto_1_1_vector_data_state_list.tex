@@ -1,0 +1,45 @@
+\hypertarget{class_picto_1_1_vector_data_state_list}{\section{Picto\-:\-:Vector\-Data\-State\-List Class Reference}
+\label{class_picto_1_1_vector_data_state_list}\index{Picto\-::\-Vector\-Data\-State\-List@{Picto\-::\-Vector\-Data\-State\-List}}
+}
+
+
+A parameter for containing numeric integer values.  
+
+
+
+
+{\ttfamily \#include $<$Vector\-Data\-State\-List.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Vector\-Data\-State\-List\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_vector_data_state_list}
+\end{center}
+\end{figure}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A parameter for containing numeric integer values. 
+
+We wanted to get rid of this parameter, because it is really just a \hyperlink{class_picto_1_1_range_parameter}{Range\-Parameter} with less options. Since old Experiments use this \hyperlink{class_picto_1_1_parameter}{Parameter} though, the easiest way to support them in newer code without allowing this \hyperlink{class_picto_1_1_parameter}{Parameter} into new designs was to keep it in \hyperlink{namespace_picto}{Picto}, but now let it show up in the \hyperlink{class_designer}{Designer} \hyperlink{class_toolbox}{Toolbox}, so that is what we have done. This \hyperlink{class_picto_1_1_parameter}{Parameter} stores integer values. It does the same thing that the \hyperlink{class_picto_1_1_range_parameter}{Range\-Parameter} does except without the set range (ie. The range is just from I\-N\-T\-\_\-\-M\-I\-N to I\-N\-T\-\_\-\-M\-A\-X). The Value \hyperlink{class_picto_1_1_property}{Property} is runtime editable and appears as a numeric \char`\"{}integer only\char`\"{} input widget in the \hyperlink{class_property_frame}{Property\-Frame}. The numeric value is accessible through the javascript \char`\"{}value\char`\"{} property as\-: 
+\begin{DoxyCode}
+NumericParameterName.value = 0.26;
+var numVal = NumericParameterName.value;
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Vector\-Data\-State\-List.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Vector\-Data\-State\-List.\-h\item 
+source/common/playback/Vector\-Data\-State\-List.\-cpp\end{DoxyCompactItemize}

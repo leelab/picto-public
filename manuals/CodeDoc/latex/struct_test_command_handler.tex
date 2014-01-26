@@ -1,0 +1,49 @@
+\hypertarget{struct_test_command_handler}{\section{Test\-Command\-Handler Struct Reference}
+\label{struct_test_command_handler}\index{Test\-Command\-Handler@{Test\-Command\-Handler}}
+}
+
+
+A command handler used when a component just wants to check on the server.  
+
+
+
+
+{\ttfamily \#include $<$Test\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Test\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_test_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_test_command_handler_af506870768f03db6a6da328fe5955c3a}{Q\-String \hyperlink{struct_test_command_handler_af506870768f03db6a6da328fe5955c3a}{method} ()}\label{struct_test_command_handler_af506870768f03db6a6da328fe5955c3a}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+\hypertarget{struct_test_command_handler_ad26eab758f1b47d4046cdc90d73d3282}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_test_command_handler_ad26eab758f1b47d4046cdc90d73d3282}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)}\label{struct_test_command_handler_ad26eab758f1b47d4046cdc90d73d3282}
+
+\begin{DoxyCompactList}\small\item\em Returns an O\-K response to any input command. This can be used by clients as a sort of sanity check, like pinging google. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A command handler used when a component just wants to check on the server. 
+
+Components can send simple messages to the server using T\-E\-S\-T anything P\-I\-C\-T\-O/1.\-0. The server will always respond with an O\-K message. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 16 of file Test\-Command\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Test\-Command\-Handler.\-h\item 
+source/server/protocol/Test\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

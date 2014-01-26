@@ -1,0 +1,85 @@
+\hypertarget{class_script_item_manager}{\section{Script\-Item\-Manager Class Reference}
+\label{class_script_item_manager}\index{Script\-Item\-Manager@{Script\-Item\-Manager}}
+}
+
+
+Manages creation and layout of Script\-Items for the various Diagram\-Items that use them.  
+
+
+
+
+{\ttfamily \#include $<$Script\-Item\-Manager.\-h$>$}
+
+Inheritance diagram for Script\-Item\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_script_item_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_script_item_manager_ae6864baaa9e9d07e94129d8b86b39b3a}{Script\-Item\-Manager} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Graphics\-Item $\ast$scripts\-Parent, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset, bool horizontal)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_script_item_manager}{Script\-Item\-Manager}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_script_item_manager_a0328456c18f63cad615465088fce1231}{set\-Script\-Bounding\-Rect} (Q\-Rect\-F rect)
+\begin{DoxyCompactList}\small\item\em Sets the bounding rectangle in which Script\-Items will be layed out. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Manages creation and layout of Script\-Items for the various Diagram\-Items that use them. 
+
+Diagram\-Items that show Script\-Items present them along their length in the order that the scripts are called with varying dimensions depending on whether we are operating in Analysis or Experiment mode. This dramatically improves design readability, and since there are a number of separate Diagram\-Items that use this paradigm it is useful to create a single class that manages creation and layout of Script\-Items for reuse by all of the Diagram\-Items needing them. This is that class. It shows Entry, Frame and Exit scripts depending on which Asset is being represented. When operating in Analysis mode, Analysis scripts are shown as well. Each script appears in the order that it is called (ie. Analysis\-Entry, Entry, Frame, Analysis\-Frame, Exit, Analysis\-Exit) from top to bottom or left to right. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Script\-Item\-Manager.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_script_item_manager_ae6864baaa9e9d07e94129d8b86b39b3a}{\index{Script\-Item\-Manager@{Script\-Item\-Manager}!Script\-Item\-Manager@{Script\-Item\-Manager}}
+\index{Script\-Item\-Manager@{Script\-Item\-Manager}!ScriptItemManager@{Script\-Item\-Manager}}
+\subsubsection[{Script\-Item\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}Script\-Item\-Manager\-::\-Script\-Item\-Manager (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{Q\-Graphics\-Item $\ast$}]{scripts\-Parent, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{asset, }
+\item[{bool}]{horizontal}
+\end{DoxyParamCaption}
+)}}\label{class_script_item_manager_ae6864baaa9e9d07e94129d8b86b39b3a}
+
+
+Constructs a new \hyperlink{class_script_item_manager}{Script\-Item\-Manager}. 
+
+editor\-State is used to extract information about any current Analysis and in \hyperlink{class_script_item}{Script\-Item} constructors. scripts\-Paranet is the \hyperlink{class_diagram_item}{Diagram\-Item} that will be the parent of the scripts created by this object. asset is used to figure out which Script\-Items need to be created and to connect to various signals telling us if we need to change something about the Script\-Items in response to a change in the Asset. horizontal lets us know if the Script\-Items will be positioned one after the other in a horizontal or vertical direction. 
+
+Definition at line 13 of file Script\-Item\-Manager.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_script_item_manager_a0328456c18f63cad615465088fce1231}{\index{Script\-Item\-Manager@{Script\-Item\-Manager}!set\-Script\-Bounding\-Rect@{set\-Script\-Bounding\-Rect}}
+\index{set\-Script\-Bounding\-Rect@{set\-Script\-Bounding\-Rect}!ScriptItemManager@{Script\-Item\-Manager}}
+\subsubsection[{set\-Script\-Bounding\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}void Script\-Item\-Manager\-::set\-Script\-Bounding\-Rect (
+\begin{DoxyParamCaption}
+\item[{Q\-Rect\-F}]{rect}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_script_item_manager_a0328456c18f63cad615465088fce1231}
+
+
+Sets the bounding rectangle in which Script\-Items will be layed out. 
+
+Generally this is going to just be the shape of the parent \hyperlink{class_diagram_item}{Diagram\-Item}. 
+
+Definition at line 66 of file Script\-Item\-Manager.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Script\-Item\-Manager.\-h\item 
+source/common/\-Designer/Script\-Item\-Manager.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,61 @@
+\hypertarget{_director_interface_8h}{\section{source/embedded/frontpanel/\-Director\-Interface.h File Reference}
+\label{_director_interface_8h}\index{source/embedded/frontpanel/\-Director\-Interface.\-h@{source/embedded/frontpanel/\-Director\-Interface.\-h}}
+}
+{\ttfamily \#include $<$Q\-List$>$}\\*
+{\ttfamily \#include $<$Q\-String$>$}\\*
+{\ttfamily \#include $<$Q\-String\-List$>$}\\*
+{\ttfamily \#include $<$Q\-Object$>$}\\*
+{\ttfamily \#include $<$Q\-Timer$>$}\\*
+{\ttfamily \#include $<$qsharedpointer.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}Front\-Panel\-Info.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../../common/protocol/protocolcommand.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../../common/protocol/protocolresponse.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Front\-Panel\-Reward\-Controller.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_director_interface}{Director\-Interface}
+\begin{DoxyCompactList}\small\item\em An interface that encapsulates socket communicate to the director from the Front Panel Application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4}{Director\-Status} \{ \\*
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7}{Dir\-Unknown}, 
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a0fb4288cdac7db0af2a2c0fd5fd2d8ee}{Dir\-Disconnect}, 
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095}{Dir\-Connect}, 
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4abca78d1dd8459a77c27ddcfc268ca99a}{Dir\-Ending}, 
+\\*
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4accbce942e6b94ead3b22cc6226c81634}{Dir\-Stop}, 
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a400cfa9793674167cd58f89c9c83165a}{Dir\-Run}, 
+\hyperlink{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a9672d9b7de0b438d4f7a0421b2ed08fa}{Dir\-Pause}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4}{\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Director\-Status@{Director\-Status}}
+\index{Director\-Status@{Director\-Status}!DirectorInterface.h@{Director\-Interface.\-h}}
+\subsubsection[{Director\-Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Director\-Status}}}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Dir\-Unknown@{Dir\-Unknown}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Unknown@{Dir\-Unknown}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7}{Dir\-Unknown}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7}
+}]Cant connect to \hyperlink{class_director}{Director} application, status is unknown \index{Dir\-Disconnect@{Dir\-Disconnect}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Disconnect@{Dir\-Disconnect}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a0fb4288cdac7db0af2a2c0fd5fd2d8ee}{Dir\-Disconnect}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a0fb4288cdac7db0af2a2c0fd5fd2d8ee}
+}]\hyperlink{class_director}{Director} is disconnected from \hyperlink{class_server}{Server}, \index{Dir\-Connect@{Dir\-Connect}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Connect@{Dir\-Connect}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095}{Dir\-Connect}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095}
+}]\hyperlink{class_director}{Director} is connected to server with no experiment loaded \index{Dir\-Ending@{Dir\-Ending}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Ending@{Dir\-Ending}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4abca78d1dd8459a77c27ddcfc268ca99a}{Dir\-Ending}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4abca78d1dd8459a77c27ddcfc268ca99a}
+}]\hyperlink{class_director}{Director} is connected to the server and ending a previously loaded experiment \index{Dir\-Stop@{Dir\-Stop}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Stop@{Dir\-Stop}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4accbce942e6b94ead3b22cc6226c81634}{Dir\-Stop}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4accbce942e6b94ead3b22cc6226c81634}
+}]\hyperlink{class_director}{Director} is connected to the server and stopped with an experiment loaded \index{Dir\-Run@{Dir\-Run}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Run@{Dir\-Run}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a400cfa9793674167cd58f89c9c83165a}{Dir\-Run}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a400cfa9793674167cd58f89c9c83165a}
+}]\hyperlink{class_director}{Director} is connected to the server and running an experiment \index{Dir\-Pause@{Dir\-Pause}!Director\-Interface.\-h@{Director\-Interface.\-h}}\index{Director\-Interface.\-h@{Director\-Interface.\-h}!Dir\-Pause@{Dir\-Pause}}\item[{\em 
+\hypertarget{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a9672d9b7de0b438d4f7a0421b2ed08fa}{Dir\-Pause}\label{_director_interface_8h_add118e59eefaadc163fc7f91ddadd7a4a9672d9b7de0b438d4f7a0421b2ed08fa}
+}]\hyperlink{class_director}{Director} is connected to the server and paused while running an experiment \end{description}
+\end{Desc}
+
+
+Definition at line 21 of file Director\-Interface.\-h.
+

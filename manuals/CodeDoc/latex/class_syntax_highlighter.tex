@@ -1,0 +1,56 @@
+\hypertarget{class_syntax_highlighter}{\section{Syntax\-Highlighter Class Reference}
+\label{class_syntax_highlighter}\index{Syntax\-Highlighter@{Syntax\-Highlighter}}
+}
+
+
+A syntax highlighter used by the xmleditor.  
+
+
+
+
+{\ttfamily \#include $<$syntax\-Highlighter.\-h$>$}
+
+Inheritance diagram for Syntax\-Highlighter\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_syntax_highlighter}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct}
+\item 
+struct \hyperlink{struct_syntax_highlighter_1_1_construct_flag}{Construct\-Flag}
+\item 
+struct \hyperlink{struct_syntax_highlighter_1_1_construct_stack}{Construct\-Stack}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_syntax_highlighter_a63b634aa77cc66e96f0e100d8be26615}{{\bfseries Syntax\-Highlighter} (Q\-Object $\ast$parent)}\label{class_syntax_highlighter_a63b634aa77cc66e96f0e100d8be26615}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_syntax_highlighter_a2633163bedde0a890f27d4d47614f1ad}{void {\bfseries highlight\-Block} (const Q\-String \&text)}\label{class_syntax_highlighter_a2633163bedde0a890f27d4d47614f1ad}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A syntax highlighter used by the xmleditor. 
+
+This class extends the Q\-Syntax\-Highlighter to add syntax highlighting to the xmleditor. Everytime a textblock is edited, Q\-T calls highlight\-Block with the Q\-String that was highlighted (the line of text in which the change was made). The class is setup to be fairly general, such that it will be easy to add new types of highlighting in the future. The basic concept is built on \char`\"{}\-Construct\char`\"{} objects. A \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} contains an opener string, a closer string, a format for the text between the opener and closer, and a list of constructs that are allowed to exist between the opener and closer. Every text block maintains a stack of Constructs where the \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} at the top of the stack is the one who's formatting is currently being applied. text blocks always build up their stack based on that of the previous text block such that the whole document is consistant. Constructs can also use empty openers to indicate that a \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} should be applied as soon as a \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} that allows it as a sub\-Construct is added. Empty Closers can be used to indicate that a \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} ends immediately after its opener. Also, A special U\-S\-E\-\_\-\-N\-E\-X\-T\-\_\-\-C\-O\-N\-S\-T\-R\-U\-C\-T string can be used as a closer to indicate that a \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} does not end until the \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} beneath it in the stack ends.
+
+For some quick examples\-: To highlight $<$\-N\-A\-M\-E param=\char`\"{}val\char`\"{}$>$ with red\-: $<$ and $>$, blue\-: N\-A\-M\-E param= and green \char`\"{}val\char`\"{}, a T\-A\-G construct would be set up with opener\-: $<$ and closer\-: $>$ and red formatting. It would have a sub\-Construct T\-A\-G\-N\-A\-M\-E with opener\-: \char`\"{}\char`\"{} and closer\-: U\-S\-E\-\_\-\-N\-E\-X\-T\-\_\-\-C\-O\-N\-S\-T\-R\-U\-C\-T and blue formatting. That would have a sub\-Construct S\-T\-R\-I\-N\-G with opener\-: \char`\"{} and closer\-: \char`\"{} and green formatting. All these definitions are placed in the \hyperlink{class_syntax_highlighter}{Syntax\-Highlighter} constructor, which can easily be modified by copying and pasting existing \hyperlink{struct_syntax_highlighter_1_1_construct}{Construct} definitions and editing their contents. 
+
+Definition at line 40 of file syntax\-Highlighter.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/\-Text\-Editor/syntax\-Highlighter.\-h\item 
+source/workstation/\-Text\-Editor/syntax\-Highlighter.\-cpp\end{DoxyCompactItemize}

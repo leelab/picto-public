@@ -1,0 +1,51 @@
+\hypertarget{struct_get_data_command_handler}{\section{Get\-Data\-Command\-Handler Struct Reference}
+\label{struct_get_data_command_handler}\index{Get\-Data\-Command\-Handler@{Get\-Data\-Command\-Handler}}
+}
+
+
+Handles G\-E\-T\-D\-A\-T\-A commands, which are sent by the Workstation to request up to date Session data.  
+
+
+
+
+{\ttfamily \#include $<$Get\-Data\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Get\-Data\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_get_data_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_get_data_command_handler_aa230c5958bea5c6019483fc0070f08c2}{Q\-String \hyperlink{struct_get_data_command_handler_aa230c5958bea5c6019483fc0070f08c2}{method} ()}\label{struct_get_data_command_handler_aa230c5958bea5c6019483fc0070f08c2}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+\hypertarget{struct_get_data_command_handler_aa1833f79ddac0a57b416475e6cdad67f}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_get_data_command_handler_aa1833f79ddac0a57b416475e6cdad67f}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)}\label{struct_get_data_command_handler_aa1833f79ddac0a57b416475e6cdad67f}
+
+\begin{DoxyCompactList}\small\item\em Parses the input Protocol\-Command to check its syntax, responds with either current state data, the latest Neural Data or the latest Session Data depending on the value befpre the colon in the command (Curren\-State, Latest\-Neural, or \hyperlink{class_session_data}{Session\-Data}). In the case of Current\-State and Latest\-Neural, the returned data includes everything after the time written after the colon in the command. adds E\-N\-D\-S\-E\-S\-S\-I\-O\-N pending directives to the \hyperlink{class_session_info}{Session\-Info} object handling the input Session and responds with a simple ok\-Response or other response depending on whether something was wrong with the request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles G\-E\-T\-D\-A\-T\-A commands, which are sent by the Workstation to request up to date Session data. 
+
+Picto\-Workstation sends these commands to the \hyperlink{class_server}{Server} to request behavioral, neural and overall Session data. The target of the command is the type of data requested followed by a colon and the time or index of the data last received.
+
+F\-O\-R\-M\-A\-T G\-E\-T\-D\-A\-T\-A datastoretype\-:index(e.\-g. Current\-State\-:3.\-245, Latest\-Neural\-:23341, etc.) P\-I\-C\-T\-O.\-1/0 Session-\/\-I\-D\-:\{44dcb670-\/4bea-\/11df-\/9879-\/0800200c9a66\} \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Get\-Data\-Command\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Get\-Data\-Command\-Handler.\-h\item 
+source/server/protocol/Get\-Data\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

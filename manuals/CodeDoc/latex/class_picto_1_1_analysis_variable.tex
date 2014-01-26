@@ -1,0 +1,190 @@
+\hypertarget{class_picto_1_1_analysis_variable}{\section{Picto\-:\-:Analysis\-Variable Class Reference}
+\label{class_picto_1_1_analysis_variable}\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}}
+}
+
+
+The base class of all variables that can be used in an \hyperlink{class_picto_1_1_analysis}{Analysis}.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Variable.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Variable\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.659794cm]{class_picto_1_1_analysis_variable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}{entered\-Scope} ()
+\begin{DoxyCompactList}\small\item\em Resets this scriptable's data fields to their original values. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_variable_a980469363411614e8f335ea4401308fb}{is\-Part\-Of\-Search} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)
+\begin{DoxyCompactList}\small\item\em Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_variable_ab47386056bb1150764473835ac30b13c}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_variable_ab47386056bb1150764473835ac30b13c}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_variable_ab47386056bb1150764473835ac30b13c}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_variable_a7f8adaf6bc5f2041ce5078f68e5db077}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_variable_a7f8adaf6bc5f2041ce5078f68e5db077}{get\-U\-I\-Group} ()}\label{class_picto_1_1_analysis_variable_a7f8adaf6bc5f2041ce5078f68e5db077}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_variable_a58f1137dd98931e5bb5124f3f2ce7b08}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_variable_a1c211501a9805870703207eb9b305bc1}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_variable_a4279b4c9eca4a7ef60de8e4db91dc6f3}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The base class of all variables that can be used in an \hyperlink{class_picto_1_1_analysis}{Analysis}. 
+
+Works exactly like a \hyperlink{class_picto_1_1_parameter}{Parameter} with the exception that it is part of an \hyperlink{class_picto_1_1_analysis}{Analysis}. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_parameter}{Parameter} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Analysis\-Variable.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_variable_a58f1137dd98931e5bb5124f3f2ce7b08}{\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisVariable@{Picto\-::\-Analysis\-Variable}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Variable\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_variable_a58f1137dd98931e5bb5124f3f2ce7b08}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a78d708af5b8c02e1d7529250e1e2ee85}{Picto\-::\-Parameter}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_output_a4fa6c835effb707ea2d163ef17d6cc5a}{Picto\-::\-Analysis\-Output}.
+
+
+
+Definition at line 36 of file Analysis\-Variable.\-h.
+
+\hypertarget{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}{\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}!entered\-Scope@{entered\-Scope}}
+\index{entered\-Scope@{entered\-Scope}!Picto::AnalysisVariable@{Picto\-::\-Analysis\-Variable}}
+\subsubsection[{entered\-Scope}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Variable\-::entered\-Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}
+
+
+Resets this scriptable's data fields to their original values. 
+
+Called when this \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters \hyperlink{namespace_picto}{Picto} Scope (ie. Control flow reaches its parent element).
+
+When a \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters scope, all of its \hyperlink{class_picto_1_1_property}{Property} run values are reset to their init values. This function takes care of that by calling restore\-Properties(). 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_ad1945e93d9ebf6cb1f1b8d0a400b73c5}{Picto\-::\-Scriptable}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_output_abbe842b6e1021e719ebe7f6aeab6179c}{Picto\-::\-Analysis\-Output}, \hyperlink{class_picto_1_1_analysis_run_notes_data_afea4b3a4e6f2a963d5d5144f6372f456}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_analysis_timer_adb5e30561a5c7b72d5370c552d23aafb}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_analysis_file_output_a3ac925e5bde617041be98d36bae5ece0}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_analysis_spike_data_a6aaa7ca5ea9496ed2117641ce5030bf0}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_analysis_frame_data_a9e320c9ab98f5eb2d5cd22393b07dfb9}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_analysis_signal_data_a4de3c66b089610d0dab11d1af533eee6}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_analysis_lfp_data_ab1421d223a564e857b142d572f575dcf}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_reward_data_a14b254716441846d12164b40429a8437}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_analysis_variable_list_a2e4352c5204085292ad70fa22512a432}{Picto\-::\-Analysis\-Variable\-List}, and \hyperlink{class_picto_1_1_analysis_variable_map_a7bbe77eef94581929441e7efe5fb6034}{Picto\-::\-Analysis\-Variable\-Map}.
+
+
+
+Definition at line 13 of file Analysis\-Variable.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_variable_a980469363411614e8f335ea4401308fb}{\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}!is\-Part\-Of\-Search@{is\-Part\-Of\-Search}}
+\index{is\-Part\-Of\-Search@{is\-Part\-Of\-Search}!Picto::AnalysisVariable@{Picto\-::\-Analysis\-Variable}}
+\subsubsection[{is\-Part\-Of\-Search}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Variable\-::is\-Part\-Of\-Search (
+\begin{DoxyParamCaption}
+\item[{{\bf Search\-Request}}]{search\-Request}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_variable_a980469363411614e8f335ea4401308fb}
+
+
+Returns true if this object is part of the requested search (ie. It falls into the search\-Request's group) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_search_request}{Search\-Request} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a5afdea71e71a791fe1abf97b67050907}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 18 of file Analysis\-Variable.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_variable_a1c211501a9805870703207eb9b305bc1}{\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisVariable@{Picto\-::\-Analysis\-Variable}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Variable\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_variable_a1c211501a9805870703207eb9b305bc1}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_aacf1829d9c0e0dc44a7854412f3face6}{Picto\-::\-Parameter}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_variable_list_a90f4446bd3f54918c492243e91d0bb8d}{Picto\-::\-Analysis\-Variable\-List}, \hyperlink{class_picto_1_1_analysis_spike_data_acfd1de9308e3d86b1109a4e7724e588b}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_analysis_output_a2a9b708fdcd043db3239c267a8fa3418}{Picto\-::\-Analysis\-Output}, \hyperlink{class_picto_1_1_analysis_lfp_data_a2ecc0790a74132a1433a6491b55eafc3}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_signal_data_a104001f38f5ba6c27ea844a96cc7a1d9}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_analysis_run_notes_data_a2be0449a871ae70d98d5b53c45aa3857}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_analysis_frame_data_affa393fdbe9a1cd847f3d66a8fc9fc9e}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_analysis_variable_map_abfb12a9e91fb6c3f0dc1baed7305e789}{Picto\-::\-Analysis\-Variable\-Map}, \hyperlink{class_picto_1_1_analysis_timer_af97de4c2bfcfb47209eafdc5d1e0c6ab}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_analysis_file_output_a1f03bef9d6e5395471475d685f1e918c}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_analysis_reward_data_ad2054bf00b94fe3449dd46ce2c9245b2}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_analysis_number_variable_a66376560630c67d8616d27baec9df56f}{Picto\-::\-Analysis\-Number\-Variable}, and \hyperlink{class_picto_1_1_analysis_data_source_a491e202caec7a1d9f9a0c7466f962f18}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 31 of file Analysis\-Variable.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_variable_a4279b4c9eca4a7ef60de8e4db91dc6f3}{\index{Picto\-::\-Analysis\-Variable@{Picto\-::\-Analysis\-Variable}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::AnalysisVariable@{Picto\-::\-Analysis\-Variable}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Variable\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_variable_a4279b4c9eca4a7ef60de8e4db91dc6f3}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. 
+
+\hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{values\-Are\-Valid()} is used for this. 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a94c0e4191ffcc0bd642b647d24557082}{Picto\-::\-Parameter}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_analysis_variable_list_a5c16695870b3749708991034bc70990f}{Picto\-::\-Analysis\-Variable\-List}, \hyperlink{class_picto_1_1_analysis_spike_data_a3e7553a7a5af76724b70500418e1fe25}{Picto\-::\-Analysis\-Spike\-Data}, \hyperlink{class_picto_1_1_analysis_lfp_data_ae53fa1010780d301a104e613f93dda1a}{Picto\-::\-Analysis\-Lfp\-Data}, \hyperlink{class_picto_1_1_analysis_signal_data_a1e2a5e3c64e9b456e5074baec23e0cf6}{Picto\-::\-Analysis\-Signal\-Data}, \hyperlink{class_picto_1_1_analysis_run_notes_data_ae58942e718660c9caeb73d2dab934540}{Picto\-::\-Analysis\-Run\-Notes\-Data}, \hyperlink{class_picto_1_1_analysis_frame_data_a935dac68ae9c34e8faddcfabff4ff4be}{Picto\-::\-Analysis\-Frame\-Data}, \hyperlink{class_picto_1_1_analysis_variable_map_aa3e515949e9225ac6655095b981bb910}{Picto\-::\-Analysis\-Variable\-Map}, \hyperlink{class_picto_1_1_analysis_timer_ac3e36dbc727da6f3aa6304b4d1878e3d}{Picto\-::\-Analysis\-Timer}, \hyperlink{class_picto_1_1_analysis_file_output_a5a892bff91012d5818e0cfcfae485242}{Picto\-::\-Analysis\-File\-Output}, \hyperlink{class_picto_1_1_analysis_reward_data_a04595898ba52980c6f48755178c546ee}{Picto\-::\-Analysis\-Reward\-Data}, \hyperlink{class_picto_1_1_analysis_number_variable_a8bd41a1ccf35063cc5cef779ee3197cc}{Picto\-::\-Analysis\-Number\-Variable}, and \hyperlink{class_picto_1_1_analysis_data_source_a8d43777d1a7d1b1467c9df205d118bb3}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 36 of file Analysis\-Variable.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Variable.\-h\item 
+source/common/parameter/Analysis\-Variable.\-cpp\end{DoxyCompactItemize}

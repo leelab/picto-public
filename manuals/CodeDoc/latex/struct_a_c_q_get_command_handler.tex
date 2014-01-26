@@ -1,0 +1,71 @@
+\hypertarget{struct_a_c_q_get_command_handler}{\section{A\-C\-Q\-Get\-Command\-Handler Struct Reference}
+\label{struct_a_c_q_get_command_handler}\index{A\-C\-Q\-Get\-Command\-Handler@{A\-C\-Q\-Get\-Command\-Handler}}
+}
+
+
+Handles G\-E\-T commands received specifying use of the A\-C\-Q protocol.  
+
+
+
+
+{\ttfamily \#include $<$A\-C\-Q\-Get\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for A\-C\-Q\-Get\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_a_c_q_get_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_a_c_q_get_command_handler_a927fb1059ecae1eb1e7d40506caf280e}{A\-C\-Q\-Get\-Command\-Handler} (Q\-Object $\ast$acq\-Plugin)
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. T\-H\-I\-S S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. Original documentation apperas below. \end{DoxyCompactList}\item 
+\hypertarget{struct_a_c_q_get_command_handler_acf1c72e3da29b51efe472a70e084d256}{Q\-String \hyperlink{struct_a_c_q_get_command_handler_acf1c72e3da29b51efe472a70e084d256}{method} ()}\label{struct_a_c_q_get_command_handler_acf1c72e3da29b51efe472a70e084d256}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+\hypertarget{struct_a_c_q_get_command_handler_aad2afc7875c2444098c5ac7787904cb7}{Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_a_c_q_get_command_handler_aad2afc7875c2444098c5ac7787904cb7}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)}\label{struct_a_c_q_get_command_handler_aad2afc7875c2444098c5ac7787904cb7}
+
+\begin{DoxyCompactList}\small\item\em Processes the input Protocol\-Command, triggering any necessary logic based on the command contents, and returns an appropriate Protocol\-Response. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles G\-E\-T commands received specifying use of the A\-C\-Q protocol. 
+
+A G\-E\-T command is asking for a piece of neural data from the proxy server. The data is returned as an X\-M\-L fragment. The fragment is documented in the T\-R\-A\-C wiki. 
+
+Definition at line 18 of file A\-C\-Q\-Get\-Command\-Handler.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{struct_a_c_q_get_command_handler_a927fb1059ecae1eb1e7d40506caf280e}{\index{A\-C\-Q\-Get\-Command\-Handler@{A\-C\-Q\-Get\-Command\-Handler}!A\-C\-Q\-Get\-Command\-Handler@{A\-C\-Q\-Get\-Command\-Handler}}
+\index{A\-C\-Q\-Get\-Command\-Handler@{A\-C\-Q\-Get\-Command\-Handler}!ACQGetCommandHandler@{A\-C\-Q\-Get\-Command\-Handler}}
+\subsubsection[{A\-C\-Q\-Get\-Command\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}A\-C\-Q\-Get\-Command\-Handler\-::\-A\-C\-Q\-Get\-Command\-Handler (
+\begin{DoxyParamCaption}
+\item[{Q\-Object $\ast$}]{acq\-Plugin}
+\end{DoxyParamCaption}
+)}}\label{struct_a_c_q_get_command_handler_a927fb1059ecae1eb1e7d40506caf280e}
+
+
+N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. T\-H\-I\-S S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. Original documentation apperas below. 
+
+See the Trac wiki for a better description of this protocol.
+
+N\-O\-T\-E\-: The protocol grabs the full waveforms from the Plexon every single time. This may be a waste of time/data if we aren't using the waveforms, but given the way the Plexon server works (only giving us the data since the last time we asked for data), this seems to make the most sense. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file A\-C\-Q\-Get\-Command\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/protocol/A\-C\-Q\-Get\-Command\-Handler.\-h\item 
+source/proxyserver/protocol/A\-C\-Q\-Get\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,59 @@
+\hypertarget{class_proxy_server_thread}{\section{Proxy\-Server\-Thread Class Reference}
+\label{class_proxy_server_thread}\index{Proxy\-Server\-Thread@{Proxy\-Server\-Thread}}
+}
+
+
+N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D (except by \hyperlink{class_proxy_server}{Proxy\-Server} which itself is no longer used). S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-T\-E\-D. Original documentation appears below.  
+
+
+
+
+{\ttfamily \#include $<$proxyserverthread.\-h$>$}
+
+Inheritance diagram for Proxy\-Server\-Thread\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_proxy_server_thread}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_proxy_server_thread_a8d2f14531bab2307bb81eed251c5b0b4}{void {\bfseries error} (Q\-Tcp\-Socket\-::\-Socket\-Error socket\-Error)}\label{class_proxy_server_thread_a8d2f14531bab2307bb81eed251c5b0b4}
+
+\item 
+\hypertarget{class_proxy_server_thread_a2f2fbb7e47e0534fc18b28687e9a5978}{void {\bfseries activity} ()}\label{class_proxy_server_thread_a2f2fbb7e47e0534fc18b28687e9a5978}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_proxy_server_thread_ad1bc4f931f601a9393e265a8d1f06d78}{{\bfseries Proxy\-Server\-Thread} (qintptr socket\-Descriptor, Q\-Shared\-Pointer$<$ \hyperlink{struct_proxy_server_protocols}{Proxy\-Server\-Protocols} $>$ \-\_\-protocol, Q\-Object $\ast$parent)}\label{class_proxy_server_thread_ad1bc4f931f601a9393e265a8d1f06d78}
+
+\item 
+\hypertarget{class_proxy_server_thread_a06ee312a58b297706532195d46322b42}{void {\bfseries run} ()}\label{class_proxy_server_thread_a06ee312a58b297706532195d46322b42}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D (except by \hyperlink{class_proxy_server}{Proxy\-Server} which itself is no longer used). S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-T\-E\-D. Original documentation appears below. 
+
+The thread spun up by the server to handle each connection
+
+Much like the server itself, this thread was stolen from the Picto\-Server code. And we are now stuck maintinaing two nearly identical pieces of code... And again, sorry. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file proxyserverthread.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyserver/network/proxyserverthread.\-h\item 
+source/proxyserver/network/proxyserverthread.\-cpp\end{DoxyCompactItemize}

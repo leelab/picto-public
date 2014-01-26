@@ -1,0 +1,131 @@
+\hypertarget{class_plexon_plugin}{\section{Plexon\-Plugin Class Reference}
+\label{class_plexon_plugin}\index{Plexon\-Plugin@{Plexon\-Plugin}}
+}
+
+
+A plugin allowing the proxy server to interface with a Plexon M\-A\-P.  
+
+
+
+
+{\ttfamily \#include $<$plexonplugin.\-h$>$}
+
+Inheritance diagram for Plexon\-Plugin\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_plexon_plugin}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_plexon_plugin_a0bd4a49facbf56e4dadeac63ff529031}{\hyperlink{class_plexon_plugin_a0bd4a49facbf56e4dadeac63ff529031}{Plexon\-Plugin} ()}\label{class_plexon_plugin_a0bd4a49facbf56e4dadeac63ff529031}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_plexon_plugin}{Plexon\-Plugin} object. \end{DoxyCompactList}\item 
+\hypertarget{class_plexon_plugin_aacfab4eb54f0d0bf0690cde1286bf6f4}{Q\-String \hyperlink{class_plexon_plugin_aacfab4eb54f0d0bf0690cde1286bf6f4}{device} () const }\label{class_plexon_plugin_aacfab4eb54f0d0bf0690cde1286bf6f4}
+
+\begin{DoxyCompactList}\small\item\em The name of the device handled by this interface. \end{DoxyCompactList}\item 
+\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{Neural\-Data\-Acq\-Interface\-::device\-Status} \hyperlink{class_plexon_plugin_afa5c5fe29b60abd12760537baf972746}{start\-Device} ()
+\begin{DoxyCompactList}\small\item\em Starts interfacing with the device and gathering data. Returns the device\-Status after the function was called. \end{DoxyCompactList}\item 
+\hypertarget{class_plexon_plugin_a10dff80ebaac37e06c53a9d9a664603e}{\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{Neural\-Data\-Acq\-Interface\-::device\-Status} \hyperlink{class_plexon_plugin_a10dff80ebaac37e06c53a9d9a664603e}{stop\-Device} ()}\label{class_plexon_plugin_a10dff80ebaac37e06c53a9d9a664603e}
+
+\begin{DoxyCompactList}\small\item\em Stops gathering data from the device handled by this interface. \end{DoxyCompactList}\item 
+\hypertarget{class_plexon_plugin_a23d55293fb6964484892bc9eddf58dd1}{\hyperlink{class_neural_data_acq_interface_a18d2ffb89521e40cba91a159e47fd449}{Neural\-Data\-Acq\-Interface\-::device\-Status} \hyperlink{class_plexon_plugin_a23d55293fb6964484892bc9eddf58dd1}{get\-Device\-Status} ()}\label{class_plexon_plugin_a23d55293fb6964484892bc9eddf58dd1}
+
+\begin{DoxyCompactList}\small\item\em Returns the current device\-Status of this \hyperlink{class_neural_data_acq_interface}{Neural\-Data\-Acq\-Interface}. \end{DoxyCompactList}\item 
+\hypertarget{class_plexon_plugin_a7553334b41f4e19dbbbae2f30e54569f}{float \hyperlink{class_plexon_plugin_a7553334b41f4e19dbbbae2f30e54569f}{sampling\-Rate} ()}\label{class_plexon_plugin_a7553334b41f4e19dbbbae2f30e54569f}
+
+\begin{DoxyCompactList}\small\item\em Returns the rate at which spike waveforms are sampled by the device handled by this interface. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_unit}{Picto\-::\-Data\-Unit} $>$ $>$ \hyperlink{class_plexon_plugin_a4fd861a9a63521256a2cd5a97511853f}{dump\-Data} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of Data\-Units read from the Neural data device since the last call to this function. \end{DoxyCompactList}\item 
+bool \hyperlink{class_plexon_plugin_ad1a9a2a999a14125f17016ca64a6f197}{acq\-Data\-After\-Now} ()
+\begin{DoxyCompactList}\small\item\em Causes the interface to throw out all data collected before now. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A plugin allowing the proxy server to interface with a Plexon M\-A\-P. 
+
+This uses the A\-P\-I provided by Plexon to extract neural data from a running Plexon system. The documentation for this A\-P\-I is relatively easy to come by. All of the functions do what they are supposed to do according to the \hyperlink{class_neural_data_acq_interface}{Neural\-Data\-Acq\-Interface} documentation. This class simply implements those functions for the Plexon interface. \begin{DoxyNote}{Note}
+The Plex\-Client.\-dll must be in the path for this plugin to be loaded. Currently we place it in the Picto\-Run\-Path directory alongside the dll generated for this class. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 23 of file plexonplugin.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_plexon_plugin_ad1a9a2a999a14125f17016ca64a6f197}{\index{Plexon\-Plugin@{Plexon\-Plugin}!acq\-Data\-After\-Now@{acq\-Data\-After\-Now}}
+\index{acq\-Data\-After\-Now@{acq\-Data\-After\-Now}!PlexonPlugin@{Plexon\-Plugin}}
+\subsubsection[{acq\-Data\-After\-Now}]{\setlength{\rightskip}{0pt plus 5cm}bool Plexon\-Plugin\-::acq\-Data\-After\-Now (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_plexon_plugin_ad1a9a2a999a14125f17016ca64a6f197}
+
+
+Causes the interface to throw out all data collected before now. 
+
+No data gathered before this point should be returned by \hyperlink{class_plexon_plugin_a4fd861a9a63521256a2cd5a97511853f}{dump\-Data()}. This function returns true if the data before this point was successfully thrown out, false otherwise. 
+
+Implements \hyperlink{class_neural_data_acq_interface_ae2a18728d2a56fe1a65a66e10a33282f}{Neural\-Data\-Acq\-Interface}.
+
+
+
+Definition at line 220 of file plexonplugin.\-cpp.
+
+\hypertarget{class_plexon_plugin_a4fd861a9a63521256a2cd5a97511853f}{\index{Plexon\-Plugin@{Plexon\-Plugin}!dump\-Data@{dump\-Data}}
+\index{dump\-Data@{dump\-Data}!PlexonPlugin@{Plexon\-Plugin}}
+\subsubsection[{dump\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Data\-Unit} $>$ $>$ Plexon\-Plugin\-::dump\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_plexon_plugin_a4fd861a9a63521256a2cd5a97511853f}
+
+
+Returns a list of Data\-Units read from the Neural data device since the last call to this function. 
+
+The returned list includes Neural\-Data\-Unit, Alignment\-Data\-Unit, and L\-F\-P\-Data\-Unit\-Package objects. The Neural\-Data\-Unit and Alignment\-Data\-Unit objects represent individual spikes and alignment events, but the L\-F\-P\-Data\-Unit\-Package represents a list of L\-F\-P readings for a particular channel. To keep the load on the server low but balance that with fresh data on the workstation, the typical L\-F\-P\-Data\-Unit\-Package should include about a half second's worth of data. 
+
+Implements \hyperlink{class_neural_data_acq_interface_a5726ef21daaedd9947640b146e554c97}{Neural\-Data\-Acq\-Interface}.
+
+
+
+Definition at line 62 of file plexonplugin.\-cpp.
+
+\hypertarget{class_plexon_plugin_afa5c5fe29b60abd12760537baf972746}{\index{Plexon\-Plugin@{Plexon\-Plugin}!start\-Device@{start\-Device}}
+\index{start\-Device@{start\-Device}!PlexonPlugin@{Plexon\-Plugin}}
+\subsubsection[{start\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Neural\-Data\-Acq\-Interface\-::device\-Status} Plexon\-Plugin\-::start\-Device (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_plexon_plugin_afa5c5fe29b60abd12760537baf972746}
+
+
+Starts interfacing with the device and gathering data. Returns the device\-Status after the function was called. 
+
+\begin{DoxyNote}{Note}
+The returned device\-Status should be at least Started unless there was some error. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_neural_data_acq_interface_afaece5bd061753aa9a4b1e05c0d1e61d}{Neural\-Data\-Acq\-Interface}.
+
+
+
+Definition at line 19 of file plexonplugin.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyplugins/plexonplugin/plexonplugin.\-h\item 
+source/proxyplugins/plexonplugin/plexonplugin.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,115 @@
+\hypertarget{class_picto_1_1_auto_saver}{\section{Picto\-:\-:Auto\-Saver Class Reference}
+\label{class_picto_1_1_auto_saver}\index{Picto\-::\-Auto\-Saver@{Picto\-::\-Auto\-Saver}}
+}
+
+
+Handles automatically saving the current \hyperlink{namespace_picto}{Picto} Design at a defined interval and restoring previously Auto-\/\-Saved files.  
+
+
+
+
+{\ttfamily \#include $<$Auto\-Saver.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Auto\-Saver\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_auto_saver}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_auto_saver_a14564b40de4eb7e14aea620e2b5b708b}{void {\bfseries open\-Design} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)}\label{class_picto_1_1_auto_saver_a14564b40de4eb7e14aea620e2b5b708b}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{class_picto_1_1_auto_saver_a97bee7c7983bb8ba0189580248d45f57}{$\sim$\-Auto\-Saver} ()
+\begin{DoxyCompactList}\small\item\em When the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} is deleted, we close our lock\-File\-\_\- and design\-File\-\_\- then remove the Auto\-Save subdirectory for this workstation. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_auto_saver_af62ed112fa85c09e4788f3846e42ab60}{void \hyperlink{class_picto_1_1_auto_saver_af62ed112fa85c09e4788f3846e42ab60}{start} (int save\-Period\-Ms)}\label{class_picto_1_1_auto_saver_af62ed112fa85c09e4788f3846e42ab60}
+
+\begin{DoxyCompactList}\small\item\em Starts autosaving the current design to file every save\-Period\-Ms. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_auto_saver_aff98146527c802af3b1728d3321f9c49}{void \hyperlink{class_picto_1_1_auto_saver_aff98146527c802af3b1728d3321f9c49}{stop} ()}\label{class_picto_1_1_auto_saver_aff98146527c802af3b1728d3321f9c49}
+
+\begin{DoxyCompactList}\small\item\em Saves the design to file, then stops Auto\-Saving the current design at a periodic interval. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_auto_saver_a0104d42c131f38a258bb0c0d14678241}{set\-Design\-Root} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design, bool save\-First\-Version)
+\begin{DoxyCompactList}\small\item\em Sets the design\-Root of the design that will be auto-\/saved to file. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_auto_saver_a8323b0f1510370ac878e35c4455e28be}{void \hyperlink{class_picto_1_1_auto_saver_a8323b0f1510370ac878e35c4455e28be}{remove\-File\-Until\-Next\-Change} ()}\label{class_picto_1_1_auto_saver_a8323b0f1510370ac878e35c4455e28be}
+
+\begin{DoxyCompactList}\small\item\em Deletes the auto-\/saved file and updates the saved file text such that no auto-\/saved file will exist until the next change is made to the design. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_auto_saver_aa003b23d0e5c82736a0609505dfdb80b}{Q\-Dialog $\ast$ \hyperlink{class_picto_1_1_auto_saver_aa003b23d0e5c82736a0609505dfdb80b}{get\-Design\-Restore\-Dialog} (Q\-Widget $\ast$parent)}\label{class_picto_1_1_auto_saver_aa003b23d0e5c82736a0609505dfdb80b}
+
+\begin{DoxyCompactList}\small\item\em Constructs and returns an \hyperlink{class_picto_1_1_auto_save_dialog}{Auto\-Save\-Dialog} to allow the designer to restore an auto saved design file. This function connects up the \hyperlink{class_picto_1_1_auto_save_dialog}{Auto\-Save\-Dialog} signals such that the delete and restore operations requested by the dialog will be properly performed. If there are no auto-\/saved files available, the function returns N\-U\-L\-L. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_auto_saver_a3eb3e497f67f3e3b76e2efb6ef8022d2}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} $>$ \hyperlink{class_picto_1_1_auto_saver_a3eb3e497f67f3e3b76e2efb6ef8022d2}{get\-Singleton} ()}\label{class_picto_1_1_auto_saver_a3eb3e497f67f3e3b76e2efb6ef8022d2}
+
+\begin{DoxyCompactList}\small\item\em Returns the singleton instance of the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_auto_saver_a09344b067f544c9f860493e210baf2af}{Q\-String \hyperlink{class_picto_1_1_auto_saver_a09344b067f544c9f860493e210baf2af}{get\-Auto\-Save\-Dir} ()}\label{class_picto_1_1_auto_saver_a09344b067f544c9f860493e210baf2af}
+
+\begin{DoxyCompactList}\small\item\em Returns the path where this \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver}'s files should be saved (a sub-\/directory of \mbox{[}Picto\-Install\-Dir\mbox{]}/\-Auto\-Save). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles automatically saving the current \hyperlink{namespace_picto}{Picto} Design at a defined interval and restoring previously Auto-\/\-Saved files. 
+
+The auto-\/saved file is saved in a subdirectory of the Auto\-Save subdirectory of the \hyperlink{namespace_picto}{Picto} installation folder. The auto-\/saved file is saved along with a \char`\"{}lock file.\char`\"{} When the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} is deleted, both files and their directory are removed. This means that future \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} objects can check for auto-\/saved files by looking through the subdirectories of \mbox{[}Picto\-Install\-Dir\mbox{]}/\-Auto\-Save and finding all of the files whose neighboring Lock\-File doesn't exist or can be deleted (since it can't be deleted when open in another workstation).
+
+Restoring an Auto-\/\-Saved file is performed though the use of an Auto\-Save\-Widget generated by an \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver}. The \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} and Auto\-Save\-Widget classes together form the entire Auto-\/\-Save system. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 29 of file Auto\-Saver.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_auto_saver_a97bee7c7983bb8ba0189580248d45f57}{\index{Picto\-::\-Auto\-Saver@{Picto\-::\-Auto\-Saver}!$\sim$\-Auto\-Saver@{$\sim$\-Auto\-Saver}}
+\index{$\sim$\-Auto\-Saver@{$\sim$\-Auto\-Saver}!Picto::AutoSaver@{Picto\-::\-Auto\-Saver}}
+\subsubsection[{$\sim$\-Auto\-Saver}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Auto\-Saver\-::$\sim$\-Auto\-Saver (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_auto_saver_a97bee7c7983bb8ba0189580248d45f57}
+
+
+When the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} is deleted, we close our lock\-File\-\_\- and design\-File\-\_\- then remove the Auto\-Save subdirectory for this workstation. 
+
+The idea here is that if the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} is being smoothly deleted, there is no need for the Auto\-Saved file. It is only necessary in the event of a crash. 
+
+Definition at line 41 of file Auto\-Saver.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_auto_saver_a0104d42c131f38a258bb0c0d14678241}{\index{Picto\-::\-Auto\-Saver@{Picto\-::\-Auto\-Saver}!set\-Design\-Root@{set\-Design\-Root}}
+\index{set\-Design\-Root@{set\-Design\-Root}!Picto::AutoSaver@{Picto\-::\-Auto\-Saver}}
+\subsubsection[{set\-Design\-Root}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Auto\-Saver\-::set\-Design\-Root (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Design\-Root} $>$}]{design\-Root, }
+\item[{bool}]{save\-First\-Version}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_auto_saver_a0104d42c131f38a258bb0c0d14678241}
+
+
+Sets the design\-Root of the design that will be auto-\/saved to file. 
+
+The design\-Root will be saved fo file each time save\-Design\-To\-File() is called by the save\-Timer\-\_\- so long as something about the design has changed. The save\-First\-Version input tells the \hyperlink{class_picto_1_1_auto_saver}{Auto\-Saver} to save the input design\-Root right away and not to wait for the next change to be made before saving the file for the first time 
+
+Definition at line 83 of file Auto\-Saver.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Auto\-Saver.\-h\item 
+source/common/\-Designer/Auto\-Saver.\-cpp\end{DoxyCompactItemize}

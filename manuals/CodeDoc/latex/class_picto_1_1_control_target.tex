@@ -1,0 +1,175 @@
+\hypertarget{class_picto_1_1_control_target}{\section{Picto\-:\-:Control\-Target Class Reference}
+\label{class_picto_1_1_control_target}\index{Picto\-::\-Control\-Target@{Picto\-::\-Control\-Target}}
+}
+
+
+A \hyperlink{class_picto_1_1_control_target}{Control\-Target} is a \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} that defines a fixation region and is invisible to the subject by default.  
+
+
+
+
+{\ttfamily \#include $<$Control\-Target.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Control\-Target\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=10.000000cm]{class_picto_1_1_control_target}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_picto_1_1_control_target_ad16278dee3e866f5cd49dbecde604797}{get\-Visible} ()
+\begin{DoxyCompactList}\small\item\em Returns whether this \hyperlink{class_picto_1_1_control_target}{Control\-Target} is currently visible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_target_af7634d919c492efa95f9e71dbdfa15ad}{{\bfseries Control\-Target} (Q\-Point position=Q\-Point(), Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color}=Qt\-::green)}\label{class_picto_1_1_control_target_af7634d919c492efa95f9e71dbdfa15ad}
+
+\item 
+\hypertarget{class_picto_1_1_control_target_a5af5446a825b50dd96f4fbedb1ec0fb3}{virtual Q\-String \hyperlink{class_picto_1_1_control_target_a5af5446a825b50dd96f4fbedb1ec0fb3}{get\-U\-I\-Template} ()}\label{class_picto_1_1_control_target_a5af5446a825b50dd96f4fbedb1ec0fb3}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_target_a4a46d2b0d80b07a439be0fcaa84dc18d}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_ac516e3849947ea0359a8e0f998f0f601}{virtual Q\-String \hyperlink{class_picto_1_1_control_target_ac516e3849947ea0359a8e0f998f0f601}{get\-U\-I\-Group} ()}\label{class_picto_1_1_control_target_ac516e3849947ea0359a8e0f998f0f601}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_aef3dae260b39bb05fbfdbcf4ff396102}{void \hyperlink{class_picto_1_1_control_target_aef3dae260b39bb05fbfdbcf4ff396102}{draw} ()=0}\label{class_picto_1_1_control_target_aef3dae260b39bb05fbfdbcf4ff396102}
+
+\begin{DoxyCompactList}\small\item\em Draws the image represented by this \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} onto the image\-\_\- object based on its current \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}{set\-Active} (bool active)
+\begin{DoxyCompactList}\small\item\em Sets whether this \hyperlink{class_picto_1_1_control_target}{Control\-Target} is currently being monitored by a \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_afb2d65410f9e72412abd7eb7840b6887}{bool \hyperlink{class_picto_1_1_control_target_afb2d65410f9e72412abd7eb7840b6887}{is\-Active} ()}\label{class_picto_1_1_control_target_afb2d65410f9e72412abd7eb7840b6887}
+
+\begin{DoxyCompactList}\small\item\em Returns whether this \hyperlink{class_picto_1_1_control_target}{Control\-Target} is currently being actively monitored by a \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_aa5a30df98937efa6d2758e364dff1d85}{void \hyperlink{class_picto_1_1_control_target_aa5a30df98937efa6d2758e364dff1d85}{set\-Outside} (bool \hyperlink{class_picto_1_1_control_target_aec615efdebbbe2b0a5e4f31d5b4c44c5}{outside})}\label{class_picto_1_1_control_target_aa5a30df98937efa6d2758e364dff1d85}
+
+\begin{DoxyCompactList}\small\item\em Sets whether the target location will be the region outside of this element's geometry. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_ab3f6a177d20cd4fd857a46449ad51144}{bool \hyperlink{class_picto_1_1_control_target_ab3f6a177d20cd4fd857a46449ad51144}{get\-Outside} ()}\label{class_picto_1_1_control_target_ab3f6a177d20cd4fd857a46449ad51144}
+
+\begin{DoxyCompactList}\small\item\em Gets whether the target location will be the region outside of this element's geometry. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}{virtual bool \hyperlink{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}{contains} (int \hyperlink{struct_picto_1_1_visual_element_a1b50bc5fa41868f661687015be3c97e8}{x}, int \hyperlink{struct_picto_1_1_visual_element_a9a4db3430219e1f78208eda1a89e9f38}{y})=0}\label{class_picto_1_1_control_target_aeba5d02793b4d40933e793cde3971940}
+
+\begin{DoxyCompactList}\small\item\em Returns whether the input x,y position is inside this \hyperlink{class_picto_1_1_control_target}{Control\-Target} element's target location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_control_target_a0cd5e40f668903b31db033efdf31829b}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_target_a708c1e33dd901e2295116e9881dd981e}{virtual bool \hyperlink{class_picto_1_1_control_target_a708c1e33dd901e2295116e9881dd981e}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_control_target_a708c1e33dd901e2295116e9881dd981e}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_target_aec615efdebbbe2b0a5e4f31d5b4c44c5}{bool \hyperlink{class_picto_1_1_control_target_aec615efdebbbe2b0a5e4f31d5b4c44c5}{outside}}\label{class_picto_1_1_control_target_aec615efdebbbe2b0a5e4f31d5b4c44c5}
+
+\begin{DoxyCompactList}\small\item\em Sets/\-Gets whether the target location will be the region outside of this element's geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_control_target}{Control\-Target} is a \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} that defines a fixation region and is invisible to the subject by default. 
+
+\hyperlink{class_picto_1_1_control_target}{Control\-Target} elements are meant to be used with \hyperlink{class_picto_1_1_target_controller}{Target\-Controller} and \hyperlink{class_picto_1_1_choice_controller}{Choice\-Controller} elements to define fixation regions. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Control\-Target.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_control_target_a4a46d2b0d80b07a439be0fcaa84dc18d}{\index{Picto\-::\-Control\-Target@{Picto\-::\-Control\-Target}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ControlTarget@{Picto\-::\-Control\-Target}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Target\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_a4a46d2b0d80b07a439be0fcaa84dc18d}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_rect_target_a13dd96ae3f77ed63405f184d1b8c45ff}{Picto\-::\-Rect\-Target}, and \hyperlink{class_picto_1_1_circle_target_ae7518ab3a7f181990598c0830aa48e31}{Picto\-::\-Circle\-Target}.
+
+
+
+Definition at line 29 of file Control\-Target.\-h.
+
+\hypertarget{class_picto_1_1_control_target_ad16278dee3e866f5cd49dbecde604797}{\index{Picto\-::\-Control\-Target@{Picto\-::\-Control\-Target}!get\-Visible@{get\-Visible}}
+\index{get\-Visible@{get\-Visible}!Picto::ControlTarget@{Picto\-::\-Control\-Target}}
+\subsubsection[{get\-Visible}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Control\-Target\-::get\-Visible (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}, {\ttfamily [slot]}}}\label{class_picto_1_1_control_target_ad16278dee3e866f5cd49dbecde604797}
+
+
+Returns whether this \hyperlink{class_picto_1_1_control_target}{Control\-Target} is currently visible. 
+
+In the case of a \hyperlink{class_picto_1_1_control_target}{Control\-Target}, even if is is set as visible, it is only actually visible if it is being actively monitored by a \hyperlink{class_picto_1_1_control_element}{Control\-Element}. This funciton returns true only if the \hyperlink{class_picto_1_1_control_target}{Control\-Target} is both set as visible and currently being monitored by a \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+Definition at line 49 of file Control\-Target.\-h.
+
+\hypertarget{class_picto_1_1_control_target_a0cd5e40f668903b31db033efdf31829b}{\index{Picto\-::\-Control\-Target@{Picto\-::\-Control\-Target}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::ControlTarget@{Picto\-::\-Control\-Target}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Control\-Target\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_target_a0cd5e40f668903b31db033efdf31829b}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_rect_target_a3e49cfeaf2c0247b1881cd377f8a4a2e}{Picto\-::\-Rect\-Target}, and \hyperlink{class_picto_1_1_circle_target_ad736fe02668f504c8635d48b7cef3d40}{Picto\-::\-Circle\-Target}.
+
+
+
+Definition at line 26 of file Control\-Target.\-cpp.
+
+\hypertarget{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}{\index{Picto\-::\-Control\-Target@{Picto\-::\-Control\-Target}!set\-Active@{set\-Active}}
+\index{set\-Active@{set\-Active}!Picto::ControlTarget@{Picto\-::\-Control\-Target}}
+\subsubsection[{set\-Active}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Control\-Target\-::set\-Active (
+\begin{DoxyParamCaption}
+\item[{bool}]{active}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_control_target_a36c8b737d2014a5686d8aed7ffa1429f}
+
+
+Sets whether this \hyperlink{class_picto_1_1_control_target}{Control\-Target} is currently being monitored by a \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+\begin{DoxyNote}{Note}
+This function should only be called by Control\-Elements 
+\end{DoxyNote}
+
+
+Definition at line 21 of file Control\-Target.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Control\-Target.\-h\item 
+source/common/controlelements/Control\-Target.\-cpp\end{DoxyCompactItemize}

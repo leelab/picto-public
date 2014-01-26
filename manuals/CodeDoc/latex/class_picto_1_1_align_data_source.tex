@@ -1,0 +1,66 @@
+\hypertarget{class_picto_1_1_align_data_source}{\section{Picto\-:\-:Align\-Data\-Source Class Reference}
+\label{class_picto_1_1_align_data_source}\index{Picto\-::\-Align\-Data\-Source@{Picto\-::\-Align\-Data\-Source}}
+}
+Inheritance diagram for Picto\-:\-:Align\-Data\-Source\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_align_data_source}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_align_data_source_a1c17afbbb7d618f6cbae3cf4dd1276aa}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_align_data_source_a1c17afbbb7d618f6cbae3cf4dd1276aa}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_align_data_source_ac31e81f976c66d65f00ddab62dcc93bf}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_data_iterator}{Analysis\-Data\-Iterator} $>$ {\bfseries create\-Data\-Iterator} ()}\label{class_picto_1_1_align_data_source_ac31e81f976c66d65f00ddab62dcc93bf}
+
+\item 
+virtual void \hyperlink{class_picto_1_1_align_data_source_ac13d9419b22333299c93daa964b0d855}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_align_data_source_af81f83b2691119af53ffcbaa5e6ac1ac}{virtual bool \hyperlink{class_picto_1_1_align_data_source_af81f83b2691119af53ffcbaa5e6ac1ac}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_align_data_source_af81f83b2691119af53ffcbaa5e6ac1ac}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14 of file Align\-Data\-Source.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_align_data_source_ac13d9419b22333299c93daa964b0d855}{\index{Picto\-::\-Align\-Data\-Source@{Picto\-::\-Align\-Data\-Source}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AlignDataSource@{Picto\-::\-Align\-Data\-Source}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Align\-Data\-Source\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_align_data_source_ac13d9419b22333299c93daa964b0d855}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_dep_a3e0d7b3b0c784e17c8fa3504705367ba}{Picto\-::\-Analysis\-Data\-Source\-Dep}.
+
+
+
+Definition at line 25 of file Align\-Data\-Source.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Align\-Data\-Source.\-h\item 
+source/common/analysis/Align\-Data\-Source.\-cpp\end{DoxyCompactItemize}

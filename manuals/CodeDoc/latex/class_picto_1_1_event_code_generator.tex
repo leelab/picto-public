@@ -1,0 +1,78 @@
+\hypertarget{class_picto_1_1_event_code_generator}{\section{Picto\-:\-:Event\-Code\-Generator Class Reference}
+\label{class_picto_1_1_event_code_generator}\index{Picto\-::\-Event\-Code\-Generator@{Picto\-::\-Event\-Code\-Generator}}
+}
+
+
+A base class for hardware specific classes that send event codes to Neural recording devices.  
+
+
+
+
+{\ttfamily \#include $<$Event\-Code\-Generator.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Event\-Code\-Generator\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.058824cm]{class_picto_1_1_event_code_generator}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual double \hyperlink{class_picto_1_1_event_code_generator_adf6a7d68b44bcecec9b7093c723cebb9}{send\-Event} (unsigned int event\-Code)=0
+\begin{DoxyCompactList}\small\item\em Sends the input event code and returns the time in seconds that the event code was triggered before the function returned. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual int \hyperlink{class_picto_1_1_event_code_generator_aa7c20e4bd4c1b3f403ea555e1a2de422}{get\-Bits\-Per\-Event} ()=0
+\begin{DoxyCompactList}\small\item\em Returns the number of bits that are available for sending events. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for hardware specific classes that send event codes to Neural recording devices. 
+
+\hyperlink{class_picto_1_1_event_code_generator}{Event\-Code\-Generator} is the base class for objects that generate event codes which are sent to neural recording devices. These event codes are important since they are our method for aligning time stamps between the behavioral and neural systems. Whenever an event code is sent, the sender (\hyperlink{class_director}{Director}) marks the time that it was sent. The Neural system also marks the time that the event is received and the Neural proxy reads this information. The event code and timestamp are then sent from both the \hyperlink{class_director}{Director} and Proxy applications and used on the \hyperlink{class_server}{Server} to align the Behavioral (\hyperlink{class_director}{Director}) and Neural (Proxy) timestamps using a least squares algorithm. This allows us to maintain a single timestream in the saved picto session. The abstraction of using an \hyperlink{class_picto_1_1_event_code_generator}{Event\-Code\-Generator} base class is neccessasry, since there may be different generators for different neural devices, as well as for different hardware setups. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 34 of file Event\-Code\-Generator.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_event_code_generator_aa7c20e4bd4c1b3f403ea555e1a2de422}{\index{Picto\-::\-Event\-Code\-Generator@{Picto\-::\-Event\-Code\-Generator}!get\-Bits\-Per\-Event@{get\-Bits\-Per\-Event}}
+\index{get\-Bits\-Per\-Event@{get\-Bits\-Per\-Event}!Picto::EventCodeGenerator@{Picto\-::\-Event\-Code\-Generator}}
+\subsubsection[{get\-Bits\-Per\-Event}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Picto\-::\-Event\-Code\-Generator\-::get\-Bits\-Per\-Event (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_event_code_generator_aa7c20e4bd4c1b3f403ea555e1a2de422}
+
+
+Returns the number of bits that are available for sending events. 
+
+In \hyperlink{namespace_picto}{Picto}, we have typically used 7 bits. 
+
+Implemented in \hyperlink{class_picto_1_1_legacy_system_x_p_event_code_generator_a7e06d1f13deed354277dec9851f58afa}{Picto\-::\-Legacy\-System\-X\-P\-Event\-Code\-Generator}, \hyperlink{class_picto_1_1_picto_box_x_p_event_code_generator_a6a3e7a0b260d96b65be5bf860baa5921}{Picto\-::\-Picto\-Box\-X\-P\-Event\-Code\-Generator}, and \hyperlink{class_picto_1_1_null_event_code_generator_aad5a36c8ba429abe180f845a3b03c47b}{Picto\-::\-Null\-Event\-Code\-Generator}.
+
+\hypertarget{class_picto_1_1_event_code_generator_adf6a7d68b44bcecec9b7093c723cebb9}{\index{Picto\-::\-Event\-Code\-Generator@{Picto\-::\-Event\-Code\-Generator}!send\-Event@{send\-Event}}
+\index{send\-Event@{send\-Event}!Picto::EventCodeGenerator@{Picto\-::\-Event\-Code\-Generator}}
+\subsubsection[{send\-Event}]{\setlength{\rightskip}{0pt plus 5cm}virtual double Picto\-::\-Event\-Code\-Generator\-::send\-Event (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{event\-Code}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{class_picto_1_1_event_code_generator_adf6a7d68b44bcecec9b7093c723cebb9}
+
+
+Sends the input event code and returns the time in seconds that the event code was triggered before the function returned. 
+
+The idea here is that in general, most Event\-Code\-Generators are going to need to hold a signal high for some number of microseconds before returning. In order to get an accurage timestamp, we will record the time when this function returns minus the value that it returns. We can't simply use the time at which the function is called because setup times may vary and are typically going to be harder to estimate. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/iodevices/Event\-Code\-Generator.\-h\item 
+source/common/iodevices/Event\-Code\-Generator.\-cpp\end{DoxyCompactItemize}

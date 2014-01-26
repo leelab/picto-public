@@ -1,0 +1,519 @@
+\hypertarget{class_daq_board}{\section{Daq\-Board Class Reference}
+\label{class_daq_board}\index{Daq\-Board@{Daq\-Board}}
+}
+
+
+Used to interact with the daq board.  
+
+
+
+
+{\ttfamily \#include $<$Daq\-Board.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_daq_board_1_1ai_channel__st}{ai\-Channel\-\_\-st}
+\begin{DoxyCompactList}\small\item\em Analog Input structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_daq_board_adc04f1440c6e392e2c5da2340b9da420}{Channel\-Type} \{ \hyperlink{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a7143906b2b10a38ef0ffb592fe59f644}{k\-Chan\-Type\-Differential} =1, 
+\hyperlink{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a9575eb0c9b9d0c904bc55203db2ad2f2}{k\-Chan\-Type\-N\-R\-S\-E}, 
+\hyperlink{class_daq_board_adc04f1440c6e392e2c5da2340b9da420adf2d9ac3fe1e4866ba5166052d751e16}{k\-Chan\-Type\-R\-S\-E}
+ \}
+\begin{DoxyCompactList}\small\item\em Types of analog inputs. \end{DoxyCompactList}\item 
+\hypertarget{class_daq_board_a71c2d161d06f7c013aa1baa14c05a465}{typedef struct \\*
+\hyperlink{struct_daq_board_1_1ai_channel__st}{Daq\-Board\-::ai\-Channel\-\_\-st} \hyperlink{class_daq_board_a71c2d161d06f7c013aa1baa14c05a465}{A\-I\-Channel}}\label{class_daq_board_a71c2d161d06f7c013aa1baa14c05a465}
+
+\begin{DoxyCompactList}\small\item\em Analog Input structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_daq_board_aeac12e2acf5b870ada4d69bdf32c05c6}{Daq\-Board} ()
+\begin{DoxyCompactList}\small\item\em Create a new \hyperlink{class_daq_board}{Daq\-Board} object. \end{DoxyCompactList}\item 
+\hyperlink{class_daq_board_ac8ecec1806ad926d40ebc6117a14e2b2}{$\sim$\-Daq\-Board} ()
+\begin{DoxyCompactList}\small\item\em Destroy a \hyperlink{class_daq_board}{Daq\-Board} object. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_acdde7e172d7395f9595db581409ca1cc}{init\-Reward\-Controller} (int \-\_\-num\-Controllers, unsigned int \-\_\-reward\-Durations\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Initializes the Reward controllers. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_afaf10ff6931efd919289e1c6f48ef69d}{set\-Reward\-Duration} (int \-\_\-controller, unsigned int \-\_\-duration)
+\begin{DoxyCompactList}\small\item\em Sets the reward duration in ms for the specified controller. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{class_daq_board_ae84119b95800ace4d9256935f9c4daed}{get\-Reward\-Duration} (int \-\_\-controller)
+\begin{DoxyCompactList}\small\item\em Gets the reward duration in ms for the specified controller. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a1f7ada581ac4a6e2aad030f5462c6c64}{give\-Reward} (int \-\_\-controller)
+\begin{DoxyCompactList}\small\item\em Turns on the reward controller for a fixed duration. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a2be76f9d253a16b011c662122b18d11e}{flush\-Reward} (int \-\_\-controller, bool \-\_\-flush)
+\begin{DoxyCompactList}\small\item\em Used to turn on or off the reward controller for flushing. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a1929a34620c0dc6444af1da9d8b2a1cc}{send\-Event} (unsigned char \-\_\-event\-Code)
+\begin{DoxyCompactList}\small\item\em Outputs a single 7-\/bit event code with a 1 bit strobe signal using the P\-F\-I outputs. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a610fcba8cb7374e9ae7af1aa7aef027d}{init\-Event\-Lines} ()
+\begin{DoxyCompactList}\small\item\em Sets up the lines used for sending even codes. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_ad3875492d646b11d129ac7547c00394b}{Create\-A\-I\-Channel} (int \-\_\-chan\-Number, \hyperlink{class_daq_board_adc04f1440c6e392e2c5da2340b9da420}{Channel\-Type} \-\_\-chan\-Type)
+\begin{DoxyCompactList}\small\item\em Creates a new analog input (A\-I) channel, and adds it to the list of channels. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a65249d3a2df5058a07e951a3a37008af}{Remove\-A\-I\-Channel} (int \-\_\-chan\-Number)
+\begin{DoxyCompactList}\small\item\em Removes an analog input channel. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_aec9c7ccf9fc6ac59018f31a218ac1144}{Clear\-A\-I\-Channel\-List} ()
+\begin{DoxyCompactList}\small\item\em Removes every channel from the channel list. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_a375d9d492b185f93a73330a93466f20d}{Start\-A\-I} (unsigned int \-\_\-frequency, bool \-\_\-continuous, unsigned int \-\_\-number\-Of\-Samples=0)
+\begin{DoxyCompactList}\small\item\em Starts the D\-A\-Q running in analog input mode. \end{DoxyCompactList}\item 
+int \hyperlink{class_daq_board_acd72291e1f936f452c543c8171292314}{Collect\-A\-I\-Data} (unsigned int \-\_\-num\-Samples)
+\begin{DoxyCompactList}\small\item\em Dumps the A\-I data sitting in the D\-A\-Q's data F\-I\-F\-O into the A\-I channel objects. \end{DoxyCompactList}\item 
+\hyperlink{class_daq_board_a71c2d161d06f7c013aa1baa14c05a465}{A\-I\-Channel} $\ast$ \hyperlink{class_daq_board_a7ea5b8dc89ba6e904d85cb6e4ffffdb6}{Get\-A\-I\-Channel} (int chan\-Number)
+\begin{DoxyCompactList}\small\item\em Provides access to the data dumped into the channel objects. \end{DoxyCompactList}\item 
+int \hyperlink{class_daq_board_af9bb2d698a93184849119720ffcdc676}{Flush\-A\-I\-Data} ()
+\begin{DoxyCompactList}\small\item\em Flushes the D\-A\-Q boards F\-I\-F\-O. \end{DoxyCompactList}\item 
+bool \hyperlink{class_daq_board_af4505522da49d132d3170493582c0890}{Stop\-A\-I} ()
+\begin{DoxyCompactList}\small\item\em Stops the A\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to interact with the daq board. 
+
+The \hyperlink{class_daq_board}{Daq\-Board} object allows the programmer to interact with a National Instruments M-\/\-Series data acquisition board. The object currently allows the control of reward controllers through the digital outputs, and the reading of analog inputs through all channels.
+
+C\-O\-D\-E L\-I\-M\-I\-T\-A\-T\-I\-O\-N\-S The code was tested with a P\-C\-I-\/6221 board, but it should work with other P\-C\-I based D\-A\-Q boards (although it hasn't been tested this way).
+
+It should also be noted that you really shouldn't attempt to create more than one \hyperlink{class_daq_board}{Daq\-Board} object. It is possible to do this (and it was tested), but you run the risk of putting the board into an unexpected state. 
+
+Definition at line 46 of file Daq\-Board.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_daq_board_adc04f1440c6e392e2c5da2340b9da420}{\index{Daq\-Board@{Daq\-Board}!Channel\-Type@{Channel\-Type}}
+\index{Channel\-Type@{Channel\-Type}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Channel\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Daq\-Board\-::\-Channel\-Type}}}\label{class_daq_board_adc04f1440c6e392e2c5da2340b9da420}
+
+
+Types of analog inputs. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{k\-Chan\-Type\-Differential@{k\-Chan\-Type\-Differential}!Daq\-Board@{Daq\-Board}}\index{Daq\-Board@{Daq\-Board}!k\-Chan\-Type\-Differential@{k\-Chan\-Type\-Differential}}\item[{\em 
+\hypertarget{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a7143906b2b10a38ef0ffb592fe59f644}{k\-Chan\-Type\-Differential}\label{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a7143906b2b10a38ef0ffb592fe59f644}
+}]Differential input. \index{k\-Chan\-Type\-N\-R\-S\-E@{k\-Chan\-Type\-N\-R\-S\-E}!Daq\-Board@{Daq\-Board}}\index{Daq\-Board@{Daq\-Board}!k\-Chan\-Type\-N\-R\-S\-E@{k\-Chan\-Type\-N\-R\-S\-E}}\item[{\em 
+\hypertarget{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a9575eb0c9b9d0c904bc55203db2ad2f2}{k\-Chan\-Type\-N\-R\-S\-E}\label{class_daq_board_adc04f1440c6e392e2c5da2340b9da420a9575eb0c9b9d0c904bc55203db2ad2f2}
+}]Non-\/referenced single-\/ended input. \index{k\-Chan\-Type\-R\-S\-E@{k\-Chan\-Type\-R\-S\-E}!Daq\-Board@{Daq\-Board}}\index{Daq\-Board@{Daq\-Board}!k\-Chan\-Type\-R\-S\-E@{k\-Chan\-Type\-R\-S\-E}}\item[{\em 
+\hypertarget{class_daq_board_adc04f1440c6e392e2c5da2340b9da420adf2d9ac3fe1e4866ba5166052d751e16}{k\-Chan\-Type\-R\-S\-E}\label{class_daq_board_adc04f1440c6e392e2c5da2340b9da420adf2d9ac3fe1e4866ba5166052d751e16}
+}]Referenced single-\/ended input. \end{description}
+\end{Desc}
+
+
+Definition at line 71 of file Daq\-Board.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_daq_board_aeac12e2acf5b870ada4d69bdf32c05c6}{\index{Daq\-Board@{Daq\-Board}!Daq\-Board@{Daq\-Board}}
+\index{Daq\-Board@{Daq\-Board}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Daq\-Board}]{\setlength{\rightskip}{0pt plus 5cm}Daq\-Board\-::\-Daq\-Board (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_aeac12e2acf5b870ada4d69bdf32c05c6}
+
+
+Create a new \hyperlink{class_daq_board}{Daq\-Board} object. 
+
+This creates a new object and opens the \char`\"{}file\char`\"{} for communicating with the D\-A\-Q board. 
+
+Definition at line 20 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_ac8ecec1806ad926d40ebc6117a14e2b2}{\index{Daq\-Board@{Daq\-Board}!$\sim$\-Daq\-Board@{$\sim$\-Daq\-Board}}
+\index{$\sim$\-Daq\-Board@{$\sim$\-Daq\-Board}!DaqBoard@{Daq\-Board}}
+\subsubsection[{$\sim$\-Daq\-Board}]{\setlength{\rightskip}{0pt plus 5cm}Daq\-Board\-::$\sim$\-Daq\-Board (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_ac8ecec1806ad926d40ebc6117a14e2b2}
+
+
+Destroy a \hyperlink{class_daq_board}{Daq\-Board} object. 
+
+This closes the \char`\"{}file\char`\"{} used for communicating with the D\-A\-Q board. 
+
+Definition at line 37 of file Daq\-Board.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_daq_board_aec9c7ccf9fc6ac59018f31a218ac1144}{\index{Daq\-Board@{Daq\-Board}!Clear\-A\-I\-Channel\-List@{Clear\-A\-I\-Channel\-List}}
+\index{Clear\-A\-I\-Channel\-List@{Clear\-A\-I\-Channel\-List}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Clear\-A\-I\-Channel\-List}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::\-Clear\-A\-I\-Channel\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_aec9c7ccf9fc6ac59018f31a218ac1144}
+
+
+Removes every channel from the channel list. 
+
+All of the channels in the analog input list are removed.
+
+\begin{DoxyReturn}{Returns}
+Always returns true 
+\end{DoxyReturn}
+
+
+Definition at line 616 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_acd72291e1f936f452c543c8171292314}{\index{Daq\-Board@{Daq\-Board}!Collect\-A\-I\-Data@{Collect\-A\-I\-Data}}
+\index{Collect\-A\-I\-Data@{Collect\-A\-I\-Data}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Collect\-A\-I\-Data}]{\setlength{\rightskip}{0pt plus 5cm}int Daq\-Board\-::\-Collect\-A\-I\-Data (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{\-\_\-num\-Samples}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_acd72291e1f936f452c543c8171292314}
+
+
+Dumps the A\-I data sitting in the D\-A\-Q's data F\-I\-F\-O into the A\-I channel objects. 
+
+This function reads data from the D\-A\-Q, and converts it to a floating point value which is the actual voltage. The values are then stored in the channel structures.\-The number of samples in the data F\-I\-F\-O could range from 0 to 4096, depending on how long the D\-A\-Q has been running (and at what frequency).
+
+/param \-\_\-num\-Samples the number of samples to read (this is per channel, so if you want 42 samples from 16 channels, this values should be 42)
+
+\begin{DoxyReturn}{Returns}
+the actual number of values read (this could be less than num\-Samples, depending on the amount of data in the fifo) If this value is equal to num\-Samples, it's possible that there is still data in the F\-I\-F\-O. 
+\end{DoxyReturn}
+
+
+Definition at line 699 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_ad3875492d646b11d129ac7547c00394b}{\index{Daq\-Board@{Daq\-Board}!Create\-A\-I\-Channel@{Create\-A\-I\-Channel}}
+\index{Create\-A\-I\-Channel@{Create\-A\-I\-Channel}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Create\-A\-I\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::\-Create\-A\-I\-Channel (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-chan\-Number, }
+\item[{{\bf Channel\-Type}}]{\-\_\-chan\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_ad3875492d646b11d129ac7547c00394b}
+
+
+Creates a new analog input (A\-I) channel, and adds it to the list of channels. 
+
+Adds the channel to the channel list stored in the object. A\-I Channels can be created in any order, however you can't create a channel more than once without first removing it. Channel numbers correspond directly to the numbers on the A\-I channels for the D\-A\-Q.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-chan\-Number} & The channel number \\
+\hline
+{\em \-\_\-chan\-Type} & The channel type (using the Channel\-Type enum)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the channel addition was sucessful
+\end{DoxyReturn}
+/note If using differential channels, the pairs are offset by 8. So differential channel 0 uses pins A\-I0 and A\-I8. 
+
+Definition at line 537 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_af9bb2d698a93184849119720ffcdc676}{\index{Daq\-Board@{Daq\-Board}!Flush\-A\-I\-Data@{Flush\-A\-I\-Data}}
+\index{Flush\-A\-I\-Data@{Flush\-A\-I\-Data}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Flush\-A\-I\-Data}]{\setlength{\rightskip}{0pt plus 5cm}int Daq\-Board\-::\-Flush\-A\-I\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_af9bb2d698a93184849119720ffcdc676}
+
+
+Flushes the D\-A\-Q boards F\-I\-F\-O. 
+
+This function flushes out all of the A\-I data currently in the D\-A\-Q's F\-I\-F\-O data buffer. This is useful if you want to make sure that the data being read is \char`\"{}fresh\char`\"{}.
+
+Note that calling this function could be expensive in terms of time (depending on the amount of data in the buffer).
+
+\begin{DoxyReturn}{Returns}
+the number of values read from the buffer 
+\end{DoxyReturn}
+
+
+Definition at line 784 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a2be76f9d253a16b011c662122b18d11e}{\index{Daq\-Board@{Daq\-Board}!flush\-Reward@{flush\-Reward}}
+\index{flush\-Reward@{flush\-Reward}!DaqBoard@{Daq\-Board}}
+\subsubsection[{flush\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::flush\-Reward (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-controller, }
+\item[{bool}]{\-\_\-flush}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a2be76f9d253a16b011c662122b18d11e}
+
+
+Used to turn on or off the reward controller for flushing. 
+
+This function turns is used to flush the reward tubes. The function opens or closes the reward controller, and leaves it in that state until told otherwise.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-controller} & Controllers are numbered starting at 1. \\
+\hline
+{\em \-\_\-flush} & Turns on (true) or off (false) flushing\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the action was successful. 
+\end{DoxyReturn}
+
+
+Definition at line 284 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a7ea5b8dc89ba6e904d85cb6e4ffffdb6}{\index{Daq\-Board@{Daq\-Board}!Get\-A\-I\-Channel@{Get\-A\-I\-Channel}}
+\index{Get\-A\-I\-Channel@{Get\-A\-I\-Channel}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Get\-A\-I\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Daq\-Board\-::\-A\-I\-Channel} $\ast$ Daq\-Board\-::\-Get\-A\-I\-Channel (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-chan\-Number}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a7ea5b8dc89ba6e904d85cb6e4ffffdb6}
+
+
+Provides access to the data dumped into the channel objects. 
+
+After calling Collect\-A\-I\-Data, the user still needs access to the data itself. This function reutrns a pointer to the A\-I Channel structure of a given channel number. The user can then read the data from the structure.
+
+\begin{DoxyReturn}{Returns}
+A pointer to an A\-I\-Channel structure. Or null, if the channel number isn't found. 
+\end{DoxyReturn}
+
+
+Definition at line 752 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_ae84119b95800ace4d9256935f9c4daed}{\index{Daq\-Board@{Daq\-Board}!get\-Reward\-Duration@{get\-Reward\-Duration}}
+\index{get\-Reward\-Duration@{get\-Reward\-Duration}!DaqBoard@{Daq\-Board}}
+\subsubsection[{get\-Reward\-Duration}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Daq\-Board\-::get\-Reward\-Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-controller}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_ae84119b95800ace4d9256935f9c4daed}
+
+
+Gets the reward duration in ms for the specified controller. 
+
+Gets the duration for the reward controllers. The durations are already set in the init\-Reward\-Controller function, so this function would only be used if you wanted to change the duration in the middle of a program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-controller} & Controllers are numbered starting at 1.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+currently set duration (or -\/1 for an invaldi controller). 
+\end{DoxyReturn}
+
+
+Definition at line 176 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a1f7ada581ac4a6e2aad030f5462c6c64}{\index{Daq\-Board@{Daq\-Board}!give\-Reward@{give\-Reward}}
+\index{give\-Reward@{give\-Reward}!DaqBoard@{Daq\-Board}}
+\subsubsection[{give\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::give\-Reward (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-controller}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a1f7ada581ac4a6e2aad030f5462c6c64}
+
+
+Turns on the reward controller for a fixed duration. 
+
+This function turns on the specified reward controller for the duration to which it has previously been set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-controller} & Controllers are numbered starting at 1.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the action was successful. 
+\end{DoxyReturn}
+
+
+Definition at line 200 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a610fcba8cb7374e9ae7af1aa7aef027d}{\index{Daq\-Board@{Daq\-Board}!init\-Event\-Lines@{init\-Event\-Lines}}
+\index{init\-Event\-Lines@{init\-Event\-Lines}!DaqBoard@{Daq\-Board}}
+\subsubsection[{init\-Event\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::init\-Event\-Lines (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a610fcba8cb7374e9ae7af1aa7aef027d}
+
+
+Sets up the lines used for sending even codes. 
+
+This function must be called before attempting to send event codes to the neural recording devices. The function basically sets up P\-F\-I\mbox{[}0\-:7\mbox{]} as digital output.
+
+\begin{DoxyReturn}{Returns}
+true if sucessful 
+\end{DoxyReturn}
+
+
+Definition at line 342 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_acdde7e172d7395f9595db581409ca1cc}{\index{Daq\-Board@{Daq\-Board}!init\-Reward\-Controller@{init\-Reward\-Controller}}
+\index{init\-Reward\-Controller@{init\-Reward\-Controller}!DaqBoard@{Daq\-Board}}
+\subsubsection[{init\-Reward\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::init\-Reward\-Controller (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-num\-Controllers, }
+\item[{unsigned int}]{\-\_\-reward\-Durations\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_acdde7e172d7395f9595db581409ca1cc}
+
+
+Initializes the Reward controllers. 
+
+This function must be called before doing anything else with the reward controllers. It returns true if the controllers were successfully initialized, otherwise it returns false.
+
+The reward controllers M\-U\-S\-T be connected to the D\-I\-O pins on the D\-A\-Q for this to work. If at some point we decide to connect the reward controllers to the P\-F\-I pins, this function will have to be rewritten.
+
+P\-I\-N C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S\-: Reward controller D\-I\-O bit Pin on P\-C\-I-\/6221 1 0 52 2 1 17 3 2 49 4 3 47
+
+\begin{DoxyNote}{Note}
+The Crouzet P\-B-\/4 Digital I/\-O board uses active low logic.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-num\-Controllers} & The number of reward controllers to initialize \\
+\hline
+{\em \-\_\-reward\-Durations} & an array containging the durations in ms for each controller. The array must have the same number of elements as the number of controllers being initialized. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a65249d3a2df5058a07e951a3a37008af}{\index{Daq\-Board@{Daq\-Board}!Remove\-A\-I\-Channel@{Remove\-A\-I\-Channel}}
+\index{Remove\-A\-I\-Channel@{Remove\-A\-I\-Channel}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Remove\-A\-I\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::\-Remove\-A\-I\-Channel (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-chan\-Number}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a65249d3a2df5058a07e951a3a37008af}
+
+
+Removes an analog input channel. 
+
+This function removes the analog input channel with the passed in channel number from the channel list. If the channel isn't currently in the list, the function makes no changes to the list, and returns false
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-chan\-Number} & The channel number to remove\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the channel addition was sucessful 
+\end{DoxyReturn}
+
+
+Definition at line 583 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a1929a34620c0dc6444af1da9d8b2a1cc}{\index{Daq\-Board@{Daq\-Board}!send\-Event@{send\-Event}}
+\index{send\-Event@{send\-Event}!DaqBoard@{Daq\-Board}}
+\subsubsection[{send\-Event}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::send\-Event (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{\-\_\-event\-Code}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a1929a34620c0dc6444af1da9d8b2a1cc}
+
+
+Outputs a single 7-\/bit event code with a 1 bit strobe signal using the P\-F\-I outputs. 
+
+For sending events to a neural recording device (such as a T\-D\-T or Plexon), this function sets an event code on P\-F\-I\mbox{[}0\-:6\mbox{]}, and then strobes P\-F\-I7 high for 250 us
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event\-Code} & Seven-\/bit event code (the M\-S\-B will be ignored)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if sucessful 
+\end{DoxyReturn}
+
+
+Definition at line 462 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_afaf10ff6931efd919289e1c6f48ef69d}{\index{Daq\-Board@{Daq\-Board}!set\-Reward\-Duration@{set\-Reward\-Duration}}
+\index{set\-Reward\-Duration@{set\-Reward\-Duration}!DaqBoard@{Daq\-Board}}
+\subsubsection[{set\-Reward\-Duration}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::set\-Reward\-Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-controller, }
+\item[{unsigned int}]{\-\_\-duration}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_afaf10ff6931efd919289e1c6f48ef69d}
+
+
+Sets the reward duration in ms for the specified controller. 
+
+Sets the duration for the reward controllers. The durations are already set in the init\-Reward\-Controller function, so this function would only be used if you wanted to change the duration in the middle of a program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-controller} & Controllers are numbered starting at 1. \\
+\hline
+{\em \-\_\-duration} & The duration in ms\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the action was successful. 
+\end{DoxyReturn}
+
+
+Definition at line 141 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_a375d9d492b185f93a73330a93466f20d}{\index{Daq\-Board@{Daq\-Board}!Start\-A\-I@{Start\-A\-I}}
+\index{Start\-A\-I@{Start\-A\-I}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Start\-A\-I}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::\-Start\-A\-I (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{\-\_\-frequency, }
+\item[{bool}]{\-\_\-continuous, }
+\item[{unsigned int}]{\-\_\-number\-Of\-Samples = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_a375d9d492b185f93a73330a93466f20d}
+
+
+Starts the D\-A\-Q running in analog input mode. 
+
+This function starts the A\-I running at the passed in frequency (in Hz) The data is either collected continuously, or a specific number of samples are collected. If continuous is true, the number of samples is ignored.
+
+Samples are collected from all of the channels currently in the A\-I channel list A sample from each channel is collected at the passed in frequency. Samples are seperated by 20\-M\-Hz/3 (using 3 as the delay divisor)
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-frequency} & The frequency in Hz at which the D\-A\-Q will run \\
+\hline
+{\em \-\_\-continuous} & Run the D\-A\-Q iun continuous mode (true), or collect a finite number of samples (false) \\
+\hline
+{\em \-\_\-number\-Of\-Samples} & Number of samples to collect. If \-\_\-continuous is true, this parameter is ignored (and can be left out of the argument list)\\
+\hline
+\end{DoxyParams}
+E\-X\-A\-M\-P\-L\-E\-: Start\-A\-I(10000,false,5)
+
+This will start the D\-A\-Q running at 10k\-Hz. Every 0.\-1ms, the D\-A\-Q will collect data from all of the inputs in the A\-I channel list (seperated by 20\-M\-Hz/3). This will occur 5 times, and then the D\-A\-Q will stop running. The whole process will have taken 0.\-5 ms, and there will be 5 samples stored in each of the A\-I channels. 
+
+Definition at line 650 of file Daq\-Board.\-cpp.
+
+\hypertarget{class_daq_board_af4505522da49d132d3170493582c0890}{\index{Daq\-Board@{Daq\-Board}!Stop\-A\-I@{Stop\-A\-I}}
+\index{Stop\-A\-I@{Stop\-A\-I}!DaqBoard@{Daq\-Board}}
+\subsubsection[{Stop\-A\-I}]{\setlength{\rightskip}{0pt plus 5cm}bool Daq\-Board\-::\-Stop\-A\-I (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_daq_board_af4505522da49d132d3170493582c0890}
+
+
+Stops the A\-I. 
+
+This stops the D\-A\-Q from collecting analog input data. The data collected remains in the F\-I\-F\-O, and can be recovered with Collect\-A\-I\-Data. Also note that calling this function when the A\-I is not currently running has no effect.
+
+\begin{DoxyReturn}{Returns}
+true if the D\-A\-Q was stopped 
+\end{DoxyReturn}
+
+
+Definition at line 839 of file Daq\-Board.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/dumb\-Engine/daqboard/Daq\-Board.\-h\item 
+source/embedded/dumb\-Engine/daqboard/Daq\-Board.\-cpp\item 
+source/embedded/dumb\-Engine/daqboard/Daq\-Board\-\_\-p.\-h\end{DoxyCompactItemize}

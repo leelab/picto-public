@@ -1,0 +1,198 @@
+\hypertarget{class_progress_widget}{\section{Progress\-Widget Class Reference}
+\label{class_progress_widget}\index{Progress\-Widget@{Progress\-Widget}}
+}
+
+
+A Widget that represents some kind of progress along with a slider that can be moved to request changes in the current progress position (like the youtube time bar).  
+
+
+
+
+{\ttfamily \#include $<$Progress\-Widget.\-h$>$}
+
+Inheritance diagram for Progress\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_progress_widget}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_progress_widget_a032ab06d4fe2ef40c91b562d1063e183}{void \hyperlink{class_progress_widget_a032ab06d4fe2ef40c91b562d1063e183}{user\-Action} (bool mouse\-Down)}\label{class_progress_widget_a032ab06d4fe2ef40c91b562d1063e183}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the user presses or releases the slider. mouse\-Down indicates if a press or release is happening. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_ae040b1c6fa7e8eae6c7b3732ac99c7d0}{void \hyperlink{class_progress_widget_ae040b1c6fa7e8eae6c7b3732ac99c7d0}{value\-Requested} (double progress)}\label{class_progress_widget_ae040b1c6fa7e8eae6c7b3732ac99c7d0}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the user uses the slider to request that the system using the slider move to a new \char`\"{}progress\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_progress_widget_a0804ac428f7930e4a5522c880a08ccd0}{{\bfseries Progress\-Widget} (Q\-Widget $\ast$parent=0)}\label{class_progress_widget_a0804ac428f7930e4a5522c880a08ccd0}
+
+\item 
+\hypertarget{class_progress_widget_a600227cff5964b15ee784f1d45548943}{void \hyperlink{class_progress_widget_a600227cff5964b15ee784f1d45548943}{set\-Maximum} (double max)}\label{class_progress_widget_a600227cff5964b15ee784f1d45548943}
+
+\begin{DoxyCompactList}\small\item\em Sets the maximum value of the progress bar. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a96a60e49437c05b25b0ba9abe9cba2d7}{double \hyperlink{class_progress_widget_a96a60e49437c05b25b0ba9abe9cba2d7}{get\-Maximum} ()}\label{class_progress_widget_a96a60e49437c05b25b0ba9abe9cba2d7}
+
+\begin{DoxyCompactList}\small\item\em Gets the maximum value of the progress bar. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a8fa688bee89ec88c26b93de431b39019}{double \hyperlink{class_progress_widget_a8fa688bee89ec88c26b93de431b39019}{get\-Highlight\-Min} (int index)}\label{class_progress_widget_a8fa688bee89ec88c26b93de431b39019}
+
+\begin{DoxyCompactList}\small\item\em Returns the minimum progress of the highlight bar at the input index. \end{DoxyCompactList}\item 
+void \hyperlink{class_progress_widget_a18f5e5044853a64027a3dd196dd1960f}{set\-Highlight\-Min} (int index, double progress, bool force\-Update=false)
+\begin{DoxyCompactList}\small\item\em Sets the minimum progress of the highlight bar at the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_ae046512475964ccd85064e3016c0964c}{double \hyperlink{class_progress_widget_ae046512475964ccd85064e3016c0964c}{get\-Highlight\-Max} (int index)}\label{class_progress_widget_ae046512475964ccd85064e3016c0964c}
+
+\begin{DoxyCompactList}\small\item\em Returns the maximum progress of the highlight bar at the input index. \end{DoxyCompactList}\item 
+void \hyperlink{class_progress_widget_ad3172072e782a4afa6937a556cca5b9e}{set\-Highlight\-Max} (int index, double progress, bool force\-Update=false)
+\begin{DoxyCompactList}\small\item\em Sets the maximum progress of the highlight bar at the input index. \end{DoxyCompactList}\item 
+void \hyperlink{class_progress_widget_ad46a886518f8b18a2ef9a434a1d74066}{set\-Highlight\-Range} (int index, double min\-Progress, double max\-Progress, bool force\-Update=false)
+\begin{DoxyCompactList}\small\item\em Sets the range of progresses that will be highlighted with the highlight bar at the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a5e75b0a5208e25f05602b5fc01123536}{Q\-Color \hyperlink{class_progress_widget_a5e75b0a5208e25f05602b5fc01123536}{get\-Highlight\-Color} (int index)}\label{class_progress_widget_a5e75b0a5208e25f05602b5fc01123536}
+
+\begin{DoxyCompactList}\small\item\em Returns the color of the highlight at the input index. \end{DoxyCompactList}\item 
+void \hyperlink{class_progress_widget_aea4461f0b45753da8eee91645813786a}{set\-Highlight\-Color} (int index, Q\-Color color, bool force\-Update=false)
+\begin{DoxyCompactList}\small\item\em Sets the color of the highlight at the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a7747c4a2d33a9e8180021bcc0fdfe5e0}{double \hyperlink{class_progress_widget_a7747c4a2d33a9e8180021bcc0fdfe5e0}{get\-Slider\-Progress} ()}\label{class_progress_widget_a7747c4a2d33a9e8180021bcc0fdfe5e0}
+
+\begin{DoxyCompactList}\small\item\em Returns the current progress value of the slider. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a3074b24b4cf39414d63b1232d204b851}{void \hyperlink{class_progress_widget_a3074b24b4cf39414d63b1232d204b851}{set\-Slider\-Progress} (double progress)}\label{class_progress_widget_a3074b24b4cf39414d63b1232d204b851}
+
+\begin{DoxyCompactList}\small\item\em Sets the current progress value of the slider. \end{DoxyCompactList}\item 
+\hypertarget{class_progress_widget_a2f86455dd880a393fcca48af01a4787e}{void \hyperlink{class_progress_widget_a2f86455dd880a393fcca48af01a4787e}{jump\-To\-End} ()}\label{class_progress_widget_a2f86455dd880a393fcca48af01a4787e}
+
+\begin{DoxyCompactList}\small\item\em Jumps the slider progress value to the end of the progress bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A Widget that represents some kind of progress along with a slider that can be moved to request changes in the current progress position (like the youtube time bar). 
+
+This widget includes a progress bar with a slider on it and an L\-C\-D display on the end. The units that are used to refer to the position of the slider bar are \char`\"{}progress\char`\"{} units. The bars max and min progresses can be set, and then the current progress can be set, causing the slider to move along the bar accordingly. The current slider progress is always displayed on the L\-C\-D display.
+
+This \hyperlink{class_progress_widget}{Progress\-Widget} also supports a highlighting system. Multiple highlight bars can be configured to appear along the progress bar at particular positions. It is useful to have these separate means of displaying a progress value along the same bar as the slider. The slider can represent a current selected time and highlights can represent the times that are loaded (again, like youtube). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Progress\-Widget.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_progress_widget_aea4461f0b45753da8eee91645813786a}{\index{Progress\-Widget@{Progress\-Widget}!set\-Highlight\-Color@{set\-Highlight\-Color}}
+\index{set\-Highlight\-Color@{set\-Highlight\-Color}!ProgressWidget@{Progress\-Widget}}
+\subsubsection[{set\-Highlight\-Color}]{\setlength{\rightskip}{0pt plus 5cm}void Progress\-Widget\-::set\-Highlight\-Color (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{Q\-Color}]{color, }
+\item[{bool}]{force\-Update = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_progress_widget_aea4461f0b45753da8eee91645813786a}
+
+
+Sets the color of the highlight at the input index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the highlight \\
+\hline
+{\em color} & The color that the highlight should take. \\
+\hline
+{\em force\-Update} & Since updating of highlights is a fairly slow process, we only update highlights once per R\-E\-F\-R\-E\-S\-H\-I\-N\-T\-E\-R\-V\-A\-L\-M\-S, not whenever this is called. To force updating immediately when this is called, set force\-Update to true. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 187 of file Progress\-Widget.\-cpp.
+
+\hypertarget{class_progress_widget_ad3172072e782a4afa6937a556cca5b9e}{\index{Progress\-Widget@{Progress\-Widget}!set\-Highlight\-Max@{set\-Highlight\-Max}}
+\index{set\-Highlight\-Max@{set\-Highlight\-Max}!ProgressWidget@{Progress\-Widget}}
+\subsubsection[{set\-Highlight\-Max}]{\setlength{\rightskip}{0pt plus 5cm}void Progress\-Widget\-::set\-Highlight\-Max (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{double}]{progress, }
+\item[{bool}]{force\-Update = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_progress_widget_ad3172072e782a4afa6937a556cca5b9e}
+
+
+Sets the maximum progress of the highlight bar at the input index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the highlight \\
+\hline
+{\em progress} & The maximum progress value \\
+\hline
+{\em force\-Update} & Since updating of highlights is a fairly slow process, we only update highlights once per R\-E\-F\-R\-E\-S\-H\-I\-N\-T\-E\-R\-V\-A\-L\-M\-S, not whenever this is called. To force updating immediately when this is called, set force\-Update to true. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 144 of file Progress\-Widget.\-cpp.
+
+\hypertarget{class_progress_widget_a18f5e5044853a64027a3dd196dd1960f}{\index{Progress\-Widget@{Progress\-Widget}!set\-Highlight\-Min@{set\-Highlight\-Min}}
+\index{set\-Highlight\-Min@{set\-Highlight\-Min}!ProgressWidget@{Progress\-Widget}}
+\subsubsection[{set\-Highlight\-Min}]{\setlength{\rightskip}{0pt plus 5cm}void Progress\-Widget\-::set\-Highlight\-Min (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{double}]{progress, }
+\item[{bool}]{force\-Update = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_progress_widget_a18f5e5044853a64027a3dd196dd1960f}
+
+
+Sets the minimum progress of the highlight bar at the input index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the highlight \\
+\hline
+{\em progress} & The minimum progress value \\
+\hline
+{\em force\-Update} & Since updating of highlights is a fairly slow process, we only update highlights once per R\-E\-F\-R\-E\-S\-H\-I\-N\-T\-E\-R\-V\-A\-L\-M\-S, not whenever this is called. To force updating immediately when this is called, set force\-Update to true. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 117 of file Progress\-Widget.\-cpp.
+
+\hypertarget{class_progress_widget_ad46a886518f8b18a2ef9a434a1d74066}{\index{Progress\-Widget@{Progress\-Widget}!set\-Highlight\-Range@{set\-Highlight\-Range}}
+\index{set\-Highlight\-Range@{set\-Highlight\-Range}!ProgressWidget@{Progress\-Widget}}
+\subsubsection[{set\-Highlight\-Range}]{\setlength{\rightskip}{0pt plus 5cm}void Progress\-Widget\-::set\-Highlight\-Range (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{double}]{min\-Progress, }
+\item[{double}]{max\-Progress, }
+\item[{bool}]{force\-Update = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_progress_widget_ad46a886518f8b18a2ef9a434a1d74066}
+
+
+Sets the range of progresses that will be highlighted with the highlight bar at the input index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the highlight \\
+\hline
+{\em min\-Progress} & The minimum progress value \\
+\hline
+{\em max\-Progress} & The maximum progress value \\
+\hline
+{\em force\-Update} & Since updating of highlights is a fairly slow process, we only update highlights once per R\-E\-F\-R\-E\-S\-H\-I\-N\-T\-E\-R\-V\-A\-L\-M\-S, not whenever this is called. To force updating immediately when this is called, set force\-Update to true. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 165 of file Progress\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/\-Replay\-Viewer/Progress\-Widget.\-h\item 
+source/workstation/\-Replay\-Viewer/Progress\-Widget.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,98 @@
+\hypertarget{class_picto_1_1_spike_reader}{\section{Picto\-:\-:Spike\-Reader Class Reference}
+\label{class_picto_1_1_spike_reader}\index{Picto\-::\-Spike\-Reader@{Picto\-::\-Spike\-Reader}}
+}
+
+
+An base class for classes that can provide Spike data over input time ranges.  
+
+
+
+
+{\ttfamily \#include $<$Playback\-Interfaces.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Spike\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_spike_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_spike_reader_a28de2c880bc36d64aebf1eb203c86fa2}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a28de2c880bc36d64aebf1eb203c86fa2}{get\-Channels} ()=0}\label{class_picto_1_1_spike_reader_a28de2c880bc36d64aebf1eb203c86fa2}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels on which spikes occured during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_afcfb6f4ae71e15799fb635a3a0422a27}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_afcfb6f4ae71e15799fb635a3a0422a27}{get\-Units} (int channel)=0}\label{class_picto_1_1_spike_reader_afcfb6f4ae71e15799fb635a3a0422a27}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the units on which spikes occured for the input channel during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_af7519da47a5774ae891835503cf5217c}{virtual double \hyperlink{class_picto_1_1_spike_reader_af7519da47a5774ae891835503cf5217c}{get\-Sample\-Period} ()=0}\label{class_picto_1_1_spike_reader_af7519da47a5774ae891835503cf5217c}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period in seconds used by the spike data acquisition system. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a1e1dc52fa0a5bf78a77b61f809ab84b4}{virtual double \hyperlink{class_picto_1_1_spike_reader_a1e1dc52fa0a5bf78a77b61f809ab84b4}{get\-Latest\-Time} ()=0}\label{class_picto_1_1_spike_reader_a1e1dc52fa0a5bf78a77b61f809ab84b4}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a4176810072b8bcb4138068c8269223e0}{virtual int \hyperlink{class_picto_1_1_spike_reader_a4176810072b8bcb4138068c8269223e0}{get\-Latest\-Channel} ()=0}\label{class_picto_1_1_spike_reader_a4176810072b8bcb4138068c8269223e0}
+
+\begin{DoxyCompactList}\small\item\em Returns the channel of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a1a15c9485e869bb0598fd48c108cdbb1}{virtual int \hyperlink{class_picto_1_1_spike_reader_a1a15c9485e869bb0598fd48c108cdbb1}{get\-Latest\-Unit} ()=0}\label{class_picto_1_1_spike_reader_a1a15c9485e869bb0598fd48c108cdbb1}
+
+\begin{DoxyCompactList}\small\item\em Returns the unit of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_ae800bc2be3ff6ff61aef6099641d2abf}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_ae800bc2be3ff6ff61aef6099641d2abf}{get\-Latest\-Waveform} ()=0}\label{class_picto_1_1_spike_reader_ae800bc2be3ff6ff61aef6099641d2abf}
+
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_af6eccc81e593d48535ba7e5281fcff0c}{virtual double \hyperlink{class_picto_1_1_spike_reader_af6eccc81e593d48535ba7e5281fcff0c}{get\-Next\-Time} ()=0}\label{class_picto_1_1_spike_reader_af6eccc81e593d48535ba7e5281fcff0c}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a983c9c5a2e96e3480afe66ab6d690339}{virtual int \hyperlink{class_picto_1_1_spike_reader_a983c9c5a2e96e3480afe66ab6d690339}{get\-Next\-Channel} ()=0}\label{class_picto_1_1_spike_reader_a983c9c5a2e96e3480afe66ab6d690339}
+
+\begin{DoxyCompactList}\small\item\em Returns the channel of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a36421ac4fae5933545628e5a753863b6}{virtual int \hyperlink{class_picto_1_1_spike_reader_a36421ac4fae5933545628e5a753863b6}{get\-Next\-Unit} ()=0}\label{class_picto_1_1_spike_reader_a36421ac4fae5933545628e5a753863b6}
+
+\begin{DoxyCompactList}\small\item\em Returns the unit of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_ac333e206d74c77f54d660928a1309914}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_ac333e206d74c77f54d660928a1309914}{get\-Next\-Waveform} ()=0}\label{class_picto_1_1_spike_reader_ac333e206d74c77f54d660928a1309914}
+
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}{get\-Times\-Since} (double time)=0}\label{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of times from this function and channels from \hyperlink{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}{get\-Channels\-Since()}, units from \hyperlink{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}{get\-Units\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}{get\-Times\-Until} (double time)=0}\label{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times when that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of times from this function and channels from \hyperlink{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}{get\-Channels\-Until()}, units from \hyperlink{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}{get\-Units\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}{get\-Channels\-Since} (double time)=0}\label{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of channels for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of channels from this function and times from \hyperlink{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}{get\-Times\-Since()}, units from \hyperlink{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}{get\-Units\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}{get\-Channels\-Until} (double time)=0}\label{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of channels for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of channels from this function and times from \hyperlink{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}{get\-Times\-Until()}, units from \hyperlink{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}{get\-Units\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}{get\-Units\-Since} (double time)=0}\label{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of units for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of units from this function and channels from \hyperlink{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}{get\-Channels\-Since()}, times from \hyperlink{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}{get\-Times\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}{get\-Units\-Until} (double time)=0}\label{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of units for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of units from this function and channels from \hyperlink{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}{get\-Channels\-Until()}, times from \hyperlink{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}{get\-Times\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}{get\-Waveforms\-Since} (double time)=0}\label{class_picto_1_1_spike_reader_a881564caff97cd2949847779de89b5ca}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of waveforms for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of waveforms from this function and channels from \hyperlink{class_picto_1_1_spike_reader_a24a5b0c59b6285c35932bb0f06ddb23c}{get\-Channels\-Since()}, units from \hyperlink{class_picto_1_1_spike_reader_ab09fef03ca5abab5b661fc0a2f4c5ed9}{get\-Units\-Since()} and times from \hyperlink{class_picto_1_1_spike_reader_a7c4b527d541cd2dd9f5b50aed54a000c}{get\-Times\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_reader_aac8a425010ec437cde9396ccb9b85ee7}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_reader_aac8a425010ec437cde9396ccb9b85ee7}{get\-Waveforms\-Until} (double time)=0}\label{class_picto_1_1_spike_reader_aac8a425010ec437cde9396ccb9b85ee7}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of waveforms for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of waveforms from this function and channels from \hyperlink{class_picto_1_1_spike_reader_aa0b0778b7298d76fa3f2d50911fabbd0}{get\-Channels\-Until()}, units from \hyperlink{class_picto_1_1_spike_reader_a0ac51134841226a5dc2172a5a899eea9}{get\-Units\-Until()} and times from \hyperlink{class_picto_1_1_spike_reader_a23634600fe4ee36cf5efe834f0c3823b}{get\-Times\-Until()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An base class for classes that can provide Spike data over input time ranges. 
+
+This class is used with the \hyperlink{class_picto_1_1_analysis}{Analysis} system so that Analyses can gather data over a range of times surrounding a current control state. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 237 of file Playback\-Interfaces.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/\hyperlink{_playback_interfaces_8h}{Playback\-Interfaces.\-h}\end{DoxyCompactItemize}

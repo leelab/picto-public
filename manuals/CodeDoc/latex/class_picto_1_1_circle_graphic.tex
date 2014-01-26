@@ -1,0 +1,169 @@
+\hypertarget{class_picto_1_1_circle_graphic}{\section{Picto\-:\-:Circle\-Graphic Class Reference}
+\label{class_picto_1_1_circle_graphic}\index{Picto\-::\-Circle\-Graphic@{Picto\-::\-Circle\-Graphic}}
+}
+
+
+Represents a circle graphic (ie. a rectangle).  
+
+
+
+
+{\ttfamily \#include $<$Circle\-Graphic.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Circle\-Graphic\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_circle_graphic}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_circle_graphic_a51b8520d228061ccaaf0b7c6c2e84bc1}{Circle\-Graphic} (Q\-Point position=Q\-Point(), int \hyperlink{class_picto_1_1_circle_graphic_a574ae580b977bfec39184f209f816cab}{radius}=0, Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color}=Q\-Color())
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_circle_graphic}{Circle\-Graphic} object at the input position and with the input radius and color. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a4520b34a4d921797e1bf7ab2706fc420}{void \hyperlink{class_picto_1_1_circle_graphic_a4520b34a4d921797e1bf7ab2706fc420}{draw} ()}\label{class_picto_1_1_circle_graphic_a4520b34a4d921797e1bf7ab2706fc420}
+
+\begin{DoxyCompactList}\small\item\em Draws the image represented by this \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} onto the image\-\_\- object based on its current \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a810bf16539f19b64ee16c0cc9b1aabb6}{Q\-Point \hyperlink{class_picto_1_1_circle_graphic_a810bf16539f19b64ee16c0cc9b1aabb6}{get\-Position\-Offset} ()}\label{class_picto_1_1_circle_graphic_a810bf16539f19b64ee16c0cc9b1aabb6}
+
+\begin{DoxyCompactList}\small\item\em This returns the offset from the top left corner of the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} image to the point in the image which should be used for positioning. For example, in a circle whose center should be positioned at the point entered into \hyperlink{struct_picto_1_1_visual_element_a454cc96862097e96a0b0f1d2c83e23ed}{set\-Position()}, this function would return Q\-Point(radius,radius). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a26a5a35821c92b51afbe15771ceef375}{int \hyperlink{class_picto_1_1_circle_graphic_a26a5a35821c92b51afbe15771ceef375}{get\-Radius} ()}\label{class_picto_1_1_circle_graphic_a26a5a35821c92b51afbe15771ceef375}
+
+\begin{DoxyCompactList}\small\item\em Returns the radius of the circle in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a5e635894bad7320ecb258da84e898f11}{void \hyperlink{class_picto_1_1_circle_graphic_a5e635894bad7320ecb258da84e898f11}{set\-Radius} (int \hyperlink{class_picto_1_1_circle_graphic_a574ae580b977bfec39184f209f816cab}{radius})}\label{class_picto_1_1_circle_graphic_a5e635894bad7320ecb258da84e898f11}
+
+\begin{DoxyCompactList}\small\item\em Sets the radius of the circle in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_ac90b9086e21289eb2a4066a70fe94078}{bool \hyperlink{class_picto_1_1_circle_graphic_ac90b9086e21289eb2a4066a70fe94078}{get\-Outline} ()}\label{class_picto_1_1_circle_graphic_ac90b9086e21289eb2a4066a70fe94078}
+
+\begin{DoxyCompactList}\small\item\em Returns whether this graphic is set to display only its outline. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a8e418a585260dd6dadb81ab6ef41ed6d}{void \hyperlink{class_picto_1_1_circle_graphic_a8e418a585260dd6dadb81ab6ef41ed6d}{set\-Outline} (bool \hyperlink{class_picto_1_1_circle_graphic_ac94afcac35d083f3894161b680eb4003}{outline})}\label{class_picto_1_1_circle_graphic_a8e418a585260dd6dadb81ab6ef41ed6d}
+
+\begin{DoxyCompactList}\small\item\em Sets whether this graphic should display only its outline. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_circle_graphic_afb3d4cb1c8d9709d9612793762178be6}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a8a04ac0e52a99a1492968ec67b17705f}{virtual Q\-String \hyperlink{class_picto_1_1_circle_graphic_a8a04ac0e52a99a1492968ec67b17705f}{get\-U\-I\-Template} ()}\label{class_picto_1_1_circle_graphic_a8a04ac0e52a99a1492968ec67b17705f}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_circle_graphic_a08f0625d8cac7b6e6aea72f0d9dd8442}{static \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} $\ast$ \hyperlink{class_picto_1_1_circle_graphic_a08f0625d8cac7b6e6aea72f0d9dd8442}{New\-Visual\-Element} ()}\label{class_picto_1_1_circle_graphic_a08f0625d8cac7b6e6aea72f0d9dd8442}
+
+\begin{DoxyCompactList}\small\item\em This is no longer used by parts of \hyperlink{namespace_picto}{Picto} that are being used. It sbould probably be deleted. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_af8ec9f14455d2f1ec01bc5d8d80f520f}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_circle_graphic_af8ec9f14455d2f1ec01bc5d8d80f520f}{Create} ()}\label{class_picto_1_1_circle_graphic_af8ec9f14455d2f1ec01bc5d8d80f520f}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_circle_graphic}{Circle\-Graphic} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_circle_graphic_a670342e0f64c5acb5ee4cdd5ed244aee}{static const Q\-String \hyperlink{class_picto_1_1_circle_graphic_a670342e0f64c5acb5ee4cdd5ed244aee}{type} = \char`\"{}Circle Graphic\char`\"{}}\label{class_picto_1_1_circle_graphic_a670342e0f64c5acb5ee4cdd5ed244aee}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_circle_graphic_a1e8bbb263c5da6cf68d4575f603c1fe6}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_a0954a798467ec7f98d66c400813ce1cb}{virtual bool \hyperlink{class_picto_1_1_circle_graphic_a0954a798467ec7f98d66c400813ce1cb}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_circle_graphic_a0954a798467ec7f98d66c400813ce1cb}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_circle_graphic_a574ae580b977bfec39184f209f816cab}{int \hyperlink{class_picto_1_1_circle_graphic_a574ae580b977bfec39184f209f816cab}{radius}}\label{class_picto_1_1_circle_graphic_a574ae580b977bfec39184f209f816cab}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the radius of the circle in pixels. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_circle_graphic_ac94afcac35d083f3894161b680eb4003}{bool \hyperlink{class_picto_1_1_circle_graphic_ac94afcac35d083f3894161b680eb4003}{outline}}\label{class_picto_1_1_circle_graphic_ac94afcac35d083f3894161b680eb4003}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets whether this graphic will display only its outline. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Represents a circle graphic (ie. a rectangle). 
+
+In addition to the Properties provided by the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} class, this class provides radius, outline and outline thickness Properties. The radius is in defined in pixels. The outline \hyperlink{class_picto_1_1_property}{Property} determines if only the outline of the graphic will be drawn. The outline thickness \hyperlink{class_picto_1_1_property}{Property} determines the thickness of the graphic outline if the outline \hyperlink{class_picto_1_1_property}{Property} is true. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Circle\-Graphic.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_circle_graphic_a51b8520d228061ccaaf0b7c6c2e84bc1}{\index{Picto\-::\-Circle\-Graphic@{Picto\-::\-Circle\-Graphic}!Circle\-Graphic@{Circle\-Graphic}}
+\index{Circle\-Graphic@{Circle\-Graphic}!Picto::CircleGraphic@{Picto\-::\-Circle\-Graphic}}
+\subsubsection[{Circle\-Graphic}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Circle\-Graphic\-::\-Circle\-Graphic (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{position = {\ttfamily QPoint()}, }
+\item[{int}]{radius = {\ttfamily 0}, }
+\item[{Q\-Color}]{color = {\ttfamily QColor()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_circle_graphic_a51b8520d228061ccaaf0b7c6c2e84bc1}
+
+
+Creates a new \hyperlink{class_picto_1_1_circle_graphic}{Circle\-Graphic} object at the input position and with the input radius and color. 
+
+Adds the following Properties\-:
+\begin{DoxyItemize}
+\item Outline\-: Stores whether only the graphics outline will be shown.
+\item Outline\-Thickness\-: Stores the thickness of the outline that will be shown if \char`\"{}\-Outline\char`\"{} is true.
+\item Radius\-: Stores the radius of the circle in Pixels. 
+\end{DoxyItemize}
+
+Definition at line 16 of file Circle\-Graphic.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_circle_graphic_afb3d4cb1c8d9709d9612793762178be6}{\index{Picto\-::\-Circle\-Graphic@{Picto\-::\-Circle\-Graphic}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::CircleGraphic@{Picto\-::\-Circle\-Graphic}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Circle\-Graphic\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_circle_graphic_afb3d4cb1c8d9709d9612793762178be6}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 44 of file Circle\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_circle_graphic_a1e8bbb263c5da6cf68d4575f603c1fe6}{\index{Picto\-::\-Circle\-Graphic@{Picto\-::\-Circle\-Graphic}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::CircleGraphic@{Picto\-::\-Circle\-Graphic}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Circle\-Graphic\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_circle_graphic_a1e8bbb263c5da6cf68d4575f603c1fe6}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 75 of file Circle\-Graphic.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Circle\-Graphic.\-h\item 
+source/common/stimuli/Circle\-Graphic.\-cpp\end{DoxyCompactItemize}

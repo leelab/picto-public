@@ -1,0 +1,99 @@
+\hypertarget{class_property_tool_group}{\section{Property\-Tool\-Group Class Reference}
+\label{class_property_tool_group}\index{Property\-Tool\-Group@{Property\-Tool\-Group}}
+}
+
+
+A very early class in \hyperlink{class_designer}{Designer} development that was going to allow generation of new properties.... until we realized that there should be a fixed number of properties for every element.  
+
+
+
+
+{\ttfamily \#include $<$Property\-Tool\-Group.\-h$>$}
+
+Inheritance diagram for Property\-Tool\-Group\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_property_tool_group}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_property_tool_group_a561c9e91f0b99c2c5f0a823f89c3821c}{{\bfseries Property\-Tool\-Group} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset=Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$(), Q\-Widget $\ast$parent=0)}\label{class_property_tool_group_a561c9e91f0b99c2c5f0a823f89c3821c}
+
+\item 
+\hypertarget{class_property_tool_group_afb7c938f11adb85dd9692a1d0311ed14}{void {\bfseries set\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_property_tool_group_afb7c938f11adb85dd9692a1d0311ed14}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_property_tool_group_ad83896033e32ef8f2aaf250301c0da55}{virtual void \hyperlink{class_property_tool_group_ad83896033e32ef8f2aaf250301c0da55}{do\-Button\-Action} (int button\-Id)}\label{class_property_tool_group_ad83896033e32ef8f2aaf250301c0da55}
+
+\begin{DoxyCompactList}\small\item\em Called when the a button is pressed so that the button can do whatever it's supposed to do. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_property_tool_group_adf0e69784e4bfd9b36a7078b9a6a09a5}{disable\-Button\-Actions} ()
+\begin{DoxyCompactList}\small\item\em Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous \hyperlink{class_property_tool_group_ad83896033e32ef8f2aaf250301c0da55}{do\-Button\-Action()} call. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_property_tool_group_aa74eb7b67163726ba2fd3c3d8ce6f2b4}{is\-Enabled} (int)
+\begin{DoxyCompactList}\small\item\em Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A very early class in \hyperlink{class_designer}{Designer} development that was going to allow generation of new properties.... until we realized that there should be a fixed number of properties for every element. 
+
+This class is no longer used. You may delete it if you want. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file Property\-Tool\-Group.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_property_tool_group_adf0e69784e4bfd9b36a7078b9a6a09a5}{\index{Property\-Tool\-Group@{Property\-Tool\-Group}!disable\-Button\-Actions@{disable\-Button\-Actions}}
+\index{disable\-Button\-Actions@{disable\-Button\-Actions}!PropertyToolGroup@{Property\-Tool\-Group}}
+\subsubsection[{disable\-Button\-Actions}]{\setlength{\rightskip}{0pt plus 5cm}void Property\-Tool\-Group\-::disable\-Button\-Actions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_property_tool_group_adf0e69784e4bfd9b36a7078b9a6a09a5}
+
+
+Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous \hyperlink{class_property_tool_group_ad83896033e32ef8f2aaf250301c0da55}{do\-Button\-Action()} call. 
+
+For example, as \hyperlink{class_asset_tool_group}{Asset\-Tool\-Group} might have set a new insertion item to be added to the design when the user clicks the canvas. When this function is called, it sets the insertion item back to N\-U\-L\-L. 
+
+Reimplemented from \hyperlink{class_tool_group_ab340659ee03a519aa249bda3592255a6}{Tool\-Group}.
+
+
+
+Definition at line 62 of file Property\-Tool\-Group.\-cpp.
+
+\hypertarget{class_property_tool_group_aa74eb7b67163726ba2fd3c3d8ce6f2b4}{\index{Property\-Tool\-Group@{Property\-Tool\-Group}!is\-Enabled@{is\-Enabled}}
+\index{is\-Enabled@{is\-Enabled}!PropertyToolGroup@{Property\-Tool\-Group}}
+\subsubsection[{is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Property\-Tool\-Group\-::is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{button\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_property_tool_group_aa74eb7b67163726ba2fd3c3d8ce6f2b4}
+
+
+Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. 
+
+For example, if the number of child assets of a certain type is limited in a particular window, this would return false for that asset's button once the limit is reached. 
+
+Implements \hyperlink{class_tool_group_adf3e25748f41ba5490aac857e375260d}{Tool\-Group}.
+
+
+
+Definition at line 24 of file Property\-Tool\-Group.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Property\-Tool\-Group.\-h\item 
+source/common/\-Designer/Property\-Tool\-Group.\-cpp\end{DoxyCompactItemize}

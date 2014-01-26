@@ -1,0 +1,56 @@
+\hypertarget{struct_picto_1_1_click_response_handler}{\section{Picto\-:\-:Click\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_click_response_handler}\index{Picto\-::\-Click\-Response\-Handler@{Picto\-::\-Click\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-C\-L\-I\-C\-K\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$Click\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Click\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_click_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_click_response_handler_a48acf028754463ff8be21e2e9274c106}{{\bfseries Click\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_click_response_handler_a48acf028754463ff8be21e2e9274c106}
+
+\item 
+\hypertarget{struct_picto_1_1_click_response_handler_a02bf3b36c6161ad9efec05b1468952cd}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_click_response_handler_a02bf3b36c6161ad9efec05b1468952cd}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_click_response_handler_aaaf361e4fb054b91ae35efc322fa65f2}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_click_response_handler_aaaf361e4fb054b91ae35efc322fa65f2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-C\-L\-I\-C\-K\char`\"{} method. 
+
+C\-L\-I\-C\-K responses indicate that the operator clicked inside their remote viewer window. They are sent with the location in the window where the click occure.
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Click\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Click\-Response\-Handler.\-h\item 
+source/common/protocol/Click\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

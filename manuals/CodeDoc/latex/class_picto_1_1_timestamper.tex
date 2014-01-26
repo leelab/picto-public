@@ -1,0 +1,78 @@
+\hypertarget{class_picto_1_1_timestamper}{\section{Picto\-:\-:Timestamper Class Reference}
+\label{class_picto_1_1_timestamper}\index{Picto\-::\-Timestamper@{Picto\-::\-Timestamper}}
+}
+
+
+An object that returns the current time.  
+
+
+
+
+{\ttfamily \#include $<$Timestamper.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_timestamper_a19af9547244d25d5c09ccb7f11955f17}{\hyperlink{class_picto_1_1_timestamper_a19af9547244d25d5c09ccb7f11955f17}{Timestamper} ()}\label{class_picto_1_1_timestamper_a19af9547244d25d5c09ccb7f11955f17}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_timestamper}{Timestamper} object and starts it. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_timestamper_adb578b7bcfc1c09761c32eed628ab735}{double \hyperlink{class_picto_1_1_timestamper_adb578b7bcfc1c09761c32eed628ab735}{stamp\-Sec} ()}\label{class_picto_1_1_timestamper_adb578b7bcfc1c09761c32eed628ab735}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time on the timestamper in units of seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_timestamper_a64b88eaa050cab52581043a779cf90f7}{double \hyperlink{class_picto_1_1_timestamper_a64b88eaa050cab52581043a779cf90f7}{stamp\-Ms} ()}\label{class_picto_1_1_timestamper_a64b88eaa050cab52581043a779cf90f7}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time on the timestamper in units of milliseconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_timestamper_aa5cd3b8e67c2f28daff1de9af2f059c3}{double \hyperlink{class_picto_1_1_timestamper_aa5cd3b8e67c2f28daff1de9af2f059c3}{stamp\-Us} ()}\label{class_picto_1_1_timestamper_aa5cd3b8e67c2f28daff1de9af2f059c3}
+
+\begin{DoxyCompactList}\small\item\em Returns the elapsed time on the timestamper in units of microseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_picto_1_1_timestamper_a46b6525e263f880e17aa8efda9a9a575}{reset} ()
+\begin{DoxyCompactList}\small\item\em Reset the \hyperlink{class_picto_1_1_timestamper}{Timestamper}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An object that returns the current time. 
+
+Throughout \hyperlink{namespace_picto}{Picto} there is a need to know the current time in precise units This \hyperlink{class_picto_1_1_timestamper}{Timestamper} object is a way to get the exact current time. Since precise timing is not provided by Qt, the code in this object is grossly platform dependent (ie. Precise in Windows, as precise as Qt is in every other O\-S).
+
+To reduce the number of significant figures in each timestamp, we measure the elapsed time since the first time a \hyperlink{class_picto_1_1_timestamper}{Timestamper} object is created.
+
+\begin{DoxyNote}{Note}
+This class is pretty much the same as the Stop\-Watch with one exception. All \hyperlink{class_picto_1_1_timestamper}{Timestamper} objects have the same start time, whereas Stop\-Watch objects all have their own object dependent start time.
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 33 of file Timestamper.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_timestamper_a46b6525e263f880e17aa8efda9a9a575}{\index{Picto\-::\-Timestamper@{Picto\-::\-Timestamper}!reset@{reset}}
+\index{reset@{reset}!Picto::Timestamper@{Picto\-::\-Timestamper}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Timestamper\-::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_timestamper_a46b6525e263f880e17aa8efda9a9a575}
+
+
+Reset the \hyperlink{class_picto_1_1_timestamper}{Timestamper}. 
+
+Internally all this is doing is recording a start\-Time that will be subtracted from the current time when an elapsed time value is requested. 
+
+Definition at line 81 of file Timestamper.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/timing/Timestamper.\-h\item 
+source/common/timing/Timestamper.\-cpp\end{DoxyCompactItemize}

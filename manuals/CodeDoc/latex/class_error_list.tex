@@ -1,0 +1,100 @@
+\hypertarget{class_error_list}{\section{Error\-List Class Reference}
+\label{class_error_list}\index{Error\-List@{Error\-List}}
+}
+
+
+A simple list for holding error messages and their types.  
+
+
+
+
+{\ttfamily \#include $<$error\-List.\-h$>$}
+
+Inheritance diagram for Error\-List\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_error_list}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}{void \hyperlink{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}{clear} ()}\label{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}
+
+\begin{DoxyCompactList}\small\item\em Clears all errors from this list. \end{DoxyCompactList}\item 
+void \hyperlink{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}{add\-Error} (Q\-String error\-Type, Q\-String error\-Text)
+\begin{DoxyCompactList}\small\item\em Adds a new error to this Error list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_error_list_a80b17c6a474bb52a54fe272f3734dcd2}{{\bfseries Error\-List} (Q\-Widget $\ast$parent=0)}\label{class_error_list_a80b17c6a474bb52a54fe272f3734dcd2}
+
+\item 
+Q\-String\-List \hyperlink{class_error_list_aa6bf2297c742d616cd0f45018d0b41b4}{get\-All\-Errors} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of all errors that were added using \hyperlink{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}{add\-Error()} since the last time that \hyperlink{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}{clear()} was called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple list for holding error messages and their types. 
+
+This is a very simple object. Errors are added to the list with \hyperlink{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}{add\-Error()}, they are accessed with \hyperlink{class_error_list_aa6bf2297c742d616cd0f45018d0b41b4}{get\-All\-Errors()} and the list is cleared with \hyperlink{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}{clear()}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file error\-List.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}{\index{Error\-List@{Error\-List}!add\-Error@{add\-Error}}
+\index{add\-Error@{add\-Error}!ErrorList@{Error\-List}}
+\subsubsection[{add\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void Error\-List\-::add\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{error\-Type, }
+\item[{Q\-String}]{error\-Text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}
+
+
+Adds a new error to this Error list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\-Type} & A string describing the type of error that occured. \\
+\hline
+{\em error\-Text} & A string describing what exactly the error was.\\
+\hline
+\end{DoxyParams}
+The error\-Type and error\-Text will be formatted into a single line when returned from \hyperlink{class_error_list_aa6bf2297c742d616cd0f45018d0b41b4}{get\-All\-Errors()}. 
+
+Definition at line 40 of file error\-List.\-cpp.
+
+\hypertarget{class_error_list_aa6bf2297c742d616cd0f45018d0b41b4}{\index{Error\-List@{Error\-List}!get\-All\-Errors@{get\-All\-Errors}}
+\index{get\-All\-Errors@{get\-All\-Errors}!ErrorList@{Error\-List}}
+\subsubsection[{get\-All\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List Error\-List\-::get\-All\-Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_error_list_aa6bf2297c742d616cd0f45018d0b41b4}
+
+
+Returns a list of all errors that were added using \hyperlink{class_error_list_a0d7142914d8cf6d4770af60ad9a5855f}{add\-Error()} since the last time that \hyperlink{class_error_list_a525741e6e6ae8c20af823e6b9ce8185c}{clear()} was called. 
+
+Returned errors are formated like the following\-: 
+\begin{DoxyCode}
+ErrorType: This is the error text.
+\end{DoxyCode}
+ 
+
+Definition at line 15 of file error\-List.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/error\-List.\-h\item 
+source/workstation/error\-List.\-cpp\end{DoxyCompactItemize}

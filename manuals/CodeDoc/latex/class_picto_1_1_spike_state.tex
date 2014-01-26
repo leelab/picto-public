@@ -1,0 +1,227 @@
+\hypertarget{class_picto_1_1_spike_state}{\section{Picto\-:\-:Spike\-State Class Reference}
+\label{class_picto_1_1_spike_state}\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract neural spike data and implement functions for traversing through that data.  
+
+
+
+
+{\ttfamily \#include $<$Spike\-State.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Spike\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_spike_state}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_spike_state_a87ccdb38e1f4d25fd7d74781da290e13}{spike\-Event} (double time, int channel, int unit, Q\-Vector$<$ float $>$ waveform)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} object is traversed due to a call to \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_spike_state_a16f1de1f8e0ab26e4d029e0f72ba512e}{virtual void \hyperlink{class_picto_1_1_spike_state_a16f1de1f8e0ab26e4d029e0f72ba512e}{set\-Database} (Q\-Sql\-Database session)}\label{class_picto_1_1_spike_state_a16f1de1f8e0ab26e4d029e0f72ba512e}
+
+\begin{DoxyCompactList}\small\item\em Sets the input Sql Database to this \hyperlink{class_picto_1_1_data_state}{Data\-State} so that it can load all of the data relevant to it into R\-A\-M for quick access. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_spike_state_a8ab8a7793a52c3aebbcd097ae1d060cb}{start\-Run} (double run\-Start\-Time, double run\-End\-Time=-\/1)
+\begin{DoxyCompactList}\small\item\em Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_spike_state_a8c6e172c8aee4903ebd8d61b7cf7a398}{get\-Current\-Index} ()
+\begin{DoxyCompactList}\small\item\em Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_spike_state_a66d02a68a15500d10a8dc6a1cd3916b8}{get\-Next\-Index} (double look\-Forward\-Time)
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index} (\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} index)
+\begin{DoxyCompactList}\small\item\em Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_affff57c009c9607eed048a6d523616c1}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_affff57c009c9607eed048a6d523616c1}{get\-Channels} ()}\label{class_picto_1_1_spike_state_affff57c009c9607eed048a6d523616c1}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels on which spikes occured during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a037d3499f4a787ba4310b491be67c9d5}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a037d3499f4a787ba4310b491be67c9d5}{get\-Units} (int channel)}\label{class_picto_1_1_spike_state_a037d3499f4a787ba4310b491be67c9d5}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the units on which spikes occured for the input channel during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a8ac376fc10eb006d6980eac7a3ea609f}{virtual double \hyperlink{class_picto_1_1_spike_state_a8ac376fc10eb006d6980eac7a3ea609f}{get\-Sample\-Period} ()}\label{class_picto_1_1_spike_state_a8ac376fc10eb006d6980eac7a3ea609f}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period in seconds used by the spike data acquisition system. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_ab03a1c4261081a4561e1b16df6fe897c}{virtual double \hyperlink{class_picto_1_1_spike_state_ab03a1c4261081a4561e1b16df6fe897c}{get\-Latest\-Time} ()}\label{class_picto_1_1_spike_state_ab03a1c4261081a4561e1b16df6fe897c}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_ac087316959c5043d45f599f389ddd41d}{virtual int \hyperlink{class_picto_1_1_spike_state_ac087316959c5043d45f599f389ddd41d}{get\-Latest\-Channel} ()}\label{class_picto_1_1_spike_state_ac087316959c5043d45f599f389ddd41d}
+
+\begin{DoxyCompactList}\small\item\em Returns the channel of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a9db1123ceb0c822830bd9dee8d99d95a}{virtual int \hyperlink{class_picto_1_1_spike_state_a9db1123ceb0c822830bd9dee8d99d95a}{get\-Latest\-Unit} ()}\label{class_picto_1_1_spike_state_a9db1123ceb0c822830bd9dee8d99d95a}
+
+\begin{DoxyCompactList}\small\item\em Returns the unit of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_af2bb21ef00f52743f47bed872450ae22}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_af2bb21ef00f52743f47bed872450ae22}{get\-Latest\-Waveform} ()}\label{class_picto_1_1_spike_state_af2bb21ef00f52743f47bed872450ae22}
+
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the latest spike to have been read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a211bd6ef7e7e33496f364a48610e34a9}{virtual double \hyperlink{class_picto_1_1_spike_state_a211bd6ef7e7e33496f364a48610e34a9}{get\-Next\-Time} ()}\label{class_picto_1_1_spike_state_a211bd6ef7e7e33496f364a48610e34a9}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_ad898342189c0a565518f98dc4a85172e}{virtual int \hyperlink{class_picto_1_1_spike_state_ad898342189c0a565518f98dc4a85172e}{get\-Next\-Channel} ()}\label{class_picto_1_1_spike_state_ad898342189c0a565518f98dc4a85172e}
+
+\begin{DoxyCompactList}\small\item\em Returns the channel of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_abd7a0c77e502e15229d741c39350394c}{virtual int \hyperlink{class_picto_1_1_spike_state_abd7a0c77e502e15229d741c39350394c}{get\-Next\-Unit} ()}\label{class_picto_1_1_spike_state_abd7a0c77e502e15229d741c39350394c}
+
+\begin{DoxyCompactList}\small\item\em Returns the unit of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a39873ce4b1f29c2642c7c9d5c03316cc}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a39873ce4b1f29c2642c7c9d5c03316cc}{get\-Next\-Waveform} ()}\label{class_picto_1_1_spike_state_a39873ce4b1f29c2642c7c9d5c03316cc}
+
+\begin{DoxyCompactList}\small\item\em Returns the waveform of the next spike to be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}{get\-Times\-Since} (double time)}\label{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of times from this function and channels from \hyperlink{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}{get\-Channels\-Since()}, units from \hyperlink{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}{get\-Units\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}{get\-Times\-Until} (double time)}\label{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of spike times when that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of times from this function and channels from \hyperlink{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}{get\-Channels\-Until()}, units from \hyperlink{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}{get\-Units\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}{get\-Channels\-Since} (double time)}\label{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of channels for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of channels from this function and times from \hyperlink{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}{get\-Times\-Since()}, units from \hyperlink{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}{get\-Units\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}{get\-Channels\-Until} (double time)}\label{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of channels for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of channels from this function and times from \hyperlink{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}{get\-Times\-Until()}, units from \hyperlink{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}{get\-Units\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}{get\-Units\-Since} (double time)}\label{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of units for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of units from this function and channels from \hyperlink{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}{get\-Channels\-Since()}, times from \hyperlink{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}{get\-Times\-Since()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}{get\-Units\-Until} (double time)}\label{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of units for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of units from this function and channels from \hyperlink{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}{get\-Channels\-Until()}, times from \hyperlink{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}{get\-Times\-Until()} and waveforms from \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}{get\-Waveforms\-Since} (double time)}\label{class_picto_1_1_spike_state_a17daf1a1128b58cc00fb0ea815fb9fe4}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of waveforms for spikes that occured with times $>$ the input time and $<$= the current time on all channels and units. There is a one to one matchup of waveforms from this function and channels from \hyperlink{class_picto_1_1_spike_state_a154d5d6c0a6c3b62115c4cfe9cebc024}{get\-Channels\-Since()}, units from \hyperlink{class_picto_1_1_spike_state_a8f1866573bf338a9c4cc388a38ad5ada}{get\-Units\-Since()} and times from \hyperlink{class_picto_1_1_spike_state_a3f5289c57f69cb73e38b55444b74853b}{get\-Times\-Since()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_spike_state_a4368c50ce8f6a06395b1ea41cae26b2b}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_spike_state_a4368c50ce8f6a06395b1ea41cae26b2b}{get\-Waveforms\-Until} (double time)}\label{class_picto_1_1_spike_state_a4368c50ce8f6a06395b1ea41cae26b2b}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of waveforms for spikes that occured with times $>$ the current time and $<$= the input time on the all channels and units. There is a one to one matchup of waveforms from this function and channels from \hyperlink{class_picto_1_1_spike_state_aaab7883be0f0a4f035a9b0c7eb567da1}{get\-Channels\-Until()}, units from \hyperlink{class_picto_1_1_spike_state_a73c82b648f2dc88b51c6b0de31b0a21a}{get\-Units\-Until()} and times from \hyperlink{class_picto_1_1_spike_state_ae132eb7cc369b9c174eac9dd38e00413}{get\-Times\-Until()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract neural spike data and implement functions for traversing through that data. 
+
+The class is fairly simple, a Q\-List of \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} objects is loaded from the session data. Each \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} represents a single neural spike and when \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index()} is called, we just traverse through the list until we reach a \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} with the appropriate time. Each time \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index()} causes us to pass through a \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} entry, the \hyperlink{class_picto_1_1_spike_state_a87ccdb38e1f4d25fd7d74781da290e13}{spike\-Event()} signal is called, which tells the rest of the playback system that a neural spike occured.
+
+\begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} and \hyperlink{class_picto_1_1_data_state}{Data\-State} classes for data read in from a Session Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding function level documentation for this class. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Spike\-State.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_spike_state_a8c6e172c8aee4903ebd8d61b7cf7a398}{\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}!get\-Current\-Index@{get\-Current\-Index}}
+\index{get\-Current\-Index@{get\-Current\-Index}!Picto::SpikeState@{Picto\-::\-Spike\-State}}
+\subsubsection[{get\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Spike\-State\-::get\-Current\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_spike_state_a8c6e172c8aee4903ebd8d61b7cf7a398}
+
+
+Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+Data\-States, like File objects, have what we can think at as a read pointer. They always have a current position from which we can move. This is for the sake of efficiency and to be sure that every time we move from one state in a \hyperlink{namespace_picto}{Picto} session to another we are not skipping any experimental events in the middle. The value returned from this function is the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} describing the time/order of the value that the \char`\"{}read pointer\char`\"{} is currently pointing at. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}, \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_aeb01a1209858dc99ce86d153aeda152a}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 115 of file Spike\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_spike_state_a66d02a68a15500d10a8dc6a1cd3916b8}{\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}!get\-Next\-Index@{get\-Next\-Index}}
+\index{get\-Next\-Index@{get\-Next\-Index}!Picto::SpikeState@{Picto\-::\-Spike\-State}}
+\subsubsection[{get\-Next\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Spike\-State\-::get\-Next\-Index (
+\begin{DoxyParamCaption}
+\item[{double}]{look\-Forward\-Time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_spike_state_a66d02a68a15500d10a8dc6a1cd3916b8}
+
+
+Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em look\-Forward\-Time} & The timespan to search forward from the current read position for the next value. Using an input value less than zero is equivalent to inputing a value of infinity. The function will look forward as far as it takes until a new value is available (which may cause some significant delay). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When we designed this interface, the idea was that we could use it for live playback and if there was no \char`\"{}next index\char`\"{} available, the system would just wait for one to come in thereby creating an unfortunate but necessary lag in playback. In practice, we are not using Data\-States for live playback, since we don't support \hyperlink{class_picto_1_1_analysis}{Analysis} during live playback. This may be something to think about when we want to start supporting that though. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_a959c083fdf897e2f8d75be596d9db8e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 123 of file Spike\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}!move\-To\-Index@{move\-To\-Index}}
+\index{move\-To\-Index@{move\-To\-Index}!Picto::SpikeState@{Picto\-::\-Spike\-State}}
+\subsubsection[{move\-To\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void Spike\-State\-::move\-To\-Index (
+\begin{DoxyParamCaption}
+\item[{{\bf Playback\-Index}}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}
+
+
+Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. 
+
+It is important that the \hyperlink{class_picto_1_1_data_state}{Data\-State} move step by step up to the input index because all of the changes in its value need to be emitted over signals and sent out to the greater playback system as we move to the new value. If we were to jump over any values and skip them, Analyses that are basing themselves on changes in values underlying this \hyperlink{class_picto_1_1_data_state}{Data\-State} might no longer be valid.
+
+Imagine, for example, if this \hyperlink{class_picto_1_1_data_state}{Data\-State} were tracking transitions. If we skipped over any transitions on the way to the input index, \hyperlink{class_picto_1_1_analysis}{Analysis} scripts that are called when those transitions are traversed would be skipped and the \hyperlink{class_picto_1_1_analysis}{Analysis} would be totally invalid. 
+
+Implements \hyperlink{class_picto_1_1_data_state_af18625b354552d5123f46bde3ded65e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 131 of file Spike\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_spike_state_a87ccdb38e1f4d25fd7d74781da290e13}{\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}!spike\-Event@{spike\-Event}}
+\index{spike\-Event@{spike\-Event}!Picto::SpikeState@{Picto\-::\-Spike\-State}}
+\subsubsection[{spike\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Spike\-State\-::spike\-Event (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{int}]{channel, }
+\item[{int}]{unit, }
+\item[{Q\-Vector$<$ float $>$}]{waveform}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_spike_state_a87ccdb38e1f4d25fd7d74781da290e13}
+
+
+Emitted whenever a \hyperlink{struct_picto_1_1_playback_spike_data}{Playback\-Spike\-Data} object is traversed due to a call to \hyperlink{class_picto_1_1_spike_state_adff36be6aba208cd131b253926a18853}{move\-To\-Index()}. 
+
+time is the time at which the spike occured, channel is the electrode channel on which it occured, unit is the neuron unit within that channel that spiked, and waveform is a vector of floats describing the spike waveform, where the time between each float is \hyperlink{class_picto_1_1_spike_state_a8ac376fc10eb006d6980eac7a3ea609f}{get\-Sample\-Period()}. \hypertarget{class_picto_1_1_spike_state_a8ab8a7793a52c3aebbcd097ae1d060cb}{\index{Picto\-::\-Spike\-State@{Picto\-::\-Spike\-State}!start\-Run@{start\-Run}}
+\index{start\-Run@{start\-Run}!Picto::SpikeState@{Picto\-::\-Spike\-State}}
+\subsubsection[{start\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void Spike\-State\-::start\-Run (
+\begin{DoxyParamCaption}
+\item[{double}]{run\-Start\-Time, }
+\item[{double}]{run\-End\-Time = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_spike_state_a8ab8a7793a52c3aebbcd097ae1d060cb}
+
+
+Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. 
+
+This is important because \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} values returned from \hyperlink{class_picto_1_1_data_state}{Data\-State} objects are always with respect to the beginning of the run. In otherwords, if a \hyperlink{class_picto_1_1_data_state}{Data\-State} returns a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of something that happened at the same time that the Run\-Started, its \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{Playback\-Index.\-time()} will be zero, even if the run happened at time 213.\-315. 
+
+Implements \hyperlink{class_picto_1_1_data_state_a8338a5e0c034ccd190e2916e4d60a6e8}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 100 of file Spike\-State.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Spike\-State.\-h\item 
+source/common/playback/Spike\-State.\-cpp\end{DoxyCompactItemize}

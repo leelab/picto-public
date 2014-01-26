@@ -1,0 +1,183 @@
+\hypertarget{class_phidgets}{\section{Phidgets Class Reference}
+\label{class_phidgets}\index{Phidgets@{Phidgets}}
+}
+
+
+Provides an interface to the \hyperlink{class_phidgets}{Phidgets} devices used by the Front\-Panel Application.  
+
+
+
+
+{\ttfamily \#include $<$phidgets.\-h$>$}
+
+Inheritance diagram for Phidgets\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_phidgets}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_phidgets_a671c347d2ee668a37ac15dbb5f592d00}{update\-L\-C\-D} (int line, Q\-String text)
+\begin{DoxyCompactList}\small\item\em Sets the input text to the input line of the L\-C\-D display. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_af591ba9e328736f3ed6612bdffb31a4d}{void \hyperlink{class_phidgets_af591ba9e328736f3ed6612bdffb31a4d}{toggle\-Backlight} ()}\label{class_phidgets_af591ba9e328736f3ed6612bdffb31a4d}
+
+\begin{DoxyCompactList}\small\item\em Toggles the on/off state of the L\-C\-D backlight. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_ad1015686646d691086d80865c22882ae}{void \hyperlink{class_phidgets_ad1015686646d691086d80865c22882ae}{turn\-On\-Backlight} ()}\label{class_phidgets_ad1015686646d691086d80865c22882ae}
+
+\begin{DoxyCompactList}\small\item\em Turns the L\-C\-D backlight on. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_af68c34e86d32785a243afcb7f516ebf0}{void \hyperlink{class_phidgets_af68c34e86d32785a243afcb7f516ebf0}{turn\-Off\-Backlight} ()}\label{class_phidgets_af68c34e86d32785a243afcb7f516ebf0}
+
+\begin{DoxyCompactList}\small\item\em Turns the L\-C\-D backlight off. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_phidgets_ae7d52dbe0d79927159f570746d99f279}{void \hyperlink{class_phidgets_ae7d52dbe0d79927159f570746d99f279}{user\-Input\-Signal} (int type)}\label{class_phidgets_ae7d52dbe0d79927159f570746d99f279}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever an event of type \hyperlink{namespace_panel_info_aeeb3b627166cd15c3898f93a1a499c65}{Panel\-Info\-::\-Input\-Type} occurs on the phidgets interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_phidgets_a0cb121d024743a04cc13b62ee256b9ce}{Phidgets} (\hyperlink{class_front_panel_info}{Front\-Panel\-Info} $\ast$panel\-Info)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_phidgets}{Phidgets} object, initializes its data values and sets up its interaction with the \hyperlink{class_phidgets}{Phidgets} A\-P\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_a63632587e91cd54861763eccee1d154c}{virtual \hyperlink{class_phidgets_a63632587e91cd54861763eccee1d154c}{$\sim$\-Phidgets} ()}\label{class_phidgets_a63632587e91cd54861763eccee1d154c}
+
+\begin{DoxyCompactList}\small\item\em Deinitializes the \hyperlink{class_phidgets}{Phidgets} object by clearing the L\-C\-D display and closing the \hyperlink{class_phidgets}{Phidgets} A\-P\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_a53cfa8a8488c9ca56aa10cb1049400ce}{void \hyperlink{class_phidgets_a53cfa8a8488c9ca56aa10cb1049400ce}{button\-Clicked} ()}\label{class_phidgets_a53cfa8a8488c9ca56aa10cb1049400ce}
+
+\begin{DoxyCompactList}\small\item\em Called by the phidgets A\-P\-I whenever the knob is pressed and emits the button\-Push user\-Input\-Signal. \end{DoxyCompactList}\item 
+void \hyperlink{class_phidgets_a224bc2b322e60fce68f515ee5504e2cd}{dial\-Turned\-Left} (bool fast)
+\begin{DoxyCompactList}\small\item\em Called by the phidgets A\-P\-I whenever the knob is turned left and emits the Panel\-Info\-::rotate\-Left or Panel\-Info\-::rotate\-Left\-Fast user\-Input\-Signals. \end{DoxyCompactList}\item 
+void \hyperlink{class_phidgets_a2f3335dae70f28d466f26c321be3cd04}{dial\-Turned\-Right} (bool fast)
+\begin{DoxyCompactList}\small\item\em Called by the phidgets A\-P\-I whenever the knob is turned right and emits the Panel\-Info\-::rotate\-Right or Panel\-Info\-::rotate\-Right\-Fast user\-Input\-Signals. \end{DoxyCompactList}\item 
+\hypertarget{class_phidgets_aa8fd54a481d892ad93379b42505b2943}{void \hyperlink{class_phidgets_aa8fd54a481d892ad93379b42505b2943}{external\-Button\-Click} (int index)}\label{class_phidgets_aa8fd54a481d892ad93379b42505b2943}
+
+\begin{DoxyCompactList}\small\item\em Called by the phidgets A\-P\-I whenever the reward or flush buttons are pressed and emits the Panel\-Info\-::reward\-Button or Panel\-Info\-::flush\-Button user\-Input\-Signals accordingly  In the Picto\-Box, the reward button is connected to digital input 0 of the L\-C\-D display. The flush button is connected to digital input 7. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_phidgets_af8d44bc3997410a4684134cfa4b7f96d}{\hyperlink{class_front_panel_info}{Front\-Panel\-Info} $\ast$ {\bfseries panel\-Info}}\label{class_phidgets_af8d44bc3997410a4684134cfa4b7f96d}
+
+\item 
+\hypertarget{class_phidgets_a0384f8ff8d21e86205b57c331109378c}{int {\bfseries text\-L\-C\-D\-Serial\-Number}}\label{class_phidgets_a0384f8ff8d21e86205b57c331109378c}
+
+\item 
+\hypertarget{class_phidgets_a1bbdcecfa457f37353ef961c6f899b33}{int {\bfseries encoder\-Serial\-Number}}\label{class_phidgets_a1bbdcecfa457f37353ef961c6f899b33}
+
+\item 
+\hypertarget{class_phidgets_ad992b047164dda94ced4513033bf3dd3}{Q\-String {\bfseries L\-C\-D\-Row1}}\label{class_phidgets_ad992b047164dda94ced4513033bf3dd3}
+
+\item 
+\hypertarget{class_phidgets_a1093ada8d8ae814ff08d42574e1391c0}{Q\-String {\bfseries L\-C\-D\-Row2}}\label{class_phidgets_a1093ada8d8ae814ff08d42574e1391c0}
+
+\item 
+\hypertarget{class_phidgets_ae09bd5feecd96927e72c64a8c9d57715}{C\-Phidget\-Text\-L\-C\-D\-Handle {\bfseries h\-Text\-L\-C\-D}}\label{class_phidgets_ae09bd5feecd96927e72c64a8c9d57715}
+
+\item 
+\hypertarget{class_phidgets_af4f7f24132d0866cb2ccbe0906104975}{C\-Phidget\-Interface\-Kit\-Handle {\bfseries h\-Int\-Kit}}\label{class_phidgets_af4f7f24132d0866cb2ccbe0906104975}
+
+\item 
+\hypertarget{class_phidgets_ab4c71371f4e0892b945ec69e1fd41f24}{C\-Phidget\-Encoder\-Handle {\bfseries h\-Encoder}}\label{class_phidgets_ab4c71371f4e0892b945ec69e1fd41f24}
+
+\item 
+\hypertarget{class_phidgets_a89b1e8e1748211fb67eb769c7c2589e3}{int {\bfseries last\-Rot}}\label{class_phidgets_a89b1e8e1748211fb67eb769c7c2589e3}
+
+\item 
+\hypertarget{class_phidgets_a5acb7a0e2d8b472761566581e2867b5e}{int {\bfseries cum\-Rot}}\label{class_phidgets_a5acb7a0e2d8b472761566581e2867b5e}
+
+\item 
+\hypertarget{class_phidgets_a07b269a048b73cc6a5ddf297f05c4837}{int {\bfseries cum\-Time}}\label{class_phidgets_a07b269a048b73cc6a5ddf297f05c4837}
+
+\item 
+\hypertarget{class_phidgets_ad4755b6633f47f534ad68b45aa5d8974}{int {\bfseries prev\-Click\-State}}\label{class_phidgets_ad4755b6633f47f534ad68b45aa5d8974}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provides an interface to the \hyperlink{class_phidgets}{Phidgets} devices used by the Front\-Panel Application. 
+
+The front panel deals with two different \hyperlink{class_phidgets}{Phidgets} devices\-: a 2-\/line L\-C\-D (1203) and a rotary encoder with push button (1052). This object handles all of the I/\-O for these devices. It does this by connecting to the \hyperlink{class_phidgets}{Phidgets} device A\-P\-I. This file includes a number of global callback functions that the \hyperlink{class_phidgets}{Phidgets} A\-P\-I calls whenever user input events occur. Internally, these functions call the \hyperlink{class_phidgets}{Phidgets} object which in turn sends messages to the Front\-Panel application. It should be noted that some threading issues had to be considered here since calls from the \hyperlink{class_phidgets}{Phidgets} A\-P\-I run in a seperate thread from the one used in the Front Panel application. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 40 of file phidgets.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_phidgets_a0cb121d024743a04cc13b62ee256b9ce}{\index{Phidgets@{Phidgets}!Phidgets@{Phidgets}}
+\index{Phidgets@{Phidgets}!Phidgets@{Phidgets}}
+\subsubsection[{Phidgets}]{\setlength{\rightskip}{0pt plus 5cm}Phidgets\-::\-Phidgets (
+\begin{DoxyParamCaption}
+\item[{{\bf Front\-Panel\-Info} $\ast$}]{panel\-Info}
+\end{DoxyParamCaption}
+)}}\label{class_phidgets_a0cb121d024743a04cc13b62ee256b9ce}
+
+
+Constructs a new \hyperlink{class_phidgets}{Phidgets} object, initializes its data values and sets up its interaction with the \hyperlink{class_phidgets}{Phidgets} A\-P\-I. 
+
+
+
+Definition at line 15 of file phidgets.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_phidgets_a224bc2b322e60fce68f515ee5504e2cd}{\index{Phidgets@{Phidgets}!dial\-Turned\-Left@{dial\-Turned\-Left}}
+\index{dial\-Turned\-Left@{dial\-Turned\-Left}!Phidgets@{Phidgets}}
+\subsubsection[{dial\-Turned\-Left}]{\setlength{\rightskip}{0pt plus 5cm}void Phidgets\-::dial\-Turned\-Left (
+\begin{DoxyParamCaption}
+\item[{bool}]{fast}
+\end{DoxyParamCaption}
+)}}\label{class_phidgets_a224bc2b322e60fce68f515ee5504e2cd}
+
+
+Called by the phidgets A\-P\-I whenever the knob is turned left and emits the Panel\-Info\-::rotate\-Left or Panel\-Info\-::rotate\-Left\-Fast user\-Input\-Signals. 
+
+This function is called from the phidgets thread. The qt system only actually triggers the emitted signals below once control returns to the qt thread. We want to avoid having multiple user\-Input\-Signals for turn events queued up so we set a turn\-Was\-Triggered bool before emitting the user\-Input\-Signal and unset it in a slot connected to that signal. Each time this function is called, we just check if the bool, and if it's true we don't emit a new turn signal. 
+
+Definition at line 194 of file phidgets.\-cpp.
+
+\hypertarget{class_phidgets_a2f3335dae70f28d466f26c321be3cd04}{\index{Phidgets@{Phidgets}!dial\-Turned\-Right@{dial\-Turned\-Right}}
+\index{dial\-Turned\-Right@{dial\-Turned\-Right}!Phidgets@{Phidgets}}
+\subsubsection[{dial\-Turned\-Right}]{\setlength{\rightskip}{0pt plus 5cm}void Phidgets\-::dial\-Turned\-Right (
+\begin{DoxyParamCaption}
+\item[{bool}]{fast}
+\end{DoxyParamCaption}
+)}}\label{class_phidgets_a2f3335dae70f28d466f26c321be3cd04}
+
+
+Called by the phidgets A\-P\-I whenever the knob is turned right and emits the Panel\-Info\-::rotate\-Right or Panel\-Info\-::rotate\-Right\-Fast user\-Input\-Signals. 
+
+See \hyperlink{class_phidgets_a224bc2b322e60fce68f515ee5504e2cd}{dial\-Turned\-Left()} for more detail 
+
+Definition at line 220 of file phidgets.\-cpp.
+
+\hypertarget{class_phidgets_a671c347d2ee668a37ac15dbb5f592d00}{\index{Phidgets@{Phidgets}!update\-L\-C\-D@{update\-L\-C\-D}}
+\index{update\-L\-C\-D@{update\-L\-C\-D}!Phidgets@{Phidgets}}
+\subsubsection[{update\-L\-C\-D}]{\setlength{\rightskip}{0pt plus 5cm}void Phidgets\-::update\-L\-C\-D (
+\begin{DoxyParamCaption}
+\item[{int}]{line, }
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_phidgets_a671c347d2ee668a37ac15dbb5f592d00}
+
+
+Sets the input text to the input line of the L\-C\-D display. 
+
+Line1 is the top line of the display, Line 2 is the bottom line 
+
+Definition at line 119 of file phidgets.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/phidgets.\-h\item 
+source/embedded/frontpanel/phidgets.\-cpp\end{DoxyCompactItemize}

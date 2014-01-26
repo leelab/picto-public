@@ -1,0 +1,67 @@
+\hypertarget{proxyserver_2main_8cpp}{\section{source/proxyserver/main.cpp File Reference}
+\label{proxyserver_2main_8cpp}\index{source/proxyserver/main.\-cpp@{source/proxyserver/main.\-cpp}}
+}
+
+
+A proxy application used to gather data from a Neural Data acquisition device (Plexon, T\-D\-T,etc) and send it to the Picto\-Server.  
+
+
+{\ttfamily \#include $<$Q\-Application$>$}\\*
+{\ttfamily \#include $<$Q\-Dialog$>$}\\*
+{\ttfamily \#include $<$Q\-Label$>$}\\*
+{\ttfamily \#include $<$Q\-Library$>$}\\*
+{\ttfamily \#include $<$Qt\-Widgets$>$}\\*
+{\ttfamily \#include $<$Q\-Locale$>$}\\*
+{\ttfamily \#include $<$Q\-Core\-Application$>$}\\*
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/globals.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/namedefs.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/archives/archives.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/update/updatedownloader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}network/proxyserver.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}protocol/\-Proxy\-Server\-Protocols.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}protocol/\-Proxy\-Server\-Acq\-Protocol.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Interactive\-S\-T\-D\-I\-O\-Handler.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}proxymainwindow.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Neural\-Data\-Acq\-Interface.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/mainmemleakdetect.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{proxyserver_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main method of the \hyperlink{namespace_picto}{Picto} Proxy application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A proxy application used to gather data from a Neural Data acquisition device (Plexon, T\-D\-T,etc) and send it to the Picto\-Server. \hyperlink{namespace_picto}{Picto} needs to be able to collect and align data produced by neural data acquisition devices. These include Plexon, T\-D\-T and many other devices. To collect this data, a proxy application is used. The proxy application runs on a machine that has access to the data (most devices have a dedicated P\-C that is used for spike sorting, so the proxy would run there). During an active session, the Proxy sends the latest gathered neural data to the Picto\-Server in real time.
+
+Since there are so many different neural acquisition devices, the proxy was written with a plugin architecture. Each plugin is tailored to a specific device or in one case a \char`\"{}\-Virtual\char`\"{} device. The plugin architecture was written with advice from the second edition of \char`\"{}\-C++ G\-U\-I
+ Programming with Qt\char`\"{} (Chapter 21). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{proxyserver_2main_8cpp_source}{main.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{proxyserver_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{\index{proxyserver/main.\-cpp@{proxyserver/main.\-cpp}!main@{main}}
+\index{main@{main}!proxyserver/main.cpp@{proxyserver/main.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{proxyserver_2main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
+
+
+The main method of the \hyperlink{namespace_picto}{Picto} Proxy application. 
+
+Goes through standard \hyperlink{namespace_picto}{Picto} application setup procedure, setting up the Q\-Application, the Q\-Translator, and calling \hyperlink{namespace_picto_ab626f6cf7953f6f0c2947f0f03b8e62e}{Picto\-::\-Initialize\-Lib()} and Picto\-::\-Iniitialize\-Ports(), then sets up the Auto\-Updater system with the commands that will be needed to restart this application and its top level window (so that it can correctly close the window during restart). Next a new \hyperlink{class_proxy_main_window}{Proxy\-Main\-Window} is displayed and the application is executed by calling Q\-Application\-::exec(), which only returns when the main window is closed. 
+
+Definition at line 54 of file main.\-cpp.
+

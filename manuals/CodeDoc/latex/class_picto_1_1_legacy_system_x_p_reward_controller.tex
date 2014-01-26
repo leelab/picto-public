@@ -1,0 +1,169 @@
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller}{\section{Picto\-:\-:Legacy\-System\-X\-P\-Reward\-Controller Class Reference}
+\label{class_picto_1_1_legacy_system_x_p_reward_controller}\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+}
+
+
+A reward controller for the Legacy\-System (ie. an old Orion computer being used as a \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director}).  
+
+
+
+
+{\ttfamily \#include $<$Legacy\-System\-X\-P\-Reward\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Legacy\-System\-X\-P\-Reward\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_legacy_system_x_p_reward_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_aa4bf911d9be6b952859875a501cebed6}{Legacy\-System\-X\-P\-Reward\-Controller} (unsigned int channel\-Count)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller}{Legacy\-System\-X\-P\-Reward\-Controller} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward} (unsigned int channel, int quantity)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{Reward\-Controller\-::start\-Reward()} to output a correctly timed reward signal on the output line. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}{reward\-Was\-Supplied} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{Reward\-Controller\-::reward\-Was\-Supplied()} to return true when the latest reward to have been started using \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward()} is complete. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a5a58e7d83861950be8be54e24d13b07e}{start\-Flush} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{Reward\-Controller\-::start\-Flush()} to raise the reward line voltage. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a00f99b4c7d166d2c51d4c1598cc0a0c1}{stop\-Flush} (unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{Reward\-Controller\-::stop\-Flush()} to lower the reward line voltage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A reward controller for the Legacy\-System (ie. an old Orion computer being used as a \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director}). 
+
+In order to support precise timing using a reward clock, we had to change things a little bit from the Orion system here. Whereas Orion is connected up such that the P\-C\-I-\/6503 board used for event delivery is also used for reward delivery, in \hyperlink{namespace_picto}{Picto}, in order to be able to use the clock timing we needed to use the other Orion card, the P\-C\-I-\/\-M\-I\-O-\/16\-X\-E-\/50. For this reason, when running \hyperlink{namespace_picto}{Picto} on a legacy Orion box we need to open up the breakout box and connect the reward controller B\-N\-C to the Ao0 port (pin 22).
+
+For more detail on the precise reward timing system, see \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward()}.
+
+\begin{DoxyNote}{Note}
+The Legacy System requires active high logic for reward delivery 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Legacy\-System\-X\-P\-Reward\-Controller.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller_aa4bf911d9be6b952859875a501cebed6}{\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}!Legacy\-System\-X\-P\-Reward\-Controller@{Legacy\-System\-X\-P\-Reward\-Controller}}
+\index{Legacy\-System\-X\-P\-Reward\-Controller@{Legacy\-System\-X\-P\-Reward\-Controller}!Picto::LegacySystemXPRewardController@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+\subsubsection[{Legacy\-System\-X\-P\-Reward\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller\-::\-Legacy\-System\-X\-P\-Reward\-Controller (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel\-Count}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_legacy_system_x_p_reward_controller_aa4bf911d9be6b952859875a501cebed6}
+
+
+Constructs a \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller}{Legacy\-System\-X\-P\-Reward\-Controller} object. 
+
+Initializes the reward voltage line to low. In the legacy system, high voltage opens the reward solenoid. 
+
+Definition at line 28 of file Legacy\-System\-X\-P\-Reward\-Controller.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}{\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}!reward\-Was\-Supplied@{reward\-Was\-Supplied}}
+\index{reward\-Was\-Supplied@{reward\-Was\-Supplied}!Picto::LegacySystemXPRewardController@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+\subsubsection[{reward\-Was\-Supplied}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller\-::reward\-Was\-Supplied (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{Reward\-Controller\-::reward\-Was\-Supplied()} to return true when the latest reward to have been started using \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward()} is complete. 
+
+In the case of the \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller}{Legacy\-System\-X\-P\-Reward\-Controller}, we piggyback onto this function and actually stop the reward task once the reward has been completely supplied. See \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward()} for more details. 
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 105 of file Legacy\-System\-X\-P\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller_a5a58e7d83861950be8be54e24d13b07e}{\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}!start\-Flush@{start\-Flush}}
+\index{start\-Flush@{start\-Flush}!Picto::LegacySystemXPRewardController@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+\subsubsection[{start\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller\-::start\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_reward_controller_a5a58e7d83861950be8be54e24d13b07e}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{Reward\-Controller\-::start\-Flush()} to raise the reward line voltage. 
+
+Unlike in \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{start\-Reward()} flushes are not stopped automatically. The \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a00f99b4c7d166d2c51d4c1598cc0a0c1}{stop\-Flush()} function is used to lower the reward line. 
+
+Implements \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 123 of file Legacy\-System\-X\-P\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}!start\-Reward@{start\-Reward}}
+\index{start\-Reward@{start\-Reward}!Picto::LegacySystemXPRewardController@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+\subsubsection[{start\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller\-::start\-Reward (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel, }
+\item[{int}]{quantity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{Reward\-Controller\-::start\-Reward()} to output a correctly timed reward signal on the output line. 
+
+As far as timing goes, the Ni\-Daq card only supports periodic timing signals. We have not found a way to define a simple high-\/low pulse. For this reason, we set up a clock pulse that ticks once for each \char`\"{}quantity\char`\"{} milliseconds. We then attach this clock to a task that sends the output signal high, low, high, low, switching once per clock pulse. The reward signal then goes high for exactly as long as we want and then low. Since the reward system is updated once per frame, we are assured that \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}{reward\-Was\-Supplied()} will be called once per frame. \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}{reward\-Was\-Supplied()} stops the task once the required reward quantity has been supplied, so the second high pulse never happens.
+
+\begin{DoxyNote}{Note}
+The downside to this is that we can't provide rewards of under 16ms, in practice, rewards this small are very non-\/linear and not a good idea anyway. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 76 of file Legacy\-System\-X\-P\-Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_legacy_system_x_p_reward_controller_a00f99b4c7d166d2c51d4c1598cc0a0c1}{\index{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}!stop\-Flush@{stop\-Flush}}
+\index{stop\-Flush@{stop\-Flush}!Picto::LegacySystemXPRewardController@{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}}
+\subsubsection[{stop\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller\-::stop\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_legacy_system_x_p_reward_controller_a00f99b4c7d166d2c51d4c1598cc0a0c1}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{Reward\-Controller\-::stop\-Flush()} to lower the reward line voltage. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a5a58e7d83861950be8be54e24d13b07e}{start\-Flush()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{Picto\-::\-Reward\-Controller}.
+
+
+
+Definition at line 144 of file Legacy\-System\-X\-P\-Reward\-Controller.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/iodevices/Legacy\-System\-X\-P\-Reward\-Controller.\-h\item 
+source/director/iodevices/Legacy\-System\-X\-P\-Reward\-Controller.\-cpp\end{DoxyCompactItemize}

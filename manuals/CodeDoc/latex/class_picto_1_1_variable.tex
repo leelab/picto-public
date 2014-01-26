@@ -1,0 +1,132 @@
+\hypertarget{class_picto_1_1_variable}{\section{Picto\-:\-:Variable Class Reference}
+\label{class_picto_1_1_variable}\index{Picto\-::\-Variable@{Picto\-::\-Variable}}
+}
+
+
+A base class for storing values that can be used in a state machine.  
+
+
+
+
+{\ttfamily \#include $<$Variable.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Variable\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.284153cm]{class_picto_1_1_variable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_variable_aae536e42c9e88e430da6b5cd298ea98a}{virtual Q\-String \hyperlink{class_picto_1_1_variable_aae536e42c9e88e430da6b5cd298ea98a}{get\-U\-I\-Template} ()}\label{class_picto_1_1_variable_aae536e42c9e88e430da6b5cd298ea98a}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_variable_abf83dc0e4cfbfe89c43720eca1c49664}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_variable_ab5e5110c067b892a49bbb0830865f32a}{virtual Q\-String \hyperlink{class_picto_1_1_variable_ab5e5110c067b892a49bbb0830865f32a}{get\-U\-I\-Group} ()}\label{class_picto_1_1_variable_ab5e5110c067b892a49bbb0830865f32a}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_variable_a7a29c48c2d30d39cfe6a6e8abf97261d}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_variable_a447e12ef138cdd99ae9ba870ed3b5174}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A base class for storing values that can be used in a state machine. 
+
+Since \hyperlink{namespace_picto}{Picto} requires users to build state machines to define their experiments, we need some sort of \char`\"{}variable\char`\"{} to hold data over defined scopes. Descendants of this class define those variables. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 23 of file Variable.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_variable_a7a29c48c2d30d39cfe6a6e8abf97261d}{\index{Picto\-::\-Variable@{Picto\-::\-Variable}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::Variable@{Picto\-::\-Variable}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Variable\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_variable_a7a29c48c2d30d39cfe6a6e8abf97261d}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_a45f74e86ce549cc38e07ac2697b3aa81}{Picto\-::\-Scriptable}.
+
+
+
+Definition at line 38 of file Variable.\-h.
+
+\hypertarget{class_picto_1_1_variable_abf83dc0e4cfbfe89c43720eca1c49664}{\index{Picto\-::\-Variable@{Picto\-::\-Variable}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::Variable@{Picto\-::\-Variable}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Variable\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_variable_abf83dc0e4cfbfe89c43720eca1c49664}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a19f94929e12069750b29b87c581024b6}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_variable_list_a49263e98e91504462b3cf717666da998}{Picto\-::\-Variable\-List}, \hyperlink{class_picto_1_1_variable_map_a56de651ffd82d88346309a4bfee6bd85}{Picto\-::\-Variable\-Map}, \hyperlink{class_picto_1_1_analysis_string_variable_a01b54b63739dd911cbb093aad4a53282}{Picto\-::\-Analysis\-String\-Variable}, \hyperlink{class_picto_1_1_number_variable_a5184a95861f786c2068e85b9eb190724}{Picto\-::\-Number\-Variable}, and \hyperlink{class_picto_1_1_string_variable_ae14fdea0cf5e80dd976985208dc64fcc}{Picto\-::\-String\-Variable}.
+
+
+
+Definition at line 34 of file Variable.\-h.
+
+\hypertarget{class_picto_1_1_variable_a447e12ef138cdd99ae9ba870ed3b5174}{\index{Picto\-::\-Variable@{Picto\-::\-Variable}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::Variable@{Picto\-::\-Variable}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Variable\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_variable_a447e12ef138cdd99ae9ba870ed3b5174}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_a5d36462b3e5c89f0d6ae8fe466c1b060}{Picto\-::\-Scriptable}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_variable_list_affb7de311b36cc25414b6386ac401467}{Picto\-::\-Variable\-List}, \hyperlink{class_picto_1_1_variable_map_a8f40e1a04708e7632fa51b25e4eb4850}{Picto\-::\-Variable\-Map}, \hyperlink{class_picto_1_1_analysis_string_variable_ad1d229ad548ade0f6cacc5be895a9d27}{Picto\-::\-Analysis\-String\-Variable}, \hyperlink{class_picto_1_1_number_variable_a6ab9b74741c023e43dab955a975cc6c4}{Picto\-::\-Number\-Variable}, and \hyperlink{class_picto_1_1_string_variable_a1a1628007dc860d2f092f9fbb03944f1}{Picto\-::\-String\-Variable}.
+
+
+
+Definition at line 10 of file Variable.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/variable/Variable.\-h\item 
+source/common/variable/Variable.\-cpp\end{DoxyCompactItemize}

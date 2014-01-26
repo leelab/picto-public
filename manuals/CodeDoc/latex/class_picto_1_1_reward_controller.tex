@@ -1,0 +1,212 @@
+\hypertarget{class_picto_1_1_reward_controller}{\section{Picto\-:\-:Reward\-Controller Class Reference}
+\label{class_picto_1_1_reward_controller}\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}}
+}
+
+
+This is the base class for classes that provide rewards to the subject of a \hyperlink{namespace_picto}{Picto} experiment.  
+
+
+
+
+{\ttfamily \#include $<$Reward\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Reward\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.111111cm]{class_picto_1_1_reward_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_reward_controller_a287522c7b84e646e85f5aa85dc49bb74}{add\-Reward} (unsigned int channel, int quantity, int min\-Reward\-Period)
+\begin{DoxyCompactList}\small\item\em Appends a reward to the list of startable rewards for the input channel and with the input quantity and min\-Reward\-Period (both in milliseconds). \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}{trigger\-Rewards} (bool append\-To\-List)
+\begin{DoxyCompactList}\small\item\em Triggers the next reward from \hyperlink{class_picto_1_1_reward_controller_a287522c7b84e646e85f5aa85dc49bb74}{add\-Reward()} if the previous one on its channel is done. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_adbcbd4e26643a6a789ebde84711ea336}{bool \hyperlink{class_picto_1_1_reward_controller_adbcbd4e26643a6a789ebde84711ea336}{reward\-In\-Progress} (unsigned int channel)}\label{class_picto_1_1_reward_controller_adbcbd4e26643a6a789ebde84711ea336}
+
+\begin{DoxyCompactList}\small\item\em Returns true if there is a reward in progress on the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_abf881b86a594bb618c2901e210d457e5}{bool \hyperlink{class_picto_1_1_reward_controller_abf881b86a594bb618c2901e210d457e5}{has\-Pending\-Rewards} ()}\label{class_picto_1_1_reward_controller_abf881b86a594bb618c2901e210d457e5}
+
+\begin{DoxyCompactList}\small\item\em returns true if there are rewards waiting to be supplied on any channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_a4380a9f16f4490377ae618096b61ffd1}{bool \hyperlink{class_picto_1_1_reward_controller_a4380a9f16f4490377ae618096b61ffd1}{has\-Pending\-Rewards} (unsigned int channel)}\label{class_picto_1_1_reward_controller_a4380a9f16f4490377ae618096b61ffd1}
+
+\begin{DoxyCompactList}\small\item\em returns true if there are rewards waiting to be supplied on the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_a82c6d50f2c4d7b924691090e7f8d4781}{void \hyperlink{class_picto_1_1_reward_controller_a82c6d50f2c4d7b924691090e7f8d4781}{flush} (unsigned int channel, int seconds)}\label{class_picto_1_1_reward_controller_a82c6d50f2c4d7b924691090e7f8d4781}
+
+\begin{DoxyCompactList}\small\item\em Flushes on the input channel for the input number of seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_ae54c91a54e1997254bdff6ecedab69bc}{bool \hyperlink{class_picto_1_1_reward_controller_ae54c91a54e1997254bdff6ecedab69bc}{is\-Flushing} (unsigned int channel)}\label{class_picto_1_1_reward_controller_ae54c91a54e1997254bdff6ecedab69bc}
+
+\begin{DoxyCompactList}\small\item\em Returns true if there is a flush in progress on the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_a5a2d6ef0210c0699afb60bbcc3422f80}{void \hyperlink{class_picto_1_1_reward_controller_a5a2d6ef0210c0699afb60bbcc3422f80}{abort\-Flush} (unsigned int channel)}\label{class_picto_1_1_reward_controller_a5a2d6ef0210c0699afb60bbcc3422f80}
+
+\begin{DoxyCompactList}\small\item\em Stops any active flush on the input channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_controller_a304c608453d6457840c8ef68d4772345}{{\bfseries Reward\-Controller} (unsigned int channel\-Count)}\label{class_picto_1_1_reward_controller_a304c608453d6457840c8ef68d4772345}
+
+\item 
+\hypertarget{class_picto_1_1_reward_controller_ae46b911316ae8383a92fd62d3e6e0a30}{bool \hyperlink{class_picto_1_1_reward_controller_ae46b911316ae8383a92fd62d3e6e0a30}{set\-Reward\-Volume} (unsigned int channel, float volume)}\label{class_picto_1_1_reward_controller_ae46b911316ae8383a92fd62d3e6e0a30}
+
+\begin{DoxyCompactList}\small\item\em This doesn't appear to be used or have any effect and should be removed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_a0ea32b937d64aeaf7928ee4b696d697b}{void \hyperlink{class_picto_1_1_reward_controller_a0ea32b937d64aeaf7928ee4b696d697b}{discard\-Overlaping\-Rewards} (bool do\-It)}\label{class_picto_1_1_reward_controller_a0ea32b937d64aeaf7928ee4b696d697b}
+
+\begin{DoxyCompactList}\small\item\em Set this to true if rewards that are queued up on a given channel, waiting for the one in progress to finish should just be erased. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_controller_a20eab2fa7e1441b4f54e94332589a3bd}{int {\bfseries get\-Channel\-Count} ()}\label{class_picto_1_1_reward_controller_a20eab2fa7e1441b4f54e94332589a3bd}
+
+\item 
+\hypertarget{class_picto_1_1_reward_controller_a1a56936f22612a215077b3ab494b27c5}{Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_reward_data_unit}{Reward\-Data\-Unit} $>$ $>$ \hyperlink{class_picto_1_1_reward_controller_a1a56936f22612a215077b3ab494b27c5}{get\-Delivered\-Rewards} ()}\label{class_picto_1_1_reward_controller_a1a56936f22612a215077b3ab494b27c5}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the latest rewards to have been supplied, clearing it in the process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{start\-Reward} (unsigned int channel, int quantity)=0
+\begin{DoxyCompactList}\small\item\em Starts a reward without blocking during reward supply. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{reward\-Was\-Supplied} (unsigned int channel)=0
+\begin{DoxyCompactList}\small\item\em Returns true if the latest reward is no longer being supplied on the input channel. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{start\-Flush} (unsigned int channel)=0
+\begin{DoxyCompactList}\small\item\em Starts a flush on the input channel. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{stop\-Flush} (unsigned int channel)=0
+\begin{DoxyCompactList}\small\item\em Stops a flush on the input channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_controller_a51ce15bed088bb162c6d87f79bd64a59}{int {\bfseries channel\-Count\-\_\-}}\label{class_picto_1_1_reward_controller_a51ce15bed088bb162c6d87f79bd64a59}
+
+\item 
+\hypertarget{class_picto_1_1_reward_controller_ad6f932bbc885d692776095ce1f907593}{Q\-List$<$ float $>$ {\bfseries reward\-Volumes\-\_\-}}\label{class_picto_1_1_reward_controller_ad6f932bbc885d692776095ce1f907593}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the base class for classes that provide rewards to the subject of a \hyperlink{namespace_picto}{Picto} experiment. 
+
+Since there are multiple different types reward controllers, this base class exists to allow the creation of reward controllers for different platforms (and different types of controllers)
+
+All reward controllers are assumed to have the following features\-:
+\begin{DoxyItemize}
+\item Access to one or more individual reward \char`\"{}channels\char`\"{} (numbered from 1 to N)
+\item The ability to give rewards seperately on each channel \hyperlink{class_picto_1_1_reward}{Reward} controllers may also have the ability to vary reward duration. If they do not have that ability, the reward duration resolution will be defined by the frequency of calls to \hyperlink{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}{trigger\-Rewards()}. Since \hyperlink{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}{trigger\-Rewards()} is currently called once per frame by the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine}, this means that reward controllers that don't have the ability to define their duration will have resolution of about 16ms.
+\end{DoxyItemize}
+
+Hardware specific reward controllers won't be located in the common/iodevices folder, but will rather be in the folders of the source that actually uses them (e.\-g. \hyperlink{class_director}{Director}).
+
+\begin{DoxyNote}{Note}
+reward controllers are numbered from 1 to n 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 44 of file Reward\-Controller.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_reward_controller_a287522c7b84e646e85f5aa85dc49bb74}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!add\-Reward@{add\-Reward}}
+\index{add\-Reward@{add\-Reward}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{add\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Reward\-Controller\-::add\-Reward (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel, }
+\item[{int}]{quantity, }
+\item[{int}]{min\-Reward\-Period}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_reward_controller_a287522c7b84e646e85f5aa85dc49bb74}
+
+
+Appends a reward to the list of startable rewards for the input channel and with the input quantity and min\-Reward\-Period (both in milliseconds). 
+
+min\-Reward\-Period is the minimum time between rewards. 
+
+Definition at line 37 of file Reward\-Controller.\-cpp.
+
+\hypertarget{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!reward\-Was\-Supplied@{reward\-Was\-Supplied}}
+\index{reward\-Was\-Supplied@{reward\-Was\-Supplied}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{reward\-Was\-Supplied}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-Reward\-Controller\-::reward\-Was\-Supplied (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}
+
+
+Returns true if the latest reward is no longer being supplied on the input channel. 
+
+\hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{start\-Reward()} won't be called until this returns true. 
+
+Implemented in \hyperlink{class_picto_1_1_picto_box_x_p_reward_controller_a3f06b94221e0bec202b4e3236e20429b}{Picto\-::\-Picto\-Box\-X\-P\-Reward\-Controller}, \hyperlink{class_picto_1_1_front_panel_reward_controller_a7ffec247d11a69a9fc0f7494aa954311}{Picto\-::\-Front\-Panel\-Reward\-Controller}, \hyperlink{class_picto_1_1_audio_reward_controller_affe4b6d185b84d6e88821947c7d94d6e}{Picto\-::\-Audio\-Reward\-Controller}, \hyperlink{class_picto_1_1_null_reward_controller_a4675f2eeae24a5473e49bb8b6df99b38}{Picto\-::\-Null\-Reward\-Controller}, and \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_acedbc12ba8ef59c623f957dcec8872a8}{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}.
+
+\hypertarget{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!start\-Flush@{start\-Flush}}
+\index{start\-Flush@{start\-Flush}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{start\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Reward\-Controller\-::start\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}
+
+
+Starts a flush on the input channel. 
+
+The flush should continue until \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{stop\-Flush()} is called. 
+
+Implemented in \hyperlink{class_picto_1_1_picto_box_x_p_reward_controller_a5dc6d881ee582daaf7eae64be6f8af1e}{Picto\-::\-Picto\-Box\-X\-P\-Reward\-Controller}, \hyperlink{class_picto_1_1_front_panel_reward_controller_aa98123b2113054a5606a634066757e2a}{Picto\-::\-Front\-Panel\-Reward\-Controller}, \hyperlink{class_picto_1_1_audio_reward_controller_a03696b14900697ce67251029841f25f6}{Picto\-::\-Audio\-Reward\-Controller}, \hyperlink{class_picto_1_1_null_reward_controller_a085d54f89d532445f4a66a179a029220}{Picto\-::\-Null\-Reward\-Controller}, and \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a5a58e7d83861950be8be54e24d13b07e}{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}.
+
+\hypertarget{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!start\-Reward@{start\-Reward}}
+\index{start\-Reward@{start\-Reward}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{start\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Reward\-Controller\-::start\-Reward (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel, }
+\item[{int}]{quantity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}
+
+
+Starts a reward without blocking during reward supply. 
+
+\hyperlink{class_picto_1_1_reward}{Reward} time is marked just after this is called, so actual reward should be given as close as possible to the end of the function. 
+
+Implemented in \hyperlink{class_picto_1_1_picto_box_x_p_reward_controller_a8490db56a1df896a33362aeea7c0cafc}{Picto\-::\-Picto\-Box\-X\-P\-Reward\-Controller}, \hyperlink{class_picto_1_1_front_panel_reward_controller_a64ca898fc2a7295e7ab23d8ac0ce8af2}{Picto\-::\-Front\-Panel\-Reward\-Controller}, \hyperlink{class_picto_1_1_audio_reward_controller_a4d4fb8f2856206f849f468deed212b72}{Picto\-::\-Audio\-Reward\-Controller}, \hyperlink{class_picto_1_1_null_reward_controller_a1aa333e20908b5e6e79cdc7465617c4e}{Picto\-::\-Null\-Reward\-Controller}, and \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a144f530dcb20520deb10666510614e14}{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}.
+
+\hypertarget{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!stop\-Flush@{stop\-Flush}}
+\index{stop\-Flush@{stop\-Flush}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{stop\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Reward\-Controller\-::stop\-Flush (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}
+
+
+Stops a flush on the input channel. 
+
+Stops the latest flush that was started with \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{start\-Flush()}. 
+
+Implemented in \hyperlink{class_picto_1_1_picto_box_x_p_reward_controller_ae9567626896a597b6cda39acd1b0aaf5}{Picto\-::\-Picto\-Box\-X\-P\-Reward\-Controller}, \hyperlink{class_picto_1_1_front_panel_reward_controller_aa29df7541e45f4f01aaf2f8f7dd186c3}{Picto\-::\-Front\-Panel\-Reward\-Controller}, \hyperlink{class_picto_1_1_audio_reward_controller_a08596b6393877a68bc176153bbd68c81}{Picto\-::\-Audio\-Reward\-Controller}, \hyperlink{class_picto_1_1_null_reward_controller_af824bf42bec797ee970b5efca37cc0a9}{Picto\-::\-Null\-Reward\-Controller}, and \hyperlink{class_picto_1_1_legacy_system_x_p_reward_controller_a00f99b4c7d166d2c51d4c1598cc0a0c1}{Picto\-::\-Legacy\-System\-X\-P\-Reward\-Controller}.
+
+\hypertarget{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}{\index{Picto\-::\-Reward\-Controller@{Picto\-::\-Reward\-Controller}!trigger\-Rewards@{trigger\-Rewards}}
+\index{trigger\-Rewards@{trigger\-Rewards}!Picto::RewardController@{Picto\-::\-Reward\-Controller}}
+\subsubsection[{trigger\-Rewards}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Reward\-Controller\-::trigger\-Rewards (
+\begin{DoxyParamCaption}
+\item[{bool}]{append\-To\-List}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_reward_controller_ae9f9b5b07f824d9078b30cb116ff3323}
+
+
+Triggers the next reward from \hyperlink{class_picto_1_1_reward_controller_a287522c7b84e646e85f5aa85dc49bb74}{add\-Reward()} if the previous one on its channel is done. 
+
+If \hyperlink{class_picto_1_1_reward_controller_a0ea32b937d64aeaf7928ee4b696d697b}{discard\-Overlaping\-Rewards()} was set true and a previous reward on a channel is in progress, all pending rewards on that channel will be removed. If append\-To\-List it true, every reward supplied will be added to a list that is retrievable using \hyperlink{class_picto_1_1_reward_controller_a1a56936f22612a215077b3ab494b27c5}{get\-Delivered\-Rewards()} this allows a record of delivered rewards to be sent to the Picto\-Server from the \hyperlink{class_director}{Director}. 
+
+Definition at line 49 of file Reward\-Controller.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/iodevices/Reward\-Controller.\-h\item 
+source/common/iodevices/Reward\-Controller.\-cpp\end{DoxyCompactItemize}

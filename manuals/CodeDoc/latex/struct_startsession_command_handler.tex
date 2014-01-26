@@ -1,0 +1,70 @@
+\hypertarget{struct_startsession_command_handler}{\section{Startsession\-Command\-Handler Struct Reference}
+\label{struct_startsession_command_handler}\index{Startsession\-Command\-Handler@{Startsession\-Command\-Handler}}
+}
+
+
+Handles S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N commands.  
+
+
+
+
+{\ttfamily \#include $<$Startsession\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Startsession\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_startsession_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_startsession_command_handler_ae2d0d17e407bc95fa1348d2d378ca924}{Q\-String \hyperlink{struct_startsession_command_handler_ae2d0d17e407bc95fa1348d2d378ca924}{method} ()}\label{struct_startsession_command_handler_ae2d0d17e407bc95fa1348d2d378ca924}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_startsession_command_handler_a72ab5c05a68c5f3300fb65f4deb64aff}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)
+\begin{DoxyCompactList}\small\item\em Handles S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N commands. 
+
+The Picto\-Workstation sends S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N commands when it wants a remote \hyperlink{class_director}{Director} instance to load an experiment. The command causes a S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N directive to be included the next time that \hyperlink{class_director}{Director} and Proxy instances send C\-O\-M\-P\-O\-N\-E\-N\-T\-U\-P\-D\-A\-T\-E commands and causes the Session design X\-M\-L to be sent to the \hyperlink{class_director}{Director} for the experimental run. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Startsession\-Command\-Handler.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_startsession_command_handler_a72ab5c05a68c5f3300fb65f4deb64aff}{\index{Startsession\-Command\-Handler@{Startsession\-Command\-Handler}!process\-Command@{process\-Command}}
+\index{process\-Command@{process\-Command}!StartsessionCommandHandler@{Startsession\-Command\-Handler}}
+\subsubsection[{process\-Command}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Response} $>$ Startsession\-Command\-Handler\-::process\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_startsession_command_handler_a72ab5c05a68c5f3300fb65f4deb64aff}
+
+
+Handles S\-T\-A\-R\-T\-S\-E\-S\-S\-I\-O\-N commands. 
+
+This function takes the incoming command and extracts the \hyperlink{class_director}{Director} and Proxy that are to be used in this Session, as well as the serialized Design and Design\-Config. All of this data is used to create a new \hyperlink{class_session_info}{Session\-Info} object to handle the new Session. The new Session will cause N\-E\-W\-S\-E\-S\-S\-I\-O\-N directives to be sent to the \hyperlink{class_director}{Director} and Proxy in the \hyperlink{struct_component_update_command_handler}{Component\-Update\-Command\-Handler}. A L\-O\-A\-D\-E\-X\-P directive is also added to the \hyperlink{class_session_info}{Session\-Info} object to be sent to the \hyperlink{class_director}{Director}. Next, this thread yields until it sees the \hyperlink{class_director}{Director} and Proxy have recieved the message and updated their status. Finally when everything is clearly started and ready for the new session, an ok\-Response is returned. 
+
+Implements \hyperlink{struct_picto_1_1_protocol_command_handler_aeeaa16fe40f10fd55996d74e16e29cad}{Picto\-::\-Protocol\-Command\-Handler}.
+
+
+
+Definition at line 24 of file Startsession\-Command\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Startsession\-Command\-Handler.\-h\item 
+source/server/protocol/Startsession\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

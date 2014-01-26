@@ -1,0 +1,132 @@
+\hypertarget{class_text_edit_mode}{\section{Text\-Edit\-Mode Class Reference}
+\label{class_text_edit_mode}\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}}
+}
+
+
+A \hyperlink{class_display_mode}{Display\-Mode} including functionality for the user to edit text.  
+
+
+
+
+{\ttfamily \#include $<$Text\-Edit\-Mode.\-h$>$}
+
+Inheritance diagram for Text\-Edit\-Mode\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_text_edit_mode}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_text_edit_mode_aefc260f73e2d9243e62a4e265fc6daa9}{Text\-Edit\-Mode} (int max\-Chars, Q\-String val\-Name, int slow\-Inc, int fast\-Inc)
+\item 
+virtual void \hyperlink{class_text_edit_mode_abad4ebd912fec7f1e592a2d4596064c0}{init\-Mode} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} \hyperlink{class_text_edit_mode_a9994ab201fb29cc3ac383b3bbea25ec7}{handle\-User\-Input} (\hyperlink{namespace_panel_info_aeeb3b627166cd15c3898f93a1a499c65}{Panel\-Info\-::\-Input\-Type} type)
+\item 
+virtual Q\-String \hyperlink{class_text_edit_mode_a3230fa49040fb5e79fadafad94f035f7}{get\-Editable\-Text} ()=0
+\item 
+virtual bool \hyperlink{class_text_edit_mode_a098ed6941771eb88d9d9d02ef16c7cfd}{set\-Value\-To\-Director} (Q\-String text)=0
+\begin{DoxyCompactList}\small\item\em Sets the input text value to the \hyperlink{namespace_picto}{Picto} director. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_display_mode}{Display\-Mode} including functionality for the user to edit text. 
+
+\hyperlink{class_display_mode}{Display\-Mode} class that allows a user to change a text string should extend this class. It displays text with a blinking cursor underneath the letter to be edited and allows the user to edit the letter by turning the input knob. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 15 of file Text\-Edit\-Mode.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_text_edit_mode_aefc260f73e2d9243e62a4e265fc6daa9}{\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!Text\-Edit\-Mode@{Text\-Edit\-Mode}}
+\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!TextEditMode@{Text\-Edit\-Mode}}
+\subsubsection[{Text\-Edit\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}Text\-Edit\-Mode\-::\-Text\-Edit\-Mode (
+\begin{DoxyParamCaption}
+\item[{int}]{max\-Chars, }
+\item[{Q\-String}]{val\-Name, }
+\item[{int}]{slow\-Inc, }
+\item[{int}]{fast\-Inc}
+\end{DoxyParamCaption}
+)}}\label{class_text_edit_mode_aefc260f73e2d9243e62a4e265fc6daa9}
+Constructs a new \hyperlink{class_text_edit_mode}{Text\-Edit\-Mode} object for a value named val\-Name, whose value can have up to max\-Chars characters. slow\-Inc sets the number of letters to flip through per tick when the user is turning the input knob slowly. fast\-Inc sets the number of letters to flip through when the user is turning the knob quickly. 
+
+Definition at line 12 of file Text\-Edit\-Mode.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_text_edit_mode_a3230fa49040fb5e79fadafad94f035f7}{\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!get\-Editable\-Text@{get\-Editable\-Text}}
+\index{get\-Editable\-Text@{get\-Editable\-Text}!TextEditMode@{Text\-Edit\-Mode}}
+\subsubsection[{get\-Editable\-Text}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Text\-Edit\-Mode\-::get\-Editable\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_text_edit_mode_a3230fa49040fb5e79fadafad94f035f7}
+Returns a text string that the user can edit while this \hyperlink{class_display_mode}{Display\-Mode} has control. 
+
+Implemented in \hyperlink{class_change_name_mode_a2787e2d47b2d0089c8cf6282d754555c}{Change\-Name\-Mode}.
+
+\hypertarget{class_text_edit_mode_a9994ab201fb29cc3ac383b3bbea25ec7}{\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!handle\-User\-Input@{handle\-User\-Input}}
+\index{handle\-User\-Input@{handle\-User\-Input}!TextEditMode@{Text\-Edit\-Mode}}
+\subsubsection[{handle\-User\-Input}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Panel\-Info\-::\-Display\-Mode\-Type} Text\-Edit\-Mode\-::handle\-User\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf Panel\-Info\-::\-Input\-Type}}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_text_edit_mode_a9994ab201fb29cc3ac383b3bbea25ec7}
+Handles user input by turning knob rotations into letter/number flips through the alphabet and knob presses into a message to accept the current letter and move on to the next one if the cursor is inside the editable string, or a message to accept changes if the cursor is past the editable string. 
+
+Implements \hyperlink{class_display_mode_a2cd062972909097648b40c08ff743ae8}{Display\-Mode}.
+
+
+
+Definition at line 52 of file Text\-Edit\-Mode.\-cpp.
+
+\hypertarget{class_text_edit_mode_abad4ebd912fec7f1e592a2d4596064c0}{\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!init\-Mode@{init\-Mode}}
+\index{init\-Mode@{init\-Mode}!TextEditMode@{Text\-Edit\-Mode}}
+\subsubsection[{init\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void Text\-Edit\-Mode\-::init\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_edit_mode_abad4ebd912fec7f1e592a2d4596064c0}
+Sets up the object by getting the latest editable text, storing it and drawing it to display. 
+
+Implements \hyperlink{class_display_mode_a08a30faa7bd878665185bd3451b5dc9d}{Display\-Mode}.
+
+
+
+Definition at line 31 of file Text\-Edit\-Mode.\-cpp.
+
+\hypertarget{class_text_edit_mode_a098ed6941771eb88d9d9d02ef16c7cfd}{\index{Text\-Edit\-Mode@{Text\-Edit\-Mode}!set\-Value\-To\-Director@{set\-Value\-To\-Director}}
+\index{set\-Value\-To\-Director@{set\-Value\-To\-Director}!TextEditMode@{Text\-Edit\-Mode}}
+\subsubsection[{set\-Value\-To\-Director}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Text\-Edit\-Mode\-::set\-Value\-To\-Director (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_text_edit_mode_a098ed6941771eb88d9d9d02ef16c7cfd}
+
+
+Sets the input text value to the \hyperlink{namespace_picto}{Picto} director. 
+
+This function is called by the \hyperlink{class_text_edit_mode}{Text\-Edit\-Mode} object whenever the text returned from \hyperlink{class_text_edit_mode_a3230fa49040fb5e79fadafad94f035f7}{get\-Editable\-Text()} is edited by the user. It returns true if the message is successfully set to the director, and false otherwise. 
+
+Implemented in \hyperlink{class_change_name_mode_a35cea861e38fde69de934d9ac8feed40}{Change\-Name\-Mode}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/Text\-Edit\-Mode.\-h\item 
+source/embedded/frontpanel/Text\-Edit\-Mode.\-cpp\end{DoxyCompactItemize}

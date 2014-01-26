@@ -1,0 +1,56 @@
+\hypertarget{struct_picto_1_1_parameter_response_handler}{\section{Picto\-:\-:Parameter\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_parameter_response_handler}\index{Picto\-::\-Parameter\-Response\-Handler@{Picto\-::\-Parameter\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-P\-A\-R\-A\-M\-E\-T\-E\-R\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$Parameter\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Parameter\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_parameter_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_parameter_response_handler_ab604bc1b3cf7697fd99c80cf5011ee31}{{\bfseries Parameter\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_parameter_response_handler_ab604bc1b3cf7697fd99c80cf5011ee31}
+
+\item 
+\hypertarget{struct_picto_1_1_parameter_response_handler_a55afc35f53a3ec232ba96a651dc7d983}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_parameter_response_handler_a55afc35f53a3ec232ba96a651dc7d983}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_parameter_response_handler_af1610db2e55ecf7576b96fbd5144bd81}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_parameter_response_handler_af1610db2e55ecf7576b96fbd5144bd81}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-P\-A\-R\-A\-M\-E\-T\-E\-R\char`\"{} method. 
+
+P\-A\-R\-A\-M\-E\-T\-E\-R messages indicate that the Operator changed the init\-Value of one of the runtime Properties exposed during an experiment. The response includes the Asset\-Id of the affected \hyperlink{class_picto_1_1_property}{Property} and the new value.
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Parameter\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Parameter\-Response\-Handler.\-h\item 
+source/common/protocol/Parameter\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

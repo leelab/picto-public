@@ -1,0 +1,129 @@
+\hypertarget{class_picto_1_1_analysis_selector_widget}{\section{Picto\-:\-:Analysis\-Selector\-Widget Class Reference}
+\label{class_picto_1_1_analysis_selector_widget}\index{Picto\-::\-Analysis\-Selector\-Widget@{Picto\-::\-Analysis\-Selector\-Widget}}
+}
+
+
+A widget used to select \hyperlink{class_picto_1_1_analysis}{Analysis} designs to apply to a test run or session playback.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Selector\-Widget.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Selector\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_analysis_selector_widget}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_a7df7ae71a49a04bcfeea9592bbad578a}{void {\bfseries analysis\-Widget\-Changed} ()}\label{class_picto_1_1_analysis_selector_widget_a7df7ae71a49a04bcfeea9592bbad578a}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_ac9069aa94619238a30eba9c913efc540}{{\bfseries Analysis\-Selector\-Widget} (Q\-Widget $\ast$parent=N\-U\-L\-L)}\label{class_picto_1_1_analysis_selector_widget_ac9069aa94619238a30eba9c913efc540}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_aab487ca4ca8b7297d1d69f18b9a72ca5}{void \hyperlink{class_picto_1_1_analysis_selector_widget_aab487ca4ca8b7297d1d69f18b9a72ca5}{clear\-Local\-Analyses} ()}\label{class_picto_1_1_analysis_selector_widget_aab487ca4ca8b7297d1d69f18b9a72ca5}
+
+\begin{DoxyCompactList}\small\item\em Removes all local Analyses, displayed and not displayed, from this widget. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}{set\-Local\-Design\-Root} (Q\-String file\-Path, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)
+\begin{DoxyCompactList}\small\item\em Adds the Analyses from the input \hyperlink{class_picto_1_1_design_root}{Design\-Root} to this widget for the input file\-Path. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_analysis_selector_widget_a9d5fc6429780f442dcf4dbe39cc61b75}{set\-Local\-Design\-Analyses} (Q\-String file\-Path, Q\-List$<$ Q\-Uuid $>$ analysis\-Ids, Q\-String\-List analysis\-Names)
+\begin{DoxyCompactList}\small\item\em Like set\-Local\-Design\-Root, except the Analyses are added directly for the input file\-Path. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_a0467f2bfe3c50f37d30e427dd9c66736}{void \hyperlink{class_picto_1_1_analysis_selector_widget_a0467f2bfe3c50f37d30e427dd9c66736}{set\-Design\-Root\-For\-Import} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)}\label{class_picto_1_1_analysis_selector_widget_a0467f2bfe3c50f37d30e427dd9c66736}
+
+\begin{DoxyCompactList}\small\item\em Adds the Analyses from the input \hyperlink{class_picto_1_1_design_root}{Design\-Root} to this widget under the Import tab for possible import into another design file. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_analysis_selector_widget_aa910d097fe96b75120114e8e1b29df19}{set\-Current\-File} (Q\-String file\-Path)
+\begin{DoxyCompactList}\small\item\em Set the path of the design or session file current being used to display local Analyses for that file. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_a71edbc9ac65774112cfab6593b9a51cc}{Q\-List$<$ Q\-Uuid $>$ \hyperlink{class_picto_1_1_analysis_selector_widget_a71edbc9ac65774112cfab6593b9a51cc}{get\-Selected\-Analysis\-Ids} ()}\label{class_picto_1_1_analysis_selector_widget_a71edbc9ac65774112cfab6593b9a51cc}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the Associate Ids for the widget's currently selected local analyses. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_a7ee81957d535d561f13916e24b07a116}{Q\-List$<$ Q\-Uuid $>$ \hyperlink{class_picto_1_1_analysis_selector_widget_a7ee81957d535d561f13916e24b07a116}{get\-Selected\-Analysis\-Ids\-For\-Import} ()}\label{class_picto_1_1_analysis_selector_widget_a7ee81957d535d561f13916e24b07a116}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the Associate Ids for the widget's currently selected importable analyses. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_ab95a7447d0400309b775b1c21db3baaf}{void \hyperlink{class_picto_1_1_analysis_selector_widget_ab95a7447d0400309b775b1c21db3baaf}{enable\-Checkboxes} (bool enable)}\label{class_picto_1_1_analysis_selector_widget_ab95a7447d0400309b775b1c21db3baaf}
+
+\begin{DoxyCompactList}\small\item\em Enables/\-Disables all checkboxes in this widget. By default they are enabled. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_selector_widget_a17a534c12c588843e10ef03c8f99f030}{bool \hyperlink{class_picto_1_1_analysis_selector_widget_a17a534c12c588843e10ef03c8f99f030}{has\-Selected\-Ids} ()}\label{class_picto_1_1_analysis_selector_widget_a17a534c12c588843e10ef03c8f99f030}
+
+\begin{DoxyCompactList}\small\item\em Returns true if something in the widget has been selected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A widget used to select \hyperlink{class_picto_1_1_analysis}{Analysis} designs to apply to a test run or session playback. 
+
+This widget includes two tabs, one including built in Analyses (ie. Analyses that are saved as part of a design file) and the other including importable Analyses (ie. Analyses that the we can attempt to apply to previously run sessions). Each tab contains check boxes such that multiple analyses can be selected at once. The list of Analyses may be built up automatically based on \hyperlink{class_picto_1_1_design_root}{Design\-Root} objects passed into \hyperlink{class_picto_1_1_analysis_selector_widget_a0467f2bfe3c50f37d30e427dd9c66736}{set\-Design\-Root\-For\-Import()} and set\-Local\-Design\-Root or added manually using \hyperlink{class_picto_1_1_analysis_selector_widget_a9d5fc6429780f442dcf4dbe39cc61b75}{set\-Local\-Design\-Analyses()}. For the purposes of easily switching between playback of multiple designs, the widget also lets us call \hyperlink{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}{set\-Local\-Design\-Root()} multiple times for different design/session files, then choose which Local Analyses we would like to display in the widget by using \hyperlink{class_picto_1_1_analysis_selector_widget_aa910d097fe96b75120114e8e1b29df19}{set\-Current\-File()}. Only one \char`\"{}importable\char`\"{} \hyperlink{class_picto_1_1_design_root}{Design\-Root} functions at a time however. Selected \hyperlink{class_picto_1_1_analysis}{Analysis} Ids are retrieved by using get\-Selected\-Anlysis\-Ids() for local Analyses and \hyperlink{class_picto_1_1_analysis_selector_widget_a7ee81957d535d561f13916e24b07a116}{get\-Selected\-Analysis\-Ids\-For\-Import()} for importable Analyses. \begin{DoxyNote}{Note}
+This widget performs no import compatibility tests. Whether or not the importable Analyses are compatible with the current Design must be tested elsewhere. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 35 of file Analysis\-Selector\-Widget.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_selector_widget_aa910d097fe96b75120114e8e1b29df19}{\index{Picto\-::\-Analysis\-Selector\-Widget@{Picto\-::\-Analysis\-Selector\-Widget}!set\-Current\-File@{set\-Current\-File}}
+\index{set\-Current\-File@{set\-Current\-File}!Picto::AnalysisSelectorWidget@{Picto\-::\-Analysis\-Selector\-Widget}}
+\subsubsection[{set\-Current\-File}]{\setlength{\rightskip}{0pt plus 5cm}void Analysis\-Selector\-Widget\-::set\-Current\-File (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_selector_widget_aa910d097fe96b75120114e8e1b29df19}
+
+
+Set the path of the design or session file current being used to display local Analyses for that file. 
+
+The Analyses for individual filepaths are entered by using \hyperlink{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}{set\-Local\-Design\-Root()} or \hyperlink{class_picto_1_1_analysis_selector_widget_a9d5fc6429780f442dcf4dbe39cc61b75}{set\-Local\-Design\-Analyses()}. 
+
+Definition at line 106 of file Analysis\-Selector\-Widget.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_selector_widget_a9d5fc6429780f442dcf4dbe39cc61b75}{\index{Picto\-::\-Analysis\-Selector\-Widget@{Picto\-::\-Analysis\-Selector\-Widget}!set\-Local\-Design\-Analyses@{set\-Local\-Design\-Analyses}}
+\index{set\-Local\-Design\-Analyses@{set\-Local\-Design\-Analyses}!Picto::AnalysisSelectorWidget@{Picto\-::\-Analysis\-Selector\-Widget}}
+\subsubsection[{set\-Local\-Design\-Analyses}]{\setlength{\rightskip}{0pt plus 5cm}void Analysis\-Selector\-Widget\-::set\-Local\-Design\-Analyses (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{file\-Path, }
+\item[{Q\-List$<$ Q\-Uuid $>$}]{analysis\-Ids, }
+\item[{Q\-String\-List}]{analysis\-Names}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_selector_widget_a9d5fc6429780f442dcf4dbe39cc61b75}
+
+
+Like set\-Local\-Design\-Root, except the Analyses are added directly for the input file\-Path. 
+
+In this function, the input analysis\-Ids and analysis\-Names strings are matched up, line by line to build up the local analysis display in the widget. Essentially, \hyperlink{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}{set\-Local\-Design\-Root()} is just extracting analysis\-Ids and analysis\-Names automatically from its input \hyperlink{class_picto_1_1_design_root}{Design\-Root} and then just doing what we are doing here. Storing that information in a file\-Name lookup table for display when set\-Current\-F\-Ile() is called with the input file\-Name. 
+
+Definition at line 62 of file Analysis\-Selector\-Widget.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}{\index{Picto\-::\-Analysis\-Selector\-Widget@{Picto\-::\-Analysis\-Selector\-Widget}!set\-Local\-Design\-Root@{set\-Local\-Design\-Root}}
+\index{set\-Local\-Design\-Root@{set\-Local\-Design\-Root}!Picto::AnalysisSelectorWidget@{Picto\-::\-Analysis\-Selector\-Widget}}
+\subsubsection[{set\-Local\-Design\-Root}]{\setlength{\rightskip}{0pt plus 5cm}void Analysis\-Selector\-Widget\-::set\-Local\-Design\-Root (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{file\-Path, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Design\-Root} $>$}]{design\-Root}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_selector_widget_ad0ecc27ca19d88c0b90d6dcc2c17f270}
+
+
+Adds the Analyses from the input \hyperlink{class_picto_1_1_design_root}{Design\-Root} to this widget for the input file\-Path. 
+
+To show these Analyses in the widget, just call \hyperlink{class_picto_1_1_analysis_selector_widget_aa910d097fe96b75120114e8e1b29df19}{set\-Current\-File()} with the input file\-Path. 
+
+Definition at line 35 of file Analysis\-Selector\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Analysis\-Selector\-Widget.\-h\item 
+source/common/\-Designer/Analysis\-Selector\-Widget.\-cpp\end{DoxyCompactItemize}

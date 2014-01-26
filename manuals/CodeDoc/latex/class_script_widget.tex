@@ -1,0 +1,78 @@
+\hypertarget{class_script_widget}{\section{Script\-Widget Class Reference}
+\label{class_script_widget}\index{Script\-Widget@{Script\-Widget}}
+}
+
+
+A widget for managing and presenting \hyperlink{class_script_text_edit}{Script\-Text\-Edit} widgets as well as interfacing them with an underlying Qt\-Property.  
+
+
+
+
+{\ttfamily \#include $<$Script\-Widget.\-h$>$}
+
+Inheritance diagram for Script\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_script_widget}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_script_widget_a87b0b6c6b19655367ad8888d8198e353}{void \hyperlink{class_script_widget_a87b0b6c6b19655367ad8888d8198e353}{text\-Edited} (const Q\-String \&text)}\label{class_script_widget_a87b0b6c6b19655367ad8888d8198e353}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever the \hyperlink{class_script_widget}{Script\-Widget}'s text is changed. text is the widget's new text. \end{DoxyCompactList}\item 
+\hypertarget{class_script_widget_ab52ac6b09578b0423fefec508959c3c6}{void \hyperlink{class_script_widget_ab52ac6b09578b0423fefec508959c3c6}{editing\-Finished} ()}\label{class_script_widget_ab52ac6b09578b0423fefec508959c3c6}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever the text edit looses focus. This is a better signal than \hyperlink{class_script_widget_a87b0b6c6b19655367ad8888d8198e353}{text\-Edited()} to connect to when it comes to defining undo blocks so that not every letter is considered for undoing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_script_widget_a5d994153c52cfa77daf596a2954675bb}{Script\-Widget} (Qt\-Variant\-Property\-Manager $\ast$manager, Qt\-Property $\ast$property, Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, bool single\-Line=false, Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_script_widget}{Script\-Widget}. \end{DoxyCompactList}\item 
+\hypertarget{class_script_widget_a1758a4811a13dff36f787e9bd486d310}{void \hyperlink{class_script_widget_a1758a4811a13dff36f787e9bd486d310}{set\-Read\-Only} (bool read\-Only)}\label{class_script_widget_a1758a4811a13dff36f787e9bd486d310}
+
+\begin{DoxyCompactList}\small\item\em Sets this \hyperlink{class_script_widget}{Script\-Widget} as readonly/editable depending on the bool read\-Only input. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A widget for managing and presenting \hyperlink{class_script_text_edit}{Script\-Text\-Edit} widgets as well as interfacing them with an underlying Qt\-Property. 
+
+This widget is used with the \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory} to create a widget for updating Script Properties. As such, this widget needs to include interfacing with the Qt\-Propert\-Browser framework which we use to get some free automatic type dependant widget creation and layout. Changes to the widget text are set to an underlyiung Qt\-Property using its Qt\-Variant\-Property\-Manager. Similarly, changes to the underlying Qt\-Property are reflected in the \hyperlink{class_script_widget}{Script\-Widget} text. The \hyperlink{class_script_widget}{Script\-Widget} can include a single line text box or a full fledged multi-\/line text editor. Either way, due to this widgets use of an underlying \hyperlink{class_script_text_edit}{Script\-Text\-Edit}, the script text is syntax highlighted and searchable. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Script\-Widget.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_script_widget_a5d994153c52cfa77daf596a2954675bb}{\index{Script\-Widget@{Script\-Widget}!Script\-Widget@{Script\-Widget}}
+\index{Script\-Widget@{Script\-Widget}!ScriptWidget@{Script\-Widget}}
+\subsubsection[{Script\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}Script\-Widget\-::\-Script\-Widget (
+\begin{DoxyParamCaption}
+\item[{Qt\-Variant\-Property\-Manager $\ast$}]{manager, }
+\item[{Qt\-Property $\ast$}]{property, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State, }
+\item[{bool}]{single\-Line = {\ttfamily false}, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_script_widget_a5d994153c52cfa77daf596a2954675bb}
+
+
+Constructs a new \hyperlink{class_script_widget}{Script\-Widget}. 
+
+manager and property are used to copy/set the value of the underlying Qt\-Property to/from the underlying \hyperlink{class_script_text_edit}{Script\-Text\-Edit}. editor\-State is used to support search functionality. Single line indicates if this \hyperlink{class_script_widget}{Script\-Widget} should contain a single line text box rather than a multi-\/line text editor. 
+
+Definition at line 11 of file Script\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Script\-Widget.\-h\item 
+source/common/\-Designer/Script\-Widget.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,100 @@
+\hypertarget{class_picto_1_1_frame_data_unit_package}{\section{Picto\-:\-:Frame\-Data\-Unit\-Package Class Reference}
+\label{class_picto_1_1_frame_data_unit_package}\index{Picto\-::\-Frame\-Data\-Unit\-Package@{Picto\-::\-Frame\-Data\-Unit\-Package}}
+}
+
+
+Stores a list of Frame\-Data\-Units, each of which holds a frame's first phosphor time, Data\-Id, and the Asset\-Id of the state that was active when the frame was rendered.  
+
+
+
+
+{\ttfamily \#include $<$Frame\-Data\-Unit\-Package.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Frame\-Data\-Unit\-Package\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_frame_data_unit_package}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_a39ff4197afeab2e5e2e87d5510b2b693}{void \hyperlink{class_picto_1_1_frame_data_unit_package_a39ff4197afeab2e5e2e87d5510b2b693}{add\-Frame} (double time, int state\-Id)}\label{class_picto_1_1_frame_data_unit_package_a39ff4197afeab2e5e2e87d5510b2b693}
+
+\begin{DoxyCompactList}\small\item\em Adds a new frame to this package with the input first phosphor time and the input Asset\-Id of the state that was active when this frame was displayed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_afb3c12cc5772538c3c5e35cbd53601bd}{void \hyperlink{class_picto_1_1_frame_data_unit_package_afb3c12cc5772538c3c5e35cbd53601bd}{add\-Frame} (Q\-String time, int state\-Id)}\label{class_picto_1_1_frame_data_unit_package_afb3c12cc5772538c3c5e35cbd53601bd}
+
+\begin{DoxyCompactList}\small\item\em Adds a new frame to this package with the input first phosphor time (as a string) and the input Asset\-Id of the state that was active when this frame was displayed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_aefa5ee3504ba041ea09542121d0ec108}{void \hyperlink{class_picto_1_1_frame_data_unit_package_aefa5ee3504ba041ea09542121d0ec108}{clear\-Frames} ()}\label{class_picto_1_1_frame_data_unit_package_aefa5ee3504ba041ea09542121d0ec108}
+
+\begin{DoxyCompactList}\small\item\em Removes all Frame\-Data\-Units from this package. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_abddf213764da4201b6ac99993563c75b}{int \hyperlink{class_picto_1_1_frame_data_unit_package_abddf213764da4201b6ac99993563c75b}{length} ()}\label{class_picto_1_1_frame_data_unit_package_abddf213764da4201b6ac99993563c75b}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of Frame\-Data\-Units in this package. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_ac9a9c94ea43a4bda078eb9ff56e3058d}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_frame_data_unit}{Frame\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_frame_data_unit_package_ac9a9c94ea43a4bda078eb9ff56e3058d}{take\-First\-Data\-Point} ()}\label{class_picto_1_1_frame_data_unit_package_ac9a9c94ea43a4bda078eb9ff56e3058d}
+
+\begin{DoxyCompactList}\small\item\em Returns the first \hyperlink{class_picto_1_1_frame_data_unit}{Frame\-Data\-Unit} in this package and removes it from the package. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_a0d962918966a9d50cf526673daabd3c1}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_frame_data_unit}{Frame\-Data\-Unit} $>$ \hyperlink{class_picto_1_1_frame_data_unit_package_a0d962918966a9d50cf526673daabd3c1}{take\-Last\-Data\-Point} ()}\label{class_picto_1_1_frame_data_unit_package_a0d962918966a9d50cf526673daabd3c1}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest \hyperlink{class_picto_1_1_frame_data_unit}{Frame\-Data\-Unit} in this package and removes it from the package. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_ae206f6078896cba47b536aadd9d7f1c4}{qulonglong \hyperlink{class_picto_1_1_frame_data_unit_package_ae206f6078896cba47b536aadd9d7f1c4}{get\-Latest\-Frame\-Id} ()}\label{class_picto_1_1_frame_data_unit_package_ae206f6078896cba47b536aadd9d7f1c4}
+
+\begin{DoxyCompactList}\small\item\em Returns the Data\-Id of the latest frame in this package. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_frame_data_unit_package_a9a81a193e3f974ce76de40839c98def3}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)
+\begin{DoxyCompactList}\small\item\em Turns the \hyperlink{class_picto_1_1_frame_data_unit_package}{Frame\-Data\-Unit\-Package} into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_a654266fc2f47cca32f67a46ab73565be}{virtual bool \hyperlink{class_picto_1_1_frame_data_unit_package_a654266fc2f47cca32f67a46ab73565be}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_frame_data_unit_package_a654266fc2f47cca32f67a46ab73565be}
+
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a \hyperlink{class_picto_1_1_frame_data_unit_package}{Frame\-Data\-Unit\-Package} object. Note that this deletes any existing data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_a2e4b365c28ba594c53c7af88729cc53b}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_frame_data_unit_package_a2e4b365c28ba594c53c7af88729cc53b}
+
+\item 
+\hypertarget{class_picto_1_1_frame_data_unit_package_a847f8d82780557cc5c81f76aca357cbb}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_frame_data_unit_package_a847f8d82780557cc5c81f76aca357cbb}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores a list of Frame\-Data\-Units, each of which holds a frame's first phosphor time, Data\-Id, and the Asset\-Id of the state that was active when the frame was rendered. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Frame\-Data\-Unit\-Package.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_frame_data_unit_package_a9a81a193e3f974ce76de40839c98def3}{\index{Picto\-::\-Frame\-Data\-Unit\-Package@{Picto\-::\-Frame\-Data\-Unit\-Package}!serialize\-As\-Xml@{serialize\-As\-Xml}}
+\index{serialize\-As\-Xml@{serialize\-As\-Xml}!Picto::FrameDataUnitPackage@{Picto\-::\-Frame\-Data\-Unit\-Package}}
+\subsubsection[{serialize\-As\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Frame\-Data\-Unit\-Package\-::serialize\-As\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$}]{xml\-Stream\-Writer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_frame_data_unit_package_a9a81a193e3f974ce76de40839c98def3}
+
+
+Turns the \hyperlink{class_picto_1_1_frame_data_unit_package}{Frame\-Data\-Unit\-Package} into an X\-M\-L fragment. 
+
+
+
+Implements \hyperlink{class_picto_1_1_data_unit_a72923bddebee1127470ef9e8face7d3a}{Picto\-::\-Data\-Unit}.
+
+
+
+Definition at line 26 of file Frame\-Data\-Unit\-Package.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Frame\-Data\-Unit\-Package.\-h\item 
+source/common/storage/Frame\-Data\-Unit\-Package.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,358 @@
+\hypertarget{class_control_panel_interface}{\section{Control\-Panel\-Interface Class Reference}
+\label{class_control_panel_interface}\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}}
+}
+
+
+The interface between the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director} and a Hardware Control panel.  
+
+
+
+
+{\ttfamily \#include $<$Control\-Panel\-Interface.\-h$>$}
+
+Inheritance diagram for Control\-Panel\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_control_panel_interface}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_control_panel_interface_ae4fe9e651aa3b8eafeea50762292ceb2}{name\-Changed} (Q\-String name)
+\begin{DoxyCompactList}\small\item\em Call this to tell the control panel that the \hyperlink{class_director}{Director}'s name changed. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_acd712ae5b62e9d32d269ada35f4bf026}{ip\-Address\-Changed} (Q\-String addr)
+\begin{DoxyCompactList}\small\item\em Call this to tell the control panel that the \hyperlink{class_director}{Director}'s ip address changed. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_ac3c6750d8f96e095fae229583dd7122c}{reward\-Duration\-Changed} (int controller, int duration)
+\begin{DoxyCompactList}\small\item\em Call this to tell the control panel that the \hyperlink{class_director}{Director}'s reward duration changed on the input controller. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_a40bc0fe90a3a339d9b934ac253823902}{flush\-Duration\-Changed} (int controller, int duration)
+\begin{DoxyCompactList}\small\item\em Call this to tell the control panel that the \hyperlink{class_director}{Director}'s flush duration changed on the input controller. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_a92942ce52b74c7e9d96fe05f5987ef50}{status\-Changed} (Q\-String status)
+\begin{DoxyCompactList}\small\item\em Call this to tell the control panel that the \hyperlink{class_director}{Director}'s status has changed. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands} ()=0
+\begin{DoxyCompactList}\small\item\em Calling this function causes this control panel to process incoming commands from control panel hardware. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_control_panel_interface_a8251e17c19a1c3a51b416e586e224dec}{void \hyperlink{class_control_panel_interface_a8251e17c19a1c3a51b416e586e224dec}{name\-Change\-Request} (Q\-String name)}\label{class_control_panel_interface_a8251e17c19a1c3a51b416e586e224dec}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the Control\-Panel hardware requests that the \hyperlink{class_director}{Director}'s name be changed. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_ab8113b70c74a95efedac338f61fa1017}{void \hyperlink{class_control_panel_interface_ab8113b70c74a95efedac338f61fa1017}{reward\-Duration\-Change\-Request} (int controller, int duration)}\label{class_control_panel_interface_ab8113b70c74a95efedac338f61fa1017}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the Control\-Panel hardware requests that the \hyperlink{class_director}{Director}'s reward duration be changed to the duration number of milliseconds for the input controller. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_ae101f565590fac484e9b17ef12394b4d}{void \hyperlink{class_control_panel_interface_ae101f565590fac484e9b17ef12394b4d}{flush\-Duration\-Change\-Request} (int controller, int duration)}\label{class_control_panel_interface_ae101f565590fac484e9b17ef12394b4d}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the Control\-Panel hardware requests that the \hyperlink{class_director}{Director}'s flush duration be changed to the duration number of seconds for the input controller. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_a20654c5b491cc616fb452ca8956bb63a}{void \hyperlink{class_control_panel_interface_a20654c5b491cc616fb452ca8956bb63a}{flush\-Request} (int controller)}\label{class_control_panel_interface_a20654c5b491cc616fb452ca8956bb63a}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the Control\-Panel hardware requests that the \hyperlink{class_director}{Director} begin a flush on the input controller. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_aa31c026d69d3e7644c43f16ea25f82f2}{void \hyperlink{class_control_panel_interface_aa31c026d69d3e7644c43f16ea25f82f2}{give\-Reward\-Request} (int controller)}\label{class_control_panel_interface_aa31c026d69d3e7644c43f16ea25f82f2}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the Control\-Panel hardware requests that the \hyperlink{class_director}{Director} begin a reward on the input controller. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_control_panel_interface_ae46318a58ccdc03dded730924fc04d36}{void \hyperlink{class_control_panel_interface_ae46318a58ccdc03dded730924fc04d36}{set\-Name} (Q\-String name)}\label{class_control_panel_interface_ae46318a58ccdc03dded730924fc04d36}
+
+\begin{DoxyCompactList}\small\item\em Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to change the \hyperlink{class_director}{Director} name if a request comes in from the Control Panel hardware to do so. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_a255ad635a27089d5523f7efc5cd8c741}{void \hyperlink{class_control_panel_interface_a255ad635a27089d5523f7efc5cd8c741}{set\-Reward\-Duration} (int controller, int duration)}\label{class_control_panel_interface_a255ad635a27089d5523f7efc5cd8c741}
+
+\begin{DoxyCompactList}\small\item\em Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to change the \hyperlink{class_director}{Director}'s Reward Duration on the input controller if a request comes in from the Control Panel hardware to do so. duration is the duration in milliseconds of the reward. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_a220b8ce8a69430219065cdc215ffb28c}{void \hyperlink{class_control_panel_interface_a220b8ce8a69430219065cdc215ffb28c}{set\-Flush\-Duration} (int controller, int duration)}\label{class_control_panel_interface_a220b8ce8a69430219065cdc215ffb28c}
+
+\begin{DoxyCompactList}\small\item\em Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to change the Directors Flush Duration on the input controller if a request comes in from the Control Panel hardware to do so. duration is the duration in seconds of the flush. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}{flush} (int controller)
+\begin{DoxyCompactList}\small\item\em Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to start or stop a flush on the \hyperlink{class_director}{Director}'s input controller if a request comes in from the Control Panel hardware to do so. \end{DoxyCompactList}\item 
+void \hyperlink{class_control_panel_interface_a0d304a64b1922ad1439ad9e97bc2e455}{give\-Reward} (int controller)
+\begin{DoxyCompactList}\small\item\em Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to supply a reward on the \hyperlink{class_director}{Director}'s input controller. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_control_panel_interface_a1ff4cd53f53e2b46ace9db8d15af29e8}{name\-Was\-Changed} ()=0
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director} name was changed. This function informs the control panel hardware of this change. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_control_panel_interface_a1a7c6571f407622786488f1895fac6ef}{ip\-Was\-Changed} ()=0
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director} I\-P Address was changed. This function informs the control panel hardware of this change. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_control_panel_interface_a559dc32a89a9e6824e72f316017f62d1}{reward\-Duration\-Was\-Changed} (int controller)=0
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director}'s reward duration was changed on the input controller. This function informs the control panel hardware of this change. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_control_panel_interface_a749cdbf08aa200de81bca97e8a5f49ce}{flush\-Duration\-Was\-Changed} (int controller)=0
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director}'s flush duration was changed on the input controller. This function informs the control panel hardware of this change. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_control_panel_interface_a77f71357afc1feb5013ebec7a4e01ee3}{status\-Was\-Changed} (Q\-String status)=0
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_director}{Director}'s status duration was changed . This function informs the control panel hardware of this change. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_a99738c601aeb18b587d5e6db64dc392c}{Q\-String \hyperlink{class_control_panel_interface_a99738c601aeb18b587d5e6db64dc392c}{get\-Name} ()}\label{class_control_panel_interface_a99738c601aeb18b587d5e6db64dc392c}
+
+\begin{DoxyCompactList}\small\item\em Returns the current name of the \hyperlink{class_director}{Director}. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_ad7367b7241b245fb72c6423b32ddf960}{Q\-String \hyperlink{class_control_panel_interface_ad7367b7241b245fb72c6423b32ddf960}{get\-I\-P} ()}\label{class_control_panel_interface_ad7367b7241b245fb72c6423b32ddf960}
+
+\begin{DoxyCompactList}\small\item\em Returns the current I\-P Address of the \hyperlink{class_director}{Director}. \end{DoxyCompactList}\item 
+int \hyperlink{class_control_panel_interface_a187eb371ccf47922296b8ca335105269}{get\-Reward\-Duration} (int controller)
+\begin{DoxyCompactList}\small\item\em Returns the current reward duration of the \hyperlink{class_director}{Director} on the input controller. Returned value is in milliseconds. \end{DoxyCompactList}\item 
+int \hyperlink{class_control_panel_interface_ab0a42d8ac19c2f1c2ef2cfd4d4d4e322}{get\-Flush\-Duration} (int controller)
+\begin{DoxyCompactList}\small\item\em Returns the current flush duration of the \hyperlink{class_director}{Director} on the input controller. Returned value is in seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_control_panel_interface_aa0afb9bd4e7606e35b92f6025dd457e1}{Q\-String \hyperlink{class_control_panel_interface_aa0afb9bd4e7606e35b92f6025dd457e1}{get\-Status} ()}\label{class_control_panel_interface_aa0afb9bd4e7606e35b92f6025dd457e1}
+
+\begin{DoxyCompactList}\small\item\em Returns the current status of the \hyperlink{class_director}{Director}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The interface between the \hyperlink{namespace_picto}{Picto} \hyperlink{class_director}{Director} and a Hardware Control panel. 
+
+A hardware control panel controls the \hyperlink{class_director}{Director} name, reward/flush durations, and offers the capability to start a reward or start/stop a flush. This class provides interfaces for all of these capabilities and should be inherited to implement that interface for particular types of hardware. The \hyperlink{namespace_picto}{Picto} Engine uses this class to inform the front panel when these \hyperlink{class_director}{Director} properties have changed, and to change these \hyperlink{class_director}{Director} properties when asked by the control panel to do so. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Control\-Panel\-Interface.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!do\-Incoming\-Commands@{do\-Incoming\-Commands}}
+\index{do\-Incoming\-Commands@{do\-Incoming\-Commands}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{do\-Incoming\-Commands}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::do\-Incoming\-Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}
+
+
+Calling this function causes this control panel to process incoming commands from control panel hardware. 
+
+Processing the incoming commands results in calling the various \char`\"{}set\char`\"{} commands (ie. \hyperlink{class_control_panel_interface_ae46318a58ccdc03dded730924fc04d36}{set\-Name()}, \hyperlink{class_control_panel_interface_a255ad635a27089d5523f7efc5cd8c741}{set\-Reward\-Duration()}, \hyperlink{class_control_panel_interface_a220b8ce8a69430219065cdc215ffb28c}{set\-Flush\-Duration()}, \hyperlink{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}{flush()}, \hyperlink{class_control_panel_interface_a0d304a64b1922ad1439ad9e97bc2e455}{give\-Reward()}) which in turn emit various signals (\hyperlink{class_control_panel_interface_a8251e17c19a1c3a51b416e586e224dec}{name\-Change\-Request()}, \hyperlink{class_control_panel_interface_ab8113b70c74a95efedac338f61fa1017}{reward\-Duration\-Change\-Request()}, \hyperlink{class_control_panel_interface_ae101f565590fac484e9b17ef12394b4d}{flush\-Duration\-Change\-Request()}, \hyperlink{class_control_panel_interface_a20654c5b491cc616fb452ca8956bb63a}{flush\-Request()}, \hyperlink{class_control_panel_interface_aa31c026d69d3e7644c43f16ea25f82f2}{give\-Reward\-Request()}) so that objects that connect to this one will be informed of new commands coming in from the Control\-Panel. \hypertarget{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!flush@{flush}}
+\index{flush@{flush}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::flush (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}
+
+
+Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to start or stop a flush on the \hyperlink{class_director}{Director}'s input controller if a request comes in from the Control Panel hardware to do so. 
+
+\hyperlink{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}{flush()} starts a Flush if there was not yet one in progress and stops it if there was one in progress. 
+
+Definition at line 140 of file Control\-Panel\-Interface.\-h.
+
+\hypertarget{class_control_panel_interface_a40bc0fe90a3a339d9b934ac253823902}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!flush\-Duration\-Changed@{flush\-Duration\-Changed}}
+\index{flush\-Duration\-Changed@{flush\-Duration\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{flush\-Duration\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::flush\-Duration\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{controller, }
+\item[{int}]{duration}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_control_panel_interface_a40bc0fe90a3a339d9b934ac253823902}
+
+
+Call this to tell the control panel that the \hyperlink{class_director}{Director}'s flush duration changed on the input controller. 
+
+Internally, this function calls \hyperlink{class_control_panel_interface_a749cdbf08aa200de81bca97e8a5f49ce}{flush\-Duration\-Was\-Changed()} with the input controller value. duration is the duration in seconds of the flush. 
+
+Definition at line 28 of file Control\-Panel\-Interface.\-cpp.
+
+\hypertarget{class_control_panel_interface_a749cdbf08aa200de81bca97e8a5f49ce}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!flush\-Duration\-Was\-Changed@{flush\-Duration\-Was\-Changed}}
+\index{flush\-Duration\-Was\-Changed@{flush\-Duration\-Was\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{flush\-Duration\-Was\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::flush\-Duration\-Was\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_control_panel_interface_a749cdbf08aa200de81bca97e8a5f49ce}
+
+
+Called when the \hyperlink{class_director}{Director}'s flush duration was changed on the input controller. This function informs the control panel hardware of this change. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_control_panel_interface_a40bc0fe90a3a339d9b934ac253823902}{flush\-Duration\-Changed()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_f_p_interface_a79917bfd3c4cf7cfd35c0c38bd91ca44}{F\-P\-Interface}.
+
+\hypertarget{class_control_panel_interface_ab0a42d8ac19c2f1c2ef2cfd4d4d4e322}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!get\-Flush\-Duration@{get\-Flush\-Duration}}
+\index{get\-Flush\-Duration@{get\-Flush\-Duration}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{get\-Flush\-Duration}]{\setlength{\rightskip}{0pt plus 5cm}int Control\-Panel\-Interface\-::get\-Flush\-Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_control_panel_interface_ab0a42d8ac19c2f1c2ef2cfd4d4d4e322}
+
+
+Returns the current flush duration of the \hyperlink{class_director}{Director} on the input controller. Returned value is in seconds. 
+
+If the controller input is invalid, -\/1 is returned. 
+
+Definition at line 50 of file Control\-Panel\-Interface.\-cpp.
+
+\hypertarget{class_control_panel_interface_a187eb371ccf47922296b8ca335105269}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!get\-Reward\-Duration@{get\-Reward\-Duration}}
+\index{get\-Reward\-Duration@{get\-Reward\-Duration}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{get\-Reward\-Duration}]{\setlength{\rightskip}{0pt plus 5cm}int Control\-Panel\-Interface\-::get\-Reward\-Duration (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_control_panel_interface_a187eb371ccf47922296b8ca335105269}
+
+
+Returns the current reward duration of the \hyperlink{class_director}{Director} on the input controller. Returned value is in milliseconds. 
+
+If the controller input is invalid, -\/1 is returned. 
+
+Definition at line 41 of file Control\-Panel\-Interface.\-cpp.
+
+\hypertarget{class_control_panel_interface_a0d304a64b1922ad1439ad9e97bc2e455}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!give\-Reward@{give\-Reward}}
+\index{give\-Reward@{give\-Reward}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{give\-Reward}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::give\-Reward (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_a0d304a64b1922ad1439ad9e97bc2e455}
+
+
+Called during \hyperlink{class_control_panel_interface_a405de6656ffb2e4ac404595e783125fb}{do\-Incoming\-Commands()} to supply a reward on the \hyperlink{class_director}{Director}'s input controller. 
+
+Unlike \hyperlink{class_control_panel_interface_adee3ebce078cc0c17d4ab36092e8b2e6}{flush()}, rewards are queued if one is requested before the previous one finishes. Reward duration is according to the value set in \hyperlink{class_control_panel_interface_a255ad635a27089d5523f7efc5cd8c741}{set\-Reward\-Duration()} or previously saved on the director. 
+
+Definition at line 145 of file Control\-Panel\-Interface.\-h.
+
+\hypertarget{class_control_panel_interface_acd712ae5b62e9d32d269ada35f4bf026}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!ip\-Address\-Changed@{ip\-Address\-Changed}}
+\index{ip\-Address\-Changed@{ip\-Address\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{ip\-Address\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::ip\-Address\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{addr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_acd712ae5b62e9d32d269ada35f4bf026}
+
+
+Call this to tell the control panel that the \hyperlink{class_director}{Director}'s ip address changed. 
+
+Internally, this function calls \hyperlink{class_control_panel_interface_a1a7c6571f407622786488f1895fac6ef}{ip\-Was\-Changed()}. \begin{DoxyNote}{Note}
+Currently, \hyperlink{namespace_picto}{Picto} doesn't have any way to actually physically change the \hyperlink{class_director}{Director}'s I\-P Address. This function implies that someone might be changing the \hyperlink{class_director}{Director} I\-P Address, but it is actually only used when a \hyperlink{class_control_panel_interface}{Control\-Panel\-Interface} is first created in order to tell it what the \hyperlink{class_director}{Director}'s I\-P Address is. 
+\end{DoxyNote}
+
+
+Definition at line 51 of file Control\-Panel\-Interface.\-h.
+
+\hypertarget{class_control_panel_interface_a1a7c6571f407622786488f1895fac6ef}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!ip\-Was\-Changed@{ip\-Was\-Changed}}
+\index{ip\-Was\-Changed@{ip\-Was\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{ip\-Was\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::ip\-Was\-Changed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_control_panel_interface_a1a7c6571f407622786488f1895fac6ef}
+
+
+Called when the \hyperlink{class_director}{Director} I\-P Address was changed. This function informs the control panel hardware of this change. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_control_panel_interface_acd712ae5b62e9d32d269ada35f4bf026}{ip\-Address\-Changed()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_f_p_interface_ada309d75eefe2043318d0d3c203b0cfd}{F\-P\-Interface}.
+
+\hypertarget{class_control_panel_interface_ae4fe9e651aa3b8eafeea50762292ceb2}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!name\-Changed@{name\-Changed}}
+\index{name\-Changed@{name\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{name\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::name\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_ae4fe9e651aa3b8eafeea50762292ceb2}
+
+
+Call this to tell the control panel that the \hyperlink{class_director}{Director}'s name changed. 
+
+Internally, this function calls \hyperlink{class_control_panel_interface_a1ff4cd53f53e2b46ace9db8d15af29e8}{name\-Was\-Changed()}. 
+
+Definition at line 43 of file Control\-Panel\-Interface.\-h.
+
+\hypertarget{class_control_panel_interface_a1ff4cd53f53e2b46ace9db8d15af29e8}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!name\-Was\-Changed@{name\-Was\-Changed}}
+\index{name\-Was\-Changed@{name\-Was\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{name\-Was\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::name\-Was\-Changed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_control_panel_interface_a1ff4cd53f53e2b46ace9db8d15af29e8}
+
+
+Called when the \hyperlink{class_director}{Director} name was changed. This function informs the control panel hardware of this change. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_control_panel_interface_ae4fe9e651aa3b8eafeea50762292ceb2}{name\-Changed()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_f_p_interface_a4582783afa21edafe30d900889324ca1}{F\-P\-Interface}.
+
+\hypertarget{class_control_panel_interface_ac3c6750d8f96e095fae229583dd7122c}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!reward\-Duration\-Changed@{reward\-Duration\-Changed}}
+\index{reward\-Duration\-Changed@{reward\-Duration\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{reward\-Duration\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::reward\-Duration\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{controller, }
+\item[{int}]{duration}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_control_panel_interface_ac3c6750d8f96e095fae229583dd7122c}
+
+
+Call this to tell the control panel that the \hyperlink{class_director}{Director}'s reward duration changed on the input controller. 
+
+Internally, this function calls \hyperlink{class_control_panel_interface_a559dc32a89a9e6824e72f316017f62d1}{reward\-Duration\-Was\-Changed()} with the input controller value. duration is the duration in milliseconds of the reward. 
+
+Definition at line 15 of file Control\-Panel\-Interface.\-cpp.
+
+\hypertarget{class_control_panel_interface_a559dc32a89a9e6824e72f316017f62d1}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!reward\-Duration\-Was\-Changed@{reward\-Duration\-Was\-Changed}}
+\index{reward\-Duration\-Was\-Changed@{reward\-Duration\-Was\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{reward\-Duration\-Was\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::reward\-Duration\-Was\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{controller}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_control_panel_interface_a559dc32a89a9e6824e72f316017f62d1}
+
+
+Called when the \hyperlink{class_director}{Director}'s reward duration was changed on the input controller. This function informs the control panel hardware of this change. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_control_panel_interface_ac3c6750d8f96e095fae229583dd7122c}{reward\-Duration\-Changed()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_f_p_interface_ac5732fcfe16d3a3a4dfa5aaae9658663}{F\-P\-Interface}.
+
+\hypertarget{class_control_panel_interface_a92942ce52b74c7e9d96fe05f5987ef50}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!status\-Changed@{status\-Changed}}
+\index{status\-Changed@{status\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{status\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Control\-Panel\-Interface\-::status\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}}\label{class_control_panel_interface_a92942ce52b74c7e9d96fe05f5987ef50}
+
+
+Call this to tell the control panel that the \hyperlink{class_director}{Director}'s status has changed. 
+
+Internally, this function calls \hyperlink{class_control_panel_interface_a77f71357afc1feb5013ebec7a4e01ee3}{status\-Was\-Changed()}. 
+
+Definition at line 57 of file Control\-Panel\-Interface.\-h.
+
+\hypertarget{class_control_panel_interface_a77f71357afc1feb5013ebec7a4e01ee3}{\index{Control\-Panel\-Interface@{Control\-Panel\-Interface}!status\-Was\-Changed@{status\-Was\-Changed}}
+\index{status\-Was\-Changed@{status\-Was\-Changed}!ControlPanelInterface@{Control\-Panel\-Interface}}
+\subsubsection[{status\-Was\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Control\-Panel\-Interface\-::status\-Was\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_control_panel_interface_a77f71357afc1feb5013ebec7a4e01ee3}
+
+
+Called when the \hyperlink{class_director}{Director}'s status duration was changed . This function informs the control panel hardware of this change. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_control_panel_interface_a92942ce52b74c7e9d96fe05f5987ef50}{status\-Changed()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_f_p_interface_ae096571c8ac5e609915ddab1a8608be9}{F\-P\-Interface}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/engine/Control\-Panel\-Interface.\-h\item 
+source/common/engine/Control\-Panel\-Interface.\-cpp\end{DoxyCompactItemize}

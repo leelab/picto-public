@@ -1,0 +1,42 @@
+\hypertarget{struct_picto_1_1_terminate_command_handler}{\section{Picto\-:\-:Terminate\-Command\-Handler Struct Reference}
+\label{struct_picto_1_1_terminate_command_handler}\index{Picto\-::\-Terminate\-Command\-Handler@{Picto\-::\-Terminate\-Command\-Handler}}
+}
+
+
+Handles the T\-E\-R\-M\-I\-N\-A\-T\-E command.  
+
+
+
+
+{\ttfamily \#include $<$Terminate\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Terminate\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_picto_1_1_terminate_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_terminate_command_handler_aaeddee1aa161cd3a9adcbf8057ebcb66}{Q\-String \hyperlink{struct_picto_1_1_terminate_command_handler_aaeddee1aa161cd3a9adcbf8057ebcb66}{method} ()}\label{struct_picto_1_1_terminate_command_handler_aaeddee1aa161cd3a9adcbf8057ebcb66}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this \hyperlink{struct_picto_1_1_protocol_command_handler}{Protocol\-Command\-Handler} handles. \end{DoxyCompactList}\item 
+\hypertarget{struct_picto_1_1_terminate_command_handler_a29d749732cd87345b773c971282e2087}{Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} $>$ \hyperlink{struct_picto_1_1_terminate_command_handler_a29d749732cd87345b773c971282e2087}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} $>$)}\label{struct_picto_1_1_terminate_command_handler_a29d749732cd87345b773c971282e2087}
+
+\begin{DoxyCompactList}\small\item\em Processes the input \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command}, triggering any necessary logic based on the command contents, and returns an appropriate \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles the T\-E\-R\-M\-I\-N\-A\-T\-E command. 
+
+This command is supposed to terminate the connection (and was tested to do so). However, I never really saw the need to do this, so it isn't really used. 
+
+Definition at line 19 of file Terminate\-Command\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Terminate\-Command\-Handler.\-h\item 
+source/common/protocol/Terminate\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

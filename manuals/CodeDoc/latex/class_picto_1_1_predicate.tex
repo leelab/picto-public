@@ -1,0 +1,71 @@
+\hypertarget{class_picto_1_1_predicate}{\section{Picto\-:\-:Predicate Class Reference}
+\label{class_picto_1_1_predicate}\index{Picto\-::\-Predicate@{Picto\-::\-Predicate}}
+}
+
+
+The base class for all logic predicates (examples\-: ==, $<$. $>$, etc)  
+
+
+
+
+{\ttfamily \#include $<$Predicate.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Predicate\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.967185cm]{class_picto_1_1_predicate}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_predicate_a3e7455e7405909146f27709ceec2e382}{virtual bool {\bfseries evaluate} (\hyperlink{class_picto_1_1_parameter}{Parameter} \&L\-H\-S, \hyperlink{class_picto_1_1_parameter}{Parameter} \&R\-H\-S)=0}\label{class_picto_1_1_predicate_a3e7455e7405909146f27709ceec2e382}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_a64eac4fce0318f03017a49e36cab3042}{virtual bool {\bfseries evaluate} (\hyperlink{class_picto_1_1_parameter}{Parameter} \&L\-H\-S, Q\-Variant R\-H\-S)=0}\label{class_picto_1_1_predicate_a64eac4fce0318f03017a49e36cab3042}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_ae5d52556294bb5102f7d3097aab50a76}{Q\-Image {\bfseries to\-Q\-Image} ()}\label{class_picto_1_1_predicate_ae5d52556294bb5102f7d3097aab50a76}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_a7a44483e0f575a84ad3fd6cea3f8a78e}{Q\-String {\bfseries to\-String} ()}\label{class_picto_1_1_predicate_a7a44483e0f575a84ad3fd6cea3f8a78e}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_a75f2bde520d647e40ae3347b9870a497}{Q\-String {\bfseries name} ()}\label{class_picto_1_1_predicate_a75f2bde520d647e40ae3347b9870a497}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_predicate_aa887b9849f3905bd94d6994c50ffce99}{Q\-String {\bfseries name\-\_\-}}\label{class_picto_1_1_predicate_aa887b9849f3905bd94d6994c50ffce99}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_a6e10f1c005e76b496b3e9f4434eee4ea}{Q\-Image {\bfseries icon\-\_\-}}\label{class_picto_1_1_predicate_a6e10f1c005e76b496b3e9f4434eee4ea}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_a5d896af45f950a33822433b823b53387}{Q\-String {\bfseries predicate\-String\-\_\-}}\label{class_picto_1_1_predicate_a5d896af45f950a33822433b823b53387}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The base class for all logic predicates (examples\-: ==, $<$. $>$, etc) 
+
+In a state machine, we are constantly evaluating logical expressions. For example the expression \char`\"{}trial $<$ 10\char`\"{} might be used to determine a branching path Since the state machine is G\-U\-I based, and does not involve writing code, we are using predicates, predicate\-Expressions, and Compound\-Expressions to control these branches.
+
+The predicate class is a base class which all predicates must inherit.
+
+Possible predicates\-: $<$ $>$ $<$= \subsection*{$>$= }
+
+!= javascript
+
+N\-O\-T\-E\-: This was an early class, and is probably over-\/engineered. Feel free to refactor. 
+
+Definition at line 40 of file Predicate.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Predicate.\-h\item 
+source/common/statemachine/Predicate.\-cpp\end{DoxyCompactItemize}

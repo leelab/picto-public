@@ -1,0 +1,252 @@
+\hypertarget{class_stored_session_data}{\section{Stored\-Session\-Data Class Reference}
+\label{class_stored_session_data}\index{Stored\-Session\-Data@{Stored\-Session\-Data}}
+}
+
+
+Handles long term storage of session data in an S\-Q\-L file.  
+
+
+
+
+{\ttfamily \#include $<$Stored\-Session\-Data.\-h$>$}
+
+Inheritance diagram for Stored\-Session\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_stored_session_data}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_stored_session_data_ad5633aa27b748431e835a6be90c04238}{\hyperlink{class_stored_session_data_ad5633aa27b748431e835a6be90c04238}{Stored\-Session\-Data} (Q\-String session\-Path, Q\-String database\-File\-Name)}\label{class_stored_session_data_ad5633aa27b748431e835a6be90c04238}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object that will put Session data in a Sqlite database in the session\-Path with the database\-File\-Name name. \end{DoxyCompactList}\item 
+\hypertarget{class_stored_session_data_a71ce0fb4b14e50493e38515927205ac8}{virtual \hyperlink{class_stored_session_data_a71ce0fb4b14e50493e38515927205ac8}{$\sim$\-Stored\-Session\-Data} ()}\label{class_stored_session_data_a71ce0fb4b14e50493e38515927205ac8}
+
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object is deleted. Closes all Sqlite database resources. \end{DoxyCompactList}\item 
+void \hyperlink{class_stored_session_data_a7c5b3706fb59f7e63e4cf56a47c7de01}{set\-Session\-Id} (Q\-Uuid session\-Id)
+\begin{DoxyCompactList}\small\item\em Sets the Session\-Id of the session that will use this \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info} (int data\-Type, Q\-String table\-Name, Q\-String column\-Names, Q\-String column\-Types, Q\-String indexed\-Columns=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Stores information about the S\-Q\-L table that should be used to store data for different data types. \end{DoxyCompactList}\item 
+void \hyperlink{class_stored_session_data_ab187a23f5736693963806ea948fb5abf}{build\-Table\-Indeces} ()
+\begin{DoxyCompactList}\small\item\em Builds all table indeces that were requested in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()}. \end{DoxyCompactList}\item 
+void \hyperlink{class_stored_session_data_a97072a76c46132af05e9f49c6862817c}{insert\-Data} (int data\-Type, Q\-Variant\-List data)
+\begin{DoxyCompactList}\small\item\em Inserts the input data of the input data\-Type into this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write} (Q\-String $\ast$error=N\-U\-L\-L)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_ab41387e7d78a4261524a201c78d1bb97}{Session\-Data\-::start\-Data\-Write()} to setup the Sql\-Query that will be used and start a S\-Q\-L transaction. \end{DoxyCompactList}\item 
+void \hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data} (int data\-Type, Q\-Variant\-List data)
+\begin{DoxyCompactList}\small\item\em Writes the input data to the S\-Q\-L database by creating an S\-Q\-L query according to the information entered in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} for the input data\-Type. \end{DoxyCompactList}\item 
+bool \hyperlink{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}{end\-Data\-Write} (Q\-String $\ast$error=N\-U\-L\-L)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_aae9d3e70ed86c81f56f5c063d1a2ff2f}{Session\-Data\-::end\-Data\-Write()} to commit the S\-Q\-L transaction that was opened in \hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()} and get rid of the Sql\-Query. \end{DoxyCompactList}\item 
+\hypertarget{class_stored_session_data_a621a4d2c9f1b39ac70bc3f2012538465}{Q\-List$<$ int $>$ \hyperlink{class_stored_session_data_a621a4d2c9f1b39ac70bc3f2012538465}{read\-Data\-Types} ()}\label{class_stored_session_data_a621a4d2c9f1b39ac70bc3f2012538465}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_a4b879f10ecfbfcaa12c2dbbc1b15bdff}{Session\-Data\-::read\-Data\-Types()} to return all the data\-Types that have had their S\-Q\-L table information set up in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()}. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant\-List $>$ \hyperlink{class_stored_session_data_a5d352c72945a9a5ec4ef9d29c83a283b}{read\-Data} (int data\-Type, Q\-Variant condition, bool cut=false)
+\item 
+\hypertarget{class_stored_session_data_a46c183f3e894ce39113e67c9bbfdeaa5}{virtual void \hyperlink{class_stored_session_data_a46c183f3e894ce39113e67c9bbfdeaa5}{erase\-Everything} ()}\label{class_stored_session_data_a46c183f3e894ce39113e67c9bbfdeaa5}
+
+\begin{DoxyCompactList}\small\item\em Implements Session\-Data\-::erase\-Everything() to do nothing and trigger an assertion since this function should never be called on objects of this class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Handles long term storage of session data in an S\-Q\-L file. 
+
+This is meant to be used with \hyperlink{class_cached_session_data}{Cached\-Session\-Data} objects. Those objects should periodically move their data to a \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object using \hyperlink{class_session_data_a15c17ef02068f6ec8bf717044c21b487}{move\-Data\-To()}. The \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object writes the data to an S\-Q\-L file according to the table structure entered in the \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} function. This object also supports setting up of S\-Q\-L indeces by using the \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} function to define index columns and calling \hyperlink{class_stored_session_data_ab187a23f5736693963806ea948fb5abf}{build\-Table\-Indeces()} to actually create them (typically when a Session is ending). Individual values can be entered into the object by using \hyperlink{class_stored_session_data_a97072a76c46132af05e9f49c6862817c}{insert\-Data()}. \begin{DoxyNote}{Note}
+This object groups batched \hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data()} operations into a single S\-Q\-L transaction. See \hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()} for more details. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Stored\-Session\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_stored_session_data_ab187a23f5736693963806ea948fb5abf}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!build\-Table\-Indeces@{build\-Table\-Indeces}}
+\index{build\-Table\-Indeces@{build\-Table\-Indeces}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{build\-Table\-Indeces}]{\setlength{\rightskip}{0pt plus 5cm}void Stored\-Session\-Data\-::build\-Table\-Indeces (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_stored_session_data_ab187a23f5736693963806ea948fb5abf}
+
+
+Builds all table indeces that were requested in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()}. 
+
+This should typically be done only at the end of a session. See \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} documentation for more details. 
+
+Definition at line 131 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!end\-Data\-Write@{end\-Data\-Write}}
+\index{end\-Data\-Write@{end\-Data\-Write}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{end\-Data\-Write}]{\setlength{\rightskip}{0pt plus 5cm}bool Stored\-Session\-Data\-::end\-Data\-Write (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{error = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}
+
+
+Implements \hyperlink{class_session_data_aae9d3e70ed86c81f56f5c063d1a2ff2f}{Session\-Data\-::end\-Data\-Write()} to commit the S\-Q\-L transaction that was opened in \hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()} and get rid of the Sql\-Query. 
+
+Since we put all batched \hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data()} calls into a single transaction, the actual writing of the data to the underlying database doesn't happen until this function is called. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()}, \hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_session_data_aae9d3e70ed86c81f56f5c063d1a2ff2f}{Session\-Data}.
+
+
+
+Definition at line 205 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a97072a76c46132af05e9f49c6862817c}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!insert\-Data@{insert\-Data}}
+\index{insert\-Data@{insert\-Data}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{insert\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Stored\-Session\-Data\-::insert\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-Variant\-List}]{data}
+\end{DoxyParamCaption}
+)}}\label{class_stored_session_data_a97072a76c46132af05e9f49c6862817c}
+
+
+Inserts the input data of the input data\-Type into this object. 
+
+Internally, this just sends the inputs to \hyperlink{class_session_data_a7cc8594766473824c591396b187354ad}{add\-Data()}. 
+
+Definition at line 149 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a5d352c72945a9a5ec4ef9d29c83a283b}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!read\-Data@{read\-Data}}
+\index{read\-Data@{read\-Data}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{read\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant\-List $>$ Stored\-Session\-Data\-::read\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-Variant}]{condition, }
+\item[{bool}]{cut = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_stored_session_data_a5d352c72945a9a5ec4ef9d29c83a283b}
+\textbackslash{} brief Implements \hyperlink{class_session_data}{Session\-Data}\-:\hyperlink{class_stored_session_data_a5d352c72945a9a5ec4ef9d29c83a283b}{read\-Data()} to read out all data from the underlying S\-Q\-L database for the input data\-Type.
+
+Each value will be set up by retrieving data from the table for the input data\-Type in the order that the columns were set up in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} and putting it all together into a Q\-Variant\-List. Each Q\-Variant\-List is appended to a Q\-List$<$\-Q\-Variant\-List$>$ and returned.
+
+\begin{DoxyNote}{Note}
+The condition and cut parameters are not supported by this class. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_session_data_a81f4eb49b8a23eb9c1a1575abc2fad4c}{Session\-Data}.
+
+
+
+Definition at line 235 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a7c5b3706fb59f7e63e4cf56a47c7de01}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!set\-Session\-Id@{set\-Session\-Id}}
+\index{set\-Session\-Id@{set\-Session\-Id}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{set\-Session\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void Stored\-Session\-Data\-::set\-Session\-Id (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{session\-Id}
+\end{DoxyParamCaption}
+)}}\label{class_stored_session_data_a7c5b3706fb59f7e63e4cf56a47c7de01}
+
+
+Sets the Session\-Id of the session that will use this \hyperlink{class_stored_session_data}{Stored\-Session\-Data} object. 
+
+The Session\-Id is used in generating uniquely named database connections when multiple threads access this database. \begin{DoxySeeAlso}{See Also}
+get\-Session\-Db() 
+\end{DoxySeeAlso}
+
+
+Definition at line 81 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!set\-Table\-Info@{set\-Table\-Info}}
+\index{set\-Table\-Info@{set\-Table\-Info}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{set\-Table\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void Stored\-Session\-Data\-::set\-Table\-Info (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-String}]{table\-Name, }
+\item[{Q\-String}]{column\-Names, }
+\item[{Q\-String}]{column\-Types, }
+\item[{Q\-String}]{indexed\-Columns = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}
+
+
+Stores information about the S\-Q\-L table that should be used to store data for different data types. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\-Type} & An integer signifying the type of data to which these settings will apply. \\
+\hline
+{\em table\-Name} & The name of the table that will be used to store data for this data\-Type. \\
+\hline
+{\em column\-Names} & A comma separated string including the names of the columns that will be used to store data for this data\-Type (put spaces on both ends of the string, like \char`\"{} data\-Id,timestamp,value \char`\"{}). \\
+\hline
+{\em column\-Types} & A comma separated string including the Sqlite types of the columns that will be used to store data for this data\-Type (put spaces on both ends of the string, like \char`\"{} I\-N\-T\-E\-G\-E\-R U\-N\-I\-Q\-U\-E O\-N C\-O\-N\-F\-L\-I\-C\-T R\-E\-P\-L\-A\-C\-E,\-R\-E\-A\-L,\-T\-E\-X\-T \char`\"{}). \\
+\hline
+{\em indexed\-Columns} & A comma separated string including the names of the columns that will be indexed for fast lookup by the Sqlite system for this data\-Type (put spaces on both ends of the string, like \char`\"{} data\-Id,timestamp \char`\"{}).\\
+\hline
+\end{DoxyParams}
+This function actually creates the necessary table in the Sql database if it doesn't already exist. \begin{DoxyNote}{Note}
+The indeces are not built when you call this function. Once indeces are built, additions to the S\-Q\-L table can take significantly longer. For this reason, we only want to add indeces at the end of the session. To do that you must use \hyperlink{class_stored_session_data_ab187a23f5736693963806ea948fb5abf}{build\-Table\-Indeces()}. 
+\end{DoxyNote}
+
+
+Definition at line 101 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!start\-Data\-Write@{start\-Data\-Write}}
+\index{start\-Data\-Write@{start\-Data\-Write}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{start\-Data\-Write}]{\setlength{\rightskip}{0pt plus 5cm}bool Stored\-Session\-Data\-::start\-Data\-Write (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{error = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}
+
+
+Implements \hyperlink{class_session_data_ab41387e7d78a4261524a201c78d1bb97}{Session\-Data\-::start\-Data\-Write()} to setup the Sql\-Query that will be used and start a S\-Q\-L transaction. 
+
+We put all batched \hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data()} calls into a single transaction for significant runtime savings. 
+
+Reimplemented from \hyperlink{class_session_data_ab41387e7d78a4261524a201c78d1bb97}{Session\-Data}.
+
+
+
+Definition at line 159 of file Stored\-Session\-Data.\-cpp.
+
+\hypertarget{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{\index{Stored\-Session\-Data@{Stored\-Session\-Data}!write\-Data@{write\-Data}}
+\index{write\-Data@{write\-Data}!StoredSessionData@{Stored\-Session\-Data}}
+\subsubsection[{write\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Stored\-Session\-Data\-::write\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-Variant\-List}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}
+
+
+Writes the input data to the S\-Q\-L database by creating an S\-Q\-L query according to the information entered in \hyperlink{class_stored_session_data_a4e05e7d7c7bcffe7d0ab20baac3ff115}{set\-Table\-Info()} for the input data\-Type. 
+
+\hyperlink{class_stored_session_data_aa9d7f702ecdb5b2c3277f29f552329e3}{write\-Data()} calls are always in between \hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()} and \hyperlink{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}{end\-Data\-Write()} calls. For the purpose of runtime savings, these surrounding functions setup and commit an S\-Q\-L transaction such that no actual writing of data to the S\-Q\-L database is occuring during this function. It only occurs when \hyperlink{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}{end\-Data\-Write()} is called. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_stored_session_data_a9ff975024ea9a09048a8e7e14129b357}{start\-Data\-Write()}, \hyperlink{class_stored_session_data_a9b226228a31f0721eb58a593f6293aa2}{end\-Data\-Write()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_session_data_ad05a594d8410d638f1a066bfa5a10ba3}{Session\-Data}.
+
+
+
+Definition at line 185 of file Stored\-Session\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/connections/Stored\-Session\-Data.\-h\item 
+source/server/connections/Stored\-Session\-Data.\-cpp\end{DoxyCompactItemize}

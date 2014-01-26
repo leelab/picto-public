@@ -1,0 +1,152 @@
+\hypertarget{class_main_window}{\section{Main\-Window Class Reference}
+\label{class_main_window}\index{Main\-Window@{Main\-Window}}
+}
+
+
+The main window for the Workstation app.  
+
+
+
+
+{\ttfamily \#include $<$mainwindow.\-h$>$}
+
+Inheritance diagram for Main\-Window\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_window}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_main_window_a2a369ca87439ec2451edff17f94dd245}{void {\bfseries open\-Document} ()}\label{class_main_window_a2a369ca87439ec2451edff17f94dd245}
+
+\item 
+\hypertarget{class_main_window_ace97ff3002e26b7e851e44c27bf4feb1}{void {\bfseries save\-Document} ()}\label{class_main_window_ace97ff3002e26b7e851e44c27bf4feb1}
+
+\item 
+\hypertarget{class_main_window_a252ad8561a072e1b986842e78818ea09}{void {\bfseries close\-Document} (int index=-\/1)}\label{class_main_window_a252ad8561a072e1b986842e78818ea09}
+
+\item 
+\hypertarget{class_main_window_a3598b641eda59f12e6ed53c0a39b6ae0}{void {\bfseries new\-Document} ()}\label{class_main_window_a3598b641eda59f12e6ed53c0a39b6ae0}
+
+\item 
+\hypertarget{class_main_window_ac4ebdf2c1008b8b1e2312fb15dd26374}{void {\bfseries add\-Shape} ()}\label{class_main_window_ac4ebdf2c1008b8b1e2312fb15dd26374}
+
+\item 
+\hypertarget{class_main_window_ab3b7aa3db44ca899a57eeafa3aa90d11}{void {\bfseries remove\-Shape} ()}\label{class_main_window_ab3b7aa3db44ca899a57eeafa3aa90d11}
+
+\item 
+\hypertarget{class_main_window_aa2a6bc69d6062689931055fad28b9048}{void {\bfseries toggle\-Clipping} ()}\label{class_main_window_aa2a6bc69d6062689931055fad28b9048}
+
+\item 
+\hypertarget{class_main_window_a00f623c134f2421a8ae5e097bc704026}{void {\bfseries begin\-Debug} ()}\label{class_main_window_a00f623c134f2421a8ae5e097bc704026}
+
+\item 
+void \hyperlink{class_main_window_ae4b78713e2b3d9b1fe8544029cc32e60}{start\-Session} ()
+\begin{DoxyCompactList}\small\item\em Starts a session. \end{DoxyCompactList}\item 
+void \hyperlink{class_main_window_a843c6d6362c897099c43ad2d65352d5d}{run\-Task} ()
+\begin{DoxyCompactList}\small\item\em runs a task. \end{DoxyCompactList}\item 
+\hypertarget{class_main_window_a7be6a5d98970ac1a6296c6f9aee1e9bb}{void {\bfseries about} ()}\label{class_main_window_a7be6a5d98970ac1a6296c6f9aee1e9bb}
+
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_main_window_a613d818a5a471cbe170adf837a117b59}{void \hyperlink{class_main_window_a613d818a5a471cbe170adf837a117b59}{error} (Q\-String error\-Type, Q\-String error\-Text)}\label{class_main_window_a613d818a5a471cbe170adf837a117b59}
+
+\begin{DoxyCompactList}\small\item\em This does not appear to be used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_main_window_a8b244be8b7b7db1b08de2a2acb9409db}{{\bfseries Main\-Window} (Q\-Widget $\ast$parent=0)}\label{class_main_window_a8b244be8b7b7db1b08de2a2acb9409db}
+
+\item 
+\hypertarget{class_main_window_adf49ab7cecde8a49010fe32e276c63b5}{void {\bfseries add\-Document} (\hyperlink{class_document}{Document} $\ast$doc)}\label{class_main_window_adf49ab7cecde8a49010fe32e276c63b5}
+
+\item 
+\hypertarget{class_main_window_acfdd14cad355ca58d60fd6fa694a58d1}{void {\bfseries remove\-Document} (\hyperlink{class_document}{Document} $\ast$doc)}\label{class_main_window_acfdd14cad355ca58d60fd6fa694a58d1}
+
+\item 
+\hypertarget{class_main_window_a67ebc2b9af1051deb93c7316e4ddfd1f}{void {\bfseries set\-Current\-Document} (\hyperlink{class_document}{Document} $\ast$doc)}\label{class_main_window_a67ebc2b9af1051deb93c7316e4ddfd1f}
+
+\item 
+\hypertarget{class_main_window_afa31ff82cd6a5a3ee67eccec30c8e608}{\hyperlink{class_document}{Document} $\ast$ {\bfseries current\-Document} () const }\label{class_main_window_afa31ff82cd6a5a3ee67eccec30c8e608}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_main_window_a4e20a4a065fbb0e4d3532a45a0a91425}{void \hyperlink{class_main_window_a4e20a4a065fbb0e4d3532a45a0a91425}{close\-Event} (Q\-Close\-Event $\ast$event)}\label{class_main_window_a4e20a4a065fbb0e4d3532a45a0a91425}
+
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_main_window}{Main\-Window} is told to close. Calls about\-To\-Quit() on all of the viewers. If nothing objects, the latest settings are written to disk and the close can proceed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main window for the Workstation app. 
+
+This window includes multiple \char`\"{}\-Modes\char`\"{} which are accessed by a toolbar on the left of the window. At the moment, the modes are\-:
+\begin{DoxyItemize}
+\item A State\-Machine\-Editor -\/ A graphical state machine based development environment that is used to design \hyperlink{namespace_picto}{Picto} Experiments and their Analysis.
+\item A \hyperlink{class_test_viewer}{Test\-Viewer} -\/ A test environment where Experiments and Analyses can be run and debugged before being deployed in a real experimental Session.
+\item A \hyperlink{class_remote_viewer}{Remote\-Viewer} -\/ A control panel that is used to start an experimental session on a Director/\-Proxy system, view it in real time, control its operation, and interact with the experiment subject.
+\item A \hyperlink{class_replay_viewer}{Replay\-Viewer} -\/ A playback system that allows for replaying completed experimental Sessions, recording their activity to video, running Analysis on the Sessions, and saving the Analysis output to disk.
+\end{DoxyItemize}
+
+While each of these Workstation modes functions to a great extent in its own world, there are some loose ties between all Viewers. The main tie between all of these viewers is a \char`\"{}current design file.\char`\"{} The Workstation as whole always has a design file loaded. The Design stored in the design file's X\-M\-L has different functions in each \hyperlink{class_viewer}{Viewer}. In the State\-Machine\-Editor, the design is what is being created and edited. In the \hyperlink{class_test_viewer}{Test\-Viewer} the design is what is being run and tested. In the \hyperlink{class_remote_viewer}{Remote\-Viewer} the design is what is being sent over to a \hyperlink{class_director}{Director} in order to run an experimental Session. In the \hyperlink{class_replay_viewer}{Replay\-Viewer}, the design defines the Analyses that can be imported into the currently loaded Session files in order to gather data that may not have been considered when a Session was first run.
+
+This window also includes some simple menus with functionality for saving the current Design, opening a new Design from different types of files, changing the System number (\hyperlink{namespace_picto}{Picto} applications only communicate with the \hyperlink{class_server}{Server} that has their System number) and retrieving broad \char`\"{}about\char`\"{} information on the \hyperlink{namespace_picto}{Picto} system. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 40 of file mainwindow.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_main_window_a843c6d6362c897099c43ad2d65352d5d}{\index{Main\-Window@{Main\-Window}!run\-Task@{run\-Task}}
+\index{run\-Task@{run\-Task}!MainWindow@{Main\-Window}}
+\subsubsection[{run\-Task}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::run\-Task (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_main_window_a843c6d6362c897099c43ad2d65352d5d}
+
+
+runs a task. 
+
+This action should only be enabled if a session has been started. A quick dialog box is popped up allowing the user to select the task to start.
+
+At some point in the near future, we'll actually need to do more after starting a task, but at the moment, we simply start it remotely. (Eventually, we'll need to display the behavioral input and state machine stuff on the user screen). 
+
+Definition at line 646 of file mainwindow.\-cpp.
+
+\hypertarget{class_main_window_ae4b78713e2b3d9b1fe8544029cc32e60}{\index{Main\-Window@{Main\-Window}!start\-Session@{start\-Session}}
+\index{start\-Session@{start\-Session}!MainWindow@{Main\-Window}}
+\subsubsection[{start\-Session}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::start\-Session (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_main_window_ae4b78713e2b3d9b1fe8544029cc32e60}
+
+
+Starts a session. 
+
+This is called when the user selects Run/\-Start Session. The user selects an X\-M\-L experiment file, and a \hyperlink{class_director}{Director} instance, and then a session is started
+
+We will probably want to change this in the future, since the expeiment to be loaded will probably be the one that the user is currently editing, but since the editor isn't built yet, this approach will be great for testing. 
+
+Definition at line 620 of file mainwindow.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/mainwindow.\-h\item 
+source/workstation/\-Old workstation/mainwindow.\-h\item 
+source/workstation/mainwindow.\-cpp\item 
+source/workstation/\-Old workstation/mainwindow.\-cpp\end{DoxyCompactItemize}

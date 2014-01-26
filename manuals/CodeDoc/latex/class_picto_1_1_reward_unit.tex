@@ -1,0 +1,95 @@
+\hypertarget{class_picto_1_1_reward_unit}{\section{Picto\-:\-:Reward\-Unit Class Reference}
+\label{class_picto_1_1_reward_unit}\index{Picto\-::\-Reward\-Unit@{Picto\-::\-Reward\-Unit}}
+}
+
+
+Stores information about the default reward delivery time on a particular channel when a simple reward button press occurs.  
+
+
+
+
+{\ttfamily \#include $<$Reward\-Unit.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Reward\-Unit\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_reward_unit}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_reward_unit_adda8f66329df0bb15591a7d24a430c2f}{Reward\-Unit} (int channel, int duration)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit} object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_unit_a543b40dc556a7b41d0a38951a8659efb}{virtual bool \hyperlink{class_picto_1_1_reward_unit_a543b40dc556a7b41d0a38951a8659efb}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_reward_unit_a543b40dc556a7b41d0a38951a8659efb}
+
+\begin{DoxyCompactList}\small\item\em Turns the \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit} into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_unit_a8fec043d14d53c6feb5032624bb15bd3}{virtual bool \hyperlink{class_picto_1_1_reward_unit_a8fec043d14d53c6feb5032624bb15bd3}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_reward_unit_a8fec043d14d53c6feb5032624bb15bd3}
+
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit} object. Note that this deletes any existing data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_unit_a9db98bab0226e5c9c1fe59f3f16003ed}{void \hyperlink{class_picto_1_1_reward_unit_a9db98bab0226e5c9c1fe59f3f16003ed}{set\-Duration} (int duration)}\label{class_picto_1_1_reward_unit_a9db98bab0226e5c9c1fe59f3f16003ed}
+
+\begin{DoxyCompactList}\small\item\em Sets the input number of milliseconds as the default duration for this \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_unit_a2e351bfb4afe4cac9ed66f3b4c424c2d}{int \hyperlink{class_picto_1_1_reward_unit_a2e351bfb4afe4cac9ed66f3b4c424c2d}{get\-Duration} ()}\label{class_picto_1_1_reward_unit_a2e351bfb4afe4cac9ed66f3b4c424c2d}
+
+\begin{DoxyCompactList}\small\item\em Gets the number of milliseconds of reward for this \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_unit_a17ea687b64e2838f6ca0d7944b2f713c}{int \hyperlink{class_picto_1_1_reward_unit_a17ea687b64e2838f6ca0d7944b2f713c}{get\-Channel} ()}\label{class_picto_1_1_reward_unit_a17ea687b64e2838f6ca0d7944b2f713c}
+
+\begin{DoxyCompactList}\small\item\em Gets the channel for which this \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit} stores the default reward duration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_unit_ab9c51fc1295e0303e669cd586827142d}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_reward_unit_ab9c51fc1295e0303e669cd586827142d}
+
+\item 
+\hypertarget{class_picto_1_1_reward_unit_ac46615f6e3dceef4af7c9c700ef6b852}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_reward_unit_ac46615f6e3dceef4af7c9c700ef6b852}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores information about the default reward delivery time on a particular channel when a simple reward button press occurs. 
+
+This stores the default duration of a reward on the stored channel. This is the quantity supplied when the reward button is pressed on the Pictobox or the reward button on the workstation is pressed. These systems are synchronized by using this Data\-Type such that they always include the same reward quantity. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Reward\-Unit.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_reward_unit_adda8f66329df0bb15591a7d24a430c2f}{\index{Picto\-::\-Reward\-Unit@{Picto\-::\-Reward\-Unit}!Reward\-Unit@{Reward\-Unit}}
+\index{Reward\-Unit@{Reward\-Unit}!Picto::RewardUnit@{Picto\-::\-Reward\-Unit}}
+\subsubsection[{Reward\-Unit}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Reward\-Unit\-::\-Reward\-Unit (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{int}]{duration}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_reward_unit_adda8f66329df0bb15591a7d24a430c2f}
+
+
+Constructs a \hyperlink{class_picto_1_1_reward_unit}{Reward\-Unit} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duration} & The duration of the reward delivery in milliseconds. \\
+\hline
+{\em channel} & The reward channel for which this is the default duration. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 17 of file Reward\-Unit.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Reward\-Unit.\-h\item 
+source/common/storage/Reward\-Unit.\-cpp\end{DoxyCompactItemize}

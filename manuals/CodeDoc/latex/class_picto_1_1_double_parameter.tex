@@ -1,0 +1,191 @@
+\hypertarget{class_picto_1_1_double_parameter}{\section{Picto\-:\-:Double\-Parameter Class Reference}
+\label{class_picto_1_1_double_parameter}\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}}
+}
+
+
+A simple parameter for holding a floating point numeric value.  
+
+
+
+
+{\ttfamily \#include $<$Double\-Parameter.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Double\-Parameter\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{class_picto_1_1_double_parameter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_double_parameter_a28d4cc0c39756c4bd6f2c326f881d844}{Double\-Parameter} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_picto_1_1_double_parameter}{Double\-Parameter}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_double_parameter_afc23ed375e032fb62a229048cf3e4504}{double \hyperlink{class_picto_1_1_double_parameter_afc23ed375e032fb62a229048cf3e4504}{get\-Value} ()}\label{class_picto_1_1_double_parameter_afc23ed375e032fb62a229048cf3e4504}
+
+\begin{DoxyCompactList}\small\item\em Returns the current value of this \hyperlink{class_picto_1_1_parameter}{Parameter}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_double_parameter_a90503201f468995d8fbe2ed25487adf8}{void \hyperlink{class_picto_1_1_double_parameter_a90503201f468995d8fbe2ed25487adf8}{set\-Value} (double val)}\label{class_picto_1_1_double_parameter_a90503201f468995d8fbe2ed25487adf8}
+
+\begin{DoxyCompactList}\small\item\em Sets the current value of this \hyperlink{class_picto_1_1_parameter}{Parameter} to the input. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_double_parameter_a7d3466cfd2a2d6bfafce9666471725d4}{virtual Q\-String \hyperlink{class_picto_1_1_double_parameter_a7d3466cfd2a2d6bfafce9666471725d4}{get\-U\-I\-Template} ()}\label{class_picto_1_1_double_parameter_a7d3466cfd2a2d6bfafce9666471725d4}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_double_parameter_aa501e011a63d3b44f45009ba9f8219f6}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_double_parameter_a7b8c4548959c8d7d4b8951b9fa24c752}{values\-Are\-Valid} (Q\-String \&warning=Q\-String())
+\begin{DoxyCompactList}\small\item\em Returns true if this Parameters current \hyperlink{class_picto_1_1_property}{Property} values are valid. Returns false otherwise. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_double_parameter_a4e3dea82bf5d16c1e9c556f716989022}{fix\-Values} ()
+\begin{DoxyCompactList}\small\item\em Fixes values that are outside of valid ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_double_parameter_ad98013ee04a3aabcfbc35844fd7a8994}{static \hyperlink{class_picto_1_1_parameter}{Parameter} $\ast$ \hyperlink{class_picto_1_1_double_parameter_ad98013ee04a3aabcfbc35844fd7a8994}{New\-Parameter} ()}\label{class_picto_1_1_double_parameter_ad98013ee04a3aabcfbc35844fd7a8994}
+
+\begin{DoxyCompactList}\small\item\em The New\-Parameter is not used anymore by anything except the obsolete Engine\-Test. It should be removed. \hyperlink{class_picto_1_1_double_parameter_a5f16551d37fb0a7aa83a8896e73bf8ee}{Create()} is now the function to use. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_double_parameter_a5f16551d37fb0a7aa83a8896e73bf8ee}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_double_parameter_a5f16551d37fb0a7aa83a8896e73bf8ee}{Create} ()}\label{class_picto_1_1_double_parameter_a5f16551d37fb0a7aa83a8896e73bf8ee}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_double_parameter}{Double\-Parameter} and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_double_parameter_a9bc0ba6583175dfc34736098ca496fd0}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_double_parameter_a9c0c23222d1dacbe7f4a8d0914c52188}{virtual bool \hyperlink{class_picto_1_1_double_parameter_a9c0c23222d1dacbe7f4a8d0914c52188}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_double_parameter_a9c0c23222d1dacbe7f4a8d0914c52188}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_parameter_a94c0e4191ffcc0bd642b647d24557082}{Parameter\-::validate\-Object()} to verify that the Min parameter is less than or equal to the Max \hyperlink{class_picto_1_1_parameter}{Parameter}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_double_parameter_a6217f0440779497b46c72ab8abb665ef}{double \hyperlink{class_picto_1_1_double_parameter_a6217f0440779497b46c72ab8abb665ef}{value}}\label{class_picto_1_1_double_parameter_a6217f0440779497b46c72ab8abb665ef}
+
+\begin{DoxyCompactList}\small\item\em Sets/\-Gets the value of the \hyperlink{class_picto_1_1_parameter}{Parameter}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A simple parameter for holding a floating point numeric value. 
+
+Min and Max Properties are also provided to constrain the numeric value to a set range. The Value \hyperlink{class_picto_1_1_property}{Property} is runtime editable and appears as a numeric input widget in the \hyperlink{class_property_frame}{Property\-Frame}. The numeric value is accessible through the javascript \char`\"{}value\char`\"{} property as\-: 
+\begin{DoxyCode}
+DoubleParameterName.value = 0.26;
+var numVal = DoubleParameterName.value;
+\end{DoxyCode}
+ \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Double\-Parameter.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_double_parameter_a28d4cc0c39756c4bd6f2c326f881d844}{\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}!Double\-Parameter@{Double\-Parameter}}
+\index{Double\-Parameter@{Double\-Parameter}!Picto::DoubleParameter@{Picto\-::\-Double\-Parameter}}
+\subsubsection[{Double\-Parameter}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Double\-Parameter\-::\-Double\-Parameter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_double_parameter_a28d4cc0c39756c4bd6f2c326f881d844}
+
+
+Constructs a \hyperlink{class_picto_1_1_double_parameter}{Double\-Parameter}. 
+
+Adds a Double \hyperlink{class_picto_1_1_property}{Property} called Value to hold the current value. Adds a Double \hyperlink{class_picto_1_1_property}{Property} called Min to hold the minimum allowed value. Adds a Double \hyperlink{class_picto_1_1_property}{Property} called Max to hold the maximum allowed value. 
+
+Definition at line 11 of file Double\-Parameter.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_double_parameter_a4e3dea82bf5d16c1e9c556f716989022}{\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}!fix\-Values@{fix\-Values}}
+\index{fix\-Values@{fix\-Values}!Picto::DoubleParameter@{Picto\-::\-Double\-Parameter}}
+\subsubsection[{fix\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Double\-Parameter\-::fix\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_double_parameter_a4e3dea82bf5d16c1e9c556f716989022}
+
+
+Fixes values that are outside of valid ranges. 
+
+This is used during a live experiment to make sure that runtime editable values stay within their valid ranges. \begin{DoxyNote}{Note}
+There is some kind of bug here. We have noticed that even when values are updated by this function, the fixed values are not necessarily reflected either in the \hyperlink{class_property_frame}{Property\-Frame} or \hyperlink{class_property_browser}{Property\-Browser}. This is worth looking into in the future. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a219dc74f193fc0f25e813275a945b822}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 95 of file Double\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_double_parameter_aa501e011a63d3b44f45009ba9f8219f6}{\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::DoubleParameter@{Picto\-::\-Double\-Parameter}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Double\-Parameter\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_double_parameter_aa501e011a63d3b44f45009ba9f8219f6}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 43 of file Double\-Parameter.\-h.
+
+\hypertarget{class_picto_1_1_double_parameter_a9bc0ba6583175dfc34736098ca496fd0}{\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::DoubleParameter@{Picto\-::\-Double\-Parameter}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Double\-Parameter\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_double_parameter_a9bc0ba6583175dfc34736098ca496fd0}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_aacf1829d9c0e0dc44a7854412f3face6}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 50 of file Double\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_double_parameter_a7b8c4548959c8d7d4b8951b9fa24c752}{\index{Picto\-::\-Double\-Parameter@{Picto\-::\-Double\-Parameter}!values\-Are\-Valid@{values\-Are\-Valid}}
+\index{values\-Are\-Valid@{values\-Are\-Valid}!Picto::DoubleParameter@{Picto\-::\-Double\-Parameter}}
+\subsubsection[{values\-Are\-Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Double\-Parameter\-::values\-Are\-Valid (
+\begin{DoxyParamCaption}
+\item[{Q\-String \&}]{warning = {\ttfamily QString()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_double_parameter_a7b8c4548959c8d7d4b8951b9fa24c752}
+
+
+Returns true if this Parameters current \hyperlink{class_picto_1_1_property}{Property} values are valid. Returns false otherwise. 
+
+If this function returns false, the design will not pass validation (ie. compilation). Also, if the function returns false, a string describing the problem is loaded into the warning reference for printing out to the validation error window. 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 71 of file Double\-Parameter.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Double\-Parameter.\-h\item 
+source/common/parameter/Double\-Parameter.\-cpp\end{DoxyCompactItemize}

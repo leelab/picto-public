@@ -1,0 +1,181 @@
+\hypertarget{class_picto_1_1_reward_state}{\section{Picto\-:\-:Reward\-State Class Reference}
+\label{class_picto_1_1_reward_state}\index{Picto\-::\-Reward\-State@{Picto\-::\-Reward\-State}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract the data for reward deliveries and implement functions for traversing through that data.  
+
+
+
+
+{\ttfamily \#include $<$Reward\-State.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Reward\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_reward_state}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_state_a1d10829fe64ff324aba508d04931759d}{void \hyperlink{class_picto_1_1_reward_state_a1d10829fe64ff324aba508d04931759d}{reward\-Supplied} (double time, int duration, int channel)}\label{class_picto_1_1_reward_state_a1d10829fe64ff324aba508d04931759d}
+
+\begin{DoxyCompactList}\small\item\em Emitted when \hyperlink{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{move\-To\-Index()} moves the current time passed a new reward value. time is the time that the reward was supplied, duration is its duraiton in milliseconds, channel is the reward channel on which the reward was supplied. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_reward_state_a1794afa6d8216446ca38542393603004}{virtual void \hyperlink{class_picto_1_1_reward_state_a1794afa6d8216446ca38542393603004}{set\-Database} (Q\-Sql\-Database session)}\label{class_picto_1_1_reward_state_a1794afa6d8216446ca38542393603004}
+
+\begin{DoxyCompactList}\small\item\em Sets the input Sql Database to this \hyperlink{class_picto_1_1_data_state}{Data\-State} so that it can load all of the data relevant to it into R\-A\-M for quick access. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_reward_state_ac6bf96667f33664a7b5855b8098ed9f4}{start\-Run} (double run\-Start\-Time, double run\-End\-Time=-\/1)
+\begin{DoxyCompactList}\small\item\em Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_reward_state_a01fe049615bb7293f0e44daa762e5ef1}{get\-Current\-Index} ()
+\begin{DoxyCompactList}\small\item\em Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_reward_state_a3fa159fcfb0b0436339fed73b7338ae0}{get\-Next\-Index} (double look\-Forward\-Time)
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{move\-To\-Index} (\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} index)
+\begin{DoxyCompactList}\small\item\em Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_ae23411af6432905935fec68078877995}{virtual double \hyperlink{class_picto_1_1_reward_state_ae23411af6432905935fec68078877995}{get\-Latest\-Time} ()}\label{class_picto_1_1_reward_state_ae23411af6432905935fec68078877995}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest reward to have been supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a196211c084d75510458fb60a9b23d1f5}{virtual double \hyperlink{class_picto_1_1_reward_state_a196211c084d75510458fb60a9b23d1f5}{get\-Next\-Time} ()}\label{class_picto_1_1_reward_state_a196211c084d75510458fb60a9b23d1f5}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next reward to be supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a6f1c29667b4e2672443caadbe0f8d5bb}{virtual int \hyperlink{class_picto_1_1_reward_state_a6f1c29667b4e2672443caadbe0f8d5bb}{get\-Latest\-Duration} ()}\label{class_picto_1_1_reward_state_a6f1c29667b4e2672443caadbe0f8d5bb}
+
+\begin{DoxyCompactList}\small\item\em Returns the duration of the latest reward to have been supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a8a9fe068a5b0e6718343c21e5925a69f}{virtual int \hyperlink{class_picto_1_1_reward_state_a8a9fe068a5b0e6718343c21e5925a69f}{get\-Next\-Duration} ()}\label{class_picto_1_1_reward_state_a8a9fe068a5b0e6718343c21e5925a69f}
+
+\begin{DoxyCompactList}\small\item\em Returns the duration of the next reward to be supplied. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_ab5fdd7ffc306e9ffbc4d9e2ab6c19fcd}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_state_ab5fdd7ffc306e9ffbc4d9e2ab6c19fcd}{get\-Times\-Since} (double time)}\label{class_picto_1_1_reward_state_ab5fdd7ffc306e9ffbc4d9e2ab6c19fcd}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward times that occured with times $>$ the input time and $<$= the current time. From the input reward channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a32737cd71bb1dacc99211ef78fc943d2}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_state_a32737cd71bb1dacc99211ef78fc943d2}{get\-Times\-Until} (double time)}\label{class_picto_1_1_reward_state_a32737cd71bb1dacc99211ef78fc943d2}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward times that occured with times $>$ the current time and $<$= the input time. From the input reward channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a02a27b7a101d07f542bee34bdb3a504a}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_state_a02a27b7a101d07f542bee34bdb3a504a}{get\-Durations\-Since} (double time)}\label{class_picto_1_1_reward_state_a02a27b7a101d07f542bee34bdb3a504a}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward durations that occured with times $>$ the input time and $<$= the current time. From the input reward channel. There is a one to one matchup of values from this function to times from the \hyperlink{class_picto_1_1_reward_state_ab5fdd7ffc306e9ffbc4d9e2ab6c19fcd}{get\-Times\-Since()} function. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_reward_state_a9087bab96fa6cef3a311949b91dd48c9}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_reward_state_a9087bab96fa6cef3a311949b91dd48c9}{get\-Durations\-Until} (double time)}\label{class_picto_1_1_reward_state_a9087bab96fa6cef3a311949b91dd48c9}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of reward durations that occured with times $>$ the current time and $<$= the input time. From the input reward channel. There is a one to one matchup of values from this function to times from the \hyperlink{class_picto_1_1_reward_state_a32737cd71bb1dacc99211ef78fc943d2}{get\-Times\-Until()} function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract the data for reward deliveries and implement functions for traversing through that data. 
+
+The class is fairly simple, a Q\-List of \hyperlink{struct_picto_1_1_playback_reward_data}{Playback\-Reward\-Data} objects is loaded from the session data. Each \hyperlink{struct_picto_1_1_playback_reward_data}{Playback\-Reward\-Data} represents a single reward delivery and when \hyperlink{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{move\-To\-Index()} is called, we just traverse through the list until we reach a \hyperlink{struct_picto_1_1_playback_reward_data}{Playback\-Reward\-Data} object with the appropriate \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}. Each time \hyperlink{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{move\-To\-Index()} causes us to pass through a \hyperlink{struct_picto_1_1_playback_reward_data}{Playback\-Reward\-Data} entry, the \hyperlink{class_picto_1_1_reward_state_a1d10829fe64ff324aba508d04931759d}{reward\-Supplied()} signal is called, which tells the rest of the playback system that a \hyperlink{class_picto_1_1_reward}{Reward} was delivered.
+
+\begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} and \hyperlink{class_picto_1_1_data_state}{Data\-State} classes for data read in from a Session Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding function level documentation for this class. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 23 of file Reward\-State.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_reward_state_a01fe049615bb7293f0e44daa762e5ef1}{\index{Picto\-::\-Reward\-State@{Picto\-::\-Reward\-State}!get\-Current\-Index@{get\-Current\-Index}}
+\index{get\-Current\-Index@{get\-Current\-Index}!Picto::RewardState@{Picto\-::\-Reward\-State}}
+\subsubsection[{get\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Reward\-State\-::get\-Current\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_reward_state_a01fe049615bb7293f0e44daa762e5ef1}
+
+
+Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+Data\-States, like File objects, have what we can think at as a read pointer. They always have a current position from which we can move. This is for the sake of efficiency and to be sure that every time we move from one state in a \hyperlink{namespace_picto}{Picto} session to another we are not skipping any experimental events in the middle. The value returned from this function is the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} describing the time/order of the value that the \char`\"{}read pointer\char`\"{} is currently pointing at. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}, \hyperlink{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{move\-To\-Index()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_aeb01a1209858dc99ce86d153aeda152a}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 57 of file Reward\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_reward_state_a3fa159fcfb0b0436339fed73b7338ae0}{\index{Picto\-::\-Reward\-State@{Picto\-::\-Reward\-State}!get\-Next\-Index@{get\-Next\-Index}}
+\index{get\-Next\-Index@{get\-Next\-Index}!Picto::RewardState@{Picto\-::\-Reward\-State}}
+\subsubsection[{get\-Next\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Reward\-State\-::get\-Next\-Index (
+\begin{DoxyParamCaption}
+\item[{double}]{look\-Forward\-Time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_reward_state_a3fa159fcfb0b0436339fed73b7338ae0}
+
+
+Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em look\-Forward\-Time} & The timespan to search forward from the current read position for the next value. Using an input value less than zero is equivalent to inputing a value of infinity. The function will look forward as far as it takes until a new value is available (which may cause some significant delay). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When we designed this interface, the idea was that we could use it for live playback and if there was no \char`\"{}next index\char`\"{} available, the system would just wait for one to come in thereby creating an unfortunate but necessary lag in playback. In practice, we are not using Data\-States for live playback, since we don't support \hyperlink{class_picto_1_1_analysis}{Analysis} during live playback. This may be something to think about when we want to start supporting that though. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_a959c083fdf897e2f8d75be596d9db8e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 65 of file Reward\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}{\index{Picto\-::\-Reward\-State@{Picto\-::\-Reward\-State}!move\-To\-Index@{move\-To\-Index}}
+\index{move\-To\-Index@{move\-To\-Index}!Picto::RewardState@{Picto\-::\-Reward\-State}}
+\subsubsection[{move\-To\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void Reward\-State\-::move\-To\-Index (
+\begin{DoxyParamCaption}
+\item[{{\bf Playback\-Index}}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_reward_state_a784e710cbd93bbc245a276b691326b12}
+
+
+Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. 
+
+It is important that the \hyperlink{class_picto_1_1_data_state}{Data\-State} move step by step up to the input index because all of the changes in its value need to be emitted over signals and sent out to the greater playback system as we move to the new value. If we were to jump over any values and skip them, Analyses that are basing themselves on changes in values underlying this \hyperlink{class_picto_1_1_data_state}{Data\-State} might no longer be valid.
+
+Imagine, for example, if this \hyperlink{class_picto_1_1_data_state}{Data\-State} were tracking transitions. If we skipped over any transitions on the way to the input index, \hyperlink{class_picto_1_1_analysis}{Analysis} scripts that are called when those transitions are traversed would be skipped and the \hyperlink{class_picto_1_1_analysis}{Analysis} would be totally invalid. 
+
+Implements \hyperlink{class_picto_1_1_data_state_af18625b354552d5123f46bde3ded65e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 73 of file Reward\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_reward_state_ac6bf96667f33664a7b5855b8098ed9f4}{\index{Picto\-::\-Reward\-State@{Picto\-::\-Reward\-State}!start\-Run@{start\-Run}}
+\index{start\-Run@{start\-Run}!Picto::RewardState@{Picto\-::\-Reward\-State}}
+\subsubsection[{start\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void Reward\-State\-::start\-Run (
+\begin{DoxyParamCaption}
+\item[{double}]{run\-Start\-Time, }
+\item[{double}]{run\-End\-Time = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_reward_state_ac6bf96667f33664a7b5855b8098ed9f4}
+
+
+Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. 
+
+This is important because \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} values returned from \hyperlink{class_picto_1_1_data_state}{Data\-State} objects are always with respect to the beginning of the run. In otherwords, if a \hyperlink{class_picto_1_1_data_state}{Data\-State} returns a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of something that happened at the same time that the Run\-Started, its \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{Playback\-Index.\-time()} will be zero, even if the run happened at time 213.\-315. 
+
+Implements \hyperlink{class_picto_1_1_data_state_a8338a5e0c034ccd190e2916e4d60a6e8}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 42 of file Reward\-State.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Reward\-State.\-h\item 
+source/common/playback/Reward\-State.\-cpp\end{DoxyCompactItemize}

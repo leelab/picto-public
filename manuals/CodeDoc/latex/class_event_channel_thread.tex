@@ -1,0 +1,54 @@
+\hypertarget{class_event_channel_thread}{\section{Event\-Channel\-Thread Class Reference}
+\label{class_event_channel_thread}\index{Event\-Channel\-Thread@{Event\-Channel\-Thread}}
+}
+
+
+Handles reading and processing incoming commands N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D.  
+
+
+
+
+{\ttfamily \#include $<$eventchannelthread.\-h$>$}
+
+Inheritance diagram for Event\-Channel\-Thread\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_event_channel_thread}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_event_channel_thread_afd7ce64ba747260fdacd89a39368615c}{void {\bfseries new\-Event\-Read} ()}\label{class_event_channel_thread_afd7ce64ba747260fdacd89a39368615c}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_event_channel_thread_a3eefa94fc53d48e1a9c42447e06f9791}{{\bfseries Event\-Channel\-Thread} (\hyperlink{class_front_panel_info}{Front\-Panel\-Info} $\ast$panel\-Info, Q\-Object $\ast$parent)}\label{class_event_channel_thread_a3eefa94fc53d48e1a9c42447e06f9791}
+
+\item 
+\hypertarget{class_event_channel_thread_a12e59339aae1090b3dd94bc067c1a97e}{void {\bfseries run} ()}\label{class_event_channel_thread_a12e59339aae1090b3dd94bc067c1a97e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles reading and processing incoming commands N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. 
+
+This object used to allow the director to push data to the Front\-Panel application. It is no longer used. The front panel is now set up as the communications master handling both setting and polling data. At a more opportune time, this object should probably be deleted and references to it removed from other parts of the application. \begin{DoxyAuthor}{Author}
+Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file eventchannelthread.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/eventchannelthread.\-h\item 
+source/embedded/frontpanel/eventchannelthread.\-cpp\end{DoxyCompactItemize}

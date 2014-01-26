@@ -1,0 +1,69 @@
+\hypertarget{class_picto_1_1_live_frame_reader}{\section{Picto\-:\-:Live\-Frame\-Reader Class Reference}
+\label{class_picto_1_1_live_frame_reader}\index{Picto\-::\-Live\-Frame\-Reader@{Picto\-::\-Live\-Frame\-Reader}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} class for a live test experiment.  
+
+
+
+
+{\ttfamily \#include $<$Live\-Frame\-Reader.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Live\-Frame\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_live_frame_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a098564555216fb091a89dfdbf5b712d6}{void \hyperlink{class_picto_1_1_live_frame_reader_a098564555216fb091a89dfdbf5b712d6}{set\-Run\-Start} ()}\label{class_picto_1_1_live_frame_reader_a098564555216fb091a89dfdbf5b712d6}
+
+\begin{DoxyCompactList}\small\item\em Called when a new Run Starts to let this object know that it should clear out its frame list and start again. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a34023f034855656dd54c34c331ca4e13}{void \hyperlink{class_picto_1_1_live_frame_reader_a34023f034855656dd54c34c331ca4e13}{set\-Latest\-Frame\-Time} (double time)}\label{class_picto_1_1_live_frame_reader_a34023f034855656dd54c34c331ca4e13}
+
+\begin{DoxyCompactList}\small\item\em Called to add a new frame time to this object so that it can be included in future data requests. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a558386d91faac9d1dcbd8e7525cce0b9}{void \hyperlink{class_picto_1_1_live_frame_reader_a558386d91faac9d1dcbd8e7525cce0b9}{set\-Run\-End} ()}\label{class_picto_1_1_live_frame_reader_a558386d91faac9d1dcbd8e7525cce0b9}
+
+\begin{DoxyCompactList}\small\item\em Called when a Run Ends to let this object know that it can clear out its frame list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a7c8b08783d60e63e7de4ecec5719aaed}{virtual double \hyperlink{class_picto_1_1_live_frame_reader_a7c8b08783d60e63e7de4ecec5719aaed}{get\-Prev\-Time} ()}\label{class_picto_1_1_live_frame_reader_a7c8b08783d60e63e7de4ecec5719aaed}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the frame shown before the latest one. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a283db103fb614fef68523f8038f8c082}{virtual double \hyperlink{class_picto_1_1_live_frame_reader_a283db103fb614fef68523f8038f8c082}{get\-Latest\-Time} ()}\label{class_picto_1_1_live_frame_reader_a283db103fb614fef68523f8038f8c082}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest frame to have been shown. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_ad91339bded3baafeab320dbc089f91dc}{virtual double \hyperlink{class_picto_1_1_live_frame_reader_ad91339bded3baafeab320dbc089f91dc}{get\-Next\-Time} ()}\label{class_picto_1_1_live_frame_reader_ad91339bded3baafeab320dbc089f91dc}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the next frame to be shown. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_ae59d5baff10449eee6fc8df2c518eac0}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_frame_reader_ae59d5baff10449eee6fc8df2c518eac0}{get\-Times\-Since} (double time)}\label{class_picto_1_1_live_frame_reader_ae59d5baff10449eee6fc8df2c518eac0}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of frame times that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_frame_reader_a10bd0824df11c12486b1ecec99a84f6a}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_frame_reader_a10bd0824df11c12486b1ecec99a84f6a}{get\-Times\-Until} (double time)}\label{class_picto_1_1_live_frame_reader_a10bd0824df11c12486b1ecec99a84f6a}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of values with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} class for a live test experiment. 
+
+This object is filled during run time by using the \hyperlink{class_picto_1_1_live_frame_reader_a34023f034855656dd54c34c331ca4e13}{set\-Latest\-Frame\-Time()} function such that Analyses have access to all past data but no future data. Requests for future data from this class will result in meaningless values. \begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} class for data read in during a live Session, there is not much to add in terms of documentation beyond what was described above, so we will not be adding additional function level documentation for many of the functions in this class. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 21 of file Live\-Frame\-Reader.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Live\-Frame\-Reader.\-h\item 
+source/common/playback/Live\-Frame\-Reader.\-cpp\end{DoxyCompactItemize}

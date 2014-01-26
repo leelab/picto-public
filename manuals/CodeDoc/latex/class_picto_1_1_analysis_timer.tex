@@ -1,0 +1,228 @@
+\hypertarget{class_picto_1_1_analysis_timer}{\section{Picto\-:\-:Analysis\-Timer Class Reference}
+\label{class_picto_1_1_analysis_timer}\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}}
+}
+
+
+A simple Timer for use in an \hyperlink{class_picto_1_1_analysis}{Analysis}.  
+
+
+
+
+{\ttfamily \#include $<$Analysis\-Timer.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Analysis\-Timer\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_analysis_timer}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_timer_a97bf799a17780d9502fa8a7193115312}{void \hyperlink{class_picto_1_1_analysis_timer_a97bf799a17780d9502fa8a7193115312}{restart} ()}\label{class_picto_1_1_analysis_timer_a97bf799a17780d9502fa8a7193115312}
+
+\begin{DoxyCompactList}\small\item\em Restarts this timer as of the latest frame time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_analysis_timer_a56132a066f92300c554e9a46dd66c5f4}{Analysis\-Timer} ()
+\begin{DoxyCompactList}\small\item\em Creates and \hyperlink{class_picto_1_1_analysis_timer}{Analysis\-Timer}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_timer_a8a76727aa775f6a61654d432a2784ef6}{set\-Design\-Config} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_config}{Design\-Config} $>$ design\-Config)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_design_config}{Design\-Config} object managing the current Design to this \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_timer_adb5e30561a5c7b72d5370c552d23aafb}{entered\-Scope} ()
+\begin{DoxyCompactList}\small\item\em Resets this scriptable's data fields to their original values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_timer_a2e404df5cd1d4ad26dc10cdaaaa4beaa}{int \hyperlink{class_picto_1_1_analysis_timer_a2e404df5cd1d4ad26dc10cdaaaa4beaa}{get\-Value} ()}\label{class_picto_1_1_analysis_timer_a2e404df5cd1d4ad26dc10cdaaaa4beaa}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest time on the timer in the units set in the Time\-Units \hyperlink{class_picto_1_1_property}{Property}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_timer_a3cc440fc668251db2dd483b8cd8c3551}{void \hyperlink{class_picto_1_1_analysis_timer_a3cc440fc668251db2dd483b8cd8c3551}{set\-Value} (int val)}\label{class_picto_1_1_analysis_timer_a3cc440fc668251db2dd483b8cd8c3551}
+
+\begin{DoxyCompactList}\small\item\em Sets the time on this timer at the latest frame to be equal to the input value. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_timer_af529f909624a1dd1dfac1faae8f81c0d}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_timer_a2b2e634ff2daa14001d295e8e91d4604}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_timer_a2b2e634ff2daa14001d295e8e91d4604}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_timer_a2b2e634ff2daa14001d295e8e91d4604}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_timer_a013d88fe3a1f43cf6643e37e09adeab7}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_timer_a013d88fe3a1f43cf6643e37e09adeab7}{get\-U\-I\-Group} ()}\label{class_picto_1_1_analysis_timer_a013d88fe3a1f43cf6643e37e09adeab7}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_timer_a85590587605ed8652dd4d60be6979cd5}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_analysis_timer_a85590587605ed8652dd4d60be6979cd5}{Create} ()}\label{class_picto_1_1_analysis_timer_a85590587605ed8652dd4d60be6979cd5}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_analysis_timer}{Analysis\-Timer} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_analysis_timer_af97de4c2bfcfb47209eafdc5d1e0c6ab}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_analysis_timer_ac3e36dbc727da6f3aa6304b4d1878e3d}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_picto_1_1_analysis_timer_a306d79a087eb6fe3e89de8abbc0b45c8}{value}
+\begin{DoxyCompactList}\small\item\em Sets/gets the latest value on the timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A simple Timer for use in an \hyperlink{class_picto_1_1_analysis}{Analysis}. 
+
+The timer works in frame presentation time units such that it is only ever incremented by the frame length of the latest frame. The timer can be restarted and its value can be polled using the value property. In many cases an \hyperlink{class_picto_1_1_analysis_frame_data}{Analysis\-Frame\-Data} object could be used for the jobs that this timer does, but in some cases this simple single purposed object is more convenient. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 23 of file Analysis\-Timer.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_analysis_timer_a56132a066f92300c554e9a46dd66c5f4}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!Analysis\-Timer@{Analysis\-Timer}}
+\index{Analysis\-Timer@{Analysis\-Timer}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{Analysis\-Timer}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Analysis\-Timer\-::\-Analysis\-Timer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_analysis_timer_a56132a066f92300c554e9a46dd66c5f4}
+
+
+Creates and \hyperlink{class_picto_1_1_analysis_timer}{Analysis\-Timer}. 
+
+Adds a Time\-Units property where the units of returned time values can be selected. Supported values are Sec, Ms, Us 
+
+Definition at line 11 of file Analysis\-Timer.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_timer_adb5e30561a5c7b72d5370c552d23aafb}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!entered\-Scope@{entered\-Scope}}
+\index{entered\-Scope@{entered\-Scope}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{entered\-Scope}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Timer\-::entered\-Scope (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_timer_adb5e30561a5c7b72d5370c552d23aafb}
+
+
+Resets this scriptable's data fields to their original values. 
+
+Called when this \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters \hyperlink{namespace_picto}{Picto} Scope (ie. Control flow reaches its parent element).
+
+When a \hyperlink{class_picto_1_1_scriptable}{Scriptable} enters scope, all of its \hyperlink{class_picto_1_1_property}{Property} run values are reset to their init values. This function takes care of that by calling restore\-Properties(). 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_variable_a0c55ee4a17dff849fb11bdb2c1c6a07a}{Picto\-::\-Analysis\-Variable}.
+
+
+
+Definition at line 42 of file Analysis\-Timer.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_timer_af529f909624a1dd1dfac1faae8f81c0d}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Timer\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_timer_af529f909624a1dd1dfac1faae8f81c0d}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_parameter_a379ef70ba283fa7c49f2548dad432dbb}{Picto\-::\-Parameter}.
+
+
+
+Definition at line 47 of file Analysis\-Timer.\-h.
+
+\hypertarget{class_picto_1_1_analysis_timer_af97de4c2bfcfb47209eafdc5d1e0c6ab}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Timer\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_timer_af97de4c2bfcfb47209eafdc5d1e0c6ab}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a491e202caec7a1d9f9a0c7466f962f18}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 67 of file Analysis\-Timer.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_timer_a8a76727aa775f6a61654d432a2784ef6}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!set\-Design\-Config@{set\-Design\-Config}}
+\index{set\-Design\-Config@{set\-Design\-Config}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{set\-Design\-Config}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Analysis\-Timer\-::set\-Design\-Config (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Design\-Config} $>$}]{design\-Config}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_timer_a8a76727aa775f6a61654d432a2784ef6}
+
+
+Sets the \hyperlink{class_picto_1_1_design_config}{Design\-Config} object managing the current Design to this \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Every Design has a single \hyperlink{class_picto_1_1_design_config}{Design\-Config} object that manages global issues affecting the entire design. It can access every asset in the design and is accessable from every asset in the design. It is set to an asset using the set\-Design\-Config function, typically by the \hyperlink{class_picto_1_1_asset}{Asset}'s parent. \begin{DoxyNote}{Note}
+There is high potential here for a memory leak due to circular shared pointers. To avoid this, Assets maintain Shared\-Pointers to the \hyperlink{class_picto_1_1_design_config}{Design\-Config} but the \hyperlink{class_picto_1_1_design_config}{Design\-Config} uses Weak\-Pointers to all assets. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_analysis_timer_a8a76727aa775f6a61654d432a2784ef6}{set\-Design\-Config}, \hyperlink{class_picto_1_1_design_config}{Design\-Config} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_ae5606ab47c82a89034689a9423fb4daa}{Picto\-::\-Asset}.
+
+
+
+Definition at line 23 of file Analysis\-Timer.\-cpp.
+
+\hypertarget{class_picto_1_1_analysis_timer_ac3e36dbc727da6f3aa6304b4d1878e3d}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Analysis\-Timer\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_timer_ac3e36dbc727da6f3aa6304b4d1878e3d}
+
+
+Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to verify that the \hyperlink{class_picto_1_1_property}{Property} values of this \hyperlink{class_picto_1_1_parameter}{Parameter} are within acceptable ranges. 
+
+\hyperlink{class_picto_1_1_parameter_a3443808da4c3edf26f2c3c3772d95b10}{values\-Are\-Valid()} is used for this. 
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_a8d43777d1a7d1b1467c9df205d118bb3}{Picto\-::\-Analysis\-Data\-Source}.
+
+
+
+Definition at line 73 of file Analysis\-Timer.\-cpp.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_picto_1_1_analysis_timer_a306d79a087eb6fe3e89de8abbc0b45c8}{\index{Picto\-::\-Analysis\-Timer@{Picto\-::\-Analysis\-Timer}!value@{value}}
+\index{value@{value}!Picto::AnalysisTimer@{Picto\-::\-Analysis\-Timer}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Analysis\-Timer\-::value\hspace{0.3cm}{\ttfamily [read]}, {\ttfamily [write]}}}\label{class_picto_1_1_analysis_timer_a306d79a087eb6fe3e89de8abbc0b45c8}
+
+
+Sets/gets the latest value on the timer. 
+
+Setting the timer value causes the time of the latest frame to be considered equal to the input value. 
+
+Definition at line 31 of file Analysis\-Timer.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Analysis\-Timer.\-h\item 
+source/common/parameter/Analysis\-Timer.\-cpp\end{DoxyCompactItemize}

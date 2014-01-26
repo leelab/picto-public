@@ -1,0 +1,138 @@
+\hypertarget{class_picto_1_1_analysis_period}{\section{Picto\-:\-:Analysis\-Period Class Reference}
+\label{class_picto_1_1_analysis_period}\index{Picto\-::\-Analysis\-Period@{Picto\-::\-Analysis\-Period}}
+}
+Inheritance diagram for Picto\-:\-:Analysis\-Period\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_picto_1_1_analysis_period}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_period_aa627b61b43c70ca92e2cc91718ca49be}{void {\bfseries load\-Session} (Q\-Sql\-Database session, bool en\-Script\-Debugging)}\label{class_picto_1_1_analysis_period_aa627b61b43c70ca92e2cc91718ca49be}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_af9b1cc6c7d012d29f76b08d36a77a9fb}{void {\bfseries start\-New\-Run} (Q\-String run\-Name, Q\-Uuid run\-Uuid)}\label{class_picto_1_1_analysis_period_af9b1cc6c7d012d29f76b08d36a77a9fb}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_aeb3f80b877890057e2c77b4204cf3ba7}{bool {\bfseries run} (\hyperlink{class_picto_1_1_event_order_index}{Event\-Order\-Index} from\-Index, \hyperlink{class_picto_1_1_event_order_index}{Event\-Order\-Index} to\-Index)}\label{class_picto_1_1_analysis_period_aeb3f80b877890057e2c77b4204cf3ba7}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_a1a9eed6aa42cbbb861c0ea9dd176b7b1}{void {\bfseries finish\-Up} ()}\label{class_picto_1_1_analysis_period_a1a9eed6aa42cbbb861c0ea9dd176b7b1}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_aa9320e6d0d7fb110c1be8763dc9a0032}{Q\-Linked\-List$<$ Q\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_output_widget}{Analysis\-Output\-Widget} $>$ $>$ {\bfseries get\-Output\-Widgets} ()}\label{class_picto_1_1_analysis_period_aa9320e6d0d7fb110c1be8763dc9a0032}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_a5db48ef247737543e8ed2975981ec705}{unsigned int {\bfseries get\-Percent\-Remaining} ()}\label{class_picto_1_1_analysis_period_a5db48ef247737543e8ed2975981ec705}
+
+\item 
+\hypertarget{class_picto_1_1_analysis_period_abf2777fe2a83cc3fd723713f50d4cb19}{virtual Q\-String \hyperlink{class_picto_1_1_analysis_period_abf2777fe2a83cc3fd723713f50d4cb19}{get\-U\-I\-Template} ()}\label{class_picto_1_1_analysis_period_abf2777fe2a83cc3fd723713f50d4cb19}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_period_ae5e82cde88b37db31663861e9f0d9ad3}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_period_a01f8844e6da32e019aa5f66a079c1dae}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_analysis_period_a01f8844e6da32e019aa5f66a079c1dae}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_analysis_period_a4342e5243727eac43cb07d0c178328c2}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_analysis_period_a2d97ef81e5edcc7f6875a2e86d8d8e50}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_analysis_period_a9fab160031ab8115f5a9e83d93b1fe39}{virtual bool \hyperlink{class_picto_1_1_analysis_period_a9fab160031ab8115f5a9e83d93b1fe39}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_analysis_period_a9fab160031ab8115f5a9e83d93b1fe39}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_analysis_period_a1b63af738cd4081209094b90d6db584e}{Q\-Sql\-Database {\bfseries session\-\_\-}}\label{class_picto_1_1_analysis_period_a1b63af738cd4081209094b90d6db584e}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 22 of file Analysis\-Period.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_analysis_period_a4342e5243727eac43cb07d0c178328c2}{\index{Picto\-::\-Analysis\-Period@{Picto\-::\-Analysis\-Period}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::AnalysisPeriod@{Picto\-::\-Analysis\-Period}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Period\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_period_a4342e5243727eac43cb07d0c178328c2}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a773e96bb8df73a90d56c1aa8fdc0dfa5}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 56 of file Analysis\-Period.\-h.
+
+\hypertarget{class_picto_1_1_analysis_period_ae5e82cde88b37db31663861e9f0d9ad3}{\index{Picto\-::\-Analysis\-Period@{Picto\-::\-Analysis\-Period}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AnalysisPeriod@{Picto\-::\-Analysis\-Period}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Analysis\-Period\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_period_ae5e82cde88b37db31663861e9f0d9ad3}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_a19f94929e12069750b29b87c581024b6}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 51 of file Analysis\-Period.\-h.
+
+\hypertarget{class_picto_1_1_analysis_period_a2d97ef81e5edcc7f6875a2e86d8d8e50}{\index{Picto\-::\-Analysis\-Period@{Picto\-::\-Analysis\-Period}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AnalysisPeriod@{Picto\-::\-Analysis\-Period}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Analysis\-Period\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_analysis_period_a2d97ef81e5edcc7f6875a2e86d8d8e50}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_ae1585113a496ff2c8de3293aa884b57b}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 335 of file Analysis\-Period.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Analysis\-Period.\-h\item 
+source/common/analysis/Analysis\-Period.\-cpp\end{DoxyCompactItemize}

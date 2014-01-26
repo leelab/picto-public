@@ -1,0 +1,88 @@
+\hypertarget{_associate_root_host_8h}{\section{source/common/parameter/\-Associate\-Root\-Host.h File Reference}
+\label{_associate_root_host_8h}\index{source/common/parameter/\-Associate\-Root\-Host.\-h@{source/common/parameter/\-Associate\-Root\-Host.\-h}}
+}
+{\ttfamily \#include $<$Q\-Shared\-Pointer$>$}\\*
+{\ttfamily \#include $<$Q\-Hash$>$}\\*
+{\ttfamily \#include \char`\"{}Associate\-Root.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_picto_1_1_associate_root_host}{Picto\-::\-Associate\-Root\-Host}
+\begin{DoxyCompactList}\small\item\em An \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} object's tree can be linked to by an \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} object's tree. Elements in the \hyperlink{class_picto_1_1_associate_root}{Associate\-Root} tree connect to elements in the \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} tree and provide additional information about them that does not affect their basic functionality. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_picto}{Picto}
+\begin{DoxyCompactList}\small\item\em A compositing surface for Direct3\-D Mobile (used on Picto\-Box) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_associate_root_host_8h_af167cc9406fdf39ff11a1feed769bad2}{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N}
+\begin{DoxyCompactList}\small\item\em Put this into the public area of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) \end{DoxyCompactList}\item 
+\#define \hyperlink{_associate_root_host_8h_a66c779135ec26650f7829025b1fdd50f}{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N}
+\begin{DoxyCompactList}\small\item\em Put this into the constructor of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) \end{DoxyCompactList}\item 
+\#define \hyperlink{_associate_root_host_8h_aff5c90a46d39d855b871c0ffd92f2d46}{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E}
+\begin{DoxyCompactList}\small\item\em Put this at the end of the post\-Deserialize() function of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_associate_root_host_8h_a66c779135ec26650f7829025b1fdd50f}{\index{Associate\-Root\-Host.\-h@{Associate\-Root\-Host.\-h}!A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N}}
+\index{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N}!AssociateRootHost.h@{Associate\-Root\-Host.\-h}}
+\subsubsection[{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-I\-N\-I\-T\-I\-A\-L\-I\-Z\-A\-T\-I\-O\-N}}\label{_associate_root_host_8h_a66c779135ec26650f7829025b1fdd50f}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+AddDefinableProperty(QVariant::Uuid,\textcolor{stringliteral}{"HostId"},QVariant());   \(\backslash\)
+                                            hostIdBeingEdited\_ = \textcolor{keyword}{false};
+\end{DoxyCode}
+
+
+Put this into the constructor of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) 
+
+Copy the lines of code below into the private area of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) Note\-: The Q\-T preprocess didn't like it when we put this in a \#define and caused runtime errors, so you should just uncomment and copy the lines below.
+
+bool host\-Id\-Being\-Edited\-\_\-; private slots\-: void change\-Host\-Id()\{if(host\-Id\-Being\-Edited\-\_\-) return;host\-Id\-Being\-Edited\-\_\- = true;property\-Container\-\_\--\/$>$set\-Property\-Value(\char`\"{}\-Host\-Id\char`\"{},Q\-Uuid\-::create\-Uuid());host\-Id\-Being\-Edited\-\_\- = false;\}; 
+
+Definition at line 28 of file Associate\-Root\-Host.\-h.
+
+\hypertarget{_associate_root_host_8h_aff5c90a46d39d855b871c0ffd92f2d46}{\index{Associate\-Root\-Host.\-h@{Associate\-Root\-Host.\-h}!A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E}}
+\index{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E}!AssociateRootHost.h@{Associate\-Root\-Host.\-h}}
+\subsubsection[{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-O\-S\-T\-\_\-\-D\-E\-S\-E\-R\-I\-A\-L\-I\-Z\-E}}\label{_associate_root_host_8h_aff5c90a46d39d855b871c0ffd92f2d46}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{if}(getHostId() == QUuid())  \(\backslash\)
+                                                    changeHostId(); \(\backslash\)
+                                                propertyContainer\_->getProperty(\textcolor{stringliteral}{"HostId"})->setVisible(\textcolor{keyword}{false}
+      );   \(\backslash\)
+                                                connect(\textcolor{keyword}{this},SIGNAL(edited()),\textcolor{keyword}{this},SLOT(changeHostId()));
+\end{DoxyCode}
+
+
+Put this at the end of the post\-Deserialize() function of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) 
+
+\begin{DoxyNote}{Note}
+This is setup such that whenever this object is edited, its Host\-Id is changed to signify that Associate Elements that aren't currently attached to it may no longer be valid. 
+\end{DoxyNote}
+
+
+Definition at line 35 of file Associate\-Root\-Host.\-h.
+
+\hypertarget{_associate_root_host_8h_af167cc9406fdf39ff11a1feed769bad2}{\index{Associate\-Root\-Host.\-h@{Associate\-Root\-Host.\-h}!A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N}}
+\index{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N@{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N}!AssociateRootHost.h@{Associate\-Root\-Host.\-h}}
+\subsubsection[{A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\-S\-S\-O\-C\-I\-A\-T\-E\-\_\-\-R\-O\-O\-T\-\_\-\-H\-O\-S\-T\-\_\-\-P\-U\-B\-L\-I\-C\-\_\-\-I\-M\-P\-L\-E\-M\-E\-N\-T\-A\-T\-I\-O\-N}}\label{_associate_root_host_8h_af167cc9406fdf39ff11a1feed769bad2}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keyword}{virtual} QUuid getHostId()\{\textcolor{keywordflow}{return} propertyContainer\_->getPropertyValue(\textcolor{stringliteral}{"HostId"}).toUuid();\}; \(\backslash\)
+                                                        virtual QSharedPointer<Property> getHostIdProperty(
+      )\{\textcolor{keywordflow}{return} propertyContainer\_->getProperty(\textcolor{stringliteral}{"HostId"});\};    \(\backslash\)
+                                                        virtual QSharedPointer<Property> getNameProperty()\{\textcolor{keywordflow}{
+      return} propertyContainer\_->getProperty(\textcolor{stringliteral}{"Name"});\};
+\end{DoxyCode}
+
+
+Put this into the public area of your Associate\-Root\-Host (this is to avoid diamond multiple inheritance issues) 
+
+
+
+Definition at line 12 of file Associate\-Root\-Host.\-h.
+

@@ -1,0 +1,109 @@
+\hypertarget{class_picto_1_1_aural_target}{\section{Picto\-:\-:Aural\-Target Class Reference}
+\label{class_picto_1_1_aural_target}\index{Picto\-::\-Aural\-Target@{Picto\-::\-Aural\-Target}}
+}
+
+
+Objects of this class handle mixing of \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} sounds and playing over the computer's speakers.  
+
+
+
+
+{\ttfamily \#include $<$Aural\-Target.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Aural\-Target\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_aural_target}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} $>$ \hyperlink{class_picto_1_1_aural_target_a1de8975e412fba2acb355f4a0d68997d}{generate\-Mixing\-Sample} ()=0
+\begin{DoxyCompactList}\small\item\em Generates and returns a mixing sample of the correct type to be used with this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_aural_target_ae68c1738d4011944c6104aca155ac5fd}{virtual Q\-String \hyperlink{class_picto_1_1_aural_target_ae68c1738d4011944c6104aca155ac5fd}{get\-Type\-Name} ()=0}\label{class_picto_1_1_aural_target_ae68c1738d4011944c6104aca155ac5fd}
+
+\begin{DoxyCompactList}\small\item\em Returns the type name of this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{mix} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} $>$)=0
+\begin{DoxyCompactList}\small\item\em Mixes the input \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} into this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} so that it will be audible this frame. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}{present} ()=0
+\begin{DoxyCompactList}\small\item\em Causes all of the mixed in Mixing\-Samples to correctly play back in this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}. Should be called every frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Objects of this class handle mixing of \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} sounds and playing over the computer's speakers. 
+
+As described by a classic S\-A\-T-\/style analogy\-: \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} \-: \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} \-:\-: \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} \-: \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} and \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} \-: \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} \-:\-: \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} \-: \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} All sounds that need to be played are set from their owner \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} objects into \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects. Every frame, these \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects are set into \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} objects using \hyperlink{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{mix()}. Present() is called every frame, and this starts \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects that weren't yet playing but were mixed in, continues those that were playing and were mixed in, and stops those that were playing and are no longer being mixed in. Each \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} is responsible for generating \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects from \hyperlink{class_picto_1_1_aural_target_a1de8975e412fba2acb355f4a0d68997d}{generate\-Mixing\-Sample()} of a type that it know's how to handle. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 30 of file Aural\-Target.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_aural_target_a1de8975e412fba2acb355f4a0d68997d}{\index{Picto\-::\-Aural\-Target@{Picto\-::\-Aural\-Target}!generate\-Mixing\-Sample@{generate\-Mixing\-Sample}}
+\index{generate\-Mixing\-Sample@{generate\-Mixing\-Sample}!Picto::AuralTarget@{Picto\-::\-Aural\-Target}}
+\subsubsection[{generate\-Mixing\-Sample}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Shared\-Pointer$<${\bf Mixing\-Sample}$>$ Picto\-::\-Aural\-Target\-::generate\-Mixing\-Sample (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_aural_target_a1de8975e412fba2acb355f4a0d68997d}
+
+
+Generates and returns a mixing sample of the correct type to be used with this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}. 
+
+The returned \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} must be set up with audio date by the caller. 
+
+Implemented in \hyperlink{class_picto_1_1_p_c_m_aural_target_a4b28bc26964cb9771e4381e47f37368f}{Picto\-::\-P\-C\-M\-Aural\-Target}.
+
+\hypertarget{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{\index{Picto\-::\-Aural\-Target@{Picto\-::\-Aural\-Target}!mix@{mix}}
+\index{mix@{mix}!Picto::AuralTarget@{Picto\-::\-Aural\-Target}}
+\subsubsection[{mix}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Aural\-Target\-::mix (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Mixing\-Sample} $>$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}
+
+
+Mixes the input \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} into this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} so that it will be audible this frame. 
+
+Every \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} needs to be added to this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target} during every frame that it needs to be audible. During the first frame when \hyperlink{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}{present()} is called and a particular \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} was not added using \hyperlink{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{mix()}, that \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} will be stopped. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}{present()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_picto_1_1_p_c_m_aural_target_a17bce3805e561894eacd5ac20bc8cc2a}{Picto\-::\-P\-C\-M\-Aural\-Target}.
+
+\hypertarget{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}{\index{Picto\-::\-Aural\-Target@{Picto\-::\-Aural\-Target}!present@{present}}
+\index{present@{present}!Picto::AuralTarget@{Picto\-::\-Aural\-Target}}
+\subsubsection[{present}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Aural\-Target\-::present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}
+
+
+Causes all of the mixed in Mixing\-Samples to correctly play back in this \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}. Should be called every frame. 
+
+During the first frame when \hyperlink{class_picto_1_1_aural_target_a75d7885362d309900041bb7b02c3cfa1}{present()} is called and a particular \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} was not added using \hyperlink{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{mix()}, that \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} will be stopped. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_aural_target_af4ae061fb6f1edb78843d9b1ac69fd0b}{mix()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{class_picto_1_1_p_c_m_aural_target_a61b64002c04ef85b30be6a24c04b43f5}{Picto\-::\-P\-C\-M\-Aural\-Target}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Aural\-Target.\-h\item 
+source/common/compositor/Aural\-Target.\-cpp\end{DoxyCompactItemize}

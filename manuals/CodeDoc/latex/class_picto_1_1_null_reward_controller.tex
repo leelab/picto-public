@@ -1,0 +1,61 @@
+\hypertarget{class_picto_1_1_null_reward_controller}{\section{Picto\-:\-:Null\-Reward\-Controller Class Reference}
+\label{class_picto_1_1_null_reward_controller}\index{Picto\-::\-Null\-Reward\-Controller@{Picto\-::\-Null\-Reward\-Controller}}
+}
+
+
+An empty reward controller.  
+
+
+
+
+{\ttfamily \#include $<$Null\-Reward\-Controller.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Null\-Reward\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_null_reward_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_null_reward_controller_ad9ef0c0e87816b12e0f54207df1ee690}{void \hyperlink{class_picto_1_1_null_reward_controller_ad9ef0c0e87816b12e0f54207df1ee690}{flush} (unsigned int channel, bool flush)}\label{class_picto_1_1_null_reward_controller_ad9ef0c0e87816b12e0f54207df1ee690}
+
+\begin{DoxyCompactList}\small\item\em This should be removed since \hyperlink{class_picto_1_1_reward_controller_a82c6d50f2c4d7b924691090e7f8d4781}{Reward\-Controller\-::flush()} is no longer virtual. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_null_reward_controller_a1aa333e20908b5e6e79cdc7465617c4e}{void \hyperlink{class_picto_1_1_null_reward_controller_a1aa333e20908b5e6e79cdc7465617c4e}{start\-Reward} (unsigned int channel, int quantity)}\label{class_picto_1_1_null_reward_controller_a1aa333e20908b5e6e79cdc7465617c4e}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_reward_controller_a3e09bdba141632e89472bef42dc1e132}{Reward\-Controller\-::start\-Reward()} to print a message to the debug output. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_null_reward_controller_a4675f2eeae24a5473e49bb8b6df99b38}{virtual bool \hyperlink{class_picto_1_1_null_reward_controller_a4675f2eeae24a5473e49bb8b6df99b38}{reward\-Was\-Supplied} (unsigned int channel)}\label{class_picto_1_1_null_reward_controller_a4675f2eeae24a5473e49bb8b6df99b38}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_reward_controller_a213ce91b8ef9019786e96e601d9641b9}{Reward\-Controller\-::reward\-Was\-Supplied()} to simply always return true. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_null_reward_controller_a085d54f89d532445f4a66a179a029220}{virtual void \hyperlink{class_picto_1_1_null_reward_controller_a085d54f89d532445f4a66a179a029220}{start\-Flush} (unsigned int channel)}\label{class_picto_1_1_null_reward_controller_a085d54f89d532445f4a66a179a029220}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_reward_controller_aaf880507edaa44288cd5b17bdb71f079}{Reward\-Controller\-::start\-Flush()} to print out a message to the debug output. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_null_reward_controller_af824bf42bec797ee970b5efca37cc0a9}{virtual void \hyperlink{class_picto_1_1_null_reward_controller_af824bf42bec797ee970b5efca37cc0a9}{stop\-Flush} (unsigned int channel)}\label{class_picto_1_1_null_reward_controller_af824bf42bec797ee970b5efca37cc0a9}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_reward_controller_a5a14b4f103def1711b485cc05f4c53bb}{Reward\-Controller\-::stop\-Flush()} to print out a message to the debug output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An empty reward controller. 
+
+We don't always have reward hardware connected to the machine that is running a state machine. This \hyperlink{class_picto_1_1_reward_controller}{Reward\-Controller} simply outputs a message to the debug console when a reward is issued. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 22 of file Null\-Reward\-Controller.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/iodevices/Null\-Reward\-Controller.\-h\item 
+source/common/iodevices/Null\-Reward\-Controller.\-cpp\end{DoxyCompactItemize}

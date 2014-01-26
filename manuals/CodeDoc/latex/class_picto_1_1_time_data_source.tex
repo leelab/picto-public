@@ -1,0 +1,71 @@
+\hypertarget{class_picto_1_1_time_data_source}{\section{Picto\-:\-:Time\-Data\-Source Class Reference}
+\label{class_picto_1_1_time_data_source}\index{Picto\-::\-Time\-Data\-Source@{Picto\-::\-Time\-Data\-Source}}
+}
+Inheritance diagram for Picto\-:\-:Time\-Data\-Source\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_picto_1_1_time_data_source}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_time_data_source_accd6e0ceeb5cee65e21c27ccc27f499d}{virtual Q\-String \hyperlink{class_picto_1_1_time_data_source_accd6e0ceeb5cee65e21c27ccc27f499d}{get\-U\-I\-Template} ()}\label{class_picto_1_1_time_data_source_accd6e0ceeb5cee65e21c27ccc27f499d}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_time_data_source_a8a195fc60ef4369722aaceb78e534eb0}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_time_data_source_a8a195fc60ef4369722aaceb78e534eb0}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_time_data_source_a9e615d71f14698b78df974f13c498962}{virtual void {\bfseries fill\-Out\-Script\-Value} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_analysis_value}{Analysis\-Value} $>$ val)}\label{class_picto_1_1_time_data_source_a9e615d71f14698b78df974f13c498962}
+
+\item 
+virtual void \hyperlink{class_picto_1_1_time_data_source_a0faac272d18e79ed02f8bd49326150a4}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_time_data_source_a1fdaec937912151f48aaf39410f11258}{virtual bool \hyperlink{class_picto_1_1_time_data_source_a1fdaec937912151f48aaf39410f11258}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_time_data_source_a1fdaec937912151f48aaf39410f11258}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14 of file Time\-Data\-Source.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_time_data_source_a0faac272d18e79ed02f8bd49326150a4}{\index{Picto\-::\-Time\-Data\-Source@{Picto\-::\-Time\-Data\-Source}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::TimeDataSource@{Picto\-::\-Time\-Data\-Source}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Time\-Data\-Source\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_time_data_source_a0faac272d18e79ed02f8bd49326150a4}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_u_i_enabled_ae1585113a496ff2c8de3293aa884b57b}{Picto\-::\-U\-I\-Enabled}.
+
+
+
+Definition at line 23 of file Time\-Data\-Source.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Time\-Data\-Source.\-h\item 
+source/common/analysis/Time\-Data\-Source.\-cpp\end{DoxyCompactItemize}

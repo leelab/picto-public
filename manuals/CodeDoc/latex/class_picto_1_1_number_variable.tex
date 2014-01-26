@@ -1,0 +1,138 @@
+\hypertarget{class_picto_1_1_number_variable}{\section{Picto\-:\-:Number\-Variable Class Reference}
+\label{class_picto_1_1_number_variable}\index{Picto\-::\-Number\-Variable@{Picto\-::\-Number\-Variable}}
+}
+
+
+A simple variable that is used for storing numeric values.  
+
+
+
+
+{\ttfamily \#include $<$Number\-Variable.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Number\-Variable\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{class_picto_1_1_number_variable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_number_variable_a2e3e98c345b9c2bbee184c2606485b66}{Number\-Variable} ()
+\begin{DoxyCompactList}\small\item\em Constructs an \hyperlink{class_picto_1_1_number_variable}{Number\-Variable}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_number_variable_a5503fd3caef3854081c028e709813d13}{double \hyperlink{class_picto_1_1_number_variable_a5503fd3caef3854081c028e709813d13}{get\-Value} ()}\label{class_picto_1_1_number_variable_a5503fd3caef3854081c028e709813d13}
+
+\begin{DoxyCompactList}\small\item\em Returns this \hyperlink{class_picto_1_1_number_variable}{Number\-Variable}'s value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_number_variable_ada17ed95cb402cb460dcb75a90023045}{void \hyperlink{class_picto_1_1_number_variable_ada17ed95cb402cb460dcb75a90023045}{set\-Value} (double val)}\label{class_picto_1_1_number_variable_ada17ed95cb402cb460dcb75a90023045}
+
+\begin{DoxyCompactList}\small\item\em Sets this \hyperlink{class_picto_1_1_number_variable}{Number\-Variable}'s value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_number_variable_a0c267c6c0235d82ff41495edaa369889}{virtual Q\-String \hyperlink{class_picto_1_1_number_variable_a0c267c6c0235d82ff41495edaa369889}{get\-U\-I\-Template} ()}\label{class_picto_1_1_number_variable_a0c267c6c0235d82ff41495edaa369889}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_number_variable_a5184a95861f786c2068e85b9eb190724}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_number_variable_a31393c261a291c97ddcac5424eba955e}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_number_variable_a31393c261a291c97ddcac5424eba955e}{Create} ()}\label{class_picto_1_1_number_variable_a31393c261a291c97ddcac5424eba955e}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_number_variable}{Number\-Variable} and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_number_variable_a6ab9b74741c023e43dab955a975cc6c4}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_number_variable_a4ee142237d5b7c7c35371225b6d464e0}{virtual bool \hyperlink{class_picto_1_1_number_variable_a4ee142237d5b7c7c35371225b6d464e0}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_number_variable_a4ee142237d5b7c7c35371225b6d464e0}
+
+\begin{DoxyCompactList}\small\item\em Verifies that, if the element has scripting elements, its name is valid for use in a script environment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_number_variable_aeedd4a8d3cdad7497554604c8cf020d4}{double \hyperlink{class_picto_1_1_number_variable_aeedd4a8d3cdad7497554604c8cf020d4}{value}}\label{class_picto_1_1_number_variable_aeedd4a8d3cdad7497554604c8cf020d4}
+
+\begin{DoxyCompactList}\small\item\em A script property used to read and write this \hyperlink{class_picto_1_1_number_variable}{Number\-Variable}'s value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A simple variable that is used for storing numeric values. 
+
+The name pretty much says it all. This is like a javascript var. It holds a number while it is in scope. The number can be read/set using the \char`\"{}value\char`\"{} script property. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Number\-Variable.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_number_variable_a2e3e98c345b9c2bbee184c2606485b66}{\index{Picto\-::\-Number\-Variable@{Picto\-::\-Number\-Variable}!Number\-Variable@{Number\-Variable}}
+\index{Number\-Variable@{Number\-Variable}!Picto::NumberVariable@{Picto\-::\-Number\-Variable}}
+\subsubsection[{Number\-Variable}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Number\-Variable\-::\-Number\-Variable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_number_variable_a2e3e98c345b9c2bbee184c2606485b66}
+
+
+Constructs an \hyperlink{class_picto_1_1_number_variable}{Number\-Variable}. 
+
+Adds a \char`\"{}\-Value\char`\"{} property. 
+
+Definition at line 8 of file Number\-Variable.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_number_variable_a5184a95861f786c2068e85b9eb190724}{\index{Picto\-::\-Number\-Variable@{Picto\-::\-Number\-Variable}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::NumberVariable@{Picto\-::\-Number\-Variable}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Number\-Variable\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_number_variable_a5184a95861f786c2068e85b9eb190724}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_variable_abf83dc0e4cfbfe89c43720eca1c49664}{Picto\-::\-Variable}.
+
+
+
+Definition at line 37 of file Number\-Variable.\-h.
+
+\hypertarget{class_picto_1_1_number_variable_a6ab9b74741c023e43dab955a975cc6c4}{\index{Picto\-::\-Number\-Variable@{Picto\-::\-Number\-Variable}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::NumberVariable@{Picto\-::\-Number\-Variable}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Number\-Variable\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_number_variable_a6ab9b74741c023e43dab955a975cc6c4}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_variable_a447e12ef138cdd99ae9ba870ed3b5174}{Picto\-::\-Variable}.
+
+
+
+Definition at line 20 of file Number\-Variable.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/variable/Number\-Variable.\-h\item 
+source/common/variable/Number\-Variable.\-cpp\end{DoxyCompactItemize}

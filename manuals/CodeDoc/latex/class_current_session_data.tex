@@ -1,0 +1,152 @@
+\hypertarget{class_current_session_data}{\section{Current\-Session\-Data Class Reference}
+\label{class_current_session_data}\index{Current\-Session\-Data@{Current\-Session\-Data}}
+}
+
+
+Stores all of the current values for each piece of session data defining the current Experimental state.  
+
+
+
+
+{\ttfamily \#include $<$Current\-Session\-Data.\-h$>$}
+
+Inheritance diagram for Current\-Session\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_current_session_data}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_current_session_data_af78242fa37935fad3fe1445ac93ba7c1}{\hyperlink{class_current_session_data_af78242fa37935fad3fe1445ac93ba7c1}{Current\-Session\-Data} (int data\-Type)}\label{class_current_session_data_af78242fa37935fad3fe1445ac93ba7c1}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_current_session_data}{Current\-Session\-Data} object for the input data\-Type. \end{DoxyCompactList}\item 
+void \hyperlink{class_current_session_data_a5db07b16051edc476dcf815d8c690688}{update\-Variable} (int dataid, int variable\-Id, Q\-String timestamp, Q\-String data)
+\begin{DoxyCompactList}\small\item\em Updates the value of the entry with the input variable\-Id to the current input data if it doesn't yet have a value or if its value's data\-Id/timestamp is lower than the input data\-Id/timestamp. \end{DoxyCompactList}\item 
+void \hyperlink{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}{update\-Variables} (Q\-List$<$ Q\-Variant\-List $>$ data)
+\begin{DoxyCompactList}\small\item\em Updates the stored values of all of the entries in the input data list if the individual entries don't yet have values or their saved data\-Id/timestamps are lower than the data\-Id/timestamps included with these new values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_current_session_data_a1096941b2edb3bff3cbb60cb4e30c25c}{write\-Data} (int data\-Type, Q\-Variant\-List data)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_ad05a594d8410d638f1a066bfa5a10ba3}{Session\-Data\-::write\-Data()} to write the input data to this object. \end{DoxyCompactList}\item 
+\hypertarget{class_current_session_data_ae2e23db13e0a70a4afefe6343e54a8a0}{Q\-List$<$ int $>$ \hyperlink{class_current_session_data_ae2e23db13e0a70a4afefe6343e54a8a0}{read\-Data\-Types} ()}\label{class_current_session_data_ae2e23db13e0a70a4afefe6343e54a8a0}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_a4b879f10ecfbfcaa12c2dbbc1b15bdff}{Session\-Data\-::read\-Data\-Types()} to return only the single data type that was entered when this object was constructed. Only it is allowed to be used with this object. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Variant\-List $>$ \hyperlink{class_current_session_data_a1df3ca686975e2c6049666dc06fd497e}{read\-Data} (int data\-Type, Q\-Variant condition, bool cut=false)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_session_data_a81f4eb49b8a23eb9c1a1575abc2fad4c}{Session\-Data\-::read\-Data()} to return all data of the input data\-Type which has timestamp after that of the input condition. \end{DoxyCompactList}\item 
+\hypertarget{class_current_session_data_abb1f488ed6ba05b54a8c3586cb21ed66}{virtual void {\bfseries erase\-Everything} ()}\label{class_current_session_data_abb1f488ed6ba05b54a8c3586cb21ed66}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores all of the current values for each piece of session data defining the current Experimental state. 
+
+This object is used to provide the current Experimental state to Workstations that are displaying Experiment activity to an Operator. The \hyperlink{class_current_session_data_a5db07b16051edc476dcf815d8c690688}{update\-Variable()} and \hyperlink{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}{update\-Variables()} functions are used to update the stored variables with their latest values. Then data can be copied or moved out by using \hyperlink{class_session_data_a20863a2b54c30b1043ff4a87a9908ba9}{copy\-Data\-To()} or \hyperlink{class_session_data_a15c17ef02068f6ec8bf717044c21b487}{move\-Data\-To()}. When these functions are called, enter a time double into the condition variables. All pieces of session data whose values changed after that time will be copied/moved.
+
+Internally, this object maintains to lookup tables. The first table stores all session data keyed by its Variable\-Id. When new data comes in, the value in that table for its Variable\-I\-D is either updated or not depending on whether the new data is newer than the stored data or not. The other lookup table stores data keyed by the time at which it changed. This is useful since the object needs to return all data that occured after a specific time, and this prevent us from having to sort lots of data every time this type of read occurs. Updating of this second table occurs every time the first table occurs. Whenever an entry in the first table is replaced, the replaced entry is removed from the second table, and the new entry is added to the second table with the key of its new timestamp.
+
+\begin{DoxyNote}{Note}
+This object is meant to be used with \hyperlink{class_serial_session_data}{Serial\-Session\-Data}. By copying data from this object to a \hyperlink{class_serial_session_data}{Serial\-Session\-Data} object, we can very easily serialize all data needed by a Workstaion whenever requests come in for the latest Experimental state. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 36 of file Current\-Session\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_current_session_data_a1df3ca686975e2c6049666dc06fd497e}{\index{Current\-Session\-Data@{Current\-Session\-Data}!read\-Data@{read\-Data}}
+\index{read\-Data@{read\-Data}!CurrentSessionData@{Current\-Session\-Data}}
+\subsubsection[{read\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Variant\-List $>$ Current\-Session\-Data\-::read\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-Variant}]{condition, }
+\item[{bool}]{cut = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_current_session_data_a1df3ca686975e2c6049666dc06fd497e}
+
+
+Implements \hyperlink{class_session_data_a81f4eb49b8a23eb9c1a1575abc2fad4c}{Session\-Data\-::read\-Data()} to return all data of the input data\-Type which has timestamp after that of the input condition. 
+
+cut is implemented as expected, if true all returned values are deleted from this object. The input data\-Type must match the one that was used in this object's constructor. 
+
+Implements \hyperlink{class_session_data_a81f4eb49b8a23eb9c1a1575abc2fad4c}{Session\-Data}.
+
+
+
+Definition at line 97 of file Current\-Session\-Data.\-cpp.
+
+\hypertarget{class_current_session_data_a5db07b16051edc476dcf815d8c690688}{\index{Current\-Session\-Data@{Current\-Session\-Data}!update\-Variable@{update\-Variable}}
+\index{update\-Variable@{update\-Variable}!CurrentSessionData@{Current\-Session\-Data}}
+\subsubsection[{update\-Variable}]{\setlength{\rightskip}{0pt plus 5cm}void Current\-Session\-Data\-::update\-Variable (
+\begin{DoxyParamCaption}
+\item[{int}]{dataid, }
+\item[{int}]{variable\-Id, }
+\item[{Q\-String}]{timestamp, }
+\item[{Q\-String}]{data}
+\end{DoxyParamCaption}
+)}}\label{class_current_session_data_a5db07b16051edc476dcf815d8c690688}
+
+
+Updates the value of the entry with the input variable\-Id to the current input data if it doesn't yet have a value or if its value's data\-Id/timestamp is lower than the input data\-Id/timestamp. 
+
+Internally, this adds data\-Id, variable\-Id, and timestamp to the front of the data value, creates a single member Q\-List$<$\-Q\-Variant\-List$>$ with that Variable\-List and calls \hyperlink{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}{update\-Variables()} with it. 
+
+Definition at line 23 of file Current\-Session\-Data.\-cpp.
+
+\hypertarget{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}{\index{Current\-Session\-Data@{Current\-Session\-Data}!update\-Variables@{update\-Variables}}
+\index{update\-Variables@{update\-Variables}!CurrentSessionData@{Current\-Session\-Data}}
+\subsubsection[{update\-Variables}]{\setlength{\rightskip}{0pt plus 5cm}void Current\-Session\-Data\-::update\-Variables (
+\begin{DoxyParamCaption}
+\item[{Q\-List$<$ Q\-Variant\-List $>$}]{data}
+\end{DoxyParamCaption}
+)}}\label{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}
+
+
+Updates the stored values of all of the entries in the input data list if the individual entries don't yet have values or their saved data\-Id/timestamps are lower than the data\-Id/timestamps included with these new values. 
+
+\begin{DoxyNote}{Note}
+The individual Variant\-List values in the Q\-List must be structured as follows\-: int dataid,int variable\-Id,Q\-String timestamp,Q\-String data\-Value 
+\end{DoxyNote}
+
+
+Definition at line 36 of file Current\-Session\-Data.\-cpp.
+
+\hypertarget{class_current_session_data_a1096941b2edb3bff3cbb60cb4e30c25c}{\index{Current\-Session\-Data@{Current\-Session\-Data}!write\-Data@{write\-Data}}
+\index{write\-Data@{write\-Data}!CurrentSessionData@{Current\-Session\-Data}}
+\subsubsection[{write\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Current\-Session\-Data\-::write\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{data\-Type, }
+\item[{Q\-Variant\-List}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_current_session_data_a1096941b2edb3bff3cbb60cb4e30c25c}
+
+
+Implements \hyperlink{class_session_data_ad05a594d8410d638f1a066bfa5a10ba3}{Session\-Data\-::write\-Data()} to write the input data to this object. 
+
+The data\-Type parameter is ignored in this function, since all data types must be the same as the one entered into the constructor. The data is assumed to be structured according to the documentation of \hyperlink{class_current_session_data_abd0e52b87a97c937baa8075ed36c05a8}{update\-Variables()}.
+
+This function gets the Data\-Id and timestamp from the input data. If either one is greater than the stored Data\-Id/\-Timestamp for the input data's variable\-Id, the new data replaces the old stored data for this variable\-Id. If that replacement occurs, the old stored value must also be removed from the data\-By\-Time list which organizes value changes by their time order. After the old data is removed from the data\-By\-Time list, the new value is added to it with its timestamp as its key. 
+
+Implements \hyperlink{class_session_data_ad05a594d8410d638f1a066bfa5a10ba3}{Session\-Data}.
+
+
+
+Definition at line 56 of file Current\-Session\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/connections/Current\-Session\-Data.\-h\item 
+source/server/connections/Current\-Session\-Data.\-cpp\end{DoxyCompactItemize}

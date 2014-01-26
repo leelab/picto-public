@@ -1,0 +1,108 @@
+\hypertarget{class_picto_1_1_state_machine_editor_data}{\section{Picto\-:\-:State\-Machine\-Editor\-Data Class Reference}
+\label{class_picto_1_1_state_machine_editor_data}\index{Picto\-::\-State\-Machine\-Editor\-Data@{Picto\-::\-State\-Machine\-Editor\-Data}}
+}
+
+
+A \hyperlink{class_picto_1_1_state_machine_editor_data}{State\-Machine\-Editor\-Data} is the exit point from a \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} or \hyperlink{class_picto_1_1_control_element}{Control\-Element}.  
+
+
+
+
+{\ttfamily \#include $<$State\-Machine\-Editor\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:State\-Machine\-Editor\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_picto_1_1_state_machine_editor_data}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_state_machine_editor_data_ab56cf9a470bfdc851d366b12cf7499c3}{void {\bfseries set\-Opened\-Asset} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ opened\-Asset)}\label{class_picto_1_1_state_machine_editor_data_ab56cf9a470bfdc851d366b12cf7499c3}
+
+\item 
+\hypertarget{class_picto_1_1_state_machine_editor_data_a2d8ef782add4139f198549efc650ab01}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries get\-Opened\-Asset} ()}\label{class_picto_1_1_state_machine_editor_data_a2d8ef782add4139f198549efc650ab01}
+
+\item 
+\hypertarget{class_picto_1_1_state_machine_editor_data_afdae8d01ecf2eec6b265cece9b656d52}{void {\bfseries set\-Opened\-Asset\-Id} (int opened\-Asset)}\label{class_picto_1_1_state_machine_editor_data_afdae8d01ecf2eec6b265cece9b656d52}
+
+\item 
+\hypertarget{class_picto_1_1_state_machine_editor_data_a1ceaef18baa7529b1a644c3dcc53d3d4}{int {\bfseries get\-Opened\-Asset\-Id} ()}\label{class_picto_1_1_state_machine_editor_data_a1ceaef18baa7529b1a644c3dcc53d3d4}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_state_machine_editor_data_a8a9e0539aa39876154e735eb8879d1d5}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_state_machine_editor_data_a8a9e0539aa39876154e735eb8879d1d5}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_state_machine_editor_data_af001fdfd8af85db7e351d2625252bded}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_state_machine_editor_data_ace4e1b873c7606f6b771daf57e1ee132}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_picto_1_1_state_machine_editor_data}{State\-Machine\-Editor\-Data} is the exit point from a \hyperlink{class_picto_1_1_state_machine_element}{State\-Machine\-Element} or \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+
+
+Definition at line 13 of file State\-Machine\-Editor\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_state_machine_editor_data_af001fdfd8af85db7e351d2625252bded}{\index{Picto\-::\-State\-Machine\-Editor\-Data@{Picto\-::\-State\-Machine\-Editor\-Data}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::StateMachineEditorData@{Picto\-::\-State\-Machine\-Editor\-Data}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Machine\-Editor\-Data\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_state_machine_editor_data_af001fdfd8af85db7e351d2625252bded}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_aaa194a5392d79cefe701c163564efd52}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 49 of file State\-Machine\-Editor\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_state_machine_editor_data_ace4e1b873c7606f6b771daf57e1ee132}{\index{Picto\-::\-State\-Machine\-Editor\-Data@{Picto\-::\-State\-Machine\-Editor\-Data}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::StateMachineEditorData@{Picto\-::\-State\-Machine\-Editor\-Data}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-State\-Machine\-Editor\-Data\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_state_machine_editor_data_ace4e1b873c7606f6b771daf57e1ee132}
+
+
+Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. 
+
+If invalid syntax is found, this function uses add\-Error to report a syntax violation and returns false. The Q\-Xml\-Stream\-Reader is passed in so that the \hyperlink{class_picto_1_1_asset}{Asset} can reference it in any error messages.
+
+In the case of the \hyperlink{class_picto_1_1_data_store}{Data\-Store}, this function checks for uniqueness of child names when \hyperlink{class_picto_1_1_data_store_af4853c8c9ec20506d352b1c1bd01360a}{needs\-Unique\-Child\-Names()} and any child or associate child \hyperlink{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{needs\-Unique\-Name()} 
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a077c9284e2d18d50b72e0fea1a5eeacb}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 55 of file State\-Machine\-Editor\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/State\-Machine\-Editor\-Data.\-h\item 
+source/common/\-Designer/State\-Machine\-Editor\-Data.\-cpp\end{DoxyCompactItemize}

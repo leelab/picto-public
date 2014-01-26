@@ -1,0 +1,294 @@
+\hypertarget{class_hardware_setup}{\section{Hardware\-Setup Class Reference}
+\label{class_hardware_setup}\index{Hardware\-Setup@{Hardware\-Setup}}
+}
+
+
+Sets up the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} according to the Picto\-Director hardware.  
+
+
+
+
+{\ttfamily \#include $<$Hardware\-Setup.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}{Signal\-Channel\-Type} \{ \hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa0e71632c05842ebd76e1cf2d3e9d03e}{Mouse}, 
+\hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa37a374b7c5af662532c47532152ba7c}{Eyetracker\-Legacy\-System\-Xp}, 
+\hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa5092296cb0e9f4668e438ed9d126377}{Eyetracker\-Picto\-Box\-Xp}
+ \}
+\begin{DoxyCompactList}\small\item\em The types of Signal\-Channel objects that can be setup. \end{DoxyCompactList}\item 
+enum \hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005}{Visual\-Target\-Type} \{ \hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005a907396ec61e0de7775ba86d887af5457}{Pixmap}, 
+\hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005a902a819b8d83a0a4eaa612023f73539f}{D3\-D}
+ \}
+\begin{DoxyCompactList}\small\item\em The types of Visual\-Target objects that can be setup. \end{DoxyCompactList}\item 
+enum \hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}{Reward\-Controller\-Type} \{ \hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bfabacd521b587da2841af42161a892fbcd}{Picto\-Box\-Xp\-Reward}, 
+\hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bfad71ea9a5498fe8fd88fbfd472df00ec7}{Legacy\-System\-Xp\-Reward}, 
+\hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa0ce47924401e928d7c26f2d4a209d066}{Audio\-Reward}, 
+\hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa6d983e58d740737e1054ee313b2771a0}{Null\-Reward}
+ \}
+\begin{DoxyCompactList}\small\item\em The types of Reward\-Controller objects that can be setup. \end{DoxyCompactList}\item 
+enum \hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625b}{Output\-Signal\-Controller\-Type} \{ \hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625baefde555de40121d74b7f8f80c1a326eb}{Picto\-Box\-Xp\-Out\-Sig}, 
+\hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625ba64fe06dc1692650e0396f9577e0eac9a}{Null\-Out\-Sig}
+ \}
+\begin{DoxyCompactList}\small\item\em The types of Output\-Signal\-Controller objects that can be setup. \end{DoxyCompactList}\item 
+enum \hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{Event\-Code\-Generator\-Type} \{ \hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a55e2be5d03b6c1117ad83174ebbb0821}{Picto\-Box\-Xp\-Gen}, 
+\hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a364e643a917643be23fd73c9cadbe20e}{Legacy\-Gen}, 
+\hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a68b2acabc843c750fdd9297f65959c39}{Null\-Gen}
+ \}
+\begin{DoxyCompactList}\small\item\em The types of Event\-Code\-Generator objects that can be setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_hardware_setup_ac373e5ac14b566519590bc113408fb67}{\hyperlink{class_hardware_setup_ac373e5ac14b566519590bc113408fb67}{Hardware\-Setup} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} $>$ engine)}\label{class_hardware_setup_ac373e5ac14b566519590bc113408fb67}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_hardware_setup}{Hardware\-Setup} object that configures the input \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_hardware_setup_ac1699cea38d2eaa236d8f4d94e279854}{setup\-Rendering\-Targets} (\hyperlink{class_hardware_setup_a69c004a7774626593182bda8c88c1005}{Visual\-Target\-Type} visual\-Target\-Type, bool timing\-Critical)
+\begin{DoxyCompactList}\small\item\em Sets up the rendering target used in the experiment with appropriate \hyperlink{class_picto_1_1_visual_target}{Picto\-::\-Visual\-Target} and \hyperlink{class_picto_1_1_p_c_m_aural_target}{Picto\-::\-P\-C\-M\-Aural\-Target} objects, then adds it to the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_hardware_setup_a79cc88d4063ce1e8f8e57e8ccc4da370}{setup\-Signal\-Channel} (\hyperlink{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}{Signal\-Channel\-Type} channel\-Type)
+\begin{DoxyCompactList}\small\item\em Sets up the signal channels used for input. \end{DoxyCompactList}\item 
+bool \hyperlink{class_hardware_setup_a47b22c5078bbc71691d97475525f9fd3}{setup\-Reward\-Controller} (\hyperlink{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}{Reward\-Controller\-Type} controller\-Type)
+\begin{DoxyCompactList}\small\item\em Sets up the reward controller. \end{DoxyCompactList}\item 
+bool \hyperlink{class_hardware_setup_afa2c46dd00077c8c65991f341bf74f35}{setup\-Output\-Signal\-Controller} (\hyperlink{class_hardware_setup_a7bf652582f22ceef095add24e855625b}{Output\-Signal\-Controller\-Type} controller\-Type, \hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{Event\-Code\-Generator\-Type} generator\-Type)
+\begin{DoxyCompactList}\small\item\em Sets up the Output\-Signal\-Controller used to handle output voltage signals. \end{DoxyCompactList}\item 
+bool \hyperlink{class_hardware_setup_aea6f3152a05620d6581243d73b40d980}{setup\-Event\-Code\-Generator} (\hyperlink{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{Event\-Code\-Generator\-Type} generator\-Type)
+\begin{DoxyCompactList}\small\item\em Sets up the Event\-Code\-Generator used to send event codes to a neural data acquisition system. \end{DoxyCompactList}\item 
+\hypertarget{class_hardware_setup_a5bc46e1c2e2a706a527b7ec1a50227d5}{bool \hyperlink{class_hardware_setup_a5bc46e1c2e2a706a527b7ec1a50227d5}{set\-X\-Y\-Channel\-Nums} (int x\-Chan, int y\-Chan)}\label{class_hardware_setup_a5bc46e1c2e2a706a527b7ec1a50227d5}
+
+\begin{DoxyCompactList}\small\item\em Sets the channel numbers used for x and y position inputs. \end{DoxyCompactList}\item 
+\hypertarget{class_hardware_setup_ad0e2d98d3b069186ed031bf97655ae9f}{bool \hyperlink{class_hardware_setup_ad0e2d98d3b069186ed031bf97655ae9f}{set\-X\-Y\-Diam\-Channel\-Nums} (int x\-Diam\-Chan, int y\-Diam\-Chan)}\label{class_hardware_setup_ad0e2d98d3b069186ed031bf97655ae9f}
+
+\begin{DoxyCompactList}\small\item\em Sets the channel numbers used for x and y diameter inputs. Negative values indicate that diameter sampling will not be used. \end{DoxyCompactList}\item 
+\hypertarget{class_hardware_setup_ac9e0635d2494b5c3012371e3cefad675}{bool \hyperlink{class_hardware_setup_ac9e0635d2494b5c3012371e3cefad675}{set\-Sample\-Periods} (int position\-Period\-Ms, int diam\-Period\-Ms)}\label{class_hardware_setup_ac9e0635d2494b5c3012371e3cefad675}
+
+\begin{DoxyCompactList}\small\item\em Sets the sample periods used for position and diameter sampling in milliseconds. \end{DoxyCompactList}\item 
+\hypertarget{class_hardware_setup_a3127e2deebca2b91df7ce974cd8532e8}{bool \hyperlink{class_hardware_setup_a3127e2deebca2b91df7ce974cd8532e8}{is\-Setup} ()}\label{class_hardware_setup_a3127e2deebca2b91df7ce974cd8532e8}
+
+\begin{DoxyCompactList}\small\item\em Returns true if everything has been successfully setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Sets up the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine} according to the Picto\-Director hardware. 
+
+The Picto\-Director could be running on any of a number of hardware platforms. This tool contains the functions needed to set up the hardware for the specific platform. At the moment, all of the code is contained within this object. If we start supporting more than 1 or 2 platforms, it may be worth breaking out each configuration seperately. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file Hardware\-Setup.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}{\index{Hardware\-Setup@{Hardware\-Setup}!Event\-Code\-Generator\-Type@{Event\-Code\-Generator\-Type}}
+\index{Event\-Code\-Generator\-Type@{Event\-Code\-Generator\-Type}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{Event\-Code\-Generator\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hardware\-Setup\-::\-Event\-Code\-Generator\-Type}}}\label{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00}
+
+
+The types of Event\-Code\-Generator objects that can be setup. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Picto\-Box\-Xp\-Gen@{Picto\-Box\-Xp\-Gen}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Picto\-Box\-Xp\-Gen@{Picto\-Box\-Xp\-Gen}}\item[{\em 
+\hypertarget{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a55e2be5d03b6c1117ad83174ebbb0821}{Picto\-Box\-Xp\-Gen}\label{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a55e2be5d03b6c1117ad83174ebbb0821}
+}]Creates event codes on the Pictobox parallel port. \index{Legacy\-Gen@{Legacy\-Gen}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Legacy\-Gen@{Legacy\-Gen}}\item[{\em 
+\hypertarget{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a364e643a917643be23fd73c9cadbe20e}{Legacy\-Gen}\label{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a364e643a917643be23fd73c9cadbe20e}
+}]Creates event codes in a legacy system (Orion computer) \index{Null\-Gen@{Null\-Gen}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Null\-Gen@{Null\-Gen}}\item[{\em 
+\hypertarget{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a68b2acabc843c750fdd9297f65959c39}{Null\-Gen}\label{class_hardware_setup_a5577404a1cb597cc0d78bc56c9acac00a68b2acabc843c750fdd9297f65959c39}
+}]No event codes will be created. \end{description}
+\end{Desc}
+
+
+Definition at line 55 of file Hardware\-Setup.\-h.
+
+\hypertarget{class_hardware_setup_a7bf652582f22ceef095add24e855625b}{\index{Hardware\-Setup@{Hardware\-Setup}!Output\-Signal\-Controller\-Type@{Output\-Signal\-Controller\-Type}}
+\index{Output\-Signal\-Controller\-Type@{Output\-Signal\-Controller\-Type}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{Output\-Signal\-Controller\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hardware\-Setup\-::\-Output\-Signal\-Controller\-Type}}}\label{class_hardware_setup_a7bf652582f22ceef095add24e855625b}
+
+
+The types of Output\-Signal\-Controller objects that can be setup. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Picto\-Box\-Xp\-Out\-Sig@{Picto\-Box\-Xp\-Out\-Sig}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Picto\-Box\-Xp\-Out\-Sig@{Picto\-Box\-Xp\-Out\-Sig}}\item[{\em 
+\hypertarget{class_hardware_setup_a7bf652582f22ceef095add24e855625baefde555de40121d74b7f8f80c1a326eb}{Picto\-Box\-Xp\-Out\-Sig}\label{class_hardware_setup_a7bf652582f22ceef095add24e855625baefde555de40121d74b7f8f80c1a326eb}
+}]Output voltage signals are created on the Pictobox B\-N\-C ports. \index{Null\-Out\-Sig@{Null\-Out\-Sig}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Null\-Out\-Sig@{Null\-Out\-Sig}}\item[{\em 
+\hypertarget{class_hardware_setup_a7bf652582f22ceef095add24e855625ba64fe06dc1692650e0396f9577e0eac9a}{Null\-Out\-Sig}\label{class_hardware_setup_a7bf652582f22ceef095add24e855625ba64fe06dc1692650e0396f9577e0eac9a}
+}]No output voltage signals will be generated. \end{description}
+\end{Desc}
+
+
+Definition at line 48 of file Hardware\-Setup.\-h.
+
+\hypertarget{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}{\index{Hardware\-Setup@{Hardware\-Setup}!Reward\-Controller\-Type@{Reward\-Controller\-Type}}
+\index{Reward\-Controller\-Type@{Reward\-Controller\-Type}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{Reward\-Controller\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hardware\-Setup\-::\-Reward\-Controller\-Type}}}\label{class_hardware_setup_adca8a1e846871351eea56002364cd9bf}
+
+
+The types of Reward\-Controller objects that can be setup. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Picto\-Box\-Xp\-Reward@{Picto\-Box\-Xp\-Reward}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Picto\-Box\-Xp\-Reward@{Picto\-Box\-Xp\-Reward}}\item[{\em 
+\hypertarget{class_hardware_setup_adca8a1e846871351eea56002364cd9bfabacd521b587da2841af42161a892fbcd}{Picto\-Box\-Xp\-Reward}\label{class_hardware_setup_adca8a1e846871351eea56002364cd9bfabacd521b587da2841af42161a892fbcd}
+}]Rewards will be provided from a Pictobox through its rear red-\/black \char`\"{}speaker\char`\"{} ports. \index{Legacy\-System\-Xp\-Reward@{Legacy\-System\-Xp\-Reward}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Legacy\-System\-Xp\-Reward@{Legacy\-System\-Xp\-Reward}}\item[{\em 
+\hypertarget{class_hardware_setup_adca8a1e846871351eea56002364cd9bfad71ea9a5498fe8fd88fbfd472df00ec7}{Legacy\-System\-Xp\-Reward}\label{class_hardware_setup_adca8a1e846871351eea56002364cd9bfad71ea9a5498fe8fd88fbfd472df00ec7}
+}]Rewards will be provided using a legacy setup (Orion system... note that the reward line will need to be reattached for this. See Legacy\-System\-X\-P\-Reward\-Controller. \index{Audio\-Reward@{Audio\-Reward}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Audio\-Reward@{Audio\-Reward}}\item[{\em 
+\hypertarget{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa0ce47924401e928d7c26f2d4a209d066}{Audio\-Reward}\label{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa0ce47924401e928d7c26f2d4a209d066}
+}]An audio tick will be played for every reward. \index{Null\-Reward@{Null\-Reward}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Null\-Reward@{Null\-Reward}}\item[{\em 
+\hypertarget{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa6d983e58d740737e1054ee313b2771a0}{Null\-Reward}\label{class_hardware_setup_adca8a1e846871351eea56002364cd9bfa6d983e58d740737e1054ee313b2771a0}
+}]No Rewards will be supplied. \end{description}
+\end{Desc}
+
+
+Definition at line 39 of file Hardware\-Setup.\-h.
+
+\hypertarget{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}{\index{Hardware\-Setup@{Hardware\-Setup}!Signal\-Channel\-Type@{Signal\-Channel\-Type}}
+\index{Signal\-Channel\-Type@{Signal\-Channel\-Type}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{Signal\-Channel\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hardware\-Setup\-::\-Signal\-Channel\-Type}}}\label{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6}
+
+
+The types of Signal\-Channel objects that can be setup. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Mouse@{Mouse}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Mouse@{Mouse}}\item[{\em 
+\hypertarget{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa0e71632c05842ebd76e1cf2d3e9d03e}{Mouse}\label{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa0e71632c05842ebd76e1cf2d3e9d03e}
+}]Sets up signal input from the Mouse. No diameter input is used. \index{Eyetracker\-Legacy\-System\-Xp@{Eyetracker\-Legacy\-System\-Xp}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Eyetracker\-Legacy\-System\-Xp@{Eyetracker\-Legacy\-System\-Xp}}\item[{\em 
+\hypertarget{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa37a374b7c5af662532c47532152ba7c}{Eyetracker\-Legacy\-System\-Xp}\label{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa37a374b7c5af662532c47532152ba7c}
+}]Sets up signal inputs for a legacy system (Orion) \index{Eyetracker\-Picto\-Box\-Xp@{Eyetracker\-Picto\-Box\-Xp}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Eyetracker\-Picto\-Box\-Xp@{Eyetracker\-Picto\-Box\-Xp}}\item[{\em 
+\hypertarget{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa5092296cb0e9f4668e438ed9d126377}{Eyetracker\-Picto\-Box\-Xp}\label{class_hardware_setup_a47f2dfba54bc1a8d0bbd64d885d638e6aa5092296cb0e9f4668e438ed9d126377}
+}]Sets up signal inputs for a Pictobox. \end{description}
+\end{Desc}
+
+
+Definition at line 24 of file Hardware\-Setup.\-h.
+
+\hypertarget{class_hardware_setup_a69c004a7774626593182bda8c88c1005}{\index{Hardware\-Setup@{Hardware\-Setup}!Visual\-Target\-Type@{Visual\-Target\-Type}}
+\index{Visual\-Target\-Type@{Visual\-Target\-Type}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{Visual\-Target\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hardware\-Setup\-::\-Visual\-Target\-Type}}}\label{class_hardware_setup_a69c004a7774626593182bda8c88c1005}
+
+
+The types of Visual\-Target objects that can be setup. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Pixmap@{Pixmap}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!Pixmap@{Pixmap}}\item[{\em 
+\hypertarget{class_hardware_setup_a69c004a7774626593182bda8c88c1005a907396ec61e0de7775ba86d887af5457}{Pixmap}\label{class_hardware_setup_a69c004a7774626593182bda8c88c1005a907396ec61e0de7775ba86d887af5457}
+}]A Qt Pixmap visual target will be used. (Inprecise timing) \index{D3\-D@{D3\-D}!Hardware\-Setup@{Hardware\-Setup}}\index{Hardware\-Setup@{Hardware\-Setup}!D3\-D@{D3\-D}}\item[{\em 
+\hypertarget{class_hardware_setup_a69c004a7774626593182bda8c88c1005a902a819b8d83a0a4eaa612023f73539f}{D3\-D}\label{class_hardware_setup_a69c004a7774626593182bda8c88c1005a902a819b8d83a0a4eaa612023f73539f}
+}]A Direct3d full screen visual target will be used. \end{description}
+\end{Desc}
+
+
+Definition at line 32 of file Hardware\-Setup.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_hardware_setup_aea6f3152a05620d6581243d73b40d980}{\index{Hardware\-Setup@{Hardware\-Setup}!setup\-Event\-Code\-Generator@{setup\-Event\-Code\-Generator}}
+\index{setup\-Event\-Code\-Generator@{setup\-Event\-Code\-Generator}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{setup\-Event\-Code\-Generator}]{\setlength{\rightskip}{0pt plus 5cm}bool Hardware\-Setup\-::setup\-Event\-Code\-Generator (
+\begin{DoxyParamCaption}
+\item[{{\bf Hardware\-Setup\-::\-Event\-Code\-Generator\-Type}}]{generator\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_hardware_setup_aea6f3152a05620d6581243d73b40d980}
+
+
+Sets up the Event\-Code\-Generator used to send event codes to a neural data acquisition system. 
+
+Options are Picto\-Box\-Xp\-Gen, Legacy\-Gen, Null\-Gen. Returns true on success, false otherwise. 
+
+Definition at line 288 of file Hardware\-Setup.\-cpp.
+
+\hypertarget{class_hardware_setup_afa2c46dd00077c8c65991f341bf74f35}{\index{Hardware\-Setup@{Hardware\-Setup}!setup\-Output\-Signal\-Controller@{setup\-Output\-Signal\-Controller}}
+\index{setup\-Output\-Signal\-Controller@{setup\-Output\-Signal\-Controller}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{setup\-Output\-Signal\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}bool Hardware\-Setup\-::setup\-Output\-Signal\-Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf Output\-Signal\-Controller\-Type}}]{controller\-Type, }
+\item[{{\bf Event\-Code\-Generator\-Type}}]{generator\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_hardware_setup_afa2c46dd00077c8c65991f341bf74f35}
+
+
+Sets up the Output\-Signal\-Controller used to handle output voltage signals. 
+
+There are only two types of Output\-Signal\-Controllers currently\-: Picto\-Box\-Xp\-Out\-Sig and Null\-Out\-Sig. Returns true on success, returns false otherwise. \begin{DoxyNote}{Note}
+This function needs to know the Event\-Code\-Generator\-Type so that it knows if the port used for Event codes is free to be used as an Output\-Signal port or not. 
+\end{DoxyNote}
+
+
+Definition at line 252 of file Hardware\-Setup.\-cpp.
+
+\hypertarget{class_hardware_setup_ac1699cea38d2eaa236d8f4d94e279854}{\index{Hardware\-Setup@{Hardware\-Setup}!setup\-Rendering\-Targets@{setup\-Rendering\-Targets}}
+\index{setup\-Rendering\-Targets@{setup\-Rendering\-Targets}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{setup\-Rendering\-Targets}]{\setlength{\rightskip}{0pt plus 5cm}bool Hardware\-Setup\-::setup\-Rendering\-Targets (
+\begin{DoxyParamCaption}
+\item[{{\bf Visual\-Target\-Type}}]{visual\-Target\-Type, }
+\item[{bool}]{timing\-Critical}
+\end{DoxyParamCaption}
+)}}\label{class_hardware_setup_ac1699cea38d2eaa236d8f4d94e279854}
+
+
+Sets up the rendering target used in the experiment with appropriate \hyperlink{class_picto_1_1_visual_target}{Picto\-::\-Visual\-Target} and \hyperlink{class_picto_1_1_p_c_m_aural_target}{Picto\-::\-P\-C\-M\-Aural\-Target} objects, then adds it to the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visual\-Target\-Type} & The type of Visual\-Target to be setup. \\
+\hline
+{\em timing\-Critical} & Indicates that this process/thread should run at maximum priority. This makes the mouse unresponsive, which is okay when input is from the eye tracker.\\
+\hline
+\end{DoxyParams}
+Returns false if the Rendering\-Target can not be set up properly. 
+
+Definition at line 96 of file Hardware\-Setup.\-cpp.
+
+\hypertarget{class_hardware_setup_a47b22c5078bbc71691d97475525f9fd3}{\index{Hardware\-Setup@{Hardware\-Setup}!setup\-Reward\-Controller@{setup\-Reward\-Controller}}
+\index{setup\-Reward\-Controller@{setup\-Reward\-Controller}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{setup\-Reward\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}bool Hardware\-Setup\-::setup\-Reward\-Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf Reward\-Controller\-Type}}]{controller\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_hardware_setup_a47b22c5078bbc71691d97475525f9fd3}
+
+
+Sets up the reward controller. 
+
+Potential Reward\-Controller are Picto\-Box\-Xp\-Reward, Legacy\-System\-Xp\-Reward, Audio\-Reward, Null\-Reward. Returns true on success, false otherwise. 
+
+Definition at line 213 of file Hardware\-Setup.\-cpp.
+
+\hypertarget{class_hardware_setup_a79cc88d4063ce1e8f8e57e8ccc4da370}{\index{Hardware\-Setup@{Hardware\-Setup}!setup\-Signal\-Channel@{setup\-Signal\-Channel}}
+\index{setup\-Signal\-Channel@{setup\-Signal\-Channel}!HardwareSetup@{Hardware\-Setup}}
+\subsubsection[{setup\-Signal\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}bool Hardware\-Setup\-::setup\-Signal\-Channel (
+\begin{DoxyParamCaption}
+\item[{{\bf Signal\-Channel\-Type}}]{channel\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_hardware_setup_a79cc88d4063ce1e8f8e57e8ccc4da370}
+
+
+Sets up the signal channels used for input. 
+
+Every director instance requires some form of input (mouse, eye tracker, or something else. This function sets that up. The Signal\-Channel\-Type is used to determine the type of channel we wish to set up. The legal choices are\-: mouse Eyetracker\-Legacy\-System\-Xp Eyetracker\-Picto\-Box\-Xp Additional choices will be added as we expand platforms.
+
+Returns false if we try to set up signal channels for the wrong platform, or we can't setup the Signal\-Channels for some other reason. Returns true otherwise. \begin{DoxyWarning}{Warning}
+The Mouse Signal channel can't be set up unless the rendering targets have already been setup. This is because the Mouse\-Signal\-Channel requires a visual target. Note that if we try to set up a signal channel for the wrong platform, we simply return false 
+\end{DoxyWarning}
+
+
+Definition at line 143 of file Hardware\-Setup.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/Hardware\-Setup.\-h\item 
+source/director/Hardware\-Setup.\-cpp\end{DoxyCompactItemize}

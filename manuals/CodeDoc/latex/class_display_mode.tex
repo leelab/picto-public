@@ -1,0 +1,207 @@
+\hypertarget{class_display_mode}{\section{Display\-Mode Class Reference}
+\label{class_display_mode}\index{Display\-Mode@{Display\-Mode}}
+}
+
+
+A display mode that defines the results of user interactions and controls the front panel L\-C\-D when it is active.  
+
+
+
+
+{\ttfamily \#include $<$displaymode.\-h$>$}
+
+Inheritance diagram for Display\-Mode\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.708609cm]{class_display_mode}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} \hyperlink{class_display_mode_ae3ba1617fac36e0cea757a12575fffa7}{user\-Input\-Slot} (\hyperlink{namespace_panel_info_aeeb3b627166cd15c3898f93a1a499c65}{Input\-Type} type)
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_display_mode_a2ebabc8a9ccbdea91a7b10cf65c6a8f3}{update\-L\-C\-D} (int line, Q\-String text)
+\item 
+void \hyperlink{class_display_mode_a829f2d5b0b2e97d8b7d344ecc3ef1143}{toggle\-Backlight} ()
+\item 
+void \hyperlink{class_display_mode_af5413cbc17b6b9cf50097906a89e4ee7}{turn\-On\-Backlight} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_display_mode_a08a30faa7bd878665185bd3451b5dc9d}{init\-Mode} ()=0
+\begin{DoxyCompactList}\small\item\em Called when a \hyperlink{class_display_mode}{Display\-Mode} is first activated. \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_display_mode_a2f2ea0d9a32c080f341c159adfeafcfa}{activity\-Timeout\-Ms} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} \hyperlink{class_display_mode_a2cd062972909097648b40c08ff743ae8}{handle\-User\-Input} (\hyperlink{namespace_panel_info_aeeb3b627166cd15c3898f93a1a499c65}{Panel\-Info\-::\-Input\-Type} type)=0
+\begin{DoxyCompactList}\small\item\em Used to define responses to user interactions. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} \hyperlink{class_display_mode_a1e7318ccee20933fbe6e1193aa0a19e7}{my\-Mode\-Type} ()=0
+\item 
+void \hyperlink{class_display_mode_a9a12e6ca60143d4e447479a36f44df5d}{draw\-Menu\-Rows} (int cursor\-Pos, Q\-String line1, Q\-String line2)
+\item 
+void \hyperlink{class_display_mode_a7f084ba9fa63656644ae736abed8902c}{draw\-Text} (Q\-String line1, Q\-String line2)
+\item 
+void \hyperlink{class_display_mode_a8aa3f4ab2efbcb2ff6988aa7befe4af0}{draw\-Message} (int duration\-Secs, Q\-String line1, Q\-String line2)
+\begin{DoxyCompactList}\small\item\em Draws a brief temporary message to the display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A display mode that defines the results of user interactions and controls the front panel L\-C\-D when it is active. 
+
+\hyperlink{class_display_mode}{Display\-Mode} objects are activated one at a time, and when active they take complete control over user input handling and L\-C\-D output for the frontpanel. All Display\-Modes define an '\hyperlink{class_display_mode_a2f2ea0d9a32c080f341c159adfeafcfa}{activity\-Timeout\-Ms()}' function as well which defines the amount of time that the \hyperlink{class_display_mode}{Display\-Mode} will remain active before allowing the Front\-Panel application to return control to another more fundamental display mode. For example, a display mode for setting the name of a pictobox might handle all of the user input and lcd display for allowing the user to alter the name of the pictobox. It might define an activity\-Timeout of 30,000ms at which point, if no user input has occured, the Front\-Panel will return control to a read-\/only Status mode that displays Front Panel name, reward, and flush timing information. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 23 of file displaymode.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_display_mode_a2f2ea0d9a32c080f341c159adfeafcfa}{\index{Display\-Mode@{Display\-Mode}!activity\-Timeout\-Ms@{activity\-Timeout\-Ms}}
+\index{activity\-Timeout\-Ms@{activity\-Timeout\-Ms}!DisplayMode@{Display\-Mode}}
+\subsubsection[{activity\-Timeout\-Ms}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Display\-Mode\-::activity\-Timeout\-Ms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_display_mode_a2f2ea0d9a32c080f341c159adfeafcfa}
+Defines the amount of time that this mode will retain control without the user inputting anything before the front panel application can switch control to another display mode. 
+
+Reimplemented in \hyperlink{class_menu_mode_ab91ab463bdf09a21ea3783fc0f284f4c}{Menu\-Mode}.
+
+
+
+Definition at line 42 of file displaymode.\-h.
+
+\hypertarget{class_display_mode_a9a12e6ca60143d4e447479a36f44df5d}{\index{Display\-Mode@{Display\-Mode}!draw\-Menu\-Rows@{draw\-Menu\-Rows}}
+\index{draw\-Menu\-Rows@{draw\-Menu\-Rows}!DisplayMode@{Display\-Mode}}
+\subsubsection[{draw\-Menu\-Rows}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::draw\-Menu\-Rows (
+\begin{DoxyParamCaption}
+\item[{int}]{cursor\-Pos, }
+\item[{Q\-String}]{line1, }
+\item[{Q\-String}]{line2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_display_mode_a9a12e6ca60143d4e447479a36f44df5d}
+Draws two lines of text, line1 and line2 to the L\-C\-D display as menu rows. Takes a cursor\-Pos input of 0 or 1 to indicate which line of text is is currently active (0\-:line1, 1\-:line2). Selection is indicated by drawing an error to the left of the currently selected row. 
+
+Definition at line 31 of file displaymode.\-cpp.
+
+\hypertarget{class_display_mode_a8aa3f4ab2efbcb2ff6988aa7befe4af0}{\index{Display\-Mode@{Display\-Mode}!draw\-Message@{draw\-Message}}
+\index{draw\-Message@{draw\-Message}!DisplayMode@{Display\-Mode}}
+\subsubsection[{draw\-Message}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::draw\-Message (
+\begin{DoxyParamCaption}
+\item[{int}]{duration\-Ms, }
+\item[{Q\-String}]{line1, }
+\item[{Q\-String}]{line2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_display_mode_a8aa3f4ab2efbcb2ff6988aa7befe4af0}
+
+
+Draws a brief temporary message to the display. 
+
+Two lines of text, line1 and line2 are written to the L\-C\-D display. At the end of duration\-Ms, the text that appeared prior to this function call is restored to the L\-C\-D. 
+
+Definition at line 66 of file displaymode.\-cpp.
+
+\hypertarget{class_display_mode_a7f084ba9fa63656644ae736abed8902c}{\index{Display\-Mode@{Display\-Mode}!draw\-Text@{draw\-Text}}
+\index{draw\-Text@{draw\-Text}!DisplayMode@{Display\-Mode}}
+\subsubsection[{draw\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::draw\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{line1, }
+\item[{Q\-String}]{line2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_display_mode_a7f084ba9fa63656644ae736abed8902c}
+Draws two lines of text, line1 and line2 to the L\-C\-D display. 
+
+Definition at line 51 of file displaymode.\-cpp.
+
+\hypertarget{class_display_mode_a2cd062972909097648b40c08ff743ae8}{\index{Display\-Mode@{Display\-Mode}!handle\-User\-Input@{handle\-User\-Input}}
+\index{handle\-User\-Input@{handle\-User\-Input}!DisplayMode@{Display\-Mode}}
+\subsubsection[{handle\-User\-Input}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Panel\-Info\-::\-Display\-Mode\-Type} Display\-Mode\-::handle\-User\-Input (
+\begin{DoxyParamCaption}
+\item[{{\bf Panel\-Info\-::\-Input\-Type}}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_display_mode_a2cd062972909097648b40c08ff743ae8}
+
+
+Used to define responses to user interactions. 
+
+Defines this \hyperlink{class_display_mode}{Display\-Mode}'s response to the input Input\-Type. Returns a \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} to which application control should switch after user input is processed. Return this \hyperlink{class_display_mode}{Display\-Mode}'s type if control should not switch for this particular type of input. 
+
+Implemented in \hyperlink{class_status_mode_aea87d00264d99e1ef0eaf5c41e007f01}{Status\-Mode}, \hyperlink{class_menu_mode_ad4a3f4a11d3f85417e074c5b2c05e21a}{Menu\-Mode}, \hyperlink{class_text_edit_mode_a9994ab201fb29cc3ac383b3bbea25ec7}{Text\-Edit\-Mode}, and \hyperlink{class_number_edit_mode_a32ee550a022e1cd1da2f0981407516f9}{Number\-Edit\-Mode}.
+
+\hypertarget{class_display_mode_a08a30faa7bd878665185bd3451b5dc9d}{\index{Display\-Mode@{Display\-Mode}!init\-Mode@{init\-Mode}}
+\index{init\-Mode@{init\-Mode}!DisplayMode@{Display\-Mode}}
+\subsubsection[{init\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Display\-Mode\-::init\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_display_mode_a08a30faa7bd878665185bd3451b5dc9d}
+
+
+Called when a \hyperlink{class_display_mode}{Display\-Mode} is first activated. 
+
+Extend this function to initialize the mode and draw the starting display to the front panel 
+
+Implemented in \hyperlink{class_status_mode_ae338584a2e978b8a3d2d34d7bf03c6f6}{Status\-Mode}, \hyperlink{class_text_edit_mode_abad4ebd912fec7f1e592a2d4596064c0}{Text\-Edit\-Mode}, \hyperlink{class_menu_mode_ab022c00df508989d4687a19d397dc3f6}{Menu\-Mode}, and \hyperlink{class_number_edit_mode_ad0ed3167dd2a15a53acbbb2ff89af18b}{Number\-Edit\-Mode}.
+
+\hypertarget{class_display_mode_a1e7318ccee20933fbe6e1193aa0a19e7}{\index{Display\-Mode@{Display\-Mode}!my\-Mode\-Type@{my\-Mode\-Type}}
+\index{my\-Mode\-Type@{my\-Mode\-Type}!DisplayMode@{Display\-Mode}}
+\subsubsection[{my\-Mode\-Type}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Panel\-Info\-::\-Display\-Mode\-Type} Display\-Mode\-::my\-Mode\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_display_mode_a1e7318ccee20933fbe6e1193aa0a19e7}
+Should be extended to return the \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} of this object. 
+
+Implemented in \hyperlink{class_status_mode_aa10144c981b493e0de51cdf5b7ad1d21}{Status\-Mode}, \hyperlink{class_menu_mode_aaecee7eee391908a83e43d8bac505033}{Menu\-Mode}, \hyperlink{class_flush_dur_mode_a4d510988b8969a85d6a3ca6a144a4ba3}{Flush\-Dur\-Mode}, \hyperlink{class_reward_dur_mode_a4c7c7697715d34ce2c6977fffad84ee9}{Reward\-Dur\-Mode}, \hyperlink{class_change_name_mode_a6ca753b944fac4847bee38c8b84857d1}{Change\-Name\-Mode}, and \hyperlink{class_reward_controller_mode_a933b4465e6414cece6e3232bdb079fa1}{Reward\-Controller\-Mode}.
+
+\hypertarget{class_display_mode_a829f2d5b0b2e97d8b7d344ecc3ef1143}{\index{Display\-Mode@{Display\-Mode}!toggle\-Backlight@{toggle\-Backlight}}
+\index{toggle\-Backlight@{toggle\-Backlight}!DisplayMode@{Display\-Mode}}
+\subsubsection[{toggle\-Backlight}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::toggle\-Backlight (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_display_mode_a829f2d5b0b2e97d8b7d344ecc3ef1143}
+Emitted whenever the Front Panel's L\-C\-D toggle the backlight (on to off or off to on) \hypertarget{class_display_mode_af5413cbc17b6b9cf50097906a89e4ee7}{\index{Display\-Mode@{Display\-Mode}!turn\-On\-Backlight@{turn\-On\-Backlight}}
+\index{turn\-On\-Backlight@{turn\-On\-Backlight}!DisplayMode@{Display\-Mode}}
+\subsubsection[{turn\-On\-Backlight}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::turn\-On\-Backlight (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_display_mode_af5413cbc17b6b9cf50097906a89e4ee7}
+Emitted whenever the Front Panel's L\-C\-D should turn on the backlight \hypertarget{class_display_mode_a2ebabc8a9ccbdea91a7b10cf65c6a8f3}{\index{Display\-Mode@{Display\-Mode}!update\-L\-C\-D@{update\-L\-C\-D}}
+\index{update\-L\-C\-D@{update\-L\-C\-D}!DisplayMode@{Display\-Mode}}
+\subsubsection[{update\-L\-C\-D}]{\setlength{\rightskip}{0pt plus 5cm}void Display\-Mode\-::update\-L\-C\-D (
+\begin{DoxyParamCaption}
+\item[{int}]{line, }
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_display_mode_a2ebabc8a9ccbdea91a7b10cf65c6a8f3}
+Emitted whenever the Front Panel's L\-C\-D should change. Line is 0 or 1, text is the text to display. \hypertarget{class_display_mode_ae3ba1617fac36e0cea757a12575fffa7}{\index{Display\-Mode@{Display\-Mode}!user\-Input\-Slot@{user\-Input\-Slot}}
+\index{user\-Input\-Slot@{user\-Input\-Slot}!DisplayMode@{Display\-Mode}}
+\subsubsection[{user\-Input\-Slot}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Panel\-Info\-::\-Display\-Mode\-Type} Display\-Mode\-::user\-Input\-Slot (
+\begin{DoxyParamCaption}
+\item[{{\bf Panel\-Info\-::\-Input\-Type}}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_display_mode_ae3ba1617fac36e0cea757a12575fffa7}
+Calls \hyperlink{class_display_mode_a2cd062972909097648b40c08ff743ae8}{handle\-User\-Input()} unless there is a temporary message onscreen. Returns the \hyperlink{namespace_panel_info_adb8b98e092c15e831aa524d39701d565}{Panel\-Info\-::\-Display\-Mode\-Type} of the \hyperlink{class_display_mode}{Display\-Mode} that should be activated next. 
+
+Definition at line 15 of file displaymode.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/embedded/frontpanel/displaymode.\-h\item 
+source/embedded/frontpanel/displaymode.\-cpp\end{DoxyCompactItemize}

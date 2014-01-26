@@ -1,0 +1,155 @@
+\hypertarget{class_picto_1_1_predicate_expression}{\section{Picto\-:\-:Predicate\-Expression Class Reference}
+\label{class_picto_1_1_predicate_expression}\index{Picto\-::\-Predicate\-Expression@{Picto\-::\-Predicate\-Expression}}
+}
+
+
+A predicate expression involves a predicate and 2 values.  
+
+
+
+
+{\ttfamily \#include $<$Predicate\-Expression.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Predicate\-Expression\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_predicate_expression}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a3166bb6d92a20c836119f978890c6e5a}{{\bfseries Predicate\-Expression} (Q\-String predicate\-Name)}\label{class_picto_1_1_predicate_expression_a3166bb6d92a20c836119f978890c6e5a}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a24267663afbb174fd76f6ba4daae516d}{bool {\bfseries is\-Valid} ()}\label{class_picto_1_1_predicate_expression_a24267663afbb174fd76f6ba4daae516d}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a972383d0f41e47d48a351662607cbc75}{bool {\bfseries evaluate} ()}\label{class_picto_1_1_predicate_expression_a972383d0f41e47d48a351662607cbc75}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_ae2645c2862bffbf23911cd4abef1dfba}{void {\bfseries set\-Order} (int order)}\label{class_picto_1_1_predicate_expression_ae2645c2862bffbf23911cd4abef1dfba}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a5a5c2e97c26a6313ad69f753ef117a18}{int {\bfseries order} ()}\label{class_picto_1_1_predicate_expression_a5a5c2e97c26a6313ad69f753ef117a18}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a2e77308059585b3e3ef1fd38a49caa65}{Q\-String {\bfseries to\-String} (bool use\-L\-H\-S\-Name=false, bool use\-R\-H\-S\-Name=false)}\label{class_picto_1_1_predicate_expression_a2e77308059585b3e3ef1fd38a49caa65}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a2af5bbc34bc44ee734ae34ce8bf2e525}{Q\-Image {\bfseries to\-Q\-Image} (bool use\-L\-H\-S\-Name=false, bool use\-R\-H\-S\-Name=false)}\label{class_picto_1_1_predicate_expression_a2af5bbc34bc44ee734ae34ce8bf2e525}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a603102c41ba138da30ccbd6a302d7316}{void {\bfseries set\-Predicate} (Q\-String predicate\-Name)}\label{class_picto_1_1_predicate_expression_a603102c41ba138da30ccbd6a302d7316}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a6ce6c9f9984c257be7baaebbb871dafc}{void {\bfseries set\-L\-H\-S} (Q\-String parameter\-Name)}\label{class_picto_1_1_predicate_expression_a6ce6c9f9984c257be7baaebbb871dafc}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a5719bcf6af39fbe3a59eb1b3b489a5af}{void {\bfseries set\-R\-H\-S\-Param} (Q\-String parameter\-Name)}\label{class_picto_1_1_predicate_expression_a5719bcf6af39fbe3a59eb1b3b489a5af}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a55bb371069c3d1465a27a29746d25023}{void {\bfseries set\-R\-H\-S\-Value} (Q\-Variant R\-H\-S)}\label{class_picto_1_1_predicate_expression_a55bb371069c3d1465a27a29746d25023}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_acd97d7b3ca1b01ca4cc0ad62b4042eb1}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_predicate_expression_acd97d7b3ca1b01ca4cc0ad62b4042eb1}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_ae38d607c2bcf56683e4beb9a5f1f052d}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_predicate_expression_ae38d607c2bcf56683e4beb9a5f1f052d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_predicate_expression_a9c85b8264a17fac83074d7954751183b}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_predicate_expression_a5457cc58cb7020d12c304ec1281ebffc}{post\-Serialize} ()
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a predicate expression. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_predicate_expression_a0f94f40e7cbc20b22744fb3efe577dc1}{virtual bool \hyperlink{class_picto_1_1_predicate_expression_a0f94f40e7cbc20b22744fb3efe577dc1}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_predicate_expression_a0f94f40e7cbc20b22744fb3efe577dc1}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_a2514dd406ef55be369cdb2c726cefef2}{Q\-String {\bfseries R\-H\-S\-Param\-Name\-\_\-}}\label{class_picto_1_1_predicate_expression_a2514dd406ef55be369cdb2c726cefef2}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_acb4ee01fcaaba117db5a6dc784a7b340}{Q\-Variant {\bfseries R\-H\-Sval\-\_\-}}\label{class_picto_1_1_predicate_expression_acb4ee01fcaaba117db5a6dc784a7b340}
+
+\item 
+\hypertarget{class_picto_1_1_predicate_expression_ae1a33b7daf74b0e9dc5fb5400ae83293}{bool {\bfseries use\-R\-H\-S\-Val\-\_\-}}\label{class_picto_1_1_predicate_expression_ae1a33b7daf74b0e9dc5fb5400ae83293}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A predicate expression involves a predicate and 2 values. 
+
+A \hyperlink{class_picto_1_1_predicate_expression}{Predicate\-Expression} gets evaluated to a boolean value. It should be noted that the predicates and predicate expressions default to false. For example, if you tried to evaluate a predicate expression without having first set the left hand side value, it will automatically return false (as opposed to returning an error flag) 
+
+Definition at line 27 of file Predicate\-Expression.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_predicate_expression_a9c85b8264a17fac83074d7954751183b}{\index{Picto\-::\-Predicate\-Expression@{Picto\-::\-Predicate\-Expression}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::PredicateExpression@{Picto\-::\-Predicate\-Expression}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Predicate\-Expression\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_predicate_expression_a9c85b8264a17fac83074d7954751183b}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a773e96bb8df73a90d56c1aa8fdc0dfa5}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 60 of file Predicate\-Expression.\-h.
+
+\hypertarget{class_picto_1_1_predicate_expression_a5457cc58cb7020d12c304ec1281ebffc}{\index{Picto\-::\-Predicate\-Expression@{Picto\-::\-Predicate\-Expression}!post\-Serialize@{post\-Serialize}}
+\index{post\-Serialize@{post\-Serialize}!Picto::PredicateExpression@{Picto\-::\-Predicate\-Expression}}
+\subsubsection[{post\-Serialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Predicate\-Expression\-::post\-Serialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_predicate_expression_a5457cc58cb7020d12c304ec1281ebffc}
+
+
+Converts X\-M\-L into a predicate expression. 
+
+Converts a predicate expression into X\-M\-L
+
+This takes the current predicate expression and turns it into an X\-M\-L fragment.
+
+S\-A\-M\-P\-L\-E $<$\-Expression$>$ $<$\-Parameter$>$Trial Number$<$/\-Parameter$>$ $<$\-Comparison$>$Greater than$<$/\-Comparison$>$ 
+
+100
+
+$<$/\-Expression$>$
+
+This takes a predicate expression in unknown state and modifies it to match the X\-M\-L fragment currently being read. The function assumes that the xml stream reader is pointing to an $<$\-Expression$>$ tag upon entry, and returns with the reader pointing to an $<$/\-Expression$>$ 
+
+Reimplemented in \hyperlink{class_picto_1_1_compare_to_param_expression_af430076626bb0a5e6000a24cd4d48ab2}{Picto\-::\-Compare\-To\-Param\-Expression}, and \hyperlink{class_picto_1_1_compare_to_val_expression_a3071487a97a15b80483e5b3d8633a9df}{Picto\-::\-Compare\-To\-Val\-Expression}.
+
+
+
+Definition at line 379 of file Predicate\-Expression.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/statemachine/Predicate\-Expression.\-h\item 
+source/common/statemachine/Predicate\-Expression.\-cpp\end{DoxyCompactItemize}

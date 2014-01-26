@@ -1,0 +1,70 @@
+\hypertarget{class_picto_1_1_x_y_signal_channel}{\section{Picto\-:\-:X\-Y\-Signal\-Channel Class Reference}
+\label{class_picto_1_1_x_y_signal_channel}\index{Picto\-::\-X\-Y\-Signal\-Channel@{Picto\-::\-X\-Y\-Signal\-Channel}}
+}
+
+
+A signal channel for representing a two dimensional (x,y) position.  
+
+
+
+
+{\ttfamily \#include $<$x\-Y\-Signal\-Channel.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:X\-Y\-Signal\-Channel\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_x_y_signal_channel}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_x_y_signal_channel_a00f66459c804d57e7591647e0f90f64d}{\hyperlink{class_picto_1_1_x_y_signal_channel_a00f66459c804d57e7591647e0f90f64d}{X\-Y\-Signal\-Channel} (Q\-String name, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_input_port}{Input\-Port} $>$ port=Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_input_port}{Input\-Port} $>$())}\label{class_picto_1_1_x_y_signal_channel_a00f66459c804d57e7591647e0f90f64d}
+
+\begin{DoxyCompactList}\small\item\em C\-Onstructs an \hyperlink{class_picto_1_1_x_y_signal_channel}{X\-Y\-Signal\-Channel} with the input name and \hyperlink{class_picto_1_1_input_port}{Input\-Port}. Sample period is set to 4ms. \end{DoxyCompactList}\item 
+\hyperlink{class_picto_1_1_x_y_signal_channel_a5dc63f0b9a70ddf7b13a9df184c71e0f}{X\-Y\-Signal\-Channel} (Q\-String name, int x\-Chan, int y\-Chan, int ms\-Per\-Sample, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_input_port}{Input\-Port} $>$ port=Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_input_port}{Input\-Port} $>$())
+\begin{DoxyCompactList}\small\item\em C\-Onstructs an \hyperlink{class_picto_1_1_x_y_signal_channel}{X\-Y\-Signal\-Channel}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A signal channel for representing a two dimensional (x,y) position. 
+
+This is the signal channel used for the test subjects position input. It includes \char`\"{}x\char`\"{} and \char`\"{}y\char`\"{} sub-\/channels. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file x\-Y\-Signal\-Channel.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_x_y_signal_channel_a5dc63f0b9a70ddf7b13a9df184c71e0f}{\index{Picto\-::\-X\-Y\-Signal\-Channel@{Picto\-::\-X\-Y\-Signal\-Channel}!X\-Y\-Signal\-Channel@{X\-Y\-Signal\-Channel}}
+\index{X\-Y\-Signal\-Channel@{X\-Y\-Signal\-Channel}!Picto::XYSignalChannel@{Picto\-::\-X\-Y\-Signal\-Channel}}
+\subsubsection[{X\-Y\-Signal\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}X\-Y\-Signal\-Channel\-::\-X\-Y\-Signal\-Channel (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name, }
+\item[{int}]{x\-Chan, }
+\item[{int}]{y\-Chan, }
+\item[{int}]{ms\-Per\-Sample, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Input\-Port} $>$}]{port = {\ttfamily QSharedPointer$<${\bf Input\-Port}$>$()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_x_y_signal_channel_a5dc63f0b9a70ddf7b13a9df184c71e0f}
+
+
+C\-Onstructs an \hyperlink{class_picto_1_1_x_y_signal_channel}{X\-Y\-Signal\-Channel}. 
+
+name is the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} name. x\-Chan and y\-Chan are channel numbers of the x and y channels in the input port respectively and they will be added in this constructor using \hyperlink{class_picto_1_1_signal_channel_abfe16a2da824414da1ed01ae72604077}{add\-Subchannel()}. ms\-Per\-Sample is the sample period. port in the \hyperlink{class_picto_1_1_input_port}{Input\-Port} from which raw data will be gathered. In the case of the \hyperlink{class_test_viewer}{Test\-Viewer}, port would be a \hyperlink{class_picto_1_1_mouse_input_port}{Mouse\-Input\-Port}. In a live experiment on a Pictobox, port would be a \hyperlink{class_picto_1_1_picto_box_x_p_analog_input_port}{Picto\-Box\-X\-P\-Analog\-Input\-Port}. 
+
+Definition at line 29 of file x\-Y\-Signal\-Channel.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/engine/x\-Y\-Signal\-Channel.\-h\item 
+source/common/engine/x\-Y\-Signal\-Channel.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,56 @@
+\hypertarget{class_picto_1_1_old_version_asset}{\section{Picto\-:\-:Old\-Version\-Asset Class Reference}
+\label{class_picto_1_1_old_version_asset}\index{Picto\-::\-Old\-Version\-Asset@{Picto\-::\-Old\-Version\-Asset}}
+}
+
+
+Assets that inherit from this type require the session to be reserialized and then deserialized if they exist.  
+
+
+
+
+{\ttfamily \#include $<$Old\-Version\-Asset.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Old\-Version\-Asset\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_old_version_asset}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_old_version_asset_a67f8d691fef4ea596c802a85f20df9f5}{static bool \hyperlink{class_picto_1_1_old_version_asset_a67f8d691fef4ea596c802a85f20df9f5}{encountered\-Old\-Version\-Asset} ()}\label{class_picto_1_1_old_version_asset_a67f8d691fef4ea596c802a85f20df9f5}
+
+\begin{DoxyCompactList}\small\item\em Returns true if an \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} appeared in the experiment. In this case an automatic upgrade (serialization followed by deserialization) should be performed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_old_version_asset_adcbdfbebb27a4c5d6557dde4ad026b3d}{static void \hyperlink{class_picto_1_1_old_version_asset_adcbdfbebb27a4c5d6557dde4ad026b3d}{clear\-Old\-Version\-Asset\-Flag} ()}\label{class_picto_1_1_old_version_asset_adcbdfbebb27a4c5d6557dde4ad026b3d}
+
+\begin{DoxyCompactList}\small\item\em Use this after using \hyperlink{class_picto_1_1_old_version_asset_a67f8d691fef4ea596c802a85f20df9f5}{encountered\-Old\-Version\-Asset()} to reset the class for future \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} checks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}{static void \hyperlink{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}{report\-Old\-Version\-Asset} ()}\label{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}
+
+\begin{DoxyCompactList}\small\item\em Call this to tell the \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} class taht an \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} was encountered and an automatic design syntax upgrade is going to need to happen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Assets that inherit from this type require the session to be reserialized and then deserialized if they exist. 
+
+Currently, the way an \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} indicates that it needs the session to be reserialized and then deserialized is by calling the static \hyperlink{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}{report\-Old\-Version\-Asset()} function. This is checked in the external system by using \hyperlink{class_picto_1_1_old_version_asset_a67f8d691fef4ea596c802a85f20df9f5}{encountered\-Old\-Version\-Asset()}. We probably should have just called \hyperlink{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}{report\-Old\-Version\-Asset()} inside the Old\-Version\-Asset() constructor since the presence of any kind of \hyperlink{class_picto_1_1_old_version_asset}{Old\-Version\-Asset} should be enough to indicate that an auto upgrade of the experiment is necessary. We may want to consider if this will work or if it will cause problems, and make the change if it will work.
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Old\-Version\-Asset.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Old\-Version\-Asset.\-h\item 
+source/common/storage/Old\-Version\-Asset.\-cpp\end{DoxyCompactItemize}

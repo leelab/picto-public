@@ -1,0 +1,78 @@
+\hypertarget{class_picto_1_1_live_run_notes_reader}{\section{Picto\-:\-:Live\-Run\-Notes\-Reader Class Reference}
+\label{class_picto_1_1_live_run_notes_reader}\index{Picto\-::\-Live\-Run\-Notes\-Reader@{Picto\-::\-Live\-Run\-Notes\-Reader}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} class for a live test experiment.  
+
+
+
+
+{\ttfamily \#include $<$Live\-Run\-Notes\-Reader.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Live\-Run\-Notes\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_live_run_notes_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_live_run_notes_reader_a6b14e378550b593fca52e72070e7a65a}{get\-Name} ()
+\begin{DoxyCompactList}\small\item\em Gets the name of the current run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_run_notes_reader_ad82e85752897275d0b5be8fced936e05}{virtual double \hyperlink{class_picto_1_1_live_run_notes_reader_ad82e85752897275d0b5be8fced936e05}{get\-Start\-Time} ()}\label{class_picto_1_1_live_run_notes_reader_ad82e85752897275d0b5be8fced936e05}
+
+\begin{DoxyCompactList}\small\item\em Returns the time that this run started in seconds where time zero is the beginning of the session. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_run_notes_reader_aedd3a7ccc6a2eb6d0d7fa2e849c94559}{virtual double \hyperlink{class_picto_1_1_live_run_notes_reader_aedd3a7ccc6a2eb6d0d7fa2e849c94559}{get\-End\-Time} ()}\label{class_picto_1_1_live_run_notes_reader_aedd3a7ccc6a2eb6d0d7fa2e849c94559}
+
+\begin{DoxyCompactList}\small\item\em Returns the time that this run ends in seconds where time zero is the beginning of the session. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_run_notes_reader_a5ea02e64056eb67c49f65a19a60437cf}{virtual Q\-String \hyperlink{class_picto_1_1_live_run_notes_reader_a5ea02e64056eb67c49f65a19a60437cf}{get\-Notes} ()}\label{class_picto_1_1_live_run_notes_reader_a5ea02e64056eb67c49f65a19a60437cf}
+
+\begin{DoxyCompactList}\small\item\em Returns the notes string that was saved by the operator during the session. If no notes were saved, an empty string is returned. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_run_notes_reader_a38eb36ed22f831c011a3ef59acb327b6}{virtual int \hyperlink{class_picto_1_1_live_run_notes_reader_a38eb36ed22f831c011a3ef59acb327b6}{get\-Run\-Index} ()}\label{class_picto_1_1_live_run_notes_reader_a38eb36ed22f831c011a3ef59acb327b6}
+
+\begin{DoxyCompactList}\small\item\em Returns the index of this run in this sessions list of task runs, where the first run has an index of zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} class for a live test experiment. 
+
+Since run notes are pretty meaningless in a test experiment, but we want \hyperlink{class_picto_1_1_analysis}{Analysis} elements that poll run notes data to return something, this class pretty much just extends the \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} functions to return simple fake data like the \char`\"{}\-Sample Name\char`\"{} name and the \char`\"{}\-Sample Notes\char`\"{} notes. Start time is zero and end time is always -\/1 (since we don't know how long the run is while we're still in it). Run index is zero. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 19 of file Live\-Run\-Notes\-Reader.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_live_run_notes_reader_a6b14e378550b593fca52e72070e7a65a}{\index{Picto\-::\-Live\-Run\-Notes\-Reader@{Picto\-::\-Live\-Run\-Notes\-Reader}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Picto::LiveRunNotesReader@{Picto\-::\-Live\-Run\-Notes\-Reader}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Live\-Run\-Notes\-Reader\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_live_run_notes_reader_a6b14e378550b593fca52e72070e7a65a}
+
+
+Gets the name of the current run. 
+
+This name is either a default one based on the start time of the run, or the one set by the operator in the run info section during a session. 
+
+Implements \hyperlink{class_picto_1_1_run_notes_reader_aa11971931900ca6456e1cd92891a2f05}{Picto\-::\-Run\-Notes\-Reader}.
+
+
+
+Definition at line 4 of file Live\-Run\-Notes\-Reader.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Live\-Run\-Notes\-Reader.\-h\item 
+source/common/playback/Live\-Run\-Notes\-Reader.\-cpp\end{DoxyCompactItemize}

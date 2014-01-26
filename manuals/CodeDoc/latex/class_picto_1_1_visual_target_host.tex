@@ -1,0 +1,94 @@
+\hypertarget{class_picto_1_1_visual_target_host}{\section{Picto\-:\-:Visual\-Target\-Host Class Reference}
+\label{class_picto_1_1_visual_target_host}\index{Picto\-::\-Visual\-Target\-Host@{Picto\-::\-Visual\-Target\-Host}}
+}
+
+
+A Widget that contains a Visual Target.  
+
+
+
+
+{\ttfamily \#include $<$Visual\-Target\-Host.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Visual\-Target\-Host\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_visual_target_host}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_visual_target_host_a3bfbf7373ba441163867709b42f84b69}{void \hyperlink{class_picto_1_1_visual_target_host_a3bfbf7373ba441163867709b42f84b69}{click\-Detected} (Q\-Point pos)}\label{class_picto_1_1_visual_target_host_a3bfbf7373ba441163867709b42f84b69}
+
+\begin{DoxyCompactList}\small\item\em Emitted with a click position whenever someone clicks within the \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_visual_target_host_a41d34ca0cff45eddfb8b164407bff116}{void \hyperlink{class_picto_1_1_visual_target_host_a41d34ca0cff45eddfb8b164407bff116}{set\-Visual\-Target} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} $>$ target)}\label{class_picto_1_1_visual_target_host_a41d34ca0cff45eddfb8b164407bff116}
+
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} object that will be hosted by this \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_host_a375c688433f74774ea9664fbe62b147d}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} $>$ \hyperlink{class_picto_1_1_visual_target_host_a375c688433f74774ea9664fbe62b147d}{get\-Visual\-Target} ()}\label{class_picto_1_1_visual_target_host_a375c688433f74774ea9664fbe62b147d}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} hosted by this \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_visual_target_host_adee5a34fd8bd737e71f17d47ff97d3fd}{paint\-Event} (Q\-Paint\-Event $\ast$)
+\begin{DoxyCompactList}\small\item\em Paints the underlying \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} objects frame onto this object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_host_ac7259d491789462b787cfad331b4bcef}{virtual void \hyperlink{class_picto_1_1_visual_target_host_ac7259d491789462b787cfad331b4bcef}{mouse\-Press\-Event} (Q\-Mouse\-Event $\ast$event)}\label{class_picto_1_1_visual_target_host_ac7259d491789462b787cfad331b4bcef}
+
+\begin{DoxyCompactList}\small\item\em Emits a click\-Detected signal whenever someone clicks on this window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A Widget that contains a Visual Target. 
+
+\begin{DoxyNote}{Note}
+Joey\-: This object seems to have been created due to an incomplete understanding of the Q\-Widget system. Whenever a Q\-Widget is deleted, all of its descendant Q\-Widgets are automatically deleted as well. For some reason, the \hyperlink{struct_picto_1_1_rendering_target}{Rendering\-Target} object is holding a shared pointer to its \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} object which also automatically deletes the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} when it is deleted. Apparently, the idea behind this object is to never actually set a parent to the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} in the Q\-Widget system so that we can just use the Q\-Shared\-Pointer system to delete it. Probably, in practice we just should never be using Q\-Shared\-Pointer's on Visual\-Targets and we should parent it within the Q\-Widget system the way we are supposed to. In practice though, since the current system works, and we don't have time to fix it, we are going to leave it alone for now. If you want to fix it though, go for it. The original notes on this class appear below for your reference.
+\end{DoxyNote}
+This object needs some explanation. If we want to run an engine and place a \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} within another widget, the obvious approach would be\-: Q\-Shared\-Pointer$<$\-Visual\-Target$>$ visual\-Target(new Visual\-Target()); .... Q\-Shared\-Pointer$<$\-Rendering\-Target$>$ rendering\-Target(new Rendering\-Target(visual\-Target, aural\-Target)); ... main\-Layout-\/$>$add\-Widget(visual\-Target.\-data()); However, this approach will blow up during destruction. The visual target will be deleted twice. Once when the rendering target is deleted (because it holds the only strong reference), and once when the main window is deleted (because the visual target was reparented when it was added to the layout). Needless to say, the second call to delete results in a memory exception.
+
+This object works around this problem by holding a strong reference to the pointer, and drawing the Visual Target directly (without reparenting it).
+
+N\-O\-T\-E\-: As a result of this situation, I have come to the conclusion that it is generally a bad idea to create Q\-Shared\-Pointer$<$\-Q\-Widget$>$, because both Q\-Widgets and Q\-Shared\-Pointers have lots of automatic calls to delete that occur behind the scenes. \begin{DoxyNote}{Note}
+That was the end of the original notes 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 56 of file Visual\-Target\-Host.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_visual_target_host_adee5a34fd8bd737e71f17d47ff97d3fd}{\index{Picto\-::\-Visual\-Target\-Host@{Picto\-::\-Visual\-Target\-Host}!paint\-Event@{paint\-Event}}
+\index{paint\-Event@{paint\-Event}!Picto::VisualTargetHost@{Picto\-::\-Visual\-Target\-Host}}
+\subsubsection[{paint\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Visual\-Target\-Host\-::paint\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Paint\-Event $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_visual_target_host_adee5a34fd8bd737e71f17d47ff97d3fd}
+
+
+Paints the underlying \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} objects frame onto this object. 
+
+This is called by the Q\-Widget hierearchy whenever this widget needs to be repainted. Since this objects whole Raison d'etre is to work around the Q\-Widget system, we need to fake the Q\-Widget parent relationship by manually drawing the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} \char`\"{}child\char`\"{} object's frame onto this object 
+
+Reimplemented in \hyperlink{class_picto_1_1_recording_visual_target_host_ac636397e7740a51ad0ef9ffc3a899333}{Picto\-::\-Recording\-Visual\-Target\-Host}.
+
+
+
+Definition at line 37 of file Visual\-Target\-Host.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Visual\-Target\-Host.\-h\item 
+source/common/compositor/Visual\-Target\-Host.\-cpp\end{DoxyCompactItemize}

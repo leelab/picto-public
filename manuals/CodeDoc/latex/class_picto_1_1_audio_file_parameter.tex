@@ -1,0 +1,184 @@
+\hypertarget{class_picto_1_1_audio_file_parameter}{\section{Picto\-:\-:Audio\-File\-Parameter Class Reference}
+\label{class_picto_1_1_audio_file_parameter}\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}}
+}
+
+
+An Audio File parameter.  
+
+
+
+
+{\ttfamily \#include $<$Audio\-File\-Parameter.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Audio\-File\-Parameter\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_audio_file_parameter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_audio_file_parameter_ad284bcc428087050eed52edf9acf1764}{Audio\-File\-Parameter} ()
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_picto_1_1_audio_file_parameter_a4a2855d0e5ba65d82fea4539ea6ed42e}{$\sim$\-Audio\-File\-Parameter} ()
+\item 
+\hypertarget{class_picto_1_1_audio_file_parameter_a596e8a7ba161ff9f09cb81a94d73dd39}{virtual Q\-String \hyperlink{class_picto_1_1_audio_file_parameter_a596e8a7ba161ff9f09cb81a94d73dd39}{get\-U\-I\-Template} ()}\label{class_picto_1_1_audio_file_parameter_a596e8a7ba161ff9f09cb81a94d73dd39}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_audio_file_parameter_ad13096076295bbd9e81d62401643eb63}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$ \hyperlink{class_picto_1_1_audio_file_parameter_a1628a85040b6f01dacaa5420453bae79}{create\-Sound} ()
+\begin{DoxyCompactList}\small\item\em Returns a shared pointer to a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object for this \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_audio_file_parameter_af5c3b27e05dc3b68dfc862fad1eccda6}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_audio_file_parameter_af5c3b27e05dc3b68dfc862fad1eccda6}{Create} ()}\label{class_picto_1_1_audio_file_parameter_af5c3b27e05dc3b68dfc862fad1eccda6}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_audio_file_parameter_ad4e30ad3080b19a5dc73a38ff460ef95}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_file_parameter_ab486817cbca0fd528df3d8fec0998bed}{virtual bool \hyperlink{class_picto_1_1_audio_file_parameter_ab486817cbca0fd528df3d8fec0998bed}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_audio_file_parameter_ab486817cbca0fd528df3d8fec0998bed}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_file_parameter_ac8e70960eed0516f77c731a415b364be}{File\-Parameter\-::validate\-Object()} to verify that this \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s file is a valid audio file. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_audio_file_parameter_a85de52a803276fad27d51286e822b349}{file\-Data\-Updated} (const Q\-Byte\-Array \&data)
+\begin{DoxyCompactList}\small\item\em Called when this \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s file data changes. Writes the data to a temporary file and loads a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} from that file for later usage by an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An Audio File parameter. 
+
+This parameter holds an audio file. Not the path to the file, but the actual file such that changing the original file on disk will not affect the contents of this parameter unless the file is reloaded. Internally, this class actually creates a new temporary file whenever the file data in the \hyperlink{class_picto_1_1_file_parameter}{File\-Parameter} changes. This is for compatibility with sound classes that require an actual physical file for playback. Whenever the File set to the \hyperlink{class_picto_1_1_file_parameter}{File\-Parameter} changes, an new underlying temporary file will be created and used.
+
+This class works with the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} class such that multiple \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} objects can use the same \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}. Each one will still represent a different sound though, and if multiple Audio\-Elements reference the same \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} and are in scope at the same time. If they play the audio file at different times, both sounds will be mixed through the speakers with their own separate timing as if they were two entirely different sound objects. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Audio\-File\-Parameter.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_audio_file_parameter_ad284bcc428087050eed52edf9acf1764}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!Audio\-File\-Parameter@{Audio\-File\-Parameter}}
+\index{Audio\-File\-Parameter@{Audio\-File\-Parameter}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{Audio\-File\-Parameter}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Audio\-File\-Parameter\-::\-Audio\-File\-Parameter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_audio_file_parameter_ad284bcc428087050eed52edf9acf1764}
+
+
+Creates a new \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}. 
+
+Calls init\-Temp\-Output\-Dir() in the process to assure that a directory is available for temporary audio files. 
+
+Definition at line 16 of file Audio\-File\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_file_parameter_a4a2855d0e5ba65d82fea4539ea6ed42e}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!$\sim$\-Audio\-File\-Parameter@{$\sim$\-Audio\-File\-Parameter}}
+\index{$\sim$\-Audio\-File\-Parameter@{$\sim$\-Audio\-File\-Parameter}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{$\sim$\-Audio\-File\-Parameter}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Audio\-File\-Parameter\-::$\sim$\-Audio\-File\-Parameter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_audio_file_parameter_a4a2855d0e5ba65d82fea4539ea6ed42e}
+Attempts to remove any temporary audio file created by this object from disk before the object is deleted.
+
+If this attempt fails, it should end up getting deleted in a future \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} initialization anyway. 
+
+Definition at line 26 of file Audio\-File\-Parameter.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_audio_file_parameter_a1628a85040b6f01dacaa5420453bae79}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!create\-Sound@{create\-Sound}}
+\index{create\-Sound@{create\-Sound}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{create\-Sound}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Preloaded\-Sound} $>$ Picto\-::\-Audio\-File\-Parameter\-::create\-Sound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_audio_file_parameter_a1628a85040b6f01dacaa5420453bae79}
+
+
+Returns a shared pointer to a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object for this \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s file. 
+
+Since we want multiple Audio\-Elements to be able to play a sound from the same \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} separately, we need to create a new \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} every time this is called. Since we have found that there is sometimes a lag until the file can be used however, we always keep around one more \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} than necessary. When this function is called, we create a new one, but return the one that we had previously created. 
+
+Definition at line 46 of file Audio\-File\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_file_parameter_a85de52a803276fad27d51286e822b349}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!file\-Data\-Updated@{file\-Data\-Updated}}
+\index{file\-Data\-Updated@{file\-Data\-Updated}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{file\-Data\-Updated}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-File\-Parameter\-::file\-Data\-Updated (
+\begin{DoxyParamCaption}
+\item[{const Q\-Byte\-Array \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_file_parameter_a85de52a803276fad27d51286e822b349}
+
+
+Called when this \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s file data changes. Writes the data to a temporary file and loads a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} from that file for later usage by an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. 
+
+\begin{DoxyNote}{Note}
+We create a physical file rather than simply using the file's binary data since many sound implementations that are available for preuse (ie. the ones underlying the \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} class) require an actual physical file. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_file_parameter_ae16da57fb69a636ec2322470dc5e4c69}{Picto\-::\-File\-Parameter}.
+
+
+
+Definition at line 89 of file Audio\-File\-Parameter.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_file_parameter_ad13096076295bbd9e81d62401643eb63}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Audio\-File\-Parameter\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_file_parameter_ad13096076295bbd9e81d62401643eb63}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_file_parameter_a4f53c44dc540d01757ef457525a50557}{Picto\-::\-File\-Parameter}.
+
+
+
+Definition at line 44 of file Audio\-File\-Parameter.\-h.
+
+\hypertarget{class_picto_1_1_audio_file_parameter_ad4e30ad3080b19a5dc73a38ff460ef95}{\index{Picto\-::\-Audio\-File\-Parameter@{Picto\-::\-Audio\-File\-Parameter}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AudioFileParameter@{Picto\-::\-Audio\-File\-Parameter}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-File\-Parameter\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_file_parameter_ad4e30ad3080b19a5dc73a38ff460ef95}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_file_parameter_a0c5b14270f5486397d2bc0d71b64bcd4}{Picto\-::\-File\-Parameter}.
+
+
+
+Definition at line 53 of file Audio\-File\-Parameter.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Audio\-File\-Parameter.\-h\item 
+source/common/parameter/Audio\-File\-Parameter.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,249 @@
+\hypertarget{class_picto_1_1_control_element}{\section{Picto\-:\-:Control\-Element Class Reference}
+\label{class_picto_1_1_control_element}\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}}
+}
+
+
+Triggers a result according to a logic test that runs each frame, thereby ending the execution of its parent \hyperlink{class_picto_1_1_state}{State}.  
+
+
+
+
+{\ttfamily \#include $<$Control\-Element.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Control\-Element\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_control_element}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_element_acf73c056833f5da319a0ae046b82b3a8}{virtual bool \hyperlink{class_picto_1_1_control_element_acf73c056833f5da319a0ae046b82b3a8}{is\-Done} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)}\label{class_picto_1_1_control_element_acf73c056833f5da319a0ae046b82b3a8}
+
+\begin{DoxyCompactList}\small\item\em is\-Done will return true if the \hyperlink{class_picto_1_1_control_element}{Control\-Element}'s logic determines that some condition has been met. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_element_a24e223e49d560fa2c3d9e6f02d68bafb}{virtual Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_result}{Result} $>$ \hyperlink{class_picto_1_1_control_element_a24e223e49d560fa2c3d9e6f02d68bafb}{get\-Result} ()}\label{class_picto_1_1_control_element_a24e223e49d560fa2c3d9e6f02d68bafb}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest result after a \hyperlink{class_picto_1_1_control_element}{Control\-Element} \hyperlink{class_picto_1_1_control_element_acf73c056833f5da319a0ae046b82b3a8}{is\-Done()}. If the \hyperlink{class_picto_1_1_control_element}{Control\-Element} is not done, this returns an empty result pointer. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_element_a29316418d618837adeebf47bb8d58308}{start} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_element_ad373499cb9f2b816627954d49e12de19}{stop} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} $>$ engine)
+\begin{DoxyCompactList}\small\item\em Deinitializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}{activate\-Targets} ()
+\begin{DoxyCompactList}\small\item\em Activates all Control Targets managed by this Control Element. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_element_ac5d3e0d806747e930702b2444509ce82}{deactivate\-Targets} ()
+\begin{DoxyCompactList}\small\item\em Deactivates all Control Targets managed by this Control Element. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_element_ac844e4681f31c3f11a26a686905c2316}{virtual Q\-String \hyperlink{class_picto_1_1_control_element_ac844e4681f31c3f11a26a686905c2316}{get\-U\-I\-Template} ()}\label{class_picto_1_1_control_element_ac844e4681f31c3f11a26a686905c2316}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_element_ad9a828f49943e34a15a69138c64ac4da}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_element_a4882c645365d985cb0f8a46061be984e}{virtual Q\-String \hyperlink{class_picto_1_1_control_element_a4882c645365d985cb0f8a46061be984e}{get\-U\-I\-Group} ()}\label{class_picto_1_1_control_element_a4882c645365d985cb0f8a46061be984e}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a type of elements with which this element should be grouped in things like Tool\-Box widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_element_a43be19d011bffeb4ff95953a826c4635}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_control_element_ae17985c70c242e936bef4d5079235861}{virtual bool \hyperlink{class_picto_1_1_control_element_ae17985c70c242e936bef4d5079235861}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_control_element_ae17985c70c242e936bef4d5079235861}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_element_a51e4b565d521ba6c264a8063d0bcd5cd}{bool {\bfseries is\-Done\-\_\-}}\label{class_picto_1_1_control_element_a51e4b565d521ba6c264a8063d0bcd5cd}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Triggers a result according to a logic test that runs each frame, thereby ending the execution of its parent \hyperlink{class_picto_1_1_state}{State}. 
+
+All \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state}{State} elements must include a Control Element of some sort. The control element determines when the \hyperlink{class_picto_1_1_state}{State} ends. During the \hyperlink{class_picto_1_1_state}{State} element's rendering loop, the \hyperlink{class_picto_1_1_control_element_acf73c056833f5da319a0ae046b82b3a8}{is\-Done()} function is called every frame until it returns true. Then the \hyperlink{class_picto_1_1_control_element_a24e223e49d560fa2c3d9e6f02d68bafb}{get\-Result()} function is called to determine the result of the \hyperlink{class_picto_1_1_control_element}{Control\-Element}'s execution(e.\-g. \char`\"{}\-Broke fixation\char`\"{}, \char`\"{}\-Selected target\char`\"{}, etc) \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 31 of file Control\-Element.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!activate\-Targets@{activate\-Targets}}
+\index{activate\-Targets@{activate\-Targets}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{activate\-Targets}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Control\-Element\-::activate\-Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}
+
+
+Activates all Control Targets managed by this Control Element. 
+
+This causes their bounding geometries to be highlighted in the operator view. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_control_target}{Control\-Target} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a9617f5b78ed7e1ab4ce9a3ca5e3660be}{Picto\-::\-Target\-Controller}, and \hyperlink{class_picto_1_1_choice_controller_a3dfbf8664c1fd73b0f721871dc0fccad}{Picto\-::\-Choice\-Controller}.
+
+
+
+Definition at line 68 of file Control\-Element.\-h.
+
+\hypertarget{class_picto_1_1_control_element_ac5d3e0d806747e930702b2444509ce82}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!deactivate\-Targets@{deactivate\-Targets}}
+\index{deactivate\-Targets@{deactivate\-Targets}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{deactivate\-Targets}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Control\-Element\-::deactivate\-Targets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_ac5d3e0d806747e930702b2444509ce82}
+
+
+Deactivates all Control Targets managed by this Control Element. 
+
+This causes their bounding geometries to stop being highlighted in the operator view. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_control_target}{Control\-Target} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a2425a38079fab780c7ccbf0a2efaf3d5}{Picto\-::\-Target\-Controller}, and \hyperlink{class_picto_1_1_choice_controller_a45208557f6ce245353971aa7bf22d36b}{Picto\-::\-Choice\-Controller}.
+
+
+
+Definition at line 73 of file Control\-Element.\-h.
+
+\hypertarget{class_picto_1_1_control_element_a43be19d011bffeb4ff95953a826c4635}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Element\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_a43be19d011bffeb4ff95953a826c4635}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 80 of file Control\-Element.\-h.
+
+\hypertarget{class_picto_1_1_control_element_ad9a828f49943e34a15a69138c64ac4da}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Element\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_ad9a828f49943e34a15a69138c64ac4da}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_ab3e676a5138ce7f49ab924c98fe3d71e}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a41bdd3b670d2b5092ec5d68a44dc8ed6}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_choice_controller_ac0ba6f4a836f383ddda56b484bd96c22}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_stopwatch_controller_a34394665524759705fefcc001ea68dba}{Picto\-::\-Stopwatch\-Controller}, and \hyperlink{class_picto_1_1_script_controller_a2620db63182fd3554e7dc61d8d0e6408}{Picto\-::\-Script\-Controller}.
+
+
+
+Definition at line 76 of file Control\-Element.\-h.
+
+\hypertarget{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Control\-Element\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_a51697af839f1b0f3e792516f59fd5941}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_result_container_ad0e8001bc4f03291cfd65c0c903c88f3}{Picto\-::\-Result\-Container}.
+
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a47559ed2d4c00422a3fc84e80620f4fc}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_choice_controller_a98308dba448abcbb46044533a3e6a56a}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_stopwatch_controller_ac7fd86cd42abe3a6474966ccc9f8ff94}{Picto\-::\-Stopwatch\-Controller}, \hyperlink{class_picto_1_1_script_controller_a8f67155393f4a6ee394120b5008befab}{Picto\-::\-Script\-Controller}, and \hyperlink{class_picto_1_1_test_controller_a5912c981db3d499dbf41e50faec2648d}{Picto\-::\-Test\-Controller}.
+
+
+
+Definition at line 16 of file Control\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_control_element_a29316418d618837adeebf47bb8d58308}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!start@{start}}
+\index{start@{start}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Control\-Element\-::start (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_a29316418d618837adeebf47bb8d58308}
+
+
+Initializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+Should be called when a \hyperlink{class_picto_1_1_state}{State} is first entered. \begin{DoxyNote}{Note}
+\hyperlink{class_picto_1_1_control_element_ac660682acd7da329220cc7c4d7a9d825}{activate\-Targets()} should be called by this function if \hyperlink{class_picto_1_1_control_target}{Control\-Target} elements will be used. This will cause their bounding geometries to be highlighted in the operator view until they are deactivated. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+Activate\-Targets() 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_affb5ce453fb86f690d8e192cb94f2b34}{Picto\-::\-Target\-Controller}, \hyperlink{class_picto_1_1_choice_controller_a25f1a01b67f68e192b9e19a8697618b7}{Picto\-::\-Choice\-Controller}, \hyperlink{class_picto_1_1_stopwatch_controller_a15e0f1023c0667695614e6b7f7848369}{Picto\-::\-Stopwatch\-Controller}, \hyperlink{class_picto_1_1_test_controller_a1a7e9f6071dace32af5bc50b251fccbc}{Picto\-::\-Test\-Controller}, and \hyperlink{class_picto_1_1_script_controller_a38429c7fc5689ad63bb43b6590e47365}{Picto\-::\-Script\-Controller}.
+
+
+
+Definition at line 55 of file Control\-Element.\-h.
+
+\hypertarget{class_picto_1_1_control_element_ad373499cb9f2b816627954d49e12de19}{\index{Picto\-::\-Control\-Element@{Picto\-::\-Control\-Element}!stop@{stop}}
+\index{stop@{stop}!Picto::ControlElement@{Picto\-::\-Control\-Element}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Control\-Element\-::stop (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Engine\-::\-Picto\-Engine} $>$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_element_ad373499cb9f2b816627954d49e12de19}
+
+
+Deinitializes the \hyperlink{class_picto_1_1_control_element}{Control\-Element}. 
+
+Should be called when a state is about to exit. \begin{DoxyNote}{Note}
+\hyperlink{class_picto_1_1_control_element_ac5d3e0d806747e930702b2444509ce82}{deactivate\-Targets()} should be called by this function if \hyperlink{class_picto_1_1_control_target}{Control\-Target} elements will be used. This will cause their bounding geometries to stop being highlighted. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_control_element_ac5d3e0d806747e930702b2444509ce82}{deactivate\-Targets()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{class_picto_1_1_target_controller_a551400318402ed8a73874ad5c89cb98a}{Picto\-::\-Target\-Controller}, and \hyperlink{class_picto_1_1_choice_controller_a66e08d4e4deface099b85b9d085c6d58}{Picto\-::\-Choice\-Controller}.
+
+
+
+Definition at line 62 of file Control\-Element.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Control\-Element.\-h\item 
+source/common/controlelements/Control\-Element.\-cpp\end{DoxyCompactItemize}

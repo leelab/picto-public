@@ -1,0 +1,67 @@
+\hypertarget{class_picto_1_1_director_data}{\section{Picto\-:\-:Director\-Data Class Reference}
+\label{class_picto_1_1_director_data}\index{Picto\-::\-Director\-Data@{Picto\-::\-Director\-Data}}
+}
+
+
+Stores a list of Reward\-Units including the Default reward quantities for all channels on this director.  
+
+
+
+
+{\ttfamily \#include $<$Director\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Director\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_director_data}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_director_data_aae2a42fd3baa601ad8034f6d3794bcd8}{virtual bool \hyperlink{class_picto_1_1_director_data_aae2a42fd3baa601ad8034f6d3794bcd8}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_director_data_aae2a42fd3baa601ad8034f6d3794bcd8}
+
+\begin{DoxyCompactList}\small\item\em Turns the Director\-Data\-Package into an X\-M\-L fragment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_director_data_abe56f09b0d67a9ddc42c0cad9178e2b2}{virtual bool \hyperlink{class_picto_1_1_director_data_abe56f09b0d67a9ddc42c0cad9178e2b2}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_director_data_abe56f09b0d67a9ddc42c0cad9178e2b2}
+
+\begin{DoxyCompactList}\small\item\em Converts X\-M\-L into a Director\-Data\-Package object. Note that this deletes any existing data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_director_data_a4b4ffd5e8085d8588b8845749b5072df}{void \hyperlink{class_picto_1_1_director_data_a4b4ffd5e8085d8588b8845749b5072df}{set\-Reward} (int channel, int duration)}\label{class_picto_1_1_director_data_a4b4ffd5e8085d8588b8845749b5072df}
+
+\begin{DoxyCompactList}\small\item\em Sets the default duration (milliseconds) for rewards on the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_director_data_ad877271941c107def8c7176719441a7d}{int \hyperlink{class_picto_1_1_director_data_ad877271941c107def8c7176719441a7d}{get\-Reward\-Duration} (int channel)}\label{class_picto_1_1_director_data_ad877271941c107def8c7176719441a7d}
+
+\begin{DoxyCompactList}\small\item\em Gets the default duration (milliseconds) for rewards on the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_director_data_a721cd3efd2a2aef8d3611dd5324ff7b1}{Q\-Hash$<$ int, int $>$ \hyperlink{class_picto_1_1_director_data_a721cd3efd2a2aef8d3611dd5324ff7b1}{get\-Reward\-Map} ()}\label{class_picto_1_1_director_data_a721cd3efd2a2aef8d3611dd5324ff7b1}
+
+\begin{DoxyCompactList}\small\item\em Gets a lookup table of reward durations keyed by reward channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_director_data_a5080db62a22b2fbf0c0d18708e73df40}{virtual void {\bfseries post\-Deserialize} ()}\label{class_picto_1_1_director_data_a5080db62a22b2fbf0c0d18708e73df40}
+
+\item 
+\hypertarget{class_picto_1_1_director_data_a88fed13281348e6ff18cd6bc3a70c8c3}{virtual bool {\bfseries validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_director_data_a88fed13281348e6ff18cd6bc3a70c8c3}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores a list of Reward\-Units including the Default reward quantities for all channels on this director. 
+
+This data is used to synchronize the Workstation with the \hyperlink{class_director}{Director} so that the same reward quantities set on the \hyperlink{class_director}{Director} itself (through the Pictobox) appear in the workstation as well. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Director\-Data.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Director\-Data.\-h\item 
+source/common/storage/Director\-Data.\-cpp\end{DoxyCompactItemize}

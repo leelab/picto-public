@@ -1,0 +1,64 @@
+\hypertarget{class_picto_1_1_picto_identifiable_object}{\section{Picto\-:\-:Picto\-Identifiable\-Object Class Reference}
+\label{class_picto_1_1_picto_identifiable_object}\index{Picto\-::\-Picto\-Identifiable\-Object@{Picto\-::\-Picto\-Identifiable\-Object}}
+}
+
+
+N\-O\-T U\-S\-E\-D.... A base class for all objects that can be tagged with a U\-U\-I\-D.  
+
+
+
+
+{\ttfamily \#include $<$Picto\-Identifiable\-Object.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_a6594cb863bb522b9e6bcf482bb4f195e}{{\bfseries Picto\-Identifiable\-Object} (Q\-Uuid id)}\label{class_picto_1_1_picto_identifiable_object_a6594cb863bb522b9e6bcf482bb4f195e}
+
+\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_a499d0ad31e4aa41bba7ebb64e05e2593}{void \hyperlink{class_picto_1_1_picto_identifiable_object_a499d0ad31e4aa41bba7ebb64e05e2593}{set\-Id} (Q\-Uuid id)}\label{class_picto_1_1_picto_identifiable_object_a499d0ad31e4aa41bba7ebb64e05e2593}
+
+\begin{DoxyCompactList}\small\item\em Sets the U\-U\-I\-D to the passed in value (used when deserializing X\-M\-L) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_acef6fda4b742c5083735155a393ae64e}{Q\-Uuid \hyperlink{class_picto_1_1_picto_identifiable_object_acef6fda4b742c5083735155a393ae64e}{get\-Id} ()}\label{class_picto_1_1_picto_identifiable_object_acef6fda4b742c5083735155a393ae64e}
+
+\begin{DoxyCompactList}\small\item\em returns the current U\-U\-I\-D \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_a09e54292ab7a5bf7624d4a56bf49bf32}{Q\-Uuid \hyperlink{class_picto_1_1_picto_identifiable_object_a09e54292ab7a5bf7624d4a56bf49bf32}{generate\-Id} ()}\label{class_picto_1_1_picto_identifiable_object_a09e54292ab7a5bf7624d4a56bf49bf32}
+
+\begin{DoxyCompactList}\small\item\em Generates a new U\-U\-I\-D, assigns it to this object, and returns the new U\-U\-I\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_ab66d3a8320bf63ae7d88d7db235cec46}{void \hyperlink{class_picto_1_1_picto_identifiable_object_ab66d3a8320bf63ae7d88d7db235cec46}{register\-Object} ()}\label{class_picto_1_1_picto_identifiable_object_ab66d3a8320bf63ae7d88d7db235cec46}
+
+\begin{DoxyCompactList}\small\item\em Registers this object in the list of Picto\-Identifiable\-Objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_picto_identifiable_object_aee17e893b8c045be452b836f59a624b4}{static Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_picto_identifiable_object}{Picto\-Identifiable\-Object} $>$ {\bfseries get\-Object\-By\-I\-D} (Q\-Uuid id)}\label{class_picto_1_1_picto_identifiable_object_aee17e893b8c045be452b836f59a624b4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+N\-O\-T U\-S\-E\-D.... A base class for all objects that can be tagged with a U\-U\-I\-D. 
+
+Within the \hyperlink{namespace_picto}{Picto} system, there are objects that are unique (Scenes, states, parameters, etc). To make it easy to find these items, the \hyperlink{class_picto_1_1_picto_identifiable_object}{Picto\-Identifiable\-Object} base class is used. It serves multiple functions\-:
+\begin{DoxyEnumerate}
+\item Allows us to tag objects with globally unique I\-Ds
+\item Allows us to recover objects by their I\-D Note that any \hyperlink{class_picto_1_1_picto_identifiable_object}{Picto\-Identifiable\-Object} is effectively a \char`\"{}global variable\char`\"{} in the sense that it can be recovered from anywhere in the system
+\end{DoxyEnumerate}
+
+Although this was implemented, it was never used (I ended up finding an alternate solution). However, the code is still useful, so I have left it in place. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Picto\-Identifiable\-Object.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/random/Picto\-Identifiable\-Object.\-h\item 
+source/common/random/Picto\-Identifiable\-Object.\-cpp\end{DoxyCompactItemize}

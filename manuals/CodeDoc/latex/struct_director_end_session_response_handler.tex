@@ -1,0 +1,52 @@
+\hypertarget{struct_director_end_session_response_handler}{\section{Director\-End\-Session\-Response\-Handler Struct Reference}
+\label{struct_director_end_session_response_handler}\index{Director\-End\-Session\-Response\-Handler@{Director\-End\-Session\-Response\-Handler}}
+}
+
+
+Extends End\-Session\-Response\-Handler to perform various \char`\"{}finish up\char`\"{} tasks in the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}.  
+
+
+
+
+{\ttfamily \#include $<$Director\-End\-Session\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Director\-End\-Session\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_director_end_session_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_end_session_response_handler_ae2d34163b016333b39c2b6854a2e45f7}{{\bfseries Director\-End\-Session\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_director_status_manager}{Director\-Status\-Manager} $>$ status\-Manager, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel} $>$ command\-Channel)}\label{struct_director_end_session_response_handler_ae2d34163b016333b39c2b6854a2e45f7}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_end_session_response_handler_a2686e1427340a7d44651e4eee09812a9}{virtual bool \hyperlink{struct_director_end_session_response_handler_a2686e1427340a7d44651e4eee09812a9}{process\-Response} (Q\-String directive)}\label{struct_director_end_session_response_handler_a2686e1427340a7d44651e4eee09812a9}
+
+\begin{DoxyCompactList}\small\item\em Extends End\-Session\-Response\-Handler\-::process\-Command() to clear the Session\-Id of the previous session from the Status\-Manager and right \char`\"{}\-Session Ended\char`\"{} to \hyperlink{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{Director\-Status\-Manager\-::set\-User\-Info()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Extends End\-Session\-Response\-Handler to perform various \char`\"{}finish up\char`\"{} tasks in the \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 13 of file Director\-End\-Session\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/protocol/Director\-End\-Session\-Response\-Handler.\-h\item 
+source/director/protocol/Director\-End\-Session\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

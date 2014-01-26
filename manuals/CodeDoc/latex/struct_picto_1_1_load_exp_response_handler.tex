@@ -1,0 +1,56 @@
+\hypertarget{struct_picto_1_1_load_exp_response_handler}{\section{Picto\-:\-:Load\-Exp\-Response\-Handler Struct Reference}
+\label{struct_picto_1_1_load_exp_response_handler}\index{Picto\-::\-Load\-Exp\-Response\-Handler@{Picto\-::\-Load\-Exp\-Response\-Handler}}
+}
+
+
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-L\-O\-A\-D\-E\-X\-P\char`\"{} method.  
+
+
+
+
+{\ttfamily \#include $<$Load\-Exp\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Load\-Exp\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_picto_1_1_load_exp_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_load_exp_response_handler_a79c3d7b16ea36fb35c4bc26f3d64397c}{{\bfseries Load\-Exp\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)}\label{struct_picto_1_1_load_exp_response_handler_a79c3d7b16ea36fb35c4bc26f3d64397c}
+
+\item 
+\hypertarget{struct_picto_1_1_load_exp_response_handler_aea09f355ed3ef5e69a8674e3798def60}{Q\-String {\bfseries method} ()}\label{struct_picto_1_1_load_exp_response_handler_aea09f355ed3ef5e69a8674e3798def60}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_picto_1_1_load_exp_response_handler_a3fff46bf7d0d85638a568f7fc1a3d3fc}{virtual bool {\bfseries process\-Response} (Q\-String directive)}\label{struct_picto_1_1_load_exp_response_handler_a3fff46bf7d0d85638a568f7fc1a3d3fc}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} classes that respond to the \char`\"{}\-L\-O\-A\-D\-E\-X\-P\char`\"{} method. 
+
+L\-O\-A\-D\-E\-X\-P reponses are sent along with an \hyperlink{class_picto_1_1_experiment}{Experiment} design and indicate that the Component should load and run the included \hyperlink{class_picto_1_1_experiment}{Experiment}.
+
+The process\-Response() function implemented by this class is empty. Extend this class to add logic that is triggered by the arrival of a new Protocol\-Respose. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 20 of file Load\-Exp\-Response\-Handler.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/protocol/Load\-Exp\-Response\-Handler.\-h\item 
+source/common/protocol/Load\-Exp\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

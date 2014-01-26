@@ -1,0 +1,53 @@
+\hypertarget{_picto_engine_8h}{\section{source/common/engine/\-Picto\-Engine.h File Reference}
+\label{_picto_engine_8h}\index{source/common/engine/\-Picto\-Engine.\-h@{source/common/engine/\-Picto\-Engine.\-h}}
+}
+{\ttfamily \#include $<$Q\-Shared\-Pointer$>$}\\*
+{\ttfamily \#include $<$Q\-Future$>$}\\*
+{\ttfamily \#include $<$Q\-Uuid$>$}\\*
+{\ttfamily \#include $<$Q\-List$>$}\\*
+{\ttfamily \#include $<$Q\-Mutex$>$}\\*
+{\ttfamily \#include $<$Q\-Network\-Interface$>$}\\*
+{\ttfamily \#include $<$Q\-Map$>$}\\*
+{\ttfamily \#include \char`\"{}../common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../compositor/\-Rendering\-Target.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../network/\-Command\-Channel.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../protocol/\-Protocol\-Command.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Signal\-Channel.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../iodevices/\-Reward\-Controller.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../iodevices/\-Output\-Signal\-Controller.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../iodevices/\-Event\-Code\-Generator.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-Property\-Data\-Unit\-Package.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-State\-Data\-Unit\-Package.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-Behavioral\-Data\-Unit\-Package.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-State\-Data\-Unit.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-Reward\-Data\-Unit.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-Task\-Run\-Data\-Unit.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../storage/\-Design\-Config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}State\-Updater.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}propertytable.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Control\-Panel\-Interface.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../playback/\-Live\-Frame\-Reader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../playback/\-Live\-Lfp\-Reader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../playback/\-Live\-Reward\-Reader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../playback/\-Live\-Spike\-Reader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../playback/\-Live\-Signal\-Reader.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../controlelements/\-Frame\-Timer\-Factory.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Picto\-::\-Engine\-::\-Picto\-Engine}
+\begin{DoxyCompactList}\small\item\em Runs a \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_experiment}{Experiment}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_picto}{Picto}
+\begin{DoxyCompactList}\small\item\em A compositing surface for Direct3\-D Mobile (used on Picto\-Box) \end{DoxyCompactList}\item 
+\hyperlink{namespace_picto_1_1_engine_1_1_picto_engine_timing_type}{Picto\-::\-Engine\-::\-Picto\-Engine\-Timing\-Type}
+\begin{DoxyCompactList}\small\item\em The namespace used for the \hyperlink{namespace_picto_1_1_engine_1_1_picto_engine_timing_type}{Picto\-Engine\-Timing\-Type} enumeration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_picto_1_1_engine_1_1_picto_engine_timing_type_a3b9833c69033de872a089c4c79a7496c}{Picto\-::\-Engine\-::\-Picto\-Engine\-Timing\-Type\-::\-Picto\-Engine\-Timing\-Type} \{ \hyperlink{namespace_picto_1_1_engine_1_1_picto_engine_timing_type_a3b9833c69033de872a089c4c79a7496ca53ec905db7963529412112d01a663492}{Picto\-::\-Engine\-::\-Picto\-Engine\-Timing\-Type\-::precise}, 
+\hyperlink{namespace_picto_1_1_engine_1_1_picto_engine_timing_type_a3b9833c69033de872a089c4c79a7496ca3c573955bb912e564ac0a7ce0983ef38}{Picto\-::\-Engine\-::\-Picto\-Engine\-Timing\-Type\-::ignore\-Frame\-Intervals}
+ \}
+\begin{DoxyCompactList}\small\item\em An enumerated type containing timing control options for Picto\-Engine objects. \end{DoxyCompactList}\end{DoxyCompactItemize}

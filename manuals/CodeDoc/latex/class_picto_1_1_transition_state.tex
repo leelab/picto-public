@@ -1,0 +1,189 @@
+\hypertarget{class_picto_1_1_transition_state}{\section{Picto\-:\-:Transition\-State Class Reference}
+\label{class_picto_1_1_transition_state}\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract transition traversal data and implement functions for traversing through that data.  
+
+
+
+
+{\ttfamily \#include $<$Transition\-State.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Transition\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_transition_state}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_transition_state_a64bfe3dca43f7a2302b8a26a41f9b743}{transition\-Activated} (int trans\-Id)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_picto_1_1_transition}{Transition} traversal is passed over due to a call to \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_transition_state_a140ddbf63a04438c46294cf73c6f750b}{virtual void \hyperlink{class_picto_1_1_transition_state_a140ddbf63a04438c46294cf73c6f750b}{set\-Database} (Q\-Sql\-Database session)}\label{class_picto_1_1_transition_state_a140ddbf63a04438c46294cf73c6f750b}
+
+\begin{DoxyCompactList}\small\item\em Sets the input Sql Database to this \hyperlink{class_picto_1_1_data_state}{Data\-State} so that it can load all of the data relevant to it into R\-A\-M for quick access. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_transition_state_ace615cb73cff5624ba1c276a04f464e1}{start\-Run} (double run\-Start\-Time, double run\-End\-Time=-\/1)
+\begin{DoxyCompactList}\small\item\em Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_transition_state_a241eb2839c2b9eac7f929d8a57ec4982}{get\-Current\-Index} ()
+\begin{DoxyCompactList}\small\item\em Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} \hyperlink{class_picto_1_1_transition_state_af53afbf44863a578046e98fc95a33d47}{get\-Next\-Index} (double look\-Forward\-Time)
+\begin{DoxyCompactList}\small\item\em Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index} (\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} index)
+\begin{DoxyCompactList}\small\item\em Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_transition_state_a39aeeed3109b3a9882a24c9ff660e208}{set\-Obsolete\-Assets} (Q\-Hash$<$ int, bool $>$ obsolete\-Asset\-Ids)
+\begin{DoxyCompactList}\small\item\em Sets a lookup table of \hyperlink{class_picto_1_1_asset}{Asset} Ids for Assets that have become obsolete. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_transition_state_a5bfa66cb7103c0b3bcda6de0613fb34f}{int \hyperlink{class_picto_1_1_transition_state_a5bfa66cb7103c0b3bcda6de0613fb34f}{get\-First\-Trans\-Id\-In\-Run} ()}\label{class_picto_1_1_transition_state_a5bfa66cb7103c0b3bcda6de0613fb34f}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_asset}{Asset} Id of the first \hyperlink{class_picto_1_1_transition}{Transition} in the current run. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_data_state}{Data\-State} and \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} classes to load a \hyperlink{namespace_picto}{Picto} Session database, extract transition traversal data and implement functions for traversing through that data. 
+
+The class is fairly simple, a Q\-List of \hyperlink{struct_picto_1_1_playback_trans_data}{Playback\-Trans\-Data} objects is loaded from the session data. Each \hyperlink{struct_picto_1_1_playback_trans_data}{Playback\-Trans\-Data} represents a single \hyperlink{class_picto_1_1_transition}{Transition} traversal and when \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index()} is called, we just move through the list until we reach a \hyperlink{struct_picto_1_1_playback_trans_data}{Playback\-Trans\-Data} with the appropriate \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}. Each time \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index()} causes us to pass through a \hyperlink{struct_picto_1_1_playback_trans_data}{Playback\-Trans\-Data} entry, the \hyperlink{class_picto_1_1_transition_state_a64bfe3dca43f7a2302b8a26a41f9b743}{transition\-Activated()} signal is called, which tells the rest of the playback system that a \hyperlink{class_picto_1_1_transition}{Transition} was traversed.
+
+\begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} and \hyperlink{class_picto_1_1_data_state}{Data\-State} classes for data read in from a Session Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding function level documentation for this class.
+
+\hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} no longer has any contents since we realized that \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} was more naturally extracted as part of \hyperlink{class_picto_1_1_state_machine}{State\-Machine} playback instead of being gathered over time ranges. We have left the \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} interface extension here, but it could probably be removed. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Transition\-State.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_transition_state_a241eb2839c2b9eac7f929d8a57ec4982}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!get\-Current\-Index@{get\-Current\-Index}}
+\index{get\-Current\-Index@{get\-Current\-Index}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{get\-Current\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Transition\-State\-::get\-Current\-Index (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_transition_state_a241eb2839c2b9eac7f929d8a57ec4982}
+
+
+Gets the current \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+Data\-States, like File objects, have what we can think at as a read pointer. They always have a current position from which we can move. This is for the sake of efficiency and to be sure that every time we move from one state in a \hyperlink{namespace_picto}{Picto} session to another we are not skipping any experimental events in the middle. The value returned from this function is the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} describing the time/order of the value that the \char`\"{}read pointer\char`\"{} is currently pointing at. \begin{DoxySeeAlso}{See Also}
+\hyperlink{struct_picto_1_1_playback_index}{Playback\-Index}, \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index()} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_aeb01a1209858dc99ce86d153aeda152a}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 62 of file Transition\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_transition_state_af53afbf44863a578046e98fc95a33d47}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!get\-Next\-Index@{get\-Next\-Index}}
+\index{get\-Next\-Index@{get\-Next\-Index}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{get\-Next\-Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Playback\-Index} Transition\-State\-::get\-Next\-Index (
+\begin{DoxyParamCaption}
+\item[{double}]{look\-Forward\-Time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_transition_state_af53afbf44863a578046e98fc95a33d47}
+
+
+Gets the \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of the next available value after the current \char`\"{}read pointer\char`\"{} in this \hyperlink{class_picto_1_1_data_state}{Data\-State}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em look\-Forward\-Time} & The timespan to search forward from the current read position for the next value. Using an input value less than zero is equivalent to inputing a value of infinity. The function will look forward as far as it takes until a new value is available (which may cause some significant delay). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When we designed this interface, the idea was that we could use it for live playback and if there was no \char`\"{}next index\char`\"{} available, the system would just wait for one to come in thereby creating an unfortunate but necessary lag in playback. In practice, we are not using Data\-States for live playback, since we don't support \hyperlink{class_picto_1_1_analysis}{Analysis} during live playback. This may be something to think about when we want to start supporting that though. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_picto_1_1_data_state_a959c083fdf897e2f8d75be596d9db8e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 70 of file Transition\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!move\-To\-Index@{move\-To\-Index}}
+\index{move\-To\-Index@{move\-To\-Index}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{move\-To\-Index}]{\setlength{\rightskip}{0pt plus 5cm}void Transition\-State\-::move\-To\-Index (
+\begin{DoxyParamCaption}
+\item[{{\bf Playback\-Index}}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}
+
+
+Moves the current read pointer forward step by step until the next value's index (ie. the thing get\-Next\-Index() will return) is greater than the input index. 
+
+It is important that the \hyperlink{class_picto_1_1_data_state}{Data\-State} move step by step up to the input index because all of the changes in its value need to be emitted over signals and sent out to the greater playback system as we move to the new value. If we were to jump over any values and skip them, Analyses that are basing themselves on changes in values underlying this \hyperlink{class_picto_1_1_data_state}{Data\-State} might no longer be valid.
+
+Imagine, for example, if this \hyperlink{class_picto_1_1_data_state}{Data\-State} were tracking transitions. If we skipped over any transitions on the way to the input index, \hyperlink{class_picto_1_1_analysis}{Analysis} scripts that are called when those transitions are traversed would be skipped and the \hyperlink{class_picto_1_1_analysis}{Analysis} would be totally invalid. 
+
+Implements \hyperlink{class_picto_1_1_data_state_af18625b354552d5123f46bde3ded65e0}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 78 of file Transition\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_transition_state_a39aeeed3109b3a9882a24c9ff660e208}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!set\-Obsolete\-Assets@{set\-Obsolete\-Assets}}
+\index{set\-Obsolete\-Assets@{set\-Obsolete\-Assets}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{set\-Obsolete\-Assets}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Transition\-State\-::set\-Obsolete\-Assets (
+\begin{DoxyParamCaption}
+\item[{Q\-Hash$<$ int, bool $>$}]{obsolete\-Asset\-Ids}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_picto_1_1_transition_state_a39aeeed3109b3a9882a24c9ff660e208}
+
+
+Sets a lookup table of \hyperlink{class_picto_1_1_asset}{Asset} Ids for Assets that have become obsolete. 
+
+When \hyperlink{class_picto_1_1_property}{Property} value changes for these Assets are encountered, they are ignored. For more information, see the \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} object. The \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} can be used to prepare the input obsolete\-Asset\-Ids table. 
+
+Definition at line 42 of file Transition\-State.\-h.
+
+\hypertarget{class_picto_1_1_transition_state_ace615cb73cff5624ba1c276a04f464e1}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!start\-Run@{start\-Run}}
+\index{start\-Run@{start\-Run}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{start\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void Transition\-State\-::start\-Run (
+\begin{DoxyParamCaption}
+\item[{double}]{run\-Start\-Time, }
+\item[{double}]{run\-End\-Time = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_transition_state_ace615cb73cff5624ba1c276a04f464e1}
+
+
+Informs this \hyperlink{class_picto_1_1_data_state}{Data\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. 
+
+This is important because \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} values returned from \hyperlink{class_picto_1_1_data_state}{Data\-State} objects are always with respect to the beginning of the run. In otherwords, if a \hyperlink{class_picto_1_1_data_state}{Data\-State} returns a \hyperlink{struct_picto_1_1_playback_index}{Playback\-Index} of something that happened at the same time that the Run\-Started, its \hyperlink{struct_picto_1_1_playback_index_acbf8f826cfd64d647a098ed165dd3999}{Playback\-Index.\-time()} will be zero, even if the run happened at time 213.\-315. 
+
+Implements \hyperlink{class_picto_1_1_data_state_a8338a5e0c034ccd190e2916e4d60a6e8}{Picto\-::\-Data\-State}.
+
+
+
+Definition at line 46 of file Transition\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_transition_state_a64bfe3dca43f7a2302b8a26a41f9b743}{\index{Picto\-::\-Transition\-State@{Picto\-::\-Transition\-State}!transition\-Activated@{transition\-Activated}}
+\index{transition\-Activated@{transition\-Activated}!Picto::TransitionState@{Picto\-::\-Transition\-State}}
+\subsubsection[{transition\-Activated}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Transition\-State\-::transition\-Activated (
+\begin{DoxyParamCaption}
+\item[{int}]{trans\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_transition_state_a64bfe3dca43f7a2302b8a26a41f9b743}
+
+
+Emitted whenever a \hyperlink{class_picto_1_1_transition}{Transition} traversal is passed over due to a call to \hyperlink{class_picto_1_1_transition_state_a9a21bdd8867aa905059d4495664735a7}{move\-To\-Index()}. 
+
+The trans\-Id is the \hyperlink{class_picto_1_1_asset}{Asset} Id of the \hyperlink{class_picto_1_1_transition}{Transition} that was traversed. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Transition\-State.\-h\item 
+source/common/playback/Transition\-State.\-cpp\end{DoxyCompactItemize}

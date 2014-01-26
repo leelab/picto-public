@@ -1,0 +1,154 @@
+\hypertarget{class_picto_1_1_state_updater}{\section{Picto\-:\-:State\-Updater Class Reference}
+\label{class_picto_1_1_state_updater}\index{Picto\-::\-State\-Updater@{Picto\-::\-State\-Updater}}
+}
+
+
+An interface class for objects that update the \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state}{State} from some external source.  
+
+
+
+
+{\ttfamily \#include $<$State\-Updater.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:State\-Updater\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_state_updater}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_state_updater_ad1590a017d6f7c51e8086a3fd7a2b25b}{void \hyperlink{class_picto_1_1_state_updater_ad1590a017d6f7c51e8086a3fd7a2b25b}{starting\-Run} (Q\-String task\-Name, Q\-String run\-Name)}\label{class_picto_1_1_state_updater_ad1590a017d6f7c51e8086a3fd7a2b25b}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a new Run starts. task\-Name is the name of the \hyperlink{class_picto_1_1_task}{Task} that will be run, run\-Name is the name of this particular run as it appears in the Run Notes tab of the Workstation. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_aab58fbf8e6a585e06b8dfe6dbf15415f}{void \hyperlink{class_picto_1_1_state_updater_aab58fbf8e6a585e06b8dfe6dbf15415f}{ending\-Run} ()}\label{class_picto_1_1_state_updater_aab58fbf8e6a585e06b8dfe6dbf15415f}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a run ends. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a59e5c0981f0109047c3fbd5a3600d1ba}{void \hyperlink{class_picto_1_1_state_updater_a59e5c0981f0109047c3fbd5a3600d1ba}{property\-Value\-Changed} (int prop\-Id, Q\-String value)}\label{class_picto_1_1_state_updater_a59e5c0981f0109047c3fbd5a3600d1ba}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a \hyperlink{class_picto_1_1_property}{Property} value changes for a \hyperlink{class_picto_1_1_property}{Property} with an Asset\-Id of prop\-Id and a new value of value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a8845b2700917283f18792ba2fa32a877}{void \hyperlink{class_picto_1_1_state_updater_a8845b2700917283f18792ba2fa32a877}{property\-Init\-Value\-Changed} (int prop\-Id, Q\-String value)}\label{class_picto_1_1_state_updater_a8845b2700917283f18792ba2fa32a877}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a \hyperlink{class_picto_1_1_property}{Property} init\-Value changes for a \hyperlink{class_picto_1_1_property}{Property} with an Asset\-Id of prop\-Id and a new init\-Value of value. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a0d2330aed87fb71711f4eb722c2b6b98}{void \hyperlink{class_picto_1_1_state_updater_a0d2330aed87fb71711f4eb722c2b6b98}{transition\-Activated} (int trans\-Id)}\label{class_picto_1_1_state_updater_a0d2330aed87fb71711f4eb722c2b6b98}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a \hyperlink{class_picto_1_1_transition}{Transition} with Asset\-Id of trans\-Id is traversed. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_adc9841e4bb187c02f6cb81cad576f506}{void \hyperlink{class_picto_1_1_state_updater_adc9841e4bb187c02f6cb81cad576f506}{frame\-Presented} (double time)}\label{class_picto_1_1_state_updater_adc9841e4bb187c02f6cb81cad576f506}
+
+\begin{DoxyCompactList}\small\item\em Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the display for this frame. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_state_updater_ad5ee865d12ecc835be806d4ed8146607}{reward\-Supplied} (double time, int duration, int channel)
+\begin{DoxyCompactList}\small\item\em Emitted when a reward is triggered. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_state_updater_affd32e4d69b3b1d2b21c35f1f0159fb0}{signal\-Changed} (Q\-String name, Q\-String\-List sub\-Chan\-Names, Q\-Vector$<$ float $>$ vals)
+\begin{DoxyCompactList}\small\item\em Emitted when new signal data comes in. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_state_updater_a6e1134167de2d8d6846f326b8b318bf8}{disable\-Rendering} (bool disable)
+\begin{DoxyCompactList}\small\item\em Emitted when rendering should be disabled/enabled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_picto_1_1_state_updater_a7554cc46eafbee58fb566edd93d5410e}{update\-State} ()=0
+\begin{DoxyCompactList}\small\item\em Calling this function updates the picto state to the latest available values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a67b81a5e1902c5adca7e645b75c1fe37}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_a67b81a5e1902c5adca7e645b75c1fe37}{get\-Frame\-Reader} ()=0}\label{class_picto_1_1_state_updater_a67b81a5e1902c5adca7e645b75c1fe37}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to a \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} object that can be used to gather lists of Frame timing data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a3801d9fb88b55f5974079312a81d1ec2}{virtual Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_a3801d9fb88b55f5974079312a81d1ec2}{get\-Lfp\-Reader} ()=0}\label{class_picto_1_1_state_updater_a3801d9fb88b55f5974079312a81d1ec2}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to a \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} object that can be used to gather lists of lfp timing/value data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a7dc223816c274f80b0082b9ebf8e4a19}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_a7dc223816c274f80b0082b9ebf8e4a19}{get\-Reward\-Reader} ()=0}\label{class_picto_1_1_state_updater_a7dc223816c274f80b0082b9ebf8e4a19}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to a \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} object that can be used to gather lists of reward data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_aef1a7c090ef1724b3686eddb8d12f8d7}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_aef1a7c090ef1724b3686eddb8d12f8d7}{get\-Run\-Notes\-Reader} ()=0}\label{class_picto_1_1_state_updater_aef1a7c090ef1724b3686eddb8d12f8d7}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to a \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} object that can be used to gather data about the current run notes. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_ac1a94f00d79bb59317bb5640de400bc6}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_ac1a94f00d79bb59317bb5640de400bc6}{get\-Spike\-Reader} ()=0}\label{class_picto_1_1_state_updater_ac1a94f00d79bb59317bb5640de400bc6}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to a \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} object that can be used to gather lists of spike data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a48b7a4e044583e2ea1d35cf39e61528a}{virtual Q\-String\-List \hyperlink{class_picto_1_1_state_updater_a48b7a4e044583e2ea1d35cf39e61528a}{get\-Signal\-Reader\-Names} ()=0}\label{class_picto_1_1_state_updater_a48b7a4e044583e2ea1d35cf39e61528a}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} names that are used in this experiment. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_state_updater_a2daede26f37d683ea665195bb9cce9a2}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} $>$ \hyperlink{class_picto_1_1_state_updater_a2daede26f37d683ea665195bb9cce9a2}{get\-Signal\-Reader} (Q\-String name)=0}\label{class_picto_1_1_state_updater_a2daede26f37d683ea665195bb9cce9a2}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} object with the input name that can be used to gather lists of signal data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An interface class for objects that update the \hyperlink{namespace_picto}{Picto} \hyperlink{class_picto_1_1_state}{State} from some external source. 
+
+The source might be a remotely running experiment or an old session file that is being replayed. Either way, the \hyperlink{class_picto_1_1_state_updater}{State\-Updater} communicates by emitting signals indicating that various events occured, in the order that they occured. It also provides various data reader objects that can be used to gather lists of past data or future data (in the case of experiments that are being played back from a previously saved session). \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file State\-Updater.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_state_updater_a6e1134167de2d8d6846f326b8b318bf8}{\index{Picto\-::\-State\-Updater@{Picto\-::\-State\-Updater}!disable\-Rendering@{disable\-Rendering}}
+\index{disable\-Rendering@{disable\-Rendering}!Picto::StateUpdater@{Picto\-::\-State\-Updater}}
+\subsubsection[{disable\-Rendering}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Updater\-::disable\-Rendering (
+\begin{DoxyParamCaption}
+\item[{bool}]{disable}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_state_updater_a6e1134167de2d8d6846f326b8b318bf8}
+
+
+Emitted when rendering should be disabled/enabled. 
+
+This is useful if we are skipping around in the run. In this case all signals will still be correctly emitted in the correct order and all data will be available on the data readers; however, the visual elements need not be displayed. \hypertarget{class_picto_1_1_state_updater_ad5ee865d12ecc835be806d4ed8146607}{\index{Picto\-::\-State\-Updater@{Picto\-::\-State\-Updater}!reward\-Supplied@{reward\-Supplied}}
+\index{reward\-Supplied@{reward\-Supplied}!Picto::StateUpdater@{Picto\-::\-State\-Updater}}
+\subsubsection[{reward\-Supplied}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Updater\-::reward\-Supplied (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{int}]{duration, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_state_updater_ad5ee865d12ecc835be806d4ed8146607}
+
+
+Emitted when a reward is triggered. 
+
+time is the time when the reward starts, duration is its duration in ms, channel is the reward channel on which the reward was provided. \hypertarget{class_picto_1_1_state_updater_affd32e4d69b3b1d2b21c35f1f0159fb0}{\index{Picto\-::\-State\-Updater@{Picto\-::\-State\-Updater}!signal\-Changed@{signal\-Changed}}
+\index{signal\-Changed@{signal\-Changed}!Picto::StateUpdater@{Picto\-::\-State\-Updater}}
+\subsubsection[{signal\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-State\-Updater\-::signal\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name, }
+\item[{Q\-String\-List}]{sub\-Chan\-Names, }
+\item[{Q\-Vector$<$ float $>$}]{vals}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_state_updater_affd32e4d69b3b1d2b21c35f1f0159fb0}
+
+
+Emitted when new signal data comes in. 
+
+name is the name of the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} for which new data is available. sub\-Chan\-Names is a list of names of this S\-Ignal\-Channel's sub-\/channels. vals is a list of the new values. If sub\-Chan\-Names is x,y, vals will have data ordered like x1,y1,x2,y2,x3,y3,... \begin{DoxyNote}{Note}
+Unlike in the master, signal data only comes in once per frame, not once per \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} sample period. \hyperlink{class_picto_1_1_state_updater_affd32e4d69b3b1d2b21c35f1f0159fb0}{signal\-Changed()} should be emitted with all of the \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} data since the previous frame after all \hyperlink{class_picto_1_1_property}{Property} value change and transition traversal signals have been emitted and before \hyperlink{class_picto_1_1_state_updater_adc9841e4bb187c02f6cb81cad576f506}{frame\-Presented()} is emitted. 
+\end{DoxyNote}
+\hypertarget{class_picto_1_1_state_updater_a7554cc46eafbee58fb566edd93d5410e}{\index{Picto\-::\-State\-Updater@{Picto\-::\-State\-Updater}!update\-State@{update\-State}}
+\index{update\-State@{update\-State}!Picto::StateUpdater@{Picto\-::\-State\-Updater}}
+\subsubsection[{update\-State}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Picto\-::\-State\-Updater\-::update\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_state_updater_a7554cc46eafbee58fb566edd93d5410e}
+
+
+Calling this function updates the picto state to the latest available values. 
+
+The various \hyperlink{class_picto_1_1_state_updater}{State\-Updater} signals will be triggered from within this function. 
+
+Implemented in \hyperlink{class_picto_1_1_playback_state_updater_a5af6cdbc6ff4a7d8010d941d7f05fc8c}{Picto\-::\-Playback\-State\-Updater}, and \hyperlink{class_picto_1_1_remote_state_updater_ac1b44f60204ce0ec535b226175deb8db}{Picto\-::\-Remote\-State\-Updater}.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+source/common/engine/State\-Updater.\-h\end{DoxyCompactItemize}

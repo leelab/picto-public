@@ -1,0 +1,82 @@
+\hypertarget{class_arrow_source_item}{\section{Arrow\-Source\-Item Class Reference}
+\label{class_arrow_source_item}\index{Arrow\-Source\-Item@{Arrow\-Source\-Item}}
+}
+
+
+An \hyperlink{class_arrow_port_item}{Arrow\-Port\-Item} to which \hyperlink{class_arrow}{Arrow} tails attach.  
+
+
+
+
+{\ttfamily \#include $<$Arrow\-Source\-Item.\-h$>$}
+
+Inheritance diagram for Arrow\-Source\-Item\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_arrow_source_item}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_arrow_source_item_acf013d5d37182de531c144bb3e536c66}{{\bfseries Arrow\-Source\-Item} (Q\-String name, Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Graphics\-Item $\ast$parent, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ asset)}\label{class_arrow_source_item_acf013d5d37182de531c144bb3e536c66}
+
+\item 
+\hypertarget{class_arrow_source_item_a9b43e19774dec3b9298d71dc1e0a688d}{virtual Q\-Point\-F \hyperlink{class_arrow_source_item_a9b43e19774dec3b9298d71dc1e0a688d}{get\-Contact\-Point} ()}\label{class_arrow_source_item_a9b43e19774dec3b9298d71dc1e0a688d}
+
+\begin{DoxyCompactList}\small\item\em The idea of this function was to define a point where the arrow should contact it. in practice, this function is not used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_arrow_source_item_a29ed73253b4ede50058fa3ec31272737}{virtual void \hyperlink{class_arrow_source_item_a29ed73253b4ede50058fa3ec31272737}{set\-Rect} (Q\-Rect\-F rect)}\label{class_arrow_source_item_a29ed73253b4ede50058fa3ec31272737}
+
+\begin{DoxyCompactList}\small\item\em Sets the dimensions of the \hyperlink{class_diagram_item}{Diagram\-Item} to those of the input Q\-Rect\-F and updates contents accordingly. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_arrow_source_item_ac61a740c4936a783c92a1c7f13d9bb5b}{hover\-Enter\-Event} (Q\-Graphics\-Scene\-Hover\-Event $\ast$event)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} to either Insert\-Line or Select when the mouse enters this \hyperlink{class_arrow_source_item}{Arrow\-Source\-Item} depending on what kind of \hyperlink{class_arrow_source_item}{Arrow\-Source\-Item} this is. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An \hyperlink{class_arrow_port_item}{Arrow\-Port\-Item} to which \hyperlink{class_arrow}{Arrow} tails attach. 
+
+This is a base class for result bars that hang of the bottom of each State\-Machine\-Element diagram as well as the Start\-Bar on the left side of the canvas. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 12 of file Arrow\-Source\-Item.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_arrow_source_item_ac61a740c4936a783c92a1c7f13d9bb5b}{\index{Arrow\-Source\-Item@{Arrow\-Source\-Item}!hover\-Enter\-Event@{hover\-Enter\-Event}}
+\index{hover\-Enter\-Event@{hover\-Enter\-Event}!ArrowSourceItem@{Arrow\-Source\-Item}}
+\subsubsection[{hover\-Enter\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Arrow\-Source\-Item\-::hover\-Enter\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Graphics\-Scene\-Hover\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_arrow_source_item_ac61a740c4936a783c92a1c7f13d9bb5b}
+
+
+Sets the \hyperlink{class_editor_state_a30123e595784b2228edc2a0c2b46ab28}{Editor\-State\-::\-Edit\-Mode} to either Insert\-Line or Select when the mouse enters this \hyperlink{class_arrow_source_item}{Arrow\-Source\-Item} depending on what kind of \hyperlink{class_arrow_source_item}{Arrow\-Source\-Item} this is. 
+
+\begin{DoxyNote}{Note}
+This might better be handled in sub-\/classes. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_arrow_port_item_ac8365305e57f311dd1a673d8c8ff92a9}{Arrow\-Port\-Item}.
+
+
+
+Definition at line 39 of file Arrow\-Source\-Item.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Arrow\-Source\-Item.\-h\item 
+source/common/\-Designer/Arrow\-Source\-Item.\-cpp\end{DoxyCompactItemize}

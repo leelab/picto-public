@@ -1,0 +1,46 @@
+\hypertarget{struct_server_app_update_protocol}{\section{Server\-App\-Update\-Protocol Struct Reference}
+\label{struct_server_app_update_protocol}\index{Server\-App\-Update\-Protocol@{Server\-App\-Update\-Protocol}}
+}
+
+
+The \hyperlink{class_server}{Server} App Update protocol.  
+
+
+
+
+{\ttfamily \#include $<$Server\-App\-Update\-Protocol.\-h$>$}
+
+Inheritance diagram for Server\-App\-Update\-Protocol\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_server_app_update_protocol}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_server_app_update_protocol_a80586fdbce2d5a37bbcba3bff29dc6a5}{\hyperlink{struct_server_app_update_protocol_a80586fdbce2d5a37bbcba3bff29dc6a5}{Server\-App\-Update\-Protocol} ()}\label{struct_server_app_update_protocol_a80586fdbce2d5a37bbcba3bff29dc6a5}
+
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{struct_server_app_update_protocol}{Server\-App\-Update\-Protocol} object which includes a single Protocol\-Command\-Handler, the \hyperlink{struct_get_file_command_handler}{Get\-File\-Command\-Handler} that is used for older \hyperlink{namespace_picto}{Picto} version to download the files for a new \hyperlink{namespace_picto}{Picto} installation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_server}{Server} App Update protocol. 
+
+The \hyperlink{class_server}{Server} App Update protocol contains all of the commands that are used by the App Update system. We keep this Protocol separate from the \hyperlink{namespace_picto}{Picto} protocol so that older \hyperlink{namespace_picto}{Picto} installations will still be able to talk to the update system and get themselves updated even if the \hyperlink{namespace_picto}{Picto} protocol itself is updated. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 16 of file Server\-App\-Update\-Protocol.\-h.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Server\-App\-Update\-Protocol.\-h\item 
+source/server/protocol/Server\-App\-Update\-Protocol.\-cpp\end{DoxyCompactItemize}

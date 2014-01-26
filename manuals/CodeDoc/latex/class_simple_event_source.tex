@@ -1,0 +1,128 @@
+\hypertarget{class_simple_event_source}{\section{Simple\-Event\-Source Class Reference}
+\label{class_simple_event_source}\index{Simple\-Event\-Source@{Simple\-Event\-Source}}
+}
+
+
+A virtual event source that builds new events one by one at sec\-Per\-Event intervals.  
+
+
+
+
+{\ttfamily \#include $<$simpleeventsource.\-h$>$}
+
+Inheritance diagram for Simple\-Event\-Source\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_simple_event_source}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_simple_event_source_a90a6e1d9583aa48f907188d2c7dc4df6}{Simple\-Event\-Source} (double sec\-Per\-Event, double sec\-Per\-Sample, double rand\-Range)
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_simple_event_source}{Simple\-Event\-Source} object. \end{DoxyCompactList}\item 
+virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_unit}{Picto\-::\-Data\-Unit} $>$ \hyperlink{class_simple_event_source_ad61883e129671a03003867cb7314a504}{get\-Next\-Event} (double time)
+\begin{DoxyCompactList}\small\item\em Defines the time at which the next neural event should be generated and passes it into build\-Event to get a neural event for that time. \end{DoxyCompactList}\item 
+\hypertarget{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}{virtual float \hyperlink{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}{sampling\-Rate} ()}\label{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}{sampling\-Rate()} for this virtual event source based on the sec\-Per\-Sample value input into the constructor. Units are samples per seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_simple_event_source_ad49239334b751f2d10670d5ed58d922f}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_unit}{Picto\-::\-Data\-Unit} $>$ {\bfseries build\-Event} (double time)=0}\label{class_simple_event_source_ad49239334b751f2d10670d5ed58d922f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_simple_event_source_aa941bdcecadfa8144226afce6941d9bd}{double \hyperlink{class_simple_event_source_aa941bdcecadfa8144226afce6941d9bd}{sec\-Per\-Event\-\_\-}}\label{class_simple_event_source_aa941bdcecadfa8144226afce6941d9bd}
+
+\begin{DoxyCompactList}\small\item\em The approximate number of seconds per virtual neural event that wil be returned by this source. \end{DoxyCompactList}\item 
+\hypertarget{class_simple_event_source_aad9b175e1a1ea0546e408fa221ad9341}{double \hyperlink{class_simple_event_source_aad9b175e1a1ea0546e408fa221ad9341}{sec\-Per\-Sample\-\_\-}}\label{class_simple_event_source_aad9b175e1a1ea0546e408fa221ad9341}
+
+\begin{DoxyCompactList}\small\item\em sec\-Per\-Sample The number of seconds per sample for this virtual event source. This is used in \hyperlink{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}{sampling\-Rate()}. \end{DoxyCompactList}\item 
+\hypertarget{class_simple_event_source_aafdea7dabd10b31e5257a5e2d594f5f9}{double \hyperlink{class_simple_event_source_aafdea7dabd10b31e5257a5e2d594f5f9}{rand\-Range\-\_\-}}\label{class_simple_event_source_aafdea7dabd10b31e5257a5e2d594f5f9}
+
+\begin{DoxyCompactList}\small\item\em The range of random variations in time when a new neural event will be generate about the exact time at which it should occur according to sec\-Per\-Event\-\_\-. \end{DoxyCompactList}\item 
+\hypertarget{class_simple_event_source_a8f5caff4b6701079145cf544bcf42d6d}{double \hyperlink{class_simple_event_source_a8f5caff4b6701079145cf544bcf42d6d}{next\-Rand\-Offset\-\_\-}}\label{class_simple_event_source_a8f5caff4b6701079145cf544bcf42d6d}
+
+\begin{DoxyCompactList}\small\item\em The random variation in time when the next new neural event will be generate about the exact time at which it should occur according to sec\-Per\-Event\-\_\-. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A virtual event source that builds new events one by one at sec\-Per\-Event intervals. 
+
+This interface doesn't implement the Build\-Event(time) function that is used by child interfaces to build the specific event type desired. It simply handles the timing of event building and leaves the actual creation of the event to its child class. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file simpleeventsource.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_simple_event_source_a90a6e1d9583aa48f907188d2c7dc4df6}{\index{Simple\-Event\-Source@{Simple\-Event\-Source}!Simple\-Event\-Source@{Simple\-Event\-Source}}
+\index{Simple\-Event\-Source@{Simple\-Event\-Source}!SimpleEventSource@{Simple\-Event\-Source}}
+\subsubsection[{Simple\-Event\-Source}]{\setlength{\rightskip}{0pt plus 5cm}Simple\-Event\-Source\-::\-Simple\-Event\-Source (
+\begin{DoxyParamCaption}
+\item[{double}]{sec\-Per\-Event, }
+\item[{double}]{sec\-Per\-Sample, }
+\item[{double}]{rand\-Range}
+\end{DoxyParamCaption}
+)}}\label{class_simple_event_source_a90a6e1d9583aa48f907188d2c7dc4df6}
+
+
+Constructs a \hyperlink{class_simple_event_source}{Simple\-Event\-Source} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sec\-Per\-Event} & The approximate number of seconds per virtual neural event that will be returned by this source. \\
+\hline
+{\em sec\-Per\-Sample} & The number of seconds per sample for this virtual event source. This is used in \hyperlink{class_simple_event_source_af095e72f6d1b1bf049635a603a0b610f}{sampling\-Rate()}. \\
+\hline
+{\em rand\-Range} & The random variation in time when a new neural event will be generate about the exact time at which it should occur according to the sec\-Per\-Event entry. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 12 of file simpleeventsource.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_simple_event_source_ad61883e129671a03003867cb7314a504}{\index{Simple\-Event\-Source@{Simple\-Event\-Source}!get\-Next\-Event@{get\-Next\-Event}}
+\index{get\-Next\-Event@{get\-Next\-Event}!SimpleEventSource@{Simple\-Event\-Source}}
+\subsubsection[{get\-Next\-Event}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Data\-Unit} $>$ Simple\-Event\-Source\-::get\-Next\-Event (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_simple_event_source_ad61883e129671a03003867cb7314a504}
+
+
+Defines the time at which the next neural event should be generated and passes it into build\-Event to get a neural event for that time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The current time.\\
+\hline
+\end{DoxyParams}
+If the next neural event time is past the input time, an empty pointer will be returned. \begin{DoxyNote}{Note}
+This function defines the time of the next virtual event as a random range about the precise time when it would occur in a perfect system. See \hyperlink{class_simple_event_source_a90a6e1d9583aa48f907188d2c7dc4df6}{Simple\-Event\-Source()} for more details. 
+\end{DoxyNote}
+
+
+Implements \hyperlink{class_virtual_event_source_a474450ba3797f516d22ef652ab7d1a4a}{Virtual\-Event\-Source}.
+
+
+
+Definition at line 29 of file simpleeventsource.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/proxyplugins/virtualdeviceplugin/simpleeventsource.\-h\item 
+source/proxyplugins/virtualdeviceplugin/simpleeventsource.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,136 @@
+\hypertarget{class_picto_1_1_multiplatform_sound}{\section{Picto\-:\-:Multiplatform\-Sound Class Reference}
+\label{class_picto_1_1_multiplatform_sound}\index{Picto\-::\-Multiplatform\-Sound@{Picto\-::\-Multiplatform\-Sound}}
+}
+
+
+A simple \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object that can be used over multiple platforms based on Qt's Q\-Sound object.  
+
+
+
+
+{\ttfamily \#include $<$Multi\-Platform\-Sound.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Multiplatform\-Sound\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_multiplatform_sound}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_multiplatform_sound_a2d934e20f151f2f89fda5bde9cf290a6}{virtual void \hyperlink{class_picto_1_1_multiplatform_sound_a2d934e20f151f2f89fda5bde9cf290a6}{play} ()}\label{class_picto_1_1_multiplatform_sound_a2d934e20f151f2f89fda5bde9cf290a6}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to start playing over the computer's sound card. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_multiplatform_sound_a24e7c2458e188a5c31a5690eb37547b9}{virtual void \hyperlink{class_picto_1_1_multiplatform_sound_a24e7c2458e188a5c31a5690eb37547b9}{stop} ()}\label{class_picto_1_1_multiplatform_sound_a24e7c2458e188a5c31a5690eb37547b9}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to stop playing over the computer's sound card. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_multiplatform_sound_a45b56fa2cc55812c7bcca3c7123dfe87}{set\-Volume} (int percent)
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound's volume to be set to the input percentage (0-\/100). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_multiplatform_sound_a42cba863c919223544d35c41e55b3cba}{virtual bool \hyperlink{class_picto_1_1_multiplatform_sound_a42cba863c919223544d35c41e55b3cba}{playing} ()}\label{class_picto_1_1_multiplatform_sound_a42cba863c919223544d35c41e55b3cba}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound is playing. \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_picto_1_1_multiplatform_sound_a3cc7215c0941af0aabe08df8b09a6b31}{volume} ()
+\begin{DoxyCompactList}\small\item\em Returns the level of the underlying sound's volume (0-\/100 percent) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_multiplatform_sound_a6176c20eb4e91fc817af83b6cd8d7953}{virtual bool \hyperlink{class_picto_1_1_multiplatform_sound_a6176c20eb4e91fc817af83b6cd8d7953}{is\-Ready} ()}\label{class_picto_1_1_multiplatform_sound_a6176c20eb4e91fc817af83b6cd8d7953}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound was succesfully loaded and is ready to play. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_multiplatform_sound_a439672057dc19e9b8f9f2648cc31c01d}{error\-String} ()
+\begin{DoxyCompactList}\small\item\em Returns a string describing an error that kept the underlying sound from being loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_multiplatform_sound_a689f79ed1073d141c518c6e63d52ee61}{static Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$ \hyperlink{class_picto_1_1_multiplatform_sound_a689f79ed1073d141c518c6e63d52ee61}{create\-Multiplatform\-Sound} (Q\-String path)}\label{class_picto_1_1_multiplatform_sound_a689f79ed1073d141c518c6e63d52ee61}
+
+\begin{DoxyCompactList}\small\item\em Creates a \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} to play the audio file at the input path.  This function is meant to be used with \hyperlink{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{Preloaded\-Sound\-::set\-Sound\-Constructor()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object that can be used over multiple platforms based on Qt's Q\-Sound object. 
+
+Qt's Q\-Sound object has a simple interface and works on multiple platforms. On the otherhand, experimentation has shown that it requires a working Qt event loop to work. This means that it works fine for the workstation, but doesn't work on the \hyperlink{class_director}{Director} where there is currently no event loop. \begin{DoxyNote}{Note}
+The \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} works with .wav files only, and not every type of sample rate is necessarily supported. Since the \hyperlink{class_picto_1_1_win_sound}{Win\-Sound} class, while not multiplatform is more versatile, we have assumed that it can play anything that this class can. This is important, because we don't want to create a situation where everything is working in the workstation's \hyperlink{class_test_viewer}{Test\-Viewer} but the experiment won't function in an actual experiment. The assumption hasn't been tested for every type of .wav file though, so it may not be perfect. The real solution to this whole issue, is to reimplement the director with an event loop, since that would be a really good idea in any case for code complexity and many other reasons, and then just use one kind of \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound}. I don't have time for that, but am happy to leave it to you \-:). 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Multi\-Platform\-Sound.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_multiplatform_sound_a439672057dc19e9b8f9f2648cc31c01d}{\index{Picto\-::\-Multiplatform\-Sound@{Picto\-::\-Multiplatform\-Sound}!error\-String@{error\-String}}
+\index{error\-String@{error\-String}!Picto::MultiplatformSound@{Picto\-::\-Multiplatform\-Sound}}
+\subsubsection[{error\-String}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Multiplatform\-Sound\-::error\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_multiplatform_sound_a439672057dc19e9b8f9f2648cc31c01d}
+
+
+Returns a string describing an error that kept the underlying sound from being loaded. 
+
+Returned value is only valid if \hyperlink{class_picto_1_1_multiplatform_sound_a6176c20eb4e91fc817af83b6cd8d7953}{is\-Ready()} returned true. 
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_a4681726539ed0e4f493860d487ef3f59}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 59 of file Multi\-Platform\-Sound.\-cpp.
+
+\hypertarget{class_picto_1_1_multiplatform_sound_a45b56fa2cc55812c7bcca3c7123dfe87}{\index{Picto\-::\-Multiplatform\-Sound@{Picto\-::\-Multiplatform\-Sound}!set\-Volume@{set\-Volume}}
+\index{set\-Volume@{set\-Volume}!Picto::MultiplatformSound@{Picto\-::\-Multiplatform\-Sound}}
+\subsubsection[{set\-Volume}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Multiplatform\-Sound\-::set\-Volume (
+\begin{DoxyParamCaption}
+\item[{int}]{percent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_multiplatform_sound_a45b56fa2cc55812c7bcca3c7123dfe87}
+
+
+Causes the underlying sound's volume to be set to the input percentage (0-\/100). 
+
+\begin{DoxyAttention}{Attention}
+Currently, the \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} does not support volume changes. This is why we have not yet added a \hyperlink{class_picto_1_1_multiplatform_sound_a45b56fa2cc55812c7bcca3c7123dfe87}{set\-Volume()} script function to the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} class. 
+\end{DoxyAttention}
+
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_abd5f14d441d6063b1ea2bd141e4023bc}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 31 of file Multi\-Platform\-Sound.\-cpp.
+
+\hypertarget{class_picto_1_1_multiplatform_sound_a3cc7215c0941af0aabe08df8b09a6b31}{\index{Picto\-::\-Multiplatform\-Sound@{Picto\-::\-Multiplatform\-Sound}!volume@{volume}}
+\index{volume@{volume}!Picto::MultiplatformSound@{Picto\-::\-Multiplatform\-Sound}}
+\subsubsection[{volume}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Multiplatform\-Sound\-::volume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_multiplatform_sound_a3cc7215c0941af0aabe08df8b09a6b31}
+
+
+Returns the level of the underlying sound's volume (0-\/100 percent) 
+
+\begin{DoxyAttention}{Attention}
+Currently, the \hyperlink{class_picto_1_1_multiplatform_sound}{Multiplatform\-Sound} does not support volume changes. This is why we have not yet added a \hyperlink{class_picto_1_1_multiplatform_sound_a45b56fa2cc55812c7bcca3c7123dfe87}{set\-Volume()} script function to the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} class. This function will always return 100\%. 
+\end{DoxyAttention}
+
+
+Implements \hyperlink{class_picto_1_1_preloaded_sound_a6383e1a60e25b51815d1876b1b29a899}{Picto\-::\-Preloaded\-Sound}.
+
+
+
+Definition at line 49 of file Multi\-Platform\-Sound.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Multi\-Platform\-Sound.\-h\item 
+source/common/stimuli/Multi\-Platform\-Sound.\-cpp\end{DoxyCompactItemize}

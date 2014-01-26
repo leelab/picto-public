@@ -1,0 +1,364 @@
+\hypertarget{class_picto_1_1_visual_target}{\section{Picto\-:\-:Visual\-Target Class Reference}
+\label{class_picto_1_1_visual_target}\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}}
+}
+
+
+The surface on which all graphics are rendered.  
+
+
+
+
+{\ttfamily \#include $<$Visual\-Target.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Visual\-Target\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.545455cm]{class_picto_1_1_visual_target}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_visual_target_ad04e5a944c2b5d31814ba32b2b93180e}{void \hyperlink{class_picto_1_1_visual_target_ad04e5a944c2b5d31814ba32b2b93180e}{presented} (double frame\-Time)}\label{class_picto_1_1_visual_target_ad04e5a944c2b5d31814ba32b2b93180e}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} determines that the first phosphor has been drawn to the display. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_visual_target_a4d88819d03209b34ffdae2cc736b5066}{escape\-Pressed} ()
+\begin{DoxyCompactList}\small\item\em Emitted when the user presses escape. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_visual_target_a640b2cbbd611a280f97f88c29eef610a}{Visual\-Target} (bool \-\_\-b\-Windowed=false, int \-\_\-width=800, int \-\_\-height=600)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} with size defined by \-\_\-width and \-\_\-height and \-\_\-b\-Windowed defining if rendering is windowed or full screeen. \end{DoxyCompactList}\item 
+virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ \hyperlink{class_picto_1_1_visual_target_ac4a01741b91fa6a984e18453d47b9da8}{generate\-Compositing\-Surface} ()=0
+\begin{DoxyCompactList}\small\item\em Creates and returns a new \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that can be used to translate a Q\-Image into a graphical data structure that this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} can understand. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_aee02d88e9a79343ac5c1438f284b5d40}{virtual Q\-String \hyperlink{class_picto_1_1_visual_target_aee02d88e9a79343ac5c1438f284b5d40}{get\-Type\-Name} ()=0}\label{class_picto_1_1_visual_target_aee02d88e9a79343ac5c1438f284b5d40}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of this type of \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_visual_target_a948764671d6721f4dcfd5c8165b0eb5c}{draw} (Q\-Point location, Q\-Point compositing\-Surface\-Offset, Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} $>$ compositing\-Surface)=0
+\begin{DoxyCompactList}\small\item\em Draws the compositing surface onto the visual target. The compositing\-Surface\-Offset is the offset at which the compositing surface should be drawn from location to assure that the \char`\"{}zero\char`\"{} point of the compositing surface is at location. For example, a cursor compositing surface might request to be drawn at 0,0, however the center of the cursor might be at position 5,5 or 7,7 within the compositing surface depending on the size of the cursor. The offset tells the system, move the compositing surface up and to the left by 5,5 or 7,7 so that the center of the cursor is at 0,0. We cant simply pass location-\/compositing\-Surface\-Offset into this function because in zooming these two components need to be treated differently (See the pixmap implementation of this function) \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_visual_target_a914177dc74348568b08aed7dc88648e8}{present} ()=0
+\begin{DoxyCompactList}\small\item\em Renders the latest frame to the display. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_visual_target_a84c690c0c08f1e4b64e40c853fcf0d41}{clear} ()=0
+\begin{DoxyCompactList}\small\item\em Clears the rendering buffer and display. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_aeb7b31051445e6b56f925c8458791564}{virtual void \hyperlink{class_picto_1_1_visual_target_aeb7b31051445e6b56f925c8458791564}{set\-Zoom} (float zoom)}\label{class_picto_1_1_visual_target_aeb7b31051445e6b56f925c8458791564}
+
+\begin{DoxyCompactList}\small\item\em Sets the zoom value to be used when rendering scalable \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} objects.  The zoom value must be greater than zero and less than 1, essentially, this value will multiply all of the dimensions of the input \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} objects to create smaller \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} object for a 'Zoom Out' effect. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_a0dd1c52fae74c5ffe146373083c89e96}{double \hyperlink{class_picto_1_1_visual_target_a0dd1c52fae74c5ffe146373083c89e96}{get\-Latest\-First\-Phosphor} ()}\label{class_picto_1_1_visual_target_a0dd1c52fae74c5ffe146373083c89e96}
+
+\begin{DoxyCompactList}\small\item\em Returns the last time at which the first phosphor was rendered. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_a62d2be22dc12dc3fec6e125bafce53aa}{virtual bool \hyperlink{class_picto_1_1_visual_target_a62d2be22dc12dc3fec6e125bafce53aa}{latest\-Frame\-Succesfully\-Rendered} ()=0}\label{class_picto_1_1_visual_target_a62d2be22dc12dc3fec6e125bafce53aa}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the latest frame was successfully rendered, false otherwise. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_visual_target_a7e8d0f77979ab56ede4c647f515d2b96}{virtual Q\-Rect \hyperlink{class_picto_1_1_visual_target_a7e8d0f77979ab56ede4c647f515d2b96}{get\-Dimensions} ()}\label{class_picto_1_1_visual_target_a7e8d0f77979ab56ede4c647f515d2b96}
+
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Rect with the dimensions of this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target}. \end{DoxyCompactList}\item 
+virtual Q\-Point \hyperlink{class_picto_1_1_visual_target_a8374c2da42cf1c438e043317b82b5318}{viewport\-Point\-To\-Target\-Point} (Q\-Point viewport\-Point)
+\begin{DoxyCompactList}\small\item\em Converts a point on the viewport to a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} itself. \end{DoxyCompactList}\item 
+virtual Q\-Point \hyperlink{class_picto_1_1_visual_target_ac7e639003d6e8afa2a063447b6beb9d5}{target\-Point\-To\-Viewport\-Point} (Q\-Point target\-Point)
+\begin{DoxyCompactList}\small\item\em Converts a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} to a point on the Viewport window. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_visual_target_a8f5ca80122c7f624772336c5af0bc618}{paint} (Q\-Paint\-Device $\ast$widget)=0
+\begin{DoxyCompactList}\small\item\em Draws the current frame onto the input widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_visual_target_ae1c83e292dfd6b56e7fca9da99783c4a}{paint\-Event} (Q\-Paint\-Event $\ast$)
+\begin{DoxyCompactList}\small\item\em Paints the latest frame onto this widget. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_visual_target_aca5fb78dbb7243782ee6d2a2f7213c93}{key\-Press\-Event} (Q\-Key\-Event $\ast$event)
+\begin{DoxyCompactList}\small\item\em Overrides the Q\-Widget function so that we can emit an escape\-Pressed signal whenever that key is pressed. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{set\-First\-Phosphor\-Time} ()
+\begin{DoxyCompactList}\small\item\em Stamps the current time as the latest first phosphor time and emits a \hyperlink{class_picto_1_1_visual_target_ad04e5a944c2b5d31814ba32b2b93180e}{presented()} signal with that time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_visual_target_a07228f221970a67ea5727de7ca58382a}{bool {\bfseries b\-Windowed\-\_\-}}\label{class_picto_1_1_visual_target_a07228f221970a67ea5727de7ca58382a}
+
+\item 
+\hypertarget{class_picto_1_1_visual_target_a5d2589443ca5096ef8b8ded54d943a2f}{int {\bfseries width\-\_\-}}\label{class_picto_1_1_visual_target_a5d2589443ca5096ef8b8ded54d943a2f}
+
+\item 
+\hypertarget{class_picto_1_1_visual_target_aee2daee767b23525e22247fb906f96c6}{int {\bfseries height\-\_\-}}\label{class_picto_1_1_visual_target_aee2daee767b23525e22247fb906f96c6}
+
+\item 
+\hypertarget{class_picto_1_1_visual_target_ad9ffb956b7c73275b14fb7247e580663}{float {\bfseries zoom\-\_\-}}\label{class_picto_1_1_visual_target_ad9ffb956b7c73275b14fb7247e580663}
+
+\item 
+\hypertarget{class_picto_1_1_visual_target_ae2580245790a3a33bc9e3be2539436ae}{\hyperlink{class_picto_1_1_timestamper}{Timestamper} {\bfseries stamper\-\_\-}}\label{class_picto_1_1_visual_target_ae2580245790a3a33bc9e3be2539436ae}
+
+\item 
+\hypertarget{class_picto_1_1_visual_target_adb893ba4f422bf39e36410f1ae7864e0}{double {\bfseries last\-Frame\-Time\-\_\-}}\label{class_picto_1_1_visual_target_adb893ba4f422bf39e36410f1ae7864e0}
+
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_visual_target_a8f365d94a47350048f58fa7a674b5f47}{class {\bfseries Visual\-Target\-Host}}\label{class_picto_1_1_visual_target_a8f365d94a47350048f58fa7a674b5f47}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The surface on which all graphics are rendered. 
+
+\begin{DoxyVerb}This is a base class for the visual rendering targets.  The idea of the visual rendering system is 
+that the VisualElements that are part of the experimental design create QImage objects of the graphics that
+they represent.  Whenever a State is active, it takes all of the QImage objects of VisualElements
+that are in scope and adds them to its Scene.  The scene creates compositing surfaces from the visual
+target that is being rendered to and uses one of these ComposingSurfaces to translate each QImage to
+the format required by the VisualTarget.  These compositing surfaces are then added to the VisualTarget
+and rendered once per frame.
+Some simple example code that removes all of the larger architectural issues and simply creates and 
+renders an image appears below:
+\end{DoxyVerb}
+ 
+\begin{DoxyCode}
+*       QSharedPointer<Picto::D3DMVisualTarget> d3dmVisualTarget(\textcolor{keyword}{new} 
+      \hyperlink{struct_picto_1_1_d3_d_m_visual_target}{Picto::D3DMVisualTarget}());
+*       d3dmVisualTarget->show();
+*
+*       QSharedPointer<Picto::CompositingSurface> compositingSurface;
+*       compositingSurface = renderingTarget.generateCompositingSurface();
+*
+*       QSharedPointer<Picto::CircleGraphic> circleGraphic(\textcolor{keyword}{new} 
+      \hyperlink{class_picto_1_1_circle_graphic}{Picto::CircleGraphic}(QPoint(50,50),100,QColor(0,255,0,127)));
+*       circleGraphic->addCompositingSurface(compositingSurface->getTypeName(),compositingSurface);\(\backslash\)
+*
+*       \textcolor{comment}{// This is the actual rendering loop}
+*       \textcolor{keywordflow}{while}(\textcolor{keyword}{true})
+*       \{
+*           d3dmVisualTarget->draw(circleGraphic->getPosition(), circleGraphic->getCompositingSurface(\textcolor{stringliteral}{"
+      Direct3DMobile"}));
+*           d3dmVisualTarget->present();
+*       \}
+*       
+\end{DoxyCode}
+
+
+The \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} is inherited by classes that render to particular platforms with particular features. The \hyperlink{struct_picto_1_1_pixmap_visual_target}{Pixmap\-Visual\-Target} for example renders a simple C\-P\-U processed surface to the display. The \hyperlink{class_director}{Director}'s D3\-D Visual Target on the other hand renders using the graphics card at a much higher speed and with precisely trackable timing. Each of these implements the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} for a different type of application, but the Experimental presentation system needs only worry about the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} base class. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 56 of file Visual\-Target.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_visual_target_a640b2cbbd611a280f97f88c29eef610a}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!Visual\-Target@{Visual\-Target}}
+\index{Visual\-Target@{Visual\-Target}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{Visual\-Target}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Visual\-Target\-::\-Visual\-Target (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-b\-Windowed = {\ttfamily false}, }
+\item[{int}]{\-\_\-width = {\ttfamily 800}, }
+\item[{int}]{\-\_\-height = {\ttfamily 600}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_visual_target_a640b2cbbd611a280f97f88c29eef610a}
+
+
+Constructs a new \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} with size defined by \-\_\-width and \-\_\-height and \-\_\-b\-Windowed defining if rendering is windowed or full screeen. 
+
+\-\_\-width and \-\_\-height are defined in pixels, where maximum \-\_\-width is 800 and miximum height is 600. In \hyperlink{namespace_picto}{Picto}, everything is in terms of 800 X 600 resolution. This is something that needs to be fixed at some point in a clever way such that old experiments can be automatically upgraded. 
+
+Definition at line 11 of file Visual\-Target.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_visual_target_a84c690c0c08f1e4b64e40c853fcf0d41}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!clear@{clear}}
+\index{clear@{clear}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Visual\-Target\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_visual_target_a84c690c0c08f1e4b64e40c853fcf0d41}
+
+
+Clears the rendering buffer and display. 
+
+\begin{DoxyNote}{Note}
+This function calls \hyperlink{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{set\-First\-Phosphor\-Time()} internally and may block execution for up to one frame depending on this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} type's level of accuracy. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_visual_target_a948764671d6721f4dcfd5c8165b0eb5c}{draw()} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{struct_picto_1_1_pixmap_visual_target_a0f4e934a0efcc50c90718a24157ecd2f}{Picto\-::\-Pixmap\-Visual\-Target}, and \hyperlink{class_picto_1_1_d3_d_visual_target_a98c6b55afc7098a156fbca67415f7f7e}{Picto\-::\-D3\-D\-Visual\-Target}.
+
+\hypertarget{class_picto_1_1_visual_target_a948764671d6721f4dcfd5c8165b0eb5c}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!draw@{draw}}
+\index{draw@{draw}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Visual\-Target\-::draw (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{location, }
+\item[{Q\-Point}]{compositing\-Surface\-Offset, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Compositing\-Surface} $>$}]{compositing\-Surface}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_visual_target_a948764671d6721f4dcfd5c8165b0eb5c}
+
+
+Draws the compositing surface onto the visual target. The compositing\-Surface\-Offset is the offset at which the compositing surface should be drawn from location to assure that the \char`\"{}zero\char`\"{} point of the compositing surface is at location. For example, a cursor compositing surface might request to be drawn at 0,0, however the center of the cursor might be at position 5,5 or 7,7 within the compositing surface depending on the size of the cursor. The offset tells the system, move the compositing surface up and to the left by 5,5 or 7,7 so that the center of the cursor is at 0,0. We cant simply pass location-\/compositing\-Surface\-Offset into this function because in zooming these two components need to be treated differently (See the pixmap implementation of this function) 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{_pixmap_visual_target_8cpp_source}{Pixmap\-Visual\-Target.\-cpp} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{struct_picto_1_1_pixmap_visual_target_a85cadece274f7f94bd7f36e7fe2f34b0}{Picto\-::\-Pixmap\-Visual\-Target}, and \hyperlink{class_picto_1_1_d3_d_visual_target_a224bdcaf5f14bffb7445f7be624b7854}{Picto\-::\-D3\-D\-Visual\-Target}.
+
+\hypertarget{class_picto_1_1_visual_target_a4d88819d03209b34ffdae2cc736b5066}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!escape\-Pressed@{escape\-Pressed}}
+\index{escape\-Pressed@{escape\-Pressed}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{escape\-Pressed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Visual\-Target\-::escape\-Pressed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_visual_target_a4d88819d03209b34ffdae2cc736b5066}
+
+
+Emitted when the user presses escape. 
+
+This is useful when the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} is running in full screen mode and we want there to be some way to exit out. \hypertarget{class_picto_1_1_visual_target_ac4a01741b91fa6a984e18453d47b9da8}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!generate\-Compositing\-Surface@{generate\-Compositing\-Surface}}
+\index{generate\-Compositing\-Surface@{generate\-Compositing\-Surface}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{generate\-Compositing\-Surface}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Shared\-Pointer$<${\bf Compositing\-Surface}$>$ Picto\-::\-Visual\-Target\-::generate\-Compositing\-Surface (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_visual_target_ac4a01741b91fa6a984e18453d47b9da8}
+
+
+Creates and returns a new \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} that can be used to translate a Q\-Image into a graphical data structure that this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} can understand. 
+
+The returned \hyperlink{struct_picto_1_1_compositing_surface}{Compositing\-Surface} should set up with a Q\-Image by the calling function. 
+
+Implemented in \hyperlink{struct_picto_1_1_d_draw_visual_target_a17bdde46a152308c90b6daad0dba5749}{Picto\-::\-D\-Draw\-Visual\-Target}, \hyperlink{struct_picto_1_1_pixmap_visual_target_a22447d36b31e40ecb6f5ad13f20a5eb4}{Picto\-::\-Pixmap\-Visual\-Target}, \hyperlink{class_picto_1_1_d3_d_visual_target_a1cf4a3dc52eea554789228fc86f6b3f7}{Picto\-::\-D3\-D\-Visual\-Target}, and \hyperlink{struct_picto_1_1_d3_d_m_visual_target_abf3cb9d3cbabc10065d74a601a51b46b}{Picto\-::\-D3\-D\-M\-Visual\-Target}.
+
+\hypertarget{class_picto_1_1_visual_target_aca5fb78dbb7243782ee6d2a2f7213c93}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!key\-Press\-Event@{key\-Press\-Event}}
+\index{key\-Press\-Event@{key\-Press\-Event}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{key\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Visual\-Target\-::key\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Key\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_picto_1_1_visual_target_aca5fb78dbb7243782ee6d2a2f7213c93}
+
+
+Overrides the Q\-Widget function so that we can emit an escape\-Pressed signal whenever that key is pressed. 
+
+This is useful for cases when the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} is rendering in full screen and we need a way to detect that the user wants to leave the full screen environment. 
+
+Definition at line 69 of file Visual\-Target.\-cpp.
+
+\hypertarget{class_picto_1_1_visual_target_a8f5ca80122c7f624772336c5af0bc618}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!paint@{paint}}
+\index{paint@{paint}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{paint}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Visual\-Target\-::paint (
+\begin{DoxyParamCaption}
+\item[{Q\-Paint\-Device $\ast$}]{widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_visual_target_a8f5ca80122c7f624772336c5af0bc618}
+
+
+Draws the current frame onto the input widget. 
+
+In the workstation, where precise first phosphor timing isn't important, we draw the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} frame onto a workstation widget according to paint\-Events from the event loop. This would generally just happen in the paint\-Event function, but we use a parent widget (\hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host}) that calls this paint function to paint the latest frame onto itself whenever its paint\-Event is called. I believe that this \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} class is unnecessary and pretty much arose due to an incomplete understanding of the Q\-Widget system. Probably, we can just do away with the \hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} class and use this class directly wherever that class is used. In practice however, what we have works and we don't have time to make this change and test it. If you are reading this and you have time, go for it... \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_visual_target_host}{Visual\-Target\-Host} 
+\end{DoxySeeAlso}
+
+
+Implemented in \hyperlink{struct_picto_1_1_pixmap_visual_target_a4b76078115a103d4f1fda8ae8a9812c3}{Picto\-::\-Pixmap\-Visual\-Target}, and \hyperlink{class_picto_1_1_d3_d_visual_target_a03497fd8b0722b14db49e32efd05d2db}{Picto\-::\-D3\-D\-Visual\-Target}.
+
+\hypertarget{class_picto_1_1_visual_target_ae1c83e292dfd6b56e7fca9da99783c4a}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!paint\-Event@{paint\-Event}}
+\index{paint\-Event@{paint\-Event}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{paint\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Visual\-Target\-::paint\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Paint\-Event $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{class_picto_1_1_visual_target_ae1c83e292dfd6b56e7fca9da99783c4a}
+
+
+Paints the latest frame onto this widget. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_visual_target_a8f5ca80122c7f624772336c5af0bc618}{paint} 
+\end{DoxySeeAlso}
+
+
+Definition at line 129 of file Visual\-Target.\-h.
+
+\hypertarget{class_picto_1_1_visual_target_a914177dc74348568b08aed7dc88648e8}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!present@{present}}
+\index{present@{present}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{present}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Visual\-Target\-::present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_visual_target_a914177dc74348568b08aed7dc88648e8}
+
+
+Renders the latest frame to the display. 
+
+\begin{DoxyNote}{Note}
+This function calls \hyperlink{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{set\-First\-Phosphor\-Time()} internally and may block execution for up to one frame depending on this \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} type's level of accuracy. 
+\end{DoxyNote}
+
+
+Implemented in \hyperlink{struct_picto_1_1_d_draw_visual_target_aec7ebdbab7aca774786728c1e761a90a}{Picto\-::\-D\-Draw\-Visual\-Target}, \hyperlink{struct_picto_1_1_pixmap_visual_target_a2546a9881bd5ec96685d7e8c09e0f7a8}{Picto\-::\-Pixmap\-Visual\-Target}, \hyperlink{class_picto_1_1_d3_d_visual_target_ae40201fd4e6f0a866ff7af9b95ea1c9d}{Picto\-::\-D3\-D\-Visual\-Target}, and \hyperlink{struct_picto_1_1_d3_d_m_visual_target_a342f15735e17314837c7bddf36ab6e68}{Picto\-::\-D3\-D\-M\-Visual\-Target}.
+
+\hypertarget{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!set\-First\-Phosphor\-Time@{set\-First\-Phosphor\-Time}}
+\index{set\-First\-Phosphor\-Time@{set\-First\-Phosphor\-Time}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{set\-First\-Phosphor\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Visual\-Target\-::set\-First\-Phosphor\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_picto_1_1_visual_target_abd0a5d10da5c642cb6e31f39635628ed}
+
+
+Stamps the current time as the latest first phosphor time and emits a \hyperlink{class_picto_1_1_visual_target_ad04e5a944c2b5d31814ba32b2b93180e}{presented()} signal with that time. 
+
+The first phosphor time is the time at which the first phosphor appears on the top left corner of the user's display. It is important to track this timing so that we can precisely relate images that the user is monitoring on the screen to neural activity. In fact, in \hyperlink{namespace_picto}{Picto} analyses all behavioral data is timed according to first phosphor times since these are the times at which actions affect the user and no other times have any real physical meaning. The rendering code in inheriting classes needs to make sure to call this function as soon as they detect that the first phosphor was rendered to the screen. Depending on which \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} is used this will sometimes be more or less accurate of a representation of the true first phosphor time. 
+
+Definition at line 87 of file Visual\-Target.\-cpp.
+
+\hypertarget{class_picto_1_1_visual_target_ac7e639003d6e8afa2a063447b6beb9d5}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!target\-Point\-To\-Viewport\-Point@{target\-Point\-To\-Viewport\-Point}}
+\index{target\-Point\-To\-Viewport\-Point@{target\-Point\-To\-Viewport\-Point}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{target\-Point\-To\-Viewport\-Point}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Point Picto\-::\-Visual\-Target\-::target\-Point\-To\-Viewport\-Point (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{target\-Point}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_visual_target_ac7e639003d6e8afa2a063447b6beb9d5}
+
+
+Converts a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} to a point on the Viewport window. 
+
+For example, if the viewport has zoomed out, a point at 10,10 in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} might only be at 1,1 in the viewport. 
+
+Reimplemented in \hyperlink{struct_picto_1_1_pixmap_visual_target_a7c69972fed4a422d1d84dc57c5aa1fef}{Picto\-::\-Pixmap\-Visual\-Target}.
+
+
+
+Definition at line 59 of file Visual\-Target.\-cpp.
+
+\hypertarget{class_picto_1_1_visual_target_a8374c2da42cf1c438e043317b82b5318}{\index{Picto\-::\-Visual\-Target@{Picto\-::\-Visual\-Target}!viewport\-Point\-To\-Target\-Point@{viewport\-Point\-To\-Target\-Point}}
+\index{viewport\-Point\-To\-Target\-Point@{viewport\-Point\-To\-Target\-Point}!Picto::VisualTarget@{Picto\-::\-Visual\-Target}}
+\subsubsection[{viewport\-Point\-To\-Target\-Point}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Point Picto\-::\-Visual\-Target\-::viewport\-Point\-To\-Target\-Point (
+\begin{DoxyParamCaption}
+\item[{Q\-Point}]{viewport\-Point}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_visual_target_a8374c2da42cf1c438e043317b82b5318}
+
+
+Converts a point on the viewport to a point in the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} itself. 
+
+For example, if the viewport has zoomed out, a point on the top left of the viewport will no longer be at 0,0 within the \hyperlink{class_picto_1_1_visual_target}{Visual\-Target} but rather at somewhere below zero like -\/100,-\/100 
+
+Reimplemented in \hyperlink{struct_picto_1_1_pixmap_visual_target_a8f3cb13a38045e2730ac4da01990dd8a}{Picto\-::\-Pixmap\-Visual\-Target}.
+
+
+
+Definition at line 50 of file Visual\-Target.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/compositor/Visual\-Target.\-h\item 
+source/common/compositor/Visual\-Target.\-cpp\end{DoxyCompactItemize}

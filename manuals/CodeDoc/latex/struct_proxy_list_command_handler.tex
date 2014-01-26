@@ -1,0 +1,70 @@
+\hypertarget{struct_proxy_list_command_handler}{\section{Proxy\-List\-Command\-Handler Struct Reference}
+\label{struct_proxy_list_command_handler}\index{Proxy\-List\-Command\-Handler@{Proxy\-List\-Command\-Handler}}
+}
+
+
+Handles P\-R\-O\-X\-Y\-L\-I\-S\-T commands.  
+
+
+
+
+{\ttfamily \#include $<$Proxy\-List\-Command\-Handler.\-h$>$}
+
+Inheritance diagram for Proxy\-List\-Command\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_proxy_list_command_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_proxy_list_command_handler_a38b268ee34bc3518e59f443a103c5fb1}{Q\-String \hyperlink{struct_proxy_list_command_handler_a38b268ee34bc3518e59f443a103c5fb1}{method} ()}\label{struct_proxy_list_command_handler_a38b268ee34bc3518e59f443a103c5fb1}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the commeand that this Protocol\-Command\-Handler handles. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_picto_1_1_protocol_response}{Picto\-::\-Protocol\-Response} $>$ \hyperlink{struct_proxy_list_command_handler_a8bf176bad0742773ad73611ba64fa6f4}{process\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$)
+\begin{DoxyCompactList}\small\item\em Parses the input Protocol\-Command to check its syntax, responds with a serialized list of currently connected Proxy Components. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles P\-R\-O\-X\-Y\-L\-I\-S\-T commands. 
+
+Picto\-Workstation sends these commands in order to get a list of all the \hyperlink{namespace_picto}{Picto} Proxy instances that are currently connected to the server. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 16 of file Proxy\-List\-Command\-Handler.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_proxy_list_command_handler_a8bf176bad0742773ad73611ba64fa6f4}{\index{Proxy\-List\-Command\-Handler@{Proxy\-List\-Command\-Handler}!process\-Command@{process\-Command}}
+\index{process\-Command@{process\-Command}!ProxyListCommandHandler@{Proxy\-List\-Command\-Handler}}
+\subsubsection[{process\-Command}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Response} $>$ Proxy\-List\-Command\-Handler\-::process\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{struct_proxy_list_command_handler_a8bf176bad0742773ad73611ba64fa6f4}
+
+
+Parses the input Protocol\-Command to check its syntax, responds with a serialized list of currently connected Proxy Components. 
+
+The returned list comes directly from \hyperlink{class_connection_manager_aad3eaf716a61bdfb93caaf68eb46cf14}{Connection\-Manager\-::get\-Proxy\-List()}. 
+
+Implements \hyperlink{struct_picto_1_1_protocol_command_handler_aeeaa16fe40f10fd55996d74e16e29cad}{Picto\-::\-Protocol\-Command\-Handler}.
+
+
+
+Definition at line 15 of file Proxy\-List\-Command\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/server/protocol/Proxy\-List\-Command\-Handler.\-h\item 
+source/server/protocol/Proxy\-List\-Command\-Handler.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,219 @@
+\hypertarget{class_picto_1_1_audio_element}{\section{Picto\-:\-:Audio\-Element Class Reference}
+\label{class_picto_1_1_audio_element}\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}}
+}
+
+
+An Audio Stimulus used to play sounds in \hyperlink{namespace_picto}{Picto}.  
+
+
+
+
+{\ttfamily \#include $<$Audio\-Element.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Audio\-Element\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_audio_element}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}{void \hyperlink{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}{play} ()}\label{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}
+
+\begin{DoxyCompactList}\small\item\em Call this function to start the underlying audio file playing at the time of the next frame. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a9960f41ed8077abd3efed9a71c84926b}{void \hyperlink{class_picto_1_1_audio_element_a9960f41ed8077abd3efed9a71c84926b}{stop} ()}\label{class_picto_1_1_audio_element_a9960f41ed8077abd3efed9a71c84926b}
+
+\begin{DoxyCompactList}\small\item\em Call this function to stop the underlying audio file playback at the time of the next frame. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{bool \hyperlink{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{is\-Playing} ()}\label{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} is currently playing its Audio\-File. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_audio_element_ab2c332184602c8bb3db0c7775641a2b7}{cache\-File} (Q\-String file\-Element\-Name)
+\begin{DoxyCompactList}\small\item\em Use this to avoid lags in an experiment when an Audio\-File is first set to an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_audio_element_a76289957ff02b44e744a77dfc47dd9fb}{Audio\-Element} ()
+\begin{DoxyCompactList}\small\item\em Constructs an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_audio_element_a3c62174d423e0596b251c78ef658d686}{add\-Mixing\-Sample} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} $>$ mixing\-Sample)
+\begin{DoxyCompactList}\small\item\em This function is analogous to the \hyperlink{struct_picto_1_1_visual_element_a3be26e20cb27604c8d978cf334898dd9}{Visual\-Element\-::add\-Compositing\-Surface()} function. It adds a \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} to which this element's audio data will be copied for mixing. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a9bed46b491e06b6aa287bacc033f064d}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} $>$ \hyperlink{class_picto_1_1_audio_element_a9bed46b491e06b6aa287bacc033f064d}{get\-Mixing\-Sample} (Q\-String sample\-Type)}\label{class_picto_1_1_audio_element_a9bed46b491e06b6aa287bacc033f064d}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} with the input sample\-Type that is used by this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a599431f9071ff2b34028ad7ae609df29}{Q\-String \hyperlink{class_picto_1_1_audio_element_a599431f9071ff2b34028ad7ae609df29}{get\-File} ()}\label{class_picto_1_1_audio_element_a599431f9071ff2b34028ad7ae609df29}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the Audio\-File element that contains the audio file used by this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a7015d2ff8956d54907d1ed6f79634aa2}{void \hyperlink{class_picto_1_1_audio_element_a7015d2ff8956d54907d1ed6f79634aa2}{set\-File} (Q\-String file\-Object\-Name)}\label{class_picto_1_1_audio_element_a7015d2ff8956d54907d1ed6f79634aa2}
+
+\begin{DoxyCompactList}\small\item\em Sets the name of the Audio\-File element from which this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} will play audio. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_audio_element_acdc7b75fe3f0f438b23f7d770fb4ec9f}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a80da674a81239be8282a6b9b646ff154}{virtual Q\-String \hyperlink{class_picto_1_1_audio_element_a80da674a81239be8282a6b9b646ff154}{get\-U\-I\-Template} ()}\label{class_picto_1_1_audio_element_a80da674a81239be8282a6b9b646ff154}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_audio_element_a7850552df518085e66630356f2280c6c}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_audio_element_a7850552df518085e66630356f2280c6c}{Create} ()}\label{class_picto_1_1_audio_element_a7850552df518085e66630356f2280c6c}
+
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} object and returns a shared \hyperlink{class_picto_1_1_asset}{Asset} pointer to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_audio_element_ae8847ae3b72666aae30c60bf045afda8}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a77706885502e3c734a9f43db5ee40d9b}{virtual bool \hyperlink{class_picto_1_1_audio_element_a77706885502e3c734a9f43db5ee40d9b}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_audio_element_a77706885502e3c734a9f43db5ee40d9b}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_a127c17469b1823ce4368bbf9d5df7b78}{Output\-Element\-::validate\-Object()} to verify that the value in the Audio\-File \hyperlink{class_picto_1_1_property}{Property} is a valid \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_audio_element_ae673367d1fc705e6661ccd953d9764a9}{scriptable\-Container\-Was\-Reinitialized} ()
+\begin{DoxyCompactList}\small\item\em Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_audio_element_a6d4765ccf4fd45078a6bfb334e521a2d}{virtual bool \hyperlink{class_picto_1_1_audio_element_a6d4765ccf4fd45078a6bfb334e521a2d}{execute\-Search\-Algorithm} (\hyperlink{struct_search_request}{Search\-Request} search\-Request)}\label{class_picto_1_1_audio_element_a6d4765ccf4fd45078a6bfb334e521a2d}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_container_aae46c50e128e021f5ad66cb8b419c65a}{Output\-Element\-::execute\-Search\-Algorithm()} to look for the input search\-Request in the Audio\-File \hyperlink{class_picto_1_1_parameter}{Parameter}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_audio_element_a54db9990bab2a0c9f80fcf801091c3a5}{Q\-String \hyperlink{class_picto_1_1_audio_element_a54db9990bab2a0c9f80fcf801091c3a5}{file}}\label{class_picto_1_1_audio_element_a54db9990bab2a0c9f80fcf801091c3a5}
+
+\begin{DoxyCompactList}\small\item\em Sets/gets the name of the Audio\-File element from which this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} will play audio. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An Audio Stimulus used to play sounds in \hyperlink{namespace_picto}{Picto}. 
+
+This is an Audio \hyperlink{class_picto_1_1_output_element}{Output\-Element}. It is used to play sounds during the course of a \hyperlink{class_picto_1_1_task}{Task} run. It includes an Audio\-File \hyperlink{class_picto_1_1_property}{Property} that is used to reference an \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} which includes the actual audio file that will be played. This indirection allows us to switch the Audio\-File associated with an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} during the course of an experiment. To play or stop the sound from the \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}, just use the \hyperlink{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}{play()} or \hyperlink{class_picto_1_1_audio_element_a9960f41ed8077abd3efed9a71c84926b}{stop()} script functions. These will cause the Audio\-File to start or stop playing at the time of the next presented frame. To check if an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}'s sound is currently playing, use the \hyperlink{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{is\-Playing()} script function.
+
+Since the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} needs to Cache the sounds that it is going to play, but it does not know at run time if a new sound file will be set to it or not at runtime, the \hyperlink{class_picto_1_1_audio_element_ab2c332184602c8bb3db0c7775641a2b7}{cache\-File()} script function can be used at the beginning of a run to assure that there will be no lag in the middle of the run when the \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} tries to play an \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s sound for the first time. \begin{DoxyNote}{Note}
+If \hyperlink{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}{play()} is called immediately followed by \hyperlink{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{is\-Playing()}, \hyperlink{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{is\-Playing()} will return false. This is because \hyperlink{class_picto_1_1_audio_element_abd8ca491891c38bc24c9b43dee687640}{is\-Playing()} records whether or not the Audio is actually playing through the speakers, and the audio doesn't start actually being played until the frame presentation time after \hyperlink{class_picto_1_1_audio_element_a7f0539817be5838b8f5208d3e3e1030c}{play()} is called. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 34 of file Audio\-Element.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_audio_element_a76289957ff02b44e744a77dfc47dd9fb}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!Audio\-Element@{Audio\-Element}}
+\index{Audio\-Element@{Audio\-Element}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{Audio\-Element}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Audio\-Element\-::\-Audio\-Element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_audio_element_a76289957ff02b44e744a77dfc47dd9fb}
+
+
+Constructs an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. 
+
+Adds an Audio\-File \hyperlink{class_picto_1_1_property}{Property} for handling the name of the Audio\-File element that will be played. Adds a Playing and Trigger booleans that are not visible to the designer but used to track the current playback status so that it can be correctly reproduced in playback. 
+
+Definition at line 11 of file Audio\-Element.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_audio_element_a3c62174d423e0596b251c78ef658d686}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!add\-Mixing\-Sample@{add\-Mixing\-Sample}}
+\index{add\-Mixing\-Sample@{add\-Mixing\-Sample}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{add\-Mixing\-Sample}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-Element\-::add\-Mixing\-Sample (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Mixing\-Sample} $>$}]{mixing\-Sample}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_audio_element_a3c62174d423e0596b251c78ef658d686}
+
+
+This function is analogous to the \hyperlink{struct_picto_1_1_visual_element_a3be26e20cb27604c8d978cf334898dd9}{Visual\-Element\-::add\-Compositing\-Surface()} function. It adds a \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} to which this element's audio data will be copied for mixing. 
+
+The input mixing\-Sample is added to a lookup table indexed by the \hyperlink{class_picto_1_1_mixing_sample_a8fa7b17971c7ec384de6f33a969a41e7}{Mixing\-Sample\-::get\-Type\-Name()} value. 
+
+Definition at line 28 of file Audio\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_element_ab2c332184602c8bb3db0c7775641a2b7}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!cache\-File@{cache\-File}}
+\index{cache\-File@{cache\-File}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{cache\-File}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-Element\-::cache\-File (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{file\-Element\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_picto_1_1_audio_element_ab2c332184602c8bb3db0c7775641a2b7}
+
+
+Use this to avoid lags in an experiment when an Audio\-File is first set to an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element}. 
+
+If an Audio\-File is set to an \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} using its file Script\-Property for the first time during the course of an \hyperlink{class_picto_1_1_experiment}{Experiment}, the element must perform the overhead necessary to create a new underlying 'sound' and this could cause some lag in Experimental execution. The system caches the sound from the \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} stored in the Audio\-File field automatically, but it can't predict what other \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter}'s sound it might need to cache. To avoid this, call cache\-File(file\-Element\-Name) with each additional file that can be played back in this \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} at the beginning of the experiment so that the element can preload all sounds that it will need to play. 
+
+Definition at line 96 of file Audio\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_element_acdc7b75fe3f0f438b23f7d770fb4ec9f}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Audio\-Element\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_element_acdc7b75fe3f0f438b23f7d770fb4ec9f}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_output_element_add3a6e0fe3d4ee7b4b466171eb437cbc}{Picto\-::\-Output\-Element}.
+
+
+
+Definition at line 51 of file Audio\-Element.\-h.
+
+\hypertarget{class_picto_1_1_audio_element_ae8847ae3b72666aae30c60bf045afda8}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-Element\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_element_ae8847ae3b72666aae30c60bf045afda8}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a0654af2c08f9a6c967a21b57614950ba}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 101 of file Audio\-Element.\-cpp.
+
+\hypertarget{class_picto_1_1_audio_element_ae673367d1fc705e6661ccd953d9764a9}{\index{Picto\-::\-Audio\-Element@{Picto\-::\-Audio\-Element}!scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}}
+\index{scriptable\-Container\-Was\-Reinitialized@{scriptable\-Container\-Was\-Reinitialized}!Picto::AudioElement@{Picto\-::\-Audio\-Element}}
+\subsubsection[{scriptable\-Container\-Was\-Reinitialized}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Audio\-Element\-::scriptable\-Container\-Was\-Reinitialized (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_audio_element_ae673367d1fc705e6661ccd953d9764a9}
+
+
+Called when the \hyperlink{class_picto_1_1_scriptable_container}{Scriptable\-Container} is reinitialized. Descendant classes extend this to run any code that needs to have access to all \hyperlink{class_picto_1_1_scriptable}{Scriptable} objects that will be accessible at runtime. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_scriptable_container_ab3d900d7a5403b8795b0edb54e50a750}{init\-Scripting()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_acabb0f86283aefd4e247f076b56504cd}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 127 of file Audio\-Element.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Audio\-Element.\-h\item 
+source/common/stimuli/Audio\-Element.\-cpp\end{DoxyCompactItemize}

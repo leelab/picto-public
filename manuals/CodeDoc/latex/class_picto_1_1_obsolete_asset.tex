@@ -1,0 +1,201 @@
+\hypertarget{class_picto_1_1_obsolete_asset}{\section{Picto\-:\-:Obsolete\-Asset Class Reference}
+\label{class_picto_1_1_obsolete_asset}\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}}
+}
+
+
+Used to hold data from X\-M\-L tags representing Assets that are now obsolete.  
+
+
+
+
+{\ttfamily \#include $<$Obsolete\-Asset.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Obsolete\-Asset\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_obsolete_asset}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a0fa27acdc34bf7fdac3dedd6493733f8}{virtual bool \hyperlink{class_picto_1_1_obsolete_asset_a0fa27acdc34bf7fdac3dedd6493733f8}{serialize\-As\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Writer $>$ xml\-Stream\-Writer)}\label{class_picto_1_1_obsolete_asset_a0fa27acdc34bf7fdac3dedd6493733f8}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_asset_a3ecc27a886c700438d98187e030d203f}{Asset\-::serialize\-As\-Xml()} to do nothing since \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} values are obsolete and never serialized out. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_obsolete_asset_a89766dd18a16e9368a4e737df8798310}{deserialize\-From\-Xml} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Asset\-::deserialize\-From\-Xml()} to deserialize everything from the input X\-M\-L tag to its closing tag into a \char`\"{}tree\char`\"{} of \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} objects, each containing a list of X\-M\-L tag attributes, and the tag values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a2317c155f6d4f933380955645bf22147}{virtual void \hyperlink{class_picto_1_1_obsolete_asset_a2317c155f6d4f933380955645bf22147}{post\-Deserialize} ()}\label{class_picto_1_1_obsolete_asset_a2317c155f6d4f933380955645bf22147}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_asset_a40a6b15b05855f8cb392e29d31d80914}{Asset\-::post\-Deserialize()} to set this object deleted and emit the \hyperlink{class_picto_1_1_asset_a2ca6303bf64730a9994a180bf2227da4}{edited()} signal to tell Parent Assets that this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} won't be saved out. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_obsolete_asset_a8cc99b68a745a111472a3ae1bf3f1112}{identifier} ()
+\begin{DoxyCompactList}\small\item\em Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_obsolete_asset_af9d35c6a769cca86ed56a8bab7f8a735}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_ae7d9e033b20f1e1bd8e6ae297c73a58c}{virtual int \hyperlink{class_picto_1_1_obsolete_asset_ae7d9e033b20f1e1bd8e6ae297c73a58c}{get\-Asset\-Id} ()}\label{class_picto_1_1_obsolete_asset_ae7d9e033b20f1e1bd8e6ae297c73a58c}
+
+\begin{DoxyCompactList}\small\item\em Returns the Asset\-Id set in \hyperlink{class_picto_1_1_obsolete_asset_a839526979e9024e1858cb881ebef743e}{set\-Asset\-Id()}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a839526979e9024e1858cb881ebef743e}{virtual void \hyperlink{class_picto_1_1_obsolete_asset_a839526979e9024e1858cb881ebef743e}{set\-Asset\-Id} (int id)}\label{class_picto_1_1_obsolete_asset_a839526979e9024e1858cb881ebef743e}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{class_picto_1_1_asset_a75ac07afb24b70da4885caef07855953}{Asset\-::set\-Asset\-Id()} to store the input Asset\-Id. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a11f8720400db2870ccea922a71a73cd2}{Q\-String\-List \hyperlink{class_picto_1_1_obsolete_asset_a11f8720400db2870ccea922a71a73cd2}{child\-Tags} ()}\label{class_picto_1_1_obsolete_asset_a11f8720400db2870ccea922a71a73cd2}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the names of the xml tags that were included in the X\-M\-L tag used to deserialize this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} $>$ $>$ \hyperlink{class_picto_1_1_obsolete_asset_a562aa6312d8505809f7150882c9f2e5d}{get\-Obsolete\-Child\-Asset} (Q\-String tag\-Name)
+\begin{DoxyCompactList}\small\item\em Returns the child \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} that was serialized in with the input tag\-Name. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_afde5b3db6920d338802d609fdce021be}{int \hyperlink{class_picto_1_1_obsolete_asset_afde5b3db6920d338802d609fdce021be}{num\-Attributes} ()}\label{class_picto_1_1_obsolete_asset_afde5b3db6920d338802d609fdce021be}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of attributes that were included in the X\-M\-L tag from which this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} was deserialized. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_obsolete_asset_a2c13b775185c9398f5adb5a6f897f1f4}{get\-Attribute\-Name} (int index)
+\begin{DoxyCompactList}\small\item\em Returns the attribute name that was included in this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}'s X\-M\-L tag at the input index. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_picto_1_1_obsolete_asset_a09aeef81dbc64bcbbf34b2ee991f76fb}{get\-Attribute\-Value} (Q\-String name)
+\begin{DoxyCompactList}\small\item\em Returns the attribute value that was included in this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}'s X\-M\-L tag at the input index. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a495b9dc57f02784d6142908efa50c6c6}{Q\-String \hyperlink{class_picto_1_1_obsolete_asset_a495b9dc57f02784d6142908efa50c6c6}{get\-Value} ()}\label{class_picto_1_1_obsolete_asset_a495b9dc57f02784d6142908efa50c6c6}
+
+\begin{DoxyCompactList}\small\item\em Returns the value contained in the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} (between the open and closing xml tags for cases where it has no children). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_obsolete_asset_a94651c2986ab08f892f66237a0b34305}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_obsolete_asset_a94651c2986ab08f892f66237a0b34305}{Create} ()}\label{class_picto_1_1_obsolete_asset_a94651c2986ab08f892f66237a0b34305}
+
+\begin{DoxyCompactList}\small\item\em Constructs and returns a shared pointer to a new \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Used to hold data from X\-M\-L tags representing Assets that are now obsolete. 
+
+Inevitably, as we have developed \hyperlink{namespace_picto}{Picto} bugs have cropped up and design decision changes have been made; however, since Sessions had already been run and designs built, we needed a way to be able to automatically upgrade old syntax and still be able to playback old sessions. Part of this system is the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} class. When design syntax changes need to be made, we increase the \#define D\-E\-S\-I\-G\-N\-S\-Y\-N\-T\-A\-X\-V\-E\-R\-S\-I\-O\-N, then we set the particular X\-M\-L tag for the \hyperlink{class_picto_1_1_asset}{Asset} type that is becoming obsolete to deserialize into an \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}. After the design is deserialized, we can use \hyperlink{class_picto_1_1_asset_aacaaedf9d76c3af2c7168d5c14fed914}{Asset\-::upgrade\-Version()} in the parent of the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} to extract any important data from the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} and put it somewhere where it will be needed in the upgraded design syntax.
+
+Data that is deserialized into the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} can be extracted using \hyperlink{class_picto_1_1_obsolete_asset_a2c13b775185c9398f5adb5a6f897f1f4}{get\-Attribute\-Name()}, \hyperlink{class_picto_1_1_obsolete_asset_a09aeef81dbc64bcbbf34b2ee991f76fb}{get\-Attribute\-Value()}, \hyperlink{class_picto_1_1_obsolete_asset_a495b9dc57f02784d6142908efa50c6c6}{get\-Value()}, etc functions. Also, if the X\-M\-L of the \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} contains other X\-M\-L tags, each of those will be deserialized into its own child \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} which is accessible from \hyperlink{class_picto_1_1_obsolete_asset_a562aa6312d8505809f7150882c9f2e5d}{get\-Obsolete\-Child\-Asset()}.
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 31 of file Obsolete\-Asset.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_obsolete_asset_a89766dd18a16e9368a4e737df8798310}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!deserialize\-From\-Xml@{deserialize\-From\-Xml}}
+\index{deserialize\-From\-Xml@{deserialize\-From\-Xml}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{deserialize\-From\-Xml}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Obsolete\-Asset\-::deserialize\-From\-Xml (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_picto_1_1_obsolete_asset_a89766dd18a16e9368a4e737df8798310}
+
+
+Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Asset\-::deserialize\-From\-Xml()} to deserialize everything from the input X\-M\-L tag to its closing tag into a \char`\"{}tree\char`\"{} of \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} objects, each containing a list of X\-M\-L tag attributes, and the tag values. 
+
+T\-His function also uses \hyperlink{class_picto_1_1_old_version_asset_ae0813a051e7dd735a8ae1a86319e4535}{report\-Old\-Version\-Asset()} to inform \hyperlink{namespace_picto}{Picto} that something that was obsolete was serialized in so it will have to perform an automatic upgrade. 
+
+Implements \hyperlink{class_picto_1_1_asset_a45e33e9da0d81734ec9e50a02ac325be}{Picto\-::\-Asset}.
+
+
+
+Definition at line 34 of file Obsolete\-Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_obsolete_asset_af9d35c6a769cca86ed56a8bab7f8a735}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Obsolete\-Asset\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_obsolete_asset_af9d35c6a769cca86ed56a8bab7f8a735}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a40eaa30ef5b2888d2a72a89bcf334c5f}{Picto\-::\-Asset}.
+
+
+
+Definition at line 44 of file Obsolete\-Asset.\-h.
+
+\hypertarget{class_picto_1_1_obsolete_asset_a2c13b775185c9398f5adb5a6f897f1f4}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!get\-Attribute\-Name@{get\-Attribute\-Name}}
+\index{get\-Attribute\-Name@{get\-Attribute\-Name}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{get\-Attribute\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Obsolete\-Asset\-::get\-Attribute\-Name (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_obsolete_asset_a2c13b775185c9398f5adb5a6f897f1f4}
+
+
+Returns the attribute name that was included in this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}'s X\-M\-L tag at the input index. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_obsolete_asset_afde5b3db6920d338802d609fdce021be}{num\-Attributes()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 85 of file Obsolete\-Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_obsolete_asset_a09aeef81dbc64bcbbf34b2ee991f76fb}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!get\-Attribute\-Value@{get\-Attribute\-Value}}
+\index{get\-Attribute\-Value@{get\-Attribute\-Value}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{get\-Attribute\-Value}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Picto\-::\-Obsolete\-Asset\-::get\-Attribute\-Value (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_obsolete_asset_a09aeef81dbc64bcbbf34b2ee991f76fb}
+
+
+Returns the attribute value that was included in this \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset}'s X\-M\-L tag at the input index. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_obsolete_asset_afde5b3db6920d338802d609fdce021be}{num\-Attributes()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 95 of file Obsolete\-Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_obsolete_asset_a562aa6312d8505809f7150882c9f2e5d}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!get\-Obsolete\-Child\-Asset@{get\-Obsolete\-Child\-Asset}}
+\index{get\-Obsolete\-Child\-Asset@{get\-Obsolete\-Child\-Asset}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{get\-Obsolete\-Child\-Asset}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Obsolete\-Asset} $>$ $>$ Picto\-::\-Obsolete\-Asset\-::get\-Obsolete\-Child\-Asset (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{tag\-Name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_obsolete_asset_a562aa6312d8505809f7150882c9f2e5d}
+
+
+Returns the child \hyperlink{class_picto_1_1_obsolete_asset}{Obsolete\-Asset} that was serialized in with the input tag\-Name. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_obsolete_asset_a89766dd18a16e9368a4e737df8798310}{deserialize\-From\-Xml()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 75 of file Obsolete\-Asset.\-cpp.
+
+\hypertarget{class_picto_1_1_obsolete_asset_a8cc99b68a745a111472a3ae1bf3f1112}{\index{Picto\-::\-Obsolete\-Asset@{Picto\-::\-Obsolete\-Asset}!identifier@{identifier}}
+\index{identifier@{identifier}!Picto::ObsoleteAsset@{Picto\-::\-Obsolete\-Asset}}
+\subsubsection[{identifier}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Obsolete\-Asset\-::identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_obsolete_asset_a8cc99b68a745a111472a3ae1bf3f1112}
+
+
+Returns a short string used to identify this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+Usually this is the same as this assets serialized X\-M\-L tag name, but it may not be. 
+
+Reimplemented from \hyperlink{class_picto_1_1_asset_a8d53229beb63862c36858e633dced712}{Picto\-::\-Asset}.
+
+
+
+Definition at line 43 of file Obsolete\-Asset.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Obsolete\-Asset.\-h\item 
+source/common/storage/Obsolete\-Asset.\-cpp\end{DoxyCompactItemize}

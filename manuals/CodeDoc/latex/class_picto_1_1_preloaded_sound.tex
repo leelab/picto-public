@@ -1,0 +1,131 @@
+\hypertarget{class_picto_1_1_preloaded_sound}{\section{Picto\-:\-:Preloaded\-Sound Class Reference}
+\label{class_picto_1_1_preloaded_sound}\index{Picto\-::\-Preloaded\-Sound@{Picto\-::\-Preloaded\-Sound}}
+}
+
+
+Objects of this class implement a sound that can be set to play, stop, etc.  
+
+
+
+
+{\ttfamily \#include $<$Preloaded\-Sound.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Preloaded\-Sound\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_preloaded_sound}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_preloaded_sound_a22fb576f20b369d32f1c6b42d7d00f79}{virtual void \hyperlink{class_picto_1_1_preloaded_sound_a22fb576f20b369d32f1c6b42d7d00f79}{play} ()=0}\label{class_picto_1_1_preloaded_sound_a22fb576f20b369d32f1c6b42d7d00f79}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to start playing over the computer's sound card. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_preloaded_sound_a876b9dd3eb966656503493a59e80554f}{virtual void \hyperlink{class_picto_1_1_preloaded_sound_a876b9dd3eb966656503493a59e80554f}{stop} ()=0}\label{class_picto_1_1_preloaded_sound_a876b9dd3eb966656503493a59e80554f}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound to stop playing over the computer's sound card. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_preloaded_sound_abd5f14d441d6063b1ea2bd141e4023bc}{virtual void \hyperlink{class_picto_1_1_preloaded_sound_abd5f14d441d6063b1ea2bd141e4023bc}{set\-Volume} (int percent)=0}\label{class_picto_1_1_preloaded_sound_abd5f14d441d6063b1ea2bd141e4023bc}
+
+\begin{DoxyCompactList}\small\item\em Causes the underlying sound's volume to be set to the input percentage (0-\/100). \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_preloaded_sound_a741746e30058d944ab64a1614ea1906f}{virtual bool \hyperlink{class_picto_1_1_preloaded_sound_a741746e30058d944ab64a1614ea1906f}{playing} ()=0}\label{class_picto_1_1_preloaded_sound_a741746e30058d944ab64a1614ea1906f}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound is playing. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_preloaded_sound_a6383e1a60e25b51815d1876b1b29a899}{virtual int \hyperlink{class_picto_1_1_preloaded_sound_a6383e1a60e25b51815d1876b1b29a899}{volume} ()=0}\label{class_picto_1_1_preloaded_sound_a6383e1a60e25b51815d1876b1b29a899}
+
+\begin{DoxyCompactList}\small\item\em Returns the level of the underlying sound's volume (0-\/100 percent) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_preloaded_sound_a952c9eb2edc3f79c36a84569cc232042}{virtual bool \hyperlink{class_picto_1_1_preloaded_sound_a952c9eb2edc3f79c36a84569cc232042}{is\-Ready} ()=0}\label{class_picto_1_1_preloaded_sound_a952c9eb2edc3f79c36a84569cc232042}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the underlying sound was succesfully loaded and is ready to play. \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_preloaded_sound_a4681726539ed0e4f493860d487ef3f59}{error\-String} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a string describing an error that kept the underlying sound from being loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{set\-Sound\-Constructor} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$($\ast$construct\-Func)(Q\-String))
+\begin{DoxyCompactList}\small\item\em Sets the constructor that will be used to generate a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} inside \hyperlink{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{create\-Sound()}. \end{DoxyCompactList}\item 
+static Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} $>$ \hyperlink{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{create\-Sound} (Q\-String path)
+\begin{DoxyCompactList}\small\item\em Generates and returns a pointer to a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object containing the sound located at the input path on disk. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Objects of this class implement a sound that can be set to play, stop, etc. 
+
+Unimplemented. A Wave Sound class.
+
+In the current design, \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} object's create \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} objects, \hyperlink{class_picto_1_1_audio_element}{Audio\-Element} objects connect to them and set them into \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects. The active \hyperlink{class_picto_1_1_state}{State} object's \hyperlink{class_picto_1_1_scene}{Scene} mixes the \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} objects of the Audio\-Elements that are in scope into the current \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}, and call the \hyperlink{class_picto_1_1_aural_target}{Aural\-Target}'s present() function which is responsible for telling the \hyperlink{class_picto_1_1_mixing_sample}{Mixing\-Sample} and in turn this \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} to play, stop, etc. \begin{DoxyNote}{Note}
+The audio sample underlying a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} should be loaded into R\-A\-M when \hyperlink{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{create\-Sound()} is first called such that no file access delays will occur during the course of experimental presentation... hence the name, \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound}. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 25 of file Preloaded\-Sound.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{\index{Picto\-::\-Preloaded\-Sound@{Picto\-::\-Preloaded\-Sound}!create\-Sound@{create\-Sound}}
+\index{create\-Sound@{create\-Sound}!Picto::PreloadedSound@{Picto\-::\-Preloaded\-Sound}}
+\subsubsection[{create\-Sound}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Preloaded\-Sound} $>$ Picto\-::\-Preloaded\-Sound\-::create\-Sound (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}
+
+
+Generates and returns a pointer to a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} object containing the sound located at the input path on disk. 
+
+\begin{DoxyNote}{Note}
+Preloaded\-Sounds should only be created by using this static function. Direct constructor's should not be used. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{set\-Sound\-Constructor()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 28 of file Preloaded\-Sound.\-cpp.
+
+\hypertarget{class_picto_1_1_preloaded_sound_a4681726539ed0e4f493860d487ef3f59}{\index{Picto\-::\-Preloaded\-Sound@{Picto\-::\-Preloaded\-Sound}!error\-String@{error\-String}}
+\index{error\-String@{error\-String}!Picto::PreloadedSound@{Picto\-::\-Preloaded\-Sound}}
+\subsubsection[{error\-String}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Preloaded\-Sound\-::error\-String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_picto_1_1_preloaded_sound_a4681726539ed0e4f493860d487ef3f59}
+
+
+Returns a string describing an error that kept the underlying sound from being loaded. 
+
+Returned value is only valid if \hyperlink{class_picto_1_1_preloaded_sound_a952c9eb2edc3f79c36a84569cc232042}{is\-Ready()} returned true. 
+
+Implemented in \hyperlink{class_picto_1_1_multiplatform_sound_a439672057dc19e9b8f9f2648cc31c01d}{Picto\-::\-Multiplatform\-Sound}, and \hyperlink{class_picto_1_1_win_sound_a8af6f5b842c004d350ff77247d931c14}{Picto\-::\-Win\-Sound}.
+
+\hypertarget{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}{\index{Picto\-::\-Preloaded\-Sound@{Picto\-::\-Preloaded\-Sound}!set\-Sound\-Constructor@{set\-Sound\-Constructor}}
+\index{set\-Sound\-Constructor@{set\-Sound\-Constructor}!Picto::PreloadedSound@{Picto\-::\-Preloaded\-Sound}}
+\subsubsection[{set\-Sound\-Constructor}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Preloaded\-Sound\-::set\-Sound\-Constructor (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Preloaded\-Sound} $>$($\ast$)(Q\-String)}]{construct\-Func}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_preloaded_sound_a52385d8c6fb8563fb8c82455f9677acc}
+
+
+Sets the constructor that will be used to generate a \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound} inside \hyperlink{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{create\-Sound()}. 
+
+This is important because sound turns out to be one of those things that varies pretty significantly over different platforms and run environments. Currently, due to the lack of an event loop in the \hyperlink{class_director}{Director}'s experimental run environment, some of the simpler types of sound objects that we can use in the workstation, won't work in the director. In both cases; however, we want \hyperlink{class_picto_1_1_audio_file_parameter}{Audio\-File\-Parameter} objects to be able to use \hyperlink{class_picto_1_1_preloaded_sound_ae242a5728bce44d1ac6bfcac2b958f81}{create\-Sound()} to create a valid \hyperlink{class_picto_1_1_preloaded_sound}{Preloaded\-Sound}. This set\-Sound\-Constructor function lets us handle this case by setting a constructor for a different kind of underlying class based on which application we are running, \hyperlink{class_director}{Director} or Workstation. 
+
+Definition at line 18 of file Preloaded\-Sound.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Preloaded\-Sound.\-h\item 
+source/common/stimuli/Wave\-Sound.\-h\item 
+source/common/stimuli/Preloaded\-Sound.\-cpp\item 
+source/common/stimuli/Wave\-Sound.\-cpp\end{DoxyCompactItemize}

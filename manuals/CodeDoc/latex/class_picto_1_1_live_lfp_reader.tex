@@ -1,0 +1,104 @@
+\hypertarget{class_picto_1_1_live_lfp_reader}{\section{Picto\-:\-:Live\-Lfp\-Reader Class Reference}
+\label{class_picto_1_1_live_lfp_reader}\index{Picto\-::\-Live\-Lfp\-Reader@{Picto\-::\-Live\-Lfp\-Reader}}
+}
+
+
+Implements the \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} class for a live test experiment.  
+
+
+
+
+{\ttfamily \#include $<$Live\-Lfp\-Reader.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Live\-Lfp\-Reader\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_picto_1_1_live_lfp_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a19ca9204ad3e71e7602a9106d3b39ec8}{{\bfseries Live\-Lfp\-Reader} (Q\-List$<$ int $>$ channels, double sample\-Period)}\label{class_picto_1_1_live_lfp_reader_a19ca9204ad3e71e7602a9106d3b39ec8}
+
+\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a22b661f0ab2d4696e1051279bc0ad0e2}{void \hyperlink{class_picto_1_1_live_lfp_reader_a22b661f0ab2d4696e1051279bc0ad0e2}{set\-Run\-Start} ()}\label{class_picto_1_1_live_lfp_reader_a22b661f0ab2d4696e1051279bc0ad0e2}
+
+\begin{DoxyCompactList}\small\item\em Called when a new Run Starts to let this object know that it should clear out its lfp list and start again. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_live_lfp_reader_a590e34f75db45fbcf5260b0fba777233}{create\-Virtual\-Lfp\-Data} (double time)
+\begin{DoxyCompactList}\small\item\em Called to add the input time to the list of valid lfp times. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_af7eb961b3f58cfc1a22586aea0d3dc2d}{void \hyperlink{class_picto_1_1_live_lfp_reader_af7eb961b3f58cfc1a22586aea0d3dc2d}{set\-Run\-End} ()}\label{class_picto_1_1_live_lfp_reader_af7eb961b3f58cfc1a22586aea0d3dc2d}
+
+\begin{DoxyCompactList}\small\item\em Called when a Run ends to let this object know that it can clear out its lfp list. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a5586589c5cf363d246f9b6c34de1fba5}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_lfp_reader_a5586589c5cf363d246f9b6c34de1fba5}{get\-Channels} ()}\label{class_picto_1_1_live_lfp_reader_a5586589c5cf363d246f9b6c34de1fba5}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of the channels on which lfp data was captured during this run. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a69f73319a6938e375e6721d5ff755430}{virtual double \hyperlink{class_picto_1_1_live_lfp_reader_a69f73319a6938e375e6721d5ff755430}{get\-Sample\-Period} ()}\label{class_picto_1_1_live_lfp_reader_a69f73319a6938e375e6721d5ff755430}
+
+\begin{DoxyCompactList}\small\item\em Returns the sample period for lfp data capture. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a02f2775da8a898bd2096ee33cdbbbd8d}{virtual double \hyperlink{class_picto_1_1_live_lfp_reader_a02f2775da8a898bd2096ee33cdbbbd8d}{get\-Latest\-Time} ()}\label{class_picto_1_1_live_lfp_reader_a02f2775da8a898bd2096ee33cdbbbd8d}
+
+\begin{DoxyCompactList}\small\item\em Returns the time of the latest lfp data sample. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_ac92cd2f69ba1c5b0e023aa1b90974219}{virtual double \hyperlink{class_picto_1_1_live_lfp_reader_ac92cd2f69ba1c5b0e023aa1b90974219}{get\-Latest\-Value} (int channel)}\label{class_picto_1_1_live_lfp_reader_ac92cd2f69ba1c5b0e023aa1b90974219}
+
+\begin{DoxyCompactList}\small\item\em Returns the latest lfp value on the channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a6e674c17ab817ceb516d819afc4c2e77}{virtual double \hyperlink{class_picto_1_1_live_lfp_reader_a6e674c17ab817ceb516d819afc4c2e77}{get\-Next\-Time} ()}\label{class_picto_1_1_live_lfp_reader_a6e674c17ab817ceb516d819afc4c2e77}
+
+\begin{DoxyCompactList}\small\item\em Returns the time at which the next signal will be read. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_abf0c233a531ebf5faabbb05776eade3c}{virtual double \hyperlink{class_picto_1_1_live_lfp_reader_abf0c233a531ebf5faabbb05776eade3c}{get\-Next\-Value} (int channel)}\label{class_picto_1_1_live_lfp_reader_abf0c233a531ebf5faabbb05776eade3c}
+
+\begin{DoxyCompactList}\small\item\em Returns the next value that will be read for the input channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_abfef51f0ab5194657c3b7adfa23ef7bb}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_lfp_reader_abfef51f0ab5194657c3b7adfa23ef7bb}{get\-Values\-Since} (int channel, double time)}\label{class_picto_1_1_live_lfp_reader_abfef51f0ab5194657c3b7adfa23ef7bb}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_a62252bcd22e61191d7ca25c030fe0657}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_lfp_reader_a62252bcd22e61191d7ca25c030fe0657}{get\-Values\-Until} (int channel, double time)}\label{class_picto_1_1_live_lfp_reader_a62252bcd22e61191d7ca25c030fe0657}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp values for the input channel that occured with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_ad97a0b12a93a66f6b8abadd9ad143a3f}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_lfp_reader_ad97a0b12a93a66f6b8abadd9ad143a3f}{get\-Times\-Since} (double time)}\label{class_picto_1_1_live_lfp_reader_ad97a0b12a93a66f6b8abadd9ad143a3f}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that occured with times $>$ the input time and $<$= the current time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_live_lfp_reader_ade90e7f616735cf415e041cd57c82c56}{virtual Q\-Variant\-List \hyperlink{class_picto_1_1_live_lfp_reader_ade90e7f616735cf415e041cd57c82c56}{get\-Times\-Until} (double time)}\label{class_picto_1_1_live_lfp_reader_ade90e7f616735cf415e041cd57c82c56}
+
+\begin{DoxyCompactList}\small\item\em Returns a list of lfp sample times that occured with times $>$ the current time and $<$= the input time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} class for a live test experiment. 
+
+Since this is meant to be used with a test experiment, this object just generates fake L\-F\-P data. It returns lfp values based on a sine wave function of sample times. The sample times to be used are input using the \hyperlink{class_picto_1_1_live_lfp_reader_a590e34f75db45fbcf5260b0fba777233}{create\-Virtual\-Lfp\-Data()} function. Since this object is filled during run time, \hyperlink{class_picto_1_1_analysis}{Analysis} have access to all past data but no future data. Requests for future data from this class will result in meaningless values. \begin{DoxyNote}{Note}
+Since the functions here simply implement the \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} class for live session data, there is not much to add in terms of documentation beyond what was described above, so we will not be adding additional function level documentation for many of the functions in this class. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Live\-Lfp\-Reader.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_live_lfp_reader_a590e34f75db45fbcf5260b0fba777233}{\index{Picto\-::\-Live\-Lfp\-Reader@{Picto\-::\-Live\-Lfp\-Reader}!create\-Virtual\-Lfp\-Data@{create\-Virtual\-Lfp\-Data}}
+\index{create\-Virtual\-Lfp\-Data@{create\-Virtual\-Lfp\-Data}!Picto::LiveLfpReader@{Picto\-::\-Live\-Lfp\-Reader}}
+\subsubsection[{create\-Virtual\-Lfp\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Live\-Lfp\-Reader\-::create\-Virtual\-Lfp\-Data (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_live_lfp_reader_a590e34f75db45fbcf5260b0fba777233}
+
+
+Called to add the input time to the list of valid lfp times. 
+
+The actual lfp data values are fake and calculated from a simple sine wave function of the sample time when get\-Value() is called. 
+
+Definition at line 34 of file Live\-Lfp\-Reader.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Live\-Lfp\-Reader.\-h\item 
+source/common/playback/Live\-Lfp\-Reader.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,174 @@
+\hypertarget{class_component_status_manager}{\section{Component\-Status\-Manager Class Reference}
+\label{class_component_status_manager}\index{Component\-Status\-Manager@{Component\-Status\-Manager}}
+}
+
+
+Handles overall status operations for a \hyperlink{class_component_interface}{Component\-Interface} object.  
+
+
+
+
+{\ttfamily \#include $<$Component\-Status\-Manager.\-h$>$}
+
+Inheritance diagram for Component\-Status\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_component_status_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_component_status_manager_a2fd4ac0e719ade2c696dd8b468c76f07}{force\-Exit} ()
+\begin{DoxyCompactList}\small\item\em After this is called, any Command\-Channel\-::process\-Responses() loops that are in progress will not continue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_component_status_manager_abd347b6732e0c3e4f675de68b5a59f69}{Component\-Status\-Manager} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_aefec86dd12b8a9ad1ca55a04391203ca}{virtual Q\-String \hyperlink{class_component_status_manager_aefec86dd12b8a9ad1ca55a04391203ca}{get\-Name} ()=0}\label{class_component_status_manager_aefec86dd12b8a9ad1ca55a04391203ca}
+
+\begin{DoxyCompactList}\small\item\em Returns a name representing the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_a6b4219dc5a4105bd24b62d89861ee443}{virtual void \hyperlink{class_component_status_manager_a6b4219dc5a4105bd24b62d89861ee443}{set\-Status} (Component\-Status status)}\label{class_component_status_manager_a6b4219dc5a4105bd24b62d89861ee443}
+
+\begin{DoxyCompactList}\small\item\em Changes the Component\-Status of the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager} to the input value. \end{DoxyCompactList}\item 
+void \hyperlink{class_component_status_manager_a64b7210feeec90b5f7c8494449f60da3}{set\-Status} (Q\-String status)
+\begin{DoxyCompactList}\small\item\em Changes the Component\-Status of the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager} to the Component\-Status represented by the input string. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_a3621411701b009a63a676d5016aecfad}{virtual void \hyperlink{class_component_status_manager_a3621411701b009a63a676d5016aecfad}{set\-User\-Info} (Q\-String info)}\label{class_component_status_manager_a3621411701b009a63a676d5016aecfad}
+
+\begin{DoxyCompactList}\small\item\em Sets a string contain user information that may optionally be displayed to the user in child class implementations. \end{DoxyCompactList}\item 
+void \hyperlink{class_component_status_manager_aa89d24ea10eef26877ff5e4e7a18c211}{set\-Session\-I\-D} (Q\-Uuid session\-I\-D)
+\begin{DoxyCompactList}\small\item\em Sets the Session I\-D of the session currently being run by the \hyperlink{class_component_interface}{Component\-Interface} handled by this object. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_aa9ef67463e97c86b2d3cb6f58a75e9ec}{Q\-Uuid \hyperlink{class_component_status_manager_aa9ef67463e97c86b2d3cb6f58a75e9ec}{get\-Session\-I\-D} ()}\label{class_component_status_manager_aa9ef67463e97c86b2d3cb6f58a75e9ec}
+
+\begin{DoxyCompactList}\small\item\em Returns ths Session I\-D of the \hyperlink{class_component_interface}{Component\-Interface}'s current session. \end{DoxyCompactList}\item 
+void \hyperlink{class_component_status_manager_a93b324f1e8ecbe6870958f3c4c3a8ca0}{update} (int timeout\-Ms)
+\begin{DoxyCompactList}\small\item\em Calls do\-Frequent\-Update() and do\-Server\-Update() according to scheduled timing. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_a2bb141c50399cc6108f0990c087c5bd5}{Component\-Status \hyperlink{class_component_status_manager_a2bb141c50399cc6108f0990c087c5bd5}{get\-Status} ()}\label{class_component_status_manager_a2bb141c50399cc6108f0990c087c5bd5}
+
+\begin{DoxyCompactList}\small\item\em Returns the current Component\-Status of the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_ac7af74c88de4929291c2146fd7649745}{Q\-String \hyperlink{class_component_status_manager_ac7af74c88de4929291c2146fd7649745}{get\-Status\-As\-String} ()}\label{class_component_status_manager_ac7af74c88de4929291c2146fd7649745}
+
+\begin{DoxyCompactList}\small\item\em Returns a status string representing the current Component\-Status of the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_a36bba277d0330af5cbb190eeeb68daeb}{bool \hyperlink{class_component_status_manager_a36bba277d0330af5cbb190eeeb68daeb}{exit\-Triggered} ()}\label{class_component_status_manager_a36bba277d0330af5cbb190eeeb68daeb}
+
+\begin{DoxyCompactList}\small\item\em Returns true if \hyperlink{class_component_status_manager_a2fd4ac0e719ade2c696dd8b468c76f07}{force\-Exit()} has been called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}{virtual void \hyperlink{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}{new\-Session} ()=0}\label{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}
+
+\begin{DoxyCompactList}\small\item\em Handles initialization operations when a new session is started. \end{DoxyCompactList}\item 
+\hypertarget{class_component_status_manager_ab8da851957cd9e1f7f48d345f73fcf2f}{virtual void {\bfseries do\-Frequent\-Update} ()}\label{class_component_status_manager_ab8da851957cd9e1f7f48d345f73fcf2f}
+
+\item 
+\hypertarget{class_component_status_manager_aad4af3be8431d94994bdd47488b4349f}{virtual void {\bfseries do\-Server\-Update} ()=0}\label{class_component_status_manager_aad4af3be8431d94994bdd47488b4349f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles overall status operations for a \hyperlink{class_component_interface}{Component\-Interface} object. 
+
+All \hyperlink{class_component_interface}{Component\-Interface} objects support the various Component\-Status states. They each work within a session framework and need to maintain a Session I\-D, they need to be able to provide various pieces of status information and recognize if there has been a request to exit the \hyperlink{class_component_interface}{Component\-Interface}'s application. This object handles all of those types of activities. It should be inherited for each \hyperlink{class_component_interface}{Component\-Interface} type to perform operations specific to that type of \hyperlink{class_component_interface}{Component\-Interface}. For example, a \hyperlink{class_director}{Director} \hyperlink{class_component_interface}{Component\-Interface} will print status information on the bottom left corner of the screen, whereas the Proxy might print it somewhere within its application window. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_component_interface}{Component\-Interface} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 30 of file Component\-Status\-Manager.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_component_status_manager_abd347b6732e0c3e4f675de68b5a59f69}{\index{Component\-Status\-Manager@{Component\-Status\-Manager}!Component\-Status\-Manager@{Component\-Status\-Manager}}
+\index{Component\-Status\-Manager@{Component\-Status\-Manager}!ComponentStatusManager@{Component\-Status\-Manager}}
+\subsubsection[{Component\-Status\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}Component\-Status\-Manager\-::\-Component\-Status\-Manager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_component_status_manager_abd347b6732e0c3e4f675de68b5a59f69}
+
+
+Constructs a new \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. 
+
+Initializes a status\-Transition\-Dictionary\-\_\- with the states to which the \hyperlink{class_component_interface}{Component\-Interface} should transition as a function of the command type recieved from the server. Also initializes a status\-Name\-Dictionary\-\_\- with the text name of a particular \hyperlink{class_component_interface}{Component\-Interface} state as a function of state type. \hyperlink{class_component_interface}{Component\-Interface} status is initialized to 'disconnected'. 
+
+Definition at line 16 of file Component\-Status\-Manager.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_component_status_manager_a2fd4ac0e719ade2c696dd8b468c76f07}{\index{Component\-Status\-Manager@{Component\-Status\-Manager}!force\-Exit@{force\-Exit}}
+\index{force\-Exit@{force\-Exit}!ComponentStatusManager@{Component\-Status\-Manager}}
+\subsubsection[{force\-Exit}]{\setlength{\rightskip}{0pt plus 5cm}void Component\-Status\-Manager\-::force\-Exit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_component_status_manager_a2fd4ac0e719ade2c696dd8b468c76f07}
+
+
+After this is called, any Command\-Channel\-::process\-Responses() loops that are in progress will not continue. 
+
+Due to the strange (ie. needs to change) run model of the Compomnent\-Interface for which an endlessly looping Command\-Channel\-::process\-Responses() function is essentially the event loop, the only way to exit the application is to call this function. Once per loop inside the Command\-Channel\-::process\-Responses() function, \hyperlink{class_component_status_manager_a36bba277d0330af5cbb190eeeb68daeb}{exit\-Triggered()} is checked and if it returns true, the loop doesn't continue, allowing the \hyperlink{class_component_interface_aa5114fa432d4102e697b808c986a59bd}{Component\-Interface\-::activate()} that calls Command\-Channel\-::process\-Responses(-\/1) to end. 
+
+Definition at line 123 of file Component\-Status\-Manager.\-cpp.
+
+\hypertarget{class_component_status_manager_aa89d24ea10eef26877ff5e4e7a18c211}{\index{Component\-Status\-Manager@{Component\-Status\-Manager}!set\-Session\-I\-D@{set\-Session\-I\-D}}
+\index{set\-Session\-I\-D@{set\-Session\-I\-D}!ComponentStatusManager@{Component\-Status\-Manager}}
+\subsubsection[{set\-Session\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void Component\-Status\-Manager\-::set\-Session\-I\-D (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{session\-I\-D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_component_status_manager_aa89d24ea10eef26877ff5e4e7a18c211}
+
+
+Sets the Session I\-D of the session currently being run by the \hyperlink{class_component_interface}{Component\-Interface} handled by this object. 
+
+This should be called whenever a new session is set up. Internally, if the Session I\-D changes, this function calls \hyperlink{class_component_status_manager_a1af23b4bf43eac138ca122be16b37b46}{new\-Session()}. 
+
+Definition at line 48 of file Component\-Status\-Manager.\-h.
+
+\hypertarget{class_component_status_manager_a64b7210feeec90b5f7c8494449f60da3}{\index{Component\-Status\-Manager@{Component\-Status\-Manager}!set\-Status@{set\-Status}}
+\index{set\-Status@{set\-Status}!ComponentStatusManager@{Component\-Status\-Manager}}
+\subsubsection[{set\-Status}]{\setlength{\rightskip}{0pt plus 5cm}void Component\-Status\-Manager\-::set\-Status (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{status}
+\end{DoxyParamCaption}
+)}}\label{class_component_status_manager_a64b7210feeec90b5f7c8494449f60da3}
+
+
+Changes the Component\-Status of the \hyperlink{class_component_interface}{Component\-Interface} handled by this \hyperlink{class_component_status_manager}{Component\-Status\-Manager} to the Component\-Status represented by the input string. 
+
+If the input string does not represent a valid Component\-Status, nothing happens. 
+
+Definition at line 53 of file Component\-Status\-Manager.\-cpp.
+
+\hypertarget{class_component_status_manager_a93b324f1e8ecbe6870958f3c4c3a8ca0}{\index{Component\-Status\-Manager@{Component\-Status\-Manager}!update@{update}}
+\index{update@{update}!ComponentStatusManager@{Component\-Status\-Manager}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void Component\-Status\-Manager\-::update (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout\-Ms}
+\end{DoxyParamCaption}
+)}}\label{class_component_status_manager_a93b324f1e8ecbe6870958f3c4c3a8ca0}
+
+
+Calls do\-Frequent\-Update() and do\-Server\-Update() according to scheduled timing. 
+
+This function does not schedule function calls at a later time. Rather it checks the current time and calls the do\-Frequent\-Update() and do\-Server\-Update() functions so long as enough time has passed since the last calls to those functions. For this reason it should be called frequently, with period at or greater than M\-S\-P\-E\-R\-F\-R\-E\-Q\-U\-P\-D\-A\-T\-E
+
+The input timeout\-Ms is the approximate amout of time that this function will take. It uses that time to run an event loop which may or may not be helping Qt not freak out about the fact that we don't use a standard Qt event loop in our \hyperlink{class_component_interface}{Component\-Interface} applications. For more details about how we don't use a Qt event loop in \hyperlink{class_component_interface}{Component\-Interface} applications, but really should, See Command\-Channel\-::process\-Responses() documentation. 
+
+Definition at line 73 of file Component\-Status\-Manager.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/network/Component\-Status\-Manager.\-h\item 
+source/common/network/Component\-Status\-Manager.\-cpp\end{DoxyCompactItemize}

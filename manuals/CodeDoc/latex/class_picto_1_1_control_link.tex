@@ -1,0 +1,96 @@
+\hypertarget{class_picto_1_1_control_link}{\section{Picto\-:\-:Control\-Link Class Reference}
+\label{class_picto_1_1_control_link}\index{Picto\-::\-Control\-Link@{Picto\-::\-Control\-Link}}
+}
+
+
+{\ttfamily \#include $<$Control\-Link.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Control\-Link\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_picto_1_1_control_link}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_link_abc1bc49159a00a9f675b83a42fee932a}{{\bfseries Control\-Link} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ source, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ source\-Result, Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ destination)}\label{class_picto_1_1_control_link_abc1bc49159a00a9f675b83a42fee932a}
+
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_link_aabf0bf910f45302c121c2457ae50e980}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_control_link_aac7c99703b61eebf811962ac2a40ad4d}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_control_link_aac7c99703b61eebf811962ac2a40ad4d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_control_link_a1565a71cfa7de5d4265cefb9c77ebb2f}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+U\-N\-U\-S\-E\-D This used to essentially be a \hyperlink{class_picto_1_1_transition}{Transition} for inside a \hyperlink{class_picto_1_1_state}{State}. Now Elements inside a \hyperlink{class_picto_1_1_state}{State} just used \hyperlink{class_picto_1_1_transition}{Transition} objects too. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 18 of file Control\-Link.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_control_link_a1565a71cfa7de5d4265cefb9c77ebb2f}{\index{Picto\-::\-Control\-Link@{Picto\-::\-Control\-Link}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::ControlLink@{Picto\-::\-Control\-Link}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Link\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_link_a1565a71cfa7de5d4265cefb9c77ebb2f}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_transition_ae2e521a9d00d6c187553364484131538}{Picto\-::\-Transition}.
+
+
+
+Definition at line 31 of file Control\-Link.\-h.
+
+\hypertarget{class_picto_1_1_control_link_aabf0bf910f45302c121c2457ae50e980}{\index{Picto\-::\-Control\-Link@{Picto\-::\-Control\-Link}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::ControlLink@{Picto\-::\-Control\-Link}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Control\-Link\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_control_link_aabf0bf910f45302c121c2457ae50e980}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_transition_a186f341ac2591346ca6a343ecc61c920}{Picto\-::\-Transition}.
+
+
+
+Definition at line 28 of file Control\-Link.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/controlelements/Control\-Link.\-h\item 
+source/common/controlelements/Control\-Link.\-cpp\end{DoxyCompactItemize}

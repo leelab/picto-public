@@ -1,0 +1,126 @@
+\hypertarget{class_tool_group}{\section{Tool\-Group Class Reference}
+\label{class_tool_group}\index{Tool\-Group@{Tool\-Group}}
+}
+
+
+A group of buttons of a particular type that have some affect on activity in the designer.  
+
+
+
+
+{\ttfamily \#include $<$Tool\-Group.\-h$>$}
+
+Inheritance diagram for Tool\-Group\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_tool_group}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_tool_group_a121676093835a19312994e69a065549b}{{\bfseries Tool\-Group} (Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State, Q\-Widget $\ast$parent=0)}\label{class_tool_group_a121676093835a19312994e69a065549b}
+
+\item 
+\hypertarget{class_tool_group_ac3ca9abf98f35c9bb6f7d8a5c4e8859e}{int \hyperlink{class_tool_group_ac3ca9abf98f35c9bb6f7d8a5c4e8859e}{num\-Buttons} ()}\label{class_tool_group_ac3ca9abf98f35c9bb6f7d8a5c4e8859e}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of buttons in this \hyperlink{class_tool_group}{Tool\-Group}. \end{DoxyCompactList}\item 
+\hypertarget{class_tool_group_aeb7de8bf11951fa5ccfcd0be4ce22e1c}{Q\-String \hyperlink{class_tool_group_aeb7de8bf11951fa5ccfcd0be4ce22e1c}{get\-Selected\-Button} ()}\label{class_tool_group_aeb7de8bf11951fa5ccfcd0be4ce22e1c}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of the currently selected button. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_tool_group_a5c64e3a5d2932696cf79603664026d78}{Add\-Button} (const Q\-String \&label, Q\-Icon icon, bool enabled=true)
+\begin{DoxyCompactList}\small\item\em Adds a new button to this \hyperlink{class_tool_group}{Tool\-Group} with the input label and icon. \end{DoxyCompactList}\item 
+\hypertarget{class_tool_group_a05a293e731bb1fa8eff34ba0287fcaaf}{void \hyperlink{class_tool_group_a05a293e731bb1fa8eff34ba0287fcaaf}{clear\-Buttons} ()}\label{class_tool_group_a05a293e731bb1fa8eff34ba0287fcaaf}
+
+\begin{DoxyCompactList}\small\item\em Removes all buttons from this \hyperlink{class_tool_group}{Tool\-Group}. \end{DoxyCompactList}\item 
+\hypertarget{class_tool_group_a97f25560443b3690840eafec703d02f6}{Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ \hyperlink{class_tool_group_a97f25560443b3690840eafec703d02f6}{get\-Editor\-State} ()}\label{class_tool_group_a97f25560443b3690840eafec703d02f6}
+
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_editor_state}{Editor\-State} referenced by this \hyperlink{class_tool_group}{Tool\-Group}. \end{DoxyCompactList}\item 
+\hypertarget{class_tool_group_abe47ad522a7f0ca0d5e222fade47f77a}{Q\-Pixmap \hyperlink{class_tool_group_abe47ad522a7f0ca0d5e222fade47f77a}{get\-Button\-Pixmap} (int button\-Id)}\label{class_tool_group_abe47ad522a7f0ca0d5e222fade47f77a}
+
+\begin{DoxyCompactList}\small\item\em Returns a Q\-Pixmap of the icon used on the button with the input button\-Id. \end{DoxyCompactList}\item 
+\hypertarget{class_tool_group_a749e84cf4dfdf68033b44aa0b4cb7734}{virtual void \hyperlink{class_tool_group_a749e84cf4dfdf68033b44aa0b4cb7734}{do\-Button\-Action} (int button\-Id)=0}\label{class_tool_group_a749e84cf4dfdf68033b44aa0b4cb7734}
+
+\begin{DoxyCompactList}\small\item\em Called when the a button is pressed so that the button can do whatever it's supposed to do. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_tool_group_ab340659ee03a519aa249bda3592255a6}{disable\-Button\-Actions} ()
+\begin{DoxyCompactList}\small\item\em Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous \hyperlink{class_tool_group_a749e84cf4dfdf68033b44aa0b4cb7734}{do\-Button\-Action()} call. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_tool_group_adf3e25748f41ba5490aac857e375260d}{is\-Enabled} (int button\-Id)=0
+\begin{DoxyCompactList}\small\item\em Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A group of buttons of a particular type that have some affect on activity in the designer. 
+
+Each of the subcategories in the \hyperlink{class_toolbox}{Toolbox} on the left hand side of the designer window is a \hyperlink{class_tool_group}{Tool\-Group}. Different types of Tool\-Groups are allowed; however, currently we are only using \hyperlink{class_asset_tool_group}{Asset\-Tool\-Group} objects. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Tool\-Group.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_tool_group_a5c64e3a5d2932696cf79603664026d78}{\index{Tool\-Group@{Tool\-Group}!Add\-Button@{Add\-Button}}
+\index{Add\-Button@{Add\-Button}!ToolGroup@{Tool\-Group}}
+\subsubsection[{Add\-Button}]{\setlength{\rightskip}{0pt plus 5cm}void Tool\-Group\-::\-Add\-Button (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{label, }
+\item[{Q\-Icon}]{icon, }
+\item[{bool}]{enabled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_tool_group_a5c64e3a5d2932696cf79603664026d78}
+
+
+Adds a new button to this \hyperlink{class_tool_group}{Tool\-Group} with the input label and icon. 
+
+The button may be set disabled if it can't currently be used by passing false into the enabled parameter. 
+
+Definition at line 29 of file Tool\-Group.\-cpp.
+
+\hypertarget{class_tool_group_ab340659ee03a519aa249bda3592255a6}{\index{Tool\-Group@{Tool\-Group}!disable\-Button\-Actions@{disable\-Button\-Actions}}
+\index{disable\-Button\-Actions@{disable\-Button\-Actions}!ToolGroup@{Tool\-Group}}
+\subsubsection[{disable\-Button\-Actions}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Tool\-Group\-::disable\-Button\-Actions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_tool_group_ab340659ee03a519aa249bda3592255a6}
+
+
+Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous \hyperlink{class_tool_group_a749e84cf4dfdf68033b44aa0b4cb7734}{do\-Button\-Action()} call. 
+
+For example, as \hyperlink{class_asset_tool_group}{Asset\-Tool\-Group} might have set a new insertion item to be added to the design when the user clicks the canvas. When this function is called, it sets the insertion item back to N\-U\-L\-L. 
+
+Reimplemented in \hyperlink{class_asset_tool_group_a40d2cbb367b31985978ea998bd6b6c34}{Asset\-Tool\-Group}, and \hyperlink{class_property_tool_group_adf0e69784e4bfd9b36a7078b9a6a09a5}{Property\-Tool\-Group}.
+
+
+
+Definition at line 48 of file Tool\-Group.\-h.
+
+\hypertarget{class_tool_group_adf3e25748f41ba5490aac857e375260d}{\index{Tool\-Group@{Tool\-Group}!is\-Enabled@{is\-Enabled}}
+\index{is\-Enabled@{is\-Enabled}!ToolGroup@{Tool\-Group}}
+\subsubsection[{is\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Tool\-Group\-::is\-Enabled (
+\begin{DoxyParamCaption}
+\item[{int}]{button\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{class_tool_group_adf3e25748f41ba5490aac857e375260d}
+
+
+Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. 
+
+For example, if the number of child assets of a certain type is limited in a particular window, this would return false for that asset's button once the limit is reached. 
+
+Implemented in \hyperlink{class_asset_tool_group_ab2ec8039e421e6be073fdfa9d4da7328}{Asset\-Tool\-Group}, \hyperlink{class_property_tool_group_aa74eb7b67163726ba2fd3c3d8ce6f2b4}{Property\-Tool\-Group}, and \hyperlink{class_background_tool_group_ae1f380cbc416556ae99a0a16a524d39c}{Background\-Tool\-Group}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Tool\-Group.\-h\item 
+source/common/\-Designer/Tool\-Group.\-cpp\end{DoxyCompactItemize}

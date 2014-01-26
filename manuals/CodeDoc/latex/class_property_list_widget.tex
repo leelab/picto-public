@@ -1,0 +1,93 @@
+\hypertarget{class_property_list_widget}{\section{Property\-List\-Widget Class Reference}
+\label{class_property_list_widget}\index{Property\-List\-Widget@{Property\-List\-Widget}}
+}
+
+
+This Widget represents a list of Properties. It creates widgets for these Properties and connects the widgets and Properties together such that changing the value in one changes the value in the other.  
+
+
+
+
+{\ttfamily \#include $<$Property\-List\-Widget.\-h$>$}
+
+Inheritance diagram for Property\-List\-Widget\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_property_list_widget}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_property_list_widget_a4cef6a2b7ac56007d324c7c7dd89a58f}{void \hyperlink{class_property_list_widget_a4cef6a2b7ac56007d324c7c7dd89a58f}{property\-Edited} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$ prop, Q\-Variant val)}\label{class_property_list_widget_a4cef6a2b7ac56007d324c7c7dd89a58f}
+
+\begin{DoxyCompactList}\small\item\em Emitted when the prop Property's value was edited to become the val value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_property_list_widget_a071afdff6fd9c0b1afd546b34b43a820}{Property\-List\-Widget} (bool track\-Init\-Vals, Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$ editor\-State=Q\-Shared\-Pointer$<$ \hyperlink{class_editor_state}{Editor\-State} $>$(), Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_property_list_widget}{Property\-List\-Widget}. \end{DoxyCompactList}\item 
+void \hyperlink{class_property_list_widget_a975fb5c361cb0791dcfd120764e3c74e}{add\-Properties} (Q\-String title, Q\-Vector$<$ Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property}{Property} $>$$>$ props)
+\begin{DoxyCompactList}\small\item\em Creates widgets for the input Properties and displays them. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This Widget represents a list of Properties. It creates widgets for these Properties and connects the widgets and Properties together such that changing the value in one changes the value in the other. 
+
+This widget makes use of the \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory} which takes advantage of the Qt\-Property\-Browser infrastructure to create an appropriate type of widgets for each property. Using the Qt\-Property\-Browser makes the logic in this object fairly complicated. In return we got lots of free pretty widgets that generated themselves automatically based on Property types. At some point we may want to reduce complexity by just making the widgets ourselves.
+
+To prepare yourself for all of the complicated patchwork of code necessary to get the Qt\-Property\-Browser to work with \hyperlink{namespace_picto}{Picto}, try taking a deep breath and reading up at\-: \href{http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html}{\tt http\-://docs.\-huihoo.\-com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.\-html} \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 31 of file Property\-List\-Widget.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_property_list_widget_a071afdff6fd9c0b1afd546b34b43a820}{\index{Property\-List\-Widget@{Property\-List\-Widget}!Property\-List\-Widget@{Property\-List\-Widget}}
+\index{Property\-List\-Widget@{Property\-List\-Widget}!PropertyListWidget@{Property\-List\-Widget}}
+\subsubsection[{Property\-List\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}Property\-List\-Widget\-::\-Property\-List\-Widget (
+\begin{DoxyParamCaption}
+\item[{bool}]{track\-Init\-Vals, }
+\item[{Q\-Shared\-Pointer$<$ {\bf Editor\-State} $>$}]{editor\-State = {\ttfamily QSharedPointer$<${\bf Editor\-State}$>$()}, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_property_list_widget_a071afdff6fd9c0b1afd546b34b43a820}
+
+
+Constructs a new \hyperlink{class_property_list_widget}{Property\-List\-Widget}. 
+
+track\-Init\-Vals indicates whether Property widgets created for this \hyperlink{class_property_list_widget}{Property\-List\-Widget} should set/show init values for the input Properties or if they should set/show save\-Values for the input Properties. editor\-State is passed into the \hyperlink{class_property_editor_factory}{Property\-Editor\-Factory} constructor. We connect the \hyperlink{class_property_editor_factory_af08e17ed7bfc43dee7cbce5ed9e00e7f}{Property\-Editor\-Factory\-::property\-Edited()} signal to property\-Was\-Edited() so that we can update Property values when their widget's values are updated. 
+
+Definition at line 15 of file Property\-List\-Widget.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_property_list_widget_a975fb5c361cb0791dcfd120764e3c74e}{\index{Property\-List\-Widget@{Property\-List\-Widget}!add\-Properties@{add\-Properties}}
+\index{add\-Properties@{add\-Properties}!PropertyListWidget@{Property\-List\-Widget}}
+\subsubsection[{add\-Properties}]{\setlength{\rightskip}{0pt plus 5cm}void Property\-List\-Widget\-::add\-Properties (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{title, }
+\item[{Q\-Vector$<$ Q\-Shared\-Pointer$<$ {\bf Property} $>$$>$}]{props}
+\end{DoxyParamCaption}
+)}}\label{class_property_list_widget_a975fb5c361cb0791dcfd120764e3c74e}
+
+
+Creates widgets for the input Properties and displays them. 
+
+This function separates out regular Property objects from Script Property objects. The details of actually creating the approriate widgets and displaying them are handled by add\-Script\-Property() and add\-Property(). 
+
+Definition at line 48 of file Property\-List\-Widget.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Property\-List\-Widget.\-h\item 
+source/common/\-Designer/Property\-List\-Widget.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,82 @@
+\hypertarget{class_picto_1_1_parameter_container}{\section{Picto\-:\-:Parameter\-Container Class Reference}
+\label{class_picto_1_1_parameter_container}\index{Picto\-::\-Parameter\-Container@{Picto\-::\-Parameter\-Container}}
+}
+
+
+A container for storing parameters.  
+
+
+
+
+{\ttfamily \#include $<$Parameter\-Container.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Parameter\-Container\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.000000cm]{class_picto_1_1_parameter_container}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_parameter_container_a12d4f7aa9eb57c80eb6bffd8d1ca26b9}{virtual Q\-String {\bfseries asset\-Type} ()}\label{class_picto_1_1_parameter_container_a12d4f7aa9eb57c80eb6bffd8d1ca26b9}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_parameter_container_a155831893a2c67caa2352df513a66c0d}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_parameter_container_a155831893a2c67caa2352df513a66c0d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_parameter_container_a7047f2c6753acddf761f1b17b5efb585}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_parameter_container_af9f8d24df13b769ddd97e2ded198d5f2}{virtual void {\bfseries post\-Serialize} ()}\label{class_picto_1_1_parameter_container_af9f8d24df13b769ddd97e2ded198d5f2}
+
+\item 
+\hypertarget{class_picto_1_1_parameter_container_ac6d51674b3c137df04536991b3d08a48}{virtual bool \hyperlink{class_picto_1_1_parameter_container_ac6d51674b3c137df04536991b3d08a48}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_parameter_container_ac6d51674b3c137df04536991b3d08a48}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A container for storing parameters. 
+
+The parameter container is basically a list of parameters. This makes it easy to give parameters scope (if the parameter is in the container, it is in scope). Note that the container actually stores Q\-Shared\-Pointers to the parameters which means that we don't need to worry about deleting them, and can have multiple copies of a parameter pointer. 
+
+Definition at line 25 of file Parameter\-Container.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_parameter_container_a7047f2c6753acddf761f1b17b5efb585}{\index{Picto\-::\-Parameter\-Container@{Picto\-::\-Parameter\-Container}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::ParameterContainer@{Picto\-::\-Parameter\-Container}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Parameter\-Container\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_parameter_container_a7047f2c6753acddf761f1b17b5efb585}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_scriptable_container_a5721f31da49f2e8df266e0a6c40317fe}{Picto\-::\-Scriptable\-Container}.
+
+
+
+Definition at line 37 of file Parameter\-Container.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/parameter/Parameter\-Container.\-h\item 
+source/common/parameter/Parameter\-Container.\-cpp\end{DoxyCompactItemize}

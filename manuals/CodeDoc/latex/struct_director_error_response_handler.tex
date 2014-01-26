@@ -1,0 +1,75 @@
+\hypertarget{struct_director_error_response_handler}{\section{Director\-Error\-Response\-Handler Struct Reference}
+\label{struct_director_error_response_handler}\index{Director\-Error\-Response\-Handler@{Director\-Error\-Response\-Handler}}
+}
+
+
+Extends Error\-Response\-Handler to display received error messages to the display.  
+
+
+
+
+{\ttfamily \#include $<$Director\-Error\-Response\-Handler.\-h$>$}
+
+Inheritance diagram for Director\-Error\-Response\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_director_error_response_handler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{struct_director_error_response_handler_ad3d0ea9f6aa718b87ee580abc487a678}{{\bfseries Director\-Error\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{class_director_status_manager}{Director\-Status\-Manager} $>$ status\-Manager)}\label{struct_director_error_response_handler_ad3d0ea9f6aa718b87ee580abc487a678}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{struct_director_error_response_handler_a7e6e14a2a3a2515fd2b729d6f095a3fc}{process\-Response} (Q\-String directive)
+\begin{DoxyCompactList}\small\item\em Extends Error\-Response\-Handler\-::process\-Response() to display the latest received error message to the display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Extends Error\-Response\-Handler to display received error messages to the display. 
+
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 11 of file Director\-Error\-Response\-Handler.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{struct_director_error_response_handler_a7e6e14a2a3a2515fd2b729d6f095a3fc}{\index{Director\-Error\-Response\-Handler@{Director\-Error\-Response\-Handler}!process\-Response@{process\-Response}}
+\index{process\-Response@{process\-Response}!DirectorErrorResponseHandler@{Director\-Error\-Response\-Handler}}
+\subsubsection[{process\-Response}]{\setlength{\rightskip}{0pt plus 5cm}bool Director\-Error\-Response\-Handler\-::process\-Response (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{directive}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{struct_director_error_response_handler_a7e6e14a2a3a2515fd2b729d6f095a3fc}
+
+
+Extends Error\-Response\-Handler\-::process\-Response() to display the latest received error message to the display. 
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_director_status_manager_a10d0fc15364fa73814c90c9c5300708c}{Director\-Status\-Manager\-::set\-User\-Info()}. 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_error_response_handler}{Picto\-::\-Error\-Response\-Handler}.
+
+
+
+Definition at line 13 of file Director\-Error\-Response\-Handler.\-cpp.
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/director/protocol/Director\-Error\-Response\-Handler.\-h\item 
+source/director/protocol/Director\-Error\-Response\-Handler.\-cpp\end{DoxyCompactItemize}

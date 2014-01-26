@@ -1,0 +1,60 @@
+\hypertarget{class_asset_describer}{\section{Asset\-Describer Class Reference}
+\label{class_asset_describer}\index{Asset\-Describer@{Asset\-Describer}}
+}
+
+
+A tool used to query documentation for classes used in the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}.  
+
+
+
+
+{\ttfamily \#include $<$Asset\-Describer.\-h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Q\-Shared\-Pointer\\*
+$<$ \hyperlink{struct_asset_description}{Asset\-Description} $>$ \hyperlink{class_asset_describer_abbb4f0834484d1fc3611f3adf7d97ceb}{get\-Asset\-Description} (Q\-String class\-Name)
+\begin{DoxyCompactList}\small\item\em Returns an \hyperlink{struct_asset_description}{Asset\-Description} object describing Assets of the input class\-Name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A tool used to query documentation for classes used in the \hyperlink{namespace_picto}{Picto} \hyperlink{class_designer}{Designer}. 
+
+Documentation gathered from this class is displayed in a widget at the bottom of the designer to streamline the development process by providing designers with in-\/application descriptions of element capabilities. Documentation is provided in the form of separate \hyperlink{struct_asset_description}{Asset\-Description} objects for each class. \begin{DoxyNote}{Note}
+It would make more sense if the Asset Description text was somehow stored with the actual class itself rather than all being lumped together here. It might be a good idea to figure out the best way to do that at some point. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 62 of file Asset\-Describer.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_asset_describer_abbb4f0834484d1fc3611f3adf7d97ceb}{\index{Asset\-Describer@{Asset\-Describer}!get\-Asset\-Description@{get\-Asset\-Description}}
+\index{get\-Asset\-Description@{get\-Asset\-Description}!AssetDescriber@{Asset\-Describer}}
+\subsubsection[{get\-Asset\-Description}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset\-Description} $>$ Asset\-Describer\-::get\-Asset\-Description (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{class\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_asset_describer_abbb4f0834484d1fc3611f3adf7d97ceb}
+
+
+Returns an \hyperlink{struct_asset_description}{Asset\-Description} object describing Assets of the input class\-Name. 
+
+If no information is found for the input class\-Name, an empty \hyperlink{struct_asset_description}{Asset\-Description} Q\-Shared\-Pointer is returned. 
+
+Definition at line 124 of file Asset\-Describer.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/\-Designer/Asset\-Describer.\-h\item 
+source/common/\-Designer/Asset\-Describer.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,504 @@
+\hypertarget{class_picto_1_1_session_state}{\section{Picto\-:\-:Session\-State Class Reference}
+\label{class_picto_1_1_session_state}\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}}
+}
+
+
+This is pretty much a convenience class for grouping together \hyperlink{class_picto_1_1_data_state}{Data\-State} objects for playback and \hyperlink{class_picto_1_1_analysis}{Analysis} purposes.  
+
+
+
+
+{\ttfamily \#include $<$Session\-State.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Session\-State\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_session_state}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_picto_1_1_session_state_abb5c876dcc69b58e92817b503cdc5960}{property\-Changed} (int prop\-Id, Q\-String value)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_picto_1_1_property}{Property} value change is traversed as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_af14fcf107dfd85a7b272f910412a6bb2}{property\-Init\-Value\-Changed} (int prop\-Id, Q\-String value)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_picto_1_1_property}{Property} init\-Value change is traversed as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a7f7e0b22267bc8ee5053668c4936978e}{transition\-Activated} (int trans\-Id)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_picto_1_1_transition}{Transition} traversal is passed over as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_ac6a15f3ee941d1c992e95e08dc51f631}{frame\-Presented} (double time)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a new frame presentation is traveresed as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_abbc16c5df0d06133d022dee84244ea5f}{reward\-Supplied} (double time, int duration, int channel)
+\begin{DoxyCompactList}\small\item\em Emitted when playback moves the current time passed a new reward value. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_ab054e12c872deb79667753f342ef80d8}{signal\-Changed} (Q\-String name, Q\-String\-List sub\-Chan\-Names, Q\-Vector$<$ float $>$ vals)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a \hyperlink{class_picto_1_1_signal}{Signal} data sample time is passed as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a5ab201c9c6bbe8e09774987465bcc2df}{lfp\-Changed} (int channel, double value)
+\begin{DoxyCompactList}\small\item\em Emitted when playback moves the current time passed a new lfp value. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a41d2edbdbc1239351e37402c8c5d41d0}{spike\-Event} (double time, int channel, int unit, Q\-Vector$<$ float $>$ waveform)
+\begin{DoxyCompactList}\small\item\em Emitted whenever a spike time is passed as part of playback. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a46343f31e2c22668f4f781ce6f2f6679}{percent\-Loaded} (double percent)
+\begin{DoxyCompactList}\small\item\em During the session load process (started when \hyperlink{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}{set\-Session\-Data()} is called), this signal provides the current load percentage as a number between 0 and 100. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_adc9a3ece6db23a6ffb2de22ab10ab7d4}{void \hyperlink{class_picto_1_1_session_state_adc9a3ece6db23a6ffb2de22ab10ab7d4}{was\-Reset} ()}\label{class_picto_1_1_session_state_adc9a3ece6db23a6ffb2de22ab10ab7d4}
+
+\begin{DoxyCompactList}\small\item\em This signal does not appear to ever be emitted. It should probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_session_state_af0e7c8888794eb8edff9d3764d12a679}{Session\-State} (bool \hyperlink{class_picto_1_1_session_state_adbb4217793c27b4adcf2163d9bfa8a88}{enable\-Lfp}=true)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_session_state}{Session\-State}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}{set\-Session\-Data} (Q\-Sql\-Database session, Q\-Hash$<$ int, bool $>$ obsolete\-Asset\-Ids=Q\-Hash$<$ int, bool $>$())
+\begin{DoxyCompactList}\small\item\em Calls this function to load all session data into this \hyperlink{class_picto_1_1_session_state}{Session\-State}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_af2ce593d4016bd0e29ba90ba32cb3e15}{start\-New\-Run} (double start\-Time, double end\-Time=-\/1)
+\begin{DoxyCompactList}\small\item\em Informs this \hyperlink{class_picto_1_1_session_state}{Session\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_a9538e5aed32615b554ecf31d35b96ff7}{void \hyperlink{class_picto_1_1_session_state_a9538e5aed32615b554ecf31d35b96ff7}{restart\-Run} ()}\label{class_picto_1_1_session_state_a9538e5aed32615b554ecf31d35b96ff7}
+
+\begin{DoxyCompactList}\small\item\em Causes playback to restart from the beginning of the current run. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_a7f5f14858c6ff2d727c1ba6017715633}{add\-Signal} (Q\-String name, Q\-String table\-Name, Q\-String\-List sub\-Chan\-Names, double samp\-Period)
+\begin{DoxyCompactList}\small\item\em Adds a new \hyperlink{class_picto_1_1_signal_state}{Signal\-State} to this \hyperlink{class_picto_1_1_session_state}{Session\-State} in order to playback signal data for the the signal with the input name. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_session_state_adbb4217793c27b4adcf2163d9bfa8a88}{enable\-Lfp} (bool enable)
+\begin{DoxyCompactList}\small\item\em Enables/disables tracking of L\-F\-P data. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_session_state_ace42c529f1217ba8cc1a4e3f585e2f22}{lfp\-Enabled} ()
+\begin{DoxyCompactList}\small\item\em Returns true if Lfp tracking is enabled, false if it is disabled. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property_reader}{Property\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_ac75b5c0bd0e2ea0fd106b9bab19d306e}{get\-Property\-Reader} ()
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_property_reader}{Property\-Reader} object that can be used to query \hyperlink{class_picto_1_1_property}{Property} data over time intervals. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_a39212e2b3c9b1cdf08e1427aa37a80a8}{get\-Transition\-Reader} ()
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} object that can be used to query \hyperlink{class_picto_1_1_transition}{Transition} traversal data over time intervals. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_ab0e3cc01fe71fbbf46f01862b0dce129}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_ab0e3cc01fe71fbbf46f01862b0dce129}{get\-Frame\-Reader} ()}\label{class_picto_1_1_session_state_ab0e3cc01fe71fbbf46f01862b0dce129}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_frame_reader}{Frame\-Reader} object that can be used to query Frame presentation data over time intervals. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_a05f2ab5ccc069e196c24b794fd4dc3b9}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_a05f2ab5ccc069e196c24b794fd4dc3b9}{get\-Reward\-Reader} ()}\label{class_picto_1_1_session_state_a05f2ab5ccc069e196c24b794fd4dc3b9}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_reward_reader}{Reward\-Reader} object that can be used to query reward supply data over time intervals. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_ad15c37c0d357f376a4a5ed93f857ece1}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_ad15c37c0d357f376a4a5ed93f857ece1}{get\-Run\-Notes\-Reader} ()}\label{class_picto_1_1_session_state_ad15c37c0d357f376a4a5ed93f857ece1}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_run_notes_reader}{Run\-Notes\-Reader} object that can be used to query meta-\/data about the current Run. \end{DoxyCompactList}\item 
+Q\-String\-List \hyperlink{class_picto_1_1_session_state_afcd6c7eaa6c7725240820da6eeac0834}{get\-Signal\-Reader\-Names} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of all \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} names that are available in this \hyperlink{class_picto_1_1_session_state}{Session\-State}. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_a1815b7ea410896c0c0432d27076fc508}{get\-Signal\-Reader} (Q\-String name)
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} object that can be used to query signal data over time intervals. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_a36f6a97f5ae7f43904c3d4edcd057382}{get\-Lfp\-Reader} ()
+\begin{DoxyCompactList}\small\item\em Returns an \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} object that can be used to query Local Field Potential data over time intervals. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_a54a0565232e64f631f0252122a10b3ba}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} $>$ \hyperlink{class_picto_1_1_session_state_a54a0565232e64f631f0252122a10b3ba}{get\-Spike\-Reader} ()}\label{class_picto_1_1_session_state_a54a0565232e64f631f0252122a10b3ba}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_spike_reader}{Spike\-Reader} object that can be used to query Spike times and data over time intervals. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_aca3e7642ab317720e552daedf31cf0f9}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_property_state}{Property\-State} $>$ \hyperlink{class_picto_1_1_session_state_aca3e7642ab317720e552daedf31cf0f9}{get\-Property\-State} ()}\label{class_picto_1_1_session_state_aca3e7642ab317720e552daedf31cf0f9}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_property_state}{Property\-State} object that can be used to playback \hyperlink{class_picto_1_1_property}{Property} value changes over time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_aa0669335b0a30a12c4ba486623100e14}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_transition_state}{Transition\-State} $>$ \hyperlink{class_picto_1_1_session_state_aa0669335b0a30a12c4ba486623100e14}{get\-Transition\-State} ()}\label{class_picto_1_1_session_state_aa0669335b0a30a12c4ba486623100e14}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_transition_state}{Transition\-State} object that can be used to playback \hyperlink{class_picto_1_1_transition}{Transition} traversal data over time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_a67ca5458e97f77ac03ad53cf285fa4ff}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_frame_state}{Frame\-State} $>$ \hyperlink{class_picto_1_1_session_state_a67ca5458e97f77ac03ad53cf285fa4ff}{get\-Frame\-State} ()}\label{class_picto_1_1_session_state_a67ca5458e97f77ac03ad53cf285fa4ff}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_frame_state}{Frame\-State} object that can be used to playback Frame presentation data over time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_a30bcdb515b9da162c3e51f9eb74b3e2a}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_reward_state}{Reward\-State} $>$ \hyperlink{class_picto_1_1_session_state_a30bcdb515b9da162c3e51f9eb74b3e2a}{get\-Reward\-State} ()}\label{class_picto_1_1_session_state_a30bcdb515b9da162c3e51f9eb74b3e2a}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_reward_state}{Reward\-State} object that can be used to playback \hyperlink{class_picto_1_1_reward}{Reward} delivery data over time. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_signal_state}{Signal\-State} $>$ \hyperlink{class_picto_1_1_session_state_aeeb32d6162b514a58ecc8707b9d0895b}{get\-Signal\-State} (Q\-String name)
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_signal_state}{Signal\-State} object that can be used to playback \hyperlink{class_picto_1_1_signal}{Signal} value data over time. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} $>$ \hyperlink{class_picto_1_1_session_state_abf27305cf07d6fb584d8f9f101946fef}{get\-Lfp\-State} ()
+\begin{DoxyCompactList}\small\item\em Returns an \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} object that can be used to playback Local Field Potential data over time. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_session_state_ac00007c18dab104b8a23601eaae05232}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_spike_state}{Spike\-State} $>$ \hyperlink{class_picto_1_1_session_state_ac00007c18dab104b8a23601eaae05232}{get\-Spike\-State} ()}\label{class_picto_1_1_session_state_ac00007c18dab104b8a23601eaae05232}
+
+\begin{DoxyCompactList}\small\item\em Returns a \hyperlink{class_picto_1_1_spike_state}{Spike\-State} object that can be used to playback Spike data over time. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_state}{Data\-State} $>$ $>$ \hyperlink{class_picto_1_1_session_state_a9e6a96eed8ed02bd34b28d695a24262a}{get\-States\-Indexed\-By\-Id} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of all \hyperlink{class_picto_1_1_data_state}{Data\-State} objects included in this \hyperlink{class_picto_1_1_session_state}{Session\-State} that are indexed with a Data\-Id. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_data_state}{Data\-State} $>$ $>$ \hyperlink{class_picto_1_1_session_state_a90001c8208d8f7e7b8b5b373641a7326}{get\-States\-Indexed\-By\-Time} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of all \hyperlink{class_picto_1_1_data_state}{Data\-State} objects included in this \hyperlink{class_picto_1_1_session_state}{Session\-State} that are only indexed according to their timestamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is pretty much a convenience class for grouping together \hyperlink{class_picto_1_1_data_state}{Data\-State} objects for playback and \hyperlink{class_picto_1_1_analysis}{Analysis} purposes. 
+
+When the \hyperlink{class_picto_1_1_session_state}{Session\-State} is created, it creates all of the standard \hyperlink{class_picto_1_1_data_state}{Data\-State} objects for playback. \hyperlink{class_picto_1_1_session_state_a7f5f14858c6ff2d727c1ba6017715633}{add\-Signal()} can be used to create and add \hyperlink{class_picto_1_1_signal_state}{Signal\-State} \hyperlink{class_picto_1_1_data_state}{Data\-State} objects since the number of \hyperlink{class_picto_1_1_signal}{Signal} channels in a session is variable as a function of the \hyperlink{class_director}{Director} hardware and configuration. \hyperlink{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}{set\-Session\-Data()} loads session data into all of the \hyperlink{class_picto_1_1_data_state}{Data\-State} objects, \hyperlink{class_picto_1_1_session_state_af2ce593d4016bd0e29ba90ba32cb3e15}{start\-New\-Run()} sets the active run, and various get functions can then be used to access the \hyperlink{class_picto_1_1_data_state}{Data\-State} objects and traverse through them for playback purposes by using their move\-To\-Index() functions. Value changes due to the playback process are emitted as signals from this \hyperlink{class_picto_1_1_session_state}{Session\-State}. For \hyperlink{class_picto_1_1_analysis}{Analysis} purposes, various get functions are available to retrieve Reader objects which can be used to poll data over set time intervals. There is also the capability to disable Lfp data for lower R\-A\-M usage and load time.
+
+\begin{DoxyNote}{Note}
+Some of the functionality that currently appears in the \hyperlink{class_picto_1_1_session_player}{Session\-Player} might better appear here. Ideally, this class would encapsulate all of the \hyperlink{class_picto_1_1_data_state}{Data\-State} objects to the extent that they wouldn't need to be accessed from the outside world. This would be a good thing to work on when someone has some free time. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See Also}
+Session\-Loader, \hyperlink{class_picto_1_1_session_player}{Session\-Player} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 45 of file Session\-State.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_session_state_af0e7c8888794eb8edff9d3764d12a679}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!Session\-State@{Session\-State}}
+\index{Session\-State@{Session\-State}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{Session\-State}]{\setlength{\rightskip}{0pt plus 5cm}Session\-State\-::\-Session\-State (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable\-Lfp = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_af0e7c8888794eb8edff9d3764d12a679}
+
+
+Constructs a new \hyperlink{class_picto_1_1_session_state}{Session\-State}. 
+
+enable\-Lfp indicates if Local Field Potential data will be played back as part of this \hyperlink{class_picto_1_1_session_state}{Session\-State} or if it will be disabled (ignored). Disabling L\-F\-P data can lead to a significant savings in R\-A\-M and load time.
+
+In this constructor all of the various \hyperlink{class_picto_1_1_data_state}{Data\-State} objects necessary to read in Session data and play it back are created. Their signals that are used to inform the outside world of session events during playback are connecte up to this objects signals and various values are initialized. 
+
+Definition at line 12 of file Session\-State.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_session_state_a7f5f14858c6ff2d727c1ba6017715633}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!add\-Signal@{add\-Signal}}
+\index{add\-Signal@{add\-Signal}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{add\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}void Session\-State\-::add\-Signal (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name, }
+\item[{Q\-String}]{table\-Name, }
+\item[{Q\-String\-List}]{sub\-Chan\-Names, }
+\item[{double}]{samp\-Period}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a7f5f14858c6ff2d727c1ba6017715633}
+
+
+Adds a new \hyperlink{class_picto_1_1_signal_state}{Signal\-State} to this \hyperlink{class_picto_1_1_session_state}{Session\-State} in order to playback signal data for the the signal with the input name. 
+
+name is the name of the signal to be tracked by this \hyperlink{class_picto_1_1_live_signal_reader}{Live\-Signal\-Reader} (ie. \char`\"{}\-Position\char`\"{}). table\-Name is the name of the table containing the signal data (ie. \char`\"{}signal\-\_\-position\char`\"{}), sub\-Chan\-Names is a list of the names of the subchannels of the signal to be tracked (ie. \char`\"{}x\char`\"{},\char`\"{}y\char`\"{}). sample\-Period is the time per sample for the signal channel. 
+
+Definition at line 124 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_adbb4217793c27b4adcf2163d9bfa8a88}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!enable\-Lfp@{enable\-Lfp}}
+\index{enable\-Lfp@{enable\-Lfp}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{enable\-Lfp}]{\setlength{\rightskip}{0pt plus 5cm}void Session\-State\-::enable\-Lfp (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_adbb4217793c27b4adcf2163d9bfa8a88}
+
+
+Enables/disables tracking of L\-F\-P data. 
+
+Disabling L\-F\-P data when it isn't needed translates into savings in R\-A\-M and loadtime. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}{Lfp\-State\-::set\-Enabled()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 141 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_ac6a15f3ee941d1c992e95e08dc51f631}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!frame\-Presented@{frame\-Presented}}
+\index{frame\-Presented@{frame\-Presented}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{frame\-Presented}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::frame\-Presented (
+\begin{DoxyParamCaption}
+\item[{double}]{time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_ac6a15f3ee941d1c992e95e08dc51f631}
+
+
+Emitted whenever a new frame presentation is traveresed as part of playback. 
+
+The \char`\"{}time\char`\"{} input is the frame time. \hypertarget{class_picto_1_1_session_state_a36f6a97f5ae7f43904c3d4edcd057382}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Lfp\-Reader@{get\-Lfp\-Reader}}
+\index{get\-Lfp\-Reader@{get\-Lfp\-Reader}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Lfp\-Reader}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Lfp\-Reader} $>$ Session\-State\-::get\-Lfp\-Reader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a36f6a97f5ae7f43904c3d4edcd057382}
+
+
+Returns an \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} object that can be used to query Local Field Potential data over time intervals. 
+
+\begin{DoxyNote}{Note}
+If \hyperlink{class_picto_1_1_session_state_ace42c529f1217ba8cc1a4e3f585e2f22}{lfp\-Enabled()} is false , this \hyperlink{class_picto_1_1_lfp_reader}{Lfp\-Reader} will not contain any data regardless of whether L\-F\-P data was tracked during the session. Lfp Enabling/\-Disabling is set in the \hyperlink{class_picto_1_1_session_state}{Session\-State} constructor and in enabled\-Lfp(). 
+\end{DoxyNote}
+
+
+Definition at line 222 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_abf27305cf07d6fb584d8f9f101946fef}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Lfp\-State@{get\-Lfp\-State}}
+\index{get\-Lfp\-State@{get\-Lfp\-State}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Lfp\-State}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Lfp\-State} $>$ Session\-State\-::get\-Lfp\-State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_abf27305cf07d6fb584d8f9f101946fef}
+
+
+Returns an \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} object that can be used to playback Local Field Potential data over time. 
+
+\begin{DoxyNote}{Note}
+If \hyperlink{class_picto_1_1_session_state_ace42c529f1217ba8cc1a4e3f585e2f22}{lfp\-Enabled()} is false , the returned \hyperlink{class_picto_1_1_lfp_state}{Lfp\-State} will not contain any data regardless of whether L\-F\-P data was tracked during the session. Lfp Enabling/\-Disabling is set in the \hyperlink{class_picto_1_1_session_state}{Session\-State} constructor and in enabled\-Lfp(). 
+\end{DoxyNote}
+
+
+Definition at line 277 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_ac75b5c0bd0e2ea0fd106b9bab19d306e}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Property\-Reader@{get\-Property\-Reader}}
+\index{get\-Property\-Reader@{get\-Property\-Reader}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Property\-Reader}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Property\-Reader} $>$ Session\-State\-::get\-Property\-Reader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_ac75b5c0bd0e2ea0fd106b9bab19d306e}
+
+
+Returns a \hyperlink{class_picto_1_1_property_reader}{Property\-Reader} object that can be used to query \hyperlink{class_picto_1_1_property}{Property} data over time intervals. 
+
+\begin{DoxyNote}{Note}
+The \hyperlink{class_picto_1_1_property_reader}{Property\-Reader} interface is now empty since it is much more natural to read out \hyperlink{class_picto_1_1_property}{Property} value data as control flow moves through the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} . We leave this here though in case we decide in the future that we want to add some additional \hyperlink{class_picto_1_1_property}{Property} data read capability. 
+\end{DoxyNote}
+
+
+Definition at line 162 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a1815b7ea410896c0c0432d27076fc508}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Signal\-Reader@{get\-Signal\-Reader}}
+\index{get\-Signal\-Reader@{get\-Signal\-Reader}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Signal\-Reader}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Signal\-Reader} $>$ Session\-State\-::get\-Signal\-Reader (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a1815b7ea410896c0c0432d27076fc508}
+
+
+Returns a \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} object that can be used to query signal data over time intervals. 
+
+The input name defines which \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} will be returned. Valid \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} names can be accessed from \hyperlink{class_picto_1_1_session_state_afcd6c7eaa6c7725240820da6eeac0834}{get\-Signal\-Reader\-Names()}. 
+
+Definition at line 211 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_afcd6c7eaa6c7725240820da6eeac0834}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Signal\-Reader\-Names@{get\-Signal\-Reader\-Names}}
+\index{get\-Signal\-Reader\-Names@{get\-Signal\-Reader\-Names}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Signal\-Reader\-Names}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List Session\-State\-::get\-Signal\-Reader\-Names (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_afcd6c7eaa6c7725240820da6eeac0834}
+
+
+Returns a list of all \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} names that are available in this \hyperlink{class_picto_1_1_session_state}{Session\-State}. 
+
+Each \hyperlink{class_picto_1_1_signal}{Signal} channel has its own \hyperlink{class_picto_1_1_signal_reader}{Signal\-Reader} and which of these channels are available is a function of the \hyperlink{class_director}{Director} hardware and configuration used to run the \hyperlink{namespace_picto}{Picto} Session. 
+
+Definition at line 202 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_aeeb32d6162b514a58ecc8707b9d0895b}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Signal\-State@{get\-Signal\-State}}
+\index{get\-Signal\-State@{get\-Signal\-State}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Signal\-State}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Signal\-State} $>$ Session\-State\-::get\-Signal\-State (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_aeeb32d6162b514a58ecc8707b9d0895b}
+
+
+Returns a \hyperlink{class_picto_1_1_signal_state}{Signal\-State} object that can be used to playback \hyperlink{class_picto_1_1_signal}{Signal} value data over time. 
+
+The input name is the name of the signal tracked by the \hyperlink{class_picto_1_1_signal_state}{Signal\-State} (ie. \char`\"{}\-Property\char`\"{}). Use \hyperlink{class_picto_1_1_session_state_afcd6c7eaa6c7725240820da6eeac0834}{get\-Signal\-Reader\-Names()} to see what names are available. 
+
+Definition at line 266 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a9e6a96eed8ed02bd34b28d695a24262a}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-States\-Indexed\-By\-Id@{get\-States\-Indexed\-By\-Id}}
+\index{get\-States\-Indexed\-By\-Id@{get\-States\-Indexed\-By\-Id}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-States\-Indexed\-By\-Id}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Data\-State} $>$ $>$ Session\-State\-::get\-States\-Indexed\-By\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a9e6a96eed8ed02bd34b28d695a24262a}
+
+
+Returns a list of all \hyperlink{class_picto_1_1_data_state}{Data\-State} objects included in this \hyperlink{class_picto_1_1_session_state}{Session\-State} that are indexed with a Data\-Id. 
+
+Some Session data like Spike times or input signal times is indexed by its timestamp only. Other values, like \hyperlink{class_picto_1_1_property}{Property} changes and \hyperlink{class_picto_1_1_transition}{Transition} traversals are indexed by time and a Data\-I\-D since these values are marked as occuring at the the time of the next presented frame, so they need this extra means of capturing the ordering of changes within the frame. 
+
+Definition at line 296 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a90001c8208d8f7e7b8b5b373641a7326}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-States\-Indexed\-By\-Time@{get\-States\-Indexed\-By\-Time}}
+\index{get\-States\-Indexed\-By\-Time@{get\-States\-Indexed\-By\-Time}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-States\-Indexed\-By\-Time}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Data\-State} $>$ $>$ Session\-State\-::get\-States\-Indexed\-By\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a90001c8208d8f7e7b8b5b373641a7326}
+
+
+Returns a list of all \hyperlink{class_picto_1_1_data_state}{Data\-State} objects included in this \hyperlink{class_picto_1_1_session_state}{Session\-State} that are only indexed according to their timestamp. 
+
+Some Session data like Spike times or input signal times is indexed by its timestamp only. Other values, like \hyperlink{class_picto_1_1_property}{Property} changes and \hyperlink{class_picto_1_1_transition}{Transition} traversals are indexed by time and a Data\-I\-D since these values are marked as occuring at the the time of the next presented frame, so they need this extra means of capturing the ordering of changes within the frame. 
+
+Definition at line 308 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a39212e2b3c9b1cdf08e1427aa37a80a8}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!get\-Transition\-Reader@{get\-Transition\-Reader}}
+\index{get\-Transition\-Reader@{get\-Transition\-Reader}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{get\-Transition\-Reader}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Transition\-Reader} $>$ Session\-State\-::get\-Transition\-Reader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a39212e2b3c9b1cdf08e1427aa37a80a8}
+
+
+Returns a \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} object that can be used to query \hyperlink{class_picto_1_1_transition}{Transition} traversal data over time intervals. 
+
+\begin{DoxyNote}{Note}
+The \hyperlink{class_picto_1_1_transition_reader}{Transition\-Reader} interface is now empty since it is much more natural to gather \hyperlink{class_picto_1_1_transition}{Transition} data implicitly by using scripts as part of the \hyperlink{class_picto_1_1_state_machine}{State\-Machine} control flow. We leave this here though in case we decide in the future that we want to add some additional \hyperlink{class_picto_1_1_transition}{Transition} data read capability. 
+\end{DoxyNote}
+
+
+Definition at line 172 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a5ab201c9c6bbe8e09774987465bcc2df}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!lfp\-Changed@{lfp\-Changed}}
+\index{lfp\-Changed@{lfp\-Changed}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{lfp\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::lfp\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{double}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_a5ab201c9c6bbe8e09774987465bcc2df}
+
+
+Emitted when playback moves the current time passed a new lfp value. 
+
+channel is the channel on which the value occured, value is the value. \hypertarget{class_picto_1_1_session_state_ace42c529f1217ba8cc1a4e3f585e2f22}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!lfp\-Enabled@{lfp\-Enabled}}
+\index{lfp\-Enabled@{lfp\-Enabled}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{lfp\-Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool Session\-State\-::lfp\-Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_ace42c529f1217ba8cc1a4e3f585e2f22}
+
+
+Returns true if Lfp tracking is enabled, false if it is disabled. 
+
+Disabling L\-F\-P data when it isn't needed translates into savings in R\-A\-M and loadtime. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_session_state_adbb4217793c27b4adcf2163d9bfa8a88}{enable\-Lfp()}, \hyperlink{class_picto_1_1_lfp_state_a2f6a5af85e42ac0cddc7bd1e91542dab}{Lfp\-State\-::set\-Enabled()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 150 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a46343f31e2c22668f4f781ce6f2f6679}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!percent\-Loaded@{percent\-Loaded}}
+\index{percent\-Loaded@{percent\-Loaded}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{percent\-Loaded}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::percent\-Loaded (
+\begin{DoxyParamCaption}
+\item[{double}]{percent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_a46343f31e2c22668f4f781ce6f2f6679}
+
+
+During the session load process (started when \hyperlink{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}{set\-Session\-Data()} is called), this signal provides the current load percentage as a number between 0 and 100. 
+
+\begin{DoxyNote}{Note}
+This is definitely not a linear scale with respect to time. It just provides a \char`\"{}general sense\char`\"{} of the current percent loaded. 
+\end{DoxyNote}
+\hypertarget{class_picto_1_1_session_state_abb5c876dcc69b58e92817b503cdc5960}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!property\-Changed@{property\-Changed}}
+\index{property\-Changed@{property\-Changed}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{property\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::property\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{prop\-Id, }
+\item[{Q\-String}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_abb5c876dcc69b58e92817b503cdc5960}
+
+
+Emitted whenever a \hyperlink{class_picto_1_1_property}{Property} value change is traversed as part of playback. 
+
+The prop\-Id is the \hyperlink{class_picto_1_1_asset}{Asset} Id of the \hyperlink{class_picto_1_1_property}{Property}, the value is the new value of the \hyperlink{class_picto_1_1_property}{Property}. \hypertarget{class_picto_1_1_session_state_af14fcf107dfd85a7b272f910412a6bb2}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!property\-Init\-Value\-Changed@{property\-Init\-Value\-Changed}}
+\index{property\-Init\-Value\-Changed@{property\-Init\-Value\-Changed}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{property\-Init\-Value\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::property\-Init\-Value\-Changed (
+\begin{DoxyParamCaption}
+\item[{int}]{prop\-Id, }
+\item[{Q\-String}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_af14fcf107dfd85a7b272f910412a6bb2}
+
+
+Emitted whenever a \hyperlink{class_picto_1_1_property}{Property} init\-Value change is traversed as part of playback. 
+
+The prop\-Id is the \hyperlink{class_picto_1_1_asset}{Asset} Id of the \hyperlink{class_picto_1_1_property}{Property}, the value is the new value of the \hyperlink{class_picto_1_1_property}{Property}. Init\-Values are the values to which \hyperlink{class_picto_1_1_property}{Property} values are set when their parents first enter scope. When the Operator changes values during playback, these are the values that are changed. They then take effect and affect the run values when their parents next enter scope. \hypertarget{class_picto_1_1_session_state_abbc16c5df0d06133d022dee84244ea5f}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!reward\-Supplied@{reward\-Supplied}}
+\index{reward\-Supplied@{reward\-Supplied}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{reward\-Supplied}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::reward\-Supplied (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{int}]{duration, }
+\item[{int}]{channel}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_abbc16c5df0d06133d022dee84244ea5f}
+
+
+Emitted when playback moves the current time passed a new reward value. 
+
+time is the time that the reward was supplied, duration is its duraiton in milliseconds, channel is the reward channel on which the reward was supplied. \hypertarget{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!set\-Session\-Data@{set\-Session\-Data}}
+\index{set\-Session\-Data@{set\-Session\-Data}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{set\-Session\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Session\-State\-::set\-Session\-Data (
+\begin{DoxyParamCaption}
+\item[{Q\-Sql\-Database}]{session, }
+\item[{Q\-Hash$<$ int, bool $>$}]{obsolete\-Asset\-Ids = {\ttfamily QHash$<$int,bool$>$()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_a54ef9957c7c3f166de6bcc76f61b65f9}
+
+
+Calls this function to load all session data into this \hyperlink{class_picto_1_1_session_state}{Session\-State}. 
+
+session is the Q\-Sql\-Database object from which all session data will be loaded. obsolete\-Asset\-Ids is a lookup table of \hyperlink{class_picto_1_1_asset}{Asset} Ids for Assets that have become obsolete. When events relating to these Assets are encountered, they will be ignored. For more information on the obsolete\-Asset\-Ids lookup table, see the \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} object. The \hyperlink{class_picto_1_1_session_version_interfacer}{Session\-Version\-Interfacer} is used to prepare the input obsolete\-Asset\-Ids table. 
+
+Definition at line 58 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_ab054e12c872deb79667753f342ef80d8}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!signal\-Changed@{signal\-Changed}}
+\index{signal\-Changed@{signal\-Changed}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{signal\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::signal\-Changed (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{name, }
+\item[{Q\-String\-List}]{sub\-Chan\-Names, }
+\item[{Q\-Vector$<$ float $>$}]{vals}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_ab054e12c872deb79667753f342ef80d8}
+
+
+Emitted whenever a \hyperlink{class_picto_1_1_signal}{Signal} data sample time is passed as part of playback. 
+
+name is the name of the \hyperlink{class_picto_1_1_signal}{Signal} channel, sub\-Chan\-Names is a list of the names of that signals sub channels, vals is a Vector of the new float values of those signals, where they are listed in the same order as sub\-Chan\-Names. Values returned have already been calibrated according to the experimental calibration parameters set in the remote viewer during the experiment. \hypertarget{class_picto_1_1_session_state_a41d2edbdbc1239351e37402c8c5d41d0}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!spike\-Event@{spike\-Event}}
+\index{spike\-Event@{spike\-Event}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{spike\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::spike\-Event (
+\begin{DoxyParamCaption}
+\item[{double}]{time, }
+\item[{int}]{channel, }
+\item[{int}]{unit, }
+\item[{Q\-Vector$<$ float $>$}]{waveform}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_a41d2edbdbc1239351e37402c8c5d41d0}
+
+
+Emitted whenever a spike time is passed as part of playback. 
+
+time is the time at which the spike occured, channel is the electrode channel on which it occured, unit is the neuron unit within that channel that spiked, and waveform is a vector of floats describing the spike waveform. \hypertarget{class_picto_1_1_session_state_af2ce593d4016bd0e29ba90ba32cb3e15}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!start\-New\-Run@{start\-New\-Run}}
+\index{start\-New\-Run@{start\-New\-Run}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{start\-New\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void Session\-State\-::start\-New\-Run (
+\begin{DoxyParamCaption}
+\item[{double}]{start\-Time, }
+\item[{double}]{end\-Time = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_session_state_af2ce593d4016bd0e29ba90ba32cb3e15}
+
+
+Informs this \hyperlink{class_picto_1_1_session_state}{Session\-State} that a new run is starting along with the time that the run is starting and the time that it will end (if available). Times are in seconds. 
+
+This is important not only because it initializes the current playback location to the beginning of the input run, but also because time values used in the Playback system are always with respect to the beginning of the run. In otherwords, if something happens at the same time that the Run Starts, its time will be reported as zero, even if the run happened at time 213.\-315. 
+
+Definition at line 93 of file Session\-State.\-cpp.
+
+\hypertarget{class_picto_1_1_session_state_a7f7e0b22267bc8ee5053668c4936978e}{\index{Picto\-::\-Session\-State@{Picto\-::\-Session\-State}!transition\-Activated@{transition\-Activated}}
+\index{transition\-Activated@{transition\-Activated}!Picto::SessionState@{Picto\-::\-Session\-State}}
+\subsubsection[{transition\-Activated}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Session\-State\-::transition\-Activated (
+\begin{DoxyParamCaption}
+\item[{int}]{trans\-Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_picto_1_1_session_state_a7f7e0b22267bc8ee5053668c4936978e}
+
+
+Emitted whenever a \hyperlink{class_picto_1_1_transition}{Transition} traversal is passed over as part of playback. 
+
+The trans\-Id is the \hyperlink{class_picto_1_1_asset}{Asset} Id of the \hyperlink{class_picto_1_1_transition}{Transition} that was traversed. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/playback/Session\-State.\-h\item 
+source/common/playback/Session\-State.\-cpp\end{DoxyCompactItemize}

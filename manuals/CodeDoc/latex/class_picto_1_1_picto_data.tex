@@ -1,0 +1,220 @@
+\hypertarget{class_picto_1_1_picto_data}{\section{Picto\-:\-:Picto\-Data Class Reference}
+\label{class_picto_1_1_picto_data}\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}}
+}
+
+
+The root node of the \hyperlink{namespace_picto}{Picto} design tree.  
+
+
+
+
+{\ttfamily \#include $<$Picto\-Data.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Picto\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_picto_1_1_picto_data}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_picto_data_a88086b3dc71b030ba09c55953c605a4a}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_picto_data_a02af7ffbee30fc04bb0d3c5792e16188}{set\-Name} (Q\-String new\-Name)
+\begin{DoxyCompactList}\small\item\em Sets the input name to this object. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_picto_data_a84bc32baffb2746990d38083e361aab1}{virtual Q\-String \hyperlink{class_picto_1_1_picto_data_a84bc32baffb2746990d38083e361aab1}{get\-Name} ()}\label{class_picto_1_1_picto_data_a84bc32baffb2746990d38083e361aab1}
+
+\begin{DoxyCompactList}\small\item\em Returns a string containing the name of this object. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Experiment} $>$ \hyperlink{class_picto_1_1_picto_data_a586cc4820a47b2cc0ab0a0c5a3273e06}{get\-Experiment} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_picto_1_1_experiment}{Experiment} child of this object. \end{DoxyCompactList}\item 
+Q\-List$<$ Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_analysis}{Analysis} $>$ $>$ \hyperlink{class_picto_1_1_picto_data_a2019b9aceb8ef5a478a21af3aa2b8cf4}{get\-Analyses} ()
+\begin{DoxyCompactList}\small\item\em Returns a list of pointers to \hyperlink{class_picto_1_1_analysis}{Analysis} children. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ \hyperlink{class_picto_1_1_picto_data_aaa430dcdc885505c40a9f3159afaaa54}{Create} ()
+\begin{DoxyCompactList}\small\item\em Constructs a shared pointer to a new \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} object and returns it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Q\-String \hyperlink{class_picto_1_1_picto_data_ae5c3d9801e509f9045be5c5d9a6aa597}{default\-Tag\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_picto_1_1_picto_data_ad6a34eb605a263ff1f69aa87e2095c2f}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_picto_1_1_picto_data_ad3c904629ebd1ecc9bd488b3bc53ee95}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)
+\begin{DoxyCompactList}\small\item\em Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The root node of the \hyperlink{namespace_picto}{Picto} design tree. 
+
+This \hyperlink{class_picto_1_1_data_store}{Data\-Store} is the root \hyperlink{class_picto_1_1_data_store}{Data\-Store} of the entire \hyperlink{namespace_picto}{Picto} Design. Its children include \hyperlink{class_picto_1_1_experiment}{Experiment} objects, and any number of \hyperlink{class_picto_1_1_analysis}{Analysis} objects and \hyperlink{class_picto_1_1_u_i_data}{U\-I\-Data} objects. Whereas the \hyperlink{class_picto_1_1_design_root}{Design\-Root} is a convenient package for moving designs around, the \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} node is the real root of the design, included in the actual serialization/deserialization procedure.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_root}{Design\-Root} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Picto\-Data.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_picto_data_aaa430dcdc885505c40a9f3159afaaa54}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!Create@{Create}}
+\index{Create@{Create}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{Create}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Asset} $>$ Picto\-Data\-::\-Create (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_picto_1_1_picto_data_aaa430dcdc885505c40a9f3159afaaa54}
+
+
+Constructs a shared pointer to a new \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} object and returns it. 
+
+Whereas in all other node of the \hyperlink{namespace_picto}{Picto} design tree, the parent sets the childs \hyperlink{class_picto_1_1_design_config}{Design\-Config} pointer to be the same as its own, since we are at the top of the tree, we create the \hyperlink{class_picto_1_1_design_config}{Design\-Config} object here and set it to our own pointer. 
+
+Definition at line 104 of file Picto\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_picto_data_ae5c3d9801e509f9045be5c5d9a6aa597}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!default\-Tag\-Name@{default\-Tag\-Name}}
+\index{default\-Tag\-Name@{default\-Tag\-Name}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{default\-Tag\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Picto\-Data\-::default\-Tag\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picto_data_ae5c3d9801e509f9045be5c5d9a6aa597}
+
+
+Returns the name of this \hyperlink{class_picto_1_1_data_store}{Data\-Store}'s default X\-M\-L tag. 
+
+\begin{DoxyNote}{Note}
+The one who determines a child's tag name is its parent however, since it is its parent that needs to understand which X\-M\-L tags need to be deserialized in which types of \hyperlink{class_picto_1_1_asset}{Asset} object. See the Output\-Element\-Container\-::\-Output\-Element\-Container() constructor for an example of this. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a773e96bb8df73a90d56c1aa8fdc0dfa5}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 42 of file Picto\-Data.\-h.
+
+\hypertarget{class_picto_1_1_picto_data_a88086b3dc71b030ba09c55953c605a4a}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Picto\-Data\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picto_data_a88086b3dc71b030ba09c55953c605a4a}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a964af19f287fffb7efb36a5f818704ab}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 30 of file Picto\-Data.\-h.
+
+\hypertarget{class_picto_1_1_picto_data_a2019b9aceb8ef5a478a21af3aa2b8cf4}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!get\-Analyses@{get\-Analyses}}
+\index{get\-Analyses@{get\-Analyses}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{get\-Analyses}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Analysis} $>$ $>$ Picto\-Data\-::get\-Analyses (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_picto_data_a2019b9aceb8ef5a478a21af3aa2b8cf4}
+
+
+Returns a list of pointers to \hyperlink{class_picto_1_1_analysis}{Analysis} children. 
+
+\hyperlink{class_picto_1_1_picto_data}{Picto\-Data} objects can have any number (including zero) of \hyperlink{class_picto_1_1_analysis}{Analysis} children. 
+
+Definition at line 124 of file Picto\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_picto_data_a586cc4820a47b2cc0ab0a0c5a3273e06}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!get\-Experiment@{get\-Experiment}}
+\index{get\-Experiment@{get\-Experiment}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{get\-Experiment}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Experiment} $>$ Picto\-Data\-::get\-Experiment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_picto_data_a586cc4820a47b2cc0ab0a0c5a3273e06}
+
+
+Returns the \hyperlink{class_picto_1_1_experiment}{Experiment} child of this object. 
+
+Every \hyperlink{class_picto_1_1_picto_data}{Picto\-Data} object has one and only one \hyperlink{class_picto_1_1_experiment}{Experiment} child. 
+
+Definition at line 115 of file Picto\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_picto_data_ad6a34eb605a263ff1f69aa87e2095c2f}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-Data\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picto_data_ad6a34eb605a263ff1f69aa87e2095c2f}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_aaa194a5392d79cefe701c163564efd52}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 24 of file Picto\-Data.\-cpp.
+
+\hypertarget{class_picto_1_1_picto_data_a02af7ffbee30fc04bb0d3c5792e16188}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!set\-Name@{set\-Name}}
+\index{set\-Name@{set\-Name}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Picto\-::\-Picto\-Data\-::set\-Name (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{new\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picto_data_a02af7ffbee30fc04bb0d3c5792e16188}
+
+
+Sets the input name to this object. 
+
+If set\-Name is not called, the object's default name is \char`\"{}\-Untitled\char`\"{} 
+
+Definition at line 34 of file Picto\-Data.\-h.
+
+\hypertarget{class_picto_1_1_picto_data_ad3c904629ebd1ecc9bd488b3bc53ee95}{\index{Picto\-::\-Picto\-Data@{Picto\-::\-Picto\-Data}!validate\-Object@{validate\-Object}}
+\index{validate\-Object@{validate\-Object}!Picto::PictoData@{Picto\-::\-Picto\-Data}}
+\subsubsection[{validate\-Object}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-Data\-::validate\-Object (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$}]{xml\-Stream\-Reader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_picto_data_ad3c904629ebd1ecc9bd488b3bc53ee95}
+
+
+Returns true if this \hyperlink{class_picto_1_1_asset}{Asset} has valid syntax. 
+
+If invalid syntax is found, this function uses add\-Error to report a syntax violation and returns false. The Q\-Xml\-Stream\-Reader is passed in so that the \hyperlink{class_picto_1_1_asset}{Asset} can reference it in any error messages.
+
+In the case of the \hyperlink{class_picto_1_1_data_store}{Data\-Store}, this function checks for uniqueness of child names when \hyperlink{class_picto_1_1_data_store_af4853c8c9ec20506d352b1c1bd01360a}{needs\-Unique\-Child\-Names()} and any child or associate child \hyperlink{class_picto_1_1_asset_ad2b39292a4648dcdb9917f4bcf4bd658}{needs\-Unique\-Name()} 
+
+Reimplemented from \hyperlink{class_picto_1_1_data_store_a077c9284e2d18d50b72e0fea1a5eeacb}{Picto\-::\-Data\-Store}.
+
+
+
+Definition at line 134 of file Picto\-Data.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/design/Picto\-Data.\-h\item 
+source/common/design/Picto\-Data.\-cpp\end{DoxyCompactItemize}

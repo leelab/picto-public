@@ -1,0 +1,76 @@
+\hypertarget{class_start_session_dialog}{\section{Start\-Session\-Dialog Class Reference}
+\label{class_start_session_dialog}\index{Start\-Session\-Dialog@{Start\-Session\-Dialog}}
+}
+
+
+N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. The original documentation appears below for your reference.  
+
+
+
+
+{\ttfamily \#include $<$Start\-Session\-Dialog.\-h$>$}
+
+Inheritance diagram for Start\-Session\-Dialog\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_start_session_dialog}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_start_session_dialog_a1600c6d47c688c82c427d1a384d98a18}{{\bfseries Start\-Session\-Dialog} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_command_channel}{Picto\-::\-Command\-Channel} $>$ command\-Channel)}\label{class_start_session_dialog_a1600c6d47c688c82c427d1a384d98a18}
+
+\item 
+\hypertarget{class_start_session_dialog_ab7beaec7de299a0d39d59ed8ccdc056d}{Q\-String {\bfseries get\-Experiment\-File} ()}\label{class_start_session_dialog_ab7beaec7de299a0d39d59ed8ccdc056d}
+
+\item 
+Q\-String \hyperlink{class_start_session_dialog_a06f3481b80116c64704c71b544e28bd2}{get\-Director\-I\-D} ()
+\begin{DoxyCompactList}\small\item\em Returns the selected director's unique I\-D as a string. \end{DoxyCompactList}\item 
+\hypertarget{class_start_session_dialog_ac915f908eb6acf959f005785d70906b7}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_experiment}{Picto\-::\-Experiment} $>$ {\bfseries get\-Experiment} ()}\label{class_start_session_dialog_ac915f908eb6acf959f005785d70906b7}
+
+\item 
+\hypertarget{class_start_session_dialog_a3df5c064883f713ba8b5796b0a15d7f3}{Q\-Uuid {\bfseries get\-Session\-Id} ()}\label{class_start_session_dialog_a3df5c064883f713ba8b5796b0a15d7f3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. The original documentation appears below for your reference. 
+
+A dialog for starting a session
+
+This was originally used as a dialog to start up a new session. We no longer use this dialog, and hence the code is no longer needed. However, I have left it in place as it shows exactly how to start up a new session. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 28 of file Start\-Session\-Dialog.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_start_session_dialog_a06f3481b80116c64704c71b544e28bd2}{\index{Start\-Session\-Dialog@{Start\-Session\-Dialog}!get\-Director\-I\-D@{get\-Director\-I\-D}}
+\index{get\-Director\-I\-D@{get\-Director\-I\-D}!StartSessionDialog@{Start\-Session\-Dialog}}
+\subsubsection[{get\-Director\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Start\-Session\-Dialog\-::get\-Director\-I\-D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_start_session_dialog_a06f3481b80116c64704c71b544e28bd2}
+
+
+Returns the selected director's unique I\-D as a string. 
+
+The value is returned as a string (rather than a Q\-Uuid), because Workstation never uses the I\-D as anything other than as an argument in a command sent to the server. If no director is selected, an empty string is returned. 
+
+Definition at line 165 of file Start\-Session\-Dialog.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/Start\-Session\-Dialog.\-h\item 
+source/workstation/Start\-Session\-Dialog.\-cpp\end{DoxyCompactItemize}

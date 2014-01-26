@@ -1,0 +1,437 @@
+\hypertarget{class_picto_1_1_command_channel}{\section{Picto\-:\-:Command\-Channel Class Reference}
+\label{class_picto_1_1_command_channel}\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}}
+}
+
+
+A channel for sending/receiving commands/responses over the network.  
+
+
+
+
+{\ttfamily \#include $<$Command\-Channel.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Command\-Channel\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_picto_1_1_command_channel}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465db}{Channel\-Status} \{ \hyperlink{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbacab8110f599c9fb57e044a328111b2c6}{connected}, 
+\hyperlink{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbad0e2834ef8ac8d240b15e4f43b4bdc46}{disconnected}
+ \}
+\begin{DoxyCompactList}\small\item\em The current status of this channel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_command_channel_a58547a1e0081ff7e8aac3ec4d5a4d5fc}{void \hyperlink{class_picto_1_1_command_channel_a58547a1e0081ff7e8aac3ec4d5a4d5fc}{connect\-To\-Server} ()}\label{class_picto_1_1_command_channel_a58547a1e0081ff7e8aac3ec4d5a4d5fc}
+
+\begin{DoxyCompactList}\small\item\em Don't call from time sensitive zone. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_command_channel_aed1770263e417f2334d9dc598695af69}{void \hyperlink{class_picto_1_1_command_channel_aed1770263e417f2334d9dc598695af69}{connect\-Attempt\-Failed} ()}\label{class_picto_1_1_command_channel_aed1770263e417f2334d9dc598695af69}
+
+\begin{DoxyCompactList}\small\item\em Emitted when an attempt to connect to the server fails. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a257a279e6a6b8ddfe4a22339e348d865}{void \hyperlink{class_picto_1_1_command_channel_a257a279e6a6b8ddfe4a22339e348d865}{channel\-Disconnected} ()}\label{class_picto_1_1_command_channel_a257a279e6a6b8ddfe4a22339e348d865}
+
+\begin{DoxyCompactList}\small\item\em Emitted whenever the connection to the server is disconnected, whether by intention or not. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a0107a2fd904237035b4337839bb907d4}{void \hyperlink{class_picto_1_1_command_channel_a0107a2fd904237035b4337839bb907d4}{channel\-Connected} ()}\label{class_picto_1_1_command_channel_a0107a2fd904237035b4337839bb907d4}
+
+\begin{DoxyCompactList}\small\item\em This signal is currently never emitted and should probably be removed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_command_channel_a85b38c5e9e5989ba8c1fec047e3cfbea}{Command\-Channel} (Q\-Uuid source\-Id, Q\-String source\-Type, Q\-Object $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. \end{DoxyCompactList}\item 
+\hyperlink{class_picto_1_1_command_channel_a0a93aed5d539ef0a4c3ab325e6440d98}{Command\-Channel} (Q\-Uuid source\-Id, Q\-String source\-Type, Q\-Host\-Address server\-Address, quint16 server\-Port\-\_\-, Q\-Object $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_af270c3f840dedc4d2d4f18d6471f5242}{virtual \hyperlink{class_picto_1_1_command_channel_af270c3f840dedc4d2d4f18d6471f5242}{$\sim$\-Command\-Channel} ()}\label{class_picto_1_1_command_channel_af270c3f840dedc4d2d4f18d6471f5242}
+
+\begin{DoxyCompactList}\small\item\em Used to make sure that the Socket underlying this channel is closed before the channel is destroyed. \end{DoxyCompactList}\item 
+int \hyperlink{class_picto_1_1_command_channel_a2178a704ecbacc3cc4b68af6949326d9}{incoming\-Responses\-Waiting} ()
+\begin{DoxyCompactList}\small\item\em Checks the network for any new incoming responses, adds them to the incoming\-Response\-Queue\-\_\-, and returns the number of responses in the queue. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_command_channel_a5b6805cc3415f144d03ae7e343df3d32}{send\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$ command)
+\begin{DoxyCompactList}\small\item\em Sends a \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} over the channel. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_command_channel_a1d6415c16c0bea0578876d13fe270074}{send\-Registered\-Command} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_command}{Picto\-::\-Protocol\-Command} $>$ command, bool enabled\-Resend=true)
+\begin{DoxyCompactList}\small\item\em Sends a command and registers it so we can watch for a matching response. \end{DoxyCompactList}\item 
+Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} $>$ \hyperlink{class_picto_1_1_command_channel_af1735870ee016525f58b6c585fdad301}{get\-Response} ()
+\begin{DoxyCompactList}\small\item\em Returns the top response in the incoming\-Response\-Queue\-\_\- and removes it from the queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_command_channel_a1a0749ef93c32a3f070dadd4e793355f}{set\-Status\-Manager} (Q\-Shared\-Pointer$<$ \hyperlink{class_component_status_manager}{Component\-Status\-Manager} $>$ status\-Manager)
+\begin{DoxyCompactList}\small\item\em When used in the \hyperlink{class_director}{Director}, the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} works closely with a \hyperlink{class_component_status_manager}{Component\-Status\-Manager} object. This sets a stored pointer to that object. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_command_channel_a42c88699a561e49f70b028122b9c60b1}{add\-Response\-Handler} (Q\-Shared\-Pointer$<$ \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} $>$ response\-Handler, bool replace\-Existing=true)
+\begin{DoxyCompactList}\small\item\em The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} maintains a table of \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} objects that take care of handling responses from the server that include commands. This function adds a \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} to that table. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses} (int timeout\-Ms)
+\begin{DoxyCompactList}\small\item\em This is a R\-E\-A\-L\-L\-Y I\-M\-P\-O\-R\-T\-A\-N\-T function that reads \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} objects coming in from the server, maps them to appropriate \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} objects and tells them to handle the response. Its pretty much the main event loop of \hyperlink{class_component_interface}{Component\-Interface} objects. R\-E\-A\-D T\-H\-E D\-E\-T\-A\-I\-L\-S..... \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a1fa109c33aeb66291ba15979378fa0d5}{int \hyperlink{class_picto_1_1_command_channel_a1fa109c33aeb66291ba15979378fa0d5}{num\-Incoming\-Responses} ()}\label{class_picto_1_1_command_channel_a1fa109c33aeb66291ba15979378fa0d5}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} objects that were recieved over the socket but not yet processed. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_command_channel_adc000fefa9fa963e93aff6e067bca69c}{wait\-For\-Response} (int timeout=0)
+\begin{DoxyCompactList}\small\item\em Waits up to the input timeout (in ms) for the command channel to have a response to process. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a995ed26dfa4a7c97b2961279aec5f821}{int \hyperlink{class_picto_1_1_command_channel_a995ed26dfa4a7c97b2961279aec5f821}{pending\-Responses} ()}\label{class_picto_1_1_command_channel_a995ed26dfa4a7c97b2961279aec5f821}
+
+\begin{DoxyCompactList}\small\item\em Every time we send a registered command, we keep it in a lookup table until a matching response comes in indicating that it was received and processed. This function returns the number of commands of this type that are waiting for responses. \end{DoxyCompactList}\item 
+Q\-Date\-Time \hyperlink{class_picto_1_1_command_channel_a3231cb5461098aea05caea3755901d28}{resend\-Pending\-Commands} ()
+\begin{DoxyCompactList}\small\item\em Resends all registered commands for which responses have not been received with this object's resend\-Pending\-Interval\-\_\-. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_command_channel_ab5523a5b477f21ba2c88160e67ff7a8b}{set\-Session\-Id} (Q\-Uuid session\-Id)
+\begin{DoxyCompactList}\small\item\em Sets the Session I\-D for which this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} will be sending data. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a146335a81b0ef524aa8291b3f6dc9721}{Q\-Uuid \hyperlink{class_picto_1_1_command_channel_a146335a81b0ef524aa8291b3f6dc9721}{get\-Session\-Id} ()}\label{class_picto_1_1_command_channel_a146335a81b0ef524aa8291b3f6dc9721}
+
+\begin{DoxyCompactList}\small\item\em Returns the Session Id of the session making use of this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_command_channel_a80e492ff5325ea3c0bbfe22bbe02863f}{clear\-Session\-Id} ()
+\begin{DoxyCompactList}\small\item\em Removes any Session I\-D that this Command Channel had stored. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_a0ec9175282cb98e99ece960376f3da12}{\hyperlink{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465db}{Channel\-Status} \hyperlink{class_picto_1_1_command_channel_a0ec9175282cb98e99ece960376f3da12}{get\-Channel\-Status} ()}\label{class_picto_1_1_command_channel_a0ec9175282cb98e99ece960376f3da12}
+
+\begin{DoxyCompactList}\small\item\em Returns the current Channel\-Status of this channel. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_aa081f7ae579624416e409f2cdd69b456}{bool \hyperlink{class_picto_1_1_command_channel_aa081f7ae579624416e409f2cdd69b456}{is\-Connected} ()}\label{class_picto_1_1_command_channel_aa081f7ae579624416e409f2cdd69b456}
+
+\begin{DoxyCompactList}\small\item\em Returns true if this channel is currently connected to the server (ie. \hyperlink{class_picto_1_1_command_channel_a0ec9175282cb98e99ece960376f3da12}{get\-Channel\-Status()} returns connected. \end{DoxyCompactList}\item 
+bool \hyperlink{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}{assure\-Connection} (int acceptable\-Timeout\-Ms=0)
+\begin{DoxyCompactList}\small\item\em Checks the channel is connected, and if not starts the reconnection process, waiting up to the input number of ms for it to complete. returns true if connected, false if disconnected. \end{DoxyCompactList}\item 
+void \hyperlink{class_picto_1_1_command_channel_a9f3c41d62b857a6ba81c55ab6aaa4a8f}{close\-Channel} ()
+\begin{DoxyCompactList}\small\item\em Closes the channel (also called from the destructor) \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_command_channel_aaa613e72eff7d7b2b01707350c5ca588}{Q\-Host\-Address \hyperlink{class_picto_1_1_command_channel_aaa613e72eff7d7b2b01707350c5ca588}{get\-Ip\-Address} ()}\label{class_picto_1_1_command_channel_aaa613e72eff7d7b2b01707350c5ca588}
+
+\begin{DoxyCompactList}\small\item\em Returns the I\-P Address from which this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} is communicating. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A channel for sending/receiving commands/responses over the network. 
+
+This discussion needs to start with a warning. Warning! This is a very messy class. This class has a lot of history and its design has suffered significantly from that history... it needs to be fixed. I will write more about this at the end. But now, getting back to the description\-:
+
+The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} object abstracts the communication between any two devices which communicate via network protocols. For example, Picto\-Director would use a \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} to send \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} objects with behavioral data to the Picto\-Server.
+
+The channel is bidirectional, but is intended to be used by the client in a client/server pair. The channel can send \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} objects and receive \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} objects.
+
+The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} can be connected to a server in multiple ways\-:
+\begin{DoxyItemize}
+\item The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} can be passed a host address and port in the constructor -\/ Currently never used
+\item The \hyperlink{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}{assure\-Connection()} function can be used (which internally calls discover\-Server() to detect a \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server} and connect to it.
+\end{DoxyItemize}
+
+To use the object, the owner calls the \hyperlink{class_picto_1_1_command_channel_a2178a704ecbacc3cc4b68af6949326d9}{incoming\-Responses\-Waiting()} function. This checks the command socket for any incoming data, and then reports back the number of responses queed up for processing. The read\-Response() function can then be called for each item in the queue. For outgoing commands, the \hyperlink{class_picto_1_1_command_channel_a5b6805cc3415f144d03ae7e343df3d32}{send\-Command()} function is called directly.
+
+The \hyperlink{class_picto_1_1_command_channel_a1d6415c16c0bea0578876d13fe270074}{send\-Registered\-Command()} function can be used to keep track of which commands have been recieved and processed by the server. Registered commands for which responses were not received can be resent with \hyperlink{class_picto_1_1_command_channel_a3231cb5461098aea05caea3755901d28}{resend\-Pending\-Commands()}. This system is currently used by \hyperlink{class_component_interface}{Component\-Interface} objects.
+
+The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} suffers significantly since it uses Q\-Tcp\-Sockets to send commands over a network while for historical reasons, the heaviest users of the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}, \hyperlink{class_component_interface}{Component\-Interface} objects don't use the Qt Event Loop which is really required for Q\-Tcp\-Sockets to run smoothly. For this reason, there is a lot of general code complexity and round about function based processing for things like assuring a network connection ( \hyperlink{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}{assure\-Connection()} ), discovering a \hyperlink{namespace_picto}{Picto} \hyperlink{class_server}{Server} I\-P Address and Port ( discover\-Server() ) and making sure server \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} messages are correctly handled ( \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()} ). This also leads to interfaces to components like Protocol\-Response\-Hander objects and \hyperlink{class_component_status_manager}{Component\-Status\-Manager} objects that the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} should really know nothing about. In an ideal world, all of these types of things would be handled by signals and slots that would be managed from the Qt Event Loop. For more detail on this issue, see the functions mentioned above, particularly \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()}.
+
+Refactoring of the \hyperlink{namespace_picto}{Picto} experimental run system to use the Qt Event loop and cleaning up this class accordingly should be considered a Priority. Until that happens, we can easily point to using the \hyperlink{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}{assure\-Connection()}, \hyperlink{class_picto_1_1_command_channel_a5b6805cc3415f144d03ae7e343df3d32}{send\-Command()}, \hyperlink{class_picto_1_1_command_channel_adc000fefa9fa963e93aff6e067bca69c}{wait\-For\-Response()}, \hyperlink{class_picto_1_1_command_channel_a995ed26dfa4a7c97b2961279aec5f821}{pending\-Responses()}, \hyperlink{class_picto_1_1_command_channel_a1fa109c33aeb66291ba15979378fa0d5}{num\-Incoming\-Responses()}, and \hyperlink{class_picto_1_1_command_channel_af1735870ee016525f58b6c585fdad301}{get\-Response()} functions to send a \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command}, wait for, and get a returned \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response}. Things start getting complicated pretty fast though, and its best at this point to just look at an existing example of \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} usage in the \hyperlink{namespace_picto}{Picto} Code, like the \hyperlink{class_remote_viewer}{Remote\-Viewer}. \hyperlink{class_component_interface}{Component\-Interface} objects use the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} in a particularly central and complex fashion. It is for \hyperlink{class_component_interface}{Component\-Interface} objects that the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} needs to include pointers to \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} and \hyperlink{class_component_status_manager}{Component\-Status\-Manager} objects. For further incite into what is going on here, look at the \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()} documentation. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()}, \hyperlink{class_component_status_manager}{Component\-Status\-Manager}, \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler}, \hyperlink{class_picto_1_1_engine_1_1_picto_engine}{Engine\-::\-Picto\-Engine} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 73 of file Command\-Channel.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465db}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!Channel\-Status@{Channel\-Status}}
+\index{Channel\-Status@{Channel\-Status}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{Channel\-Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Picto\-::\-Command\-Channel\-::\-Channel\-Status}}}\label{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465db}
+
+
+The current status of this channel. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{connected@{connected}!Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}}\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!connected@{connected}}\item[{\em 
+\hypertarget{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbacab8110f599c9fb57e044a328111b2c6}{connected}\label{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbacab8110f599c9fb57e044a328111b2c6}
+}]This channel is currently connected to the server. \index{disconnected@{disconnected}!Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}}\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!disconnected@{disconnected}}\item[{\em 
+\hypertarget{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbad0e2834ef8ac8d240b15e4f43b4bdc46}{disconnected}\label{class_picto_1_1_command_channel_ab7d91aac6340369c17e2bd2be8a465dbad0e2834ef8ac8d240b15e4f43b4bdc46}
+}]This channel is not currently connected to the server. \end{description}
+\end{Desc}
+
+
+Definition at line 113 of file Command\-Channel.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_command_channel_a85b38c5e9e5989ba8c1fec047e3cfbea}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!Command\-Channel@{Command\-Channel}}
+\index{Command\-Channel@{Command\-Channel}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{Command\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Command\-Channel\-::\-Command\-Channel (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{source\-Id, }
+\item[{Q\-String}]{source\-Type, }
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a85b38c5e9e5989ba8c1fec047e3cfbea}
+
+
+Constructs a new \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. 
+
+The input source\-Id is a unique I\-D that will be used to identify the owner of this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} in all communications. The source\-Type input is a string describing the type of application that is using this command channel (ie. \char`\"{}\-D\-I\-R\-E\-C\-T\-O\-R\char`\"{}). The source type is also recorded in all communications. 
+
+Definition at line 19 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a0a93aed5d539ef0a4c3ab325e6440d98}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!Command\-Channel@{Command\-Channel}}
+\index{Command\-Channel@{Command\-Channel}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{Command\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Command\-Channel\-::\-Command\-Channel (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{source\-Id, }
+\item[{Q\-String}]{source\-Type, }
+\item[{Q\-Host\-Address}]{server\-Address, }
+\item[{quint16}]{server\-Port\-\_\-, }
+\item[{Q\-Object $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a0a93aed5d539ef0a4c3ab325e6440d98}
+
+
+Constructs a new \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. 
+
+The input source\-Id is a unique I\-D that will be used to identify the owner of this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} in all communications. The source\-Type input is a string describing the type of application that is using this command channel (ie. \char`\"{}\-D\-I\-R\-E\-C\-T\-O\-R\char`\"{}). The source type is also recorded in all communications. The input server\-Port is the port on which communication will occur with the server, if it is known at the time that this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} is constructed. \begin{DoxyNote}{Note}
+This constructor does not appear to ever be used in \hyperlink{namespace_picto}{Picto} and should probably be removed. 
+\end{DoxyNote}
+
+
+Definition at line 49 of file Command\-Channel.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_command_channel_a42c88699a561e49f70b028122b9c60b1}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!add\-Response\-Handler@{add\-Response\-Handler}}
+\index{add\-Response\-Handler@{add\-Response\-Handler}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{add\-Response\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Command\-Channel\-::add\-Response\-Handler (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Protocol\-Response\-Handler} $>$}]{response\-Handler, }
+\item[{bool}]{replace\-Existing = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a42c88699a561e49f70b028122b9c60b1}
+
+
+The \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} maintains a table of \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} objects that take care of handling responses from the server that include commands. This function adds a \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} to that table. 
+
+The \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} table is indexed by the response directive that each \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} knows how to deal with. That way, when new responses come in, in \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()} the appropriate handler can be quickly found and used. 
+
+Definition at line 154 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!assure\-Connection@{assure\-Connection}}
+\index{assure\-Connection@{assure\-Connection}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{assure\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Command\-Channel\-::assure\-Connection (
+\begin{DoxyParamCaption}
+\item[{int}]{acceptable\-Timeout\-Ms = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a785fa9b2dccc12b6419dc9d8be3d2e21}
+
+
+Checks the channel is connected, and if not starts the reconnection process, waiting up to the input number of ms for it to complete. returns true if connected, false if disconnected. 
+
+This call only blocks for up to the input number of ms. It checks for a connection every time the function is called and if there is no connection, it attempts to reconnect by using discover\-Server() and Q\-Tcp\-Socket\-::connect\-To\-Host(). If there is an attached Status Manager, its status (disconnected or idle) is set automatically as part of this function. 
+
+Definition at line 435 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a80e492ff5325ea3c0bbfe22bbe02863f}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!clear\-Session\-Id@{clear\-Session\-Id}}
+\index{clear\-Session\-Id@{clear\-Session\-Id}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{clear\-Session\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Command\-Channel\-::clear\-Session\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a80e492ff5325ea3c0bbfe22bbe02863f}
+
+
+Removes any Session I\-D that this Command Channel had stored. 
+
+This function does not appear to be used currently. I'm not sure that it would ever really be useful. 
+
+Definition at line 754 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a9f3c41d62b857a6ba81c55ab6aaa4a8f}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!close\-Channel@{close\-Channel}}
+\index{close\-Channel@{close\-Channel}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{close\-Channel}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Command\-Channel\-::close\-Channel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a9f3c41d62b857a6ba81c55ab6aaa4a8f}
+
+
+Closes the channel (also called from the destructor) 
+
+
+
+Definition at line 98 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_af1735870ee016525f58b6c585fdad301}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!get\-Response@{get\-Response}}
+\index{get\-Response@{get\-Response}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{get\-Response}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Shared\-Pointer$<$ {\bf Protocol\-Response} $>$ Picto\-::\-Command\-Channel\-::get\-Response (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_af1735870ee016525f58b6c585fdad301}
+
+
+Returns the top response in the incoming\-Response\-Queue\-\_\- and removes it from the queue. 
+
+If the incoming\-Response\-Queue\-\_\- is empty, an empty shared pointer will be returned. 
+
+Definition at line 128 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a2178a704ecbacc3cc4b68af6949326d9}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!incoming\-Responses\-Waiting@{incoming\-Responses\-Waiting}}
+\index{incoming\-Responses\-Waiting@{incoming\-Responses\-Waiting}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{incoming\-Responses\-Waiting}]{\setlength{\rightskip}{0pt plus 5cm}int Picto\-::\-Command\-Channel\-::incoming\-Responses\-Waiting (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a2178a704ecbacc3cc4b68af6949326d9}
+
+
+Checks the network for any new incoming responses, adds them to the incoming\-Response\-Queue\-\_\-, and returns the number of responses in the queue. 
+
+Effectively, this function is just polling for the latest responses, then returning \hyperlink{class_picto_1_1_command_channel_a1fa109c33aeb66291ba15979378fa0d5}{num\-Incoming\-Responses()}. 
+
+Definition at line 115 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!process\-Responses@{process\-Responses}}
+\index{process\-Responses@{process\-Responses}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{process\-Responses}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Command\-Channel\-::process\-Responses (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout\-Ms}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}
+
+
+This is a R\-E\-A\-L\-L\-Y I\-M\-P\-O\-R\-T\-A\-N\-T function that reads \hyperlink{struct_picto_1_1_protocol_response}{Protocol\-Response} objects coming in from the server, maps them to appropriate \hyperlink{struct_picto_1_1_protocol_response_handler}{Protocol\-Response\-Handler} objects and tells them to handle the response. Its pretty much the main event loop of \hyperlink{class_component_interface}{Component\-Interface} objects. R\-E\-A\-D T\-H\-E D\-E\-T\-A\-I\-L\-S..... 
+
+This is one of those functions, the ones that are hiding in the middle of a huge stack of obscure code looking like any other function even though they are actually essentially the masters of the entire application. The history behind this function is that long, long ago, before there were smartphones, computers were pretty fast, but not quite so fast as they are now. At that point there was a concern that if we were to use Qt's event loop architecture (which is well designed and everything but required when you build with Qt) since we didn't have total control of what was happening behind the scenes in the application code, Qt might go and spend 100 ms trying to handle some random windows event that we don't care about and cause an experiment to skip a bunch of frames which would make data about things like subject response times to stimuli less reliable, or ruin timing in precisely timed states. For those reasons, the decision was made to work outside of the Qt event loop and run everything in our own loop thereby allowing us to ignore all machine events apart from data coming in over a socket from the server. At this point, though I haven't performed any tests, I believe that decision is obsolete. Processors are very fast, \hyperlink{namespace_picto}{Picto} is running on fairly clean machines that don't have lots of other background things going on, and if the core i5 processors that we are using in Pictoboxes are good enough to run many modern video games in all of their 3d, shaded, ray traced glory at 60 frames per second, they can probably handle our little circles and squares without too much trouble, even if we do use the Q\-T event loop. Added to this is a recent paper\-: \href{http://jn.physiology.org/content/109/1/249.full.pdf+html}{\tt http\-://jn.\-physiology.\-org/content/109/1/249.\-full.\-pdf+html} discussing the monkey logic software and how the Matlab language interpreter is now fast enough on a core i5 processor to acceptably deliver stimuli and track responses. Since we are working in C++ and they are working in Matlab. If they can do it, it would be difficult to imagine that our code couldn't do it, even with a Q\-T event loop running. For this reason, I hope that at some point, someone will refactor the code for Component\-Interfaces (\hyperlink{class_director}{Director} and Proxy) such that they make use of the Qt event loop and can do away with this strange event loop inside the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel}. As part of this, the Picto\-Engine and \hyperlink{class_picto_1_1_experiment}{Experiment} should be refactored as well so that we never spend more than one frame with control inside the experiment. Each frame, control should pass down from the Qt event loop, into the current state, the frame should be presented and time stamped, and control should return to the event loop for the next frame. Obviously this will need to be tested, but for normal experiments we should not run into problems. We can also add code to make \hyperlink{namespace_picto}{Picto} perform self checks for missed frames, verifying that the time span between control entery into the frame presentation code from one call to the next has very low variance. This would help experiment designers catch design errors like \char`\"{}if(var i=0 ;i$<$10;i-\/-\/)\{...\}\char`\"{} which would innevitably lead to skipped frames.
+
+In any event, the purpose of this documentation is to describe the current code, and so...
+
+This function essentially became the Event Loop because it handles responses to server commands, and in the end, \hyperlink{class_component_interface}{Component\-Interface} objects are essentially slaves to the \hyperlink{class_server}{Server}. Component\-Interfaces wait for a N\-E\-W\-S\-E\-S\-S\-I\-O\-N command, they wait for a start command, they wait for the server to end the session. For that reason, all Director/\-Proxy \hyperlink{class_component_interface}{Component\-Interface} code is functionally placed underneath this one function that handles the server responses. This is somewhat confusing. We just said that the Director/\-Proxy are slaves to the server. Shouldn't they be the ones supplying the responses? The answer to this is that they gather so much data and have precise timing requirements such they need to get rid of the data on their schedule. That means that they send the commands to the server whenever they need to and this happens frequently enough that the server can send its logical commands back inside 'responses' to the Director/\-Proxy's network commands and there is still never much of a noticable lag. When the Director/\-Proxy are idle, they still send periodic update commands to tell the server that thet are ready to start a session, so the server always has some response on which to piggyback a logical command.
+
+In summary, rewrite the \hyperlink{class_component_interface}{Component\-Interface} / Experimental run system please!!!!! and the activities of this function are as follows\-:
+\begin{DoxyItemize}
+\item Gather responses to commands sent on the channel. Hhandle them using Protocol\-Response\-Hander objects and mark off any registered commands that they match.
+\item Make sure that we are still connected to the server, and attempt to reconnect if necessary.
+\item Resend any registered commands for whom no matching responses have been received verifying that the commands were processed and their data saved. This continues until either the input number of timeout\-Ms milliseconds has been passed, or if -\/1 is input (indicating that the function never times out) this looping functionality continues until the status\-Manager\-\_\-.\-to\-Strong\-Ref()-\/$>$exit\-Triggered() function returns true (which always causes the function to end).
+\end{DoxyItemize}
+
+The function returns true if there are no pending responses left from the server. If there are still some responses left that were not processed, false is returned. 
+
+Definition at line 207 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a3231cb5461098aea05caea3755901d28}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!resend\-Pending\-Commands@{resend\-Pending\-Commands}}
+\index{resend\-Pending\-Commands@{resend\-Pending\-Commands}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{resend\-Pending\-Commands}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Date\-Time Picto\-::\-Command\-Channel\-::resend\-Pending\-Commands (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a3231cb5461098aea05caea3755901d28}
+
+
+Resends all registered commands for which responses have not been received with this object's resend\-Pending\-Interval\-\_\-. 
+
+Every time a registered command is sent, it is added to the list of pending commands. When a registered response is received, the corresponding command is removed from that list. This function resends all of the registered commands that were sent over resend\-Pending\-Interval\-\_\- seconds ago and have not yet had responses received.
+
+The function checks which command will need to be resent next assuming that no response for it is received in time. It returns a Q\-Date\-Time that indicates when the that command was sent originally so that the caller can plan when to next call this function. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 701 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a5b6805cc3415f144d03ae7e343df3d32}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!send\-Command@{send\-Command}}
+\index{send\-Command@{send\-Command}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{send\-Command}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Command\-Channel\-::send\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a5b6805cc3415f144d03ae7e343df3d32}
+
+
+Sends a \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} over the channel. 
+
+The following fields are automatically added to the \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} before it is sent
+\begin{DoxyItemize}
+\item Source-\/\-I\-D\-: The unique I\-D of the device sending this message.
+\item Source-\/\-Type\-: A string indicating the type of device that is sending this message (ie. D\-I\-R\-E\-C\-T\-O\-R).
+\item Session-\/\-I\-D\-: The unique Session Id of the Session to which this \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command} is relevant Returns true if the command is sent succesfully, false otherwise. \begin{DoxyNote}{Note}
+This function's returning true does not indicate that the receiver recieved the \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command}, only that it was succesfully sent. For a way to asynhronously be sure that the receiver recieved and saved that data included in a \hyperlink{struct_picto_1_1_protocol_command}{Protocol\-Command}, use \hyperlink{class_picto_1_1_command_channel_a1d6415c16c0bea0578876d13fe270074}{send\-Registered\-Command()}. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+Definition at line 594 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a1d6415c16c0bea0578876d13fe270074}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!send\-Registered\-Command@{send\-Registered\-Command}}
+\index{send\-Registered\-Command@{send\-Registered\-Command}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{send\-Registered\-Command}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Command\-Channel\-::send\-Registered\-Command (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Picto\-::\-Protocol\-Command} $>$}]{command, }
+\item[{bool}]{enabled\-Resend = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a1d6415c16c0bea0578876d13fe270074}
+
+
+Sends a command and registers it so we can watch for a matching response. 
+
+This function is used when you want to be able to check at a later time to determine if a response has been issued for your command. A command sent this way has a \char`\"{}\-Command-\/\-I\-D\char`\"{} field appended. The command is also added to the pending commands lookup table (using the Command-\/\-I\-D U\-U\-I\-D as a key). Sending a command as \char`\"{}registered\char`\"{} allows us to see if a response was received for that command with its included data saved. We can then resend any commands which didn't receive responses in a defined time window. For more detail on how registered commands and their responses are handled, see read\-Incoming\-Response() \begin{DoxySeeAlso}{See Also}
+read\-Incoming\-Response() 
+\end{DoxySeeAlso}
+
+
+Definition at line 637 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_ab5523a5b477f21ba2c88160e67ff7a8b}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!set\-Session\-Id@{set\-Session\-Id}}
+\index{set\-Session\-Id@{set\-Session\-Id}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{set\-Session\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Command\-Channel\-::set\-Session\-Id (
+\begin{DoxyParamCaption}
+\item[{Q\-Uuid}]{session\-Id}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_ab5523a5b477f21ba2c88160e67ff7a8b}
+
+
+Sets the Session I\-D for which this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} will be sending data. 
+
+The Session I\-D is written to any attached \hyperlink{class_component_status_manager}{Component\-Status\-Manager}. Command-\/\-I\-D values for registered commands are also reset back to 1 since they only need to be unique on a per-\/session bases. 
+
+Definition at line 741 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_a1a0749ef93c32a3f070dadd4e793355f}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!set\-Status\-Manager@{set\-Status\-Manager}}
+\index{set\-Status\-Manager@{set\-Status\-Manager}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{set\-Status\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Command\-Channel\-::set\-Status\-Manager (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Component\-Status\-Manager} $>$}]{status\-Manager}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_a1a0749ef93c32a3f070dadd4e793355f}
+
+
+When used in the \hyperlink{class_director}{Director}, the \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} works closely with a \hyperlink{class_component_status_manager}{Component\-Status\-Manager} object. This sets a stored pointer to that object. 
+
+Since the \hyperlink{class_director}{Director} works outside of the Qt Event loop,things get a little hairy when it comes to sockets which by their very nature like to work in the background while other things are happening. For that reason, the \hyperlink{class_picto_1_1_command_channel_aafe619791fb542563544ecf50628238b}{process\-Responses()} function ends up becoming a kind of event loop since it is called frequently, and this function allows it to tell the \hyperlink{class_component_status_manager}{Component\-Status\-Manager} to update. Storing a pointer to the \hyperlink{class_component_status_manager}{Component\-Status\-Manager} also allows this \hyperlink{class_picto_1_1_command_channel}{Command\-Channel} to let the \hyperlink{class_component_status_manager}{Component\-Status\-Manager} know when certain changes occur in connection status. 
+
+Definition at line 143 of file Command\-Channel.\-cpp.
+
+\hypertarget{class_picto_1_1_command_channel_adc000fefa9fa963e93aff6e067bca69c}{\index{Picto\-::\-Command\-Channel@{Picto\-::\-Command\-Channel}!wait\-For\-Response@{wait\-For\-Response}}
+\index{wait\-For\-Response@{wait\-For\-Response}!Picto::CommandChannel@{Picto\-::\-Command\-Channel}}
+\subsubsection[{wait\-For\-Response}]{\setlength{\rightskip}{0pt plus 5cm}bool Picto\-::\-Command\-Channel\-::wait\-For\-Response (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_command_channel_adc000fefa9fa963e93aff6e067bca69c}
+
+
+Waits up to the input timeout (in ms) for the command channel to have a response to process. 
+
+If the input is 0, this function is essentially equivalent to
+\begin{DoxyCode}
+\textcolor{keywordflow}{return} \hyperlink{class_picto_1_1_command_channel_a2178a704ecbacc3cc4b68af6949326d9}{incomingResponsesWaiting}() > 0; 
+\end{DoxyCode}
+ 
+
+Definition at line 288 of file Command\-Channel.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/network/Command\-Channel.\-h\item 
+source/common/network/Command\-Channel.\-cpp\end{DoxyCompactItemize}

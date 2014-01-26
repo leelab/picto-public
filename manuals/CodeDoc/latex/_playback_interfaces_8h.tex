@@ -1,0 +1,38 @@
+\hypertarget{_playback_interfaces_8h}{\section{source/common/playback/\-Playback\-Interfaces.h File Reference}
+\label{_playback_interfaces_8h}\index{source/common/playback/\-Playback\-Interfaces.\-h@{source/common/playback/\-Playback\-Interfaces.\-h}}
+}
+{\ttfamily \#include $<$Q\-Variant\-List$>$}\\*
+{\ttfamily \#include $<$Q\-String\-List$>$}\\*
+{\ttfamily \#include $<$Q\-Object$>$}\\*
+{\ttfamily \#include \char`\"{}../common.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_picto_1_1_frame_reader}{Picto\-::\-Frame\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide Frame data over input time ranges. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_lfp_reader}{Picto\-::\-Lfp\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide Local Field Potential data over input time ranges. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_property_reader}{Picto\-::\-Property\-Reader}
+\begin{DoxyCompactList}\small\item\em This class is now empty and should probably be removed. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_reward_reader}{Picto\-::\-Reward\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide \hyperlink{class_picto_1_1_reward}{Reward} data over input time ranges. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_run_notes_reader}{Picto\-::\-Run\-Notes\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide Run Notes data. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_signal_reader}{Picto\-::\-Signal\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide Input \hyperlink{class_picto_1_1_signal}{Signal} data over input time ranges (ie. Position, Eye Diameter). \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_spike_reader}{Picto\-::\-Spike\-Reader}
+\begin{DoxyCompactList}\small\item\em An base class for classes that can provide Spike data over input time ranges. \end{DoxyCompactList}\item 
+class \hyperlink{class_picto_1_1_transition_reader}{Picto\-::\-Transition\-Reader}
+\begin{DoxyCompactList}\small\item\em This class is now empty and should probably be removed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_picto}{Picto}
+\begin{DoxyCompactList}\small\item\em A compositing surface for Direct3\-D Mobile (used on Picto\-Box) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provides interfaces usable by the outside world to gather data on the session state. We return all lists as Q\-Varaint\-Lists or Q\-String\-Lists here so that they will be converted to the javascript properly. 
+
+Definition in file \hyperlink{_playback_interfaces_8h_source}{Playback\-Interfaces.\-h}.
+

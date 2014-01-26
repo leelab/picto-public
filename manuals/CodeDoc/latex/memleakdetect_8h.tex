@@ -1,0 +1,29 @@
+\hypertarget{memleakdetect_8h}{\section{source/common/memleakdetect.h File Reference}
+\label{memleakdetect_8h}\index{source/common/memleakdetect.\-h@{source/common/memleakdetect.\-h}}
+}
+
+
+Any cpp file that includes this file will have memory leak detection enabled.  
+
+
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$crtdbg.\-h$>$}\\*
+
+
+\subsection{Detailed Description}
+Any cpp file that includes this file will have memory leak detection enabled. \begin{DoxyNote}{Note}
+This file must be included after all predefined headers (ie. \#include $<$\-Q\-Shared\-Pointer$>$). Therefore, including this in header files makes things incredibly complicated since some files will include others that may define this and then include other files with precompiled headers at the top. For this reason, you should only include this in cpp files and memory leaks that occur in .h files won't be detected. S\-O D\-O\-N'T A\-L\-L\-O\-C\-A\-T\-E M\-E\-M\-O\-R\-Y I\-N .h F\-I\-L\-E\-S U\-N\-L\-E\-S\-S Y\-O\-U'R\-E R\-E\-A\-L\-L\-Y C\-A\-R\-E\-F\-U\-L!
+\end{DoxyNote}
+See \href{http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS}{\tt http\-://www.\-qtcentre.\-org/wiki/index.\-php?title=\-Memory\-\_\-\-Leak\-\_\-\-Detection\-\_\-in\-\_\-\-V\-S} for more information. \begin{DoxySeeAlso}{See Also}
+\hyperlink{mainmemleakdetect_8h_source}{mainmemleakdetect.\-h} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{memleakdetect_8h_source}{memleakdetect.\-h}.
+

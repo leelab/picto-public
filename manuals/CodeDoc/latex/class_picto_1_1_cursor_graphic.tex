@@ -1,0 +1,144 @@
+\hypertarget{class_picto_1_1_cursor_graphic}{\section{Picto\-:\-:Cursor\-Graphic Class Reference}
+\label{class_picto_1_1_cursor_graphic}\index{Picto\-::\-Cursor\-Graphic@{Picto\-::\-Cursor\-Graphic}}
+}
+
+
+A cursor graphic used to displays the current location of an input (typically the position signal).  
+
+
+
+
+{\ttfamily \#include $<$Cursor\-Graphic.\-h$>$}
+
+Inheritance diagram for Picto\-:\-:Cursor\-Graphic\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=9.000000cm]{class_picto_1_1_cursor_graphic}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_picto_1_1_cursor_graphic_ae5fcecf5fb9a0818e71cd87131f205ab}{Cursor\-Graphic} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} $>$ channel, Q\-Color \hyperlink{struct_picto_1_1_visual_element_a45c3042c969717eb2ab60373369c7de7}{color}=Q\-Color())
+\begin{DoxyCompactList}\small\item\em Creates a new \hyperlink{class_picto_1_1_cursor_graphic}{Cursor\-Graphic} object whose position will be determined by the input \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} and with the input color. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_cursor_graphic_ac7591847b95596bc30d7e5e18e4e453a}{void \hyperlink{class_picto_1_1_cursor_graphic_ac7591847b95596bc30d7e5e18e4e453a}{draw} ()}\label{class_picto_1_1_cursor_graphic_ac7591847b95596bc30d7e5e18e4e453a}
+
+\begin{DoxyCompactList}\small\item\em Draws the image represented by this \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} onto the image\-\_\- object based on its current \hyperlink{class_picto_1_1_property}{Property} values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_cursor_graphic_a57de42c02ab434f5594b04c214753327}{void \hyperlink{class_picto_1_1_cursor_graphic_a57de42c02ab434f5594b04c214753327}{update\-Animation} (int frame, Q\-Time elapsed\-Time)}\label{class_picto_1_1_cursor_graphic_a57de42c02ab434f5594b04c214753327}
+
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{struct_picto_1_1_visual_element_a598c8f6e33c58b85b80197e3743b0e91}{Visual\-Element\-::update\-Animation()} to change the position of the cursor every frame based on the position \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel}'s x, y values. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_cursor_graphic_afd45b81d61ebfe3c57fc14b037d0145e}{Q\-Point \hyperlink{class_picto_1_1_cursor_graphic_afd45b81d61ebfe3c57fc14b037d0145e}{get\-Position\-Offset} ()}\label{class_picto_1_1_cursor_graphic_afd45b81d61ebfe3c57fc14b037d0145e}
+
+\begin{DoxyCompactList}\small\item\em This returns the offset from the top left corner of the \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} image to the point in the image which should be used for positioning. For example, in a circle whose center should be positioned at the point entered into \hyperlink{struct_picto_1_1_visual_element_a454cc96862097e96a0b0f1d2c83e23ed}{set\-Position()}, this function would return Q\-Point(radius,radius). \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_picto_1_1_cursor_graphic_aa9c53a08fbe9884c0fd4429a03c7deb9}{friendly\-Type\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_cursor_graphic_a7a273380d6061cb31c27e1ec7a0d2fed}{static \hyperlink{struct_picto_1_1_visual_element}{Visual\-Element} $\ast$ \hyperlink{class_picto_1_1_cursor_graphic_a7a273380d6061cb31c27e1ec7a0d2fed}{New\-Visual\-Element} ()}\label{class_picto_1_1_cursor_graphic_a7a273380d6061cb31c27e1ec7a0d2fed}
+
+\begin{DoxyCompactList}\small\item\em This is no longer used by parts of \hyperlink{namespace_picto}{Picto} that are being used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_cursor_graphic_af8355060e8352fe334363872164fa2cd}{static const Q\-String \hyperlink{class_picto_1_1_cursor_graphic_af8355060e8352fe334363872164fa2cd}{type} = \char`\"{}Cursor Graphic\char`\"{}}\label{class_picto_1_1_cursor_graphic_af8355060e8352fe334363872164fa2cd}
+
+\begin{DoxyCompactList}\small\item\em I believe that this is no longer used. It sbould probably be deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_picto_1_1_cursor_graphic_ac2e7c774d4ce4df03b47e2095c400a3e}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_cursor_graphic_acd8db3afbc8485e4563f1fbafe61911d}{virtual bool \hyperlink{class_picto_1_1_cursor_graphic_acd8db3afbc8485e4563f1fbafe61911d}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_cursor_graphic_acd8db3afbc8485e4563f1fbafe61911d}
+
+\begin{DoxyCompactList}\small\item\em Extends \hyperlink{class_picto_1_1_scriptable_ab6e2944c43a3b5d418bf7b251594386d}{Scriptable\-::validate\-Object()} to check the syntax of this object's scripts and add a compilation error if any problems are found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A cursor graphic used to displays the current location of an input (typically the position signal). 
+
+The cursor graphic displays the current x,y location of an input as taken from a signal channel and is not meant to be used as part of an \hyperlink{class_picto_1_1_experiment}{Experiment} design. It was designed and tested for use in an engine running in slave mode.
+
+This graphic is set as non-\/scalable (\hyperlink{struct_picto_1_1_visual_element_a068aefd4d7927229d627add5f56e1b87}{Visual\-Element\-::set\-Scalable()}) since we want the cross to remain the same size regardless of the current viewer zoom state. \begin{DoxyNote}{Note}
+It might be a good idea to add a \char`\"{}tail\char`\"{} to the position signal at some point since this has proven somewhat useful in Orion. 
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 26 of file Cursor\-Graphic.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_picto_1_1_cursor_graphic_ae5fcecf5fb9a0818e71cd87131f205ab}{\index{Picto\-::\-Cursor\-Graphic@{Picto\-::\-Cursor\-Graphic}!Cursor\-Graphic@{Cursor\-Graphic}}
+\index{Cursor\-Graphic@{Cursor\-Graphic}!Picto::CursorGraphic@{Picto\-::\-Cursor\-Graphic}}
+\subsubsection[{Cursor\-Graphic}]{\setlength{\rightskip}{0pt plus 5cm}Picto\-::\-Cursor\-Graphic\-::\-Cursor\-Graphic (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Signal\-Channel} $>$}]{channel, }
+\item[{Q\-Color}]{color = {\ttfamily QColor()}}
+\end{DoxyParamCaption}
+)}}\label{class_picto_1_1_cursor_graphic_ae5fcecf5fb9a0818e71cd87131f205ab}
+
+
+Creates a new \hyperlink{class_picto_1_1_cursor_graphic}{Cursor\-Graphic} object whose position will be determined by the input \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} and with the input color. 
+
+The input \hyperlink{class_picto_1_1_signal_channel}{Signal\-Channel} must have x and y subcomponents. This is checked in the constructor with assertions. 
+
+Definition at line 13 of file Cursor\-Graphic.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_cursor_graphic_aa9c53a08fbe9884c0fd4429a03c7deb9}{\index{Picto\-::\-Cursor\-Graphic@{Picto\-::\-Cursor\-Graphic}!friendly\-Type\-Name@{friendly\-Type\-Name}}
+\index{friendly\-Type\-Name@{friendly\-Type\-Name}!Picto::CursorGraphic@{Picto\-::\-Cursor\-Graphic}}
+\subsubsection[{friendly\-Type\-Name}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Picto\-::\-Cursor\-Graphic\-::friendly\-Type\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_cursor_graphic_aa9c53a08fbe9884c0fd4429a03c7deb9}
+
+
+Returns a friendly string identifying this type of \hyperlink{class_picto_1_1_asset}{Asset}. 
+
+This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. \hyperlink{class_picto_1_1_target_controller}{Target\-Controller}, \char`\"{}\-Total Time Excceeded\char`\"{} result). 
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a78f92381924153f2c5f4b679812310eb}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 41 of file Cursor\-Graphic.\-h.
+
+\hypertarget{class_picto_1_1_cursor_graphic_ac2e7c774d4ce4df03b47e2095c400a3e}{\index{Picto\-::\-Cursor\-Graphic@{Picto\-::\-Cursor\-Graphic}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::CursorGraphic@{Picto\-::\-Cursor\-Graphic}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Picto\-::\-Cursor\-Graphic\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_cursor_graphic_ac2e7c774d4ce4df03b47e2095c400a3e}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{struct_picto_1_1_visual_element_a48c6087344d566cae7cd925443b571da}{Picto\-::\-Visual\-Element}.
+
+
+
+Definition at line 101 of file Cursor\-Graphic.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/stimuli/Cursor\-Graphic.\-h\item 
+source/common/stimuli/Cursor\-Graphic.\-cpp\end{DoxyCompactItemize}

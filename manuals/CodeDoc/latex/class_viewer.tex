@@ -1,0 +1,121 @@
+\hypertarget{class_viewer}{\section{Viewer Class Reference}
+\label{class_viewer}\index{Viewer@{Viewer}}
+}
+
+
+A \hyperlink{class_viewer}{Viewer} is a base class for panels in the Workstation that are used to handle some clearly defined job.  
+
+
+
+
+{\ttfamily \#include $<$viewer.\-h$>$}
+
+Inheritance diagram for Viewer\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_viewer}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_viewer_a78e0e1af1e09f32032b95546a0c74d3e}{virtual void \hyperlink{class_viewer_a78e0e1af1e09f32032b95546a0c74d3e}{init} ()=0}\label{class_viewer_a78e0e1af1e09f32032b95546a0c74d3e}
+
+\begin{DoxyCompactList}\small\item\em Called just before displaying the viewer. Handles any setup that needs to occur before the viewer takes focus. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_viewer_ae36f82194449083e10825229a9e22fdf}{deinit} ()=0
+\begin{DoxyCompactList}\small\item\em Called just before moving focus to a different viewer. Handles any take-\/down that needs to occur before the viewer loses focus. \end{DoxyCompactList}\item 
+\hypertarget{class_viewer_ad2cf4211ec8bf80d953daab04b14038a}{virtual void \hyperlink{class_viewer_ad2cf4211ec8bf80d953daab04b14038a}{about\-To\-Save} ()}\label{class_viewer_ad2cf4211ec8bf80d953daab04b14038a}
+
+\begin{DoxyCompactList}\small\item\em Called just before the Design\-Root is saved to file. Handles any actions that need to occur before that happens. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_viewer_aa8f10afad8094330d363080b275daaeb}{deinit\-Complete} ()
+\item 
+\hypertarget{class_viewer_af867becef29c20dc442b85c61c4d8403}{void \hyperlink{class_viewer_af867becef29c20dc442b85c61c4d8403}{enable\-Cut\-Action} (bool enable)}\label{class_viewer_af867becef29c20dc442b85c61c4d8403}
+
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_viewer_a0af3752fbdfcab15fc5d157459f5d2eb}{void \hyperlink{class_viewer_a0af3752fbdfcab15fc5d157459f5d2eb}{enable\-Copy\-Action} (bool enable)}\label{class_viewer_a0af3752fbdfcab15fc5d157459f5d2eb}
+
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. \end{DoxyCompactList}\item 
+\hypertarget{class_viewer_a305f3dfbf71cd6b987f6e85c4461e388}{void \hyperlink{class_viewer_a305f3dfbf71cd6b987f6e85c4461e388}{enable\-Paste\-Action} (bool enable)}\label{class_viewer_a305f3dfbf71cd6b987f6e85c4461e388}
+
+\begin{DoxyCompactList}\small\item\em N\-O L\-O\-N\-G\-E\-R U\-S\-E\-D. S\-H\-O\-U\-L\-D P\-R\-O\-B\-A\-B\-L\-Y B\-E D\-E\-L\-E\-T\-E\-D. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_viewer_a6a1f845092e1d4407adabb550e40431b}{{\bfseries Viewer} (Q\-Widget $\ast$parent=0)}\label{class_viewer_a6a1f845092e1d4407adabb550e40431b}
+
+\item 
+\hypertarget{class_viewer_a2006f795f8a96b722d21f0cc982ae111}{void \hyperlink{class_viewer_a2006f795f8a96b722d21f0cc982ae111}{set\-Design\-Root} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ design\-Root)}\label{class_viewer_a2006f795f8a96b722d21f0cc982ae111}
+
+\begin{DoxyCompactList}\small\item\em Sets this \hyperlink{class_viewer}{Viewer}'s Design\-Root to the input. \end{DoxyCompactList}\item 
+\hypertarget{class_viewer_aa27fe7a15dfe5ee65389b681fc5f57d9}{virtual Q\-String \hyperlink{class_viewer_aa27fe7a15dfe5ee65389b681fc5f57d9}{type} ()=0}\label{class_viewer_aa27fe7a15dfe5ee65389b681fc5f57d9}
+
+\begin{DoxyCompactList}\small\item\em Returns a string containing the type of this viewer (e.\-g \char`\"{}\-State Edit Viewer\char`\"{}). \end{DoxyCompactList}\item 
+\hypertarget{class_viewer_a36fd548283a09aeec9a56819287bf782}{virtual bool \hyperlink{class_viewer_a36fd548283a09aeec9a56819287bf782}{about\-To\-Quit} ()}\label{class_viewer_a36fd548283a09aeec9a56819287bf782}
+
+\begin{DoxyCompactList}\small\item\em This is called just before the application quits and is used to take-\/down anything that needs to be taken down before a quit. In particular, if there is some long running thread going on in the background, this function makes sure to end it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_viewer_a73547dcfee4688dc5f7f47c25fcae0e3}{Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_design_root}{Design\-Root} $>$ {\bfseries design\-Root\-\_\-}}\label{class_viewer_a73547dcfee4688dc5f7f47c25fcae0e3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_viewer}{Viewer} is a base class for panels in the Workstation that are used to handle some clearly defined job. 
+
+Within Picto\-Workstation, you change modes by selecting different Viewers. For example, an Experiment Design can be viewed and edited in the \hyperlink{class_state_edit_viewer}{State\-Edit\-Viewer}. It can also be run in the \hyperlink{class_test_viewer}{Test\-Viewer}.
+
+This base class implemements the minimum neccessary functionality\-: initialization, deinitialization, quitting and saving functionality are defined. Every viewer also has a pointer to a main Design\-Root since they all operate on the same main Design\-Root in some way.
+
+When we change from one viewer to another, the process is\-:
+\begin{DoxyEnumerate}
+\item Call \hyperlink{class_viewer_ae36f82194449083e10825229a9e22fdf}{deinit()} on the old \hyperlink{class_viewer}{Viewer},
+\item Wait for the old \hyperlink{class_viewer}{Viewer} to emit \hyperlink{class_viewer_aa8f10afad8094330d363080b275daaeb}{deinit\-Complete()}.
+\item Call init on the new \hyperlink{class_viewer}{Viewer}
+\item Change focus to the new \hyperlink{class_viewer}{Viewer}. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+\end{DoxyEnumerate}
+
+Definition at line 32 of file viewer.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_viewer_ae36f82194449083e10825229a9e22fdf}{\index{Viewer@{Viewer}!deinit@{deinit}}
+\index{deinit@{deinit}!Viewer@{Viewer}}
+\subsubsection[{deinit}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Viewer\-::deinit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}, {\ttfamily [slot]}}}\label{class_viewer_ae36f82194449083e10825229a9e22fdf}
+
+
+Called just before moving focus to a different viewer. Handles any take-\/down that needs to occur before the viewer loses focus. 
+
+\begin{DoxyNote}{Note}
+\hyperlink{class_viewer_ae36f82194449083e10825229a9e22fdf}{deinit()} needs to make sure somehow that \hyperlink{class_viewer_aa8f10afad8094330d363080b275daaeb}{deinit\-Complete()} is going to be emitted. The next viewer only takes focus once \hyperlink{class_viewer_aa8f10afad8094330d363080b275daaeb}{deinit\-Complete()} is emitted. See that signal for more details. 
+\end{DoxyNote}
+\hypertarget{class_viewer_aa8f10afad8094330d363080b275daaeb}{\index{Viewer@{Viewer}!deinit\-Complete@{deinit\-Complete}}
+\index{deinit\-Complete@{deinit\-Complete}!Viewer@{Viewer}}
+\subsubsection[{deinit\-Complete}]{\setlength{\rightskip}{0pt plus 5cm}void Viewer\-::deinit\-Complete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_viewer_aa8f10afad8094330d363080b275daaeb}
+This is emitted when the \hyperlink{class_viewer}{Viewer}'s deinitialization process is completed.
+
+We don't just rely on the \hyperlink{class_viewer_ae36f82194449083e10825229a9e22fdf}{deinit()} function returning because in some cases, deinitialization needs to wait for another thread, or \hyperlink{class_viewer_ae36f82194449083e10825229a9e22fdf}{deinit()} may even be getting called from underneath another function that needs to end before deinitialization is complete (\hyperlink{class_test_viewer_aa585afc2e81af645c57e31d2fe8e4d9f}{Test\-Viewer\-::deinit()}). 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/workstation/viewer.\-h\item 
+source/workstation/viewer.\-cpp\end{DoxyCompactItemize}

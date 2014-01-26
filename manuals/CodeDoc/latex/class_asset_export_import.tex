@@ -1,0 +1,207 @@
+\hypertarget{class_asset_export_import}{\section{Asset\-Export\-Import Class Reference}
+\label{class_asset_export_import}\index{Asset\-Export\-Import@{Asset\-Export\-Import}}
+}
+
+
+Provides functionality for exporting selected assets and importing them into a separate experiment or the same experiment at a different location.  
+
+
+
+
+{\ttfamily \#include $<$Asset\-Export\-Import.\-h$>$}
+
+Inheritance diagram for Asset\-Export\-Import\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_asset_export_import}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9e}{I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E} \{ \hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9eafb1638381aef4aee18f93d3479c8d504}{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D}, 
+\hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea1e2b2370e45bb6dfde584f190eb49d4f}{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S}, 
+\hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea46133e570ffe748afb4af35dae1a7269}{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D}, 
+\hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ead8177ff757d543d6b6f3d9ca8d5dddbf}{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K}
+ \}
+\begin{DoxyCompactList}\small\item\em An enum describing the result of an import process. \end{DoxyCompactList}\item 
+enum \hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7e}{T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E} \{ \hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea8ca1e74bed20219f29294423473af44e}{N\-O\-N\-E}, 
+\hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eae0569d127f144681bd278c5608acfca3}{E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E}, 
+\hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea256f385a864cc065545ab659f8f728b1}{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E}, 
+\hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eaa760024a586e0f4925aba0d4f6eb3808}{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T}
+ \}
+\begin{DoxyCompactList}\small\item\em An enum describing the types of operations available for a given string exported from \hyperlink{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{export\-To\-Text()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_asset_export_import_ac5e6cc644505281203cb591ccdfe1bca}{void \hyperlink{class_asset_export_import_ac5e6cc644505281203cb591ccdfe1bca}{rollback\-Design\-Required} ()}\label{class_asset_export_import_ac5e6cc644505281203cb591ccdfe1bca}
+
+\begin{DoxyCompactList}\small\item\em A change to the design occured but failed, roll the design back to its previous state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String \hyperlink{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{export\-To\-Text} (Q\-List$<$ Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$$>$ assets, \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} $\ast$associate\-Root\-Host)
+\begin{DoxyCompactList}\small\item\em Serializes the input assets from the input associate\-Root\-Host object's tree to a text string and returns that string. \end{DoxyCompactList}\item 
+int \hyperlink{class_asset_export_import_ac05d9fb6c66ad9a103eaef364f96dd77}{import\-From\-Text} (Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ paste\-Parent, Q\-String paste\-Text, \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} $\ast$experiment\-Root\-Host, Q\-Point paste\-Position=Q\-Point(0, 0), \hyperlink{class_picto_1_1_associate_root_host}{Associate\-Root\-Host} $\ast$analysis\-Root\-Host=N\-U\-L\-L)
+\begin{DoxyCompactList}\small\item\em Imports text exported from \hyperlink{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{export\-To\-Text()} into the input paste\-Parent. \end{DoxyCompactList}\item 
+\hypertarget{class_asset_export_import_aa03bd0281fb6cadcbb8dc22f6b4f9d2d}{Q\-String \hyperlink{class_asset_export_import_aa03bd0281fb6cadcbb8dc22f6b4f9d2d}{get\-Latest\-Message} ()}\label{class_asset_export_import_aa03bd0281fb6cadcbb8dc22f6b4f9d2d}
+
+\begin{DoxyCompactList}\small\item\em When something didn't work, this returns the latest messages describing what. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{class_asset_export_import_a92772031d880cade636d659ca5000d9b}{command\-Type\-Of\-Text} (Q\-String text)
+\begin{DoxyCompactList}\small\item\em Returns the type of command that can be performed with the input text where the input text should have been produced with export\-To\-String(). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provides functionality for exporting selected assets and importing them into a separate experiment or the same experiment at a different location. 
+
+This class is used for copy/paste functionality and larger scale importing of entire Analyses into new experiments during the design process or to Analyze a session that didn't have an appropriate Analysis saved with the design when the session was run. With this class, Experimental and Analysis elements must be exported separately. Since Analysis elements don't define a tree structure but are added into an experimental tree structure, import of analysis elements can be partially succesful where some Analyses find their correct parent elements and some don't. In these cases, Analysis elements that can be added are added, and those that can't are listed in a returned message. It is also possible for the import to fail but with a changed design. In these cases, the return value from the \hyperlink{class_asset_export_import_ac05d9fb6c66ad9a103eaef364f96dd77}{import\-From\-Text()} function will indicate this, and a \hyperlink{class_asset_export_import_ac5e6cc644505281203cb591ccdfe1bca}{rollback\-Design\-Required()} signal will be triggered as well. \begin{DoxyAuthor}{Author}
+Joey Schnurr, Mark Hammond, Matt Gay 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2009-\/2013 
+\end{DoxyDate}
+
+
+Definition at line 24 of file Asset\-Export\-Import.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9e}{\index{Asset\-Export\-Import@{Asset\-Export\-Import}!I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E@{I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E}}
+\index{I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E@{I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E}!AssetExportImport@{Asset\-Export\-Import}}
+\subsubsection[{I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Asset\-Export\-Import\-::\-I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E}}}\label{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9e}
+
+
+An enum describing the result of an import process. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D@{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D@{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D}}\item[{\em 
+\hypertarget{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9eafb1638381aef4aee18f93d3479c8d504}{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D}\label{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9eafb1638381aef4aee18f93d3479c8d504}
+}]Indicates that the import succeeded. \index{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S@{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S@{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S}}\item[{\em 
+\hypertarget{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea1e2b2370e45bb6dfde584f190eb49d4f}{I\-M\-P\-O\-R\-T\-\_\-\-S\-U\-C\-C\-E\-E\-D\-E\-D\-\_\-\-W\-I\-T\-H\-\_\-\-W\-A\-R\-N\-I\-N\-G\-S}\label{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea1e2b2370e45bb6dfde584f190eb49d4f}
+}]Indicates that the import succeeded but there were some warnings. \index{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D@{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D@{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D}}\item[{\em 
+\hypertarget{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea46133e570ffe748afb4af35dae1a7269}{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D}\label{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ea46133e570ffe748afb4af35dae1a7269}
+}]Indicates that the import failed, but the design hasn't been changed. \index{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K@{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K@{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K}}\item[{\em 
+\hypertarget{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ead8177ff757d543d6b6f3d9ca8d5dddbf}{I\-M\-P\-O\-R\-T\-\_\-\-F\-A\-I\-L\-E\-D\-\_\-\-R\-O\-L\-L\-B\-A\-C\-K}\label{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9ead8177ff757d543d6b6f3d9ca8d5dddbf}
+}]Indicates that the import failed and the design has been changed. An Undo should be used to return it to its prior state. \end{description}
+\end{Desc}
+
+
+Definition at line 32 of file Asset\-Export\-Import.\-h.
+
+\hypertarget{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7e}{\index{Asset\-Export\-Import@{Asset\-Export\-Import}!T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E@{T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E}}
+\index{T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E@{T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E}!AssetExportImport@{Asset\-Export\-Import}}
+\subsubsection[{T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Asset\-Export\-Import\-::\-T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E}}}\label{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7e}
+
+
+An enum describing the types of operations available for a given string exported from \hyperlink{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{export\-To\-Text()} 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\-O\-N\-E@{N\-O\-N\-E}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!N\-O\-N\-E@{N\-O\-N\-E}}\item[{\em 
+\hypertarget{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea8ca1e74bed20219f29294423473af44e}{N\-O\-N\-E}\label{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea8ca1e74bed20219f29294423473af44e}
+}]Exported String cannot be imported. \index{E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E@{E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E@{E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E}}\item[{\em 
+\hypertarget{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eae0569d127f144681bd278c5608acfca3}{E\-X\-P\-E\-R\-I\-M\-E\-N\-T\-\_\-\-P\-A\-S\-T\-E}\label{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eae0569d127f144681bd278c5608acfca3}
+}]Exported String is made up of experimental assets that can be pasted into an experiment. \index{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E@{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E@{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E}}\item[{\em 
+\hypertarget{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea256f385a864cc065545ab659f8f728b1}{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-P\-A\-S\-T\-E}\label{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7ea256f385a864cc065545ab659f8f728b1}
+}]Exported String is made up of analysis assets on a single level in the design tree that can be pasted onto a window Asset in the designer. \index{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T@{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T}!Asset\-Export\-Import@{Asset\-Export\-Import}}\index{Asset\-Export\-Import@{Asset\-Export\-Import}!A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T@{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T}}\item[{\em 
+\hypertarget{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eaa760024a586e0f4925aba0d4f6eb3808}{A\-N\-A\-L\-Y\-S\-I\-S\-\_\-\-I\-M\-P\-O\-R\-T}\label{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7eaa760024a586e0f4925aba0d4f6eb3808}
+}]Exported String is made up of analysis assets from multiple levels of the design tree that can be imported into a State\-Machine\-Element (by right clicking on that element) \end{description}
+\end{Desc}
+
+
+Definition at line 44 of file Asset\-Export\-Import.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_asset_export_import_a92772031d880cade636d659ca5000d9b}{\index{Asset\-Export\-Import@{Asset\-Export\-Import}!command\-Type\-Of\-Text@{command\-Type\-Of\-Text}}
+\index{command\-Type\-Of\-Text@{command\-Type\-Of\-Text}!AssetExportImport@{Asset\-Export\-Import}}
+\subsubsection[{command\-Type\-Of\-Text}]{\setlength{\rightskip}{0pt plus 5cm}int Asset\-Export\-Import\-::command\-Type\-Of\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_asset_export_import_a92772031d880cade636d659ca5000d9b}
+
+
+Returns the type of command that can be performed with the input text where the input text should have been produced with export\-To\-String(). 
+
+The returned value is a \hyperlink{class_asset_export_import_a37d3ee8f821ba2e32f16705c7c471d7e}{Asset\-Export\-Import\-::\-T\-E\-X\-T\-\_\-\-C\-O\-M\-M\-A\-N\-D\-\_\-\-T\-Y\-P\-E}. \begin{DoxyNote}{Note}
+The returned value is based entirely on the contents of the input text string. 
+\end{DoxyNote}
+
+
+Definition at line 554 of file Asset\-Export\-Import.\-cpp.
+
+\hypertarget{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{\index{Asset\-Export\-Import@{Asset\-Export\-Import}!export\-To\-Text@{export\-To\-Text}}
+\index{export\-To\-Text@{export\-To\-Text}!AssetExportImport@{Asset\-Export\-Import}}
+\subsubsection[{export\-To\-Text}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Asset\-Export\-Import\-::export\-To\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-List$<$ Q\-Shared\-Pointer$<$ {\bf Asset} $>$$>$}]{assets, }
+\item[{{\bf Associate\-Root\-Host} $\ast$}]{associate\-Root\-Host}
+\end{DoxyParamCaption}
+)}}\label{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}
+
+
+Serializes the input assets from the input associate\-Root\-Host object's tree to a text string and returns that string. 
+
+The returned string is meant to be used with \hyperlink{class_asset_export_import_ac05d9fb6c66ad9a103eaef364f96dd77}{Asset\-Export\-Import\-::import\-From\-Text()}. If the returned string is empty, there was a problem and more information is available from \hyperlink{class_asset_export_import_aa03bd0281fb6cadcbb8dc22f6b4f9d2d}{get\-Latest\-Message()}. The input associate\-Root\-Host is the Experiment object if the input objects are experimental assets and the Analysis object if the input objects are Analysis\-Elements. Experimental and Analysis elements cannot be exported at the same time. The serialized text includes U\-I\-Data so that imported elements will appear with the same positions as the exported elements with the exception of top level elements which will have the same relative positions but will be imported at the point where the mouse clicks for the import. Exported string looks something like this\-: 
+\begin{DoxyCode}
+<CopyData>
+    <CopiedFrom>[DesignPath]</CopyFrom>
+    <ElementCopy>
+        [Serialized Element 1 XML as in Design File]
+    </ElementCopy>
+    <ElementCopy>
+        [Serialized Element 2 XML as in Design File]
+    </ElementCopy>
+        ...
+    <UICopy>
+        [Serialized UIElement \textcolor{keywordflow}{for} Element1 XML as in Design File]
+    </UICopy>
+    <UICopy>
+        [Serialized UIElement \textcolor{keywordflow}{for} Element2 XML as in Design File]   
+    </UICopy>
+        ...
+</CopyData>
+\end{DoxyCode}
+ 
+
+Definition at line 44 of file Asset\-Export\-Import.\-cpp.
+
+\hypertarget{class_asset_export_import_ac05d9fb6c66ad9a103eaef364f96dd77}{\index{Asset\-Export\-Import@{Asset\-Export\-Import}!import\-From\-Text@{import\-From\-Text}}
+\index{import\-From\-Text@{import\-From\-Text}!AssetExportImport@{Asset\-Export\-Import}}
+\subsubsection[{import\-From\-Text}]{\setlength{\rightskip}{0pt plus 5cm}int Asset\-Export\-Import\-::import\-From\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-Shared\-Pointer$<$ {\bf Asset} $>$}]{paste\-Parent, }
+\item[{Q\-String}]{paste\-Text, }
+\item[{{\bf Associate\-Root\-Host} $\ast$}]{experiment\-Root\-Host, }
+\item[{Q\-Point}]{paste\-Position = {\ttfamily QPoint(0,0)}, }
+\item[{{\bf Associate\-Root\-Host} $\ast$}]{analysis\-Root\-Host = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)}}\label{class_asset_export_import_ac05d9fb6c66ad9a103eaef364f96dd77}
+
+
+Imports text exported from \hyperlink{class_asset_export_import_a164a5810ba088a4577ecb5e7b81a12ef}{export\-To\-Text()} into the input paste\-Parent. 
+
+paste\-Parent is the Asset which will be the parent of the imported Assets. paste\-Text is the text that was exported from export\-To\-Text. experiment\-Root\-Host is the Assoicate\-Root\-Host pointer to the Experiment object to which the imported experimental or analysis assets are associated paste\-Position is the position at which the assets should be placed (ie. If the user right clicked and selected paste somewhere, that position would go here) analysis\-Root\-Host is the Assoicate\-Root\-Host pointer to the Analysis object into which any analysis elements will be imported (it may be null if importing only experimental assets). The returned value is an enum from \hyperlink{class_asset_export_import_aca4cd77d57caadb60bc50edc33ca3d9e}{Asset\-Export\-Import\-::\-I\-M\-P\-O\-R\-T\-\_\-\-R\-E\-S\-U\-L\-T\-\_\-\-T\-Y\-P\-E}.
+
+The import algorithm is fairly involved considering the fact that imported assets may be experimental or analysis, and they have associated U\-I\-Element data which references its associated elements by asset id, yet asset ids can change if assets are immediately imported into an experiment where one of their asset ids is already taken. The best way to understand what is happening is to just read the code, but in a nutshell we take care of most of these issues by serializing the imported text in with a temporary Design\-Config, then once the associate links are set up moving the assets to the correct Design\-Config and only updating their Asset\-Ids at that point. \begin{DoxyNote}{Note}
+A common event is that the import will succeed with warnings, and the warnings will include a list of elements that could not be imported. This occurs when an experiment has changed slightly and we are trying to import an analysis. Frequently most of the analysis elements will find their attached experimental elements, but a few of them will fail since the experimental elements' names have changed. In this case the users might undo, fix the names and reimport, or simply import the analysis elements whose associated experimental elements could not be found one by one at the appropriate level. 
+\end{DoxyNote}
+
+
+Definition at line 235 of file Asset\-Export\-Import.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/storage/Asset\-Export\-Import.\-h\item 
+source/common/storage/Asset\-Export\-Import.\-cpp\end{DoxyCompactItemize}

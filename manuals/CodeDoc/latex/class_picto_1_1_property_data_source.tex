@@ -1,0 +1,72 @@
+\hypertarget{class_picto_1_1_property_data_source}{\section{Picto\-:\-:Property\-Data\-Source Class Reference}
+\label{class_picto_1_1_property_data_source}\index{Picto\-::\-Property\-Data\-Source@{Picto\-::\-Property\-Data\-Source}}
+}
+Inheritance diagram for Picto\-:\-:Property\-Data\-Source\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_picto_1_1_property_data_source}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_data_source_afdafb7a29a54ac63cf4435d924516327}{virtual Q\-String \hyperlink{class_picto_1_1_property_data_source_afdafb7a29a54ac63cf4435d924516327}{get\-U\-I\-Template} ()}\label{class_picto_1_1_property_data_source_afdafb7a29a54ac63cf4435d924516327}
+
+\begin{DoxyCompactList}\small\item\em Returns the name of a user interface template that should be used to represent this element in a U\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_data_source_afc4002f17ca7bcb9c5cc7bf4422e5823}{static Q\-Shared\-Pointer$<$ \hyperlink{class_picto_1_1_asset}{Asset} $>$ {\bfseries Create} ()}\label{class_picto_1_1_property_data_source_afc4002f17ca7bcb9c5cc7bf4422e5823}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_picto_1_1_property_data_source_af1a18ae0edce4283eac2fe4e7d008760}{virtual Q\-Shared\-Pointer\\*
+$<$ \hyperlink{class_picto_1_1_analysis_data_iterator}{Analysis\-Data\-Iterator} $>$ {\bfseries create\-Data\-Iterator} ()}\label{class_picto_1_1_property_data_source_af1a18ae0edce4283eac2fe4e7d008760}
+
+\item 
+virtual void \hyperlink{class_picto_1_1_property_data_source_a8370e743f3590aeee82486757d2df307}{post\-Deserialize} ()
+\begin{DoxyCompactList}\small\item\em This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. \end{DoxyCompactList}\item 
+\hypertarget{class_picto_1_1_property_data_source_ac51a648a0e82ecf3d15ab9725e38e92a}{virtual bool \hyperlink{class_picto_1_1_property_data_source_ac51a648a0e82ecf3d15ab9725e38e92a}{validate\-Object} (Q\-Shared\-Pointer$<$ Q\-Xml\-Stream\-Reader $>$ xml\-Stream\-Reader)}\label{class_picto_1_1_property_data_source_ac51a648a0e82ecf3d15ab9725e38e92a}
+
+\begin{DoxyCompactList}\small\item\em Verifies that this object does not have an empty name or a name that contains \char`\"{}\-::\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 14 of file Property\-Data\-Source.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_picto_1_1_property_data_source_a8370e743f3590aeee82486757d2df307}{\index{Picto\-::\-Property\-Data\-Source@{Picto\-::\-Property\-Data\-Source}!post\-Deserialize@{post\-Deserialize}}
+\index{post\-Deserialize@{post\-Deserialize}!Picto::PropertyDataSource@{Picto\-::\-Property\-Data\-Source}}
+\subsubsection[{post\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Property\-Data\-Source\-::post\-Deserialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{class_picto_1_1_property_data_source_a8370e743f3590aeee82486757d2df307}
+
+
+This function is called in \hyperlink{class_picto_1_1_asset_a8bed4da09ecb1c07ce0dab313a9aba67}{from\-Xml()} after successful deserialization and is used to initialize the \hyperlink{class_picto_1_1_asset}{Asset} based on values that were loaded in during deserialization. 
+
+In the case of the \hyperlink{class_picto_1_1_asset}{Asset} class, during post\-Deserialize we tell the \hyperlink{class_picto_1_1_design_config}{Design\-Config} that if we have reached the stage of loading where \hyperlink{class_picto_1_1_asset}{Asset} I\-Ds must be unique, it should make sure that our \hyperlink{class_picto_1_1_asset}{Asset} I\-D is different from all others in this design. \begin{DoxySeeAlso}{See Also}
+\hyperlink{class_picto_1_1_design_config_ab57e0738b97e4358ab09530cd6815fc0}{Design\-Config\-::fix\-Duplicated\-Asset\-Ids()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{class_picto_1_1_analysis_data_source_dep_a3e0d7b3b0c784e17c8fa3504705367ba}{Picto\-::\-Analysis\-Data\-Source\-Dep}.
+
+
+
+Definition at line 27 of file Property\-Data\-Source.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+source/common/analysis/Property\-Data\-Source.\-h\item 
+source/common/analysis/Property\-Data\-Source.\-cpp\end{DoxyCompactItemize}
