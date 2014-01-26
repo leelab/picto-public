@@ -1,0 +1,1 @@
+This directory includes the design built during the course of the tutorials in the PictoManual and a short session that was run with that design.

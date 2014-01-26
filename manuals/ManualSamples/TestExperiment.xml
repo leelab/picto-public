@@ -1,0 +1,376 @@
+<PictoData id="2"><Name id="7">TestExperiment</Name><Experiment id="1">
+    <Task id="3">
+      <StateMachine id="4">
+        
+        
+        
+        <Name id="18">PresentStimuli</Name>
+        
+        <StateMachineElement type="StateMachine" id="20">
+          
+          <Name id="22">PresentSingleStimulus</Name>
+          
+          <StateMachineElement type="State" id="26">
+            <EntryScript id="27">//Get square position and size based on operator click and grid dimensions
+var colWidth = grid.width/grid.columns;
+var rowHeight = grid.height/grid.rows;
+square.x = operatorClick.x-(operatorClick.x%colWidth)+colWidth/2;
+square.y = operatorClick.y-(operatorClick.y%rowHeight)+rowHeight/2;
+square.width = squareDimension.value;
+square.height = squareDimension.value;
+//Put the fixation target where the square is
+target.x = square.x;
+target.y = square.y;            
+//Make square visible to user and indicate this to operator by 
+//bringing its alpha back to 255.
+square.subjectView = true;
+square.alpha = 255;</EntryScript>
+            <FrameScript id="28">//If we're in assisted calibration mode and the opeartor clicked, update 
+//eye calibration values
+if(operatorClick.newClick &amp;&amp; assistedCalibration.value)
+{
+	//Set the newClick value back to false, in case the operator clicks again right away
+	operatorClick.newClick = false;
+	//Get latest x,y eye positions
+	var x = posSig.getValue(&quot;x&quot;); 
+	var y = posSig.getValue(&quot;y&quot;);
+	var colWidth = grid.width/grid.columns;
+	var rowHeight = grid.height/grid.rows;
+	var text = &quot;&quot;;
+	if((Experiment.xGain == 0) || (Experiment.yGain == 0))
+	{
+		text =		&quot;Assisted Calibration does\n&quot;+
+					&quot;not work when either gain\n&quot;+
+					&quot;value is zero&quot;
+	}
+	//If square is in the center, calculate offsets
+	else if( (Math.abs(square.x - 400) &lt; (colWidth/4.0))
+		&amp;&amp; (Math.abs(square.y - 300) &lt; (rowHeight/4.0))
+			)
+	{
+		Experiment.xOffset = Experiment.xOffset + (square.x-x)/Experiment.xGain;
+		Experiment.yOffset = Experiment.yOffset + (square.y-y)/Experiment.yGain;
+		text = &quot;Offsets were calculated&quot;
+	}
+	//If square is not in the center, calculate gains
+	else
+	{
+		var xGainC = 0;
+		var yGainC = 0;
+		if(Math.abs(square.x - 400) &gt; (colWidth/4.0))
+		{
+			Experiment.xGain = Experiment.xGain*((square.x-400)/(x-400));
+			xGainC = 1;
+		}
+		if(Math.abs(square.y - 300) &gt; (rowHeight/4.0))
+		{
+			Experiment.yGain = Experiment.yGain*((square.y-300)/(y-300));
+			yGainC = 1;
+		}
+		if(xGainC || yGainC)
+		{		
+			text = (xGainC &amp;&amp; yGainC)?&quot;XGain and YGain were\n&quot;:xGainC?&quot;XGain was &quot;:&quot;YGain was &quot;;
+			text = text + &quot;calculated&quot;;
+		}
+	}
+	//Tell operator what we did and put the text where the box was
+	assistFeedback.text = text;
+	var textX = square.x+square.width;
+	if(textX + assistFeedback.width &gt; 800)
+		textX = square.x-assistFeedback.width;
+	assistFeedback.setPos(textX,square.y-square.height/2.0);
+	assistFeedback.visible = true;
+}</FrameScript>
+            <Name id="29">PresentStimulus</Name>
+            <Result id="30">
+              <Name id="31">Failed</Name>
+              
+              <UIEnabled id="35">false</UIEnabled>
+              <UIOrder id="36">0</UIOrder>
+            </Result>
+            
+            <ExitScript id="40">//The user either looked at this point or didn't.  Lets turn off 
+//the square so that it will be interesting when it comes back on
+//and indicate to the operator that we did this by bringing the 
+//square opacity down to half.
+square.subjectView = false;
+square.alpha = 122;
+            </ExitScript>
+            <ControlElement type="Target Controller" id="42">
+              <Name id="43">FixationTracker</Name>
+              <Result id="44">
+                <Name id="45">Reaquistion Time Exceeded</Name>
+                <UIEnabled id="46">false</UIEnabled>
+                
+                <UIOrder id="50">0</UIOrder>
+              </Result>
+              <Result id="51">
+                <Name id="52">Initial Aquistion Time Exceeded</Name>
+                <UIEnabled id="53">false</UIEnabled>
+                
+                <UIOrder id="57">0</UIOrder>
+              </Result>
+              <Result id="58">
+                <Name id="59">Total Time Excceeded</Name>
+                <UIEnabled id="60">false</UIEnabled>
+                
+                <UIOrder id="64">0</UIOrder>
+              </Result>
+              <Result id="65">
+                <Name id="66">Broke Fixation</Name>
+                <UIEnabled id="67">false</UIEnabled>
+                
+                <UIOrder id="71">0</UIOrder>
+              </Result>
+              <Result id="72">
+                <Name id="73">Success</Name>
+                <UIEnabled id="74">false</UIEnabled>
+                
+                <UIOrder id="78">0</UIOrder>
+              </Result>
+              
+              <ControlTarget id="82">target</ControlTarget>
+              <FixationTime id="83">400</FixationTime>
+              <MaxInitialAcquisitionTime id="84">1100</MaxInitialAcquisitionTime>
+              <SignalChannel id="85">Position</SignalChannel>
+              <TimeUnits id="86">Ms</TimeUnits>
+              <TotalTime id="87">1500</TotalTime>
+              <MaxReacquisitionTime id="88">1100</MaxReacquisitionTime>
+              <MinInitialAcquisitionTime id="89">0</MinInitialAcquisitionTime>
+              <ReacquisitionAllowed id="90">true</ReacquisitionAllowed>
+              
+              
+              
+              <UIEnabled id="94">true</UIEnabled>
+              <UIOrder id="95">0</UIOrder>
+            </ControlElement>
+            <Result id="96">
+              <Name id="97">Fixated</Name>
+              
+              <UIEnabled id="101">false</UIEnabled>
+              <UIOrder id="102">0</UIOrder>
+            <EntryScript id="9">//User fixated on square.  Set it green to indicate this
+//to the operator
+square.red = 0;</EntryScript></Result>
+            <Transition id="103">
+              <Destination id="104">Failed</Destination>
+              <Source id="105">FixationTracker</Source>
+              <SourceResult id="106">Reaquistion Time Exceeded</SourceResult>
+            <DId id="55">30</DId><SId id="56">42</SId><SRId id="61">44</SRId></Transition>
+            <Transition id="107">
+              <Destination id="108">Failed</Destination>
+              <Source id="109">FixationTracker</Source>
+              <SourceResult id="110">Initial Aquistion Time Exceeded</SourceResult>
+            <DId id="62">30</DId><SId id="63">42</SId><SRId id="68">51</SRId></Transition>
+            <Transition id="111">
+              <Destination id="112">Failed</Destination>
+              <Source id="113">FixationTracker</Source>
+              <SourceResult id="114">Total Time Excceeded</SourceResult>
+            <DId id="69">30</DId><SId id="70">42</SId><SRId id="75">58</SRId></Transition>
+            <Transition id="115">
+              <Destination id="116">Failed</Destination>
+              <Source id="117">FixationTracker</Source>
+              <SourceResult id="118">Broke Fixation</SourceResult>
+            <DId id="76">30</DId><SId id="77">42</SId><SRId id="79">65</SRId></Transition>
+            <Transition id="119">
+              <Destination id="120">Fixated</Destination>
+              <Source id="121">FixationTracker</Source>
+              <SourceResult id="122">Success</SourceResult>
+            <DId id="80">96</DId><SId id="81">42</SId><SRId id="91">72</SRId></Transition>
+            <BackgroundColor id="123">0,0,0,255</BackgroundColor>
+            <UIEnabled id="125">false</UIEnabled>
+            <UIOrder id="126">0</UIOrder>
+          </StateMachineElement>
+          <Result id="127">
+            <Name id="128">StimulusPresented</Name>
+            
+            <UIEnabled id="132">false</UIEnabled>
+            <UIOrder id="133">0</UIOrder>
+          </Result>
+          <Transition id="134">
+            <Destination id="135">StimulusPresented</Destination>
+            <Source id="136">PresentStimulus</Source>
+            <SourceResult id="137">Failed</SourceResult>
+          <DId id="98">127</DId><SId id="99">26</SId><SRId id="100">30</SRId></Transition>
+          <StateMachineElement type="State" id="138">
+            <ControlElement type="Script Controller" id="139">
+              <Name id="140">WaitForOperatorClick</Name>
+              <Result id="141">
+                <Name id="142">true</Name>
+                <UIEnabled id="143">false</UIEnabled>
+                
+                <UIOrder id="147">0</UIOrder>
+              </Result>
+              <Script id="148">return operatorClick.newClick;</Script>
+              
+              
+              <UIEnabled id="153">false</UIEnabled>
+              <UIOrder id="154">0</UIOrder>
+            </ControlElement>
+            <Name id="155">WaitForClick</Name>
+            <Result id="156">
+              <Name id="157">OperatorClicked</Name>
+              
+              <UIEnabled id="161">false</UIEnabled>
+              <UIOrder id="162">0</UIOrder>
+            </Result>
+            
+            <Transition id="166">
+              <Destination id="167">OperatorClicked</Destination>
+              <Source id="168">WaitForOperatorClick</Source>
+              <SourceResult id="169">true</SourceResult>
+            <DId id="146">156</DId><SId id="149">139</SId><SRId id="150">141</SRId></Transition>
+            <ExitScript id="170">//Square will still be green if the user fixated last time.  
+//Turn it back to yellow now.
+square.red = 255;
+
+//If there was a feedback message from the Assisisted Calibration system,
+//we can stop showing it now.
+assistFeedback.visible = false;
+
+//Later logic will look to see if there is a new click available for the 
+//purposes of assisted calibration.  Set newClick back to false
+//so that the new click can be detected.
+operatorClick.newClick = false;</ExitScript>
+            <BackgroundColor id="171">0,0,0,255</BackgroundColor>
+            <EntryScript id="173"/>
+            <FrameScript id="174"/>
+            <UIEnabled id="176">false</UIEnabled>
+            <UIOrder id="177">0</UIOrder>
+          </StateMachineElement>
+          <Transition id="178">
+            <Destination id="179">PresentStimulus</Destination>
+            <Source id="180">WaitForClick</Source>
+            <SourceResult id="181">OperatorClicked</SourceResult>
+          <DId id="151">26</DId><SId id="152">138</SId><SRId id="158">156</SRId></Transition>
+          <VisualElement type="Grid Graphic" id="182">
+            <Color id="183">255,255,255,255</Color>
+            
+            <Name id="185">grid</Name>
+            
+            <UIEnabled id="189">true</UIEnabled>
+            <Columns id="190">7</Columns>
+            <Rows id="191">7</Rows>
+            <SubjectView id="192">false</SubjectView>
+            <Layer id="193">0</Layer>
+            <OperatorView id="194">true</OperatorView>
+            <Position id="195">400,300</Position>
+            <UIOrder id="196">0</UIOrder>
+            <Visible id="197">true</Visible>
+          <Size id="163">800,600</Size></VisualElement>
+          <Parameter type="Range" id="198">
+            <Increment id="199">1</Increment>
+            <Max id="200">200</Max>
+            <Name id="201">squareDimension</Name>
+            
+            <Value id="205">50</Value>
+            <UIEnabled id="206">true</UIEnabled>
+            <Min id="207">0</Min>
+            <UIOrder id="208">0</UIOrder>
+            
+          </Parameter>
+          
+          
+          
+          <EntryScript id="289">//Update target radius from the parameter
+target.radius = targetRadius.value;
+
+//If assisted calibration is being used, change grid color 
+//and show the assistance label
+if(assistedCalibration.value)
+{
+	assistLabel.visible = true;
+	grid.setColor(0,255,0);
+}</EntryScript>
+          <Parameter type="Range" id="290">
+            <Increment id="291">1</Increment>
+            <Max id="292">1000</Max>
+            <Min id="293">0</Min>
+            <Name id="294">targetRadius</Name>
+            <UIEnabled id="295">true</UIEnabled>
+            
+            <Value id="299">80</Value>
+            <UIOrder id="300">0</UIOrder>
+            
+          </Parameter>
+          <ExitScript id="302"/>
+          
+          
+          <UIEnabled id="305">false</UIEnabled>
+          <UIOrder id="306">0</UIOrder>
+        <Transition id="520"><Destination id="519">WaitForClick</Destination><Source id="521"/><SourceResult id="522"/><DId id="240">138</DId></Transition><Parameter type="SignalValue" id="621"><Name id="622">posSig</Name><Signal id="623">Position</Signal><UIEnabled id="624">false</UIEnabled><UIOrder id="628">0</UIOrder></Parameter><Parameter type="Boolean" id="618"><FalseLabel id="619">False</FalseLabel><Name id="620">assistedCalibration</Name><TrueLabel id="629">True</TrueLabel><UIEnabled id="630">true</UIEnabled><UIOrder id="649">0</UIOrder><Value id="650">false</Value></Parameter><VisualElement type="Text Graphic" id="657"><Color id="658">255,170,0,255</Color><Layer id="660">0</Layer><Name id="661">assistLabel</Name><OperatorView id="662">true</OperatorView><Position id="663">230,0</Position><SubjectView id="664">false</SubjectView><Text id="665">ASSISTED CALIBRATION MODE</Text><UIEnabled id="666">true</UIEnabled><UIOrder id="670">0</UIOrder><Visible id="671">false</Visible><Size id="255">290,20</Size></VisualElement><Parameter type="OperatorClick" id="215">
+          <Name id="216">operatorClick</Name>
+          
+          <NewClick id="217">false</NewClick>
+          <Pos id="220">0,0</Pos>
+          <UIEnabled id="224">false</UIEnabled>
+          <UIOrder id="225">0</UIOrder>
+        </Parameter><StateMachineElement type="Reward" id="145">
+              <Name id="159">Reward</Name>
+              <Result id="160">
+                <Name id="164">done</Name>
+                <UIEnabled id="165">false</UIEnabled>
+                
+                <UIOrder id="172">0</UIOrder>
+              </Result>
+              <RewardChan id="175">1</RewardChan>
+              <RewardQty id="184">60</RewardQty>
+              
+              
+              <UIEnabled id="186">true</UIEnabled>
+              <UIOrder id="187">0</UIOrder>
+              <NumRewards id="209">1</NumRewards>
+            <MinRewardPeriod id="188">125</MinRewardPeriod><EntryScript id="144"/></StateMachineElement><Transition id="16"><DId id="17">145</DId><Destination id="19">Reward</Destination><SId id="21">26</SId><SRId id="23">96</SRId><Source id="24">PresentStimulus</Source><SourceResult id="222">Fixated</SourceResult></Transition><Transition id="223"><DId id="230">127</DId><Destination id="231">StimulusPresented</Destination><SId id="232">145</SId><SRId id="233">160</SRId><Source id="234">Reward</Source><SourceResult id="235">done</SourceResult></Transition></StateMachineElement>
+        <VisualElement type="Box Graphic" id="307">
+          <Color id="308">255,255,0,255</Color>
+          
+          <Name id="310">square</Name>
+          
+          <Visible id="314">true</Visible>
+          <SubjectView id="315">false</SubjectView>
+          <Layer id="316">0</Layer>
+          <OperatorView id="317">true</OperatorView>
+          <Outline id="318">false</Outline>
+          <OutlineThickness id="319">0</OutlineThickness>
+          <Position id="320">0,0</Position>
+          <UIEnabled id="321">false</UIEnabled>
+          <UIOrder id="322">0</UIOrder>
+        <Size id="272">10,10</Size></VisualElement>
+        
+        
+        
+        
+        
+        <ControlTarget type="CircleTarget" id="367">
+          <Name id="368">target</Name>
+          
+          <Radius id="372">80</Radius>
+          <Color id="373">0,255,0,255</Color>
+          <Layer id="374">0</Layer>
+          <OperatorView id="375">true</OperatorView>
+          <Position id="376">0,0</Position>
+          <SubjectView id="377">false</SubjectView>
+          <UIEnabled id="378">false</UIEnabled>
+          <UIOrder id="379">0</UIOrder>
+          <Visible id="380">true</Visible>
+        </ControlTarget>
+        <EntryScript id="381"/>
+        <ExitScript id="382"/>
+        
+        <UIEnabled id="384">false</UIEnabled>
+        <UIOrder id="385">0</UIOrder>
+      <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/><DId id="326">20</DId><SId id="327">0</SId></Transition><VisualElement type="Text Graphic" id="633"><Color id="634">255,170,0,255</Color><Layer id="636">0</Layer><Name id="637">assistFeedback</Name><OperatorView id="638">true</OperatorView><Position id="639">0,0</Position><SubjectView id="640">false</SubjectView><Text id="641"/><UIEnabled id="642">false</UIEnabled><UIOrder id="646">0</UIOrder><Visible id="647">true</Visible><Size id="334">200,60</Size></VisualElement><Transition id="33"><DId id="34">20</DId><Destination id="37">PresentSingleStimulus</Destination><SId id="38">20</SId><SRId id="39">127</SRId><Source id="41">PresentSingleStimulus</Source><SourceResult id="47">StimulusPresented</SourceResult></Transition></StateMachine>
+      
+      <Name id="389">EyeCalibration</Name>
+    </Task>
+
+
+<XGain id="394">1</XGain>
+<XOffset id="395">0</XOffset>
+<XYSignalShear id="396">0</XYSignalShear>
+<YGain id="397">1</YGain>
+<YOffset id="398">0</YOffset>
+<HostId id="339">{fad98084-27e0-43e7-acdf-81bb4b25953e}</HostId><Task id="269"><Name id="270">FixationTask</Name><UIEnabled id="278">false</UIEnabled><UIOrder id="279">0</UIOrder><StateMachine id="131"><Name id="213">Top</Name><Result id="356"><EntryScript id="357"/><Name id="358">TaskEnded</Name><UIEnabled id="359">false</UIEnabled><UIOrder id="360">0</UIOrder></Result><StateMachineElement type="StateMachine" id="301"><EntryScript id="303"/><ExitScript id="304">trialNum.value++; </ExitScript><Name id="309">Trial</Name><Result id="330"><EntryScript id="331"/><Name id="332">Done</Name><UIEnabled id="333">false</UIEnabled><UIOrder id="335">0</UIOrder></Result><StateMachineElement type="State" id="529"><BackgroundColor id="530">0,0,0,255</BackgroundColor><EntryScript id="531"/><ExitScript id="532"/><FrameScript id="533"/><Name id="534">ITI</Name><Result id="615"><EntryScript id="616"/><Name id="617">Done</Name><UIEnabled id="625">false</UIEnabled><UIOrder id="626">0</UIOrder></Result><UIEnabled id="535">false</UIEnabled><UIOrder id="536">0</UIOrder><ControlElement type="Stopwatch Controller" id="721"><Name id="722">Timeout</Name><Result id="267"><Name id="268">Success</Name></Result><Time id="723">2</Time><TimeUnits id="724">Sec</TimeUnits><UIEnabled id="725">false</UIEnabled><UIOrder id="726">0</UIOrder></ControlElement><Transition id="275"><DId id="276">615</DId><Destination id="277">Done</Destination><SId id="669">721</SId><SRId id="672">267</SRId><Source id="673">Timeout</Source><SourceResult id="674">Success</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="574"><BackgroundColor id="578">0,0,0,255</BackgroundColor><EntryScript id="579">fixateGraphic.visible = true; </EntryScript><ExitScript id="580"/><FrameScript id="581"/><Name id="582">Fixation</Name><Result id="645"><EntryScript id="648"/><Name id="651">Done</Name><UIEnabled id="652">false</UIEnabled><UIOrder id="653">0</UIOrder></Result><UIEnabled id="583">false</UIEnabled><UIOrder id="584">0</UIOrder><Result id="710"><EntryScript id="711">fixateGraphic.visible = false; </EntryScript><Name id="712">Failed</Name><UIEnabled id="713">false</UIEnabled><UIOrder id="714">0</UIOrder></Result><ControlElement type="Target Controller" id="865"><ControlTarget id="866">fixateTarget</ControlTarget><FixationTime id="867">1</FixationTime><MaxInitialAcquisitionTime id="868">1</MaxInitialAcquisitionTime><MaxReacquisitionTime id="869">0</MaxReacquisitionTime><MinInitialAcquisitionTime id="870">0</MinInitialAcquisitionTime><Name id="871">FixationController</Name><OnTarget id="872">false</OnTarget><OnTargetChanged id="873">false</OnTargetChanged><ReacquisitionAllowed id="874">false</ReacquisitionAllowed><Result id="806"><Name id="807">Reaquistion Time Exceeded</Name></Result><Result id="811"><Name id="812">Initial Aquistion Time Exceeded</Name></Result><Result id="816"><Name id="817">Total Time Excceeded</Name></Result><Result id="821"><Name id="822">Broke Fixation</Name></Result><Result id="826"><Name id="827">Success</Name></Result><SignalChannel id="875">Position</SignalChannel><TimeUnits id="876">Sec</TimeUnits><TotalTime id="877">5</TotalTime><UIEnabled id="878">false</UIEnabled><UIOrder id="879">0</UIOrder></ControlElement><Transition id="831"><DId id="832">645</DId><Destination id="833">Done</Destination><SId id="834">865</SId><SRId id="835">826</SRId><Source id="836">FixationController</Source><SourceResult id="837">Success</SourceResult></Transition><Transition id="838"><DId id="839">710</DId><Destination id="840">Failed</Destination><SId id="841">865</SId><SRId id="842">806</SRId><Source id="843">FixationController</Source><SourceResult id="844">Reaquistion Time Exceeded</SourceResult></Transition><Transition id="916"><DId id="917">710</DId><Destination id="918">Failed</Destination><SId id="919">865</SId><SRId id="920">811</SRId><Source id="921">FixationController</Source><SourceResult id="922">Initial Aquistion Time Exceeded</SourceResult></Transition><Transition id="923"><DId id="924">710</DId><Destination id="925">Failed</Destination><SId id="926">865</SId><SRId id="927">816</SRId><Source id="928">FixationController</Source><SourceResult id="929">Total Time Excceeded</SourceResult></Transition><Transition id="930"><DId id="931">710</DId><Destination id="932">Failed</Destination><SId id="933">865</SId><SRId id="934">821</SRId><Source id="935">FixationController</Source><SourceResult id="936">Broke Fixation</SourceResult></Transition></StateMachineElement><StateMachineElement type="State" id="591"><BackgroundColor id="592">0,0,0,255</BackgroundColor><EntryScript id="603">box.visible = true; </EntryScript><ExitScript id="604"/><FrameScript id="605"/><Name id="606">Stimulus</Name><UIEnabled id="607">false</UIEnabled><UIOrder id="608">0</UIOrder><Result id="699"><EntryScript id="700"/><Name id="701">Done</Name><UIEnabled id="702">false</UIEnabled><UIOrder id="703">0</UIOrder></Result><ControlElement type="Stopwatch Controller" id="847"><Name id="848">Timeout</Name><Result id="845"><Name id="846">Success</Name></Result><Time id="849">2</Time><TimeUnits id="850">Sec</TimeUnits><UIEnabled id="851">false</UIEnabled><UIOrder id="852">0</UIOrder></ControlElement><Transition id="940"><DId id="941">699</DId><Destination id="942">Done</Destination><SId id="943">847</SId><SRId id="944">845</SRId><Source id="945">Timeout</Source><SourceResult id="946">Success</SourceResult></Transition></StateMachineElement><UIEnabled id="311">false</UIEnabled><UIOrder id="312">0</UIOrder><ControlTarget type="CircleTarget" id="758"><Color id="759">0,255,0,255</Color><Layer id="760">0</Layer><Name id="761">fixateTarget</Name><OperatorView id="762">true</OperatorView><Outside id="763">false</Outside><Position id="764">400,300</Position><Radius id="765">60</Radius><SubjectView id="766">false</SubjectView><UIEnabled id="767">false</UIEnabled><UIOrder id="768">0</UIOrder><Visible id="769">true</Visible></ControlTarget><Transition id="675"><DId id="676">574</DId><Destination id="677">Fixation</Destination><SId id="678">529</SId><SRId id="679">615</SRId><Source id="680">ITI</Source><SourceResult id="681">Done</SourceResult></Transition><Transition id="682"><DId id="683">591</DId><Destination id="684">Stimulus</Destination><SId id="685">574</SId><SRId id="686">645</SRId><Source id="687">Fixation</Source><SourceResult id="688">Done</SourceResult></Transition><Transition id="689"><DId id="690">330</DId><Destination id="691">Done</Destination><SId id="692">591</SId><SRId id="693">699</SRId><Source id="694">Stimulus</Source><SourceResult id="695">Done</SourceResult></Transition><Transition id="696"><DId id="697">529</DId><Destination id="698">ITI</Destination><SId id="795">574</SId><SRId id="796">710</SRId><Source id="797">Fixation</Source><SourceResult id="798">Failed</SourceResult></Transition><Transition id="799"><DId id="800">529</DId><Destination id="801">ITI</Destination><SId id="802">0</SId><SRId id="803">0</SRId><Source id="804"/><SourceResult id="805"/></Transition><VisualElement type="Circle Graphic" id="739"><Color id="740">255,255,255,255</Color><Layer id="741">0</Layer><Name id="742">fixateGraphic</Name><OperatorView id="743">true</OperatorView><Outline id="744">false</Outline><OutlineThickness id="745">0</OutlineThickness><Position id="746">400,300</Position><Radius id="747">30</Radius><SubjectView id="748">true</SubjectView><UIEnabled id="749">true</UIEnabled><UIOrder id="750">0</UIOrder><Visible id="751">false</Visible></VisualElement><VisualElement type="Box Graphic" id="776"><Color id="777">255,0,0,255</Color><Layer id="778">0</Layer><Name id="779">box</Name><OperatorView id="780">true</OperatorView><Outline id="781">false</Outline><OutlineThickness id="782">0</OutlineThickness><Position id="783">600,300</Position><Size id="784">50,50</Size><SubjectView id="785">true</SubjectView><UIEnabled id="786">false</UIEnabled><UIOrder id="787">0</UIOrder><Visible id="788">false</Visible></VisualElement></StateMachineElement><StateMachineElement type="Switch" id="370"><EntryScript id="371"/><ExitScript id="383"/><Name id="386">IsTaskOver</Name><Result id="492"><EntryScript id="493"/><Name id="494">Yes</Name><UIEnabled id="495">false</UIEnabled><UIOrder id="496">0</UIOrder></Result><Result id="503"><EntryScript id="504"/><Name id="505">No</Name><UIEnabled id="506">false</UIEnabled><UIOrder id="507">0</UIOrder></Result><Script id="387">if(trialNum.value &gt;= 5)
+	return &quot;Yes&quot;;
+return &quot;No&quot;;</Script><UIEnabled id="388">false</UIEnabled><UIOrder id="390">0</UIOrder></StateMachineElement><Transition id="210"><DId id="212">301</DId><Destination id="214">Trial</Destination><SId id="218">0</SId><SRId id="219">0</SRId><Source id="221"/><SourceResult id="243"/></Transition><Transition id="244"><DId id="245">356</DId><Destination id="246">TaskEnded</Destination><SId id="247">370</SId><SRId id="249">492</SRId><Source id="250">IsTaskOver</Source><SourceResult id="251">Yes</SourceResult></Transition><Transition id="252"><DId id="253">301</DId><Destination id="254">Trial</Destination><SId id="256">370</SId><SRId id="257">503</SRId><Source id="258">IsTaskOver</Source><SourceResult id="259">No</SourceResult></Transition><Transition id="260"><DId id="261">370</DId><Destination id="262">IsTaskOver</Destination><SId id="263">301</SId><SRId id="264">330</SRId><Source id="265">Trial</Source><SourceResult id="266">Done</SourceResult></Transition><Variable type="NumberVariable" id="514"><Name id="515">trialNum</Name><UIEnabled id="516">false</UIEnabled><UIOrder id="517">0</UIOrder><Value id="518">0</Value></Variable></StateMachine></Task></Experiment><SyntaxVersion id="342">0.0.2</SyntaxVersion><UIData id="343"><AssociateId id="344">{962098af-381b-4e81-adb7-4f3365d1c042}</AssociateId><LinkedHostId id="345">{fad98084-27e0-43e7-acdf-81bb4b25953e}</LinkedHostId><LinkedHostName id="346">Experiment</LinkedHostName><Name id="347">Not Yet Named</Name><OpenAsset id="348">131</OpenAsset><UIElement id="351"><HostLink id="352"><ParentId id="353">367</ParentId><ParentPath id="354">EyeCalibration::PresentStimuli::target</ParentPath></HostLink><Pos id="369">208,429</Pos></UIElement><UIElement id="399"><HostLink id="400"><ParentId id="401">198</ParentId><ParentPath id="402">EyeCalibration::PresentStimuli::PresentSingleStimulus::squareDimension</ParentPath></HostLink><Pos id="403">326,362</Pos></UIElement><UIElement id="404"><HostLink id="405"><ParentId id="406">290</ParentId><ParentPath id="407">EyeCalibration::PresentStimuli::PresentSingleStimulus::targetRadius</ParentPath></HostLink><Pos id="408">58,356</Pos></UIElement><UIElement id="409"><HostLink id="410"><ParentId id="411">621</ParentId><ParentPath id="412">EyeCalibration::PresentStimuli::PresentSingleStimulus::posSig</ParentPath></HostLink><Pos id="413">193,471</Pos></UIElement><UIElement id="414"><HostLink id="415"><ParentId id="416">618</ParentId><ParentPath id="417">EyeCalibration::PresentStimuli::PresentSingleStimulus::assistedCalibration</ParentPath></HostLink><Pos id="418">71,473</Pos></UIElement><UIElement id="419"><HostLink id="420"><ParentId id="421">127</ParentId><ParentPath id="422">EyeCalibration::PresentStimuli::PresentSingleStimulus::StimulusPresented</ParentPath></HostLink><Pos id="423">591,79</Pos></UIElement><UIElement id="424"><HostLink id="425"><ParentId id="426">44</ParentId><ParentPath id="427">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Reaquistion Time Exceeded</ParentPath></HostLink><Pos id="428">114,137</Pos></UIElement><UIElement id="429"><HostLink id="430"><ParentId id="431">51</ParentId><ParentPath id="432">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Initial Aquistion Time Exceeded</ParentPath></HostLink><Pos id="433">323,137</Pos></UIElement><UIElement id="434"><HostLink id="435"><ParentId id="436">58</ParentId><ParentPath id="437">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Total Time Excceeded</ParentPath></HostLink><Pos id="438">557,137</Pos></UIElement><UIElement id="439"><HostLink id="440"><ParentId id="441">65</ParentId><ParentPath id="442">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Broke Fixation</ParentPath></HostLink><Pos id="443">723,137</Pos></UIElement><UIElement id="444"><HostLink id="445"><ParentId id="446">72</ParentId><ParentPath id="447">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker::Success</ParentPath></HostLink><Pos id="448">837,137</Pos></UIElement><UIElement id="449"><HostLink id="450"><ParentId id="451">42</ParentId><ParentPath id="452">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::FixationTracker</ParentPath></HostLink><Pos id="453">168,171</Pos></UIElement><UIElement id="454"><HostLink id="455"><ParentId id="456">30</ParentId><ParentPath id="457">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::Failed</ParentPath></HostLink><Pos id="458">695,220</Pos></UIElement><UIElement id="459"><HostLink id="460"><ParentId id="461">96</ParentId><ParentPath id="462">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus::Fixated</ParentPath></HostLink><Pos id="463">689,338</Pos></UIElement><UIElement id="464"><HostLink id="465"><ParentId id="466">26</ParentId><ParentPath id="467">EyeCalibration::PresentStimuli::PresentSingleStimulus::PresentStimulus</ParentPath></HostLink><Pos id="468">364,155</Pos></UIElement><UIElement id="469"><HostLink id="470"><ParentId id="471">141</ParentId><ParentPath id="472">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::WaitForOperatorClick::true</ParentPath></HostLink><Pos id="473">100,90</Pos></UIElement><UIElement id="474"><HostLink id="475"><ParentId id="476">139</ParentId><ParentPath id="477">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::WaitForOperatorClick</ParentPath></HostLink><Pos id="478">204,197</Pos></UIElement><UIElement id="479"><HostLink id="480"><ParentId id="481">156</ParentId><ParentPath id="482">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick::OperatorClicked</ParentPath></HostLink><Pos id="483">616,217</Pos></UIElement><UIElement id="484"><HostLink id="485"><ParentId id="486">138</ParentId><ParentPath id="487">EyeCalibration::PresentStimuli::PresentSingleStimulus::WaitForClick</ParentPath></HostLink><Pos id="488">157,156</Pos></UIElement><UIElement id="539"><HostLink id="540"><ParentId id="541">182</ParentId><ParentPath id="542">EyeCalibration::PresentStimuli::PresentSingleStimulus::grid</ParentPath></HostLink><Pos id="543">190,362</Pos></UIElement><UIElement id="544"><HostLink id="545"><ParentId id="546">657</ParentId><ParentPath id="547">EyeCalibration::PresentStimuli::PresentSingleStimulus::assistLabel</ParentPath></HostLink><Pos id="548">300,469</Pos></UIElement><UIElement id="549"><HostLink id="550"><ParentId id="551">20</ParentId><ParentPath id="552">EyeCalibration::PresentStimuli::PresentSingleStimulus</ParentPath></HostLink><Pos id="553">226,166</Pos></UIElement><UIElement id="554"><HostLink id="555"><ParentId id="556">307</ParentId><ParentPath id="557">EyeCalibration::PresentStimuli::square</ParentPath></HostLink><Pos id="558">191,336</Pos></UIElement><UIElement id="559"><HostLink id="560"><ParentId id="561">633</ParentId><ParentPath id="562">EyeCalibration::PresentStimuli::assistFeedback</ParentPath></HostLink><Pos id="563">280,339</Pos></UIElement><UIElement id="564"><HostLink id="565"><ParentId id="566">4</ParentId><ParentPath id="567">EyeCalibration::PresentStimuli</ParentPath></HostLink><Pos id="568">645,521</Pos></UIElement><UIElement id="593"><HostLink id="594"><ParentId id="595">3</ParentId><ParentPath id="596">EyeCalibration</ParentPath></HostLink><Pos id="597">1668,1744</Pos></UIElement><UIElement id="598"><HostLink id="599"><ParentId id="600">1</ParentId><ParentPath id="601"/></HostLink><Pos id="602">0,0</Pos></UIElement><UIEnabled id="349">false</UIEnabled><UIOrder id="350">0</UIOrder><UIElement id="226"><HostLink id="227"><ParentId id="228">215</ParentId><ParentPath id="229">EyeCalibration::PresentStimuli::PresentSingleStimulus::operatorClick</ParentPath></HostLink><Pos id="236">390,472</Pos></UIElement><UIElement id="238"><HostLink id="239"><ParentId id="241">145</ParentId><ParentPath id="242">EyeCalibration::PresentStimuli::PresentSingleStimulus::Reward</ParentPath></HostLink><Pos id="248">518,263</Pos></UIElement><UIElement id="202"><HostLink id="203"><ParentId id="204">160</ParentId><ParentPath id="211">EyeCalibration::PresentStimuli::PresentSingleStimulus::Reward::done</ParentPath></HostLink><Pos id="237">133,157</Pos></UIElement><UIElement id="280"><HostLink id="281"><ParentId id="282">269</ParentId><ParentPath id="283">FixationTask</ParentPath></HostLink><Notes id="284"/><Pos id="285">1824,1745</Pos></UIElement><UIElement id="286"><HostLink id="287"><ParentId id="288">131</ParentId><ParentPath id="296">FixationTask::Top</ParentPath></HostLink><Notes id="297"/><Pos id="298">92,50</Pos></UIElement><UIElement id="313"><HostLink id="323"><ParentId id="324">301</ParentId><ParentPath id="325">FixationTask::Top::Trial</ParentPath></HostLink><Notes id="328"/><Pos id="329">167,110</Pos></UIElement><UIElement id="336"><HostLink id="337"><ParentId id="338">330</ParentId><ParentPath id="340">FixationTask::Top::Trial::Done</ParentPath></HostLink><Notes id="341"/><Pos id="355">498,178</Pos></UIElement><UIElement id="361"><HostLink id="362"><ParentId id="363">356</ParentId><ParentPath id="364">FixationTask::Top::TaskEnded</ParentPath></HostLink><Notes id="365"/><Pos id="366">439,266</Pos></UIElement><UIElement id="391"><HostLink id="392"><ParentId id="393">370</ParentId><ParentPath id="489">FixationTask::Top::IsTaskOver</ParentPath></HostLink><Notes id="490"/><Pos id="491">314,213</Pos></UIElement><UIElement id="497"><HostLink id="498"><ParentId id="499">492</ParentId><ParentPath id="500">FixationTask::Top::IsTaskOver::Yes</ParentPath></HostLink><Notes id="501"/><Pos id="502">336,76</Pos></UIElement><UIElement id="508"><HostLink id="509"><ParentId id="510">503</ParentId><ParentPath id="511">FixationTask::Top::IsTaskOver::No</ParentPath></HostLink><Notes id="512"/><Pos id="513">325,180</Pos></UIElement><UIElement id="523"><HostLink id="524"><ParentId id="525">514</ParentId><ParentPath id="526">FixationTask::Top::trialNum</ParentPath></HostLink><Notes id="527"/><Pos id="528">147,309</Pos></UIElement><UIElement id="537"><HostLink id="538"><ParentId id="569">529</ParentId><ParentPath id="570">FixationTask::Top::Trial::ITI</ParentPath></HostLink><Notes id="571"/><Pos id="572">110,172</Pos></UIElement><UIElement id="585"><HostLink id="586"><ParentId id="587">574</ParentId><ParentPath id="588">FixationTask::Top::Trial::Fixation</ParentPath></HostLink><Notes id="589">In the Fixation state, the subject is required to fixate on the fixateGraphic for 1 second.  If they fail to fixate, control returns to the ITI.</Notes><Pos id="590">241,171</Pos></UIElement><UIElement id="609"><HostLink id="610"><ParentId id="611">591</ParentId><ParentPath id="612">FixationTask::Top::Trial::Stimulus</ParentPath></HostLink><Notes id="613"/><Pos id="614">383,171</Pos></UIElement><UIElement id="627"><HostLink id="631"><ParentId id="632">615</ParentId><ParentPath id="635">FixationTask::Top::Trial::ITI::Done</ParentPath></HostLink><Notes id="643"/><Pos id="644">344,146</Pos></UIElement><UIElement id="654"><HostLink id="655"><ParentId id="656">645</ParentId><ParentPath id="659">FixationTask::Top::Trial::Fixation::Done</ParentPath></HostLink><Notes id="667"/><Pos id="668">347,136</Pos></UIElement><UIElement id="704"><HostLink id="705"><ParentId id="706">699</ParentId><ParentPath id="707">FixationTask::Top::Trial::Stimulus::Done</ParentPath></HostLink><Notes id="708"/><Pos id="709">307,168</Pos></UIElement><UIElement id="715"><HostLink id="716"><ParentId id="717">710</ParentId><ParentPath id="718">FixationTask::Top::Trial::Fixation::Failed</ParentPath></HostLink><Notes id="719"/><Pos id="720">338,227</Pos></UIElement><UIElement id="727"><HostLink id="728"><ParentId id="729">721</ParentId><ParentPath id="730">FixationTask::Top::Trial::ITI::Timeout</ParentPath></HostLink><Notes id="731"/><Pos id="732">196,146</Pos></UIElement><UIElement id="733"><HostLink id="734"><ParentId id="735">267</ParentId><ParentPath id="736">FixationTask::Top::Trial::ITI::Timeout::Success</ParentPath></HostLink><Notes id="737"/><Pos id="738">0,0</Pos></UIElement><UIElement id="752"><HostLink id="753"><ParentId id="754">739</ParentId><ParentPath id="755">FixationTask::Top::Trial::fixateGraphic</ParentPath></HostLink><Notes id="756"/><Pos id="757">194,316</Pos></UIElement><UIElement id="770"><HostLink id="771"><ParentId id="772">758</ParentId><ParentPath id="773">FixationTask::Top::Trial::fixateTarget</ParentPath></HostLink><Notes id="774"/><Pos id="775">295,315</Pos></UIElement><UIElement id="789"><HostLink id="790"><ParentId id="791">776</ParentId><ParentPath id="792">FixationTask::Top::Trial::box</ParentPath></HostLink><Notes id="793"/><Pos id="794">386,314</Pos></UIElement><UIElement id="853"><HostLink id="854"><ParentId id="855">847</ParentId><ParentPath id="856">FixationTask::Top::Trial::Stimulus::Timeout</ParentPath></HostLink><Notes id="857"/><Pos id="858">135,152</Pos></UIElement><UIElement id="859"><HostLink id="860"><ParentId id="861">845</ParentId><ParentPath id="862">FixationTask::Top::Trial::Stimulus::Timeout::Success</ParentPath></HostLink><Notes id="863"/><Pos id="864">0,0</Pos></UIElement><UIElement id="880"><HostLink id="881"><ParentId id="882">865</ParentId><ParentPath id="883">FixationTask::Top::Trial::Fixation::FixationController</ParentPath></HostLink><Notes id="884"/><Pos id="885">115,122</Pos></UIElement><UIElement id="886"><HostLink id="887"><ParentId id="888">806</ParentId><ParentPath id="889">FixationTask::Top::Trial::Fixation::FixationController::Reaquistion Time Exceeded</ParentPath></HostLink><Notes id="890"/><Pos id="891">0,0</Pos></UIElement><UIElement id="892"><HostLink id="893"><ParentId id="894">806</ParentId><ParentPath id="895">FixationTask::Top::Trial::Fixation::FixationController::Reaquistion Time Exceeded</ParentPath></HostLink><Notes id="896"/><Pos id="897">0,0</Pos></UIElement><UIElement id="898"><HostLink id="899"><ParentId id="900">806</ParentId><ParentPath id="901">FixationTask::Top::Trial::Fixation::FixationController::Reaquistion Time Exceeded</ParentPath></HostLink><Notes id="902"/><Pos id="903">0,0</Pos></UIElement><UIElement id="904"><HostLink id="905"><ParentId id="906">806</ParentId><ParentPath id="907">FixationTask::Top::Trial::Fixation::FixationController::Reaquistion Time Exceeded</ParentPath></HostLink><Notes id="908"/><Pos id="909">0,0</Pos></UIElement><UIElement id="910"><HostLink id="911"><ParentId id="912">806</ParentId><ParentPath id="913">FixationTask::Top::Trial::Fixation::FixationController::Reaquistion Time Exceeded</ParentPath></HostLink><Notes id="914"/><Pos id="915">0,0</Pos></UIElement></UIData><Analysis id="983"><AnalysisDataSource type="Signal" id="1038"><HostLink id="1039"><ParentId id="1040">131</ParentId><ParentPath id="1041">FixationTask::Top</ParentPath></HostLink><Name id="1042">posSig</Name><SignalName id="1043">Position</SignalName><UIEnabled id="1044">false</UIEnabled><UIOrder id="1045">0</UIOrder></AnalysisDataSource><AnalysisOutput type="File" id="999"><FileSuffix id="1000">.test.txt</FileSuffix><FileType id="1001">Text</FileType><HostLink id="1002"><ParentId id="1003">131</ParentId><ParentPath id="1004">FixationTask::Top</ParentPath></HostLink><Name id="1005">outFile</Name><UIEnabled id="1006">false</UIEnabled><UIOrder id="1007">0</UIOrder></AnalysisOutput><AnalysisScriptHolder id="1028"><AnalysisEntryScript id="1035"/><AnalysisExitScript id="1036">outputLine.value += fixateGraphic.color;
+outputLine.value += &quot;,&quot;+posSig.getLatestValue();</AnalysisExitScript><AnalysisFrameScript id="1037"/><HostLink id="1029"><ParentId id="1030">591</ParentId><ParentPath id="1031">FixationTask::Top::Trial::Stimulus</ParentPath></HostLink><Name id="1032">NotYetNamed</Name><UIEnabled id="1033">false</UIEnabled><UIOrder id="1034">0</UIOrder></AnalysisScriptHolder><AnalysisScriptHolder id="1052"><AnalysisEntryScript id="1059"/><AnalysisExitScript id="1060"/><HostLink id="1053"><ParentId id="1054">131</ParentId><ParentPath id="1055">FixationTask::Top</ParentPath></HostLink><Name id="1056">NotYetNamed</Name><UIEnabled id="1057">false</UIEnabled><UIOrder id="1058">0</UIOrder></AnalysisScriptHolder><AnalysisScriptHolder id="1061"><AnalysisEntryScript id="1068"/><AnalysisExitScript id="1069">outFile.writeLine(trialNum.value + &quot;,&quot; + outputLine.value);</AnalysisExitScript><HostLink id="1062"><ParentId id="1063">301</ParentId><ParentPath id="1064">FixationTask::Top::Trial</ParentPath></HostLink><Name id="1065">NotYetNamed</Name><UIEnabled id="1066">false</UIEnabled><UIOrder id="1067">0</UIOrder></AnalysisScriptHolder><AnalysisVariable type="StringVariable" id="1014"><HostLink id="1015"><ParentId id="1016">301</ParentId><ParentPath id="1017">FixationTask::Top::Trial</ParentPath></HostLink><Name id="1018">outputLine</Name><UIEnabled id="1019">false</UIEnabled><UIOrder id="1020">0</UIOrder><Value id="1021"/></AnalysisVariable><AssociateId id="984">{b3a1e70e-9c89-4f94-b3dd-1089d76f03ca}</AssociateId><HostId id="985">{04c01b38-90b0-4af6-9c50-e19101ef79fa}</HostId><LinkedHostId id="986">{fad98084-27e0-43e7-acdf-81bb4b25953e}</LinkedHostId><LinkedHostName id="987">Experiment</LinkedHostName><Name id="988">TestAnalysis</Name><UIEnabled id="989">false</UIEnabled><UIOrder id="990">0</UIOrder></Analysis><UIData id="991"><AssociateId id="992">{c98bf741-0ca7-436f-a1d2-21f17c828d13}</AssociateId><LinkedHostId id="993">{04c01b38-90b0-4af6-9c50-e19101ef79fa}</LinkedHostId><LinkedHostName id="994">TestAnalysis</LinkedHostName><Name id="995">NotYetNamed</Name><OpenAsset id="996">0</OpenAsset><UIElement id="1008"><HostLink id="1009"><ParentId id="1010">999</ParentId><ParentPath id="1011">TestExperiment::TestAnalysis::outFile</ParentPath></HostLink><Notes id="1012"/><Pos id="1013">468,114</Pos></UIElement><UIElement id="1022"><HostLink id="1023"><ParentId id="1024">1014</ParentId><ParentPath id="1025">TestExperiment::TestAnalysis::outputLine</ParentPath></HostLink><Notes id="1026"/><Pos id="1027">484,308</Pos></UIElement><UIElement id="1046"><HostLink id="1047"><ParentId id="1048">1038</ParentId><ParentPath id="1049">TestExperiment::TestAnalysis::posSig</ParentPath></HostLink><Notes id="1050"/><Pos id="1051">329,107</Pos></UIElement><UIEnabled id="997">false</UIEnabled><UIOrder id="998">0</UIOrder></UIData></PictoData>
