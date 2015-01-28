@@ -60,6 +60,7 @@ void SaveOutputDialog::setup()
 	if(QDir(defaultPath_).exists())
 		setDirectory(defaultPath_);
 	setOption(QFileDialog::ShowDirsOnly,true);
+	setOption(QFileDialog::DontUseNativeDialog, true);
 	setFileMode(QFileDialog::Directory);
 	selectedDir_ = "";
 }
