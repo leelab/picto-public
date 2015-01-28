@@ -23,7 +23,7 @@ namespace Picto {
  *	SignalChannels store and transmit all data as doubles.  This is done since 
  *	it is the most flexible , however the user will need to be aware of this when 
  *	using values that are clearly integers (like mouse coordinate).  The data is sampled
- *	at a fixed rate and stored in a FIFO.  Each Signal Channel has  a fixed (but arbitrary)
+ *	at a fixed rate and stored in a FIFO.  Each Signal Channel has a fixed (but arbitrary)
  *	number of subchannels.  So, a position channel would probably have 2 subchannels (x & y), 
  *	while another PictoBox Analog Input channel might have some other number of subchannels
  *

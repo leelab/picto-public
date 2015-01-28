@@ -29,8 +29,8 @@ public:
 	/*! \brief Returns the value on the output port when interpreted as the binary form of an integer.*/
 	int getBinValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	/*! \brief This is a bug and should be removed. This element does not contain a Pin Property.*/
-	void setPin(int pin){propertyContainer_->setPropertyValue("Pin",pin);};
-	virtual int getPin(){return -1;};
+	//void setPin(int pin){propertyContainer_->setPropertyValue("Pin",pin);};
+	//virtual int getPin(){return -1;};
 	virtual QVariant getValue(){return QVariant(getBinValue());};
 
 	virtual QString getUITemplate(){return "BinarySignal";};
