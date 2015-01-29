@@ -13,7 +13,7 @@ namespace Picto {
  *	\details Inevitably, as we have developed Picto bugs have cropped up and design decision changes have been made; however,
  *	since Sessions had already been run and designs built, we needed a way to be able to automatically upgrade old syntax and still
  *	be able to playback old sessions.  Part of this system is the ObsoleteAsset class.  When design syntax changes need to be made, 
- *	we increase the #define DESIGNSYNTAXVERSION, then we set the particular XML tag for the Asset type that is becoming obsolete to 
+ *	we increase the \#define DESIGNSYNTAXVERSION, then we set the particular XML tag for the Asset type that is becoming obsolete to 
  *	deserialize into an ObsoleteAsset.  After the design is deserialized, we can use Asset::upgradeVersion() in the parent of the 
  *	ObsoleteAsset to extract any important data from the ObsoleteAsset and put it somewhere where it will be needed in the upgraded
  *	design syntax.  

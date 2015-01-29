@@ -110,7 +110,7 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 }
 
 /*! \brief Creates a diagram item for the input Asset according to its type and adds it to the scene.
- *	\detais If the input Asset already has an attached UIElement including its position, that position will
+ *	\details If the input Asset already has an attached UIElement including its position, that position will
  *	be used to position it, otherwise it will be positioned based on the input pos value.
  *	After the DiagramItem is added itemInserted() is emitted and the DiagramItem is returned from the function.
  */

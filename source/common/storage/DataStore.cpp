@@ -996,7 +996,7 @@ void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
 }
 
 /*! \brief Sets whether this DataStore and its Descendants should act as if they are in an experimental run or in a design environment.
-	\detail See DesignRoot::enableRunMode() for more detail.
+	\details See DesignRoot::enableRunMode() for more detail.
  */
 void DataStore::enableRunModeForDescendants(bool en)
 {

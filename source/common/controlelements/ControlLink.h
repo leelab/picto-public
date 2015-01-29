@@ -7,7 +7,7 @@
 
 namespace Picto {
 
-/*!	\Brief UNUSED This used to essentially be a Transition for inside a State.  Now Elements inside a State just used Transition objects too.
+/*!	\brief UNUSED This used to essentially be a Transition for inside a State.  Now Elements inside a State just used Transition objects too.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */

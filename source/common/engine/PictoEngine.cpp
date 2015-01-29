@@ -724,7 +724,7 @@ void PictoEngine::setSessionId(QUuid sessionId)
 //}
 
 /*! \brief Changes the engine command to StopEngine so that a execution will end.
- *	\detail Internally, calls stopAllSignalChannels()
+ *	\details Internally, calls stopAllSignalChannels()
  */
 void PictoEngine::stop()
 { 

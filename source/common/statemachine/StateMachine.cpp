@@ -193,7 +193,7 @@ QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, boo
 	//qDebug(QString("Entering: %1").arg(path_.join("::")).toLatin1());
 	if(!initScripting(engine->operatorIsUser()))	//only debug when in the test viewer
 	{
-		//! \TODO Make some sort of intelligent error reporting...
+		//! TODO Make some sort of intelligent error reporting...
 		return "scriptingError";
 	}
 
@@ -344,7 +344,7 @@ QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	QString result;
 	if(!initScripting(false))
 	{
-		//! \TODO Make some sort of intelligent error reporting...
+		//! TODO Make some sort of intelligent error reporting...
 		return "scriptingError";
 	}
 

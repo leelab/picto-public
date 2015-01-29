@@ -27,9 +27,9 @@ class QAction;
  *	a Construct does not end until the Construct beneath it in the stack ends.
  *
  *	For some quick examples:
- *	To highlight <NAME param="val"> with red: < and >, blue: NAME param=
- *	and green "val", a TAG construct would be set up with opener: < and
- *	closer: > and red formatting.  It would have a subConstruct TAGNAME with
+ *	To highlight \<NAME param="val"\> with red: \< and \>, blue: NAME param=
+ *	and green "val", a TAG construct would be set up with opener: \< and
+ *	closer: \> and red formatting.  It would have a subConstruct TAGNAME with
  *	opener:	"" and closer: USE_NEXT_CONSTRUCT and blue formatting.  That would
  *	have a subConstruct STRING with opener: " and closer: " and green formatting.
  *	All these definitions are placed in the SyntaxHighlighter constructor, which 

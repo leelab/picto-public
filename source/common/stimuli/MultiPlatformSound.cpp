@@ -64,7 +64,7 @@ QString MultiplatformSound::errorString()
 }
 
 /*! \brief Creates a MultiplatformSound to play the audio file at the input path.
- * \detail This function is meant to be used with PreloadedSound::setSoundConstructor()
+ * \details This function is meant to be used with PreloadedSound::setSoundConstructor()
  */
 QSharedPointer<PreloadedSound> MultiplatformSound::createMultiplatformSound(QString path)
 {

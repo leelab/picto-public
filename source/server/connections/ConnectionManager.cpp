@@ -248,6 +248,7 @@ QString ConnectionManager::getProxyList()
 /*!	\brief Returns a list of director instances as an xml fragment.
  *
  *	The XML fragment will look like this:
+ *  \code
  	<DirectorInstances>
  		<Director>
  			<Address>192.168.3.51</Address>
@@ -266,6 +267,7 @@ QString ConnectionManager::getProxyList()
 			<Details></Details>
  		</Director>
  	</DirectorInstances>
+	\endcode
  */
 QString ConnectionManager::getDirectorList()
 {
@@ -477,7 +479,7 @@ QUuid ConnectionManager::pendingSession(QUuid componentID)
 }
 
 /*! \brief Creates a new session and returns a pointer to the SessionInfo object.
- *	@param directorId The Uuid of the Director to be used in the session.
+ *	@param directorID The Uuid of the Director to be used in the session.
  *	@param proxyID The Uuid of the Proxy to be used in the session.
  *	@param designName The name of the design that will be used in the Session.
  *	@param designXml The contents of the Design file that will be used in the Session.

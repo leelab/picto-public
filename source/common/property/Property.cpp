@@ -132,7 +132,7 @@ void Property::setAttribute(QString _attributeName, QVariant _attributeValue)
 	attributes_[_attributeName] = _attributeValue;
 }
 
-/*! \briief Returns the value of the attribute with the input _attributeName.
+/*! \brief Returns the value of the attribute with the input _attributeName.
  *	\details If no such _attributeName exists, an empty QVariant is returned.
  *	For more details on Property attibutes, see setAttribute()
  */

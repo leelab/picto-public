@@ -6,7 +6,7 @@ namespace Picto {
 StateDataUnitPackage::StateDataUnitPackage()
 {
 }
-/*! \brier Adds the input Transition to this package's list of Transition traversals.
+/*! \brief Adds the input Transition to this package's list of Transition traversals.
 */
 void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition)
 {
@@ -15,7 +15,7 @@ void StateDataUnitPackage::addTransition(QSharedPointer<Transition> transition)
 	data_.append(data);
 }
 
-/*! \brier Adds a Transition by its AssetId to this package's list of Transition traversals.
+/*! \brief Adds a Transition by its AssetId to this package's list of Transition traversals.
 */
 void StateDataUnitPackage::addTransition(int id)
 {

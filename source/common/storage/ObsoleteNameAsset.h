@@ -12,7 +12,7 @@ namespace Picto {
  *
  *	\details Inevitably, as we have developed, Picto bugs have cropped up and design decision changes have been made.  Sometimes this
  *	resulted in an element's XML tag name changing, even though the rest of the XML could stay the same.  In order to automatically
- *	upgrade a Picto design and fix this type of issue, in the new design syntax version (#define DESIGNSYNTAXVERSION), we set the 
+ *	upgrade a Picto design and fix this type of issue, in the new design syntax version (\#define DESIGNSYNTAXVERSION), we set the 
  *	particular XML tag that needs to change to deserialize into an ObsoleteNameAsset.  After the design is deserialized, we can use 
  *	Asset::upgradeVersion() in the parent of the ObsoleteNameAsset to set a new tag name using setNewTagName().  By using 
  *	OldVersionAsset::reportOldVersionAsset(), we make sure that the design will then be serialized out and deserialized back in.  

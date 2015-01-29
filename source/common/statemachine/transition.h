@@ -8,7 +8,7 @@
 
 namespace Picto {
 
-/*!	\Brief A transition between two StateMachineElements
+/*!	\brief A transition between two StateMachineElements
  *
  *	A transition links a specific Result value from a specific StateMachineElement
  *	to another StateMachineElement.  Since no two StateMachineElements on the same level are allowed

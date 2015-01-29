@@ -127,17 +127,18 @@ void Layer::draw(QSharedPointer<VisualTarget> visualTarget, QSharedPointer<Engin
 /*!	\brief Converts this canvas to an XML fragment
  *
  *	The XML fragment for a layer will look something like this:
- *	<Layer>
- *		<Name> Default</Name>
- *		<Order>1</Order>
- *		<VisualElement type="Circle Graphic">
- *			...
- *		</VisualElement>
- *		<VisualElement type="Arrow Graphic">
- *			...
- *		</VisualElement>
- *	</Layer>
- *
+ *  \code
+	<Layer>
+		<Name> Default</Name>
+		<Order>1</Order>
+		<VisualElement type="Circle Graphic">
+			...
+		</VisualElement>
+		<VisualElement type="Arrow Graphic">
+			...
+		</VisualElement>
+	</Layer>
+	\endcode
  */
 //bool Layer::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 //{

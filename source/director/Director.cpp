@@ -33,7 +33,7 @@ using namespace Picto;
  *	@param sigChannel The HardwareSetup::SignalChannelType of signal channels that will be used by this Director (ie. Mouse, legacy eye, Pictobox eye)
  *	@param visualTarget	The HardwareSetup::VisualTargetType that will be used by this Director (ie. Pixmap or Direct3d)
  *	@param rewardController The HardwareSetup::RewardControllerType that will be used by this Director (ie. Pictobox Solenoid, audio, etc).
- *	@param outSigCOntroller The HardwareSetup::OutputSignalControllerType that will be used by this Director (ie. Pictobox, none)
+ *	@param outSigController The HardwareSetup::OutputSignalControllerType that will be used by this Director (ie. Pictobox, none)
  *	@param eventCodeGenerator The HardwareSetup::EventCodeGeneratorType that will be used to deliver event codes (ie. Pictobox, legacy, none)
  *	@param xEyeChannel The input channel on which x eye position data will be delivered
  *	@param yEyeChannel The input channel on which y eye position data will be delivered

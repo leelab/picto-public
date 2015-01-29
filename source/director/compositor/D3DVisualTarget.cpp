@@ -375,7 +375,7 @@ void D3DVisualTarget::paint(QPaintDevice *widget)
 	Q_UNUSED(widget);
 }
 
-/*!	\Brief Draws the input text on the screen according to the input font, color, and in the input rect with the input alignment.
+/*!	\brief Draws the input text on the screen according to the input font, color, and in the input rect with the input alignment.
  *
  *	\warning This function is slow, and will likely result in dropped frames.  Don't use it during a Task run.
  */

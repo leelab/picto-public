@@ -107,7 +107,7 @@ TestScripts::TestScripts()
 //
 //}
 
-/*!	\Brief Tests binding to the ArrowGraphic properties
+/*!	\brief Tests binding to the ArrowGraphic properties
  *
  *	The ArrowGraphic has the following bound functions that need to be tested
  *		getStartPointX()
@@ -161,7 +161,7 @@ void TestScripts::TestArrowGraphicBinding()
 	//QCOMPARE(arrow->getSize(),initialSize+5);
 }
 
-/*!	\Brief Tests binding to the BoxGraphic properties
+/*!	\brief Tests binding to the BoxGraphic properties
  *
  *	The BoxGraphic has the following bound functions that need to be tested
  *		getWidth()
@@ -193,7 +193,7 @@ void TestScripts::TestBoxGraphicBinding()
 
 }
 
-/*!	\Brief Tests binding to the CircleGraphic properties
+/*!	\brief Tests binding to the CircleGraphic properties
  *
  *	The CircleGraphic has the following bound functions that need to be tested
  *		getRadius()
@@ -216,7 +216,7 @@ void TestScripts::TestCircleGraphicBinding()
 	//QCOMPARE(circle->getRadius(),initialRadius+5);
 }
 
-/*!	\Brief Tests binding to the EllipseGraphic properties
+/*!	\brief Tests binding to the EllipseGraphic properties
  *
  *	The EllipseGraphic has the following bound functions that need to be tested
  *		getWidth()
@@ -249,7 +249,7 @@ void TestScripts::TestEllipseGraphicBinding()
 }
 
 
-/*!	\Brief Tests binding to the LineGraphic properties
+/*!	\brief Tests binding to the LineGraphic properties
  *
  *	The LineGraphic has the following bound functions that need to be tested
  *		no additional functions (yet)
@@ -262,7 +262,7 @@ void TestScripts::TestLineGraphicBinding()
 	TestVisualElementBinding(line);
 }
 
-/*!	\Brief Tests binding to the PictureGraphic properties
+/*!	\brief Tests binding to the PictureGraphic properties
  *
  *	The PictureGraphic has the following bound functions that need to be tested
  *		getImageFile()
@@ -284,7 +284,7 @@ void TestScripts::TestPictureGraphicBinding()
 	//QCOMPARE(picture->getImageFile(),QString("SomeOtherFile.bmp"));
 }
 
-/*!	\Brief Tests binding to the RandomlyFilledGridGraphic properties
+/*!	\brief Tests binding to the RandomlyFilledGridGraphic properties
  *
  *	The PictureGraphic has the following bound functions that need to be tested
  *		getRed2()

@@ -20,7 +20,7 @@ AudioFileParameter::AudioFileParameter()
 	initTempOutputDir();
 }
 
-/*! \brierf Attempts to remove any temporary audio file created by this object from disk before the object is deleted.
+/*! \brief Attempts to remove any temporary audio file created by this object from disk before the object is deleted.
  *	\details If this attempt fails, it should end up getting deleted in a future AudioFileParameter initialization anyway.
  */
 AudioFileParameter::~AudioFileParameter()

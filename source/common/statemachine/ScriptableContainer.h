@@ -97,7 +97,13 @@ protected:
 	 */
 	virtual void scriptableContainerWasReinitialized(){};
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+
+	/*! \brief Contains a shared pointer to the QScriptEngine
+	 */
 	QSharedPointer<QScriptEngine> qsEngine_;
+
+	/*! \brief Contains a shared pointer to the QScriptEngineDebugger
+	*/
 	QSharedPointer<QScriptEngineDebugger> qsEngineDebugger_;
 
 private:

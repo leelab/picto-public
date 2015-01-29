@@ -111,7 +111,7 @@ QString WinSound::errorString()
 }
 
 /*! \brief Creates a WinSound to play the audio file at the input path.
- * \detail This function is meant to be used with PreloadedSound::setSoundConstructor()
+ * \details This function is meant to be used with PreloadedSound::setSoundConstructor()
  */
 QSharedPointer<PreloadedSound> WinSound::createWinSound(QString path)
 {

@@ -14,7 +14,7 @@
 														virtual QSharedPointer<Property> getNameProperty(){return propertyContainer_->getProperty("Name");};	
 
 /*! Copy the lines of code below into the private area of your AssociateRootHost (this is to avoid diamond multiple inheritance issues)
- *	Note: The QT preprocess didn't like it when we put this in a #define and caused runtime errors, so you should just uncomment and copy the lines below.
+ *	Note: The QT preprocess didn't like it when we put this in a \#define and caused runtime errors, so you should just uncomment and copy the lines below.
 
 	bool hostIdBeingEdited_;
 	private slots:
@@ -52,7 +52,7 @@ namespace Picto {
  *	we wanted classes that are already QObjects to inherit from AssociateRootHost but this would create diamond inheritance if AssociateRootHost was also
  *	a QObject and we needed AssociateRootHost to inherit from UIEnabled as well, which is a QObject.  
  *	This means that we couldn't make AssociateRootHost a QObject.  Instead, in order to use some signal/slot functionality that can only
- *	be used in QObjects we provide some #defines and commented code in this file that need to be copied into any class that wants to be an AssociateRootHost.
+ *	be used in QObjects we provide some \#defines and commented code in this file that need to be copied into any class that wants to be an AssociateRootHost.
  *	
  *	To implement an AssociateRootHost, do as follows:
  *		- Inherit from AssociateRootHost and UIEnabled or something that inherits from UIEnabled.
@@ -69,7 +69,7 @@ namespace Picto {
 	\endcode
  *	\details These copied lines take care of automatically changing the HostId whenever the AssociateRootHost's tree is edited and make the data in its "Name" Property
  *	accessible so that the AssociateRoot can record it.
- *	\note The reason that we didn't put the code that goes into the private area of the AssociateRootHost's .h file in a #define is that the QT preprocessor
+ *	\note The reason that we didn't put the code that goes into the private area of the AssociateRootHost's .h file in a \#define is that the QT preprocessor
  *	didn't properly understand it when we did this and it led to runtime errors.
  *	\sa AssociateRoot, AssociateElement, Analysis, UIData, Experiment
  *	\author Joey Schnurr, Mark Hammond, Matt Gay

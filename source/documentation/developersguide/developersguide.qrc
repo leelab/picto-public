@@ -1021,7 +1021,6 @@
    <file alias="arrow_8h_source.html">../../../output/documentation/main/html/arrow_8h_source.html</file>
    <file alias="bc_s.png">../../../output/documentation/main/html/bc_s.png</file>
    <file alias="bdwn.png">../../../output/documentation/main/html/bdwn.png</file>
-   <file alias="bug.html">../../../output/documentation/main/html/bug.html</file>
    <file alias="build__environment__preparation_8h_source.html">../../../output/documentation/main/html/build__environment__preparation_8h_source.html</file>
    <file alias="build_environment_preparation.html">../../../output/documentation/main/html/build_environment_preparation.html</file>
    <file alias="changenamemode_8cpp_source.html">../../../output/documentation/main/html/changenamemode_8cpp_source.html</file>
@@ -2376,8 +2375,6 @@
    <file alias="class_xml_editor.png">../../../output/documentation/main/html/class_xml_editor.png</file>
    <file alias="classes.html">../../../output/documentation/main/html/classes.html</file>
    <file alias="closed.png">../../../output/documentation/main/html/closed.png</file>
-   <file alias="coding__conventions_8h_source.html">../../../output/documentation/main/html/coding__conventions_8h_source.html</file>
-   <file alias="coding_conventions.html">../../../output/documentation/main/html/coding_conventions.html</file>
    <file alias="commands_8cpp_source.html">../../../output/documentation/main/html/commands_8cpp_source.html</file>
    <file alias="commands_8h_source.html">../../../output/documentation/main/html/commands_8h_source.html</file>
    <file alias="common_2experiment_2_session_data_8cpp_source.html">../../../output/documentation/main/html/common_2experiment_2_session_data_8cpp_source.html</file>
@@ -2434,7 +2431,6 @@
    <file alias="dir_99747d88556ec990e04212ec6da6dce7.html">../../../output/documentation/main/html/dir_99747d88556ec990e04212ec6da6dce7.html</file>
    <file alias="dir_9a714823152d77715cf91fd3b92bd12a.html">../../../output/documentation/main/html/dir_9a714823152d77715cf91fd3b92bd12a.html</file>
    <file alias="dir_9f4cf5716968a2f26d6738d3d6632968.html">../../../output/documentation/main/html/dir_9f4cf5716968a2f26d6738d3d6632968.html</file>
-   <file alias="dir__tree_8h_source.html">../../../output/documentation/main/html/dir__tree_8h_source.html</file>
    <file alias="dir_a14d8f740ef90745771bb1d88d5e14c0.html">../../../output/documentation/main/html/dir_a14d8f740ef90745771bb1d88d5e14c0.html</file>
    <file alias="dir_a1dcedd20972ce79e1f048d848b5e2c0.html">../../../output/documentation/main/html/dir_a1dcedd20972ce79e1f048d848b5e2c0.html</file>
    <file alias="dir_a2a12be3376ccb8d888280b1f7e3432c.html">../../../output/documentation/main/html/dir_a2a12be3376ccb8d888280b1f7e3432c.html</file>
@@ -2462,7 +2458,6 @@
    <file alias="dir_f47fc0aabfe634cd8a35c6cfd834dd33.html">../../../output/documentation/main/html/dir_f47fc0aabfe634cd8a35c6cfd834dd33.html</file>
    <file alias="dir_fdaf8e61b0465529de66f7943eab7d34.html">../../../output/documentation/main/html/dir_fdaf8e61b0465529de66f7943eab7d34.html</file>
    <file alias="dir_fe87da21280f7312594c8aa8a000711a.html">../../../output/documentation/main/html/dir_fe87da21280f7312594c8aa8a000711a.html</file>
-   <file alias="dir_tree.html">../../../output/documentation/main/html/dir_tree.html</file>
    <file alias="director_2main_8cpp.html">../../../output/documentation/main/html/director_2main_8cpp.html</file>
    <file alias="director_2main_8cpp_source.html">../../../output/documentation/main/html/director_2main_8cpp_source.html</file>
    <file alias="displaymode_8cpp_source.html">../../../output/documentation/main/html/displaymode_8cpp_source.html</file>
@@ -2563,9 +2558,7 @@
    <file alias="functions_rela.html">../../../output/documentation/main/html/functions_rela.html</file>
    <file alias="functions_type.html">../../../output/documentation/main/html/functions_type.html</file>
    <file alias="functions_vars.html">../../../output/documentation/main/html/functions_vars.html</file>
-   <file alias="future__directions__hardware_8h_source.html">../../../output/documentation/main/html/future__directions__hardware_8h_source.html</file>
    <file alias="future__directions__software_8h_source.html">../../../output/documentation/main/html/future__directions__software_8h_source.html</file>
-   <file alias="future_directions_hardware.html">../../../output/documentation/main/html/future_directions_hardware.html</file>
    <file alias="future_directions_software.html">../../../output/documentation/main/html/future_directions_software.html</file>
    <file alias="globals.html">../../../output/documentation/main/html/globals.html</file>
    <file alias="globals_8cpp_source.html">../../../output/documentation/main/html/globals_8cpp_source.html</file>
@@ -2993,7 +2986,6 @@
    <file alias="text_viewer_8h_source.html">../../../output/documentation/main/html/text_viewer_8h_source.html</file>
    <file alias="time__ce_8cpp_source.html">../../../output/documentation/main/html/time__ce_8cpp_source.html</file>
    <file alias="time__ce_8h_source.html">../../../output/documentation/main/html/time__ce_8h_source.html</file>
-   <file alias="todo.html">../../../output/documentation/main/html/todo.html</file>
    <file alias="transition_8cpp_source.html">../../../output/documentation/main/html/transition_8cpp_source.html</file>
    <file alias="transition_8h_source.html">../../../output/documentation/main/html/transition_8h_source.html</file>
    <file alias="unioneeprom_f32-members.html">../../../output/documentation/main/html/unioneeprom_f32-members.html</file>
