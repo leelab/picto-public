@@ -100,7 +100,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 }
 
 /*! \brief Implements RewardController::startReward() to output a correctly timed reward signal on the output line.
- *	\detail As far as timing goes, the NiDaq card only supports periodic timing signals.  We have not found a way
+ *	\details As far as timing goes, the NiDaq card only supports periodic timing signals.  We have not found a way
  *	to define a simple high-low pulse.  For this reason, we set up a clock pulse that ticks once for each "quantity" milliseconds.
  *	We then attach this clock to a task that sends the output signal high, low, high, low, switching once per clock pulse.
  *	The reward signal then goes high for exactly as long as we want and then low.  Since the reward system is updated once
