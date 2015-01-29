@@ -258,7 +258,7 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 	return false;
 }
 
-/*! \Brief Returns the name of the ControlTarget that the subject is currently inside.  
+/*! \brief Returns the name of the ControlTarget that the subject is currently inside.  
  *
  *	If the subject isn't inside a target, this returns NotATarget (which is a reserved name).
  */

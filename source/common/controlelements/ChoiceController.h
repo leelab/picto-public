@@ -11,7 +11,7 @@
 
 namespace Picto {
 
-/*!	\Brief Returns a result based on the region selected by the subject
+/*!	\brief Returns a result based on the region selected by the subject
  *	\details The Choice Controller, like the TargetController is used to check if the 
  *	user has fixated on a ControlTarget.  In the case of the ChoiceController 
  *	however, multiple targets can be defined using internal ControlTargetResult

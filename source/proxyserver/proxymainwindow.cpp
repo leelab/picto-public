@@ -347,7 +347,7 @@ void ProxyMainWindow::createLayout()
  *			PERSISTANT SETTINGS
  *
  *****************************************************/
-/*! \Brief Reads the current Proxy settings
+/*! \brief Reads the current Proxy settings
  *
  *	Settings for the workstation app are stored between sessions.
  *	The QSettings object does this for us in a platform independent
@@ -621,7 +621,7 @@ void ProxyMainWindow::systemNumberChanged(int index)
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),index,true);
 }
 
-/*! \Brief Stores applicaiont settings to disk
+/*! \brief Stores applicaiont settings to disk
  *
  *	Settings for the workstation app are stored between sessions.
  *	The QSettings object does this for us in a platform independent

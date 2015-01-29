@@ -64,7 +64,7 @@ struct PICTOLIB_CLASS VisualElement : public OutputElement
 	Q_PROPERTY(int blue READ getBlue WRITE setBlue)
 	/*! \brief Sets/gets the alpha component of this VisualElement's color.*/
 	Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
-	/*! \brief Sets/gets the this VisualElement's color in the #rrbbgg format (ex. #FF2255).  
+	/*! \brief Sets/gets the this VisualElement's color in the \#rrbbgg format (ex. \#FF2255).  
 	 *	\note This script property is compatible with values read from/written to a ColorParameter.
 	 */
 	Q_PROPERTY(QVariant color READ getColor WRITE setColor)

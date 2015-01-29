@@ -39,7 +39,7 @@ struct PlaybackCommand
 		Stop,	//!< This tells the PlaybackController to stop the current Run.
 		Jump	//!< This tells the PlaybackController to jump to a different time.
 	};
-	/*! \breif The type of user looking at the played back Session, Operator or TestSubject.  
+	/*! \brief The type of user looking at the played back Session, Operator or TestSubject.  
 	 *	\details This defines which VisualElement objects are visible as a function of their
 	 *	OperatorView and SubjectView Properties.
 	 */
@@ -120,7 +120,7 @@ private:
 
 };
 
-/*! \brier A simple struct for storing preloaded data about a Session.
+/*! \brief A simple struct for storing preloaded data about a Session.
  *	\details The PlaybackController preloads Session files to retrieve high level data about them without
  *	loading the entire file.  This struct stores that data.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
@@ -198,7 +198,7 @@ signals:
 	void sessionPreloaded(PreloadedSessionData sessionData);
 	/*! \brief Emitted when preloading of a Session fails.*/
 	void sessionPreloadFailed(QString error);
-	/*! \breif Emitted when the current Session time changes. */
+	/*! \brief Emitted when the current Session time changes. */
 	void timeChanged(double time);
 	/*! \brief Emitted when loading of a session (not preloading) starts and stops.
 	 *	@param isLoading Indicates if the load is starting or stopping.

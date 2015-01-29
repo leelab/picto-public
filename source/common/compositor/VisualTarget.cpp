@@ -25,7 +25,7 @@ VisualTarget::~VisualTarget()
 }
 
 /*! \brief Sets the zoom value to be used when rendering scalable CompositingSurface objects.
- * \detail The zoom value must be greater than zero and less than 1, essentially, this value will
+ * \details The zoom value must be greater than zero and less than 1, essentially, this value will
  * multiply all of the dimensions of the input CompositingSurface objects to create smaller
  * CompositingSurface object for a 'Zoom Out' effect.
  */

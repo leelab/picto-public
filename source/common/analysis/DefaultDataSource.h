@@ -9,7 +9,7 @@
 namespace Picto {
 
 struct TimeData;
-/*! \Brief Empty implementation of an AnalysisDataSourceDep used by AnalysisTriggers that don't have any DataSource children.
+/*! \brief Empty implementation of an AnalysisDataSourceDep used by AnalysisTriggers that don't have any DataSource children.
  *	Since AnalysisTriggers depend on child data sources to tracking the number of triggers in the current analysis period, 
  *	an AnalysisTrigger that has no DataSource children defined should make use of this default DataSource so that it will
  *	be able to accurately set its "length" property.

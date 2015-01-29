@@ -21,14 +21,14 @@ QString ColorProperty::variantToString(QVariant value) const
 	return QString("%1,%2,%3,%4").arg(color.red()).arg(color.green()).arg(color.blue()).arg(color.alpha());
 }
 /*! \brief Implements Property::stringToVariant() to convert the input string to a variant color.
- *	\details The input string may be in the format returned from variantToString() or in the #rrggbb where 
+ *	\details The input string may be in the format returned from variantToString() or in the \#rrggbb where 
  *	rr, gg and bb are hex values from 0 to FF.  This is supported since QVariant color -> QString conversion
  *	returns colors in that format.
 */
 QVariant ColorProperty::stringToVariant(QString string, QString& error) const
 {
 	error = "";
-	//Check if the color is saved in the form #?????? (this is what a color QVariant->QString does)
+	//Check if the color is saved in the form \#?????? (this is what a color QVariant->QString does)
 	//but differs from our user friendly generated string.
 	if(string.startsWith("#") && (string.length() == 7))
 	{

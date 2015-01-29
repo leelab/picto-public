@@ -55,7 +55,7 @@ public:
 
 	virtual void enteredScope();
 	int getValue();
-	/*! \breif Restarts the timer and sets the time of the latest presented frame as if it was
+	/*! \brief Restarts the timer and sets the time of the latest presented frame as if it was
 	 *	equal to the input value.
 	 *	ie. \code
 			TimerParameterName.setValue(10);

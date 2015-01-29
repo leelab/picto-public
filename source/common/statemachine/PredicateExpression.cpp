@@ -224,17 +224,19 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 	return expImage;
 }
 
-/*! \breif Converts a predicate expression into XML
+/*! \brief Converts a predicate expression into XML
  *
  *	This takes the current predicate expression and turns it into an
  *	XML fragment. 
  *
  *	SAMPLE 
- *		<Expression>
- *			<Parameter>Trial Number</Parameter>
- *			<Comparison>Greater than</Comparison>
- *			<Value>100</Value>
- *		</Expression>
+ *  \code
+		<Expression>
+			<Parameter>Trial Number</Parameter>
+			<Comparison>Greater than</Comparison>
+			<Value>100</Value>
+		</Expression>
+    \endcode
  */
 //bool PredicateExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 //{
@@ -271,8 +273,8 @@ QImage PredicateExpression::toQImage(bool useLHSName, bool useRHSName)
 // *
 // *	This takes a predicate expression in unknown state and modifies it to
 // *	match the XML fragment currently being read.  The function assumes
-// *	that the xml stream reader is pointing to an <Expression> tag upon entry,
-// *	and returns with the reader pointing to an </Expression tag>
+// *	that the xml stream reader is pointing to an \<Expression\> tag upon entry,
+// *	and returns with the reader pointing to an \</Expression tag\>
 // */
 //bool PredicateExpression::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{

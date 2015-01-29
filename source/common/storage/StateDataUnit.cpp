@@ -6,7 +6,7 @@ namespace Picto {
 StateDataUnit::StateDataUnit()
 {
 }
-/*! \brier Sets up the StateDataUnit with the AssetId of the input Transition.
+/*! \brief Sets up the StateDataUnit with the AssetId of the input Transition.
 */
 void StateDataUnit::setTransition(QSharedPointer<Transition> transition)
 {

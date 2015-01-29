@@ -680,7 +680,7 @@ void MainWindow::updateRecentFileActions()
  *			PERSISTANT SETTINGS
  *
  *****************************************************/
-/*! \Brief Stores settings from the Workstation to disk.
+/*! \brief Stores settings from the Workstation to disk.
  *
  *	\details Settings for the Workstation app are stored on disk.
  *	The QSettings object does this for us in a platform independent
@@ -697,7 +697,7 @@ void MainWindow::writeSettings()
 
 }
 
-/*! \Brief Reads settings for the Workstation from disk.
+/*! \brief Reads settings for the Workstation from disk.
  *
  *	\details Settings for the Workstation app are stored on disk.
  *	The QSettings object does this for us in a platform independent

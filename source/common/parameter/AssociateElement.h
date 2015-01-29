@@ -11,10 +11,10 @@
 
 namespace Picto {
 /*! \file */
-//The #defines below implements the AssociateElement for its child classes in a default way.
+//The \#defines below implements the AssociateElement for its child classes in a default way.
 //This is really just a simple way of cleaning up the multiple inheritance necessary
 //to all AssociateElements to inherit from design elements but still have common properties.
-/*! \brief This #define should be copied into the public section of anything inheriting AssociateElement in order to implement its pure virtual functions.
+/*! \brief This \#define should be copied into the public section of anything inheriting AssociateElement in order to implement its pure virtual functions.
  *	\details Implements the AssociateElement class's pure virtual functions including:
  *		- getParentPath()	-	Returns the Path of the Design element to which this AssociateElement is linked (this is handled by a child AssociateHostLink).
  *		- getParentId()		-	Returns the Asset ID of the Design element to which this AssociateElement is linked (this is handled by a child AssociateHostLink).
@@ -89,7 +89,7 @@ namespace Picto {
 												return lnk->updateLinkPath(oldPrefix,newPrefix);	\
 											};											
 
-/*! \brief This #define should be copied to the end of the constructor of anything inheriting AssociateElement.
+/*! \brief This \#define should be copied to the end of the constructor of anything inheriting AssociateElement.
  *	\details Adds a required child HostLink to the AssociateElement to store information about the Design element to
  *	which the AssociateElement should be linked.
  *	\note We don't just include this code in the AssociateElement itself because it would not complile unless the 
@@ -105,8 +105,8 @@ namespace Picto {
  *	need to be addable into the Design to provided their additional functionality.  For this reason, they "link into" design elements.  They are deleted when design elements
  *	are deleted and their linked ids and paths are updated when the elements to which they are linked are edited; however, they can easily be unlinked from design elements
  *	wihtout affecting the integrity of the design.
- *	\note In order to properly inherit from AssociateElement, descendant classes need to copy the ASSOCIATE_ELEMENT_IMPLEMENTATION #define into the public section of their
- *	.h file and copy the EXP_LINK_FACTORY_CREATION #define to the end of their constructor.  We don't just include this code in the AssociateElement itself because it would 
+ *	\note In order to properly inherit from AssociateElement, descendant classes need to copy the ASSOCIATE_ELEMENT_IMPLEMENTATION \#define into the public section of their
+ *	.h file and copy the EXP_LINK_FACTORY_CREATION \#define to the end of their constructor.  We don't just include this code in the AssociateElement itself because it would 
  *	not complile unless the AssociateElement class inherited from DataStore.  AssociateElement children need to inherit from various DataStore classes themselves to be able
  *	to reuse DataStore sub-class code, and this would therefore lead to AssociateElement children having diamond inheritance patterns (ie. inheriting from two classes that 
  *	both inherit from the same class) which leads to lots of problems.
