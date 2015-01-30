@@ -106,7 +106,7 @@ void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
 }
 
 /*! \brief Sets the current zoom level of this scene.
- *	\detail The zoom value must be greater than zero and less than 1. Essentially, this value will
+ *	\details The zoom value must be greater than zero and less than 1. Essentially, this value will
  *	multiply all of the dimensions of objects in the Scene to create smaller objects for smaller zoom values
  *	and simulate a 'Zoom Out' effect.
 */

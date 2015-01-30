@@ -3,7 +3,7 @@
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
 
-/*! \brier Constructs a new MenuMode object
+/*! \brief Constructs a new MenuMode object
  * \details Sets up the menuItems_ list to with all of the DisplayMode items that
  * are selectable from this MenuMode
  */ 

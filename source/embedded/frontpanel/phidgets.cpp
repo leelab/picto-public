@@ -234,7 +234,7 @@ void Phidgets::dialTurnedRight(bool fast)
 }
 
 /*! \brief Called by the phidgets API whenever the reward or flush buttons are pressed and emits the PanelInfo::rewardButton or PanelInfo::flushButton userInputSignals accordingly
- * \detail In the PictoBox, the reward button is connected to digital input 0 of the LCD display.  
+ * \details In the PictoBox, the reward button is connected to digital input 0 of the LCD display.  
  * The flush button is connected to digital input 7.
  */
 void Phidgets::externalButtonClick(int index)

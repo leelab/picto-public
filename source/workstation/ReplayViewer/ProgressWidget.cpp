@@ -387,7 +387,7 @@ QColor HighlightData::getColor()  const
 	return color_;
 }
 
-/*! \brief Gets a string in #rrggbb format describing a brighter version of this Highlight's color.*/
+/*! \brief Gets a string in \#rrggbb format describing a brighter version of this Highlight's color.*/
 QString HighlightData::getMaxColorStr()  const
 {
 	QColor max;
@@ -395,7 +395,7 @@ QString HighlightData::getMaxColorStr()  const
 	return getColorStr(max);
 }
 
-/*! \brief Gets a string in #rrggbb format describing a darker version of this Highlight's color.*/
+/*! \brief Gets a string in \#rrggbb format describing a darker version of this Highlight's color.*/
 QString HighlightData::getMinColorStr()  const
 {
 	QColor min;

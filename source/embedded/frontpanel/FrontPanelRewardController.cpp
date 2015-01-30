@@ -109,7 +109,7 @@ FrontPanelRewardController::~FrontPanelRewardController()
 }
 
 /*! \brief Starts a reward an the input channel for the 'quantity' number of milliseconds
- * \detail Due to the limited capabilities of our current version of the NiDaq card, the way 
+ * \details Due to the limited capabilities of our current version of the NiDaq card, the way 
  * that rewards are precisely timed is that we start a clock with frequency equal to the input
  * quantity.  We then start a task that switches the A0.0 pin to 0V, then 5V, then 0V, etc, (remember, active
  * low logic) each time the clock triggers.  Since we make sure to call rewardWasSupplied() once every 16ms, we can

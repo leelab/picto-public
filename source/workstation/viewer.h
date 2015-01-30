@@ -58,7 +58,7 @@ public slots:
 	virtual void aboutToSave() {};
 
 signals:
-	/*! \breif This is emitted when the Viewer's deinitialization process is completed.  
+	/*! \brief This is emitted when the Viewer's deinitialization process is completed.  
 	 *	\details We don't just rely on the deinit() function returning because in some cases, deinitialization needs to wait for
 	 *	another thread, or deinit() may even be getting called from underneath another function that needs to end before 
 	 *	deinitialization is complete (TestViewer::deinit()).

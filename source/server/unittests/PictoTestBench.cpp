@@ -83,7 +83,7 @@ void PictoTestBench::DoAction(QSharedPointer<SimActorDesc> actorDesc, QSharedPoi
 	}
 }
 
-/*! \break Pops the next activity report off of the list and returns it through the reference paramter.
+/*! \brief Pops the next activity report off of the list and returns it through the reference paramter.
  */
 bool PictoTestBench::PopActivityReport(PictoSystemActivityReport& activityReport)
 {

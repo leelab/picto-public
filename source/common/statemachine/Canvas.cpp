@@ -70,17 +70,19 @@ void Canvas::addLayer(QSharedPointer<Layer> layer)
 /*!	\brief Converts this canvas to an XML fragment
  *
  *	The XML fragment for a canvas will look something like this:
- *	<Canvas>
- *		<Layers>
- *			<BackgroundLayer color="#FF00FF"/>
- *			<Layer>
- *				...
- *			</Layer>
- *			<Layer>
- *				...
- *			</Layer>
- *		</Layers>
- *	</Canvas>
+ *  \code
+ 	<Canvas>
+ 		<Layers>
+ 			<BackgroundLayer color="#FF00FF"/>
+ 			<Layer>
+ 				...
+ 			</Layer>
+ 			<Layer>
+ 				...
+ 			</Layer>
+ 		</Layers>
+ 	</Canvas>
+	\endcode
  */
 //bool Canvas::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 //{
@@ -106,17 +108,19 @@ void Canvas::addLayer(QSharedPointer<Layer> layer)
 ///*!	\brief Creates a Canvas from an XML fragment
 // *
 // *	The XML fragment for a canvas will look something like this:
-// *	<Canvas>
-// *		<Layers>
-// *			<BackgroundLayer color="#FF00FF"/>
-// *			<Layer>
-// *				...
-// *			</Layer>
-// *			<Layer>
-// *				...
-// *			</Layer>
-// *		</Layers>
-// *	</Canvas>
+// *  \code
+//	 	<Canvas>
+//	 		<Layers>
+//	 			<BackgroundLayer color="#FF00FF"/>
+//	 			<Layer>
+//	 				...
+//	 			</Layer>
+//	 			<Layer>
+//	 				...
+//	 			</Layer>
+//	 		</Layers>
+//	 	</Canvas>
+//	  \endcode
 // */
 //bool Canvas::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 //{

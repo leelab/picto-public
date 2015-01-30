@@ -16,7 +16,7 @@
  *	do what they are supposed to do according to the NeuralDataAcqInterface documentation.  This
  *	class simply implements those functions for the Plexon interface.
  *	\note The PlexClient.dll must be in the path for this plugin to be loaded.  Currently we place
- *	it in the PictoRunPath\plugins directory alongside the dll generated for this class.
+ *	it in the PictoRunPath\\plugins directory alongside the dll generated for this class.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */

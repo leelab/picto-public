@@ -8,7 +8,7 @@ namespace Picto {
 const QString GridGraphic::type = "Grid Graphic";
 
 /*! \brief Constructs a GridGraphic object.
- *	\detils Adds the following Properties:
+ *	\details Adds the following Properties:
  *	- Rows: The number of rows in the grid (where a row is the space between horizontal lines)
  *	- Columns: The number of colums in the grid (where a column is the space between vertical lines)
  *	- Size:	The total size of the grid graphic.

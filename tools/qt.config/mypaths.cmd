@@ -1,8 +1,8 @@
 set INCLUDE=%PICTO_THIRD_PARTY%\openssl\inc32;%INCLUDE%
 set LIB=%PICTO_THIRD_PARTY%\openssl\lib;%LIB%
-set QTTOP=%PICTO_THIRD_PARTY%\QT\Qt5.1.1\5.1.1
-set PATH=%PICTO_THIRD_PARTY%\openssl\bin;%QTTOP%\msvc2010\bin;%PATH%
-set QTDIR=%QTTOP%\msvc2010
+set QTTOP=%PICTO_THIRD_PARTY%\Qt\Qt5.3.2\5.3
+set PATH=%PICTO_THIRD_PARTY%\openssl\bin;%QTTOP%\msvc2013\bin;%PATH%
+set QTDIR=%QTTOP%\msvc2013
 set PROPBROWSDIR=%QTTOP%\Src\qttools\src\shared\qtpropertybrowser
 set QWTDIR=%PICTO_THIRD_PARTY%\qwt
 set PHIDGETSDIR=%PICTO_THIRD_PARTY%\phidgets

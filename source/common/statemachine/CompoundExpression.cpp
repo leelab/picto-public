@@ -363,20 +363,21 @@ QImage CompoundExpression::toQImage(bool useLHSNames, bool useRHSNames)
 /*!	\brief	Converts a CompoundExpression into XML
  *
  *	The XML output of a compound expression will look like this:
- *	
- *	<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
- *		<Expression>
- *			...
- *		</Expression>
- *		<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
- *			<Expression>
- *				...
- *			</Expression>
- *			<Expression>
- *				...
- *			</Expression>
- *		</CompoundExpression>
- *	</CompoundExpression>
+ *	/code
+		<CompoundExpression boolean="and" invertLeft="true" invertRight = "false>
+			<Expression>
+				...
+			</Expression>
+			<CompoundExpression boolean="or" invertLeft="false" invertRight = "false>
+				<Expression>
+					...
+				</Expression>
+				<Expression>
+					...
+				</Expression>
+			</CompoundExpression>
+		</CompoundExpression>
+	/endcode
  */
 //bool CompoundExpression::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 //{
