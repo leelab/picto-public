@@ -6,7 +6,7 @@
 #include "XYSignalChannel.h"
 #include "../timing/Timestamper.h"
 #include "../memleakdetect.h"
-#include "../memleakdetect.h"
+
 using namespace Picto;
 
 /*! \brief COnstructs an XYSignalChannel with the input name and InputPort.  Sample period is set to 4ms.
