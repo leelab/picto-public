@@ -107,6 +107,7 @@ Director::Director(QString name,
 	//figure out our name
 	query.exec("SELECT value FROM directorinfo WHERE key='Name'");
 	bool rc = query.next();
+	IGNORED_PARAMETER(rc);
 	Q_ASSERT(rc);
 	name_ = query.value(0).toString();
 

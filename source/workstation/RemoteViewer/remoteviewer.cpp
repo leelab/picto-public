@@ -111,6 +111,7 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	}
 	query.exec("SELECT value FROM workstationinfo WHERE key='id'");
 	bool rc = query.next();
+	IGNORED_PARAMETER(rc);
 	Q_ASSERT(rc);
 	observerId_ = QUuid(query.value(0).toString());
 	configDb.close();
@@ -854,6 +855,9 @@ void RemoteViewer::setupEngine()
 	//set up signal channel
 	QSharedPointer<Picto::SignalChannel> signalChannel(new Picto::XYSignalChannel("Position"));
 	engine_->addSignalChannel(signalChannel);
+
+	QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput("GenericInputs"));
+	engine_->addSignalChannel(genericInputs);
 
 	//Set up output signal generator
 	outSigControllers_.push_back(QSharedPointer<Picto::VirtualOutputSignalController>(new VirtualOutputSignalController("BNC0")));

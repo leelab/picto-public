@@ -27,6 +27,8 @@ class BehavioralDataUnitPackage : public DataUnit
 public:
 
 	BehavioralDataUnitPackage();
+	virtual ~BehavioralDataUnitPackage() {};
+
 	void setDescriptor(QString descriptor);
 	/*! \brief Returns a comma separated list of value names for the input data.
 	 * \details This string is used to identify the number of input values, and 

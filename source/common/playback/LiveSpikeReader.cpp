@@ -58,7 +58,7 @@ QVariantList LiveSpikeReader::getChannels()
 	return chans_;
 }
 
-QVariantList LiveSpikeReader::getUnits(int channel)
+QVariantList LiveSpikeReader::getUnits(int)
 {
 	return units_;
 }

@@ -122,6 +122,7 @@ void StoredSessionData::setTableInfo(int dataType,QString tableName,QString colu
 	}
 	QString createTableString = "CREATE TABLE IF NOT EXISTS "+tableName+" (id  INTEGER PRIMARY KEY"+columnDefString+");";
 	bool success = query.exec(createTableString);
+	(void*)success;
 	Q_ASSERT_X(success,"StoredSessionData::setTableInfo","Error: Failed to create table: " + tableName.toLatin1() + ", Error: " +query.lastError().text().toLatin1());
 }
 
@@ -138,6 +139,7 @@ void StoredSessionData::buildTableIndeces()
 		foreach(QString index,tableIndeces)
 		{
 			bool success = query.exec("CREATE INDEX IF NOT EXISTS "+table.name+"_"+index.trimmed()+"_index ON "+table.name+"("+index+");");
+			(void*)success;
 			Q_ASSERT_X(success,"StoredSessionData::buildTableIndeces","Error: Failed to create index: " + index.trimmed().toLatin1() + " for table: " + table.name.toLatin1() + ", Error: " +query.lastError().text().toLatin1());
 		}
 	}
@@ -193,6 +195,7 @@ void StoredSessionData::writeData(int dataType, QVariantList data)
 		query_->addBindValue(value);
 	}
 	bool success = query_->exec();
+	(void*)success;
 	Q_ASSERT_X(success,"StoredSessionData::writeData","Error: "+query_->lastError().text().toLatin1());
 }
 
@@ -234,6 +237,7 @@ QList<int> StoredSessionData::readDataTypes()
  */
 QList<QVariantList> StoredSessionData::readData(int dataType,QVariant condition,bool cut)
 {
+	(void*)cut;
 	Q_ASSERT((condition == QVariant())	 && !cut);//These options are not supported
 	Q_ASSERT(tableByType_.contains(dataType));
 	QSqlDatabase sessionDb = getSessionDb();

@@ -224,6 +224,7 @@ void AutoSaver::initAutoSaveDir()
 	QString lockFilePath = QDir(autoSaveDir_).filePath(LOCKFILENAME);
 	lockFile_ = QSharedPointer<QFile>(new QFile(lockFilePath));
 	bool rc = lockFile_->open(QIODevice::WriteOnly | QIODevice::Text);
+	IGNORED_PARAMETER(rc);
 	Q_ASSERT(rc);
 }
 
@@ -319,6 +320,7 @@ void AutoSaver::saveDesignToFile()
 	{
 		designFile_->rename(newDesignFilePath);	//This closes the file
 		bool rc = designFile_->open(QIODevice::ReadWrite | QIODevice::Text);
+		IGNORED_PARAMETER(rc);
 		Q_ASSERT(rc);
 	}
 }

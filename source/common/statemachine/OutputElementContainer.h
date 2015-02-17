@@ -20,8 +20,8 @@ namespace Picto {
  *	\details This class contains the AssetFactory objects for creating OutputElements and manages
  *	their scoping issues so that descendant classes can easily access all in-scope OutputElements
  *	from a single list.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API OutputElementContainer : public StateMachineElement
@@ -50,6 +50,7 @@ protected:
 	QSharedPointer<AssetFactory> visualElementFactory_;
 	QSharedPointer<AssetFactory> audioElementFactory_;
 	QSharedPointer<AssetFactory> outputSignalFactory_;
+	QSharedPointer<AssetFactory> inputSignalFactory_;
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
 
 private:

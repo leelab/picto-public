@@ -15,6 +15,7 @@ Parameter::Parameter() :
  */
 bool Parameter::valuesAreValid(QString& warning)
 {
+	UNREFERENCED_PARAMETER(warning);
 	return true;
 }
 /*! \brief Fixes values that are outside of valid ranges.

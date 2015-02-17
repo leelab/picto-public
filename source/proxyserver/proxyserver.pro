@@ -3,6 +3,7 @@ TARGET = PictoProxyServer
 QT = core gui xml network sql widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 # We elect to be a console application on Windows so that we will have our
 # standard output attached to the invoking terminal, if one is present; if
 # none is present, then we can still create a GUI

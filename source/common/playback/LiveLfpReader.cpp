@@ -72,7 +72,7 @@ double LiveLfpReader::getNextTime()
 {
 	return -1;
 }
-double LiveLfpReader::getNextValue(int channel)
+double LiveLfpReader::getNextValue(int)
 {
 	return 0;
 }

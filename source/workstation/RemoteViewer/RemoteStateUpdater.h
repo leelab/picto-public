@@ -18,8 +18,8 @@ namespace Picto {
  *	support Analysis of live Experiments.  This is partially due to the fact that no future data is available
  *	at any given time.  It is for this reason that we are returning empty pointers from all of the StateUpdater
  *	get?Reader() functions.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor, Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class RemoteStateUpdater : public StateUpdater
 {

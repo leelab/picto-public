@@ -100,7 +100,7 @@ QVariantList LiveSignalReader::getValuesSince(QString channel,double time)
 	return returnVal;
 }
 
-QVariantList LiveSignalReader::getValuesUntil(QString channel,double time)
+QVariantList LiveSignalReader::getValuesUntil(QString channel,double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
@@ -123,7 +123,7 @@ QVariantList LiveSignalReader::getTimesSince(double time)
 	return returnVal;
 }
 
-QVariantList LiveSignalReader::getTimesUntil(double time)
+QVariantList LiveSignalReader::getTimesUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();

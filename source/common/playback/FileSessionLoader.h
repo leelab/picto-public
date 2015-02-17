@@ -75,7 +75,6 @@ private:
 		QStringList subChanNames_;
 		double samplePeriod_;
 	};
-	QVector<SigData> sigs_;
 	QVector<RunData> runs_;
 	double dataBuffer_;
 	QSharedPointer<DesignRoot> designRoot_;

@@ -3,6 +3,7 @@ TARGET = PictoDevelopersGuide
 QT = core gui widgets webkitwidgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 

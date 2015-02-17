@@ -108,7 +108,8 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("StarterContainer",":/icons/startercontainer.svg",100,100);
 		addIconDefinition("EnderContainer",":/icons/endercontainer.svg",100,100);
 		addIconDefinition("AnalysisDefinition",":/icons/analysisdefinition.svg",100,100);
-		addIconDefinition("OutputSignal",":/icons/outputsignal.svg",100,100);
+		addIconDefinition("OutputSignal", ":/icons/outputsignal.svg", 100, 100);
+		addIconDefinition("InputSignal", ":/icons/outputsignal.svg", 100, 100);
 		addIconDefinition("BinarySignal",":/icons/binarysignal.svg",100,100);
 		mapInitialized_ = true;
 	}

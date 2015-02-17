@@ -60,8 +60,6 @@ addingTransition_(false)
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(BooleanParameter::Create))));
 	parameterFactory_->addAssetType("Color",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ColorParameter::Create))));
-	//parameterFactory_->addAssetType("Choice",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceParameter::Create))));
 	parameterFactory_->addAssetType("Numeric",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(NumericParameter::Create))));
 	parameterFactory_->addAssetType("Range",

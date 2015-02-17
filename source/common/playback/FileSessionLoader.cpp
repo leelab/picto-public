@@ -237,6 +237,7 @@ bool FileSessionLoader::loadRunData()
 */
 double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
 {
+	UNREFERENCED_PARAMETER(subtractTime);
 	if(!getDatabase().isOpen())
 		return after;
 	if(after == to)
@@ -244,7 +245,7 @@ double FileSessionLoader::loadNeuralData(double after,double to,double subtractT
 	
 	QSqlQuery query(getDatabase());
 	query.setForwardOnly(true);
-	bool success;
+
 	// eLfp:
 	//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
 	//eSpike:
@@ -282,7 +283,6 @@ bool FileSessionLoader::getSignalInfo()
 		data.tableName_ = sigInf.getTableName();
 		data.subChanNames_ = sigInf.getSubchannelNames().split(",",QString::SkipEmptyParts);
 		data.samplePeriod_ = double(sigInf.getResolution())/1000.0;
-		sigs_.append(data);
 		//Add the signal to the session state so that it knows it should track its data
 		if(sessionState_)
 			sessionState_->addSignal(data.name_,data.tableName_,data.subChanNames_,data.samplePeriod_);

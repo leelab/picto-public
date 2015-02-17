@@ -4,6 +4,7 @@ QT = core gui xml network widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG += console
 CONFIG -= flat
+CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include . $$(PHIDGETSDIR)
 

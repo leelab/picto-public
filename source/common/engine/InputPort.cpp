@@ -138,6 +138,7 @@ void InputPort::updateDataBuffer(double currTimestamp)
 		lastSyncTimestamp_ = currTimestamp;
 		
 		bool started = start();
+		IGNORED_PARAMETER(started);
 		Q_ASSERT_X(started,"InputPort::updateDataBuffer","Port failed to start");
 		return;
 	}
@@ -153,7 +154,6 @@ void InputPort::updateDataBuffer(double currTimestamp)
 	//added to the head of the list here.
 	if(channelLeftOvers[channelNums_[0]].size())
 	{
-		int lastTimesLeftovers = channelLeftOvers[channelNums_[0]].size();
 		QHash<int, QVector<double>>::iterator it;
 		for(it = channelBuffers_.begin();it != channelBuffers_.end();it++)
 		{
@@ -250,8 +250,8 @@ QVector<double> InputPort::getData(int channelNum)
 	int sampsPerRead = sampsPerReadMap_[channelNum];
 	int currPhase = channelPhaseMap_[channelNum];
 	QVector<double>* currList = &channelBuffers_[channelNum];
+
 	//Create the return array with the correct size
-	int returnArraySize = (currList->size()+currPhase)/sampsPerRead;
 	QVector<double> returnVal((currList->size()+currPhase)/sampsPerRead);
 
 	//Put every "sampsPerReadth" value from the daq data into the return array taking
@@ -262,7 +262,6 @@ QVector<double> InputPort::getData(int channelNum)
 		currPhase++;
 		if(currPhase == sampsPerRead)
 		{
-			double currVal = (*currList)[i];
 			returnVal[j++] = (*currList)[i];
 			currPhase = 0;
 		}

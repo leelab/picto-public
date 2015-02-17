@@ -348,7 +348,8 @@ void TestViewer::playTriggered()
 				liveRunNotesReader_ = QSharedPointer<LiveRunNotesReader>(new LiveRunNotesReader());
 				liveSpikeReader_ = QSharedPointer<LiveSpikeReader>(new LiveSpikeReader(5,2,32));
 				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Position",QStringList()<<"x"<<"y",0.002)));
-				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Diameter",QStringList()<<"x"<<"y",0.004)));
+				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("Diameter", QStringList() << "x" << "y", 0.004)));
+				signalReaders_.append(QSharedPointer<LiveSignalReader>(new LiveSignalReader("GenericInputs", QStringList() << "input0" << "input1" << "input2" << "input3" << "input4" << "input5" << "input6" << "input7", 0.004)));
 			}
 			designConfig->setFrameReader(liveFrameReader_.staticCast<FrameReader>());
 			designConfig->setLfpReader(liveLfpReader_.staticCast<LfpReader>());

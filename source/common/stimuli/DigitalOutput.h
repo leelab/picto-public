@@ -25,6 +25,7 @@ class PICTOLIB_CLASS DigitalOutput : public OutputSignal
 	Q_PROPERTY(int pin READ getPin WRITE setPin)
 public:
 	DigitalOutput();
+	virtual ~DigitalOutput() {};
 
 	static QSharedPointer<Asset> Create();
 	static const QString type;

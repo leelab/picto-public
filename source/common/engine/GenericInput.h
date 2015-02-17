@@ -7,6 +7,7 @@
 
 #include "../common.h"
 #include "SignalChannel.h"
+#include "../storage/InputDataUnitPackage.h"
 
 namespace Picto{
 
@@ -18,13 +19,17 @@ namespace Picto{
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API GenericInput : public SignalChannel
 #else
-class XYSignalChannel : public SignalChannel
+class GenericInput : public SignalChannel
 #endif
 {
 	Q_OBJECT
 public:
 	GenericInput(QString name, QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
 	GenericInput(QVector<int> &qvUsedChannels, QString name, QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
+
+	virtual ~GenericInput() {};
+
+	QSharedPointer<InputDataUnitPackage> GenericInput::getDataPackage();
 };
 
 };

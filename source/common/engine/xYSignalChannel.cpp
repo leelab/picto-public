@@ -12,7 +12,7 @@ using namespace Picto;
 /*! \brief COnstructs an XYSignalChannel with the input name and InputPort.  Sample period is set to 4ms.
 */
 XYSignalChannel::XYSignalChannel(QString name,QSharedPointer<InputPort> port)
-	: SignalChannel(name,4,port)
+	: DoubletSignalChannel(name,4,port)
 {
 	//add our subchannels to the list
 	addSubchannel("x",0);
@@ -27,7 +27,7 @@ XYSignalChannel::XYSignalChannel(QString name,QSharedPointer<InputPort> port)
  *	PictoBoxXPAnalogInputPort.
 */
 XYSignalChannel::XYSignalChannel(QString name,int xChan, int yChan, int msPerSample,QSharedPointer<InputPort> port)
-	: SignalChannel(name,msPerSample,port)
+	: DoubletSignalChannel(name, msPerSample, port)
 {
 	//add our subchannels to the list
 	addSubchannel("x",xChan);
