@@ -60,8 +60,8 @@ void InputDataUnitPackage::addData(QMap<QString, QVector<double>> signalChannelD
 	//to our list
 	setOffsetTime(frameToSampleOffset);
 
-	double dataBuffer[8];
-	bool inputPresent[8];
+	double dataBuffer[8] = { 0.0 };
+	bool inputPresent[8] = { false };
 	
 	QVector<double>::const_iterator inputElem[8];
 	QVector<double>::const_iterator inputElemEnd[8];

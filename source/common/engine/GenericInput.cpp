@@ -7,7 +7,7 @@ using namespace Picto;
 GenericInput::GenericInput(QString name, QSharedPointer<InputPort> port ) 
 	: SignalChannel(name, 4, port)
 {
-	for (int i = 2; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		addSubchannel(QString("input%1").arg(i), i);
 	}
