@@ -19,6 +19,7 @@ void NullRewardController::startReward(unsigned int channel,int)
  */
 bool NullRewardController::rewardWasSupplied(unsigned int channel)
 {
+	UNREFERENCED_PARAMETER(channel);
 	return true;
 }
 /*! \brief Extends RewardController::startFlush() to print out a message to the debug output.*/

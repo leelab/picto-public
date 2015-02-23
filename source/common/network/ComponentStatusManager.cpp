@@ -73,7 +73,6 @@ void ComponentStatusManager::setStatus(QString status)
 void ComponentStatusManager::update(int timeoutMs)
 {
 	QDateTime startTime = QDateTime::currentDateTime();
-	int val = lastFreqUpdateTime_.msecsTo(startTime);
 	if((getStatus()<=stopped) && (lastFreqUpdateTime_.msecsTo(startTime)>=MSPERFREQUPDATE))
 	{
 		doFrequentUpdate();

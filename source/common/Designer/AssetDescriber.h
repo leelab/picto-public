@@ -12,8 +12,8 @@
  *	\details In addition to documenting element properties, script properties, and script functions,
  *	an element overview is provided and its class inheritance is stored so that inherited values
  *	can also be included in documentation.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct AssetDescription
 {

@@ -28,9 +28,9 @@ void MultiplatformSound::stop()
  *	volume changes.  This is why we have not yet added a setVolume()
  *	script function to the AudioElement class.
  */
-void MultiplatformSound::setVolume(int percent)
+void MultiplatformSound::setVolume(int)
 {
-
+	
 }
 
 bool MultiplatformSound::playing()

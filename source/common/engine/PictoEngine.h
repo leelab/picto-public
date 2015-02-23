@@ -19,13 +19,16 @@
 //#include "../experiment/Experiment.h"
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolCommand.h"
+#include "GenericInput.h"
 #include "SignalChannel.h"
+#include "DoubletSignalChannel.h"
 #include "../iodevices/RewardController.h"
 #include "../iodevices/OutputSignalController.h"
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
 #include "../storage/StateDataUnitPackage.h"
 #include "../storage/BehavioralDataUnitPackage.h"
+#include "../storage/InputDataUnitPackage.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/TaskRunDataUnit.h"
@@ -84,8 +87,8 @@ namespace PictoEngineTimingType
  *	operator or subject mode, which defines visibility of experimental graphics (graphics can be set visible for the experiment operator (tester), subject (testee) 
  *	or both).
  *	
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PictoEngine : public QObject
@@ -180,6 +183,7 @@ public:
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
 
 	QList<QSharedPointer<BehavioralDataUnitPackage>> getBehavioralDataPackages();
+	QList<QSharedPointer<InputDataUnitPackage>> getInputDataPackages();
 
 	void reportNewFrame(double frameTime,int runningStateId);
 	void setLastFrame(qulonglong frameId);
@@ -381,8 +385,8 @@ private:
 	bool slave_;
 	bool userIsOperator_;
 	bool syncInitProperties_;
-	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
-	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
+	//QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
+	//QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	qulonglong lastFrameId_;
 	QHostAddress ipAddress_;
 

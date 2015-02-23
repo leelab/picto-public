@@ -98,7 +98,7 @@ void RandomlyFilledGridGraphic::draw()
 	int foregroundIndex;
 
 	buildColorList();
-	int numColor2 = propertyContainer_->getPropertyValue("Color2Squares").toInt();
+	//int numColor2 = propertyContainer_->getPropertyValue("Color2Squares").toInt();
 	int numHorizSquares = propertyContainer_->getPropertyValue("HorizontalSquares").toInt();
 	int numVertSquares = propertyContainer_->getPropertyValue("VerticalSquares").toInt();
 

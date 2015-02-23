@@ -15,8 +15,8 @@
  *	recorded.  PUTDATA commands are very heavily used and include just about all of the important data 
  *	in a Session: Property value changes, input signal values, frame times, transition traversals, spike data,
  *	LFP data, reward times, etc.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PutDataCommandHandler : Picto::ProtocolCommandHandler
 {

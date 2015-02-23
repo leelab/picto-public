@@ -34,6 +34,7 @@
 
 
 #include "../common/engine/XYSignalChannel.h"
+#include "../common/engine/GenericInput.h"
 #include "../common/engine/MouseInputPort.h"
 #if defined WIN32 && defined NI_STUFF
 #include "engine/PictoBoxXPAnalogInputPort.h"
@@ -169,12 +170,23 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
+		//Track the used ports - do not make them available as Generic Inputs
+		QVector<int> qvUsedPorts;
+		qvUsedPorts.push_back(xChan_);
+		qvUsedPorts.push_back(yChan_);
+
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
 			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
+
+			qvUsedPorts.push_back(xDiamChan_);
+			qvUsedPorts.push_back(yDiamChan_);
 		}
+
+		QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput(qvUsedPorts, "GenericInputs", daqPort));
+		engine_->addSignalChannel(genericInputs);
 
 #else
 		return false;
@@ -189,12 +201,24 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
+		//Track the used ports - do not make them available as Generic Inputs
+		QVector<int> qvUsedPorts;
+		qvUsedPorts.push_back(xChan_);
+		qvUsedPorts.push_back(yChan_);
+
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
 			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
+
+			qvUsedPorts.push_back(xDiamChan_);
+			qvUsedPorts.push_back(yDiamChan_);
 		}
+
+		QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput(qvUsedPorts, "GenericInputs", daqPort));
+		engine_->addSignalChannel(genericInputs);
+
 #else
 		return false;
 #endif

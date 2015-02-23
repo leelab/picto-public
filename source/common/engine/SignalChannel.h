@@ -37,8 +37,8 @@ namespace Picto {
  *	can be set.  Logic is included to support shear cases as well, where one coordinate's multiplication factor
  *	may be a function to some extent of its other coordinate.
  *	
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE
@@ -55,11 +55,9 @@ public:
 
 	virtual ~SignalChannel() {};
 
-	void addSubchannel(QString subchannelName, int channelIndex);
+	virtual void addSubchannel(QString subchannelName, int channelIndex);
 	void setSampleResolution(int msPerSample);
-	void setCalibrationCoefficientsFromRange(QString subchannel, double minRawValue, double maxRawValue, double minScaledValue, double maxScaledValue);
-	void setCalibrationCoefficients(QString subchannel, double gain, int offset, double scaledCenterValue);
-	void setShear(QString subchannel, QString asFuncOfSubChannel, double shearFactor);
+
 	/*! \brief Returns a list of the names of this SignalChanne''s sub-channels.*/
 	QList<QString> getSubchannels() { return rawDataBuffer_.keys(); };
 	double latestUpdateEventOffset();
@@ -67,10 +65,10 @@ public:
 	bool start();
 	bool stop();
 
-	QMap<QString, QVector<double>> getValues();
+	virtual QMap<QString, QVector<double>> getValues();
 	void updateData(double currentTime);
-	QMap<QString, QVector<double>> getRawValues();
-	QSharedPointer<BehavioralDataUnitPackage> getDataPackage();
+	virtual QMap<QString, QVector<double>> getRawValues();
+
 	/*! \brief Returns the name of this SignalChannel.*/
 	QString getName(){return name_;};
 	/*! \brief Returns a string describing the type of this SignalChannel's underlying InputPort.  
@@ -78,7 +76,7 @@ public:
 	 */
 	QString getPortType(){return port_?port_->type():"";};
 
-	double peekValue(QString subchannel);
+	virtual double peekValue(QString subchannel);
 	void clearValues();
 
 	void insertValue(QString subchannel, double val);
@@ -95,27 +93,8 @@ protected:
 	QMap<QString, double > rawDataLastValue_;
 
 	int msPerSample_;			//samples per second collected by the channel
-	bool useScaleFactors_;
 	QString name_;
 
-private:
-	double scaleData(int subchannel, double rawData);
-	
-	/*! \brief Holds the scale factors needed used in converting the signal coming in on the InputPort to
-	 *	the clean SignalChannel data output from this object.
-	 *	\details The InputValue can be offset, scaled by a factor and sheared as a function of another sub-channel.  
-	 */
-	struct scaleFactors
-	{
-		scaleFactors(){scaleA = 0;scaleB = 1;shearFactor = 0;shearAsFuncOf = "";centerVal = 0;};
-		double scaleA;			//!< A linear offset of the InputPort values.
-		double scaleB;			//!< A scale factor by which InputPort values will be multiplied.
-		double shearFactor;		//!< A scale factor by which the shearAsFuncOf signal's offset from its center values will be multiplied and added to this value.
-		QString shearAsFuncOf;	//!< The name of the sub-channel by which this channel will be sheared.
-		double centerVal;		//!< The center value of this sub-channel for the purpose of shearing other sub-channels
-	};
-
-	QMap<QString, scaleFactors> scaleFactorsMap_;
 	QMap<QString, int> channelIndexMap_;
 	QSharedPointer<InputPort> port_;
 

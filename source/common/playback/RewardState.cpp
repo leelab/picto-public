@@ -28,8 +28,6 @@ void RewardState::setDatabase(QSqlDatabase session)
 		return;
 	}
 
-	double duration;
-	int channel;
 	int arrayIndex = 0;
 	while(query_->next())
 	{

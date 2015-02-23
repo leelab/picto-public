@@ -104,7 +104,6 @@ bool RandomDoubleParameter::valuesAreValid(QString& warning)
 
 void RandomDoubleParameter::fixValues()
 {
-	bool returnVal = true;
 	double min = propertyContainer_->getProperty("Min")->initValue().toDouble();
 	double max = propertyContainer_->getProperty("Max")->initValue().toDouble();
 	double value = propertyContainer_->getProperty("Value")->initValue().toDouble();

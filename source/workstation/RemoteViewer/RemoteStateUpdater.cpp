@@ -2,6 +2,7 @@
 
 #include "RemoteStateUpdater.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/InputDataUnitPackage.h"
 #include "../../common/storage/RewardDataUnit.h"
 #include "../../common/storage/PropertyDataUnit.h"
 #include "../../common/storage/FrameDataUnit.h"
@@ -76,6 +77,7 @@ bool RemoteStateUpdater::updateState()
 
 	PropertyDataUnit propUnit;
 	BehavioralDataUnitPackage behavUnitPack;
+	InputDataUnitPackage inputUnitPack;
 	StateDataUnit stateUnit;
 	FrameDataUnit frameUnit;
 	RewardDataUnit rewardUnit;
@@ -109,6 +111,19 @@ bool RemoteStateUpdater::updateState()
 			emit signalChanged(behavUnitPack.getChannel()
 								,behavUnitPack.getDescriptor().split(",",QString::SkipEmptyParts)
 								,data);
+		}
+		else if (xmlReader->name() == "IDUP")
+		{
+			inputUnitPack.fromXml(xmlReader);
+			QVector<float> data(8);
+			QSharedPointer<InputDataUnit> unit = inputUnitPack.takeLastDataPoint();
+			for (int i = 0; i < 8; i++)
+			{
+				data[i] = unit->input[i];
+			}
+			emit signalChanged(inputUnitPack.getChannel()
+				, inputUnitPack.getDescriptor().split(",", QString::SkipEmptyParts)
+				, data);
 		}
 		else if(xmlReader->name() == "SDU")
 		{

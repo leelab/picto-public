@@ -105,6 +105,13 @@ void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
 	unaddedOutputSignals_.push_back(element);
 }
 
+/*! \brief Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame.*/
+void Scene::addInputSignal(QSharedPointer<InputSignal> element)
+{
+	QMutexLocker locker(mutex_.data());
+	unaddedInputSignals_.push_back(element);
+}
+
 /*! \brief Sets the current zoom level of this scene.
  *	\details The zoom value must be greater than zero and less than 1. Essentially, this value will
  *	multiply all of the dimensions of objects in the Scene to create smaller objects for smaller zoom values
@@ -210,6 +217,29 @@ void Scene::doRender(int callerId)
 			value = outputSignal->getValue();
 			engine_->enableOutputSignal(port,pinId,enabled);
 			engine_->setOutputSignalValue(port,pinId,value);
+		}
+
+		//Add any unadded input signals to the inputSignals_ list
+		if (!unaddedInputSignals_.isEmpty())
+		{
+			//add the appropriate compositing surfaces to the element
+			for (int i = 0; i<unaddedInputSignals_.length(); i++)
+			{
+				//Do Input Signal setup here
+				inputSignals_.append(unaddedInputSignals_[i]);
+			}
+			unaddedInputSignals_.clear();
+		}
+
+		//Set Input Signals Values to engine
+		pinId = 0;
+		double fInputValue;
+		foreach(QSharedPointer<InputSignal> inputSignal, inputSignals_)
+		{
+			pinId = inputSignal->getPin();
+			QSharedPointer<SignalChannel> sigChan = engine_->getSignalChannel(QString("GenericInputs"));
+			fInputValue = sigChan ? sigChan->peekValue(QString("input%1").arg(pinId)) : -1;
+			inputSignal->setValue(fInputValue);
 		}
 
 

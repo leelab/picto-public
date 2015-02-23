@@ -3,6 +3,7 @@ TARGET = BlankScreen
 QT = core gui xml network script scripttools sql svg multimedia concurrent
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 

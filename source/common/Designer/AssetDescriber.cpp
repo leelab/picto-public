@@ -181,6 +181,12 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Enabled","Defines whether pins controlled by this element are active.  When set false, regardless of other settings, they will have voltage of zero.");
 	curr->addSProp("enabled","Sets or gets whether pins controlled by this element are currently active.  When set false, regardless of other settings, they will have voltage of zero.");
 
+	curr = addDescription("InputSignal");
+	curr->setInherits(getAssetDescription("OutputElement"));
+	//curr->addProp("Port", "The name of the physical output port where the voltage signal will be read.  Currently on a standard Pictobox BNC0 (BNC lines 1-8) and PAR0 (8 Parallel lines in 20 pin rear output) are supported.");
+	//curr->addProp("Enabled", "Defines whether pins controlled by this element are active.  When set false, regardless of other settings, the value will not update.");
+	//curr->addSProp("enabled", "Sets or gets whether pins controlled by this element are currently active.  When set false, regardless of other settings, the value will not update.");
+
 	curr = addDescription("VisualElement");
 	curr->setInherits(getAssetDescription("OutputElement"));
 	curr->addProp("Position","The x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
@@ -560,7 +566,15 @@ void AssetDescriber::setupDescriptions()
 	curr->addProp("Pin","The index of the pin (0-7) of the 'Port' that this element will use for voltage output.");
 	curr->addProp("Value","The boolean value to be output on the 'Pin' of the 'Port'.");
 	curr->addSProp("value","Sets/Gets the current boolean value to be output on the 'Pin' of the 'Port'.");
-	curr->addSProp("pin","Sets/Gets the current index of the 'Pin' in the 'Port' to be used for output.");
+	curr->addSProp("pin", "Sets/Gets the current index of the 'Pin' in the 'Port' to be used for output.");
+
+	curr = addDescription("AnalogInput");
+	curr->setInherits(getAssetDescription("InputSignal"));
+	curr->setOverview("This element is used to read an analog voltage value on a particular single line of a set port.  The data is read into the 'value' script property and making sure that the element is 'enabled'.");
+	curr->addProp("Pin", "The index of the pin (0-7) of the 'Port' that this element will use for voltage input.");
+	curr->addProp("Value", "The boolean value read on the 'Pin' of the 'Port'.");
+	curr->addSProp("value", "Gets the current boolean value read on the 'Pin' of the 'Port'.");
+	curr->addSProp("pin", "Sets/Gets the current index of the 'Pin' in the 'Port' to be used for input.");
 
 	curr = addDescription("BoxGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));

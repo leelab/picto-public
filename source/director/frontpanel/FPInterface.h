@@ -31,8 +31,6 @@ public:
 	FPInterface();
 	~FPInterface();
 
-	void runExperiment(int trialsPerBlock, int blocks);
-
 public slots:
 	virtual void doIncomingCommands();
 protected:

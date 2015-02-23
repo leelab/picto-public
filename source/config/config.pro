@@ -3,6 +3,7 @@ TARGET = PictoConfig
 QT = core gui xml network widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 

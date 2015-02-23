@@ -86,6 +86,7 @@ int PropertyContainer::enumTypeId()
  */
 QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple)
 {
+	UNREFERENCED_PARAMETER(allowMultiple);
 	Q_ASSERT_X(allowMultiple || !properties_.contains(_identifier),
 		"PropertyContainer::addProperty",
 		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toLatin1());

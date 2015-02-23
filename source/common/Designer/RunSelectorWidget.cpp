@@ -294,6 +294,7 @@ void RunSelectorWidget::setRunColor(QString fileName,int runIndex,QColor color)
  */
 void RunSelectorWidget::buttonClicked(int buttonIndex)
 {
+	UNREFERENCED_PARAMETER(buttonIndex);
 	Q_ASSERT(buttonIdRunLookup_.contains(buttonIndex));
 	resetAllRunStatus();
 	emit runSelectionChanged();

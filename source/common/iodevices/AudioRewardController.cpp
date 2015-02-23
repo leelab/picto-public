@@ -42,6 +42,7 @@ void AudioRewardController::startFlush(unsigned int)
 }
 void AudioRewardController::stopFlush(unsigned int channel)
 {
+	UNREFERENCED_PARAMETER(channel);
 	latestQuantity_ = timer_.elapsed();
 }
 
