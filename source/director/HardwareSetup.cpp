@@ -19,7 +19,6 @@
 #include "../common/controlelements/ChoiceController.h"
 
 #include "../common/parameter/BooleanParameter.h"
-#include "../common/parameter/ChoiceParameter.h"
 #include "../common/parameter/NumericParameter.h"
 #include "../common/parameter/RangeParameter.h"
 

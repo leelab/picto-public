@@ -78,10 +78,6 @@ public:
 	/*! \brief Draws the image represented by this VisualElement onto the image_ object based on its current Property values.*/
 	virtual void draw() = 0;
 	virtual void updateAnimation(int frame, QTime elapsedTime);
-	/*! \brief This is unimplemented and unused and should be deleted.*/
-	void setRandomNumberGeneratorState(MTRand::uint32 * rng);
-	/*! \brief This is unimplemented and unused and should be deleted.*/
-	MTRand::uint32 * getRandomNumberGeneratorState();
 
 	QPoint getPosition();
 	/*! \brief This returns the offset from the top left corner of the VisualElement image to the point in the image which should be 

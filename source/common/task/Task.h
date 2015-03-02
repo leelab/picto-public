@@ -4,14 +4,10 @@
 #include "../common.h"
 #include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
-//#include "../parameter/ParameterContainer.h"
 #include "../property/PropertyContainer.h"
 #include "../statemachine/StateMachine.h"
 //#include "../statemachine/StageResult.h"
 //#include "../experimentalsystem/ExperimentalSystem.h"
-//#include "Constraint.h"
-//#include "TrialResult.h"
-//#include "BlockGenerator.h"
 #include "../engine/PictoEngine.h"
 
 //#include <QUuid>

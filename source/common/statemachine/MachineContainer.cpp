@@ -7,7 +7,6 @@
 #include "../parameter/AudioFileParameter.h"
 #include "../parameter/BooleanParameter.h"
 #include "../parameter/ColorParameter.h"
-#include "../parameter/ChoiceParameter.h"
 #include "../parameter/ImageFileParameter.h"
 #include "../parameter/NumericParameter.h"
 #include "../parameter/RangeParameter.h"
