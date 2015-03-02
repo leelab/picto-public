@@ -75,19 +75,19 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ImageGraphic::Create))));
 
 	AddDefinableObjectFactory("AudioElement",audioElementFactory_);
-	audioElementFactory_->addAssetType("Simple",
+	audioElementFactory_->addAssetType(AudioElement::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AudioElement::Create))));
 
 	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	outputSignalFactory_->addAssetType("DigitalOutput",
+	outputSignalFactory_->addAssetType(DigitalOutput::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(DigitalOutput::Create))));
 
 	AddDefinableObjectFactory("OutputSignal",outputSignalFactory_);
-	outputSignalFactory_->addAssetType("BinaryDataOutput",
+	outputSignalFactory_->addAssetType(BinaryDataOutput::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(BinaryDataOutput::Create))));
 
 	AddDefinableObjectFactory("InputSignal", inputSignalFactory_);
-	inputSignalFactory_->addAssetType("AnalogInput",
+	inputSignalFactory_->addAssetType(AnalogInput::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalogInput::Create))));
 }
 

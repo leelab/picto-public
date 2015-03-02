@@ -32,12 +32,11 @@ public:
 	OperatorInfoGraphic();
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	//Resets the OperatorInfoGraphic Object to its initial state.
 	virtual void enteredScope();
-	static const QString type;
 	virtual QString friendlyTypeName(){return "Operator Info";};
 	virtual QString getUITemplate(){return "OperatorInfoElement";};
 public slots:

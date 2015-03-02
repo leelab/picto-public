@@ -89,7 +89,6 @@ QList<QSharedPointer<Picto::DataUnit>> PlexonPlugin::dumpData()
 		//Joey, before we were using PL_GetWaveFormStructures but the lfp waveforms
 		//could be longer than the regular PL_WaveLong's allowed.  Now were using the longWaveForm structure.
 		PL_GetLongWaveFormStructures(&NumMAPEvents, pServerEventBuffer,&serverDropped,&mmfDropped);
-		QSharedPointer<Picto::lfpDataBlock> dataBlock;
 		lfpData = QSharedPointer<Picto::LFPDataUnitPackage>(new Picto::LFPDataUnitPackage());
 
 		for(int MAPEvent=0; MAPEvent<NumMAPEvents; MAPEvent++)

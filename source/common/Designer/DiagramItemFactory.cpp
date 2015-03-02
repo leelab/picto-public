@@ -1,7 +1,6 @@
 #include <string>
 #include <QGraphicsScene>
 #include "DiagramItemFactory.h"
-#include "ResultItem.h"
 #include "WireableResultItem.h"
 #include "StateMachineElementItem.h"
 #include "ControlElementItem.h"

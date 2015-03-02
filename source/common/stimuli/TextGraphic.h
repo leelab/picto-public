@@ -38,8 +38,8 @@ public:
 	TextGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor(), QString text=QString());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 	/*! \brief Returns a QRect with the dimensions (width, height) of this graphic.
 	 *	\note The returned value contains no position information.  Only the Width, Height
 	 *	values should be used.
@@ -61,8 +61,6 @@ public:
 	QString getText() { return propertyContainer_->getPropertyValue("Text").toString(); };
 	/*! \brief Sets the text that is displayed in the graphic.*/
 	void setText(QString text) { propertyContainer_->setPropertyValue("Text",text); };
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Text";};
 	virtual QString getUITemplate(){return "TextElement";};

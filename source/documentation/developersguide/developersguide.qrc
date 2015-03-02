@@ -443,10 +443,6 @@
    <file alias="_input_data_unit_8h_source.html">../../../output/documentation/main/html/_input_data_unit_8h_source.html</file>
    <file alias="_input_data_unit_package_8cpp_source.html">../../../output/documentation/main/html/_input_data_unit_package_8cpp_source.html</file>
    <file alias="_input_data_unit_package_8h_source.html">../../../output/documentation/main/html/_input_data_unit_package_8h_source.html</file>
-   <file alias="_input_element_8cpp_source.html">../../../output/documentation/main/html/_input_element_8cpp_source.html</file>
-   <file alias="_input_element_8h_source.html">../../../output/documentation/main/html/_input_element_8h_source.html</file>
-   <file alias="_input_element_container_8cpp_source.html">../../../output/documentation/main/html/_input_element_container_8cpp_source.html</file>
-   <file alias="_input_element_container_8h_source.html">../../../output/documentation/main/html/_input_element_container_8h_source.html</file>
    <file alias="_input_port_8cpp_source.html">../../../output/documentation/main/html/_input_port_8cpp_source.html</file>
    <file alias="_input_port_8h_source.html">../../../output/documentation/main/html/_input_port_8h_source.html</file>
    <file alias="_input_signal_8cpp_source.html">../../../output/documentation/main/html/_input_signal_8cpp_source.html</file>
@@ -516,7 +512,6 @@
    <file alias="_mouse_input_port_8h_source.html">../../../output/documentation/main/html/_mouse_input_port_8h_source.html</file>
    <file alias="_multi_platform_sound_8cpp_source.html">../../../output/documentation/main/html/_multi_platform_sound_8cpp_source.html</file>
    <file alias="_multi_platform_sound_8h_source.html">../../../output/documentation/main/html/_multi_platform_sound_8h_source.html</file>
-   <file alias="_multiplatform_sound_8cpp_source.html">../../../output/documentation/main/html/_multiplatform_sound_8cpp_source.html</file>
    <file alias="_neural_data_acq_interface_8h_source.html">../../../output/documentation/main/html/_neural_data_acq_interface_8h_source.html</file>
    <file alias="_neural_data_unit_8cpp_source.html">../../../output/documentation/main/html/_neural_data_unit_8cpp_source.html</file>
    <file alias="_neural_data_unit_8h_source.html">../../../output/documentation/main/html/_neural_data_unit_8h_source.html</file>
@@ -1631,12 +1626,6 @@
    <file alias="class_picto_1_1_input_data_unit_package-members.html">../../../output/documentation/main/html/class_picto_1_1_input_data_unit_package-members.html</file>
    <file alias="class_picto_1_1_input_data_unit_package.html">../../../output/documentation/main/html/class_picto_1_1_input_data_unit_package.html</file>
    <file alias="class_picto_1_1_input_data_unit_package.png">../../../output/documentation/main/html/class_picto_1_1_input_data_unit_package.png</file>
-   <file alias="class_picto_1_1_input_element-members.html">../../../output/documentation/main/html/class_picto_1_1_input_element-members.html</file>
-   <file alias="class_picto_1_1_input_element.html">../../../output/documentation/main/html/class_picto_1_1_input_element.html</file>
-   <file alias="class_picto_1_1_input_element.png">../../../output/documentation/main/html/class_picto_1_1_input_element.png</file>
-   <file alias="class_picto_1_1_input_element_container-members.html">../../../output/documentation/main/html/class_picto_1_1_input_element_container-members.html</file>
-   <file alias="class_picto_1_1_input_element_container.html">../../../output/documentation/main/html/class_picto_1_1_input_element_container.html</file>
-   <file alias="class_picto_1_1_input_element_container.png">../../../output/documentation/main/html/class_picto_1_1_input_element_container.png</file>
    <file alias="class_picto_1_1_input_port-members.html">../../../output/documentation/main/html/class_picto_1_1_input_port-members.html</file>
    <file alias="class_picto_1_1_input_port.html">../../../output/documentation/main/html/class_picto_1_1_input_port.html</file>
    <file alias="class_picto_1_1_input_port.png">../../../output/documentation/main/html/class_picto_1_1_input_port.png</file>

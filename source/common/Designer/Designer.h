@@ -20,7 +20,6 @@
 
 #include "diagramitem.h"
 #include "EditorState.h"
-//#include "../design/Design.h"
 #include "../design/DesignRoot.h"
 #include "LevelUpButton.h"
 #include "../common.h"

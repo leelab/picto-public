@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString EllipseGraphic::type = "Ellipse Graphic";
+	const QString EllipseGraphic::type = "Ellipse Graphic";
 
 /*! \brief Creates a new EllipseGraphic object at the input position and with the input dimensions and color.
  *	\details Adds the following Properties:
@@ -44,12 +43,6 @@ void EllipseGraphic::draw()
 	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* EllipseGraphic::NewVisualElement()
-{
-	return new EllipseGraphic;
 }
 
 /*! \brief Creates a new EllipseGraphic object and returns a shared Asset pointer to it.*/

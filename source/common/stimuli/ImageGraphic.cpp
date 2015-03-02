@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString ImageGraphic::type = "ImageGraphic";
+	const QString ImageGraphic::type = "ImageGraphic";
 
 /*! \brief Constructs an ImageGraphic.
  *	\details Adds an ImageFile Property for handdling the name of the ImageFile element that will be displayed.  Adds a Size Property
@@ -66,12 +65,6 @@ void ImageGraphic::draw()
 	posOffset_ = QPoint(image_.width()/2.0,image_.height()/2.0);
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* ImageGraphic::NewVisualElement()
-{
-	return new ImageGraphic;
 }
 
 /*! \brief Creates a new ImageGraphic object and returns a shared Asset pointer to it.*/

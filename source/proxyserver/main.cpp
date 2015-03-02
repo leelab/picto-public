@@ -29,7 +29,6 @@
 #include "../common/namedefs.h"
 #include "../common/archives/archives.h"
 #include "../common/update/updatedownloader.h"
-#include "network/proxyserver.h"
 #include "protocol/ProxyServerProtocols.h"
 #include "protocol/ProxyServerAcqProtocol.h"
 #include "InteractiveSTDIOHandler.h"

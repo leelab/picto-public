@@ -1,5 +1,4 @@
 #include "SignalState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 /*! \brief Constructs a new SignalState to track data from a single signal channel.

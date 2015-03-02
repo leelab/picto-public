@@ -6,7 +6,7 @@
 namespace Picto {
 
 #define PI 3.141592
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
+
 const QString TokenTrayGraphic::type = "Token Tray Graphic";
 
 /*! \brief Creates a new TokenTrayGraphic object at the input position and with the input dimensions and color.
@@ -519,12 +519,6 @@ void TokenTrayGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* TokenTrayGraphic::NewVisualElement()
-{
-	return new TokenTrayGraphic;
 }
 
 /*! \brief Creates a new TokenTrayGraphic object and returns a shared Asset pointer to it.*/

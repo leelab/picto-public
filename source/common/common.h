@@ -99,15 +99,12 @@
  *	for researchers to build and run their own experiments fully within the Picto system without
  *	help from a Picto software developer.
  */
-#define PICTOVERSION "2.0.1"
+#define PICTOVERSION "2.0.2"
 /*! \brief This is the current version of the Picto design syntax.  It is saved along with every Picto design
  *	so that it will be clear on deserialization whether some syntax needs to be upgraded and how.
  */
 #define DESIGNSYNTAXVERSION "0.0.2"
-//Directory name of automatic updater application and dependencies
-//It is a subdirectory of the main binary directory
-//THIS APPEARS TO NO LONGER BE USED AND SHOULD PROBABLY BE DELETED.
-#define UPDATERDIR "updater"
+
 
 #ifdef _DEBUG 
 	//Uncomment this to enable memory leak detection

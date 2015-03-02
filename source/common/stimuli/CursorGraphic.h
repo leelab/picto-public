@@ -30,13 +30,11 @@ class PICTOLIB_CLASS CursorGraphic : public VisualElement
 public:
 	CursorGraphic(QSharedPointer<SignalChannel> channel, QColor color=QColor());
 
+	static const QString type;
+
 	void draw();
 	void updateAnimation(int frame, QTime elapsedTime);
 	QPoint getPositionOffset();
-
-	static VisualElement* NewVisualElement();
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Cursor Graphic";};
 

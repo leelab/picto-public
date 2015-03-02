@@ -233,26 +233,6 @@ bool FileSessionLoader::loadRunData()
 	return true;
 }
 
-/*! \brief This function is no longer used and should be removed.  Its functionality is handled in loadRun().
-*/
-double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
-{
-	UNREFERENCED_PARAMETER(subtractTime);
-	if(!getDatabase().isOpen())
-		return after;
-	if(after == to)
-		return after;
-	
-	QSqlQuery query(getDatabase());
-	query.setForwardOnly(true);
-
-	// eLfp:
-	//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
-	//eSpike:
-	//setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
-	return to;
-}
-
 /*! \brief Loads all information about which signals were used in the session and sets that data into the SessionState.
  *	\details This tells the SessionState how many objects it needs to handle loading of the Session's signal data
  *	and causes it to set them up properly.

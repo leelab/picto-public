@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTextDocument>
 #include "PictoData.h"
-//#include "Design.h"
 
 namespace Picto{
 

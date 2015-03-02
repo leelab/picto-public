@@ -1,5 +1,4 @@
 #include "PropertyState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 /*! \brief Constructs a new PropertyState.

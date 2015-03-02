@@ -5,8 +5,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString RandomlyFilledGridGraphic::type = "Randomly Filled Grid Graphic";
+	const QString RandomlyFilledGridGraphic::type = "Randomly Filled Grid Graphic";
 
 /*! \brief Constructs a RandomlyFilledGridGraphic at the input position with the input dimensions (only size component is used), with the primary color and
  *	secondary color2, the input number of horizontal and vertical squares in the grid, and the total number of color2 squares at a given frame.  Randomization
@@ -43,12 +42,6 @@ RandomlyFilledGridGraphic::RandomlyFilledGridGraphic(QPoint position, QRect dime
 	AddDefinableProperty(QVariant::Int,"Color2Squares",numColor2);
 
 	AddDefinableProperty(QVariant::Int,"FramesPerUpdate",updateFrameRate);
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* RandomlyFilledGridGraphic::NewVisualElement()
-{
-	return new RandomlyFilledGridGraphic;
 }
 
 /*! \brief Creates a new RandomlyFilledGridGraphic object and returns a shared Asset pointer to it.*/

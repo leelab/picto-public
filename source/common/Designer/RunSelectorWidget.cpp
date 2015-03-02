@@ -197,22 +197,6 @@ int RunSelectorWidget::getRunStatus(QString fileName,int runIndex)
 	return fileRunLookup_[fileName][runIndex]->runStatus_;
 }
 
-/*! \brief No longer used.  This should be removed.*/
-void RunSelectorWidget::setRunInProgress(QString fileName,int runIndex)
-{
-	setRunColor(fileName,runIndex,Qt::green);
-}
-/*! \brief No longer used.  This should be removed.*/
-void RunSelectorWidget::setRunComplete(QString fileName,int runIndex)
-{
-	setRunColor(fileName,runIndex,Qt::blue);
-}
-/*! \brief No longer used.  This should be removed.*/
-void RunSelectorWidget::setRunError(QString fileName,int runIndex)
-{
-	setRunColor(fileName,runIndex,Qt::red);
-}
-
 /*! \brief Resets the status of all runs to Idle.  Highlight will be removed and tooltip will be restored to the original run notes.*/
 void RunSelectorWidget::resetAllRunStatus()
 {

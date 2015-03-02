@@ -15,7 +15,7 @@
 
 #include "../engine/PictoEngine.h"
 #include "../engine/propertytable.h"
-#include "../storage/propertylookup.h"
+
 
 namespace Picto {
 

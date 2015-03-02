@@ -3,9 +3,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString BinaryDataOutput::type = "Binary Data Output";
-
+	const QString BinaryDataOutput::type = "BinaryDataOutput";
 /*! \brief Constructs a BinaryDataOutput object.
  *	\details Adds a Value Property to store an integer value that will be output in binary form over the output port.
  */

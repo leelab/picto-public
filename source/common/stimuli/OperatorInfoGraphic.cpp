@@ -5,8 +5,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString OperatorInfoGraphic::type = "Operator Info Graphic";
+	const QString OperatorInfoGraphic::type = "Operator Info Graphic";
 
 /*! \brief Constructs an OperatorInfoGraphic object.
  *	\details Adds the following Properties:
@@ -58,12 +57,6 @@ void OperatorInfoGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* OperatorInfoGraphic::NewVisualElement()
-{
-	return new OperatorInfoGraphic;
 }
 
 /*! \brief Creates a new OperatorInfoGraphic object and returns a shared Asset pointer to it.*/

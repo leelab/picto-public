@@ -6,7 +6,7 @@
 
 #include "../common.h"
 #include "../property/property.h"
-#include "../storage/propertylookup.h"
+
 #include "../storage/DesignConfig.h"
 
 namespace Picto {

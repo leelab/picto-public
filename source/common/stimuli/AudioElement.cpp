@@ -4,6 +4,7 @@
 
 namespace Picto {
 
+	const QString AudioElement::type = "Simple";
 /*! \brief Constructs an AudioElement.
  *	\details Adds an AudioFile Property for handling the name of the AudioFile element that will be played.  Adds a Playing and Trigger booleans
  *	that are not visible to the designer but used to track the current playback status so that it can be correctly reproduced in playback.

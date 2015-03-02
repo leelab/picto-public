@@ -4,7 +4,7 @@
 namespace Picto {
 
 	/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-	const QString AnalogInput::type = "Analog Input";
+	const QString AnalogInput::type = "AnalogInput";
 
 	/*! \brief Constructs a AnalogInput object.
 	*	\details Adds a Value Property to store a boolean value that will be output to the output pin.
