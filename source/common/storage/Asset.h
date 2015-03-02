@@ -100,7 +100,7 @@ public:
 	 *	\details Locally, the self pointer is stored as a QWeakPointer (otherwise the object could never be deleted).
 	 */
 	void setSelfPtr(QSharedPointer<Asset> selfPtr){self_ = selfPtr;};
-	void reinitialize();
+
 	/*! \brief Returns information about this object for the user.  In practice, the AssetDescriber has taken ove this functionality to a great extent.
 	 *	\details Originally, we planned to use this to store information describing an Asset inside its class description.  We are still using it to
 	 *	automatically generate script information in the Picto Designer's "Scripting Info" tab which shows all available in scope elements along with

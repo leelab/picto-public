@@ -1,5 +1,4 @@
 #include "FrameState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 void FrameState::setDatabase(QSqlDatabase session)

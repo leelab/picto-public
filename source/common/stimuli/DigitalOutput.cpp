@@ -3,8 +3,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString DigitalOutput::type = "Digital Output";
+	const QString DigitalOutput::type = "DigitalOutput";
 
 /*! \brief Constructs a BinaryDataOutput object.
  *	\details Adds a Value Property to store a boolean value that will be output to the output pin.

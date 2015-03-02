@@ -3,7 +3,6 @@
 
 #include "proxymainwindow.h"
 #include "NeuralDataAcqInterface.h"
-#include "network/proxyserver.h"
 #include "protocol/ProxyServerProtocols.h"
 #include "protocol/ProxyServerAcqProtocol.h"
 #include "../common/globals.h"

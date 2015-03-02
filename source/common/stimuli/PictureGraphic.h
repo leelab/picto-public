@@ -32,15 +32,14 @@ class PICTOLIB_CLASS PictureGraphic : public VisualElement
 public:
 	PictureGraphic(QPoint position=QPoint(), QString imageFile="");
 	static QSharedPointer<Asset> Create();
+	static const QString type;
+
 	void draw();
-	static VisualElement* NewVisualElement();
 
 	/*! \brief Gets the current image file path.*/
 	QString getImageFile() { return propertyContainer_->getPropertyValue("ImageFile").toString(); };
 	/*! \brief Sets the image file path to the input value.*/
 	void setImageFile(QString fileName) { propertyContainer_->setPropertyValue("ImageFile",fileName); };
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Picture";};
 protected:

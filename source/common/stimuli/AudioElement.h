@@ -41,6 +41,7 @@ public:
 	AudioElement();
 	virtual ~AudioElement(){};
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	void addMixingSample(QSharedPointer<MixingSample> mixingSample);
 	QSharedPointer<MixingSample> getMixingSample(QString sampleType);

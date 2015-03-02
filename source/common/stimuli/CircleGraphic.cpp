@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString CircleGraphic::type = "Circle Graphic";
+	const QString CircleGraphic::type = "Circle Graphic";
 
 /*! \brief Creates a new CircleGraphic object at the input position and with the input radius and color.
  *	\details Adds the following Properties:
@@ -53,12 +52,6 @@ void CircleGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* CircleGraphic::NewVisualElement()
-{
-	return new CircleGraphic;
 }
 
 /*! \brief Creates a new CircleGraphic object and returns a shared Asset pointer to it.*/

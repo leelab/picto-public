@@ -10,14 +10,10 @@ namespace Picto
  */
 NumericParameter::NumericParameter()
 : 
-  value_(0),
-  units_(""),
   Parameter()
 {
 	AddDefinableProperty(QVariant::Int,"Value",QVariant());
 	AddDefinableObjectFactory("Units",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
-
-
 }
 
 /*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.

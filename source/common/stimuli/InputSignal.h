@@ -27,6 +27,8 @@ public:
 	InputSignal();
 	virtual ~InputSignal();
 
+	static const QString type;
+
 	/*! \brief Returns the pin number handled by this InputSignal.
 	*/
 	virtual int getPin(){ return -1; };

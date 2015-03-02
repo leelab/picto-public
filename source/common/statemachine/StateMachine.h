@@ -8,18 +8,6 @@
 
 namespace Picto {
 
-/*! \brief This namespace is no longer used and should be deleted.*/
-namespace StateMachineLevel
-{
-	//typedef enum
-	//{
-	//	Stage,
-	//	Trial,
-	//	Task,
-	//	Experiment
-	//} StateMachineLevel;
-}
-
 /*!	\brief A container for a State Machine defined by StateMachineElement objects connected by Transitions.
  *
  *	\details A StateMachine contains multiple StateMachineElements and the Transitions between them.  It is also a StateMachineElement, 

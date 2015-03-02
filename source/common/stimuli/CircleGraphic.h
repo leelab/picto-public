@@ -28,9 +28,9 @@ public:
 	CircleGraphic(QPoint position=QPoint(), int radius=0, QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
 	static const QString type;
+
 	QPoint getPositionOffset();
 	/*! \brief Returns the radius of the circle in pixels.*/
 	int getRadius(){return propertyContainer_->getPropertyValue("Radius").toInt();};

@@ -1,5 +1,4 @@
 #include "RewardState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 void RewardState::setDatabase(QSqlDatabase session)

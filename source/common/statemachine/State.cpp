@@ -2,7 +2,6 @@
 #include <QUuid>
 
 #include "State.h"
-#include "../controlelements/ControlElementFactory.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"

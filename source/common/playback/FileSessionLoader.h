@@ -61,7 +61,6 @@ protected:
 	};
 
 	virtual bool loadRunData();
-	virtual double loadNeuralData(double after,double to,double subtractTime);
 private:
 	bool getSignalInfo();
 	bool loadDesignDefinition();

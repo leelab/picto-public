@@ -35,6 +35,7 @@ public:
 	void draw();
 	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	QPoint getStartPoint() { return propertyContainer_->getPropertyValue("Start").toPoint(); };
 	QPoint getEndPoint() { return propertyContainer_->getPropertyValue("End").toPoint(); };
@@ -48,8 +49,6 @@ public:
 	void setEndX(int x){setEndPoint(QPoint(x,getEndPoint().y()));};
 	int getEndY(){return getEndPoint().y();};
 	void setEndY(int y){setEndPoint(QPoint(getEndPoint().x(),y));};
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Arrow";};
 public slots:

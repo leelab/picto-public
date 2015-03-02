@@ -13,13 +13,11 @@
 #include "../common/stimuli/RandomlyFilledGridGraphic.h"
 #include "../common/stimuli/TextGraphic.h"*/
 
-#include "../common/controlelements/ControlElementFactory.h"
 #include "../common/controlelements/TestController.h"
 #include "../common/controlelements/StopwatchController.h"
 #include "../common/controlelements/TargetController.h"
 #include "../common/controlelements/ChoiceController.h"
 
-#include "../common/parameter/ParameterFactory.h"
 #include "../common/parameter/BooleanParameter.h"
 #include "../common/parameter/ChoiceParameter.h"
 #include "../common/parameter/NumericParameter.h"

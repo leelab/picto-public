@@ -35,10 +35,10 @@ public:
 	GridGraphic();
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
-	virtual void upgradeVersion(QString deserializedVersion);
 	static const QString type;
+
+	virtual void upgradeVersion(QString deserializedVersion);
 	/*! \brief Returns the width of this graphic in pixels.*/
 	int getWidth(){return getDimensions().width();};
 	/*! \brief Returns the height of this graphic in pixels.*/

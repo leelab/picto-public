@@ -33,8 +33,8 @@ public:
 	EllipseGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 	/*! \brief Returns a QRect with the dimensions (width, height) of this graphic.
 	 *	\note The returned value contains no position information.  Only the Width, Height
 	 *	values should be used.
@@ -59,7 +59,6 @@ public:
 	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
 
 	QPoint getPositionOffset();
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Ellipse";};
 	virtual QString getUITemplate(){return "EllipseElement";};

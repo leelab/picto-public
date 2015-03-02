@@ -47,8 +47,6 @@ SOURCES += $$(PICTO_TREE)/source/server/connections/ComponentInfo.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/ServerConfig.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ServerConfig.cpp
 
-HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
-SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.cpp
 
@@ -81,8 +79,6 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/JoinsessionCommandHandler.h
