@@ -47,8 +47,6 @@ public:
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString friendlyTypeName(){return "Task";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
-	/*! \brief Since there is no TaskId Property, this function doesn't appear to do anything and should be removed.*/
-	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 	/*! \brief Returns a pointer to the top level StateMachine contained in this Task.
 	*/

@@ -10,7 +10,6 @@
 #include <QString>
 #include <QVariant>
 
-#include "../common/stimuli/VisualElementFactory.h"
 #include "../common/stimuli/ArrowGraphic.h"
 #include "../common/stimuli/BoxGraphic.h"
 #include "../common/stimuli/CircleGraphic.h"

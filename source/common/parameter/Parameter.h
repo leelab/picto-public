@@ -66,7 +66,6 @@ protected:
 	virtual QString defaultTagName(){return "Parameter";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-	QVariant currValue_;	//!< This is still here from many moons ago and is not used.  It should be deleted.
 private:
 	bool fixingValues_;
 };

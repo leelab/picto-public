@@ -132,8 +132,6 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 		returnVal = NULL;
 	else if(asset->inherits("Picto::ControlLink"))
 		returnVal = NULL;
-	else if(asset->inherits("Picto::UIInfo"))
-		returnVal = NULL;
 	else if(asset->inherits("Picto::AnalysisScriptHolder"))
 		returnVal = NULL;
 	else if(asset->inherits("Picto::LogicResult"))

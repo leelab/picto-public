@@ -26,7 +26,6 @@ size_(16)
 	propertyContainer_->setContainerName(type);
 	initializePropertiesToDefaults();
 	propertyContainer_->setPropertyValue("Position",QPoint(0,0));	//Hmm... There already is a Position Property.  This line should probably be removed.
-	propertyContainer_->setPropertyValue("Color",color);	//Hmm... Isn't this handled in the VisualElement constructor.  This line should probably be removed.
 	setScalable(false);
 
 	draw();

@@ -17,8 +17,8 @@ namespace Picto {
  *	course a function of the Result's parent container since the Result does not have its
  *	own run() function.  With that said, however, all elements that call a results EntryScript 
  *	(runResultScript()) should do so before calling their own ExitScript.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Result : public ScriptableContainer
@@ -46,8 +46,6 @@ protected:
 	virtual bool hasScripts();
 	virtual QMap<QString,QString> getScripts();
 	virtual bool canHaveScripts(){return true;};
-
-	QSharedPointer<AssetFactory> resultEntryScriptFactory_;	//!< This appears to be unused and should probably be deleted.
 
 };
 

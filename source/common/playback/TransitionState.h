@@ -18,14 +18,11 @@ struct PlaybackTransData;
  *	data read in from a Session Database, there is not much to add in terms of documentation 
  *	beyond what was described above, so we will not be adding function level documentation
  *	for this class.
- *
- *	\note TransitionReader no longer has any contents since we realized that TransitionReader was more naturally
- *	extracted as part of StateMachine playback instead of being gathered over time ranges.  We have left
- *	the TransitionReader interface extension here, but it could probably be removed.
+
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
-class TransitionState : public TransitionReader, public DataState
+class TransitionState : public QObject, public DataState
 {
 	Q_OBJECT
 public:

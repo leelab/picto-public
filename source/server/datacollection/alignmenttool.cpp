@@ -164,16 +164,3 @@ void AlignmentTool::updateCoefficients(double bAlignTimestamp,
 	else
 		coeff_.corr = (SSxy*SSxy)/(SSxx*SSyy);
 }
-
-/*! \brief This appears to no longer be used and should probably be deleted.
-*/
-QString AlignmentTool::getSQLJitterEquation(QString jitterColumn, 
-							QString neuralTimebaseColumn, 
-							QString behavioralTimebaseColumn, 
-							QString correlationColumn)
-{
-	QMutexLocker locker(alignmentMutex_.data());
-	return jitterColumn + "=" + behavioralTimebaseColumn + "-(" + QString::number(coeff_.A,'f',14) + "+(" + QString::number(coeff_.B,'f',14)+"*"+neuralTimebaseColumn+"))"+
-		"," + correlationColumn + "=" + QString::number(getCorrelationCoefficient(),'f',14);
-
-}

@@ -150,7 +150,6 @@ SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray de
 	//Setup databases
 	LoadBaseSessionDatabase(sessionPath, databaseName);
 	SetupBaseSessionDatabase();
-	//CreateCacheDatabase(databaseName);
 
 	//file_.setFileName(databaseName + ".test");
 	//file_.open(QIODevice::WriteOnly);
@@ -1200,16 +1199,6 @@ void SessionInfo::SetupBaseSessionDatabase()
 	//Now that everything has been written to the tempCachedSessionData object.  Move it all to the StoredSessionData object in one
 	//big transaction
 	tempCachedSessionData->moveDataTo(storedSessionData_.data());
-}
-
-/*! \brief No longer does anything and should be deleted.*/
-void SessionInfo::CreateCacheDatabase(QString databaseName)
-{
-}
-
-/*! \brief No longer does anything and should be deleted.*/
-void SessionInfo::AddTablesToDatabase(QSqlQuery* /*query*/)
-{
 }
 
 /*! \brief Should be used with SessionData values of BEHAVIORAL_ALIGN_EVENTS_TYPE.  Returns

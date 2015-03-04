@@ -36,7 +36,6 @@ public:
 	void restart();
 	bool stepToTime(double time);
 	double getTime();
-	bool isProcessing();
 signals:
 	/*! \brief Emitted when playback of a Session Run starts or is restarted.  taskName is the name of the task
 	 *	that was Run, runName is the name that was saved for this Run during the Experimental Session.

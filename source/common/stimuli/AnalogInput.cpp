@@ -2,8 +2,6 @@
 #include "../memleakdetect.h"
 
 namespace Picto {
-
-	/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
 	const QString AnalogInput::type = "AnalogInput";
 
 	/*! \brief Constructs a AnalogInput object.

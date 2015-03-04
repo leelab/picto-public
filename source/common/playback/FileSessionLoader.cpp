@@ -236,8 +236,6 @@ bool FileSessionLoader::loadRunData()
 /*! \brief Loads all information about which signals were used in the session and sets that data into the SessionState.
  *	\details This tells the SessionState how many objects it needs to handle loading of the Session's signal data
  *	and causes it to set them up properly.
- *	\note The sigs_ vector added to here does not appear to be used anywhere and may be a memory leak.  It should probably
- *	be removed.
  */
 bool FileSessionLoader::getSignalInfo()
 {

@@ -17,9 +17,6 @@
 #include "../common.h"
 
 namespace Picto {
-	/*! \brief This Enum does not appear to be used and should probably be deleted.
-	*/
-	typedef enum{eProperty,eTransition,eFrame,eReward,eSignal,eLfp,eSpike} PlaybackDataType;
 
 /*! \brief This is pretty much a convenience class for grouping together DataState objects for
  *	playback and Analysis purposes.
@@ -60,8 +57,6 @@ public:
 	//GET FUNCTIONS-----------------------------------------------------------------
 	//The separate types of DataReaders are used to access asynchronous data
 	//such as spikes since 1 second ago, lfp data until 500ms from now, etc.
-	QSharedPointer<PropertyReader> getPropertyReader();
-	QSharedPointer<TransitionReader> getTransitionReader();
 	QSharedPointer<FrameReader> getFrameReader();
 	QSharedPointer<RewardReader> getRewardReader();
 	QSharedPointer<RunNotesReader> getRunNotesReader();
@@ -132,9 +127,6 @@ signals:
 	 *	provides a "general sense" of the current percent loaded.
 	 */
 	void percentLoaded(double percent);
-	/*! \brief This signal does not appear to ever be emitted. It should probably be deleted.
-	 */
-	void wasReset();
 
 private:
 	void updatePercentLoaded();

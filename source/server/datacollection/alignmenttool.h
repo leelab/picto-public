@@ -44,10 +44,6 @@ public:
 	double getNeuralOffsetTime();
 	double getNeuralTemporalFactor();
 	void updateCoefficients(double bAlignTimestamp, double nAlignTimestamp);
-	QString getSQLJitterEquation(	QString jitterColumn, 
-									QString neuralTimebaseColumn, 
-									QString behavioralTimebaseColumn,
-									QString correlationColumn);
 
 private:
 	struct AlignmentEvent

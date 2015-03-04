@@ -34,13 +34,6 @@ QString StateMachineElement::slaveRenderFrame(QSharedPointer<Engine::PictoEngine
 	return "";
 }
 
-/*! \brief This function does not appear to be used and should probably be deleted.
-*/
-QPoint StateMachineElement::getDisplayLayoutPosition()
-{
-	return layoutPosition_;
-}
-
 void StateMachineElement::postDeserialize()
 {
 	ResultContainer::postDeserialize();

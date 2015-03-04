@@ -146,8 +146,6 @@ private:
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString path, QString databaseName);
 	void SetupBaseSessionDatabase();
-	void CreateCacheDatabase(QString databaseName);
-	void AddTablesToDatabase(QSqlQuery* query);
 	void alignTimeBases(bool realignAll = false);
 	void createSessionIndeces();
 	void setStateVariable(int dataid, int varid, QString serializedValue);

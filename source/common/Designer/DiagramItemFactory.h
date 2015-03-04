@@ -3,7 +3,6 @@
 
 #include "diagramitem.h"
 #include "../../common/storage/asset.h"
-#include "../../common/statemachine/uiinfo.h"
 #include <QMap>
 using namespace Picto;
 

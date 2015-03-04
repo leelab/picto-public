@@ -23,13 +23,9 @@ namespace Picto {
 
 
 PictoEngine::PictoEngine() :
-	timingType_(PictoEngineTimingType::precise),
 	propTable_(NULL),
 	slave_(false),
 	userIsOperator_(false),
-	syncInitProperties_(true),
-	//currBehavUnitPack_(QSharedPointer<BehavioralDataUnitPackage>(new BehavioralDataUnitPackage())),
-	//currBehavUnit_(QSharedPointer<BehavioralDataUnit>(new BehavioralDataUnit())),
 	lastFrameId_(-1),
 	engineCommand_(StopEngine),
 	taskRunStarting_(false),
@@ -39,11 +35,6 @@ PictoEngine::PictoEngine() :
 	setSessionId(QUuid());
 }
 
-/*! \brief This doesn't appear to actually do anything.  It should probably be removed.*/
-void PictoEngine::setTimingControl(PictoEngineTimingType::PictoEngineTimingType _timingType)
-{
-	timingType_ = _timingType;
-}
 /*! \brief Returns a list of RenderingTargets to which the running Experiment is rendered.*/
 QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 {
@@ -646,67 +637,6 @@ bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandCh
 QSharedPointer<CommandChannel> PictoEngine::getDataCommandChannel()
 {
 	return dataCommandChannel_;
-}
-
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
- *	\details The earlier comment was: Sets the CommandChannel used for updates.  Returns true if the channel's status is connected
- */
-bool PictoEngine::setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel)
-{
-	if(commandChannel.isNull())
-		return false;
-
-	updateCommandChannel_ = commandChannel;
-	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
-		return false;
-	else
-		return true;
-}
-
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
-*/
-QSharedPointer<CommandChannel> PictoEngine::getUpdateCommandChannel()
-{
-	return updateCommandChannel_;
-}
-
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
-*/
-bool PictoEngine::setFrontPanelCommandChannel(QSharedPointer<CommandChannel> commandChannel)
-{
-	if(commandChannel.isNull())
-		return false;
-
-	fpCommandChannel_ = commandChannel;
-	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
-		return false;
-	else
-		return true;
-}
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
-*/
-QSharedPointer<CommandChannel> PictoEngine::getFrontPanelCommandChannel()
-{
-	return fpCommandChannel_;
-}
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
-*/
-bool PictoEngine::setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel)
-{
-	if(commandChannel.isNull())
-		return false;
-
-	fpEventChannel_ = commandChannel;
-	if(commandChannel->getChannelStatus() == CommandChannel::disconnected)
-		return false;
-	else
-		return true;
-}
-/*! \brief This was used in a preliminary version of the Picto Engine; however, it is no longer being used and should be deleted.
-*/
-QSharedPointer<CommandChannel> PictoEngine::getFrontPanelEventChannel()
-{
-	return fpEventChannel_;
 }
 
 /*! \brief Sets a PropertyTable to this Picto Engine for the purpose of tracking changed values and initvalues and sending them to

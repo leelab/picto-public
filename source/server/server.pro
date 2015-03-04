@@ -23,8 +23,6 @@ HEADERS += $$(PICTO_TREE)/source/server/processinfo/WinGetPID.h
 SOURCES += $$(PICTO_TREE)/source/server/main.cpp
 HEADERS += $$(PICTO_TREE)/source/server/dialog.h
 SOURCES += $$(PICTO_TREE)/source/server/dialog.cpp
-HEADERS += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.h
-SOURCES += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.cpp
 
 HEADERS += $$(PICTO_TREE)/source/server/connections/AlignSessionData.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/AlignSessionData.cpp

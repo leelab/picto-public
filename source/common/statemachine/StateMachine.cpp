@@ -2,8 +2,6 @@
 
 #include "State.h"
 #include "Reward.h"
-//#include "FlowElement.h"
-#include "ScriptElement.h"
 #include "SwitchElement.h"
 #include "PausePoint.h"
 #include "LogicResult.h"
@@ -43,11 +41,8 @@ StateMachine::StateMachine() :
 
 	//DefinePlaceholderTag("StateMachineElements");
 
-	//QSharedPointer<AssetFactory> factory(new AssetFactory(0,-1));
 	elementFactory_->addAssetType("Reward",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Reward::Create))));
-	//elementFactory_->addAssetType("FlowElement",
-	//	QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FlowElement::Create))));
 	elementFactory_->addAssetType("ScriptElement",
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	elementFactory_->addAssetType("Switch",
@@ -349,61 +344,6 @@ QString StateMachine::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	}
 
 	return result;
-}
-
-/*!	\brief This function was used when we used to enforce a trial structure in Picto.  We no longer do this and alignment codes are no longer
- *	attached to any particular experimental event, so this function is no longer used.  It should probably be deleted.
- */
-void StateMachine::sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine)
-{
-	Timestamper timestamper;
-	double timestamp = timestamper.stampSec();
-
-	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
-	if(dataChannel.isNull())
-		return;
-
-	//Create an alignment command
-	QString dataCommandStr = "PUTDATA " + engine->getName() + ":running PICTO/1.0";
-	QSharedPointer<ProtocolCommand> command(new ProtocolCommand(dataCommandStr));
-
-	//Create the content of the alignment command
-	QByteArray alignDataXml;
-	QSharedPointer<QXmlStreamWriter> xmlWriter(new QXmlStreamWriter(&alignDataXml));
-	
-	Picto::AlignmentDataUnit alignData;
-	alignData.setAlignCode(trialEventCode_);
-	alignData.setAlignNumber(trialNum_);
-	alignData.setTimestamp(timestamp);
-
-	xmlWriter->writeStartElement("Data");
-	alignData.toXml(xmlWriter);
-	xmlWriter->writeEndElement();
-
-
-	command->setContent(alignDataXml);
-	command->setFieldValue("Content-Length",QString::number(alignDataXml.length()));
-
-	dataChannel->sendRegisteredCommand(command);
-	//if(!dataChannel->waitForResponse(10000))
-	//{
-	//	handleLostServer(engine);
-	//}
-	//else
-	//{
-
-	//	response = dataChannel->getResponse();
-	//	Q_ASSERT(!response.isNull());
-	//	Q_ASSERT(response->getResponseType() == "OK");
-	//	processStatusDirective(engine,response);
-	//}
-}
-
-/*	\brief This function is no longer used and should be deleted.
- */
-void StateMachine::handleLostServer(QSharedPointer<Engine::PictoEngine> engine)
-{
-	engine->stop();
 }
 
 void StateMachine::postDeserialize()

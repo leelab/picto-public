@@ -3,16 +3,6 @@
 
 #define NI_STUFF
 
-/*#include "../common/stimuli/VisualElementFactory.h"
-#include "../common/stimuli/ArrowGraphic.h"
-#include "../common/stimuli/BoxGraphic.h"
-#include "../common/stimuli/CircleGraphic.h"
-#include "../common/stimuli/EllipseGraphic.h"
-#include "../common/stimuli/LineGraphic.h"
-#include "../common/stimuli/PictureGraphic.h"
-#include "../common/stimuli/RandomlyFilledGridGraphic.h"
-#include "../common/stimuli/TextGraphic.h"*/
-
 #include "../common/controlelements/TestController.h"
 #include "../common/controlelements/StopwatchController.h"
 #include "../common/controlelements/TargetController.h"

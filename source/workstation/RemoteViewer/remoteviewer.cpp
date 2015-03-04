@@ -1888,17 +1888,6 @@ bool RemoteViewer::joinSession()
 	return true;
 }
 
-
-
-
-/*! \brief This does not do anything and should probably be deleted.
- *
- */
-bool RemoteViewer::syncExperiment()
-{
-	return true;
-}
-
 /*! \brief Causes the engine to stop the currently running experiment before the next time updateState() runs.
  *
  */

@@ -19,13 +19,10 @@ struct PropertyData;
  *	beyond what was described above, so we will not be adding function level documentation
  *	for this class.
  *
- *	\note PropertyReader no longer has any contents since we realized that PropertyData was more naturally
- *	extracted as part of StateMachine playback instead of being gathered over time ranges.  We have left
- *	the PropertyReader interface extension here, but it could probably be removed.
  *	\author Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2013
  */
-class PropertyState : public PropertyReader, public DataState
+class PropertyState : public QObject, public DataState
 {
 	Q_OBJECT
 public:

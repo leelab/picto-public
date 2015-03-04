@@ -347,7 +347,6 @@ void PlaybackController::setup()
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(operatorWasUser);
 	engine_->setSlaveMode(true);
-	engine_->syncInitPropertiesForSlave(false);
 
 	//Setup playback update system
 	double playbackSpeed = 1.0;

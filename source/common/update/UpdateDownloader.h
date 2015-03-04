@@ -17,7 +17,6 @@
 #include "../common.h"
 #include "../globals.h"
 #include "../namedefs.h"
-#include "../archives/archives.h"
 #include "../protocol/protocolresponse.h"
 #include "../network/serverdiscoverer.h"
 

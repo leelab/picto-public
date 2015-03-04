@@ -54,9 +54,6 @@ protected:
 
 private:
 	QString runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool slave);
-	void sendTrialEventToServer(QSharedPointer<Engine::PictoEngine> engine);
-
-	void handleLostServer(QSharedPointer<Engine::PictoEngine> engine);
 
 	static short trialEventCode_;
 	static int trialNum_;

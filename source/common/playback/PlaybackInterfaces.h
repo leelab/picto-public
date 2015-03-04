@@ -77,29 +77,6 @@ public:
 	virtual QVariantList getTimesUntil(double time)=0;
 };
 
-/*! \brief This class is now empty and should probably be removed.*/
-class PropertyReader : public QObject
-{
-//	Q_OBJECT
-//public:
-//	virtual ~PropertyReader(){};
-//	virtual QVariant getValue(){return QVariant();};
-//	//Returns a list of times when the property changed that occured with times > the 
-//	//input time and <= the current time.  
-//	virtual QVariantList getTimesSince(double time){return QVariantList();};
-//	//Returns a list of times when the property changed that occured with times > the 
-//	//current time and <= the input time.  
-//	virtual QVariantList getTimesUntil(double time){return QVariantList();};
-//	//Returns a property values to which the property was changed that occured with 
-//	//times > the input time and <= the current time.  There is a one to one matchup
-//	//of values from this function to times from the getTimesSince function.
-//	virtual QVariantList getValuesSince(double time){return QVariantList();};
-//	//Returns a property values to which the property was changed that occured with 
-//	//times > the current time and <= the input time.  There is a one to one matchup
-//	//of values from this function to times from the getTimesSince function.
-//	virtual QVariantList getValuesUntil(double time){return QVariantList();};
-};
-
 /*! \brief An base class for classes that can provide Reward data over input time ranges.
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
@@ -303,55 +280,6 @@ public:
 	 *	from this function and channels from getChannelsUntil(), units from getUnitsUntil()
 	 *	and times from getTimesUntil().*/
 	virtual QVariantList getWaveformsUntil(double time)=0;
-};
-
-/*! \brief This class is now empty and should probably be removed.*/
-class TransitionReader : public QObject
-{
-	Q_OBJECT
-public:
-	//virtual ~TransitionReader(){};
-	//virtual QString getLatestSourceName(){return "";};
-	//virtual QString getLatestSourcePath(){return "";};
-	//virtual QString getLatestResultName(){return "";};
-	//virtual QString getLatestResultPath(){return "";};
-	//virtual QString getLatestDestination(){return "";};
-	//virtual QString getLatestDestinationPath(){return "";};
-	////Returns a list of times when transitions occured with times > the 
-	////input time and <= the current time.  There is a one to one matchup of times
-	////from this function and values from getSourcePathsSince(time),getResultPathsSince(time)
-	////getDestinationsSince(time).
-	//virtual QVariantList getTimesSince(double time){return QVariantList();};
-	////Returns a list of times when transitions occured with times > the 
-	////current time and <= the input time.  There is a one to one matchup of times
-	////from this function and values from getSourcePathsUntil(time),getResultPathsUntil(time)
-	////getDestinationPathsUntiltime).
-	//virtual QVariantList getTimesUntil(double time){return QVariantList();};
-	//virtual QVariantList getSourcePathsSince(double time){return QVariantList();};
-	//virtual QVariantList getSourcePathsUntil(double time){return QVariantList();};
-	//virtual QVariantList getResultPathsSince(double time){return QVariantList();};
-	//virtual QVariantList getResultPathsUntil(double time){return QVariantList();};
-	//virtual QVariantList getDestinationPathsSince(double time){return QVariantList();};
-	//virtual QVariantList getDestinationPathsUntil(double time){return QVariantList();};
-
-	////Returns a list of times when a transition occured from the input source path and 
-	////result with times > the input time and <= the current time.
-	//virtual QVariantList getTimesSince(QString sourcePath, QString resultName, double time){return QVariantList();};
-	////Returns a list of times when transitions occured from the input source path and result
-	////with times > the current time and <= the input time.
-	//virtual QVariantList getTimesUntil(QString sourcePath, QString resultName, double time){return QVariantList();};
-	////Returns a list of times when transitions occured from the input source path regardless
-	////of result with times > the input time and <= the current time.
-	//virtual QVariantList getTimesFromSourceSince(QString destPath, double time){return QVariantList();};
-	////Returns a list of times when transitions occured from the input source path 
-	////regardless of result with times > the current time and <= the input time.
-	//virtual QVariantList getTimesFromSourceUntil(QString destPath, double time){return QVariantList();};
-	////Returns a list of times when transitions occured to the input destination path with times > the 
-	////input time and <= the current time.
-	//virtual QVariantList getTimesToDestSince(QString destPath, double time){return QVariantList();};
-	////Returns a list of times when transitions occured to the input destination with times > the 
-	////current time and <= the input time.
-	//virtual QVariantList getTimesToDestUntil(QString destPath, double time){return QVariantList();};
 };
 
 }; //namespace Picto
