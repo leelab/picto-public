@@ -30,39 +30,39 @@ class TargetController : public ControlElement
 {
 	Q_OBJECT
 	/*! \brief Sets/Gets the current value of the necessary 'FixationTime' considered successful fixation.
-	 * \details FixationTime is the amount of time that the user must continuously fixate on the target 
-	 *	defined in the 'ControlTarget' property before 'TotalTime' is reached in order for the 'Success' 
+	 * \details FixationTime is the amount of time that the user must continuously fixate on the target
+	 *	defined in the 'ControlTarget' property before 'TotalTime' is reached in order for the 'Success'
 	 *	result to be triggered.
 	 */
-	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime)
+	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime);
 	/*! \brief Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.
-	 * \details TotalTime is the amount of time that the user has to succesfully fixate on the target defined in 'ControlTarget' 
-	 *	for a continuous 'FixationTime'.  
-	 *	\note If the user is not fixating on the target at a time beyond 'TotalTime'-'FixationTime', 'Total Time Exceeded' will be 
+	 * \details TotalTime is the amount of time that the user has to succesfully fixate on the target defined in 'ControlTarget'
+	 *	for a continuous 'FixationTime'.
+	 *	\note If the user is not fixating on the target at a time beyond 'TotalTime'-'FixationTime', 'Total Time Exceeded' will be
 	 *	triggered.
 	 */
-	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime)
+	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime);
 	/*! \brief Sets/Gets the current value of 'MinInitialAcquisitionTime'.
-	 *	\details MinInitialAcquisitionTime is the time before which any fixation on the target is not counted toward the 
+	 *	\details MinInitialAcquisitionTime is the time before which any fixation on the target is not counted toward the
 	 *	'FixationTime'.
 	 */
-	Q_PROPERTY(int minAcquisitionTime READ getMinAcqTime WRITE setMinAcqTime)
+	Q_PROPERTY(int minAcquisitionTime READ getMinAcqTime WRITE setMinAcqTime);
 	/*! \brief Sets/Gets the current value of 'MaxInitialAcquisitionTime'
-	 * \details The time before which the user must begin their initial fixation.  
-	 *	If the user does not fixate on the target for at least a single frame before 
+	 * \details The time before which the user must begin their initial fixation.
+	 *	If the user does not fixate on the target for at least a single frame before
 	 *	this time, 'Initial Aquistion Time Exceeded' will be triggered.
 	 */
-	Q_PROPERTY(int maxAcquisitionTime READ getMaxAcqTime WRITE setMaxAcqTime)
+	Q_PROPERTY(int maxAcquisitionTime READ getMaxAcqTime WRITE setMaxAcqTime);
 	/*! \brief Sets/Gets the current value of 'MaxReacquisitionTime'
-	 * \details When 'ReaquisitionAllowed' is true, this is the amount of time that the user has to look outside the target 
+	 * \details When 'ReaquisitionAllowed' is true, this is the amount of time that the user has to look outside the target
 	 *	after having left it before 'Reacquisition Time Exceeded' is triggered.
 	 */
-	Q_PROPERTY(int maxReacquisitionTime READ getMaxReacqTime WRITE setMaxReacqTime)
+	Q_PROPERTY(int maxReacquisitionTime READ getMaxReacqTime WRITE setMaxReacqTime);
 	/*! \brief Sets/Gets the current value of 'ReacquisitionAllowed'
-	 * \details If true, the user's eye position may enter and exit the target defined in 'ControlTarget' without triggering a 
+	 * \details If true, the user's eye position may enter and exit the target defined in 'ControlTarget' without triggering a
 	 *	'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.
 	 */
-	Q_PROPERTY(bool reacquisitionAllowed READ getReacqAllowed WRITE setReacqAllowed)
+	Q_PROPERTY(bool reacquisitionAllowed READ getReacqAllowed WRITE setReacqAllowed);
 
 public:
 	TargetController();

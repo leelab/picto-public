@@ -8,7 +8,6 @@
 
 #include "../common.h"
 
-#include "StimulusElement.h"
 #include "OutputElement.h"
 #include "../statemachine/scriptable.h"
 #include "../compositor/CompositingSurface.h"

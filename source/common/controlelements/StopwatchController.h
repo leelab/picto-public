@@ -26,7 +26,7 @@ class StopwatchController : public ControlElement
 {
 	Q_OBJECT
 	/*! \brief Sets/Gets the current value of the Time property which defines the time at which 'Success' will be triggered*/
-	Q_PROPERTY(int timeout READ getTime() WRITE setTime())
+	Q_PROPERTY(int timeout READ getTime() WRITE setTime());
 public:
 	StopwatchController();
 	virtual ~StopwatchController(){};

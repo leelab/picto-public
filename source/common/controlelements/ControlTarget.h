@@ -22,7 +22,7 @@ class ControlTarget : public VisualElement
 {
 	Q_OBJECT
 	/*! \brief Sets/Gets whether the target location will be the region outside of this element's geometry.*/
-	Q_PROPERTY(bool outside READ getOutside WRITE setOutside)
+	Q_PROPERTY(bool outside READ getOutside WRITE setOutside);
 public:
 	ControlTarget(QPoint position=QPoint(), QColor color=Qt::green);
 	virtual QString getUITemplate(){return "ControlTarget";};

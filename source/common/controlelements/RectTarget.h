@@ -20,9 +20,9 @@ class RectTarget : public ControlTarget
 {
 	Q_OBJECT
 	/*! \brief Sets/Gets the target's current width.*/
-	Q_PROPERTY(int width READ getWidth WRITE setWidth)
+	Q_PROPERTY(int width READ getWidth WRITE setWidth);
 	/*! \brief Sets/Gets the target's current width.*/
-	Q_PROPERTY(int height READ getHeight WRITE setHeight)
+	Q_PROPERTY(int height READ getHeight WRITE setHeight);
 public:
 	RectTarget();
 	static QSharedPointer<Asset> Create();
