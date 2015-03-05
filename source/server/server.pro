@@ -10,6 +10,7 @@ CONFIG += c++11
 win32:CONFIG += console
 DEPENDPATH += .
 INCLUDEPATH += .
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Input
 macx {

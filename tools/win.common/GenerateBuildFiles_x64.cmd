@@ -9,7 +9,7 @@
 
   @echo Generating Documentation
   
-  @call %PICTO_TREE%\tools\win.common\GenerateDocumentation.cmd
+  @call %PICTO_TREE%\tools\win.common\GenerateDocumentation_x64.cmd
   
   @echo Generating Documentation Resource File
   
@@ -19,7 +19,7 @@
   @qmake -recursive
   
   @echo Generating Visual Studio Solution
-  @qmake -recursive -tp vc
+  @qmake -recursive -tp vc -o Picto_x64.sln
 
   REM We used the vcprojFilters application below in Visual Studio 2008 and before to setup the visual studio directory structure.  
   REM This broke in VS2010, but we now use "CONFIG -= flat" in the Picto.pro file, which takes care of giving

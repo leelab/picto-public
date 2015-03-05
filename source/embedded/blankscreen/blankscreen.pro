@@ -6,6 +6,7 @@ CONFIG -= flat
 CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/embedded/blankscreen/main.cpp
@@ -107,7 +108,12 @@ macx:PRIVATE_LIBRARIES.files = $$(PICTO_TREE)/intermediates/lib/release/
 QTFFMPEGWRAPPER_SOURCE_PATH = $$(PICTO_TREE)/3rdparty/QTFFmpegWrapper/QTFFmpegWrapper
 
 # Set FFMPEG_LIBRARY_PATH to point to the directory containing the FFmpeg import libraries (if needed - typically for Windows), i.e. the dll.a files
-FFMPEG_LIBRARY_PATH = $$(PICTO_TREE)/3rdparty/QTFFmpegWrapper/ffmpeg_lib_win32
+contains(MACHINE_TYPE,X86) {
+	FFMPEG_LIBRARY_PATH = $$(PICTO_TREE)/3rdparty/QTFFmpegWrapper/ffmpeg_lib_win32
+}
+contains(MACHINE_TYPE,X64) {
+	FFMPEG_LIBRARY_PATH = $$(PICTO_TREE)/3rdparty/QTFFmpegWrapper/ffmpeg_lib_win64
+}
 
 # Set FFMPEG_INCLUDE_PATH to point to the directory containing the FFMPEG includes (if needed - typically for Windows)
 FFMPEG_INCLUDE_PATH = $$(PICTO_TREE)/3rdparty/QTFFmpegWrapper/QTFFmpegWrapper

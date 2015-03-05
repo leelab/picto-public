@@ -3,6 +3,8 @@ CONFIG -= flat
 CONFIG += ordered 
 CONFIG += c++11
 
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+
 # addSubdirs(subdirs,deps): Adds directories to the project that depend on
 # other directories
 defineTest(addSubdirs) {
@@ -28,7 +30,13 @@ addSubdirs(source/config)
 addSubdirs(source/workstation)
 addSubdirs(source/documentation/developersguide)
 addSubdirs(source/embedded)
-addSubdirs(source/proxyplugins/plexonplugin)
+
+#The PlexonPlugin can currently only be built for X86
+contains(MACHINE_TYPE,X86) {
+	addSubdirs(source/proxyplugins/plexonplugin)
+}
+
+
 addSubdirs(source/proxyplugins/tdtplugin)
 addSubdirs(source/proxyplugins/virtualdeviceplugin)
 
@@ -52,11 +60,11 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 #We can't build the TDT plugin unless we have the TDT SDK installed.
 #The TDT software has a hard time running under 64-bit Vista, so I always
 #used a 32-bit XP virtual machine to build this.
-exists(C:/TDT){
-
-	addSubdirs(source/proxyplugins/tdtplugin)
-	message("Building TDT proxy server plugin")
-}
+#exists(C:/TDT){
+#
+#	addSubdirs(source/proxyplugins/tdtplugin)
+#	message("Building TDT proxy server plugin")
+#}
 
 # Dependencies
 
@@ -141,7 +149,6 @@ SSLLIBS_DEBUG.files += $$(OPENSSLDIR)/out32dll/libeay32.dll
 SSLLIBS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += SSLLIBS_DEBUG
 
-MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 !wince* {
     contains(MACHINE_TYPE,X86) {
     CRUNTIMEPRIVATEASSEMBLY.extra = xcopy /E /I /Y \"$$(DevEnvDir)/../../VC/redist/x86/Microsoft.VC90.CRT\" "$$(PICTO_TREE)/output/bin/release/Microsoft.VC90.CRT"
@@ -247,11 +254,18 @@ INSTALLS += TESTS_DEBUG
 
 
 #Files for running the ProxyServer with the various nerual acquisition devices
-NEURALACQ_DLLS.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+
+#The PlexClient.dll only exists for x86 releases.
+contains(MACHINE_TYPE,X86) {
+	NEURALACQ_DLLS.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+}
 NEURALACQ_DLLS.path = $$(PICTO_TREE)/output/bin/release
 INSTALLS += NEURALACQ_DLLS
 
-NEURALACQ_DLLS_DEBUG.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+#The PlexClient.dll only exists for x86 releases.
+contains(MACHINE_TYPE,X86) {
+	NEURALACQ_DLLS_DEBUG.files += $$(PICTO_TREE)/3rdparty/bin/PlexClient.dll
+}
 NEURALACQ_DLLS_DEBUG.path = $$(PICTO_TREE)/output/bin/debug
 INSTALLS += NEURALACQ_DLLS_DEBUG
 

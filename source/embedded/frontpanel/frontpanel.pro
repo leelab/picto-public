@@ -7,6 +7,7 @@ CONFIG -= flat
 CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include . $$(PHIDGETSDIR)
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/main.cpp
@@ -47,8 +48,14 @@ SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/statusmode.cpp
 HEADERS += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.h
 SOURCES += $$(PICTO_TREE)/source/embedded/frontpanel/menumode.cpp
 
-INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
-LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
+contains(MACHINE_TYPE,X86) {
+	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
+	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib32/msvc/NIDAQmx.lib"
+}
+contains(MACHINE_TYPE,X64) {
+	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
+	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib64/msvc/NIDAQmx.lib"
+}
 
 # Output
 build_pass:CONFIG(debug, debug|release) {
@@ -64,7 +71,14 @@ UI_DIR = $$(PICTO_TREE)/intermediates/ui/embedded/frontpanel
 MOC_DIR = $$(PICTO_TREE)/intermediates/moc/embedded/frontpanel
 
 # Libraries
-win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x86
+
+contains(MACHINE_TYPE,X86) {
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x86
+}
+contains(MACHINE_TYPE,X64) {
+	win32:QMAKE_LIBDIR += $$(PHIDGETSDIR)/x64
+}
+
 wince*:LIBS += phidget21.lib
 win32:!wince*:LIBS += phidget21.lib
 

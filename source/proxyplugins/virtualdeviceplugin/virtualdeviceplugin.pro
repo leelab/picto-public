@@ -10,6 +10,8 @@ DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+
 # Input
 SOURCES += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyplugins/virtualdeviceplugin/virtualdeviceplugin.h
