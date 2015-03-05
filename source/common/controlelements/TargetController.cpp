@@ -221,7 +221,10 @@ bool TargetController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 	else if(unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(),"") == "Us")
 		timeUnits = Controller::TimerUnits::us;
 	else
+	{
+		timeUnits = Controller::TimerUnits::ms;
 		Q_ASSERT(false);
+	}
 
 
 	//check to see if we've met or exceeded the total time

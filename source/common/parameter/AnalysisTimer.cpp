@@ -57,7 +57,11 @@ int AnalysisTimer::getValue()
 	else if(unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(),"") == "Us")
 		units = Controller::TimerUnits::us;
 	else
+	{
+		units = Controller::TimerUnits::ms;
 		Q_ASSERT(false);
+	}
+
 	Q_ASSERT(timer_);
 	int returnVal = time_ + timer_->elapsedTime(units);
 	return returnVal;

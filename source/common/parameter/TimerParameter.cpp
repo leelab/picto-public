@@ -63,7 +63,10 @@ int TimerParameter::getValue()
 	else if(unitList_.value(propertyContainer_->getPropertyValue("TimeUnits").toInt(),"") == "Us")
 		units = Controller::TimerUnits::us;
 	else
+	{
+		units = Controller::TimerUnits::ms;
 		Q_ASSERT(false);
+	}
 	return time_ + timer_->elapsedTime(units);
 	//qDebug(QString("Timer Value: %1").arg(propertyContainer_->getPropertyValue("Value").toInt()).toLatin1());
 }

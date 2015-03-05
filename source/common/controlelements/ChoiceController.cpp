@@ -167,7 +167,10 @@ bool ChoiceController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 	else if(unitList_.value(timeUnits_,"") == "Us")
 		timeUnits = Controller::TimerUnits::us;
 	else
+	{
+		timeUnits = Controller::TimerUnits::ms;
 		Q_ASSERT(false);
+	}
 
 
 	//check to see if we've met or exceeded the total time
