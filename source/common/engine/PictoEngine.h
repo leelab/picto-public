@@ -19,13 +19,16 @@
 //#include "../experiment/Experiment.h"
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolCommand.h"
+#include "GenericInput.h"
 #include "SignalChannel.h"
+#include "DoubletSignalChannel.h"
 #include "../iodevices/RewardController.h"
 #include "../iodevices/OutputSignalController.h"
 #include "../iodevices/EventCodeGenerator.h"
 #include "../storage/PropertyDataUnitPackage.h"
 #include "../storage/StateDataUnitPackage.h"
 #include "../storage/BehavioralDataUnitPackage.h"
+#include "../storage/InputDataUnitPackage.h"
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/TaskRunDataUnit.h"
@@ -43,35 +46,6 @@
 namespace Picto {
 	namespace Engine {
 
-/*! \brief The namespace used for the PictoEngineTimingType enumeration
- *
- *	\note This namespace does not actually appear to be used.  It should probably be deleted.
- *	
- * \details This namespace is used to improve code readability; it simply contains the PictoEngineTimingType
- * enum.  This necessitates qualifying an enumerated type in context.  For example, instead of
- * referring to an enum as "brief" in your code, you would have to refer to it as ExampleType::brief.
- * In so doing, it is unambiguous what you are referring to.  To refer to the enum as a type itself 
- * you would simply repeat the namespace (in the example above it would be ExampleType::ExampleType).
- *
- */
-namespace PictoEngineTimingType
-{
-	/*! \brief An enumerated type containing timing control options for PictoEngine objects
-	 *
-	 *	\note This enum does not actually appear to be used.  It should probably be deleted.
-	 * \details PictoEngine objects can be set to have precise timing control, or to ignore frame intervals
-	 * (to catch up a playback, allow for fast forward and rewind behaviors, enable generation of movie
-	 * files, allow analysis of replayed data, etcetera).  PictoEngineTimingType enumerates the
-	 * valid timing options.
-	 * 
-	 */
-	typedef enum
-	{
-		precise,				/*!< Utilize precise timing */
-		ignoreFrameIntervals	/*!< Ignore frame intervals during processing */
-	} PictoEngineTimingType;
-}
-
 /*! \brief Runs a Picto Experiment.
  *
  *	As implied by the name, the PictoEngine runs the Experiment.  It actually does far too much for one class and should probably be split into a number 
@@ -84,8 +58,8 @@ namespace PictoEngineTimingType
  *	operator or subject mode, which defines visibility of experimental graphics (graphics can be set visible for the experiment operator (tester), subject (testee) 
  *	or both).
  *	
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PictoEngine : public QObject
@@ -97,14 +71,6 @@ class PictoEngine : public QObject
 public:
 
 	PictoEngine();
-
-	/*! Sets the timing control for the PictoEngine to \a _timingType.
-		\note This function does not appear to be used.  It's probably worth getting rid of it.
-	    \param _timingType one of the PictoEngineTimingType::PictoEngineTimingType
-		       enum values specifying the desired timing
-		\return none
-	 */
-	void setTimingControl(PictoEngineTimingType::PictoEngineTimingType _timingType);
 
 	/*! \brief Sets this PictoEngine to run the Experiment in Exclusive mode.
 	 *	\details Exclusive mode indicates that the running experiment wants as much timing control as possible, as such
@@ -180,6 +146,7 @@ public:
 	QSharedPointer<StateDataUnitPackage> getStateDataPackage();
 
 	QList<QSharedPointer<BehavioralDataUnitPackage>> getBehavioralDataPackages();
+	QList<QSharedPointer<InputDataUnitPackage>> getInputDataPackages();
 
 	void reportNewFrame(double frameTime,int runningStateId);
 	void setLastFrame(qulonglong frameId);
@@ -190,15 +157,6 @@ public:
 
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
-
-	bool setUpdateCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	QSharedPointer<CommandChannel> getUpdateCommandChannel();
-
-	bool setFrontPanelCommandChannel(QSharedPointer<CommandChannel> commandChannel);
-	QSharedPointer<CommandChannel> getFrontPanelCommandChannel();
-
-	bool setFrontPanelEventChannel(QSharedPointer<CommandChannel> commandChannel);
-	QSharedPointer<CommandChannel> getFrontPanelEventChannel();
 
 	void setPropertyTable(QSharedPointer<PropertyTable> propTable);
 	/*! \brief Returns this engine's PropertyTable
@@ -235,11 +193,6 @@ public:
 	void setSlaveMode(bool mode) { slave_ = mode; };
 	/*! \brief Returns true if this engine is running in slave mode, false if its running in master mode.*/
 	bool slaveMode() { return slave_; }
-	/*! \brief DOES NOT APPEAR TO BE IMPLEMENTED.  SHOULD BE REMOVED.
-	 *	\details If disabled, Init properties of the slave experiment will not be synchronized with those of the master.
-	 *	By default, they are synchronized
-	 */
-	void syncInitPropertiesForSlave(bool enable){syncInitProperties_ = enable;};
 	/*! \brief Sets the Controller::FrameTimerFactory for this experiment.
 	 *	\details Since frame timers in the same experiment all need to be updated each time a new frame comes in, we use a 
 	 *	FrameTimerFactory foreach experiment that is responsible for creating the FrameTimers.  This allows us to set the 
@@ -334,8 +287,6 @@ signals:
 	void escapePressed();
 private:
 	QHostAddress getIpAddress();
-	//QSharedPointer<Experiment> experiment_;
-	PictoEngineTimingType::PictoEngineTimingType timingType_;
 	bool bExclusiveMode_;
 	
 	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
@@ -380,9 +331,6 @@ private:
 	QSharedPointer<StateUpdater> stateUpdater_;
 	bool slave_;
 	bool userIsOperator_;
-	bool syncInitProperties_;
-	QSharedPointer<BehavioralDataUnitPackage> currBehavUnitPack_;
-	QSharedPointer<BehavioralDataUnit> currBehavUnit_;
 	qulonglong lastFrameId_;
 	QHostAddress ipAddress_;
 

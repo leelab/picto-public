@@ -1,5 +1,4 @@
 #include "TransitionState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 void TransitionState::setDatabase(QSqlDatabase session)

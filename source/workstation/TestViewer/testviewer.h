@@ -57,8 +57,8 @@ class QSlider;
  *	flow reaches the next PausePoint element.
  *	Suggestions for future features:
  *		- Add a step function for advancing frame by frame
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class TestViewer : public Viewer
 {

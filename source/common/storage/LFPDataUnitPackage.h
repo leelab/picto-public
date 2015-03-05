@@ -12,16 +12,6 @@
 
 namespace Picto {
 
-/*! \brief This doesn't appear to be used in Picto in any meaningful way, it should probably be deleted.
- */
-struct lfpDataBlock
-{
-	lfpDataBlock(double timestamp,double timePerSample){timestamp_=timestamp;timePerSample_=timePerSample;};
-	QMap<int,QList<double>> data;
-	double timestamp_;
-	double timePerSample_;
-};
-
 /*!	\brief Stores local field data for transmission over a network.
  *
  *	\details Each LFPDataUnitPackage holds a list of LFP data that was read starting at

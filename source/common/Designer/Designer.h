@@ -6,21 +6,16 @@
 #include <QButtonGroup>
 #include <QTabWidget>
 
-
-
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
 #include "SyntaxErrorBox.h"
 #include "AboutElementBox.h"
 #include "AnalysisOptionWidget.h"
 
-
-
 #include "../storage/asset.h"
 
 #include "diagramitem.h"
 #include "EditorState.h"
-//#include "../design/Design.h"
 #include "../design/DesignRoot.h"
 #include "LevelUpButton.h"
 #include "../common.h"

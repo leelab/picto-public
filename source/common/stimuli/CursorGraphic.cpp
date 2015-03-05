@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString CursorGraphic::type = "Cursor Graphic";
+	const QString CursorGraphic::type = "Cursor Graphic";
 
 /*! \brief Creates a new CursorGraphic object whose position will be determined by the input SignalChannel and with the input color.
  *	\details The input SignalChannel must have x and y subcomponents.  This is checked in the constructor with assertions.
@@ -27,7 +26,6 @@ size_(16)
 	propertyContainer_->setContainerName(type);
 	initializePropertiesToDefaults();
 	propertyContainer_->setPropertyValue("Position",QPoint(0,0));	//Hmm... There already is a Position Property.  This line should probably be removed.
-	propertyContainer_->setPropertyValue("Color",color);	//Hmm... Isn't this handled in the VisualElement constructor.  This line should probably be removed.
 	setScalable(false);
 
 	draw();
@@ -85,17 +83,6 @@ void CursorGraphic::updateAnimation(int frame, QTime elapsedTime)
 QPoint CursorGraphic::getPositionOffset()
 {
 	return QPoint(size_/2,size_/2);
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* CursorGraphic::NewVisualElement()
-{
-	// This function is used during deserialization, so we won't have access to a 
-	// signal channel at that point.  If we wanted to use a cursor graphic
-	// in a state machine, connecting it might not be possible.  However, since this
-	//is not currently an issue (this is destined for use in a slave state machine)
-	//I'm going to ignore this issue.
-	return new CursorGraphic(QSharedPointer<SignalChannel>());
 }
 
 void CursorGraphic::postDeserialize()

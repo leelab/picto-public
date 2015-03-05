@@ -4,7 +4,6 @@
 #include <QInputDialog>
 #include "../../common/storage/DataStore.h"
 #include "../../common/statemachine/uienabled.h"
-#include "../../common/statemachine/uiinfo.h"
 #include "AssetItem.h"
 #include "ArrowDestinationItem.h"
 #include "StartBarItem.h"

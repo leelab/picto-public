@@ -13,7 +13,6 @@
 							Q_ASSERT_X(!rc, "PictoBoxXPOutputSignalController", msg.toLatin1());\
 						 } }
 
-// THIS IS NOT USED AND SHOULD BE DELETED.
 #define DEVICE_NAME "Dev1"
 
 namespace Picto

@@ -58,6 +58,7 @@ void WinSound::play()
 	pPosition_->put_CurrentPosition(0.0f);
 	// Run the graph.
     HRESULT hr = pControl_->Run();
+	IGNORED_PARAMETER(hr);
     Q_ASSERT(SUCCEEDED(hr));
 }
 void WinSound::stop()
@@ -74,7 +75,7 @@ void WinSound::stop()
  */
 void WinSound::setVolume(int percent)
 {
-
+	IGNORED_PARAMETER(percent);
 }
 
 bool WinSound::playing()

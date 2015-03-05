@@ -62,8 +62,6 @@ public:
 	QString getInfo();
 
 protected:
-	/*! \brief NOT USED.  This should probably be deleted.*/
-	virtual QString scriptCode(){return "";};
 	virtual QString defaultTagName(){return "Scriptable";};
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

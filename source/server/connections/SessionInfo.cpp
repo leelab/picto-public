@@ -18,7 +18,7 @@
 #define FRAME_STATE_VAR_ID -1
 #define TRANSITION_STATE_VAR_ID -2
 #define REWARD_STATE_VAR_ID -3
-#define MAX_SIG_CHAN_VAR_ID -4
+#define MAX_SIG_CHAN_VAR_ID -12
 #define PROP_INIT_START_VAR_ID (INT_MAX/2)
 #define NEURAL_DATA_BUFFER_SECS 60
 #define BEHAV_MATCHED_COLUMN 4
@@ -150,7 +150,6 @@ SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray de
 	//Setup databases
 	LoadBaseSessionDatabase(sessionPath, databaseName);
 	SetupBaseSessionDatabase();
-	//CreateCacheDatabase(databaseName);
 
 	//file_.setFileName(databaseName + ".test");
 	//file_.open(QIODevice::WriteOnly);
@@ -674,6 +673,62 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 	}
 }
 
+/*! \brief Inserts a InputDataUnitPackage record into the CachedSessionData and the record of the current Session state.
+*	The CachedSessionData will later be flushed to disk in flushCache().
+*/
+void SessionInfo::insertInputData(QSharedPointer<Picto::InputDataUnitPackage> data)
+{
+	//Get this signal channels State Variable ID.
+	//If it doesn't have one yet, add it to the map and store
+	//it in the session database.
+	QString sigChan = data->getChannel().toLower();
+	QString tableName = QString("signal_%1").arg(sigChan);
+	int stateVarId;
+	if (sigChanVarIDs_.contains(sigChan))
+		stateVarId = sigChanVarIDs_.value(sigChan);
+	else
+	{
+		stateVarId = nextSigChanVarId_--;
+
+		sigChanTypes_[tableName] = FIRST_SIGNAL_CHANNEL_TYPE + sigChanTypes_.size();
+		storedSessionData_->setTableInfo(sigChanTypes_[tableName], tableName, " dataid,offsettime,sampleperiod,data,frameid ", " INTEGER UNIQUE ON CONFLICT IGNORE,REAL,REAL,BLOB,INTEGER ");
+
+		//Add the signal channel info to the session database
+		Picto::SignalChannelInfo sigInfo(sigChan,
+			tableName,
+			stateVarId,
+			data->getResolution(),
+			data->getDescriptor().split(",", QString::SkipEmptyParts).size(),
+			data->getDescriptor());
+
+		//Add the signal channel info to the session database.
+		storedSessionData_->insertData(SESSION_INFO_TYPE, QVariantList() << ++sessionInfoDataId_ << "Signal" << sigInfo.toXml());
+		sigChanVarIDs_[sigChan] = stateVarId;
+	}
+
+	if (data->length())
+	{
+		cachedDirectorSessionData_->insertData(sigChanTypes_[tableName], data->getDataIDOfLastUnit(), QVariantList()
+			<< data->getDataIDOfLastUnit()
+			<< data->getOffsetTime()
+			<< data->getResolution()
+			<< data->getDataAsByteArray()
+			<< data->getActionFrame());
+
+		//Only write a InputDataUnitPackage with the last data unit
+		//
+		//Use the package text because that contains the signal channel name, time, sampleperiod.
+		//Use the unit id because that was generated when the last data unit
+		//was generated and will preserve the information generation order
+		//in the stateVariable list.
+		data->clearAllButLastDataPoints();
+		if (data->length() == 1)
+		{
+			setStateVariable(data->getDataIDOfLastUnit(), stateVarId, data->toXml());
+		}
+	}
+}
+
 /*! \brief Inserts a PropertyDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
  *	The CachedSessionData will later be flushed to disk in flushCache().
  */
@@ -1144,16 +1199,6 @@ void SessionInfo::SetupBaseSessionDatabase()
 	//Now that everything has been written to the tempCachedSessionData object.  Move it all to the StoredSessionData object in one
 	//big transaction
 	tempCachedSessionData->moveDataTo(storedSessionData_.data());
-}
-
-/*! \brief No longer does anything and should be deleted.*/
-void SessionInfo::CreateCacheDatabase(QString databaseName)
-{
-}
-
-/*! \brief No longer does anything and should be deleted.*/
-void SessionInfo::AddTablesToDatabase(QSqlQuery* /*query*/)
-{
 }
 
 /*! \brief Should be used with SessionData values of BEHAVIORAL_ALIGN_EVENTS_TYPE.  Returns

@@ -1,5 +1,4 @@
 #include "RewardState.h"
-#include "PlaybackData.h"
 using namespace Picto;
 
 void RewardState::setDatabase(QSqlDatabase session)
@@ -28,8 +27,6 @@ void RewardState::setDatabase(QSqlDatabase session)
 		return;
 	}
 
-	double duration;
-	int channel;
 	int arrayIndex = 0;
 	while(query_->next())
 	{

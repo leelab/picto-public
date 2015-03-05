@@ -27,8 +27,8 @@ class SignalChannel;
  *	provide rewards, but it is important to note that it is 'nearly' true.  Of course, it would be incredibly messy to do this and no one ever should, 
  *	but the fact that it is 'nearly' possible should be an indication of the importance of this class.  With this in mind, be extremely careful before changing 
  *	anything about this class, particularly in the run() method.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API State : public MachineContainer
@@ -37,10 +37,6 @@ class State : public MachineContainer
 #endif
 {
 	Q_OBJECT
-	//Q_PROPERTY(int red READ getRed WRITE setRed)
-	//Q_PROPERTY(int green READ getGreen WRITE setGreen)
-	//Q_PROPERTY(int blue READ getBlue WRITE setBlue)
-	//Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
 public:
 	State();
 	virtual ~State(){};

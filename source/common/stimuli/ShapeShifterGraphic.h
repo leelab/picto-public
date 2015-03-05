@@ -31,8 +31,8 @@ public:
 	ShapeShifterGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
@@ -47,8 +47,6 @@ public:
 	QPoint getPositionOffset();
 	QString getShape();
 	void setShape(QString shape);
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Shape Shift";};
 	virtual QString getUITemplate(){return "ShapeShifterElement";};

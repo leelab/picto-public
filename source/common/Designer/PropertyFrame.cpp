@@ -128,6 +128,7 @@ void PropertyFrame::updatePropertiesFromFile(QString filename)
 		query.bindValue(":path",path);
 		query.bindValue(":name",name);
 		bool success = query.exec();
+		IGNORED_PARAMETER(success);
 		Q_ASSERT_X(success,"PropertyFrame::updatePropertiesFromFile","Error: "+query.lastError().text().toLatin1());
 		if(query.next())
 		{

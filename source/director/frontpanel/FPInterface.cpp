@@ -44,22 +44,6 @@ FPInterface::~FPInterface()
 {
 }
 
-/*! \brief NOT USED.  This is no longer used and should probably be deleted.*/
-void FPInterface::runExperiment(int trialsPerBlock, int blocks)
-{
-	if(!commSocket->isValid())
-		return;
-	if(!eventSocket->isValid())
-		return;
-
-	//Tell the front panel that we are starting
-	QString eventXml = QString("<event type=\"statuschange\" status=\"running\" />");
-	sendFPInterfaceEvent(eventXml);
-
-	eventXml = QString("<event type=\"experimentstart\" />");
-	sendFPInterfaceEvent(eventXml);
-}
-
 /*! \brief Causes the commands coming in from the front panel to be read, handled, and responded to.
  *	\details This function Should be called a lot, like every frame to avoid lag in the control panel.
  */

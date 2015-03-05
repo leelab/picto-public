@@ -154,26 +154,6 @@ bool SessionState::lfpEnabled()
 	return lfpState_->getEnabled();
 }
 
-/*! \brief Returns a PropertyReader object that can be used to query Property data over time intervals.
- *	\note The PropertyReader interface is now empty since it is much more natural to read out Property
- *	value data as control flow moves through the StateMachine .  We leave this here though in case
- *	we decide in the future that we want to add some additional Property data read capability.
- */
-QSharedPointer<PropertyReader> SessionState::getPropertyReader()
-{
-	return propState_;
-}
-
-/*! \brief Returns a TransitionReader object that can be used to query Transition traversal data over time intervals.
- *	\note The TransitionReader interface is now empty since it is much more natural to gather Transition data
- *	implicitly by using scripts as part of the StateMachine control flow.  We leave this here though in case
- *	we decide in the future that we want to add some additional Transition data read capability.
- */
-QSharedPointer<TransitionReader> SessionState::getTransitionReader()
-{
-	return transState_;
-}
-
 /*! \brief Returns a FrameReader object that can be used to query Frame presentation data over time intervals.
  */
 QSharedPointer<FrameReader> SessionState::getFrameReader()

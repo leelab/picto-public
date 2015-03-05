@@ -13,8 +13,6 @@ BooleanParameter::BooleanParameter()
 	AddDefinableProperty(QVariant::Bool,"Value",QVariant());
 	AddDefinableProperty("TrueLabel","True");
 	AddDefinableProperty("FalseLabel","False");
-	trueLabel_ = "";
-	falseLabel_ = "";
 }
 
 /*! \brief The NewParameter is not used anymore by anything except the obsolete EngineTest.  It should be removed.
@@ -36,8 +34,6 @@ QSharedPointer<Asset> BooleanParameter::Create()
 void BooleanParameter::postDeserialize()
 {
 	Parameter::postDeserialize();
-	trueLabel_ = propertyContainer_->getPropertyValue("TrueLabel").toString();
-	falseLabel_ = propertyContainer_->getPropertyValue("FalseLabel").toString();
 	propertyContainer_->getProperty("TrueLabel")->setVisible(false);
 	propertyContainer_->getProperty("FalseLabel")->setVisible(false);
 	setPropertyRuntimeEditable("Value");

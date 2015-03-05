@@ -40,14 +40,6 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
 
-	/*! \brief Units are no longer used in this Parameter.  This function should probably be deleted.
-	*/
-	void setUnits(QString units) { units_ = units; };
-
-	/*! \brief Units are no longer used in this Parameter.  This function should probably be deleted.
-	*/
-	QString getUnits() { return units_; };
-
 	/*! \brief Returns the current value of this Parameter.*/
 	int getValue(){return propertyContainer_->getPropertyValue("Value").toInt();};
 	/*! \brief Sets the current value of this Parameter to the input.*/
@@ -65,10 +57,6 @@ public:
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	int value_;		//!< We should get rid of this
-	QString units_;	//!< We should get rid of this
 };
 
 

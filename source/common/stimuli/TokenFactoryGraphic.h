@@ -51,8 +51,9 @@ public:
 	TokenFactoryGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
+
 	virtual void enteredScope();
 
 	QRect getTokenDimensions();
@@ -74,8 +75,6 @@ public:
 	int getOutlineWidth();
 	void setOutlineWidth(int pixels);
 	QPoint getPositionOffset();
-
-	static const QString type;
 
 	virtual QString getUITemplate(){return "TokenFactoryElement";};
 	virtual QString friendlyTypeName(){return "Token Factory";};

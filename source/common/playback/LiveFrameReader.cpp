@@ -56,7 +56,7 @@ QVariantList LiveFrameReader::getTimesSince(double time)
 	return returnVal;
 }
 
-QVariantList LiveFrameReader::getTimesUntil(double time)
+QVariantList LiveFrameReader::getTimesUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();

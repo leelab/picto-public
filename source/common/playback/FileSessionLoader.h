@@ -61,7 +61,6 @@ protected:
 	};
 
 	virtual bool loadRunData();
-	virtual double loadNeuralData(double after,double to,double subtractTime);
 private:
 	bool getSignalInfo();
 	bool loadDesignDefinition();
@@ -75,7 +74,6 @@ private:
 		QStringList subChanNames_;
 		double samplePeriod_;
 	};
-	QVector<SigData> sigs_;
 	QVector<RunData> runs_;
 	double dataBuffer_;
 	QSharedPointer<DesignRoot> designRoot_;

@@ -159,7 +159,6 @@ void PseudorandomIntParameter::postDeserialize()
 		mtRand_.seed(seed_);
 	min_ = propertyContainer_->getPropertyValue("Min").toInt();
 	max_ = propertyContainer_->getPropertyValue("Max").toInt();
-	currValue_ = min_-1;
 	setPropertyRuntimeEditable("Value");
 }
 

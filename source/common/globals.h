@@ -17,8 +17,6 @@ PICTOLIB_API inline void InitializeNames();
 
 inline void InitializeMetaTypes();
 
-inline void initializeFactories();
-
 PICTOLIB_API void InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode);
 
 PICTOLIB_API void InitializePorts(QString appName,bool usedInSystemService = false);

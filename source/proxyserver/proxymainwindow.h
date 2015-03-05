@@ -86,7 +86,6 @@ private:
 
 	void createStatusLights();
 	void createComboBox();
-	void createButtons();
 	void createLineEdits();
 	void createLayout();
 

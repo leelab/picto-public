@@ -13,6 +13,7 @@
 #include "../engine/PictoEngine.h"
 #include "../stimuli/visualelement.h"
 #include "../stimuli/outputsignal.h"
+#include "../stimuli/inputsignal.h"
 
 namespace Picto {
 
@@ -47,6 +48,7 @@ public:
 	void addVisualElement(QSharedPointer<VisualElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);
 	void addOutputSignal(QSharedPointer<OutputSignal> element);
+	void addInputSignal(QSharedPointer<InputSignal> element);
 	static void setZoom(float zoom);
 	static void closeRenderLoops();
 
@@ -71,6 +73,9 @@ private:
 
 	QList<QSharedPointer <OutputSignal> > outputSignals_;
 	QList<QSharedPointer <OutputSignal> > unaddedOutputSignals_;
+
+	QList<QSharedPointer <InputSignal> > inputSignals_;
+	QList<QSharedPointer <InputSignal> > unaddedInputSignals_;
 	
 	int frame_;
 	QTime elapsedTime_;

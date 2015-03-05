@@ -53,9 +53,6 @@ public:
 		};
 	void setRunStatus(QString fileName,int runIndex,RunStatus status,QString message="");
 	int getRunStatus(QString fileName,int runIndex);
-	void setRunInProgress(QString fileName,int runIndex);
-	void setRunComplete(QString fileName,int runIndex);
-	void setRunError(QString fileName,int runIndex);
 	void resetAllRunStatus();
 	void selectRun(QString fileName,int runIndex);
 	void deselectRun(QString fileName,int runIndex);

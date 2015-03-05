@@ -233,30 +233,9 @@ bool FileSessionLoader::loadRunData()
 	return true;
 }
 
-/*! \brief This function is no longer used and should be removed.  Its functionality is handled in loadRun().
-*/
-double FileSessionLoader::loadNeuralData(double after,double to,double subtractTime)
-{
-	if(!getDatabase().isOpen())
-		return after;
-	if(after == to)
-		return after;
-	
-	QSqlQuery query(getDatabase());
-	query.setForwardOnly(true);
-	bool success;
-	// eLfp:
-	//setLFP(qulonglong dataId,double startTime,double sampPeriod,int channel,QByteArray data);
-	//eSpike:
-	//setSpike(qulonglong dataId,double spikeTime,int channel,int unit,QByteArray waveform);
-	return to;
-}
-
 /*! \brief Loads all information about which signals were used in the session and sets that data into the SessionState.
  *	\details This tells the SessionState how many objects it needs to handle loading of the Session's signal data
  *	and causes it to set them up properly.
- *	\note The sigs_ vector added to here does not appear to be used anywhere and may be a memory leak.  It should probably
- *	be removed.
  */
 bool FileSessionLoader::getSignalInfo()
 {
@@ -282,7 +261,6 @@ bool FileSessionLoader::getSignalInfo()
 		data.tableName_ = sigInf.getTableName();
 		data.subChanNames_ = sigInf.getSubchannelNames().split(",",QString::SkipEmptyParts);
 		data.samplePeriod_ = double(sigInf.getResolution())/1000.0;
-		sigs_.append(data);
 		//Add the signal to the session state so that it knows it should track its data
 		if(sessionState_)
 			sessionState_->addSignal(data.name_,data.tableName_,data.subChanNames_,data.samplePeriod_);

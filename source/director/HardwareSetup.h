@@ -12,8 +12,8 @@
  *	specific platform.  At the moment, all of the code is contained within this 
  *	object.  If we start supporting more than 1 or 2 platforms, it may be worth 
  *	breaking out each configuration seperately.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class HardwareSetup
 {

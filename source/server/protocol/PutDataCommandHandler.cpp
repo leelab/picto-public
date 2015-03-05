@@ -2,6 +2,7 @@
 
 #include "../../common/globals.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/InputDataUnitPackage.h"
 #include "../../common/storage/StateDataUnit.h"
 #include "../../common/storage/TaskRunDataUnit.h"
 #include "../connections/SessionInfo.h"
@@ -33,7 +34,7 @@ PutDataCommandHandler::PutDataCommandHandler()
  */
 QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {
-	int messageIndex=0;
+	//int messageIndex=0;
 	//qDebug((QString("PUTDATA  handler: %1 %2").arg(command->getFieldValue("Source-ID")).arg(command->getFieldValue("Command-ID"))).toLatin1());
 	//QTime commandProcessingTimer;
 	//commandProcessingTimer.start();
@@ -114,6 +115,14 @@ QSharedPointer<Picto::ProtocolResponse> PutDataCommandHandler::processCommand(QS
 			behaveData->fromXml(xmlReader);
 
 			sessionInfo->insertBehavioralData(behaveData);
+		}
+		else if (dataType == "IDUP")
+		{
+			//Extract the InputDataUnitPackage
+			QSharedPointer<Picto::InputDataUnitPackage> inputData(new Picto::InputDataUnitPackage());
+			inputData->fromXml(xmlReader);
+
+			sessionInfo->insertInputData(inputData);
 		}
 		else if(dataType == "PropertyDataUnitPackage")
 		{

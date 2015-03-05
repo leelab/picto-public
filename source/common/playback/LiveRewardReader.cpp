@@ -62,7 +62,7 @@ QVariantList LiveRewardReader::getTimesSince(double time)
 	return returnVal;
 }
 
-QVariantList LiveRewardReader::getTimesUntil(double time)
+QVariantList LiveRewardReader::getTimesUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();
@@ -85,7 +85,7 @@ QVariantList LiveRewardReader::getDurationsSince(double time)
 	return returnVal;
 }
 
-QVariantList LiveRewardReader::getDurationsUntil(double time)
+QVariantList LiveRewardReader::getDurationsUntil(double)
 {
 	//Since we can't see the future, we just always return an empty list.
 	return QVariantList();

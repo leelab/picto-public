@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 CONFIG -= flat
 CONFIG += ordered 
+CONFIG += c++11
 
 # addSubdirs(subdirs,deps): Adds directories to the project that depend on
 # other directories

@@ -3,6 +3,7 @@ TARGET = PictoProxyServer
 QT = core gui xml network sql widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 # We elect to be a console application on Windows so that we will have our
 # standard output attached to the invoking terminal, if one is present; if
 # none is present, then we can still create a GUI
@@ -18,18 +19,8 @@ HEADERS += $$(PICTO_TREE)/source/proxyserver/proxymainwindow.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/proxymainwindow.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/StatusLight.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/StatusLight.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserver.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxyserverthread.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/network/proxystatusmanager.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/network/proxystatusmanager.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ACQGetCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerAcqProtocol.cpp
-HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.h
-SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyServerProtocols.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyLoadExpResponseHandler.h
 SOURCES += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyLoadExpResponseHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/proxyserver/protocol/ProxyNewSessionResponseHandler.h

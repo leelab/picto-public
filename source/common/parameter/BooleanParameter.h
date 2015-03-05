@@ -35,11 +35,6 @@ public:
 	static Parameter* NewParameter();
 	static QSharedPointer<Asset> Create();
 
-	/*! \brief Obsolete.  We should get rid of this function.*/
-	void setTrueLabel(QString label) { trueLabel_ = label; };
-	/*! \brief Obsolete.  We should get rid of this function.*/
-	void setFalseLabel(QString label) { falseLabel_ = label; };
-
 	/*! \brief Returns the stored boolean value.*/
 	bool getValue(){return propertyContainer_->getPropertyValue("Value").toBool();};
 	/*! \brief Sets the stored boolean value.*/
@@ -51,12 +46,6 @@ public:
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-private:
-	bool value_;	//Get rid of this.  Everything must be stored in Properties now.
-	QString trueLabel_;	//Get rid of this.  Everything must be stored in Properties now.
-	QString falseLabel_;//Get rid of this.  Everything must be stored in Properties now.
-
 };
 
 

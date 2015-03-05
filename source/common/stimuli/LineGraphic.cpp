@@ -4,31 +4,12 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString LineGraphic::type = "Line Graphic";
+	const QString LineGraphic::type = "Line Graphic";
 
 LineGraphic::LineGraphic(QPoint position, QVector<QPoint> points, QColor color)
 : VisualElement(position,color)
 {
 	AddDefinableProperty("Points","(1,1)(2,2)...(n,n)");
-	//propertyContainer_->setContainerName(type);
-
-	//propertyContainer_->setPropertyValue("Position",position);
-	//
-	//for(int i = 0; i < points.count(); i++)
-	//{
-	//	propertyContainer_->addProperty(QVariant::Point,QString("Point %1").arg(i),points[i]);
-	//}
-
-	//propertyContainer_->setPropertyValue("Color",color);
-
-	//draw();
-
-	//connect(propertyContainer_.data(),
-	//	    SIGNAL(signalPropertyValueChanged(QString, int, QVariant)),
-	//	    this,
-	//		SLOT(slotPropertyValueChanged(QString, int, QVariant))
-	//		);
 }
 
 void LineGraphic::draw()
@@ -63,26 +44,11 @@ void LineGraphic::draw()
 	shouldUpdateCompositingSurfaces_ = true;
 }
 
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* LineGraphic::NewVisualElement()
-{
-	return new LineGraphic;
-}
-
 /*! \brief Creates a new LineGraphic object and returns a shared Asset pointer to it.*/
 QSharedPointer<Asset> LineGraphic::Create()
 {
 	return QSharedPointer<Asset>(new LineGraphic());
 }
-
-//void LineGraphic::slotPropertyValueChanged(QString propertyName, int,
-//											  QVariant) //propertyValue
-//{
-//	if(propertyName != "Position" && propertyName != "Name")
-//	{
-//		draw();
-//	}
-//}
 
 void LineGraphic::postDeserialize()
 {

@@ -30,8 +30,6 @@
 #include "../common/common.h"
 #include "../common/globals.h"
 #include "../common/namedefs.h"
-#include "../common/archives/archives.h"
-#include "../common/random/mtrand.h"
 #include "../common/update/updatedownloader.h"
 
 #include "mainwindow.h"
@@ -67,8 +65,6 @@ int main(int argc, char *argv[])
 
 	Picto::InitializeLib(&app,localeLanguageCode);
 	Picto::InitializePorts(Picto::Names->workstationAppName);
-
-	Q_ASSERT_X(Picto::testMTRand(),"Director::main()","Random number generator failed test");
 
 	MainWindow mainWin;
 	UpdateDownloader::getInstance()->setRootWidget(&mainWin);

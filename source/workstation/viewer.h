@@ -64,12 +64,6 @@ signals:
 	 *	deinitialization is complete (TestViewer::deinit()).
 	 */
 	void deinitComplete();
-	/*! \brief NO LONGER USED.  SHOULD PROBABLY BE DELETED.*/
-	void enableCutAction(bool enable);
-	/*! \brief NO LONGER USED.  SHOULD PROBABLY BE DELETED.*/
-	void enableCopyAction(bool enable);
-	/*! \brief NO LONGER USED.  SHOULD PROBABLY BE DELETED.*/
-	void enablePasteAction(bool enable);
 
 protected:
 	QSharedPointer<DesignRoot> designRoot_;

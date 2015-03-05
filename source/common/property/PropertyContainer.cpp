@@ -81,12 +81,10 @@ int PropertyContainer::enumTypeId()
 }
 
 /*! \brief Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the input _value, then returns it.
- *	\details allowMultiple was once used to allow for more than one Property with the same _identifier; however, this doesn't
- *	really make sense anymore with the current design.  I believer that it is no longer used and we should probably remove it.
  */
-QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple)
+QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value)
 {
-	Q_ASSERT_X(allowMultiple || !properties_.contains(_identifier),
+	Q_ASSERT_X(!properties_.contains(_identifier),
 		"PropertyContainer::addProperty",
 		QString("Attempted to add multiple properties to a tag (%1) for which this operation is forbidden").arg(_identifier).toLatin1());
 

@@ -71,13 +71,11 @@ public:
 
 	virtual QString friendlyTypeName(){return "State Machine Element";};
 
-	virtual QPoint getDisplayLayoutPosition();
 	virtual QString getUITemplate(){return "StateMachineElement";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
 
 protected:
 	virtual QString defaultTagName(){return "StateMachineElement";};
-	//QString getMasterStateResult(QSharedPointer<Engine::PictoEngine> engine);
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 	virtual bool canHaveScripts(){return true;};

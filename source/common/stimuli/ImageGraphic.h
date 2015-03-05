@@ -37,7 +37,6 @@ public:
 	ImageGraphic();
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
 	static const QString type;
 

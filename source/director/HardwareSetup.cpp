@@ -3,25 +3,12 @@
 
 #define NI_STUFF
 
-/*#include "../common/stimuli/VisualElementFactory.h"
-#include "../common/stimuli/ArrowGraphic.h"
-#include "../common/stimuli/BoxGraphic.h"
-#include "../common/stimuli/CircleGraphic.h"
-#include "../common/stimuli/EllipseGraphic.h"
-#include "../common/stimuli/LineGraphic.h"
-#include "../common/stimuli/PictureGraphic.h"
-#include "../common/stimuli/RandomlyFilledGridGraphic.h"
-#include "../common/stimuli/TextGraphic.h"*/
-
-#include "../common/controlelements/ControlElementFactory.h"
 #include "../common/controlelements/TestController.h"
 #include "../common/controlelements/StopwatchController.h"
 #include "../common/controlelements/TargetController.h"
 #include "../common/controlelements/ChoiceController.h"
 
-#include "../common/parameter/ParameterFactory.h"
 #include "../common/parameter/BooleanParameter.h"
-#include "../common/parameter/ChoiceParameter.h"
 #include "../common/parameter/NumericParameter.h"
 #include "../common/parameter/RangeParameter.h"
 
@@ -34,6 +21,7 @@
 
 
 #include "../common/engine/XYSignalChannel.h"
+#include "../common/engine/GenericInput.h"
 #include "../common/engine/MouseInputPort.h"
 #if defined WIN32 && defined NI_STUFF
 #include "engine/PictoBoxXPAnalogInputPort.h"
@@ -169,12 +157,23 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
+		//Track the used ports - do not make them available as Generic Inputs
+		QVector<int> qvUsedPorts;
+		qvUsedPorts.push_back(xChan_);
+		qvUsedPorts.push_back(yChan_);
+
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
 			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
+
+			qvUsedPorts.push_back(xDiamChan_);
+			qvUsedPorts.push_back(yDiamChan_);
 		}
+
+		QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput(qvUsedPorts, "GenericInputs", daqPort));
+		engine_->addSignalChannel(genericInputs);
 
 #else
 		return false;
@@ -189,12 +188,24 @@ bool HardwareSetup::setupSignalChannel(SignalChannelType channelType)
 		QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Position",xChan_,yChan_,posSampPer_,daqPort));
 		engine_->addSignalChannel(aiChannel);
 
+		//Track the used ports - do not make them available as Generic Inputs
+		QVector<int> qvUsedPorts;
+		qvUsedPorts.push_back(xChan_);
+		qvUsedPorts.push_back(yChan_);
+
 		if((xDiamChan_ >= 0) || (yDiamChan_ >=0))
 		{
 			//Setup DiameterChannel
 			QSharedPointer<Picto::XYSignalChannel> aiChannel(new Picto::XYSignalChannel("Diameter",xDiamChan_,yDiamChan_,diamSampPer_,daqPort));
 			engine_->addSignalChannel(aiChannel);
+
+			qvUsedPorts.push_back(xDiamChan_);
+			qvUsedPorts.push_back(yDiamChan_);
 		}
+
+		QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput(qvUsedPorts, "GenericInputs", daqPort));
+		engine_->addSignalChannel(genericInputs);
+
 #else
 		return false;
 #endif

@@ -6,8 +6,8 @@
 namespace Picto {
 
 #define PI 3.141592
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString TokenFactoryGraphic::type = "Token Factory Graphic";
+
+	const QString TokenFactoryGraphic::type = "Token Factory Graphic";
 
 /*! \brief Creates a new TokenFactoryGraphic object at the input position and with the input dimensions and color.
  *	\details Adds the following Properties:
@@ -497,12 +497,6 @@ void TokenFactoryGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* TokenFactoryGraphic::NewVisualElement()
-{
-	return new TokenFactoryGraphic;
 }
 
 /*! \brief Creates a new TokenFactoryGraphic object and returns a shared Asset pointer to it.*/

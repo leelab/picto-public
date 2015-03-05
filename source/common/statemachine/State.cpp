@@ -2,29 +2,21 @@
 #include <QUuid>
 
 #include "State.h"
-#include "../controlelements/ControlElementFactory.h"
 #include "../protocol/ProtocolCommand.h"
 #include "../protocol/ProtocolResponse.h"
 #include "../engine/PictoEngine.h"
-#include "../storage/FrameDataUnitPackage.h"
 #include "../engine/SignalChannel.h"
+#include "../storage/FrameDataUnitPackage.h"
 #include "../stimuli/OutputElement.h"
+#include "../stimuli/CursorGraphic.h"
+#include "../stimuli/InputSignal.h"
 #include "../timing/Timestamper.h"
 #include "../parameter/AnalysisScriptHolder.h"
-#include "../stimuli/CursorGraphic.h"
 #include "../controlelements/TestController.h"
 #include "../controlelements/StopwatchController.h"
 #include "../controlelements/ScriptController.h"
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
-//#include "../stimuli/ArrowGraphic.h"
-//#include "../stimuli/BoxGraphic.h"
-//#include "../stimuli/CircleGraphic.h"
-//#include "../stimuli/EllipseGraphic.h"
-//#include "../stimuli/LineGraphic.h"
-//#include "../stimuli/PictureGraphic.h"
-//#include "../stimuli/RandomlyFilledGridGraphic.h"
-//#include "../stimuli/TextGraphic.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -85,10 +77,6 @@ void State::enableRunMode(bool enable)
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
-
-	//sigChannel_ = engine->getSignalChannel("Position");
-	//Add a cursor for the user input
-	//addCursor();
 
 	//Set up frame script.
 	bool runFrameScript = !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
@@ -376,6 +364,10 @@ void State::rebuildScene()
 		else if(output.dynamicCast<AudioElement>())
 		{
 			scene_->addAudioElement(output.staticCast<AudioElement>());
+		}
+		else if(output.dynamicCast<InputSignal>())
+		{
+			scene_->addInputSignal(output.staticCast<InputSignal>());
 		}
 	}
 	QColor backgroundColor;

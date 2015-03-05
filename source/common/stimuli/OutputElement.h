@@ -8,7 +8,6 @@
 
 #include "../common.h"
 
-#include "StimulusElement.h"
 #include "../statemachine/scriptablecontainer.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"

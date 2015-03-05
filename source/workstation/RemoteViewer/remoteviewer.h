@@ -148,7 +148,6 @@ private:
 	bool startSession();
 	bool endSession();
 	bool joinSession();
-	bool syncExperiment();
 	void stopExperiment();
 	bool disjoinSession();
 	bool shouldEndSession();

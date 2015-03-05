@@ -19,7 +19,6 @@
 #include "StartsessionCommandHandler.h"
 #include "TaskCommandHandler.h"
 #include "TestCommandHandler.h"
-#include "TrialCommandHandler.h"
 #include "../../common/memleakdetect.h"
 
 /*! \brief Constructs a ServerPictoProtocol object which includes ProtocolCommandHandlers to handle
@@ -43,7 +42,6 @@ ServerPictoProtocol::ServerPictoProtocol()
 	QSharedPointer<StartsessionCommandHandler> startsessionCommandHandler(new StartsessionCommandHandler());
 	QSharedPointer<TaskCommandHandler> taskCommandHandler(new TaskCommandHandler());
 	QSharedPointer<TestCommandHandler> testCommandHandler(new TestCommandHandler());
-	QSharedPointer<TrialCommandHandler> trialCommandHandler(new TrialCommandHandler());
 
 
 	addCommandHandler(announceCommandHandler);
@@ -61,7 +59,6 @@ ServerPictoProtocol::ServerPictoProtocol()
 	addCommandHandler(startsessionCommandHandler);
 	addCommandHandler(taskCommandHandler);
 	addCommandHandler(testCommandHandler);
-	addCommandHandler(trialCommandHandler);
 }
 
 QString ServerPictoProtocol::id()

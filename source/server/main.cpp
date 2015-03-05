@@ -25,7 +25,6 @@
 #include "../common/common.h"
 #include "../common/globals.h"
 #include "../common/namedefs.h"
-#include "../common/archives/archives.h"
 #include "network/server.h"
 #include "protocol/ServerProtocols.h"
 #include "protocol/ServerPictoProtocol.h"
@@ -282,9 +281,6 @@ int main(int argc, char *argv[])
 													arg(Picto::Names->serverAppName).arg(Picto::portNums->getSystemNumber());
 					outputStream << "Type \"quit\" on a single line to exit\n";
 					outputStream.flush();
-
-					//InteractiveSTDIOHandler interactiveSTDIOHandler;
-					//interactiveSTDIOHandler.start();
 
 					result = systemService.runInteractive();
 

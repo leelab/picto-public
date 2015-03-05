@@ -4,14 +4,10 @@
 #include "../common.h"
 #include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
-//#include "../parameter/ParameterContainer.h"
 #include "../property/PropertyContainer.h"
 #include "../statemachine/StateMachine.h"
 //#include "../statemachine/StageResult.h"
 //#include "../experimentalsystem/ExperimentalSystem.h"
-//#include "Constraint.h"
-//#include "TrialResult.h"
-//#include "BlockGenerator.h"
 #include "../engine/PictoEngine.h"
 
 //#include <QUuid>
@@ -51,8 +47,6 @@ public:
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString friendlyTypeName(){return "Task";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
-	/*! \brief Since there is no TaskId Property, this function doesn't appear to do anything and should be removed.*/
-	QUuid getTaskId(){return propertyContainer_->getPropertyValue("TaskId").toUuid();};
 	void setTaskNumber(int num);
 	/*! \brief Returns a pointer to the top level StateMachine contained in this Task.
 	*/

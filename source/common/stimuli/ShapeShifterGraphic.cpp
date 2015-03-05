@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString ShapeShifterGraphic::type = "Shape Shifter Graphic";
+	const QString ShapeShifterGraphic::type = "Shape Shifter Graphic";
 
 /*! \brief Creates a new ShapeShifterGraphic object at the input position and with the input dimensions and color.
  *	\details Adds the following Properties:
@@ -106,12 +105,6 @@ void ShapeShifterGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* ShapeShifterGraphic::NewVisualElement()
-{
-	return new ShapeShifterGraphic;
 }
 
 /*! \brief Creates a new ShapeShifterGraphic object and returns a shared Asset pointer to it.*/

@@ -4,8 +4,6 @@ using namespace Picto;
 /*! \brief Constructs a new SessionPlayer.
  *	\details sessState is the SessionState that will be used to playback all of the Session data.  sessLoader
  *	is the FileSessionLoader that will load the Session file into the SessionState object before playback.
- *	\note The input FileSessionLoader does not appear to be used in this class anymore.  It should probably be removed
- *	from this constructor.
  */
 SessionPlayer::SessionPlayer(QSharedPointer<SessionState> sessState,QSharedPointer<FileSessionLoader> sessLoader)
 :
@@ -129,14 +127,6 @@ bool SessionPlayer::stepToTime(double time)
 double SessionPlayer::getTime()
 {
 	return lastIndex_.time();
-}
-
-/*! \brief While the processing_ bool is used in this class to make functions reentrant, this function does not
- *	appear to be used.  It should probably be deleted.
- */
-bool SessionPlayer::isProcessing()
-{
-	return processing_;
 }
 
 /*! \brief This function calls step() and doesn't appear to add any other functionality apart from reentrancy.  We should probably

@@ -2,7 +2,6 @@
 #define _STRINGPARAMETER_H_
 
 #include "../common.h"
-#include "../experiment/MediaItem.h"
 
 #include "parameter.h"
 
@@ -11,7 +10,6 @@ namespace Picto {
 struct StringParameterOption
 {
 	QString label;
-	MediaItem icon;
 };
 
 /*!	\brief A parameter for storing strings that is not being used.

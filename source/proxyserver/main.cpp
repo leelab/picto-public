@@ -27,12 +27,7 @@
 #include "../common/common.h"
 #include "../common/globals.h"
 #include "../common/namedefs.h"
-#include "../common/archives/archives.h"
 #include "../common/update/updatedownloader.h"
-#include "network/proxyserver.h"
-#include "protocol/ProxyServerProtocols.h"
-#include "protocol/ProxyServerAcqProtocol.h"
-#include "InteractiveSTDIOHandler.h"
 #include "proxymainwindow.h"
 #include "NeuralDataAcqInterface.h"
 

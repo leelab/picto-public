@@ -122,6 +122,7 @@ bool LegacySystemXPRewardController::rewardWasSupplied(unsigned int)
 */
 void LegacySystemXPRewardController::startFlush(unsigned int channel)
 {
+	UNREFERENCED_PARAMETER(channel);
 	if(!hasDevice_)
 		return;
 	//We don't really care about the channel here because there's currenlty 
@@ -143,6 +144,7 @@ void LegacySystemXPRewardController::startFlush(unsigned int channel)
 */
 void LegacySystemXPRewardController::stopFlush(unsigned int channel)
 {
+	UNREFERENCED_PARAMETER(channel);
 	//Stop flush task
 	DAQmxErrChk(DAQmxStopTask(daqTaskHandle_));
 	DAQmxErrChk(DAQmxClearTask(daqTaskHandle_));

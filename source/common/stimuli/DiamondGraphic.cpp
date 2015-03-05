@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString DiamondGraphic::type = "Diamond Graphic";
+	const QString DiamondGraphic::type = "Diamond Graphic";
 
 /*! \brief Creates a new DiamondGraphic object at the input position and with the input dimensions and color.
  *	\details Adds the following Properties:
@@ -75,12 +74,6 @@ void DiamondGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* DiamondGraphic::NewVisualElement()
-{
-	return new DiamondGraphic;
 }
 
 /*! \brief Creates a new DiamondGraphic object and returns a shared Asset pointer to it.*/

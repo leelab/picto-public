@@ -3,6 +3,7 @@ TARGET = PictoServer
 QT = core gui xml network sql concurrent widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 # We elect to be a console application on Windows so that we will have our
 # standard output attached to the invoking terminal, if one is present; if
 # none is present, then we can still create a GUI
@@ -22,8 +23,6 @@ HEADERS += $$(PICTO_TREE)/source/server/processinfo/WinGetPID.h
 SOURCES += $$(PICTO_TREE)/source/server/main.cpp
 HEADERS += $$(PICTO_TREE)/source/server/dialog.h
 SOURCES += $$(PICTO_TREE)/source/server/dialog.cpp
-HEADERS += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.h
-SOURCES += $$(PICTO_TREE)/source/server/InteractiveSTDIOHandler.cpp
 
 HEADERS += $$(PICTO_TREE)/source/server/connections/AlignSessionData.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/AlignSessionData.cpp
@@ -46,8 +45,6 @@ SOURCES += $$(PICTO_TREE)/source/server/connections/ComponentInfo.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/ServerConfig.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ServerConfig.cpp
 
-HEADERS += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.h
-SOURCES += $$(PICTO_TREE)/source/server/datacollection/neuraldatacollector.cpp
 HEADERS += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.h
 SOURCES += $$(PICTO_TREE)/source/server/datacollection/alignmenttool.cpp
 
@@ -80,8 +77,6 @@ HEADERS += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/DirectorListCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/ProxyListCommandHandler.cpp
-HEADERS += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.h
-SOURCES += $$(PICTO_TREE)/source/server/protocol/TrialCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.h
 SOURCES += $$(PICTO_TREE)/source/server/protocol/StartsessionCommandHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/server/protocol/JoinsessionCommandHandler.h

@@ -104,6 +104,7 @@ QString PlaybackController::activateAnalyses(QStringList analysisData)
 		newAnalysis->setName(QUuid::createUuid().toString());	//Name doesn't matter.  Just make it unique
 		QUuid newAnalysisId = newAnalysis->getAssociateId();
 		bool linkResult = newAnalysis->LinkToAsset(getDesignRoot()->getExperiment(),QString());
+		IGNORED_PARAMETER(linkResult);
 		Q_ASSERT(linkResult);
 		//Create UI Data for the new Analysis and attach it
 		AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
@@ -346,7 +347,6 @@ void PlaybackController::setup()
 	engine_->setExclusiveMode(false);
 	engine_->setOperatorAsUser(operatorWasUser);
 	engine_->setSlaveMode(true);
-	engine_->syncInitPropertiesForSlave(false);
 
 	//Setup playback update system
 	double playbackSpeed = 1.0;
@@ -370,6 +370,9 @@ void PlaybackController::setup()
 	//set up position signal channel
 	QSharedPointer<Picto::XYSignalChannel> mouseChannel(new Picto::XYSignalChannel("Position"));
 	engine_->addSignalChannel(mouseChannel);
+
+	QSharedPointer<Picto::GenericInput> genericInputs(new Picto::GenericInput("GenericInputs"));
+	engine_->addSignalChannel(genericInputs);
 
 	//Set up output signal generator
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)

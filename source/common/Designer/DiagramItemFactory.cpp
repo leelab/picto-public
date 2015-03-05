@@ -1,7 +1,6 @@
 #include <string>
 #include <QGraphicsScene>
 #include "DiagramItemFactory.h"
-#include "ResultItem.h"
 #include "WireableResultItem.h"
 #include "StateMachineElementItem.h"
 #include "ControlElementItem.h"
@@ -108,7 +107,8 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("StarterContainer",":/icons/startercontainer.svg",100,100);
 		addIconDefinition("EnderContainer",":/icons/endercontainer.svg",100,100);
 		addIconDefinition("AnalysisDefinition",":/icons/analysisdefinition.svg",100,100);
-		addIconDefinition("OutputSignal",":/icons/outputsignal.svg",100,100);
+		addIconDefinition("OutputSignal", ":/icons/outputsignal.svg", 100, 100);
+		addIconDefinition("InputSignal", ":/icons/outputsignal.svg", 100, 100);
 		addIconDefinition("BinarySignal",":/icons/binarysignal.svg",100,100);
 		mapInitialized_ = true;
 	}
@@ -131,8 +131,6 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::Transition"))
 		returnVal = NULL;
 	else if(asset->inherits("Picto::ControlLink"))
-		returnVal = NULL;
-	else if(asset->inherits("Picto::UIInfo"))
 		returnVal = NULL;
 	else if(asset->inherits("Picto::AnalysisScriptHolder"))
 		returnVal = NULL;

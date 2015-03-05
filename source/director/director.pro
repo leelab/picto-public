@@ -3,6 +3,7 @@ TARGET = PictoDirector
 QT = core gui xml network script sql scripttools multimedia concurrent widgets
 CONFIG += qt warn_on debug_and_release
 CONFIG -= flat
+CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 
@@ -12,8 +13,6 @@ HEADERS += $$(PICTO_TREE)/source/director/Director.h
 SOURCES += $$(PICTO_TREE)/source/director/Director.cpp
 SOURCES += $$(PICTO_TREE)/source/director/HardwareSetup.cpp
 HEADERS += $$(PICTO_TREE)/source/director/HardwareSetup.h
-SOURCES += $$(PICTO_TREE)/source/director/EngineTest.cpp
-HEADERS += $$(PICTO_TREE)/source/director/EngineTest.h
 
 HEADERS += $$(PICTO_TREE)/source/director/network/DirectorStatusManager.h
 SOURCES += $$(PICTO_TREE)/source/director/network/DirectorStatusManager.cpp
@@ -42,8 +41,6 @@ HEADERS += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.
 SOURCES += $$(PICTO_TREE)/source/director/protocol/DirectorClickResponseHandler.cpp
 
 win32 {
-SOURCES += $$(PICTO_TREE)/source/director/SignalChannelTest.cpp
-HEADERS += $$(PICTO_TREE)/source/director/SignalChannelTest.h
 HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.h
 SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DCompositingSurface.cpp
 HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.h

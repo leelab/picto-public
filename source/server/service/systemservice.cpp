@@ -592,6 +592,7 @@ void WINAPI SystemService::main(DWORD,		//_argc
 	//Services run in c:\Windows\System32 by default.  Change the working directory
 	//to the application installation path.
 	bool result = QDir::setCurrent(QCoreApplication::applicationDirPath());
+	UNREFERENCED_PARAMETER(result);
 	Q_ASSERT_X(result,"SystemService::main","Picto Server Service working directory was not succesfully reset to its application path.");
 
 	//serviceMainThread(0);

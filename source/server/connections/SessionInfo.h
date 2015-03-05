@@ -5,6 +5,7 @@
 #include "../network/serverthread.h"
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/BehavioralDataUnitPackage.h"
+#include "../../common/storage/InputDataUnitPackage.h"
 #include "../../common/storage/PropertyDataUnitPackage.h"
 #include "../../common/storage/StateDataUnitPackage.h"
 #include "../../common/storage/FrameDataUnitPackage.h"
@@ -71,6 +72,7 @@ public:
 	void insertNeuralData(QSharedPointer<Picto::NeuralDataUnit> data);
 	void insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPackage> data);
 	void insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitPackage> data);
+	void insertInputData(QSharedPointer<Picto::InputDataUnitPackage> data);
 	void insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data);
 	void insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data);
 	void insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data);
@@ -144,8 +146,6 @@ private:
 	void InitializeVariables();
 	void LoadBaseSessionDatabase(QString path, QString databaseName);
 	void SetupBaseSessionDatabase();
-	void CreateCacheDatabase(QString databaseName);
-	void AddTablesToDatabase(QSqlQuery* query);
 	void alignTimeBases(bool realignAll = false);
 	void createSessionIndeces();
 	void setStateVariable(int dataid, int varid, QString serializedValue);

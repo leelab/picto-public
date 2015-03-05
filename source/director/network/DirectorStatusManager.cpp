@@ -79,7 +79,6 @@ void DirectorStatusManager::setUserInfo(QString info)
  */
 void DirectorStatusManager::setStatus(ComponentStatus status)
 {
-	ComponentStatus oldStatus = getStatus();	//Not sure why this is here...
 	ComponentStatusManager::setStatus(status);
 	ComponentStatus newStatus = getStatus();
 

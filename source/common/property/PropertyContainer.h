@@ -44,7 +44,7 @@ public:
 	virtual ~PropertyContainer(){};
 	void copyProperties(QSharedPointer<PropertyContainer> container2);
 	static int enumTypeId();
-	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value, bool allowMultiple = false);
+	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value);
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);
 	QSharedPointer<Property> setPropertyValue(QString _identifier, QVariant _value, int index=0);

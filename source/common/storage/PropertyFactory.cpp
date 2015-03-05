@@ -37,7 +37,7 @@ attributeMap_(attributeMap)
  */
 QSharedPointer<Asset> PropertyFactory::generateNewAsset()
 {
-	QSharedPointer<Property> prop = propContainer_->addProperty(propertyType_,propIdentifier_,defaultValue_,((getMaxAssets()==-1) || (getMaxAssets()>1)) );
+	QSharedPointer<Property> prop = propContainer_->addProperty(propertyType_,propIdentifier_,defaultValue_);
 	if(!prop.isNull())
 	{
 		for(QMap<QString,QVariant>::iterator iter = attributeMap_.begin();iter != attributeMap_.end(); iter++)

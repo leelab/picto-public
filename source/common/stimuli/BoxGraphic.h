@@ -28,11 +28,11 @@ class PICTOLIB_CLASS BoxGraphic : public VisualElement
 	Q_PROPERTY(bool outline READ getOutline WRITE setOutline)
 
 public:
-	BoxGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
+	BoxGraphic(QPoint position = QPoint(), QRect dimensions = QRect(), QColor color = QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
@@ -50,9 +50,6 @@ public:
 	bool getOutline(){return propertyContainer_->getPropertyValue("Outline").toBool();};
 	/*! \brief Sets whether this graphic should display only its outline.*/
 	void setOutline(bool outline) { propertyContainer_->setPropertyValue("Outline", outline);};
-
-
-	static const QString type;
 
 	virtual QString friendlyTypeName(){return "Box";};
 	virtual QString getUITemplate(){return "BoxElement";};

@@ -18,7 +18,7 @@ namespace Picto {
  *	changed slightly since that version.
  *	With the NiDAQ system, the general polling method is to create a sampling task, configure it with the desired 
  *	sample rate and start it.  We then poll it periodically, to get the latest data that came in.  Sample times can be
- *	calculated based on the sample rate.  Since the NiDAQ's configurable clock has significant inprecision, timing errors
+ *	calculated based on the sample rate.  Since the NiDAQ's configurable clock has significant imprecision, timing errors
  *	are corrected in the parent InputPort class.
  *	\sa InputPort::updateDataBuffer(double)
  *	\author Joey Schnurr, Mark Hammond, Matt Gay

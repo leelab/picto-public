@@ -8,7 +8,6 @@
 #include "../memleakdetect.h"
 
 namespace Picto {
-#define RECONNECT_POLL_INTERVAL_MS 100	//!< Appears to no longer be used... should be deleted.
 
 /*! \brief Constructs a new CommandChannel.
  *	\details The input sourceId is a unique ID that will be used to identify the owner of this

@@ -59,8 +59,9 @@ public:
 	TokenTrayGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
+
 	virtual void enteredScope();
 
 	QRect getTokenDimensions();
@@ -97,7 +98,6 @@ public:
 	void setOutlineWidth(int pixels);
 	QPoint getPositionOffset();
 
-	static const QString type;
 	virtual void upgradeVersion(QString deserializedVersion);
 
 	virtual QString getUITemplate(){return "TokenTrayElement";};

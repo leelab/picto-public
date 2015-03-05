@@ -4,8 +4,7 @@
 
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString BoxGraphic::type = "Box Graphic";
+	const QString BoxGraphic::type = "Box Graphic";
 
 /*! \brief Creates a new BoxGraphic object at the input position and with the input dimensions and color.
  *	\details Adds the following Properties:
@@ -66,12 +65,6 @@ void BoxGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* BoxGraphic::NewVisualElement()
-{
-	return new BoxGraphic;
 }
 
 /*! \brief Creates a new BoxGraphic object and returns a shared Asset pointer to it.*/

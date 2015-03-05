@@ -74,6 +74,7 @@ void BufferFileGenerator::initTempOutputDir()
 	QString fileName = outputDir_+"/"+QUuid::createUuid().toString();
 	lockFile_ = QSharedPointer<QFile>(new QFile(fileName));
 	bool rc = lockFile_->open(QIODevice::WriteOnly | QIODevice::Text);
+	IGNORED_PARAMETER(rc);
 	Q_ASSERT(rc);
 
 }

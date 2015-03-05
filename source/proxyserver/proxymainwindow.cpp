@@ -3,9 +3,6 @@
 
 #include "proxymainwindow.h"
 #include "NeuralDataAcqInterface.h"
-#include "network/proxyserver.h"
-#include "protocol/ProxyServerProtocols.h"
-#include "protocol/ProxyServerAcqProtocol.h"
 #include "../common/globals.h"
 #include "../common/network/CommandChannel.h"
 #include "../common/timing/timestamper.h"
@@ -27,7 +24,6 @@ ProxyMainWindow::ProxyMainWindow()
     setWindowTitle(tr("%1").arg(Picto::Names->proxyServerAppName));
 
 	createStatusLights();
-	createButtons();
 	createLineEdits();
 	createComboBox();
 	createLayout();
@@ -277,13 +273,6 @@ void ProxyMainWindow::createComboBox()
 	connect(pluginCombo_,SIGNAL(currentIndexChanged(int)),this,SLOT(pluginIndexChanged(int)));
 
 	return;
-}
-
-/*! \brief Doesn't do anything.  Should probably be deleted.*/
-void ProxyMainWindow::createButtons()
-{
-	//connect(startStopClientButton_,SIGNAL(clicked()),this,SLOT(startStopClient()));
-	//connect(quitButton_,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 /*! \brief Creates the widgets for entering the Proxy name and displaying/changing the 

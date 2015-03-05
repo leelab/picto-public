@@ -4,8 +4,7 @@
 #include "../memleakdetect.h"
 namespace Picto {
 
-/*! \brief I believe that this is no longer used.  It sbould probably be deleted.*/
-const QString PictureGraphic::type = "Picture Graphic";
+	const QString PictureGraphic::type = "Picture Graphic";
 
 /*! \brief Creates a PictureGraphic object at the input position based on the image at the input ImageFile path.
  *	\details Adds an ImageFile Property to hold the path to the ImageFile.
@@ -37,12 +36,6 @@ void PictureGraphic::draw()
 	//updateCompositingSurfaces();
 
 	shouldUpdateCompositingSurfaces_ = true;
-}
-
-/*! \brief This is no longer used by parts of Picto that are being used.  It sbould probably be deleted.*/
-VisualElement* PictureGraphic::NewVisualElement()
-{
-	return new PictureGraphic;
 }
 
 void PictureGraphic::postDeserialize()

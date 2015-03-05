@@ -140,14 +140,6 @@ void Asset::receivedDeletedSignal()
 	deleted_ = true;
 }
 
-/*!	\brief NO LONGER OPERATIONAL.  This function is no longer used and should be removed.
- */
-void Asset::reinitialize()
-{
-	//Ideally postDeserialize calls will be callable over and over again, but in practice, this isn't yet the case.
-	//postDeserialize();
-}
-
 /*! \brief Returns the "::" separated path to this Asset in the Asset tree.
  *	\details The path is returned up to the level of the experiment or AssociateRoot
  *	those levels are not included in the path.  

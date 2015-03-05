@@ -19,7 +19,7 @@ class CircleTarget : public ControlTarget
 {
 	Q_OBJECT
 	/*!	\brief Sets/Gets the circle target's current radius*/
-	Q_PROPERTY(int radius READ getRadius WRITE setRadius)
+	Q_PROPERTY(int radius READ getRadius WRITE setRadius);
 public:
 	CircleTarget();
 	static QSharedPointer<Asset> Create();

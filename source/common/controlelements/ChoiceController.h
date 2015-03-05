@@ -36,9 +36,9 @@ class ChoiceController : public ControlElement
 {
 	Q_OBJECT
 	/*! \brief Sets/Gets the current value of the necessary 'FixationTime' considered successful fixation.*/
-	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime)
+	Q_PROPERTY(int fixationTime READ getFixationTime WRITE setFixationTime);
 	/*! \brief Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.*/
-	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime)
+	Q_PROPERTY(int totalTime READ getTotalTime WRITE setTotalTime);
 public:
 	ChoiceController();
 	virtual ~ChoiceController(){};

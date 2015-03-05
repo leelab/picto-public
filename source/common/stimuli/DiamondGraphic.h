@@ -31,8 +31,8 @@ public:
 	DiamondGraphic(QPoint position=QPoint(), QRect dimensions=QRect(), QColor color=QColor());
 
 	void draw();
-	static VisualElement* NewVisualElement();
 	static QSharedPointer<Asset> Create();
+	static const QString type;
 
 	QRect getDimensions();
 	void setDimensions(QRect dimensions);
@@ -52,7 +52,6 @@ public:
 
 	virtual QString friendlyTypeName(){return "Diamond";};
 	virtual QString getUITemplate(){return "DiamondElement";};
-	static const QString type;
 public slots:
 	/*! \brief Set the dimensions (width, height) of this graphic.*/
 	void setDimensions(int w, int h){setWidth(w);setHeight(h);};

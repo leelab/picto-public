@@ -13,7 +13,6 @@
 #include "../../common/globals.h"
 
 #include "TestCommandHandler.h"
-#include "../datacollection/neuraldatacollector.h"
 #include "../datacollection/alignmenttool.h"
 #include "../../common/memleakdetect.h"
 

@@ -23,9 +23,8 @@ void PropertyTable::addProperty(QSharedPointer<Property> prop)
 
 /*! \brief Causes propertyValueChanged() and propertyInitValueChanged() signals to be emitted for every property in the current Experiment.
  *	\details This can be used in conjunction with the Picto Engine to send all current property values to server.
- *	\note This function is set to ignore UIInfo objects, Transitions and Control Links.  Transitions and Control Links don't have any Properties 
- *	that can change during and experiment.  UIInfo objects have no bearing on the experiment and are used only for UI information for the State 
- *	Machine Editor.
+ *	\note This function is set to ignore Transitions and Control Links.  Transitions and Control Links don't have any Properties 
+ *	that can change during and experiment.  
  *	\note Whereas in addProperty() we wrote that only those Properties added through that function would participate in valueChanged() signal
  *	emission.  That was with regard to when the Property values actually change.  In this function, we emit the valueChanged() signals regardless
  *	of what was or was not added in addProperty().
@@ -42,7 +41,6 @@ void PropertyTable::reportChangeInAllProperties()
 			&& (	
 				propParent->inherits("Picto::Transition") 
 				||	propParent->inherits("Picto::ControlLink")
-				||	propParent->inherits("Picto::UIInfo")
 			)
 		)
 		continue;

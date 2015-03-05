@@ -1,6 +1,5 @@
 #include "LfpState.h"
 #include "../storage/DataSourceInfo.h"
-#include "PlaybackData.h"
 #include "../storage/alignmentinfo.h"
 using namespace Picto;
 
