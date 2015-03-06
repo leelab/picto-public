@@ -21,8 +21,7 @@ pushd %PICTO_TREE%
 @IF EXIST manuals\CodeDoc\html (
   RD /S /Q manuals\CodeDoc\html
 )
-%DOXYGEN_DIR%\doxygen tools\doxygen\PictoMainDoxyConfig
-
+%DOXYGEN_DIR%\doxygen tools\doxygen\PictoMainDoxyConfig 2>DocBuildErr.txt
 
 @IF NOT EXIST output\documentation (
   mkdir output\documentation
@@ -31,8 +30,13 @@ pushd %PICTO_TREE%
 @IF NOT EXIST output\documentation\unittests (
   mkdir output\documentation\unittests
 )
-%DOXYGEN_DIR%\doxygen tools\doxygen\PictoUnitTestsDoxyConfig
+%DOXYGEN_DIR%\doxygen tools\doxygen\PictoUnitTestsDoxyConfig 2>output\documentation\unittests\DocBuildErr.txt
 
-
-popd
+@echo.
+@echo.
+@echo NOTE:
+@echo DoxyGen errors for the project have been redirected to %PICTO_TREE%\DocBuildErr.txt
+@echo Check there for any documentation issues
+@echo.
+@popd
 @ENDLOCAL
