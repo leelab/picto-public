@@ -1,7 +1,7 @@
 /*! \mainpage Picto Developer's Guide
-\author Joey Schnurr, Mark Hammond, Matt Gay
-\version 2.0.1
-\date Last modified: January 24, 2014
+\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+\version 2.0.2
+\date Last modified: March 6, 2015
 
 This is the Developer's Guide for the Picto suite of experimental control applications
 and associated PictoBox hardware.  If you are an investigator utilizing the software as

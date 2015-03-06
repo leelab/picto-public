@@ -28,7 +28,6 @@ addSubdirs(source/server, source/server/unittests)
 addSubdirs(source/proxyserver)
 addSubdirs(source/config)
 addSubdirs(source/workstation)
-addSubdirs(source/documentation/developersguide)
 addSubdirs(source/embedded)
 
 #The PlexonPlugin can currently only be built for X86
@@ -47,7 +46,6 @@ addSubdirs(source/proxyplugins/virtualdeviceplugin)
 #  SUBDIRS += source/proxyserver
 #  SUBDIRS += source/config
 #  SUBDIRS += source/workstation
-#  SUBDIRS += source/documentation/developersguide
 #}
 #win* {
 #  SUBDIRS += source/embedded

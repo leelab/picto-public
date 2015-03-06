@@ -7,13 +7,11 @@ var searchData=
   ['_7ecommandchannel',['~CommandChannel',['../class_picto_1_1_command_channel.html#af270c3f840dedc4d2d4f18d6471f5242',1,'Picto::CommandChannel']]],
   ['_7ecomponentinterface',['~ComponentInterface',['../class_component_interface.html#a9e0bf6312b07c414d29694740ca63817',1,'ComponentInterface']]],
   ['_7ed3dcompositingsurface',['~D3DCompositingSurface',['../class_picto_1_1_d3_d_compositing_surface.html#afa0df367f0ea3500dd135968ebb174e4',1,'Picto::D3DCompositingSurface']]],
-  ['_7ed3dmvisualtarget',['~D3DMVisualTarget',['../struct_picto_1_1_d3_d_m_visual_target.html#a52e680b418f2624819ebd14743e79901',1,'Picto::D3DMVisualTarget']]],
-  ['_7edaqboard',['~DaqBoard',['../class_daq_board.html#ac8ecec1806ad926d40ebc6117a14e2b2',1,'DaqBoard']]],
   ['_7eengineconnections',['~EngineConnections',['../class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b',1,'EngineConnections']]],
   ['_7efilesessionloader',['~FileSessionLoader',['../class_picto_1_1_file_session_loader.html#a9f28fba3c0be58a4d6397e7d3f6b13ca',1,'Picto::FileSessionLoader']]],
   ['_7efrontpanelrewardcontroller',['~FrontPanelRewardController',['../class_picto_1_1_front_panel_reward_controller.html#a0971824746bbf2e478fde6e03f835b8c',1,'Picto::FrontPanelRewardController']]],
   ['_7elegacysystemxpanaloginputport',['~LegacySystemXPAnalogInputPort',['../class_picto_1_1_legacy_system_x_p_analog_input_port.html#a316f1a839eefb91fbf6b4b346eeb6351',1,'Picto::LegacySystemXPAnalogInputPort']]],
   ['_7ephidgets',['~Phidgets',['../class_phidgets.html#a63632587e91cd54861763eccee1d154c',1,'Phidgets']]],
-  ['_7epictoboxdaqboard',['~PictoBoxDaqBoard',['../class_picto_1_1_picto_box_daq_board.html#af83dac8cea05f6faf994ae65dcefc938',1,'Picto::PictoBoxDaqBoard']]],
+  ['_7epictoboxxprewardcontroller',['~PictoBoxXPRewardController',['../class_picto_1_1_picto_box_x_p_reward_controller.html#a4679cf9cf4f423d44e5142a5d639fb26',1,'Picto::PictoBoxXPRewardController']]],
   ['_7estoredsessiondata',['~StoredSessionData',['../class_stored_session_data.html#a71ce0fb4b14e50493e38515927205ac8',1,'StoredSessionData']]]
 ];
