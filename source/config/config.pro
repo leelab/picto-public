@@ -7,6 +7,8 @@ CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+
 # Input
 SOURCES += $$(PICTO_TREE)/source/config/main.cpp
 HEADERS += $$(PICTO_TREE)/source/config/TestLabel.h

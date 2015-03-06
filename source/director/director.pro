@@ -7,6 +7,8 @@ CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+
 # Input
 SOURCES += $$(PICTO_TREE)/source/director/main.cpp
 HEADERS += $$(PICTO_TREE)/source/director/Director.h
@@ -47,8 +49,14 @@ HEADERS += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.h
 SOURCES += $$(PICTO_TREE)/source/director/compositor/D3DVisualTarget.cpp
 INCLUDEPATH += "$$(DXSDK_DIR)/include"
 
-LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
-LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+contains(MACHINE_TYPE,X86) {
+	LIBS += "$$(DXSDK_DIR)/Lib/x86/D3D9.lib"
+	LIBS += "$$(DXSDK_DIR)/Lib/x86/d3dx9.lib"
+}
+contains(MACHINE_TYPE,X64) {
+	LIBS += "$$(DXSDK_DIR)/Lib/x64/D3D9.lib"
+	LIBS += "$$(DXSDK_DIR)/Lib/x64/d3dx9.lib"
+}
 LIBS += "Strmiids.lib"
 
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/PictoBoxXPEventCodeGenerator.h
@@ -63,8 +71,15 @@ HEADERS += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardControll
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/LegacySystemXPRewardController.cpp
 HEADERS += $$(PICTO_TREE)/source/director/iodevices/WinSound.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/WinSound.cpp
-INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/include"
-LIBS += "$$(NIDAQmxSwitchDir)/../DAQmx ANSI C Dev/lib/msvc/NIDAQmx.lib"
+
+contains(MACHINE_TYPE,X86) {
+	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
+	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib32/msvc/NIDAQmx.lib"
+}
+contains(MACHINE_TYPE,X64) {
+	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
+	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib64/msvc/NIDAQmx.lib"
+}
 
 HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.h
 SOURCES += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.cpp

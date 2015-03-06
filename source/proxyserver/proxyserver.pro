@@ -11,6 +11,7 @@ CONFIG += c++11
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
+MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
 
 # Input
 HEADERS += $$(PICTO_TREE)/source/proxyserver/NeuralDataAcqInterface.h

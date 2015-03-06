@@ -9,14 +9,14 @@ INCLUDEPATH += .
 
 # Input
 HEADERS +=
-SOURCES += $$(PICTO_TREE)/tools/win.common/vcSlnDependencies/main.cpp
+SOURCES += $$(PICTO_TREE)/main.cpp
 
 # Output
-DESTDIR = $$(PICTO_TREE)/tools/win.common/vcSlnDependencies/bin
-OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/tools/vcSlnDependencies/release
-RCC_DIR = $$(PICTO_TREE)/intermediates/resources/tools/vcSlnDependencies
-UI_DIR = $$(PICTO_TREE)/intermediates/ui/tools/vcSlnDependencies
-MOC_DIR = $$(PICTO_TREE)/intermediates/moc/tools/vcSlnDependencies
+DESTDIR = $$(PICTO_TREE)/$$(PICTO_MACHINE_TYPE)/bin/
+OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/
+RCC_DIR = $$(PICTO_TREE)/intermediates/resources/
+UI_DIR = $$(PICTO_TREE)/intermediates/ui/
+MOC_DIR = $$(PICTO_TREE)/intermediates/moc/
 
 # Platform Specific Configuration
 

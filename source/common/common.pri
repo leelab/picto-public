@@ -21,8 +21,15 @@ INCLUDEPATH += $$(PROPBROWSDIR)/
 win32:QMAKE_LIBDIR += $$(PROPBROWSDIR)/lib
 
 # Include QWT header's and libs
-INCLUDEPATH += $$(PICTO_THIRD_PARTY)/qwt/src
-win32:QMAKE_LIBDIR += $$(PICTO_THIRD_PARTY)/qwt/lib
+contains(MACHINE_TYPE,X86) {
+	INCLUDEPATH += $$(PICTO_THIRD_PARTY)/qwt/src
+	win32:QMAKE_LIBDIR += $$(PICTO_THIRD_PARTY)/qwt/lib
+	}
+contains(MACHINE_TYPE,X64) {
+	INCLUDEPATH += $$(PICTO_THIRD_PARTY)/qwt_64/src
+	win32:QMAKE_LIBDIR += $$(PICTO_THIRD_PARTY)/qwt_64/lib
+	}
+	
 
 # Tell everyone that we're running Windows XP SP 2
 win32:!wince*:DEFINES += _WIN32_WINNT=0x0502
