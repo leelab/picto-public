@@ -15,8 +15,8 @@
  *	event that has already been matched is not overwritten with an unmatched value due to things
  *	like a Director resending the event.  The matched column is also tracked to make sure that 
  *	that values are never cut from this object during a readData() call until they are matched.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AlignSessionData : public SessionData
 {

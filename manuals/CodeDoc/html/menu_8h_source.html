@@ -120,43 +120,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#a83b4027ae502520a6c94891eb2052d02">aboutToQuit</a>();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> checkConnections();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> returnToStatus();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">//void drawFlush();  //Since this is display &quot;animated&quot; it needs to be a slot</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;signals:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#ae31aac661b1be50022bb6ef105330573">updateLCD</a>(<span class="keywordtype">int</span> line, QString text);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#aa35b1ddd8bd823d70262d8c9d6357dc5">toggleBacklight</a>();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#a1b94ca8578185fc490c0e8bba50305f2">turnOnBacklight</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#a6bb95c088d59c52597a40c0d941ea575">turnOffBacklight</a>();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> loadMenus();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//void initFlush();</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    QSharedPointer&lt;DirectorInterface&gt; directorIf_;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QTimer *connectionTimer;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QTimer *activityTimer;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> wasConnected_;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="comment">/*QTimer *flushingTimer;*/</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> returnToStatus();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment">//void drawFlush();  //Since this is display &quot;animated&quot; it needs to be a slot</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;signals:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#ae31aac661b1be50022bb6ef105330573">updateLCD</a>(<span class="keywordtype">int</span> line, QString text);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#aa35b1ddd8bd823d70262d8c9d6357dc5">toggleBacklight</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#a1b94ca8578185fc490c0e8bba50305f2">turnOnBacklight</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu.html#a6bb95c088d59c52597a40c0d941ea575">turnOffBacklight</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> loadMenus();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">//void initFlush();</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    QSharedPointer&lt;DirectorInterface&gt; directorIf_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QTimer *activityTimer;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">bool</span> wasConnected_;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QMap&lt;PanelInfo::DisplayModeType,QSharedPointer&lt;DisplayMode&gt;&gt; panelModes_;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    QSharedPointer&lt;DisplayMode&gt; currMode_;  </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QMap&lt;PanelInfo::DisplayModeType,QSharedPointer&lt;DisplayMode&gt;&gt; panelModes_;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QSharedPointer&lt;DisplayMode&gt; currMode_;  </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;};</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="ttc" id="class_menu_html_a3a8a0e8b13f44978f239e280d78b38bd"><div class="ttname"><a href="class_menu.html#a3a8a0e8b13f44978f239e280d78b38bd">Menu::userInputSlot</a></div><div class="ttdeci">void userInputSlot(int type)</div><div class="ttdoc">Accepts user input from the phidgets interface and routes it to the active DisplayMode or appropriate...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00070">menu.cpp:70</a></div></div>
-<div class="ttc" id="class_menu_html_aa515edd7f33010c5f9c42a693c79dcc6"><div class="ttname"><a href="class_menu.html#aa515edd7f33010c5f9c42a693c79dcc6">Menu::Menu</a></div><div class="ttdeci">Menu(FrontPanelInfo *panelInfo)</div><div class="ttdoc">Constructs a new Menu object, taking in a panelInfo object that provides access to the Socket connect...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00027">menu.cpp:27</a></div></div>
+<div class="ttc" id="class_menu_html_a3a8a0e8b13f44978f239e280d78b38bd"><div class="ttname"><a href="class_menu.html#a3a8a0e8b13f44978f239e280d78b38bd">Menu::userInputSlot</a></div><div class="ttdeci">void userInputSlot(int type)</div><div class="ttdoc">Accepts user input from the phidgets interface and routes it to the active DisplayMode or appropriate...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00058">menu.cpp:58</a></div></div>
+<div class="ttc" id="class_menu_html_aa515edd7f33010c5f9c42a693c79dcc6"><div class="ttname"><a href="class_menu.html#aa515edd7f33010c5f9c42a693c79dcc6">Menu::Menu</a></div><div class="ttdeci">Menu(FrontPanelInfo *panelInfo)</div><div class="ttdoc">Constructs a new Menu object, taking in a panelInfo object that provides access to the Socket connect...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00026">menu.cpp:26</a></div></div>
 <div class="ttc" id="class_menu_html_ae31aac661b1be50022bb6ef105330573"><div class="ttname"><a href="class_menu.html#ae31aac661b1be50022bb6ef105330573">Menu::updateLCD</a></div><div class="ttdeci">void updateLCD(int line, QString text)</div><div class="ttdoc">Emitted when the output line of the LCD should be set to the output text where the top line is 1 and ...</div></div>
 <div class="ttc" id="class_menu_html"><div class="ttname"><a href="class_menu.html">Menu</a></div><div class="ttdoc">The top level object for the front panel that creates all operable DisplayModes and connects them to ...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8h_source.html#l00024">menu.h:24</a></div></div>
-<div class="ttc" id="class_menu_html_a83b4027ae502520a6c94891eb2052d02"><div class="ttname"><a href="class_menu.html#a83b4027ae502520a6c94891eb2052d02">Menu::aboutToQuit</a></div><div class="ttdeci">void aboutToQuit()</div><div class="ttdoc">Deinitializes this application just before it closes, essentially by turning off the LCD display...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00103">menu.cpp:103</a></div></div>
+<div class="ttc" id="class_menu_html_a83b4027ae502520a6c94891eb2052d02"><div class="ttname"><a href="class_menu.html#a83b4027ae502520a6c94891eb2052d02">Menu::aboutToQuit</a></div><div class="ttdeci">void aboutToQuit()</div><div class="ttdoc">Deinitializes this application just before it closes, essentially by turning off the LCD display...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00091">menu.cpp:91</a></div></div>
 <div class="ttc" id="class_menu_html_a1b94ca8578185fc490c0e8bba50305f2"><div class="ttname"><a href="class_menu.html#a1b94ca8578185fc490c0e8bba50305f2">Menu::turnOnBacklight</a></div><div class="ttdeci">void turnOnBacklight()</div><div class="ttdoc">Emitted when LCD&#39;s backlight should be turned On. </div></div>
-<div class="ttc" id="class_menu_html_aebc90f39203524becf5ad750269d5d82"><div class="ttname"><a href="class_menu.html#aebc90f39203524becf5ad750269d5d82">Menu::initMenu</a></div><div class="ttdeci">void initMenu()</div><div class="ttdoc">Initializes this object by creating all DisplayMode objects, turning on the LCD backlight and setting...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00056">menu.cpp:56</a></div></div>
+<div class="ttc" id="class_menu_html_aebc90f39203524becf5ad750269d5d82"><div class="ttname"><a href="class_menu.html#aebc90f39203524becf5ad750269d5d82">Menu::initMenu</a></div><div class="ttdeci">void initMenu()</div><div class="ttdoc">Initializes this object by creating all DisplayMode objects, turning on the LCD backlight and setting...</div><div class="ttdef"><b>Definition:</b> <a href="menu_8cpp_source.html#l00044">menu.cpp:44</a></div></div>
 <div class="ttc" id="class_menu_html_a6bb95c088d59c52597a40c0d941ea575"><div class="ttname"><a href="class_menu.html#a6bb95c088d59c52597a40c0d941ea575">Menu::turnOffBacklight</a></div><div class="ttdeci">void turnOffBacklight()</div><div class="ttdoc">Emitted when LCD&#39;s backlight should be turned Off. </div></div>
 <div class="ttc" id="_director_interface_8h_html"><div class="ttname"><a href="_director_interface_8h.html">DirectorInterface.h</a></div></div>
 <div class="ttc" id="class_front_panel_info_html"><div class="ttname"><a href="class_front_panel_info.html">FrontPanelInfo</a></div><div class="ttdoc">Stores the command socket used by the Front Panel to communicate with the director as well as the cur...</div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00036">FrontPanelInfo.h:36</a></div></div>

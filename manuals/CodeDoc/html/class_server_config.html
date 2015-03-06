@@ -139,8 +139,8 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>The configuration of the server is stored in a config database. This object provides an interface for accessing the database, since we don't want to have access by random code.</p>
 <p>Currently, the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> configuration consists exclusively of information about the currently open and recently timed out sessions, the components attached to them and their associated Sqlite files. Functions are provided to access and change these values. In the future, other <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> configurations may be needed and can be added here.</p>
 <dl class="section note"><dt>Note</dt><dd>A new (and unique) database connection is created everytime a <a class="el" href="class_server_config.html" title="ServerConfig handles the configuration of a PictoServer. ">ServerConfig</a> object is constructed. This is done because database connections can only be used from within the thread that created them, so we can't just create a single connection. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_server_config_8h_source.html#l00026">26</a> of file <a class="el" href="_server_config_8h_source.html">ServerConfig.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

@@ -25,8 +25,8 @@ namespace Picto {
  *	set margin of error.
  *
  *	Child classes should handle the actual setup of the underlying device and implement the class's virtual functions.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API InputPort

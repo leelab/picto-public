@@ -28,8 +28,8 @@ namespace Picto {
  *	so that a UIData object can link to it and define the positions of all of its Analysis element children in the Design Editor canvas.
  *
  *	\sa AssociateElement
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Analysis : public AssociateRoot, public AssociateRootHost

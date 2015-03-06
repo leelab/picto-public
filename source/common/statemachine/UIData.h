@@ -16,8 +16,8 @@ namespace Picto {
  *	is stored in the UIData object itself,.  Asset specific data is stored in child UIElement classes.  
  *
  *	The code handling Linkage to the Analysis and Experiment (AssociateRootHost) trees is handled by the inherited AssociateRoot class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API UIData : public AssociateRoot

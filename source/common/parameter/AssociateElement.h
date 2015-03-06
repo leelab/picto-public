@@ -111,8 +111,8 @@ namespace Picto {
  *	to reuse DataStore sub-class code, and this would therefore lead to AssociateElement children having diamond inheritance patterns (ie. inheriting from two classes that 
  *	both inherit from the same class) which leads to lots of problems.
  *	\sa AssociateRoot, AssociateRootHost
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AssociateElement

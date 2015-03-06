@@ -19,8 +19,8 @@ namespace Picto {
  *	recieves an input with a time that is lower than the latest time, the Session Run is restarted and fast forwarded to 
  *	that position.  This is due to the need to support the Analysis system.  For more detail, see stepToTime().
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionPlayer : public QObject

@@ -13,8 +13,8 @@
  *	with it, etc.  Most of the ViewerWindow functionality is supplied automatically by its parent
  *	class QGraphicsView; however, there is some customization that we need to do for Picto, which we
  *	add here.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ViewerWindow : public QGraphicsView
 {

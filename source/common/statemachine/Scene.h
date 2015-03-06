@@ -29,8 +29,8 @@ namespace Picto {
  *	that the render code gets run in the main UI thread, but everything else can run in a separate thread.  We handle this by moving the
  *	Scene object into the UI thread, and then calling its private render code using a signal-slot framework.  This is all handled internally
  *	and needn't concern outside classes.  For more detail on this, see render() and doRender().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Scene : public QObject

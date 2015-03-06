@@ -16,8 +16,8 @@ namespace Picto {
  *	graphic will be drawn.  The outline thickness Property determines the thickness of the graphic outline if the outline Property is true.
  *	\note Setting the width and height to be equal makes this graphic identical to a CircleGraphic with radius equal to half of the width
  *	or height dimension.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS EllipseGraphic : public VisualElement
 {

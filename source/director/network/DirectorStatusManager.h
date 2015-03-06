@@ -11,8 +11,8 @@
  *	for the Experiment subject, interfacing with any Control Panels attached to the Director, sending Alignment Events to
  *	attached neural systems, and sending COMPONENTUPDATE commands and Alignment Event data to the Picto Server.
  *	\sa ComponentStatusManager
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class DirectorStatusManager : public ComponentStatusManager
 {

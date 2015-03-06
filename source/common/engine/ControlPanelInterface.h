@@ -17,8 +17,8 @@
  *	these capabilities and should be inherited to implement that interface for particular types of hardware.
  *	The Picto Engine uses this class to inform the front panel when these Director properties have changed,
  *	and to change these Director properties when asked by the control panel to do so.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ControlPanelInterface : public QObject

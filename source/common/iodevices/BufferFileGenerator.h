@@ -20,8 +20,8 @@ namespace Picto {
  *	playback video files, for AnalysisFileOutput files, and for design AutoSaved files.
  *	So far we have only used this BufferFileGenerator for the playback video files 
  *	(RecordingVisualTargetHost).  We should probably reuse it in all those places though.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API BufferFileGenerator

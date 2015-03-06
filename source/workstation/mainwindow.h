@@ -34,8 +34,8 @@ class QStackedWidget;
  *	This window also includes some simple menus with functionality for saving the current Design, opening a new Design from different types of files,
  *	changing the System number (Picto applications only communicate with the Server that has their System number) and retrieving broad "about" information
  *	on the Picto system.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class MainWindow : public QMainWindow
 {

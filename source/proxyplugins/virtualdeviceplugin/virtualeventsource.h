@@ -27,8 +27,8 @@ struct VirtualEvent
  *  
  *	\details The key function here is getNextEvent(time) which returns Picto::DataUnit objects one by one, in time
  *  order until the input time arrives, at which point it should return a null pointer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class VirtualEventSource
 {

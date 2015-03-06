@@ -9,8 +9,8 @@
  *	\details This ArrowPortItem takes care of things like telling the arrow connected to it if it
  *	needs to redraw itself with new endpoints and deleting an attached arrow if this ArrowPortItem
  *	is deleted.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ArrowPortItem : public DiagramItem
 {

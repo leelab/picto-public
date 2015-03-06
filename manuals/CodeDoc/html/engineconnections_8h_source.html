@@ -98,32 +98,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;FrontPanelInfo.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_engine_connections.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_engine_connections.html">EngineConnections</a> : <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_engine_connections.html#acb38eac1a3302c4668d2f2b0be48788c">EngineConnections</a>(<a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo, QObject* parent = 0);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">~EngineConnections</a>();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span> setupCommandConnection();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> setupEventConnection();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;signals:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_connections.html#ac76e805b02421bb343e738898d8a8949">newEventRead</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    QTcpServer *commandChannel;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    QTcpServer *eventChannel;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="class_engine_connections_html"><div class="ttname"><a href="class_engine_connections.html">EngineConnections</a></div><div class="ttdoc">Sets up the connections between the engine and the front panel. </div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8h_source.html#l00017">engineconnections.h:17</a></div></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_engine_connections.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_engine_connections.html">EngineConnections</a> : <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="class_engine_connections.html#acb38eac1a3302c4668d2f2b0be48788c">EngineConnections</a>(<a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo, QObject* parent = 0);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">~EngineConnections</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">void</span> setupCommandConnection();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;signals:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_connections.html#ac76e805b02421bb343e738898d8a8949">newEventRead</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_front_panel_info.html">FrontPanelInfo</a> *panelInfo;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    QTcpServer *commandChannel;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_engine_connections_html"><div class="ttname"><a href="class_engine_connections.html">EngineConnections</a></div><div class="ttdoc">Sets up the connections between the engine and the front panel. </div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8h_source.html#l00016">engineconnections.h:16</a></div></div>
 <div class="ttc" id="class_engine_connections_html_acb38eac1a3302c4668d2f2b0be48788c"><div class="ttname"><a href="class_engine_connections.html#acb38eac1a3302c4668d2f2b0be48788c">EngineConnections::EngineConnections</a></div><div class="ttdeci">EngineConnections(FrontPanelInfo *panelInfo, QObject *parent=0)</div><div class="ttdoc">Creates an EngineConnections object which creates a commandChannel and puts it into the input FrontPa...</div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8cpp_source.html#l00012">engineconnections.cpp:12</a></div></div>
-<div class="ttc" id="class_engine_connections_html_a7d06ed516638c57ae407581ebe53781b"><div class="ttname"><a href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">EngineConnections::~EngineConnections</a></div><div class="ttdeci">virtual ~EngineConnections()</div><div class="ttdoc">Destroys the EngineConnections object, closing the FrontPanel->Director command channel in the proces...</div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8cpp_source.html#l00036">engineconnections.cpp:36</a></div></div>
+<div class="ttc" id="class_engine_connections_html_a7d06ed516638c57ae407581ebe53781b"><div class="ttname"><a href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">EngineConnections::~EngineConnections</a></div><div class="ttdeci">virtual ~EngineConnections()</div><div class="ttdoc">Destroys the EngineConnections object, closing the FrontPanel->Director command channel in the proces...</div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8cpp_source.html#l00025">engineconnections.cpp:25</a></div></div>
 <div class="ttc" id="class_engine_connections_html_ac76e805b02421bb343e738898d8a8949"><div class="ttname"><a href="class_engine_connections.html#ac76e805b02421bb343e738898d8a8949">EngineConnections::newEventRead</a></div><div class="ttdeci">void newEventRead()</div><div class="ttdoc">No Longer Used. </div></div>
 <div class="ttc" id="class_front_panel_info_html"><div class="ttname"><a href="class_front_panel_info.html">FrontPanelInfo</a></div><div class="ttdoc">Stores the command socket used by the Front Panel to communicate with the director as well as the cur...</div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00036">FrontPanelInfo.h:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

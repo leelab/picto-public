@@ -26,8 +26,8 @@
  *	a StoredSessionData SessionData class, we have even been able to simplify our SQL file interface by hiding
  *	it all inside that class and writing to SQL by simply copying data from a CachedSessionData object
  *	to a StoredSessionData object.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SessionData
 {

@@ -18,8 +18,8 @@ class QDoubleSpinBox;
  *	playback speed is multiplied. Therefore, a playback speed of 3 means that playback
  *	will occur at 3 times the normal rate. A value of .5 means that playback will occur
  *	at half the normal rate.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SpeedWidget : public QFrame
 {

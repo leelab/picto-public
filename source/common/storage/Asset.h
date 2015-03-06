@@ -17,8 +17,8 @@ namespace Picto {
  *	table if need be, meaning that it has to have a unique ID.  The Asset class adds
  *	all of this functionality and more.  It is of key importance in the experimental
  *	design system and to Picto as a whole.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Asset : public QObject, public Serializable

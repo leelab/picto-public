@@ -33,8 +33,8 @@ namespace Picto {
  *	class would encapsulate all of the DataState objects to the extent that they wouldn't need to be accessed from
  *	the outside world.  This would be a good thing to work on when someone has some free time.
  *	\sa SessionLoader, SessionPlayer
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionState : public QObject

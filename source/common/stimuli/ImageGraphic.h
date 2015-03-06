@@ -21,8 +21,8 @@ namespace Picto {
  *	image file that will be displayed.  This indirection allows us to switch the ImageFile associated with an ImageGraphic
  *	during the course of an experiment.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS ImageGraphic : public VisualElement
 {

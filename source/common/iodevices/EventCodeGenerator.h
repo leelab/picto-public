@@ -24,8 +24,8 @@ namespace Picto {
  *	The abstraction of using an EventCodeGenerator base class
  *	is neccessasry, since there may be different generators for different
  *	neural devices, as well as for different hardware setups.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

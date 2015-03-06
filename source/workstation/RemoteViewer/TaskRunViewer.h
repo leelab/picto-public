@@ -18,8 +18,8 @@
  *	data through input pointers and changing run data directly in the objects that those pointers point to.  When the
  *	taskRunDataChanged() signal is emitted, the outside world knows that something changed in the Task Run that it 
  *	indicates and that data can be sent to the Picto Server.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class TaskRunViewer : public QWidget
 {

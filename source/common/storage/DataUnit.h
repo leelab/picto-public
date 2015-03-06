@@ -16,8 +16,8 @@ namespace Picto {
  *	are unique over a single session.  Since many behavioral data values are marked by the frame in which they occured, the Data ID
  *	is useful to determine the order in which Behavioral Data Values were generated.  The uniqueness of the ID also lets us assure
  *	that data values that might be sent more than once due to network problems are still only stored once in the session database.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API DataUnit : public Serializable

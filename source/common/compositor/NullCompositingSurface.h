@@ -16,8 +16,8 @@ namespace Picto {
  *	\note Joey: When actually creating the Analysis system, we didn't actually use this,
  *	but it might be interesting to see if using this type of method could speed 
  *	things up when using RunToEnd in the PlaybackViewer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class NullCompositingSurface
 {

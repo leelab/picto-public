@@ -28,8 +28,8 @@ namespace Picto {
  * Convenience functions are also available for creating CompositingSurface and MixingSample objects directly rather than
  * going through these VisualTarget and AuralTarget classes.
  * Commonly used operations, including showing a splash screen or status information are also available.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API RenderingTarget

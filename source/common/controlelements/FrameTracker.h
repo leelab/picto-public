@@ -21,8 +21,8 @@ namespace TimerUnits
 
 /*! \brief Stores frame timing information for use by FrameResolutionTimer objects.
  *	The FrameTracker object used in a particular experiment is created by the FrameTimerFactory.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013	
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015	
  */
 struct FrameTracker
 {

@@ -14,8 +14,8 @@
  *	Apart from that, objects of this class are used entirely for their buildEvent() 
  *	function which just creates NeuralDataUnit objects one after the other when SimpleEventSource
  *	says to do so.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SimpleSpikeSource : public SimpleEventSource
 {

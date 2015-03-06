@@ -33,8 +33,8 @@ QT_END_NAMESPACE
  *
  *	It would probably be cleaner to separate out the logical state machine code from the simple UI code
  *	and that would be a good refactoring project for someone who has the time to do so.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ProxyMainWindow : public QMainWindow, public ComponentInterface
 {

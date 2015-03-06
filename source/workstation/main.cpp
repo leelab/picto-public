@@ -16,8 +16,8 @@
  *	TestViewer the design is what is being run and tested.  In the RemoteViewer the design is what is being sent over to a Director in order to run
  *	an experimental Session.  In the ReplayViewer, the design defines the Analyses that can be imported into the currently loaded Session files
  *	in order to gather data that may not have been considered when a Session was first run.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #include <QApplication>
 #include <QLabel>
@@ -42,8 +42,8 @@
  *	level window (so that it can correctly close the window during restart). Next the top level MainWindow is
  *	displayed and the application is executed by calling QApplication::exec(), which only returns when
  *	the MainWindow is closed.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 int main(int argc, char *argv[])
 {

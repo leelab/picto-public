@@ -6,8 +6,8 @@
 #include "../network/DirectorStatusManager.h"
 
 /*! \brief Extends NewSessionResponseHandler to setup the Picto::Engine::PictoEngine for the new Session.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorNewSessionResponseHandler : public Picto::NewSessionResponseHandler
 {

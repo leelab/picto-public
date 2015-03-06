@@ -12,8 +12,8 @@ namespace Picto {
  *	\details This stores the default duration of a reward on the stored channel.  This is the quantity supplied when the reward button
  *	is pressed on the Pictobox or the reward button on the workstation is pressed.  These systems are synchronized by using this DataType
  *	such that they always include the same reward quantity.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardUnit : public DataUnit

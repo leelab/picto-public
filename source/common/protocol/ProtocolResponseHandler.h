@@ -21,8 +21,8 @@ namespace Picto {
  *	when a ProtocolResponse arrives.  acceptResponse() takes care of updating the ComponentStatusManager's status
  *	as a function of the incoming ProtocolResponse.  The acceptResponse() function is the one that calls 
  *	processResponse().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolResponseHandler

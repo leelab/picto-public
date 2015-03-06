@@ -21,8 +21,8 @@ namespace Picto {
  *	
  *	In summary, this class should be removed, but first we will have to set Picto up to use the ImageGraphic for displaying the BlockDesign splash
  *	screen.  This was never a high proirity so it hasn't happened yet.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS PictureGraphic : public VisualElement
 {

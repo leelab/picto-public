@@ -22,8 +22,8 @@ QT_END_NAMESPACE
  *
  *	This widget's job is essentially just creating PropertyListWidgets which take care of actually creating property widgets and displaying them 
  *	and then placing each of those widget within a group layout.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PropertyGroupWidget : public QWidget
 {

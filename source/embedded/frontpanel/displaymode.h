@@ -17,8 +17,8 @@ using namespace PanelInfo;
  * an activityTimeout of 30,000ms at which point, if no user input has occured, the
  * FrontPanel will return control to a read-only Status mode that displays Front Panel 
  * name, reward, and flush timing information.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class DisplayMode : public QObject
 {

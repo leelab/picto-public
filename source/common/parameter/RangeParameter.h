@@ -19,8 +19,8 @@ namespace Picto {
  *	and RemoteViewer doesn't appear to be limiting values to be within the Min-Max range.  We would
  *	have expected this to work automatically when fixValues() brings the value back to the allowed
  *	range, but there appears to be some issue. This shoul be looked into.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

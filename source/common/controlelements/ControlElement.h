@@ -21,8 +21,8 @@ namespace Picto {
  *	the isDone() function is called every frame until it returns true.  Then the
  *	getResult() function is called to determine the result of the ControlElement's
  *	execution(e.g. "Broke fixation", "Selected target", etc)
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

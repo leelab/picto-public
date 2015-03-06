@@ -264,8 +264,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores local field data for transmission over a network. </p>
 <p>Each <a class="el" href="class_picto_1_1_l_f_p_data_unit_package.html" title="Stores local field data for transmission over a network. ">LFPDataUnitPackage</a> holds a list of LFP data that was read starting at a stored timestamp with a stored sample period for a particular stored channel. The class also includes functions for setting "aligned" timestamps and sample periods so that the function can include lfp timing that is aligned to the behavioral timestream. The correlation coefficient for the least squares fitting of the timestamp alignment can be stored here as well. </p><dl class="section note"><dt>Note</dt><dd>Originally, we wanted to right LFP data on a row by row basis with one row for each timestamp and columns for each channel, but with the current Sqlite database this simply takes way too long. We ran a benchmark test and found that each character stored in a new row takes an additional ~20us, whereas each character stored in the same row takes an additional ~20ns. Big difference. For this reason, we are storing lfp data in ~500ms chunks indexed by timestamp and channel. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_l_f_p_data_unit_package_8h_source.html#l00036">36</a> of file <a class="el" href="_l_f_p_data_unit_package_8h_source.html">LFPDataUnitPackage.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>

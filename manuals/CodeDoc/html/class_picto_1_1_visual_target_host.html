@@ -147,8 +147,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>This object needs some explanation. If we want to run an engine and place a <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> within another widget, the obvious approach would be: QSharedPointer&lt;VisualTarget&gt; visualTarget(new VisualTarget()); .... QSharedPointer&lt;RenderingTarget&gt; renderingTarget(new RenderingTarget(visualTarget, auralTarget)); ... mainLayout-&gt;addWidget(visualTarget.data()); However, this approach will blow up during destruction. The visual target will be deleted twice. Once when the rendering target is deleted (because it holds the only strong reference), and once when the main window is deleted (because the visual target was reparented when it was added to the layout). Needless to say, the second call to delete results in a memory exception.</p>
 <p>This object works around this problem by holding a strong reference to the pointer, and drawing the Visual Target directly (without reparenting it).</p>
 <p>NOTE: As a result of this situation, I have come to the conclusion that it is generally a bad idea to create QSharedPointer&lt;QWidget&gt;, because both QWidgets and QSharedPointers have lots of automatic calls to delete that occur behind the scenes. </p><dl class="section note"><dt>Note</dt><dd>That was the end of the original notes </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_visual_target_host_8h_source.html#l00056">56</a> of file <a class="el" href="_visual_target_host_8h_source.html">VisualTargetHost.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>

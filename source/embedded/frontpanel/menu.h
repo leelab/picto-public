@@ -18,8 +18,8 @@
  * It also handles things like a set DisplayMode timeout after which if the user hasn't done anything, operation
  * returns to the default StatusMode in addition to other minor housekeeping activities.
  * If you are trying to understand the operation of the FrontPanel Application.  This is the place to start.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class Menu : public QObject
 {
@@ -36,7 +36,6 @@ public slots:
 	void aboutToQuit();
 
 private slots:
-	void checkConnections();
 	void returnToStatus();
 	//void drawFlush();  //Since this is display "animated" it needs to be a slot
 
@@ -57,10 +56,8 @@ private:
 	FrontPanelInfo *panelInfo;
 	QSharedPointer<DirectorInterface> directorIf_;
 
-	QTimer *connectionTimer;
 	QTimer *activityTimer;
 	bool wasConnected_;
-	/*QTimer *flushingTimer;*/
 
 	QMap<PanelInfo::DisplayModeType,QSharedPointer<DisplayMode>> panelModes_;
 	QSharedPointer<DisplayMode> currMode_;	

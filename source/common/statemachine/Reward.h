@@ -23,8 +23,8 @@ namespace Picto {
  *	handle the display during the course of that reward process.  This is useful for creating animations
  *	representing reward delivery like reward tokens that slowly disappear during the course of the reward
  *	supply.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Reward : public StateMachineElement

@@ -22,8 +22,8 @@ namespace Picto {
  *	the correct times to enter into the SessionPlayer accordingly.  It 
  *	implements StateUpdater so that it can be used with a SlaveExperimentDriver
  *	to drive a slave's experimental state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PlaybackStateUpdater : public StateUpdater
 {

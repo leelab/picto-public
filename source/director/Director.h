@@ -19,8 +19,8 @@
  *	a CommandChannel that work together to run Experiments that come in from the PictoServer.  When running on a Pictobox it 
  *	also starts an instance of the EmbeddedFrontPanel process which functions as a simple control panel for things like 
  *	supplying rewards and displaying feedback to the Experiment operator.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Director : public QObject, public ComponentInterface
 {

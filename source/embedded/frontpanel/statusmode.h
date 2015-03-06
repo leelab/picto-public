@@ -10,8 +10,8 @@
  * \details Displayed information includes Pictobox Name, ServerDisconnected/ServerConnected/Stopped/Running
  * status symbol, Reward duration, Flush duration, Default Reward Controller Number, PictoBox IP address.  
  * This data takes up three lines which the user navigates by turning the input knob.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class StatusMode : public DisplayMode
 {

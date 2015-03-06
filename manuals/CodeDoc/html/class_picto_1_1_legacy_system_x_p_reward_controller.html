@@ -198,8 +198,8 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 <p>In order to support precise timing using a reward clock, we had to change things a little bit from the Orion system here. Whereas Orion is connected up such that the PCI-6503 board used for event delivery is also used for reward delivery, in Picto, in order to be able to use the clock timing we needed to use the other Orion card, the PCI-MIO-16XE-50. For this reason, when running Picto on a legacy Orion box we need to open up the breakout box and connect the reward controller BNC to the Ao0 port (pin 22).</p>
 <p>For more detail on the precise reward timing system, see <a class="el" href="class_picto_1_1_legacy_system_x_p_reward_controller.html#a144f530dcb20520deb10666510614e14" title="Implements RewardController::startReward() to output a correctly timed reward signal on the output li...">startReward()</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>The Legacy System requires active high logic for reward delivery </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_legacy_system_x_p_reward_controller_8h_source.html#l00025">25</a> of file <a class="el" href="_legacy_system_x_p_reward_controller_8h_source.html">LegacySystemXPRewardController.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

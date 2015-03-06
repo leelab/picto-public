@@ -115,8 +115,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> object managing the actual incoming connections and <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> generation for the PictoServer. </p>
 <p>The server handles incoming and outgoing network connections. Luckily for us, QT already has a server class, so we just extended it. It should be noted that there are two types of connections that are being dealt with here. The first is a UDP broadcast. When a UDP broadcast is observed, the server object handles it directly. These are used only for components to DISCOVER the server IP Address and Port. They are handled by responding with an ANNOUNCE UDP message that contains that information. The other kind of connection is a TCP connection. When a TCP connection arrives, a new thread is spun up to handle incoming commands on that thread.</p>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="server_8h_source.html#l00032">32</a> of file <a class="el" href="server_8h_source.html">server.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

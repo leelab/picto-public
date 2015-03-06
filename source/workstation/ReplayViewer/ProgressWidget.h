@@ -22,8 +22,8 @@ class HighlightData;
  *	to appear along the progress bar at particular positions.  It is useful to have these separate means
  *	of displaying a progress value along the same bar as the slider.  The slider can represent a current
  *	selected time and highlights can represent the times that are loaded (again, like youtube).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ProgressWidget : public QFrame
 {

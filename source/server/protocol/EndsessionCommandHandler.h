@@ -11,8 +11,8 @@
  *	PictoWorkstation sends these commands when it wants to terminate a session.
  *	The command results in an ENDSESSION directive being included in the next reply 
  *	to COMPONENTUPDATE commands from every Component (Director or Proxy).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct EndsessionCommandHandler : Picto::ProtocolCommandHandler
 {

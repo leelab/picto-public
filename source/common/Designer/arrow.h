@@ -69,8 +69,8 @@ QT_END_NAMESPACE
  *	Much of the code for the Arrow is lifted from an example in the Qt toolkit.  For this reason there
  *	is some functionality that we don't use here.  The file has been significantly modified for our
  *	purposes.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Arrow : public QGraphicsLineItem
 {

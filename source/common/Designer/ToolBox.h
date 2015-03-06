@@ -26,8 +26,8 @@ QT_END_NAMESPACE
  *
  *	Most of the more complicated work needed by the Toolbox is happening in the ToolGroup and its sub-classes.  The 
  *	Toolbox itself pretty much just collects ToolGroups, and lays them out in a Toolbox framework.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Toolbox : public QToolBox
 {

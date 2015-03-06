@@ -22,8 +22,8 @@ namespace Picto {
  *	the Size of the Window in which text appears.  It is important to remember that if the Size is too small, text
  *	isn't going to shrink to fit it, it will just run off the end and be invisible.  For this reason, it is important
  *	to always be sure that the TextGraphic has a large enough Size to handle any text that we expect to be written.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS TextGraphic : public VisualElement
 {

@@ -6,8 +6,8 @@
 
 /*! \brief Implements ResumeResponseHandler to resume running the current Experiment 
  *	from a paused state when a resume request is received over the network.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorResumeResponseHandler : public Picto::ResumeResponseHandler
 {

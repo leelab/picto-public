@@ -5,8 +5,8 @@
 #include "../network/DirectorStatusManager.h"
 
 /*! \brief Implements LoadExpResponseHandler to load the Experiment in directive's received over the network.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorLoadExpResponseHandler : public Picto::LoadExpResponseHandler
 {

@@ -18,8 +18,8 @@ namespace Picto {
  *	to keep "get" operations efficient.  Internal code synchronizes the Property and C++ map whenever 
  *	a "set" operation occurs both within a single object and over the network (ie. Slave object updated 
  *	from changes in an object from the Master Expeirment).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API VariableMap : public Variable

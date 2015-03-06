@@ -9,10 +9,9 @@
  * \details This used to be a more important class than it is now.  The only
  * thing that it does at this point is set up the socket used to send commands
  * from the Front Panel application to the Director application, and set that
- * socket into the FrontPanelInfo object.  It should probably be simplified, at 
- * some point.  In particular, the eventChannel is no longer used.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * socket into the FrontPanelInfo object.
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class EngineConnections : public QObject
 {
@@ -23,7 +22,6 @@ public:
 
 private slots:
 	void setupCommandConnection();
-	void setupEventConnection();
 signals:
 	/*! \brief No Longer Used*/
 	void newEventRead();
@@ -31,9 +29,6 @@ signals:
 private:
 	FrontPanelInfo *panelInfo;
 	QTcpServer *commandChannel;
-	QTcpServer *eventChannel;
-
-
 };
 
 

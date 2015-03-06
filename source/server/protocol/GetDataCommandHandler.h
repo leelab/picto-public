@@ -14,8 +14,8 @@
  *	FORMAT
  *		GETDATA datastoretype:index(e.g. CurrentState:3.245, LatestNeural:23341, etc.) PICTO.1/0
  *		Session-ID:{44dcb670-4bea-11df-9879-0800200c9a66}
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct GetDataCommandHandler : Picto::ProtocolCommandHandler
 {

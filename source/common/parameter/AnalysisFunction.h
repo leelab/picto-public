@@ -11,8 +11,8 @@ namespace Picto {
 /*! \brief A ScriptFunction for Analyses.
  *	\details Works exactly like the ScriptFunction with exception that it is part of an Analysis.
  *	\sa ScriptFunction
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisFunction : public ScriptFunction, public AssociateElement

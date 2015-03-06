@@ -24,8 +24,8 @@ namespace Picto {
  *
  *	\note Much of the work of discovering the server has been moved into the CommandChannel and happens automatically.
  *	This still appears to be used by some sections of the Picto code though.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

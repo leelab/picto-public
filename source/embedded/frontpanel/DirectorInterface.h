@@ -34,8 +34,8 @@ enum DirectorStatus {
  * as a slave and simply responding to these commands.  Set commands return true if the value was 
  * succesfully set and false otherwise.  getCommands return the requested value or an invalid value
  * (typically -1) if communication to the director failed.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class DirectorInterface : public QObject
 {

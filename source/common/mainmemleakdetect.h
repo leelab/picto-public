@@ -7,8 +7,8 @@
  *	or else this will effectively be before some predefined headers
  *	\details See http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS for more information.
  *	\sa memleakdetect.h
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined (DETECTMEMLEAKS) && defined(WIN32) && defined(_DEBUG)
 	#define _CRTDBG_MAP_ALLOC

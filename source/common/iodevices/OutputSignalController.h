@@ -15,8 +15,8 @@ namespace Picto {
  *	when not disabled.
  *  This class should be inherited to handle interfaces to varying types of D/A cards and/or virtual outputs.
  *	\sa OutputSignalWidget
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API OutputSignalController : public QObject

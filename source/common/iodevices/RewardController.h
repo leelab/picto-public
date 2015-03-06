@@ -35,8 +35,8 @@ namespace Picto {
  *	that actually uses them (e.g. Director).
  *
  *	\note reward controllers are numbered from 1 to n
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardController : public QObject

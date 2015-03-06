@@ -11,8 +11,8 @@
  *	is set in the constructor.  Apart from that, objects of this class are used
  *	entirely for their buildEvent() function which just creates AlignmentDataUnit objects
  *	one after the other with increasing Alignment codes that wrap to 1 at 128.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SimpleMarkSource : public SimpleEventSource
 {

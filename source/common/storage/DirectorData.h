@@ -11,8 +11,8 @@ namespace Picto {
 /*!	\brief Stores a list of RewardUnits including the Default reward quantities for all channels on this director.
  *	\details This data is used to synchronize the Workstation with the Director so that the same reward quantities set 
  *	on the Director itself (through the Pictobox) appear in the workstation as well.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API DirectorData : public DataUnit

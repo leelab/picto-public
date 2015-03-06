@@ -22,8 +22,8 @@ namespace Picto {
  *	- Position: The position of the top-left corner of the box containing the line (in screen coordinates)
  *	- Point 1 - N: The points (in order) that will be conencted to form the line graphic.
  *	- Color: The color of the lines
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS LineGraphic : public VisualElement
 {

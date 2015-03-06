@@ -12,8 +12,8 @@ namespace Picto {
  *	from within the Picto application.  Different AnalysisOutput classes will be associated with different 
  *	AnalysisWidgets, for example, an AnalysisFileOutput will be associated with an AnalysisFileOutputWidget, whereas
  *	an AnalysisRasterOutput might still save its data to file, but be viewable using an AnalysisRasterPlotWidget.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AnalysisOutputWidget : public QWidget

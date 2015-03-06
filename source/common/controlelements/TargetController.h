@@ -18,8 +18,8 @@ namespace Picto {
  *	for transitions, fixing this name would break many many things.  I'm not going to do it.  It should be possible
  *	to fix this by using the Automatic upgrade system (see Asset::upgradeVersion()) and creating some new system
  *	for upgrading old Session databases as well.  If you have a lot of time on your hands, go for it.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

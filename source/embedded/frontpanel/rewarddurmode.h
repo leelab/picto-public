@@ -7,8 +7,8 @@
 
 /*!	\brief A NumberEditMode including functionality for the user to change the the duration
  * of the default PictoBox reward.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class RewardDurMode : public NumberEditMode
 {

@@ -28,8 +28,8 @@ namespace Picto {
  *	will run into problems since our page is defined in number of lines, not word count.  We
  *	may want to look more closely at this at some point.
  *	\sa AnalysisFileOutput
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AnalysisFileOutputWidget : public AnalysisOutputWidget
 {

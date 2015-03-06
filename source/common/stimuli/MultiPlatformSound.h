@@ -23,8 +23,8 @@ namespace Picto {
  *	with an event loop, since that would be a really good idea in any case for code complexity
  *	and many other reasons, and then just use one kind of PreloadedSound.  I don't have time 
  *	for that, but am happy to leave it to you :).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API MultiplatformSound : public PreloadedSound

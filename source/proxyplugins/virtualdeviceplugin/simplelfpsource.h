@@ -11,8 +11,8 @@
  *	along with their sample rates, and the channel represented by this SimpleLfpSource
  *	are set in the constructor.  Apart from that, objects of this class are used
  *	entirely for their buildEvent() function.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SimpleLFPSource : public SimpleEventSource
 {

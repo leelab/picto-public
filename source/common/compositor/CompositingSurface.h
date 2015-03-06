@@ -14,8 +14,8 @@ namespace Picto {
  *	that is drawn in a language that the VisualTarget understands, or looked at another way, a
  *	compositing surface is a translater, translating from the language of the QImage to the
  *	language of the VisualTarget.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PICTOLIB_CLASS CompositingSurface
 {

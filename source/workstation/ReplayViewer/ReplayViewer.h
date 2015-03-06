@@ -43,8 +43,8 @@ class QLCDNumber;
  *	path there.  This is particularly useful when analyzing a batch of Runs, in which case all Runs' 
  *	outputs are saved to the same parent directory.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ReplayViewer : public Viewer
 {

@@ -33,8 +33,8 @@ namespace Picto {
  *	Data saved by AnalysisOutput objects is stored underneath the "analysisoutput" directory in the Picto run
  *	directory.  Each time Picto starts, this directory is erased meaning that storage there is temporary.  AnalysisOutputWidget
  *	objects take care of copying data from that temporary directory to a permanent location on the operator's request.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisOutput : public AnalysisVariable

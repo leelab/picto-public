@@ -30,8 +30,8 @@ namespace PanelInfo
  * in other locations.  In the meantime, it's still here.  Note that the eventSocket is no longer used.  The
  * DirectorInterface is the chief user of the commandSocket and rewardController data stored here.
  * \sa DirectorInterface
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class FrontPanelInfo
 {

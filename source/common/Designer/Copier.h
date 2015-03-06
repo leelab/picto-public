@@ -14,8 +14,8 @@ using namespace Picto;
  *	paste, text from the clipboard is read, checked for Picto import compatibility and if compatible
  *	imported.  In terms of its actual functionality, this class is not much more than a wrapper for
  *	the AssetExportImporter that adds clipboard functionality.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Copier : public QObject
 {

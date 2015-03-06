@@ -46,8 +46,8 @@ namespace Picto {
  *	D3D Visual Target on the other hand renders using the graphics card at a much higher speed and with precisely
  *	trackable timing.  Each of these implements the VisualTarget for a different type of application, but the 
  *	Experimental presentation system needs only worry about the VisualTarget base class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

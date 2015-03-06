@@ -12,8 +12,8 @@
  *	\note Objects that want functions to run in this thread need to use QObject::moveToThread() because if
  *	they don'y Qt will simply queue up calls to init() and update() and run them in the event queue of
  *	the thread that the object belongs to.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PlaybackThread : public QThread
 {

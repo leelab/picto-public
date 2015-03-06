@@ -32,8 +32,8 @@ namespace Picto {
  *	voltage on an individual pins of the port.  The widget is controlled by the VirtualOutputSignalController
  *	passed into the constructor.
  *	\sa OutputSignalController, VirtualOutputSignalController
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

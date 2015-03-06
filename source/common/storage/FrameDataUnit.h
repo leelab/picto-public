@@ -15,8 +15,8 @@ namespace Picto {
  *	\note In this and some other DataUnits, we store a timestamp as a string to be sure that no one
  *	reduces the precision of the Timestamp anywhere in transit (as might happen if some other class
  *	converted a timestamp double to a string with unknown precision).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FrameDataUnit : public DataUnit

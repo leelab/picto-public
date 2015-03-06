@@ -13,8 +13,8 @@ namespace Picto {
  *	is undefined.  We might want to check for this at some point in validateObject.
  *	More than one DigitalOutput can be used with the same port so long as eash one 
  *	handles a different pin.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS DigitalOutput : public OutputSignal
 {

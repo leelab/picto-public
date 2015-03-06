@@ -11,8 +11,8 @@ namespace Picto {
  *	a string value which is not used by TRANS_ACTIVATED events but holds a Property's value/initValue for
  *	PROP_VAL_CHANGE and INIT_PROP_VAL_CHANGE events.
  *	\sa SlaveEventQueue, SlaveExperimentDriver
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 class SlaveEvent

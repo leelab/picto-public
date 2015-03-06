@@ -18,8 +18,8 @@ namespace Picto {
  *	- Name - Overriden as an ObsoleteAsset to remove the Name Property from this object since it must always be "Experiment"
  *	- UIEnabled	- Overriden to be "true" by default so that eye calibration Properties will appear in the Property Frame by default.
  *	\sa xOffset, yOffset, xGain, yGain, xySignalShear, setName()
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 Experiment::Experiment()
 :

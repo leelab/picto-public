@@ -23,8 +23,8 @@ namespace Picto {
  *	reference the same AudioFileParameter and are in scope at the same time.  If they play the audio file at different
  *	times, both sounds will be mixed through the speakers with their own separate timing as if they were two entirely different sound
  *	objects.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AudioFileParameter : public FileParameter

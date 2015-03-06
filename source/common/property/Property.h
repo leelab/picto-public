@@ -41,8 +41,8 @@ class PropertyContainer;
  *	be settable by the Operator even while the StateMachine is at a level where they are 
  *	already in scope.  For these cases, use enbleInitRunValueSync() which causes 
  *	these values to be copied to one another every time they are written.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Property : public Asset

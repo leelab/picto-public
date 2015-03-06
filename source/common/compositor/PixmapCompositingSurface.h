@@ -16,8 +16,8 @@ namespace Picto {
  *	software bitmap).  The PixmapCompositingSurface would probably not be used
  *	in PictoDirector, but it is multiplatform compatible and therefore used in 
  *	the PictoWorkstation so that the user can see what is being displayed by a Director instance.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PixmapCompositingSurface : public CompositingSurface
 {

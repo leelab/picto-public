@@ -7,8 +7,8 @@
  *	\details This is a very simple object.  Errors are added to the
  *	list with addError(), they are accessed with getAllErrors() and 
  *	the list is cleared with clear().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ErrorList : public QWidget
 {

@@ -10,8 +10,8 @@ namespace Picto {
 /*!	\brief A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by default.
  *	\details ControlTarget elements are meant to be used with TargetController and ChoiceController elements to define
  *	fixation regions.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

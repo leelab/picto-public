@@ -30,8 +30,8 @@
  *	\note This object is meant to be used with SerialSessionData.  By copying data from this object
  *	to a SerialSessionData object, we can very easily serialize all data needed by a Workstaion 
  *	whenever requests come in for the latest Experimental state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class CurrentSessionData : public SessionData
 {

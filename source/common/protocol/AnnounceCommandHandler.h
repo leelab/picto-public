@@ -13,8 +13,8 @@ namespace Picto {
  *	classes.
  *	\details Using this AnnounceCommandHandler to handle the ANNOUNCE commands was actually a pretty good idea though so it might
  *	be worthwhile at some point to try to clean things up so that ANNOUNCE handling isn't hard coded into anything.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PICTOLIB_CLASS AnnounceCommandHandler : ProtocolCommandHandler
 {

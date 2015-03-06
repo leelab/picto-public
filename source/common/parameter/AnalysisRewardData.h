@@ -11,8 +11,8 @@ namespace Picto {
 /*!	\brief An AnalysisDataSource for gathering reward timing data.
  *	\details This object can be used to query reward onset times as well as their durations.
  *	\note This class uses a RewardReader as its main data source.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisRewardData : public AnalysisDataSource

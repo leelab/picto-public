@@ -25,8 +25,8 @@ QT_END_NAMESPACE
  *	
  *	To prepare yourself for all of the complicated patchwork of code necessary to get the QtPropertyBrowser to work with Picto, try taking a deep breath and
  *	reading up at: http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PropertyListWidget : public QWidget
 {

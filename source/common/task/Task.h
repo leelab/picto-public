@@ -25,8 +25,8 @@ namespace Picto {
  *	for the Task Run and starts the underlying StateMachine that handles its actual experimental
  *	control logic.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Task : public ScriptableContainer

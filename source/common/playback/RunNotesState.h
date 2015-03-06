@@ -15,8 +15,8 @@ namespace Picto {
  *	beyond what was described above, so we will not be adding much function level documentation
  *	for this class.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class RunNotesState : public RunNotesReader
 {

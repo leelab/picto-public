@@ -23,8 +23,8 @@ namespace Picto {
  * Then, every frame present() is called.  In present(), all MixingSamples that were mixed in using mix() are
  * either started or allowed to continue playing over the computer's speakers and any mixing samples that
  * were mixed in last frame that were not mixed in this frame are set to stop.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_CLASS PCMAuralTarget : public AuralTarget

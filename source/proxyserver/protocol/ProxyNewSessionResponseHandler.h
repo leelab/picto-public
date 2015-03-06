@@ -8,8 +8,8 @@
 /*! \brief Extends NewSessionResponseHandler to gather Neural data and send it to the Picto Server until
  *	the Session ends or the Proxy application is closed.
  *	\details This class really only extends the processResponse() function.  See that functions documentation for more details.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ProxyNewSessionResponseHandler : public Picto::NewSessionResponseHandler
 {

@@ -1,7 +1,7 @@
 /*! \file globals.h
  * \brief Initialization calls and global variables exposed by the %Picto library
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #ifndef _GLOBALS_H_

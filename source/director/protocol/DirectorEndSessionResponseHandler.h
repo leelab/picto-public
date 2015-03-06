@@ -7,8 +7,8 @@
 
 /*! \brief Extends EndSessionResponseHandler to perform various "finish up" tasks in the 
  *	Picto::Engine::PictoEngine.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorEndSessionResponseHandler : public Picto::EndSessionResponseHandler
 {

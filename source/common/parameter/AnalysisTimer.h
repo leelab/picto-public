@@ -14,8 +14,8 @@ namespace Picto {
  *	and its value can be polled using the value property.  In many cases an AnalysisFrameData
  *	object could be used for the jobs that this timer does, but in some cases this simple
  *	single purposed object is more convenient.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisTimer : public AnalysisDataSource

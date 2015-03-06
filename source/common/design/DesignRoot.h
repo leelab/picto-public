@@ -18,8 +18,8 @@ struct DesignMessage
  *	viewers in Picto and provides easy to access to the experimental design and analyses as well as 
  *	undo/redo operations and serialization/deserialization methods that include automatic upgrading.
  *	It is essentially the user-friendly wrapper for the experimental design.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API DesignRoot : public QObject

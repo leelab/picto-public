@@ -6,8 +6,8 @@
 
 /*! \brief Implements StopResponseHandler to stop the current Task run when a stop request is
  *	received over the network.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorStopResponseHandler : public Picto::StopResponseHandler
 {

@@ -1,7 +1,7 @@
 /*! \file namedefs.h
  * \brief Names used for %Picto applications and hardware
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #ifndef _NAMEDEFS_H_
@@ -13,8 +13,8 @@
 namespace Picto {
 
 /*! \brief Exposes the names used for %Picto applications and hardware
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class TranslatedNames
 {

@@ -9,8 +9,8 @@
 /*! \brief A simple button widget containing an up arrow that turns red if the current Window Asset's ancestors contain the current search query.
  *	\details This widget is used by the Designer to switch the Window Asset to the parent of the current Window Asset.
  *	\sa EditorState::getWindowAsset(), EditorState::setWindowAsset(), EditorState::setWindowAssetToParent()
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class LevelUpButton : public QToolButton
 {

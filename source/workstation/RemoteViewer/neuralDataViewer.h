@@ -43,8 +43,8 @@ class QLineEdit;
  *	a function of our buffering a half second of LFP data on the Proxy before sending it to the Server.  The lag is a function
  *	of the Neural Data Acquisition system being used since some only make their data available with a noticeable lag.  In 
  *	particular, we have noticed that the TDT system seems to have a lag of a few seconds.  The Plexon system has a lower lag.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class NeuralDataViewer : public QScrollArea
 {

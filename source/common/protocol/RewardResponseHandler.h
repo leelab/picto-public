@@ -11,8 +11,8 @@ namespace Picto {
  *	
  *	The processResponse() function implemented by this class is empty.  Extend this class
  *	to add logic that is triggered by the arrival of a new ProtocolRespose.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	struct PICTOLIB_API RewardResponseHandler : public ProtocolResponseHandler

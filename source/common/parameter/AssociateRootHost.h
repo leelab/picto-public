@@ -72,8 +72,8 @@ namespace Picto {
  *	\note The reason that we didn't put the code that goes into the private area of the AssociateRootHost's .h file in a \#define is that the QT preprocessor
  *	didn't properly understand it when we did this and it led to runtime errors.
  *	\sa AssociateRoot, AssociateElement, Analysis, UIData, Experiment
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AssociateRootHost

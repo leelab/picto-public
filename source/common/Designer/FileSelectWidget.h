@@ -14,8 +14,8 @@
  *	file path.  When we use this in Picto, the Design Element typically checks to see when the File Path Property changes, and when it does,
  *	it updates the contents of separate Data Property that actually stores the file contents.
  *	\sa FileParameter
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class FileSelectWidget : public QWidget
 {

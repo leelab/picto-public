@@ -22,8 +22,8 @@ namespace Picto {
  *	default data in the value input.
  *	\note Like the TextGraphic, the size of this graphic determines the size of the graphic window in which text can be shown.  If it is too small some data
  *	will not be visible.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS OperatorInfoGraphic : public VisualElement
 {

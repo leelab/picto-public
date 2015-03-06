@@ -14,8 +14,8 @@ namespace Picto {
  *	set by the operator during the run.  This data includes the run's name (which the operator may
  *	or may not have changed from its default value), notes about the run that the operator added, 
  *	and a boolean flag indicating whether the operator considered this run to be worth saving.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API TaskRunDataUnit : public DataUnit

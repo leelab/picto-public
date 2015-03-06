@@ -8,8 +8,8 @@ namespace Picto {
  *	\details This is useful for storing a list of options that the designer can select.  The list of possible
  *	enum values is set by adding a Property Attribute with the name "enumNames" and a QVariant of 
  *	a QStringList containing enum names for the value.  This is done using Property::setAttribute().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API EnumProperty : public Property

@@ -5,8 +5,8 @@
 #include "../network/DirectorStatusManager.h"
 
 /*! \brief Extends ErrorResponseHandler to display received error messages to the display.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorErrorResponseHandler : public Picto::ErrorResponseHandler
 {

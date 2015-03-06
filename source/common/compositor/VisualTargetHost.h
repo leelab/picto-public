@@ -46,8 +46,8 @@ namespace Picto {
  *	QSharedPointers have lots of automatic calls to delete that occur behind the 
  *	scenes.
  *	\note That was the end of the original notes
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

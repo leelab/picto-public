@@ -18,8 +18,8 @@ namespace Picto {
  *	simply the name of the command (e.g. GET).  The processCommand function is where
  *	all of the logic is.  The processCommand function should return a response, and
  *	cause any necessary internal state changes.  
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolCommandHandler : public QObject

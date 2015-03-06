@@ -13,8 +13,8 @@
  *	to be included the next time that Director and Proxy instances send COMPONENTUPDATE
  *	commands and causes the Session design XML to be sent to the Director for 
  *	the experimental run.		
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct StartsessionCommandHandler : Picto::ProtocolCommandHandler
 {

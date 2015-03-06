@@ -18,8 +18,8 @@ QT_END_NAMESPACE
  *	\note This widget is used by the ScriptWidget which handles search commands and some
  *	other functionality.
  *	\sa ScriptWidget
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ScriptTextEdit : public SearchableTextEdit
 {

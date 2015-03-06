@@ -25,8 +25,8 @@
  *	Alternatively, convenience functions convertToBehavioralTimebase() and 
  *	convertSamplePeriodToBehavioralTimebase() are provided as are their counterparts for
  *	converting the timestamps in the opposite direction.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AlignmentTool
 {

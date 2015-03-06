@@ -39,8 +39,8 @@ class Result;
  *	If two Scriptable elements have the same name and are both in scope, the scriptable with the longer path will be the one that
  *	is accessed by using its name.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

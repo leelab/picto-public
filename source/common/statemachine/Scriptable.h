@@ -27,8 +27,8 @@ namespace Picto {
  *	In addition to UIEnabled, this class inherits QScriptable.  This gives it the capability to access the Qt Script Environment
  *	that it is invoked in.  Among other things, this is useful for triggering custom runtime errors which is done by some classes that
  *	inherit Scriptable.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Scriptable : public UIEnabled, protected QScriptable

@@ -17,8 +17,8 @@ namespace Picto {
  *	built-in and importable analyses in one widget became apparent and we have
  *	now moved to using the AnalysisSelectorWidget.
  *	\sa AnalysisSelectorWidget
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AnalysisOptionWidget : public QWidget

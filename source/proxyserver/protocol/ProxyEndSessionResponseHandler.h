@@ -7,8 +7,8 @@
 /*! \brief Extends EndSessionResponseHandler but does not actually add any functionality.
  *
  *	\details Maybe this will be a handy container to have someday though :).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ProxyEndSessionResponseHandler : public Picto::EndSessionResponseHandler
 {

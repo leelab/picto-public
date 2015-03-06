@@ -20,8 +20,8 @@ namespace Picto {
  *	the same size regardless of the current viewer zoom state.
  *	\note It might be a good idea to add a "tail" to the position signal at some point since this has proven
  *	somewhat useful in Orion.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS CursorGraphic : public VisualElement
 {

@@ -130,8 +130,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A thread used to handle TCP connections. </p>
-<p>When a TCp connection is created by the server, a new <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> is spun up to handle the incoming data. The thread reads the incoming data as if it is following HTTP protocol. It then finds the appropriate command handler (using the protocol from <a class="el" href="struct_server_protocols.html" title="A simple container object used to store all fo the Protocol objects used by the Server. ">ServerProtocols</a> and the command name) and calls that command handler for a response which is then returned to the sender. </p><dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<p>When a TCp connection is created by the server, a new <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> is spun up to handle the incoming data. The thread reads the incoming data as if it is following HTTP protocol. It then finds the appropriate command handler (using the protocol from <a class="el" href="struct_server_protocols.html" title="A simple container object used to store all fo the Protocol objects used by the Server. ">ServerProtocols</a> and the command name) and calls that command handler for a response which is then returned to the sender. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="serverthread_8h_source.html#l00029">29</a> of file <a class="el" href="serverthread_8h_source.html">serverthread.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

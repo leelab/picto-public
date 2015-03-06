@@ -25,8 +25,8 @@ namespace Picto {
  *
  *	Regardless of whether pausing occured due to the pause button being pressed or "ForcePause" being true, pressing the play button causes
  *	playback to resume.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PausePoint : public OutputElementContainer

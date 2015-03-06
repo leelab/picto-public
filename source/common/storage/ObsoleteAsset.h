@@ -22,8 +22,8 @@ namespace Picto {
  *	Also, if the XML of the ObsoleteAsset contains other XML tags, each of those will be deserialized into its own child ObsoleteAsset which 
  *	is accessible from getObsoleteChildAsset().
  * 
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ObsoleteAsset : public Asset, OldVersionAsset

@@ -10,8 +10,8 @@ namespace Picto {
 /*!	\brief An OutputSignal that handles the value of multiple pins over an entire port.
  *	\details Output values are set as an integer.  The integer is intepreted
  *	as a binary value and written to the output port accordingly.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS BinaryDataOutput : public OutputSignal
 {

@@ -13,8 +13,8 @@
  *	(and possibly control if authorized) the Session. Responses to JOINSESSION commands
  *	include the Session's full Design XML in the response contents and the Session's 
  *	SessionID in the SessionID field.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct JoinsessionCommandHandler : Picto::ProtocolCommandHandler
 {

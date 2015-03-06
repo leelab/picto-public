@@ -11,8 +11,8 @@ using namespace Picto;
  *	\details Apart from being a container for the Designer, this class doesn't do much.  It really only
  *	implements init() and deinit() functions to take care of a number of simple operations whenever this
  *	Viewer takes and leaves focus.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class StateEditViewer : public Viewer
 {

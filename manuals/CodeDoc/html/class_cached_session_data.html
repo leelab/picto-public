@@ -171,8 +171,8 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores session data in RAM for quick access until it is saved to disk. </p>
-<p>Data is stored in a lookup table of lookup tables, where the outer table is indexed by dataType, and the inner table is indexed by the DataId of each particular event. By using this double lookup table we keep each data type separate and make sure that each individual data value is only ever written once even if it enters the <a class="el" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4" title="Implements SessionData::writeData() to write the input data entry to this objects data structure for ...">writeData()</a> function more than once. </p><dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<p>Data is stored in a lookup table of lookup tables, where the outer table is indexed by dataType, and the inner table is indexed by the DataId of each particular event. By using this double lookup table we keep each data type separate and make sure that each individual data value is only ever written once even if it enters the <a class="el" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4" title="Implements SessionData::writeData() to write the input data entry to this objects data structure for ...">writeData()</a> function more than once. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_cached_session_data_8h_source.html#l00018">18</a> of file <a class="el" href="_cached_session_data_8h_source.html">CachedSessionData.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>

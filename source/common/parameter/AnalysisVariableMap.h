@@ -10,8 +10,8 @@ namespace Picto {
 /*! \brief A VariableMap for Analyses.
  *	\details Works exactly like a VariableMap with exception that it is part of an Analysis.
  *	\sa VariableMap
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisVariableMap : public AnalysisVariable

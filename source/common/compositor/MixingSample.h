@@ -21,8 +21,8 @@ namespace Picto {
  *	as they are in scope.  Then, at the appropriate time each frame, the currently running State 
  *	object's Scene calls AuralTarget::present() in order to implement all of the commands that
  *	have been scheduled on each MixingSample during the course of the last frame.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_CLASS MixingSample : public QObject

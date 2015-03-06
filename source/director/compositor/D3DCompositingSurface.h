@@ -13,8 +13,8 @@ namespace Picto {
  *	\details The D3DCompositingSurface is located in the PictoDirector source tree (as opposed to the
  *	libPicto Tree) because it is platform dependant.  The compositing surface uses
  *	Direct3D Textures to store image data, and then pases them to the D3DVisualTarget.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class D3DCompositingSurface : public CompositingSurface
 {

@@ -18,8 +18,8 @@ namespace Picto {
  *	path and stores them in a special XML friendly Base64 format in the Design file.  This way no matter where the
  *	Design.xml goes, the File will come with it, there will be no need to make sure that file resources are at proper
  *	paths to get the design to run.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FileParameter : public Parameter

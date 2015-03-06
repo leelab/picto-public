@@ -25,8 +25,8 @@ namespace Picto {
  *	 it is actually only read once.  To do this, we calculate the time since the last call to 
  *	updateDataBuffer() and devide by the configured sample period for the number of samples
  *	needed, then copy the mouse data that number of times and enter it into the data buffer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API MouseInputPort : public InputPort

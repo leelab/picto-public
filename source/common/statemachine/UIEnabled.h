@@ -14,8 +14,8 @@ namespace Picto {
  *	is not currently used but may someday be implemented to store the order of this objects runtime Properties in the widget window.
  *	UIEnabled objects also use their attached UIElement children to store a position in the Designer canvas and design notes.
  *	These are accessed with setNotes() and getNotes().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API UIEnabled : public DataStore

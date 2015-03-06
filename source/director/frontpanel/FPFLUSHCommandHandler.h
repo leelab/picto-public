@@ -8,8 +8,8 @@
 
 /*! \brief A Picto::ProtocolCommandHandler that Handles FPFLUSH commands received by the Director from the EmbeddedFrontPanel.
  *	\details Emits a flush() signal when a flush is requested.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct FPFLUSHCommandHandler : Picto::ProtocolCommandHandler
 {

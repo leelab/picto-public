@@ -16,8 +16,8 @@ namespace Picto {
 /*! \brief An base class for classes that can provide Frame data over input time ranges.
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API FrameReader : public QObject
@@ -43,8 +43,8 @@ public:
 /*! \brief An base class for classes that can provide Local Field Potential data over input time ranges.
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LfpReader : public QObject
@@ -80,8 +80,8 @@ public:
 /*! \brief An base class for classes that can provide Reward data over input time ranges.
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API RewardReader : public QObject
@@ -120,8 +120,8 @@ public:
 /*! \brief An base class for classes that can provide Run Notes data.
  *	\details This class allows Analyses to gather data about the current run, so that
  *	it can be used to provide meta-data in Analysis outputs.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API RunNotesReader : public QObject
@@ -158,8 +158,8 @@ public:
 /*! \brief An base class for classes that can provide Input Signal data over input time ranges (ie. Position, Eye Diameter).
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SignalReader : public QObject
@@ -205,8 +205,8 @@ public:
 /*! \brief An base class for classes that can provide Spike data over input time ranges.
  *	\details This class is used with the Analysis system so that Analyses can gather data over
  *	a range of times surrounding a current control state.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SpikeReader : public QObject

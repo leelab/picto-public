@@ -12,8 +12,8 @@ namespace Picto
  *	We don't always have reward hardware connected to the machine
  *	that is running a state machine.  This RewardController simply
  *	outputs a message to the debug console when a reward is issued.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

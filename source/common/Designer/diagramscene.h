@@ -28,8 +28,8 @@ QT_END_NAMESPACE
   *	of new assets and transitions to the window element, etc.  It is the foundation on which all of the graphical StateMachine UI is based.  
   *	\note There are some functions here that we don't use.  This is due to the fact that much of the code for this and other elements of the graphical
   *	StateMachine UI were lifted from Qt Toolkit samples.
-  *	\author Joey Schnurr, Mark Hammond, Matt Gay
-  *	\date 2009-2013
+  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+  *	\date 2009-2015
   */
 class DiagramScene : public QGraphicsScene
 {

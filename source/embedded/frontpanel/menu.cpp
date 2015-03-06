@@ -22,23 +22,13 @@
  * DisplayModes are aborted and the active DisplayMode returns to the StatusMode.  The DirectorInterface 
  * is also set up here to use the Director Socket from the input panelInfo to control all communication with 
  * the director.
- * connectionTimer_ no longer has any significant effect and should probably be removed at some point.
  */
 Menu::Menu(FrontPanelInfo *panelInfo) :
 	panelInfo(panelInfo),
 	wasConnected_(false)
 {
-	connectionTimer = new QTimer(this);
-	connectionTimer->setInterval(1000);
-	connect(connectionTimer, SIGNAL(timeout()), this, SLOT(checkConnections()));
-	connectionTimer->start();
-
 	activityTimer = new QTimer(this);
 	connect(activityTimer, SIGNAL(timeout()), this, SLOT(returnToStatus()));
-
-	//flushingTimer = new QTimer(this);
-	//flushingTimer->setInterval(100);
-	//connect(flushingTimer,SIGNAL(timeout()), this, SLOT(drawFlush()));
 
 	directorIf_ = QSharedPointer<DirectorInterface>(new DirectorInterface(panelInfo));
 
@@ -46,8 +36,6 @@ Menu::Menu(FrontPanelInfo *panelInfo) :
 
 Menu::~Menu()
 {
-	delete connectionTimer;
-	//delete flushingTimer;
 }
 
 /*! \brief Initializes this object by creating all DisplayMode objects, turning on the LCD
@@ -128,28 +116,6 @@ void Menu::loadMenus()
 
 	//The first DisplayMode should be the StatusMode
 	currMode_ = panelModes_[StatusModeType];
-}
-
-/*! \brief Should be removed.  No longer does anything.
- */
-void Menu::checkConnections()
-{
-//	if(!directorIf_->isConnected())
-//	{
-//		QString line1 = "No engine connection\n";
-//		QString line2 = "";
-//
-//		emit updateLCD(1, line1);
-//		emit updateLCD(2, line2);
-//
-//		wasConnected_ = false;
-//	}
-//	//coming out of wait for engine, we return to the status menu
-//	else if(!wasConnected_)
-//	{
-//		returnToStatus();
-//		wasConnected_ = true;
-//	}
 }
 
 /*! \brief Returns the current DisplayMode to the StatusMode.

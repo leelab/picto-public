@@ -8,8 +8,8 @@
 
 /*! \brief A Picto::ProtocolCommandHandler that Handles FPREWARD commands received by the Director from the EmbeddedFrontPanel.
  *	\details Emits a giveReward() signal when a reward is requested.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct FPREWARDCommandHandler : Picto::ProtocolCommandHandler
 {

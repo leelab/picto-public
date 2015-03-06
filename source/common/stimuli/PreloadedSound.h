@@ -16,8 +16,8 @@ namespace Picto {
  *	\note The audio sample underlying a PreloadedSound should be loaded into RAM when createSound()
  *	is first called such that no file access delays will occur during the course of experimental
  *	presentation... hence the name, PreloadedSound.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PreloadedSound

@@ -26,8 +26,8 @@
  *	The other kind of connection is a TCP connection.  When a TCP connection arrives, a new thread is spun up to handle 
  *	incoming commands on that thread.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Server : public QTcpServer
 {

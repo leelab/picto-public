@@ -23,8 +23,8 @@
  *	following HTTP protocol.  It then finds the appropriate command handler (using the 
  *	protocol from ServerProtocols and the command name) and calls that command handler for a response
  *	which is then returned to the sender.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ServerThread : public QThread
 {

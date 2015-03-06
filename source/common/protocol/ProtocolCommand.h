@@ -16,8 +16,8 @@ namespace Picto {
  * The ProtocolCommand object is used to parse and execute commands received via the PICTO protocol.
  * Since the PICTO protocol shares the same semantics as the HTTP protocol, a ProtocolCommand object
  * can be used for both purposes.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolCommand

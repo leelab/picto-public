@@ -56,8 +56,8 @@ struct AssetDescription
  *	\note It would make more sense if the Asset Description text was somehow stored with the 
  *	actual class itself rather than all being lumped together here.  It might be a good idea
  *	to figure out the best way to do that at some point.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AssetDescriber
 {

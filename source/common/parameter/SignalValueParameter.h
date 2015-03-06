@@ -25,8 +25,8 @@ namespace Picto {
  *	the FrameResolutionTimers in its own experiment.  We should really set something like this up for the SignalValueParameter, but in the 
  *	meantime the SignalValueParameter is really only used for calibration purposes and has not been "mission critical" so 
  *	the current system will work for now.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API SignalValueParameter : public Parameter

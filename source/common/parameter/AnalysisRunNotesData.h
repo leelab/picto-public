@@ -23,8 +23,8 @@ namespace Picto {
  *	When that happens, this class will have to be modified for accessing that data as well.
  *
  *	\note This class uses a RunNotesReader as its main data source.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisRunNotesData : public AnalysisDataSource

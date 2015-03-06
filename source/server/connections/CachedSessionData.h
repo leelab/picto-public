@@ -12,8 +12,8 @@
  *	event.  By using this double lookup table we keep each data type separate and make
  *	sure that each individual data value is only ever written once even if it enters
  *	the writeData() function more than once.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class CachedSessionData : public SessionData
 {

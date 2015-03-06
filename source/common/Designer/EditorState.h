@@ -21,8 +21,8 @@ using namespace Picto;
  *	current Window Asset, current Analysis, current SearchRequest, etc.
  *	
  *	Since it is so central to Designer operation, the EditorState is passed into most if not all of the constructors of classes used by the Designer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class EditorState : public QObject
 {

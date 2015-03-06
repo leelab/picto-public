@@ -19,8 +19,8 @@ namespace Picto {
  *	
  *	In general, Direct3D is very useful in that it is very fast and very good at providing precise vSync timing 
  *	for the purpose of marking first phosphor times.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class D3DVisualTarget : public VisualTarget
 {

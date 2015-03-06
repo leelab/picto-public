@@ -15,8 +15,8 @@ QT_END_NAMESPACE
  *	The status light is used in the proxy server's GUI.  It is just a circle that changes colors 
  *	(red, yellow, green) to indicate status.  This was an early attempt at writing a Qt GUI, 
  *	so it's a bit crude.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class StatusLight : public QWidget
 {

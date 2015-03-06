@@ -7,8 +7,8 @@
  *	\details Different types of search can be defined.  We can look for query strings, the existance of scripts, or the existance of elements of a certain type.  We can
  *	also set what type of elements should be searched, Experimental, Active Analysis, Inactive Analysis, etc.  Other parameters that can be set are case sensitivity for
  *	query string searches and an enable parameter that can be used to disable or enable a particular search query.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct SearchRequest
 {

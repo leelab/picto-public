@@ -19,8 +19,8 @@ struct PropertyData;
  *	beyond what was described above, so we will not be adding function level documentation
  *	for this class.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PropertyState : public QObject, public DataState
 {

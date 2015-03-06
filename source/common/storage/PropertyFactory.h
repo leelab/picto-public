@@ -20,8 +20,8 @@ namespace Picto {
  *	
  *	\note The PropertyFactory constructor includes minAsset, maxAssets inputs but it really shouldn't.  These should both always be one and it would be a
  *	good idea to fix this at some point.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyFactory : public AssetFactory

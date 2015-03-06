@@ -25,8 +25,8 @@ namespace Picto {
  *	temporarily to an input message.  Selected runs can be retrieved with getSelectedRuns(), a runSelectionChanged()
  *	signal is emitted when the selection changes, and other functions are available for additional data retrieval.
  *	Convenience buttons are included for selecting all runs, clearing all runs and selecting only saved runs.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API RunSelectorWidget : public QWidget

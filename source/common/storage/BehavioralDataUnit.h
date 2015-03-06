@@ -11,8 +11,8 @@ namespace Picto {
 /*!	\brief Stores a single unit (ie. the sample for a single instant in time) of x,y behavioral data
  *
  *	\details Behavioral data is just x,y SignalChannel data.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API BehavioralDataUnit : public DataUnit

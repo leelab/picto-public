@@ -19,8 +19,8 @@ namespace Picto {
  *
  *	Since it does contain scripts and needs to be able to run them in the script engine, this class inherits ScriptableContainer.
  *	\sa ScriptableContainer, StateMachineElement
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisScriptHolder : public ScriptableContainer, public AssociateElement

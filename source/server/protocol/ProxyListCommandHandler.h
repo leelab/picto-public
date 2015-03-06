@@ -10,8 +10,8 @@
  *
  *	PictoWorkstation sends these commands in order to get a list of all the
  *	Picto Proxy instances that are currently connected to the server.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ProxyListCommandHandler : Picto::ProtocolCommandHandler
 {

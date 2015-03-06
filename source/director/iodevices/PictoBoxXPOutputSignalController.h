@@ -23,8 +23,8 @@ namespace Picto
  *	hardware setup, as far as the Picto experiment is concerned, the PAR0 port has 8 pins that 
  *	can be controlled as part of the experiment.  These pins are controlled on the Pictobox by 
  *	a NiDaq controller, which this class controls.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 class PictoBoxXPOutputSignalController :  public OutputSignalController

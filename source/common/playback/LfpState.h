@@ -25,8 +25,8 @@ namespace Picto {
  *	beyond what was described above, so we will not be adding additional function level documentation
  *	for many of the functions in this class.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class LfpState : public LfpReader, public DataState
 {

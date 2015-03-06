@@ -15,8 +15,8 @@ namespace Picto {
  *	root of the design, included in the actual serialization/deserialization procedure.
  *	
  *	\sa DesignRoot
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PictoData : public DataStore

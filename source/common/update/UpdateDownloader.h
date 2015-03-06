@@ -44,8 +44,8 @@ using namespace Picto;
  *	and possibly requireUserInteraction(), enableUpdateWarning() and/or autoCheckForUpdates() depending on the particular application use case
  *	and let the object do the rest.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API UpdateDownloader : public QObject

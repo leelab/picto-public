@@ -19,8 +19,8 @@ namespace Picto {
  *	\note For the purpose of design clarity we don't allow the SwitchElement Script to change any of the StateMachine's data.  If it does
  *	so a runtime error is triggered.  In testing, we found that this greatly improved design clarity by assuring that all logic that can
  *	affect StateMachine data is located in Entry, Exit, or Frame Scripts.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SwitchElement : public StateMachineElement

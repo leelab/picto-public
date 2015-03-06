@@ -8,8 +8,8 @@ using namespace Picto;
 
 /*! \brief A WireableItem that represents a StateMachineElement.
  *	\details Essentially this is just a WireableItem that has a start bar and result bars for each child results.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class StateMachineElementItem : public WireableItem
 {

@@ -14,8 +14,8 @@ namespace Picto {
  *	itself such that it can be contained by other StateMachines.  This class manages traversal of the StateMachine inside its
  *	run() function.  Essentially, all Logic for a Task is contained inside its StateMachine, so this is one of the more important
  *	classes in the Picto framework.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateMachine : public MachineContainer

@@ -19,8 +19,8 @@ namespace Picto {
  *	During serialization the ObsoleteNameAsset is saved with a new XML tag name.  During deserialization the XML has the correct tag 
  *	and fits the upgraded syntax.
  * 
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ObsoleteNameAsset : public DataStore, OldVersionAsset

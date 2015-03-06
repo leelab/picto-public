@@ -17,8 +17,8 @@
 /*!	\brief This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel.  
  *	It lets us run the server as a System service.  It should probably be replaced with the QtService class at some point.  For that reason,
  *	and since we didn't write almost any of it, we're not going to provide detailed documentation.
- *	\author Tobias Doerffel, Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Tobias Doerffel, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SystemService
 {

@@ -21,8 +21,8 @@ namespace Picto {
  *
  *	On the design side, the UIEnabled class knows how to interface with UIElement objects in order to retrieve UI information.
  *	\sa UIEnabled
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

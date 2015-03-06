@@ -43,8 +43,8 @@ class QTabWidget;
  *	Due to the Server-client architecture of the Picto system, multiple Workstations can be used to control/view the same Experiment (only Workstations
  *	with the correct password entered in the password box can control a Session).  All Workstations attached to the same Session are all synchronized. 
  *	When one changes something about the Experiment, all others are updated accordingly.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class RemoteViewer : public Viewer
 {

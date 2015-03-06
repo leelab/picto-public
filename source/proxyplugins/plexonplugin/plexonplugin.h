@@ -17,8 +17,8 @@
  *	class simply implements those functions for the Plexon interface.
  *	\note The PlexClient.dll must be in the path for this plugin to be loaded.  Currently we place
  *	it in the PictoRunPath\\plugins directory alongside the dll generated for this class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PlexonPlugin : public QObject, public NeuralDataAcqInterface
 {

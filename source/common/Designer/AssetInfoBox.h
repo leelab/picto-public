@@ -10,8 +10,8 @@ QT_END_NAMESPACE
 /*! \brief Provides data about scipts that are in scope for the currently selected Asset in the Designer.
  *	\note This widget is much less useful now that we have th AboutElementBox.  We might think about
  *	either removing it or updating it with the additional data available from the AssetDescriber.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AssetInfoBox : public SearchableTextEdit
 {

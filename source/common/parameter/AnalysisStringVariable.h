@@ -10,8 +10,8 @@ namespace Picto {
 /*! \brief A StringVariable for Analyses.
  *	\details Works exactly like the StringVariable with the exception that it is part of an Analysis.
  *	\sa StringVariable
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisStringVariable : public AnalysisVariable

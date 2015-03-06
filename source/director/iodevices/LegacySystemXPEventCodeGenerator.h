@@ -38,8 +38,8 @@ namespace Picto {
  *	is sent high as an event strobe.  The digital output lines remain at these levels for 
  *	250us and are then lowered back down.  This is sufficient to provide the event code data 
  *	to the Plexon system.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class LegacySystemXPEventCodeGenerator : public EventCodeGenerator
 {

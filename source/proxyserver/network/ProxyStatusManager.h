@@ -11,8 +11,8 @@
  *	provides functions for setting/getting the neural data acquisition plugin that will be used to gather
  *	data from the Neural DAQ software for sending to the Server.
  *	\sa ComponentStatusManager
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ProxyStatusManager : public ComponentStatusManager
 {

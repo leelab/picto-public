@@ -21,8 +21,8 @@ namespace Picto {
  * dependencies and we can still use the QT audio framework (used by MultiplatformSound) since the workstation 
  * operates with an event loop.
  * \sa PreloadedSound::setSoundConstructor()
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class WinSound : public PreloadedSound
 {

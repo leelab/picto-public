@@ -29,8 +29,8 @@ QT_END_NAMESPACE
  *
  * `This class also includes an interface for updating Property initValues based on values recorded in a previous session.
  *	\sa DataStore::setPropertyRuntimeEditable(), Property::setRuntimEditable()
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyFrame : public QScrollArea

@@ -18,8 +18,8 @@ namespace Picto {
  *	a large group of unrelated Properties and simplify their interface so that all changed Property values can be condensed into a single list and a 
  *	list of Property initValues that need to be set to their respective properties can be set by simply calling a single function in a loop.
  *	
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

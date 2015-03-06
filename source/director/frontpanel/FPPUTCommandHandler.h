@@ -12,8 +12,8 @@
  *	then implements them using various signals.  The object that owns this one should take care of connecting to these signals
  *	and performing the requested operations.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct FPPUTCommandHandler : Picto::ProtocolCommandHandler
 {

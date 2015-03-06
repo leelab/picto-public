@@ -37,8 +37,8 @@ namespace Picto {
  *	needs some way to figure out where this "handle" is located. For this purpose, we use the getPositionOffset() function to 
  *	define the offset from the top left corner of the VisualElement image to the point that should be used as its handle.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PICTOLIB_CLASS VisualElement : public OutputElement
 {

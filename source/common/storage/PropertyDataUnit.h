@@ -15,8 +15,8 @@ namespace Picto {
  *	value changed is referenced by its AssetId.  The changed value can be either a runValue or
  *	an initValue, as indicated by the initValue_ field.  The Value itself is stored in a string
  *	form that can be converted to a Property value by using Property::valFromUserString().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PropertyDataUnit : public DataUnit

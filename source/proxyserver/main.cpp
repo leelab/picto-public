@@ -13,8 +13,8 @@
  *	architecture.  Each plugin is tailored to a specific device or in one case a "Virtual" device.
  *	The plugin architecture was written with advice from the second edition of "C++ GUI
  *	Programming with Qt" (Chapter 21).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #include <QApplication>
 #include <QDialog>

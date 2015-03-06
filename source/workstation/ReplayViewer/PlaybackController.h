@@ -20,8 +20,8 @@ using namespace Picto;
  *	between command logic and state machine logic.  THis is important since the
  *	two run in different threads and communicate via the threadsafe PlaybackControllerData
  *	functions.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PlaybackCommand 
 {
@@ -59,8 +59,8 @@ struct PlaybackCommand
 /*! \brief This class holds data for the PlaybackController.  Since this class ends up
  *	being called by both the GUI and playback threads, functions use mutexes and are 
  *	thread safe.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PlaybackControllerData
 {
@@ -123,8 +123,8 @@ private:
 /*! \brief A simple struct for storing preloaded data about a Session.
  *	\details The PlaybackController preloads Session files to retrieve high level data about them without
  *	loading the entire file.  This struct stores that data.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PreloadedSessionData
 {
@@ -159,8 +159,8 @@ Q_DECLARE_METATYPE(PreloadedSessionData)
  *	
  *	A number of signals are available for a view into what is happening inside the PlaybackController
  *	as well as a way to gather data about things like PreloadedSessionData.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PlaybackController : public QObject
 {

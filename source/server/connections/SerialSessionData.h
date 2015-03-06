@@ -12,8 +12,8 @@
  *	\details This is a simple SessionData object that pretty much just takes in data from CurrentSessionData
  *	objects through copyDataTo() or moveDataTo() functions, takes its Serial XML data and appends it
  *	to a string that can be retrieved from takeSerializedData().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SerialSessionData : public SessionData
 {

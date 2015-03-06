@@ -11,8 +11,8 @@ namespace Picto {
  *	\note Typically, it doesn't make sense to make a ListProperty editable by the designer or Experiment operator.  ListProperties
  *	are usually set invisible to the GUI (setVisible()) and used exclusively as a way to describe an DataStore's current state
  *	to support the requirement that that state be fully described by the DataStore's Properties.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ListProperty : public Property

@@ -15,8 +15,8 @@ namespace Picto {
  *	Either way, the StateUpdater communicates by emitting signals indicating that various events occured, in the order that they occured.
  *	It also provides various data reader objects that can be used to gather lists of past data
  *	or future data (in the case of experiments that are being played back from a previously saved session).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API StateUpdater : public QObject

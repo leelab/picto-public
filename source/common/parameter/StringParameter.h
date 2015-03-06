@@ -17,8 +17,8 @@ struct StringParameterOption
  *	There is a StringVariable for this purpose, so having a separate Parameter to do it doesn't seem to useful
  *	although one could imagine things like showing text messages to test subjects that are updatable during an experiment
  *	from the Remote Viewer.  This should be easy to implment someday if someone feels the need to do so.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StringParameter : public Parameter

@@ -33,8 +33,8 @@ int __stdcall EncoderPositionChangeHandler(CPhidgetEncoderHandle hEncoder, void 
  * to the FrontPanel application.  It should be noted that some threading issues had to be considered
  * here since calls from the Phidgets API run in a seperate thread from the one used in the Front
  * Panel application.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 
 class Phidgets : public QObject

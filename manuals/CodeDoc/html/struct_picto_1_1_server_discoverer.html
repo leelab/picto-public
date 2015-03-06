@@ -150,8 +150,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 <p>All Picto apps (except for <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>) communicate with the server. For this to occur, they need the IP address of the server and a communication port value. This is something that we could require the user to enter, but it is much more user-friendly to automate the process. The server discoverer object sends out a UDP broadcast, and then waits for a response from a server on the network with the requested information.</p>
 <p>This object was not designed for use on a network with multiple servers, so its behavior in such a scenario is undefined. (If it still functions correctly, it will find <em>a</em> server, but which one will be a function of the server load and network conditions.)</p>
 <dl class="section note"><dt>Note</dt><dd>Much of the work of discovering the server has been moved into the <a class="el" href="class_picto_1_1_command_channel.html" title="A channel for sending/receiving commands/responses over the network. ">CommandChannel</a> and happens automatically. This still appears to be used by some sections of the Picto code though. </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_server_discoverer_8h_source.html#l00034">34</a> of file <a class="el" href="_server_discoverer_8h_source.html">ServerDiscoverer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>

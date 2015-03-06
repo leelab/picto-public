@@ -76,8 +76,8 @@ namespace RegisteredResponseType
  *	simple command, or it can be much more complex.  Although there is functionality
  *	in place for streaming responses, Picto doesn't currently use it.  Multipart responses
  *	are also supported but not used.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API ProtocolResponse

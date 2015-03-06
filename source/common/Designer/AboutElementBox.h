@@ -12,8 +12,8 @@ QT_END_NAMESPACE
  *	\details This box is used in the picto Designer to provide desginers with contextual data
  *	including an Overview, DataStore properties, Script properties, and Script functions for every
  *	selected Asset.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AboutElementBox : public SearchableTextEdit
 {

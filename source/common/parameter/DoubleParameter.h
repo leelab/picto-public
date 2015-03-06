@@ -16,8 +16,8 @@ namespace Picto {
  		DoubleParameterName.value = 0.26;
  		var numVal = DoubleParameterName.value;
  	\endcode
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API DoubleParameter : public Parameter

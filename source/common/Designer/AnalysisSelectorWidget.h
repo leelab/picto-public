@@ -26,8 +26,8 @@ namespace Picto {
  *	and getSelectedAnalysisIdsForImport() for importable Analyses.
  *	\note This widget performs no import compatibility tests.  Whether or not the importable
  *	Analyses are compatible with the current Design must be tested elsewhere.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AnalysisSelectorWidget : public QWidget

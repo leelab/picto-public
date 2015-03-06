@@ -13,8 +13,8 @@ namespace Picto {
 /*!	\brief Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame
  *
  *	\details This class is meant to be used for transferring the Property value changes over a network.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PropertyDataUnitPackage : public DataUnit

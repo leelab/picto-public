@@ -16,8 +16,8 @@ namespace Picto {
  *	with the DataId of the Frame that was presented following that traversal.  This information
  *	can later be used to reproduce the precise path through the StateMachine that was taken
  *	during a given session.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StateDataUnit : public DataUnit

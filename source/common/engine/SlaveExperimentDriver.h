@@ -22,8 +22,8 @@ namespace Picto {
  *	This is necessary since the Engine needs to be properly configured for the current render/run environment, and the
  *	SlaveExperimentDriver is reponsible only for sending data into the Experiment.  It knows nothing about the 
  *	current run environment.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SlaveExperimentDriver : public QObject

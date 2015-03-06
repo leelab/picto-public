@@ -14,8 +14,8 @@
  *	This isn't currently being done, but it could prove useful for certain applications.
  *	(e.g. streaming "video" of an ongoing experiment to a destination that doesn't have
  *	a copy of PictoWorkstation, and doesn't need to be able to control an experiment).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct HTTPGetCommandHandler : Picto::ProtocolCommandHandler
 {

@@ -24,8 +24,8 @@ namespace Picto {
  *	\note The Choice Controller is essentially a convenience 
  *	element.  Its operation can be fairly precisely simulated by simply using 
  *	multiple Target Controllers.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

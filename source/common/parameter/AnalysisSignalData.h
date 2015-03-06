@@ -17,8 +17,8 @@ namespace Picto {
  *	Engine::addSignalChannel().
  *
  *	\note This class uses a SignalReader as its main data source.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisSignalData : public AnalysisDataSource

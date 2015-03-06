@@ -14,8 +14,8 @@ class Arrow;
  *	flow and can therefore have transitions wired to it.
  *	\details WireableItem objects can include an attached start bar destination for arrows and functionality for adding result arrow sources
  *	\sa ResultArrowSourceItem, ArrowDestinationItem
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class WireableItem : public ExperimentItem
 {

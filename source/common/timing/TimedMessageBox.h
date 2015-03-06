@@ -10,8 +10,8 @@ namespace Picto {
  *	
  *	\details The timeout is set in the constructor.  A ProgressBar widget is displayed showing how close we are
  *	to the timeout time.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API TimedMessageBox : public QMessageBox

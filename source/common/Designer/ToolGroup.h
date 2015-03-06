@@ -18,8 +18,8 @@ QT_END_NAMESPACE
 /*! \brief A group of buttons of a particular type that have some affect on activity in the designer.
  *	\details Each of the subcategories in the Toolbox on the left hand side of the designer window is a ToolGroup.
  *	Different types of ToolGroups are allowed; however, currently we are only using AssetToolGroup objects.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ToolGroup : public QWidget
 {

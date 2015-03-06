@@ -21,8 +21,8 @@
  *	of compressed files available.  The compressed file who's index is sent is returned in the 
  *	ProtocolResponse when a GETFILE command is sent.  Other fields are included in the response 
  *	like "TotalFiles" which tells the client how many files it needs to have a complete updated Picto installation.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct GetFileCommandHandler : Picto::ProtocolCommandHandler
 {

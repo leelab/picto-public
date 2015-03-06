@@ -26,8 +26,8 @@ using namespace Picto;
  *		2. Wait for the old Viewer to emit deinitComplete().
  *		3. Call init on the new Viewer
  *		4. Change focus to the new Viewer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class Viewer : public QWidget
 {

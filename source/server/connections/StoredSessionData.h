@@ -20,8 +20,8 @@
  *	be entered into the object by using insertData().
  *	\note This object groups batched writeData() operations into a single SQL transaction.  See
  *	startDataWrite() for more details.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class StoredSessionData : public SessionData
 {

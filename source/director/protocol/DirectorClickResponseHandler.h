@@ -6,8 +6,8 @@
 
 /*! \brief Implements the ClickResponseHandler class by extracting click data
  *	when it arrives and delivering it to the OperatorClickParameter class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct  DirectorClickResponseHandler : public Picto::ClickResponseHandler
 {

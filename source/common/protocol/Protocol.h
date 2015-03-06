@@ -18,8 +18,8 @@ namespace Picto {
  *	object is a base class that makes it easy to define a custom protocol.  Each
  *	derived protocol needs to have a name and version, as well as a list of command
  *	handlers that get added to the protocol.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API Protocol

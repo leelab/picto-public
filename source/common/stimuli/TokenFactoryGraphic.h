@@ -28,8 +28,8 @@ namespace Picto {
  *	also means that a TokenFactoryGraphic with a high layer and tokens that are spread out very far could cover other graphics.  We may want to think
  *	of a clean way to deal with this at some point.  In the meantime, TokenFactoryGraphics should be set to have a low layer so that other things will
  *	be in front of them.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS TokenFactoryGraphic : public VisualElement
 {

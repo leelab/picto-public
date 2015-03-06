@@ -12,8 +12,8 @@ class QTimer;
  *	functionality for saving the AnalysisOutputWidgets' data to disk.
  *	\details This widget is used in both the ReplayViewer and TestViewer.  It gives the operator a way to get a quick view of 
  *	AnalysisOutput results and save them to disk.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class OutputWidgetHolder : public QFrame
 {

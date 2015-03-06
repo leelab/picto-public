@@ -19,8 +19,8 @@
  *	functions for the TDT interface.  Some additional functions were created purely for
  *	the purpose of cleaning up the inherited functions.  Those functions have been documented here
  *	but they are really just another part of the TDT interface logic.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class TdtPlugin : public QObject, public NeuralDataAcqInterface
 {

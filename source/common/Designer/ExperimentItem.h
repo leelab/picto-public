@@ -14,8 +14,8 @@ using namespace Picto;
  *	it is part of the experiment and not the analysis.  It also has functionality for disabling
  *	certain capabilities when the Designer is in "Analysis design" mode.
  *	\sa EditorState::setCurrentAnalysis()
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ExperimentItem : public AssetItem
 {

@@ -10,8 +10,8 @@ namespace Picto {
  *	
  *	\details This is the class used for low level Results that live beneath the Design's StateMachine.  For example, in the case of a
  *	TargetController, the C++ logic itself decides which Results should be triggered.	
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LogicResult : public Result

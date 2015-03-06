@@ -14,8 +14,8 @@ namespace Picto {
  *	runs out. Please note that since time is checked only once per frame the time that the next 
  *	frame from a state following this one will appear will be anywhere from one to two frames beyond 
  *	the set 'Time'.  This is true of all time based conditions in ControlElement objects.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013	
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015	
  */
 
 #if defined WIN32 || defined WINCE

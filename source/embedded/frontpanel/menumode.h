@@ -8,8 +8,8 @@
  * all of the DisplayModes available for view in the Front Panel system.
  * \details Allows users to navigate through a list of other DisplayModes by
  * turning the input knob and select one by pressing it.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class MenuMode : public DisplayMode
 {

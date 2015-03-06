@@ -38,8 +38,8 @@ namespace Picto {
  *	in its own experiment.  We should really set something like this up for the OperatorClickParameter, but in the 
  *	meantime the OperatorClickParameter is really only used for calibration purposes and not "mission critical" so 
  *	the current system will work for now.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API OperatorClickParameter : public Parameter

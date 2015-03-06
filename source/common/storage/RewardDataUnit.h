@@ -10,8 +10,8 @@ namespace Picto {
  *
  *	\details This stores the time at which the reward was delivered.  The duration of the reward in
  *	milliseconds, and the reward channel on which the reward was supplied.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API RewardDataUnit : public DataUnit

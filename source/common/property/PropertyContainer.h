@@ -28,8 +28,8 @@ class Property;
  *	all Property objects from the same PropertyContainer to have different names, but there is still some left
  *	over code requiring inputting of an index along with a Property name to access a particular Property.  At
  *	some point we should remove this requirement.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyContainer : public QObject

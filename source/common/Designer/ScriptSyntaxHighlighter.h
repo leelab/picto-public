@@ -26,8 +26,8 @@ namespace Picto {
  *	We will not include detailed documentation of this class, since we basically never looked at its code,
  *	pretty much all we do is call its constructor with the document that we want to highlight and it takes
  *	care of the rest.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ScriptSyntaxHighlighter : public QSyntaxHighlighter
 {

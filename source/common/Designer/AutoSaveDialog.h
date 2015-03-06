@@ -24,8 +24,8 @@ namespace Picto {
  *	This widget is used with the AutoSaver to create a complete AutoSave system preventing significant data loss should Picto
  *	or the machine running it crash unexpectedly.
  *	\sa AutoSaver
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AutoSaveDialog : public QDialog

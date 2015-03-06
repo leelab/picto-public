@@ -18,8 +18,8 @@ namespace Picto {
  *	to file.  An AnalysisOutputWidgetContainer can only be associated with a particular run and
  *	is currently created exclusively by the AnalysisOutput class in the AnalysisOutput::getContainerWidget()
  *	function.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AnalysisOutputWidgetContainer : public QWidget

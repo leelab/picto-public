@@ -6,8 +6,8 @@
  *	not totally convinced that we need an application like this, although it might become
  *	useful if Picto reaches a wider audience.  At the moment Picto systems pretty much
  *	self-configure (although you do need to get all of the pieces running).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #include <QApplication>
@@ -21,8 +21,8 @@
  *	\details This application pretty much just tells us what the Picto Server's IP Address was by using the TestLabel
  *	class.  We can build it out at some point if we can think of something useful to do with it.
  *	\sa config/main.cpp
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 int main(int argc, char *argv[])
 {  

@@ -12,8 +12,8 @@ using namespace Picto;
 /*! \brief An AssetItem used to represent Analysis elements.
  *	\details This is pretty much just an AssetItem that is colored yellowish to represent that
  *	it is part of an Analysis.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class AnalysisItem : public AssetItem
 {

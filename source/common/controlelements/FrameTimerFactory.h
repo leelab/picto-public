@@ -22,8 +22,8 @@ namespace Controller {
  *	timing data for all FrameResolutionTimers throughout the experiment.
  *	\note We could not simply use a static function in FrameResolutionTimer to update times because there can
  *	be multiple designs running simultaneously within the same application; ie. In the ReplayViewer and TestViewer.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

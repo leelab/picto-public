@@ -22,8 +22,8 @@ namespace Picto {
  *
  *	This class extends QPair<double,qulonglong> which provides all of the necessary comparison operators so that
  *	comparison of two PlaybackIndex values will look first at the time value and then at the dataId.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PlaybackIndex: public QPair<double,qulonglong>
 {

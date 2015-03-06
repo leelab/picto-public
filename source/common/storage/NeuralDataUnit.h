@@ -15,8 +15,8 @@ namespace Picto {
  *	timestamp and waveform sample periods so that the function can include spike timing that is aligned to the 
  *	behavioral timestream.  The correlation coefficient for the least squares fitting of the timestamp alignment 
  *	can be stored here as well.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API NeuralDataUnit : public DataUnit

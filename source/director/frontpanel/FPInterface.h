@@ -20,8 +20,8 @@
 /*! \brief The interface between the Picto Director and the application managing the Pictobox Front Panel.
  *	\details This class implements the ControlPanelInterface for communication with the EmbeddedFrontPanel application.
  *	The interface is through a local socket and simple http style commands (ie. FPPUT, FPGET, etc).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class FPInterface : public ControlPanelInterface
 {

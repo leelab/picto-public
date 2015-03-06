@@ -12,8 +12,8 @@ using namespace Picto;
 /*! \brief The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment.
  *	\details This is essentially a convenience class that allows us to just start and stop running Tasks
  *	in an Experiment without worrying about details like its interaction with the Engine::PictoEngine.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class TestPlaybackController : public QObject
 {

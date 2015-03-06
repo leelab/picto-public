@@ -17,18 +17,16 @@
 
 pushd %PICTO_TREE%
 
-@IF NOT EXIST output\documentation (
-  mkdir output\documentation
-)
-
-
 @echo Generating Standard Documentation
-@IF NOT EXIST output\documentation\main (
-  mkdir output\documentation\main
+@IF EXIST manuals\CodeDoc\html (
+  RD /S /Q manuals\CodeDoc\html
 )
 %DOXYGEN_DIR%\doxygen tools\doxygen\PictoMainDoxyConfig
 
 
+@IF NOT EXIST output\documentation (
+  mkdir output\documentation
+)
 @echo Generating Unit Tests Documentation
 @IF NOT EXIST output\documentation\unittests (
   mkdir output\documentation\unittests

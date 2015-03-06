@@ -23,8 +23,8 @@ QT_END_NAMESPACE
  *	logic where we keep lookup tables of Property objects indexed by the QtProperty objects representing them, then tell the world
  *	when a widget value was edited and use the lookup table to figure out which Property we should say was represented by the edited widget.  
  *	This class takes care of all of these issues.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API PropertyEditorFactory : public QtVariantEditorFactory

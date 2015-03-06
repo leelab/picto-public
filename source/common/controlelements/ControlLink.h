@@ -8,8 +8,8 @@
 namespace Picto {
 
 /*!	\brief UNUSED This used to essentially be a Transition for inside a State.  Now Elements inside a State just used Transition objects too.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

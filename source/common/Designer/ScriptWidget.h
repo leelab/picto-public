@@ -14,8 +14,8 @@
  *	Similarly, changes to the underlying QtProperty are reflected in the ScriptWidget text.  The ScriptWidget can include a single line
  *	text box or a full fledged multi-line text editor.  Either way, due to this widgets use of an underlying ScriptTextEdit, the script text 
  *	is syntax highlighted and searchable.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */	
 class ScriptWidget : public QWidget
 {

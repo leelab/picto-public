@@ -12,8 +12,8 @@ QT_END_NAMESPACE
 /*! \brief A QTextEdit that is searchable by using a SearchRequest object.
  *	\details When a SearchRequest is found in this QTextEdit, the strings
  *	that are found will be highlighted.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SearchableTextEdit : public QTextEdit
 {

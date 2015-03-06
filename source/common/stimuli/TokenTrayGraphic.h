@@ -26,8 +26,8 @@ namespace Picto {
  *	This would mean the path would need to change in order to stay inside the total Size setting.  To avoid these problems, we just use the Size Property 
  *	to set the size of the Token tray path and then calculate the size of the actual QImage that we need during draw() to make sure that all tokens appear '
  *	without being clipped.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS TokenTrayGraphic : public VisualElement
 {

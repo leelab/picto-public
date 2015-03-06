@@ -5,8 +5,8 @@
 
 /*! \brief Extends PauseResponseHandler but doesn't actually add anything.
  *	\details Maybe this will be a handy container to have some day :).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ProxyPauseResponseHandler : public Picto::PauseResponseHandler
 {

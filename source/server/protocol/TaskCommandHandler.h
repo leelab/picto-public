@@ -20,8 +20,8 @@ class ConnectionManager;
  *	and change the notes, name or saved value of a Task Run.  Essentially, this
  *	is the Workstation's interface to a running session.  For more details
  *	see processCommand().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct TaskCommandHandler : Picto::ProtocolCommandHandler
 {

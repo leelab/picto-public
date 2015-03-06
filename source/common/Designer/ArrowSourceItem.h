@@ -6,8 +6,8 @@
 /*! \brief An ArrowPortItem to which Arrow tails attach.
  *	\details This is a base class for result bars that hang of the bottom of each StateMachineElement diagram 
  *	as well as the StartBar on the left side of the canvas.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ArrowSourceItem : public ArrowPortItem
 {

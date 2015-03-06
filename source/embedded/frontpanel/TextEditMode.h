@@ -9,8 +9,8 @@
  * \details DisplayMode class that allows a user to change a text string should
  * extend this class.  It displays text with a blinking cursor underneath the 
  * letter to be edited and allows the user to edit the letter by turning the input knob.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class TextEditMode : public DisplayMode
 {

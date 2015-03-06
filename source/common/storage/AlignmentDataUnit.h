@@ -14,8 +14,8 @@ namespace Picto {
  *	Both systems mark the time at which the alignment code occured, and the Directer, which generates the code
  *	also records the index of the event (Alignment Number, not limited to 7 bits).  They can then be matched up and used for
  *	a least squares method of time synchronization.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AlignmentDataUnit : public DataUnit

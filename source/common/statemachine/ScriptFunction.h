@@ -26,8 +26,8 @@ namespace Picto {
 		var addedValue = SampleFunction(23,12);
 		var isThirtyFive = (addedValue == 35); //will be true.
 	\endcode
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API ScriptFunction : public ScriptableContainer

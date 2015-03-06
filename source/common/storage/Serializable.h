@@ -12,8 +12,8 @@ namespace Picto {
 /*! \brief The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hierarchy, providing an interface for serialization/deserialization
  *	\details Everything element of the Picto design and of network transferrable DataUnit objects must be savable and loadable, so we put that functionality into
  *	this hierarchical root class.  An interface to retrieve serialization errors is also provided.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Serializable

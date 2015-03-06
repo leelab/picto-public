@@ -10,8 +10,8 @@ namespace Picto {
 /*! \brief A simple variable that is used for storing strings.
  *	\details The name pretty much says it all.  The object holds a string while it is in scope.
  *	The string can be read/set using the "value" script property.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API StringVariable : public Variable

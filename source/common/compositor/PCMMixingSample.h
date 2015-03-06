@@ -19,8 +19,8 @@ namespace Picto {
  *	sounds is not an issue since Qt allows them to be played in parallel
  *	and the computer's sound system figures out how to make all the 
  *	separate audio sources come out of the speaker at once.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PCMMixingSample : public MixingSample

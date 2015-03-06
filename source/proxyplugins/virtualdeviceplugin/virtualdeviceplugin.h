@@ -26,8 +26,8 @@
  *	be sure that it has all available virtual data when getNextEvent() returns an empty pointer for all VirtualEventSources.
  *	After all data from VirtualEventSources is loaded, the data is added to the message that is sent to the 
  *	Picto Server by the Proxy application that calls dumpData().
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class VirtualDevicePlugin : public QObject, public NeuralDataAcqInterface
 {

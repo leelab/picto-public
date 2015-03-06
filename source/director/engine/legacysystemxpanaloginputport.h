@@ -17,8 +17,8 @@ namespace Picto {
  *	- LegacySystem has a PCI-MIO-16XE-50 card installed, with some number of AI channels connected
  *	- The DAQ card is "Dev2"
  *	- The development box has the NIDAQmx libraries and headers installed
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class LegacySystemXPAnalogInputPort : public InputPort
 {

@@ -18,8 +18,8 @@ namespace Picto {
  *	
  *	\details This is one of those graphics that was created toward the beginning of the Picto project but wasn't used in any actual experiments.  For this reason
  *	it is missing some important things like Script Properties.  It should really be brought up to date.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 

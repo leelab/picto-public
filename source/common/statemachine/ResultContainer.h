@@ -16,8 +16,8 @@ namespace Picto {
  *	State, SwitchElement, etc.  This class contains functionality for adding Results, setting up 
  *	required and optional Results and different types of Results, as well as accessing the latest 
  *	triggered result name from a script during execution.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ResultContainer : public ScriptableContainer

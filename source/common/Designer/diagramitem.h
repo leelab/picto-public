@@ -73,8 +73,8 @@ class Arrow;
  *	
  *	The DiagramItem is loosely based on an item of that name from a Qt Toolkit example.
  *	\sa DiagramScene, \sa Arrow
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class DiagramItem : public QObject, public QGraphicsPolygonItem
 {

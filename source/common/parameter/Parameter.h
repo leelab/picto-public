@@ -36,8 +36,8 @@ namespace Picto {
  *	\note In practice, there is some issue with the valuesAreValid() / fixValues() system.  In the RangeParameter case for example, when the Value property is set lower than the Min Property,
  *	the value is automatically fixed but this doesn't show up in the Property widgets under certain conditions.  Also in the PropertyFrame, it appears that restrictions on 
  *	moving the Value property outside of the allowable range aren't fedback to the widget value displayed.  This should be looked into.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Parameter : public Scriptable

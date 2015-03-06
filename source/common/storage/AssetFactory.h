@@ -28,8 +28,8 @@ namespace Picto {
  *	of the sub-AssetFactories must be met as well as those of the Group Factory.  In the case of the Group Factory,
  *	the minimum/maximum values apply to the overall total number of generated Assets of all sub-types.
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AssetFactory : public QObject

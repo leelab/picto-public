@@ -11,8 +11,8 @@
  *
  *	Rather than creating some kind of complex circular reference system, we have simply exposed functions here that higher level 
  *	classes can use to update this ProtocolCommandHandler with the data that it needs.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct FPGETCommandHandler : Picto::ProtocolCommandHandler
 {

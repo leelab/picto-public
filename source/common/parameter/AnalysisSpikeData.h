@@ -20,8 +20,8 @@ namespace Picto {
  *	be fake sample data.  For consistency's sake, any functions requesting 
  *	future data will return meaningless values.
  *	\note This class uses a SpikeReader as its main data source.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AnalysisSpikeData : public AnalysisDataSource

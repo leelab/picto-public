@@ -69,8 +69,8 @@ QT_END_NAMESPACE
  *	
  *	In essence, the designer is a GUI for interacting with the DesignRoot loaded in loadDesign.  A design could be created entirely in a text
  *	editor, but the UI makes things astronomically easier.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Designer : public QWidget

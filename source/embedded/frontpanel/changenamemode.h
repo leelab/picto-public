@@ -6,8 +6,8 @@
 #include "TextEditMode.h"
 
 /*!	\brief A TextEditMode including functionality for the user to change the PictoBox's name
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class ChangeNameMode : public TextEditMode
 {

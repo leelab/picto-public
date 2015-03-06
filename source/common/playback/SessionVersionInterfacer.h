@@ -38,8 +38,8 @@ struct SVIAssetNode;
  *	\note Theoretically, the situation could come up at some point where a Property value from an obsolete asset needs
  *	to get mapped into a Property of a new Asset created to replace the obsolete one.  That hasn't come up yet, but when
  *	it does we will have to come up with a solution for that scenario.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SessionVersionInterfacer
 {

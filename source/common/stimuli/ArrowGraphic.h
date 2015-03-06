@@ -18,8 +18,8 @@ namespace Picto {
  *	- Size: The size of the arrowhead
  *	- Color: The color
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS ArrowGraphic : public VisualElement
 {

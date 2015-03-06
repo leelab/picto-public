@@ -16,8 +16,8 @@ namespace Picto {
  *	so easy to work with, this is a really simple target.  It holds 2 pixmap
  *	compositing surface, and flips back and forth between them (so that we never
  *	draw directly to the screen).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

@@ -48,8 +48,8 @@ namespace Picto {
  *
  *	For more detail on the algorithm used by the PseudorandomIntParameter, see randomize().
  *
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API PseudorandomIntParameter : public Parameter

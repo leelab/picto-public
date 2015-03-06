@@ -32,8 +32,8 @@ namespace Picto {
  *	up in the TestViewer depending on which ScriptableContainer contained the offending script, which is pretty annoying.  
  *	There may be a way to better handle scoping issues by using QScriptContext or something like that, but I didn't have 
  *	time to look into it.  This would be a good area for future research.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ScriptableContainer : public Scriptable

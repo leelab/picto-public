@@ -13,8 +13,8 @@ namespace Picto {
  *	and trigger them by returning a string that is equal to one of the results's names.  In 
  *	order to continue in the State without exiting, simply return any value that is not equal 
  *	to a result name or nothing at all.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013	
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015	
  */
 
 #if defined WIN32 || defined WINCE

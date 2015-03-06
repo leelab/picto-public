@@ -32,8 +32,8 @@ struct TransInfo{int id; QString name; int parent; QString source;QString result
  *	These and other general design configuration issues are handled by this class.  Every Picto Asset holds a pointer to the DesignConfig of the
  *	design to which it is attached and adds itself to the DesignConfig object (which holds a weak pointer to it to avoid circular shared pointer issues).
  *	The DesignConfig of a particular Experiment or overall PictoData root object can be accessed using its Asset::getDesignConfig() function.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API DesignConfig : public QObject, public Serializable

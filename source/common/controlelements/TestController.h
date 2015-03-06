@@ -12,8 +12,8 @@ namespace Picto {
  *	This controller is a wrapper that can be modified (in C++) to do whatever is needed for test purposes
  *	Currently, it is simply outputing to the debuggin console, and return isDone() == true
  *	the 120th time it is called (2 seconds if we're running at 60Hz).
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

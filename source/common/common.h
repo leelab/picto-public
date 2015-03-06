@@ -1,7 +1,7 @@
 /*! \file common.h
  * \brief Definitions common to the %Picto library
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #ifndef _COMMON_H_

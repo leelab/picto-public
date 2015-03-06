@@ -13,8 +13,8 @@ namespace Picto {
  *	\details Objects of this class store meta-data about a particular SignalChannel including its
  *	name, the session table that holds its data, the VariableId that identifies it in the session file, 
  *	its sample period, and the names of its subchannels.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API SignalChannelInfo : public DataUnit

@@ -10,8 +10,8 @@
 #include "../../common/protocol/Protocol.h"
 
 /*!	\brief A simple container object used to store all fo the Protocol objects used by the Server. 
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ServerProtocols
 {

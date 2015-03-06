@@ -9,8 +9,8 @@
  *	\details The StartBarItem includes a ScriptItemManager that handles ScriptItem boxes for each of the StateMachine
  *	element's Scripts.  The StartBar also always makes sure to let its ScriptItemManager know about scrolling changes so
  *	that all scripts will appear on screen regardless of the user's scroll position.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class StartBarItem : public ArrowSourceItem
 {

@@ -14,8 +14,8 @@ namespace Picto {
  *	Objects of this class store a collection of TaskRunDataUnit objects containing meta-data about all of
  *	the runs that made up a particular session.  Runs can be accessed by their DataId values or their
  *	order in the session.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API SessionDataPackage : public DataUnit

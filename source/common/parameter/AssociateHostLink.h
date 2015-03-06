@@ -17,8 +17,8 @@ namespace Picto {
  *	signals are connected so that changes in the linked Asset name or id will automatically propogate to this
  *	object's Property values.  updateLinkePath() functionality is also provided for the purpose
  *	of AssociateElement export/import.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API AssociateHostLink : public DataStore

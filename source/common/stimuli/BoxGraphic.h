@@ -14,8 +14,8 @@ namespace Picto {
  *	\details In addition to the Properties provided by the VisualElement class, this class provides size, outline and outline thickness
  *	Properties.  The size is just the total width and height of the graphic.  The outline Property determines if only the outline of the
  *	graphic will be drawn.  The outline thickness Property determines the thickness of the graphic outline if the outline Property is true.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS BoxGraphic : public VisualElement
 {

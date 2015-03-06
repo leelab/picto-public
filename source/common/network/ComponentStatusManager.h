@@ -21,8 +21,8 @@ enum ComponentStatus
  *	will print status information on the bottom left corner of the screen, whereas the Proxy might print it somewhere within its application
  *	window.
  *	\sa ComponentInterface
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API ComponentStatusManager : public QObject

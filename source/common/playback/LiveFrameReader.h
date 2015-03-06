@@ -12,8 +12,8 @@ namespace Picto {
  *	data read in during a live Session, there is not much to add in terms of documentation 
  *	beyond what was described above, so we will not be adding additional function level documentation
  *	for many of the functions in this class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveFrameReader : public FrameReader

@@ -35,8 +35,8 @@ namespace Picto {
  *	for the purposes of proper playback and valid Analyses we want to make sure that even if someone
  *	is trying to "fast forward" through data, all intermediary data states are traversed before the
  *	requested position is reached.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class DataState
 {

@@ -16,8 +16,8 @@
  *	represented.  When operating in Analysis mode, Analysis scripts are shown as well.  Each script
  *	appears in the order that it is called (ie. AnalysisEntry, Entry, Frame, AnalysisFrame, Exit, 
  *	AnalysisExit) from top to bottom or left to right.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ScriptItemManager : public QObject
 {

@@ -10,8 +10,8 @@
  *	\details See http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS
  *	for more information.
  *	\sa mainmemleakdetect.h
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if !defined(_CRTDBG_MAP_ALLOC)
 	#define _CRTDBG_MAP_ALLOC

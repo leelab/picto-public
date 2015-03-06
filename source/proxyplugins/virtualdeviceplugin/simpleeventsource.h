@@ -12,8 +12,8 @@
  *	This interface doesn't implement the BuildEvent(time) function that is used by child interfaces
  *  to build the specific event type desired.  It simply handles the timing of event building and leaves
  *  the actual creation of the event to its child class.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SimpleEventSource : public VirtualEventSource
 {

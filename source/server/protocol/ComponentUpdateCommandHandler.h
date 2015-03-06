@@ -11,8 +11,8 @@
  *	\details ComponentInterface objects (ie. Director, Proxy... not Workstation) send COMPONENTUPDATE 
  *	commands to the Server at a fixed interval.  These provide up to data information about the Component status,
  *	keep the network connection from timing out and are used to send directives from the Picto Server to the Component.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct ComponentUpdateCommandHandler : Picto::ProtocolCommandHandler
 {

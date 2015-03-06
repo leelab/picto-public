@@ -10,8 +10,8 @@ namespace Picto {
  *	functions to return simple fake data like the "Sample Name" name and the "Sample Notes" notes.  Start
  *	time is zero and end time is always -1 (since we don't know how long the run is while we're still in it).
  *	Run index is zero.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API LiveRunNotesReader : public RunNotesReader

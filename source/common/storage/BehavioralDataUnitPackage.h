@@ -15,8 +15,8 @@ namespace Picto {
  *	\details Each Package includes an ActionFrame which is the frame after which the data was read.  It also
  *	inclues an OffsetTime which is the amount of time after the prior frame that the first sample was read on 
  *	the SignalChannel.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API BehavioralDataUnitPackage : public DataUnit

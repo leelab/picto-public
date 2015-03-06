@@ -20,8 +20,8 @@ namespace Picto {
  		NumericParameterName.value = 0.26;
  		var numVal = NumericParameterName.value;
  	\endcode
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API NumericParameter : public Parameter

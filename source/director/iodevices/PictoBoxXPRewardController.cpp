@@ -112,7 +112,7 @@ PictoBoxXPRewardController::~PictoBoxXPRewardController()
 }
 
 /*! \brief Implements RewardController::startReward() to output a correctly timed reward signal on the output line.
- *  \detail Previous limitations due to the old implementation have been lifted, and now rewards can be
+ *  \details Previous limitations due to the old implementation have been lifted, and now rewards can be
  *  given with any amount of pause between.
  *	\note The downside to this is that we can't provide rewards of under 16ms, in practice, rewards this small are
  *	very non-linear and not a good idea anyway.

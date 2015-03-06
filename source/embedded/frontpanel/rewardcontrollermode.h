@@ -6,8 +6,8 @@
 #include "NumberEditMode.h"
 
 /*!	\brief A NumberEditMode including functionality for the user to change the current Reward Controller.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class RewardControllerMode : public NumberEditMode
 {

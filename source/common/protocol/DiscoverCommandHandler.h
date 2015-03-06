@@ -11,8 +11,8 @@ namespace Picto {
  *	Director and Proxy, handling of DISCOVER commands ended up getting hard coded into the Server class.
  *	\details Using this DiscoverCommandHandler to handle the DISCOVER commands was actually a pretty good idea though so it might
  *	be worthwhile at some point to try to clean things up so that DISCOVER handling isn't hard coded into anything.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 struct PICTOLIB_API DiscoverCommandHandler : ProtocolCommandHandler

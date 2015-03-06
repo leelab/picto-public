@@ -15,8 +15,8 @@ namespace Picto {
  *	kind of OldVersionAsset should be enough to indicate that an auto upgrade of the experiment is necessary.
  *	We may want to consider if this will work or if it will cause problems, and make the change if it will work.
  * 
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API OldVersionAsset

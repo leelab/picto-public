@@ -22,8 +22,8 @@ namespace Picto {
  *	all of its associated logic.
  *	Currently, VisualElement objects, AudioElement objects, and OutputSignal objects (for digital voltage output) are considered 
  *	OutputElements.  
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_CLASS OutputElement : public ScriptableContainer

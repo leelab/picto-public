@@ -10,8 +10,8 @@ namespace Picto
  *	\details This port is used with the OutputSignalWidget to show current voltage states
  *	to operators from the workstation during experiment testing and/or remote experiment
  *	monitoring.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API VirtualOutputSignalController :  public OutputSignalController

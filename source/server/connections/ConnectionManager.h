@@ -24,8 +24,8 @@ class QTimer;
  *	The ConnectionManager is a singleton object that is accessed by multiple threads.   The actual object will be held 
  *	by the Server, but we can grab an instance of it anywhere we need it (such as in the 
  *	command handlers).  
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ConnectionManager : public QObject
 {

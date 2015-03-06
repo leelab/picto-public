@@ -54,8 +54,8 @@
  *  - -onesided: When this is used there will be no alignment or gathering of neural data.  This means that the parallel port usually used to 
  *		send alignment events to the neural system will be available as a secondary OutputSignal port to the experiment developer
  *		referred to as PAR0.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #include <QApplication>
 #include <QTranslator>

@@ -9,8 +9,8 @@
  *	This is not a clean run model, and we should fix it at some point such that processResponse() only schedules
  *	that the task be run, and the Qt event loop actually does the work of starting the Task.  
  *	See Picto::CommandChannel::processResponses() for more details.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct DirectorStartResponseHandler : public Picto::StartResponseHandler
 {

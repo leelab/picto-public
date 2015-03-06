@@ -64,8 +64,8 @@ namespace Picto {
  *	a particularly central and complex fashion.  It is for ComponentInterface objects that the CommandChannel needs to include pointers to ProtocolResponseHandler and 
  *	ComponentStatusManager objects.  For further incite into what is going on here, look at the processResponses() documentation.
  *	\sa processResponses(), ComponentStatusManager, ProtocolResponseHandler, Engine::PictoEngine
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API CommandChannel : public QObject

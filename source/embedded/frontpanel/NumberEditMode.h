@@ -8,8 +8,8 @@
 /*!	\brief A DisplayMode including functionality for the user to edit numbers
  * \details DisplayMode class that allows a user to change a number should
  * extend this class.  It displays numbers that can be edited by turning the input knob.
- * \author Joey Schnurr, Mark Hammond, Matt Gay
- * \date 2009-2013
+ * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ * \date 2009-2015
  */
 class NumberEditMode : public DisplayMode
 {

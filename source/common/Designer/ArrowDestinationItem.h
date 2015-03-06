@@ -13,8 +13,8 @@
  *	in the designer canvas.  Beyond being an ArrowPortItem that draws a green bar and 
  *	defines an arrow head contact point, it also includes a ScriptItemManager that defines
  *	the position of ScriptItem boxes along its length.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ArrowDestinationItem : public ArrowPortItem
 {

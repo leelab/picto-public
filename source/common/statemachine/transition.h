@@ -19,8 +19,8 @@ namespace Picto {
  *
  *	Transitions are mainly just containers for Source, SourceResult and Destination data; however they also include
  *	functionality to automatically delete themselves if one of the Assets to which they are connected is deleted.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API Transition : public DataStore

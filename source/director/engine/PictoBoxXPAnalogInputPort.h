@@ -21,8 +21,8 @@ namespace Picto {
  *	calculated based on the sample rate.  Since the NiDAQ's configurable clock has significant imprecision, timing errors
  *	are corrected in the parent InputPort class.
  *	\sa InputPort::updateDataBuffer(double)
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PictoBoxXPAnalogInputPort : public InputPort
 {

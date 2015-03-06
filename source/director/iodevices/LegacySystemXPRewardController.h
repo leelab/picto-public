@@ -19,8 +19,8 @@ namespace Picto
  *	For more detail on the precise reward timing system, see startReward().
  *
  *	\note The Legacy System requires active high logic for reward delivery
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class LegacySystemXPRewardController :  public RewardController
 {

@@ -12,8 +12,8 @@ QT_END_NAMESPACE
  *	\details The Picto design is checked using DesignRoot::compiles().  If the design syntax is invalid, this
  *	can result in error messages.  These error messages are displayed in this widget.
  *	\sa DesignRoot::compiles(), Asset::validateTree()
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SyntaxErrorBox : public SearchableTextEdit
 {

@@ -18,8 +18,8 @@ namespace Controller {
  *	purpose.  The timer always returns times according to the instant at which the latest first phosphor occured.
  *	FrameResolutionTimer objects require an underlying FrameTracker object which provides frame timing information.
  *	The FrameResolutionTimer is created by a FrameTimerFactory, and this factory provides the FrameTracker instance.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013	
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015	
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API FrameResolutionTimer

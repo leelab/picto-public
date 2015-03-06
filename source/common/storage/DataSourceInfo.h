@@ -13,8 +13,8 @@ namespace Picto {
  *	saved in the Session file, and the resolution (really this is the sample period) of sampling on that
  *	data source.
  *	\note In the case of spikes, resolution is the time per sample for a spike's waveform.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API DataSourceInfo : public DataUnit

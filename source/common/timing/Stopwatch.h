@@ -20,8 +20,8 @@ namespace Picto {
  *	\note This class is pretty much the same as the Timestamper with one exception.
  *	All Timestamper objects have the same start time, whereas StopWatch objects
  *	all have their own object dependent start time.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API Stopwatch

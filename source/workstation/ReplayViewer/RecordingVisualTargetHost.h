@@ -19,8 +19,8 @@ namespace Picto {
  *	\note This class currently uses qtffmpegwrapper which is a wrapper for ffmpeg since there is no way yet to 
  *	save video files directly from Qt.  qtffmpegwrapper will undoubtedly need to be updated at some point.  It can
  *	be found in Picto\\3rdParty.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class RecordingVisualTargetHost : public VisualTargetHost
 {

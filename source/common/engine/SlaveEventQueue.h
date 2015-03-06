@@ -11,8 +11,8 @@ namespace Picto {
  *	It is implemented as a circular buffered FIFO that expands as necessary to increasing storage needs.
  *	SlaveEvents are added using addPropChange(), addInitPropChange() and addTransActivation().  SlaveEvents are popped using takeFirstEvent().
  *	\sa SlaveEvent, SlaveExperimentDriver
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 class SlaveEventQueue

@@ -16,8 +16,8 @@ namespace Picto {
  *	setting the physical port handled by the OutputSignal as well as enabling/disabling the port.  Enabling/disabling
  *	a port sets whether the value set in this OutputSignal will actually physically appear on the port or not.  It is 
  *	analogous to visible/invisible in a VisualElement.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 struct PICTOLIB_CLASS OutputSignal : public OutputElement
 {

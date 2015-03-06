@@ -20,8 +20,8 @@
  *	\note A new (and unique) database connection is created everytime a ServerConfig
  *	object is constructed.  This is done because database connections can only be used
  *	from within the thread that created them, so we can't just create a single connection.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class ServerConfig
 {

@@ -46,8 +46,8 @@
  *	The SessionInfo class works closely with the SessionData class and its descendants since objects of these classes
  *	store the bulk of the data that comes into the SessionInfo object.  This is a very important class.  It is
  *	fairly central to the function of the Picto Server.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class SessionInfo
 {

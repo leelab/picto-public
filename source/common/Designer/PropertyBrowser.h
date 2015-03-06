@@ -18,8 +18,8 @@ QT_END_NAMESPACE
  *
  *	This widget's job is essentially figuring out which property widgets need to be displayed.  It includes a PropertyGroupWidget
  *	which takes care of actually creating and displaying those widgets.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PropertyBrowser : public QWidget
 {

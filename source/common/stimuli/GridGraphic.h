@@ -17,8 +17,8 @@ namespace Picto {
  *	\details In addition to the Properties provided by the VisualElement class, this class provides size, rows and columns 
  *	Properties.  The size is just the total width and height of the graphic.  The rows and columns are the number of rows
  *	and columns that appear in the grid between the grid lines.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 class PICTOLIB_CLASS GridGraphic : public VisualElement
 {

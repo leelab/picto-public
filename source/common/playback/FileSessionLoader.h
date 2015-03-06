@@ -20,8 +20,8 @@ namespace Picto {
  *	there is a possibility that Assets that were not upgraded might have their Asset ids changed for various reasons.
  *	This class uses a SessionVersionInterfacer to automatically fix the changed Asset IDs and extract the Asset IDs of
  *	Assets that are now obsolete so that their Property values can be ignored.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 	class PICTOLIB_API FileSessionLoader : public QObject

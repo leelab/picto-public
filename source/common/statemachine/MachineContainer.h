@@ -16,8 +16,8 @@ namespace Picto {
  *	
  *	As it stands however, this is a fairly important class that handles a lot of the code necessary for elements that contain
  *	"machines" that includes some form of state transfer.  Currently these include StateMachine and State.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 
 #if defined WIN32 || defined WINCE

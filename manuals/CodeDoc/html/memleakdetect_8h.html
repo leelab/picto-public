@@ -102,8 +102,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><p>Any cpp file that includes this file will have memory leak detection enabled. </p>
 <dl class="section note"><dt>Note</dt><dd>This file must be included after all predefined headers (ie. #include &lt;QSharedPointer&gt;). Therefore, including this in header files makes things incredibly complicated since some files will include others that may define this and then include other files with precompiled headers at the top. For this reason, you should only include this in cpp files and memory leaks that occur in .h files won't be detected. SO DON'T ALLOCATE MEMORY IN .h FILES UNLESS YOU'RE REALLY CAREFUL!</dd></dl>
 <p>See <a href="http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS">http://www.qtcentre.org/wiki/index.php?title=Memory_Leak_Detection_in_VS</a> for more information. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="mainmemleakdetect_8h_source.html">mainmemleakdetect.h</a> </dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>2009-2013 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition in file <a class="el" href="memleakdetect_8h_source.html">memleakdetect.h</a>.</p>
 </div></div><!-- contents -->

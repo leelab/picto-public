@@ -15,8 +15,8 @@ using namespace Picto;
  *	In these cases, Analysis elements that can be added are added, and those that can't are listed in a returned message.  It is also possible for the import to
  *	fail but with a changed design.  In these cases, the return value from the importFromText() function will indicate this, and a rollbackDesignRequired() signal
  *	will be triggered as well.
- *	\author Joey Schnurr, Mark Hammond, Matt Gay
- *	\date 2009-2013
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API AssetExportImport : public QObject
