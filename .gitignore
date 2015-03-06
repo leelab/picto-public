@@ -45,3 +45,4 @@
 /source/workstation/Makefile*
 /source/workstation/PictoWorkstation.vcxproj*
 /source/workstation/*.pro.user
+/err.txt

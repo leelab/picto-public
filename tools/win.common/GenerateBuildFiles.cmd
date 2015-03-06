@@ -30,10 +30,6 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 @call %PICTO_TREE%\tools\win.common\GenerateDocumentation.cmd
 
 
-@echo Generating Documentation Resource File
-%DOXYGEN_DIR%\docQrcGen %PICTO_TREE%\source\documentation\developersguide\developersguide.qrc %PICTO_TREE%\output\documentation\main\html ../../../output/documentation/main/html/
-
-
 @echo Generating Visual Studio Solution
 @qmake -recursive -tp vc
 
