@@ -8,9 +8,17 @@
 @REM Just doing this to contain the local, build-dependent variables
 @SETLOCAL
 
-@IF "%PICTO_MACHINE_TYPE%"=="X86" SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win32
+@IF "%PICTO_MACHINE_TYPE%" == "X86" (
+  @SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win32
+  @SET DEPENDENCY_FIX_DIR=vcSlnDependencies\x86\bin
+  @SET PICTO_SOLUTION_NAME=Picto.sln
+)
 
-@IF "%PICTO_MACHINE_TYPE%"=="X64" SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win64
+@IF "%PICTO_MACHINE_TYPE%" == "X64" (
+  @SET DOXYGEN_DIR=%PICTO_TREE%\tools\doxygen\win64
+  @SET DEPENDENCY_FIX_DIR=vcSlnDependencies\x64\bin
+  @SET PICTO_SOLUTION_NAME=Picto_x64.sln
+)
 
 
 @echo Generating Translation Object Files
@@ -35,9 +43,9 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 @REM )
 
 @REM We rename the solution for 64-bit 
-@IF "%PICTO_MACHINE_TYPE%" == "X64" (
+@IF NOT %PICTO_SOLUTION_NAME%=="Picto.sln" (
   @del "Picto.sln"
-  @qmake -tp vc -o Picto_x64.sln 
+  @qmake -tp vc -o %PICTO_SOLUTION_NAME%
 )
 
 
@@ -49,7 +57,7 @@ FOR /R source %%T IN (*.ts) DO lrelease %%T
 
 @echo Setting Dependencies in Visual Studio Solution
   
-%PICTO_TREE%\tools\win.common\vcSlnDependencies\bin\vcSlnDependencies Picto.sln libPicto
+%PICTO_TREE%\tools\win.common\%DEPENDENCY_FIX_DIR%\vcSlnDependencies %PICTO_SOLUTION_NAME% libPicto
 
 popd
 @ENDLOCAL
