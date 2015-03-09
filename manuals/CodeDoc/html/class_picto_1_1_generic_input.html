@@ -113,15 +113,20 @@ Inheritance diagram for Picto::GenericInput:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a323a34eba0445b24859043ee2ddde9bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323a34eba0445b24859043ee2ddde9bd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GenericInput</b> (QString name, QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt; port=QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;())</td></tr>
+<tr class="memitem:a323a34eba0445b24859043ee2ddde9bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#a323a34eba0445b24859043ee2ddde9bd">GenericInput</a> (QString name, QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt; port=QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;())</td></tr>
+<tr class="memdesc:a323a34eba0445b24859043ee2ddde9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> with the input name and <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>.  <a href="#a323a34eba0445b24859043ee2ddde9bd">More...</a><br /></td></tr>
 <tr class="separator:a323a34eba0445b24859043ee2ddde9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8282d4cc9c80c489dfc02aadd2d2861"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8282d4cc9c80c489dfc02aadd2d2861"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GenericInput</b> (QVector&lt; int &gt; &amp;qvUsedChannels, QString name, QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt; port=QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;())</td></tr>
+<tr class="memitem:ad8282d4cc9c80c489dfc02aadd2d2861"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#ad8282d4cc9c80c489dfc02aadd2d2861">GenericInput</a> (QVector&lt; int &gt; &amp;qvUsedChannels, QString name, QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt; port=QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;())</td></tr>
+<tr class="memdesc:ad8282d4cc9c80c489dfc02aadd2d2861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> using all channels not included in the qvUsedChannels vector.  <a href="#ad8282d4cc9c80c489dfc02aadd2d2861">More...</a><br /></td></tr>
 <tr class="separator:ad8282d4cc9c80c489dfc02aadd2d2861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7afba6e96b711d68575687f2ac4bfe02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7afba6e96b711d68575687f2ac4bfe02"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_data_unit_package.html">InputDataUnitPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GenericInput::getDataPackage</b> ()</td></tr>
-<tr class="separator:a7afba6e96b711d68575687f2ac4bfe02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774d772302c58686d086986a180ebd42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a774d772302c58686d086986a180ebd42"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#a774d772302c58686d086986a180ebd42">~GenericInput</a> ()</td></tr>
+<tr class="memdesc:a774d772302c58686d086986a180ebd42"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> virutal destructor. <br /></td></tr>
+<tr class="separator:a774d772302c58686d086986a180ebd42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae97ce452a265bf91ecd7747795c3bb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae97ce452a265bf91ecd7747795c3bb08"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_data_unit_package.html">InputDataUnitPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08">getDataPackage</a> ()</td></tr>
+<tr class="memdesc:ae97ce452a265bf91ecd7747795c3bb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to a <a class="el" href="class_picto_1_1_input_data_unit_package.html" title="Stores input data (data from a SignalChannel) as a list of InputDataUnits (ie. x,y readings) ...">InputDataUnitPackage</a> object with the Analog Input data. <br /></td></tr>
+<tr class="separator:ae97ce452a265bf91ecd7747795c3bb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_signal_channel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_signal_channel')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_signal_channel.html">Picto::SignalChannel</a></td></tr>
 <tr class="memitem:afd9b6db73405a692074553032f1ca33c inherit pub_methods_class_picto_1_1_signal_channel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">SignalChannel</a> (QString name, QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt; port=QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;())</td></tr>
 <tr class="memdesc:afd9b6db73405a692074553032f1ca33c inherit pub_methods_class_picto_1_1_signal_channel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> with the input name and <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>.  <a href="#afd9b6db73405a692074553032f1ca33c">More...</a><br /></td></tr>
@@ -212,7 +217,76 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPor
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_generic_input_8h_source.html#l00022">22</a> of file <a class="el" href="_generic_input_8h_source.html">GenericInput.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a323a34eba0445b24859043ee2ddde9bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GenericInput::GenericInput </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;&#160;</td>
+          <td class="paramname"><em>port</em> = <code>QSharedPointer&lt;<a class="el" href="class_picto_1_1_input_port.html">InputPort</a>&gt;()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> with the input name and <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>. </p>
+<p>When using this constructor a default value of 4 readings per ms is used. </p><dl class="section note"><dt>Note</dt><dd>Multiple SignalChannels can share a single <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>. The <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> represents a DAQ device, for example, whereas the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> represents one logical signal such as "Position." </dd></dl>
+
+<p>Definition at line <a class="el" href="_generic_input_8cpp_source.html#l00013">13</a> of file <a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8282d4cc9c80c489dfc02aadd2d2861"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GenericInput::GenericInput </td>
+          <td>(</td>
+          <td class="paramtype">QVector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>qvUsedChannels</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPort</a> &gt;&#160;</td>
+          <td class="paramname"><em>port</em> = <code>QSharedPointer&lt;<a class="el" href="class_picto_1_1_input_port.html">InputPort</a>&gt;()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> using all channels not included in the qvUsedChannels vector. </p>
+<p>When using this constructor a default value of 4 readings per ms is used. </p><dl class="section note"><dt>Note</dt><dd>Multiple SignalChannels can share a single <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>. The <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> represents a DAQ device, for example, whereas the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> represents one logical signal such as "Position." </dd></dl>
+
+<p>Definition at line <a class="el" href="_generic_input_8cpp_source.html#l00028">28</a> of file <a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/engine/<a class="el" href="_generic_input_8h_source.html">GenericInput.h</a></li>
 <li>source/common/engine/<a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a></li>
 </ul>

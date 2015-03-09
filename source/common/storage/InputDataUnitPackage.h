@@ -25,8 +25,9 @@ namespace Picto {
 #endif
 {
 public:
-
+	/*! \brief Constructs an InputDataUnitPackage.*/
 	InputDataUnitPackage();
+	/*! \brief InputDataUnitPackage virtual destructor.*/
 	virtual ~InputDataUnitPackage() {};
 
 	void setDescriptor(QString descriptor);

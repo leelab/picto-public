@@ -27,9 +27,11 @@ public:
 	GenericInput(QString name, QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
 	GenericInput(QVector<int> &qvUsedChannels, QString name, QSharedPointer<InputPort> port = QSharedPointer<InputPort>());
 
+	/*! \brief GenericInput virutal destructor.*/
 	virtual ~GenericInput() {};
 
-	QSharedPointer<InputDataUnitPackage> GenericInput::getDataPackage();
+	/*! \brief Returns a pointer to a InputDataUnitPackage object with the Analog Input data.*/
+	QSharedPointer<InputDataUnitPackage> getDataPackage();
 };
 
 };

@@ -2,9 +2,10 @@ var searchData=
 [
   ['machinecontainer',['MachineContainer',['../class_picto_1_1_machine_container.html',1,'Picto']]],
   ['machinecontainer',['MachineContainer',['../class_picto_1_1_machine_container.html#ad038f9042442d026b1a48f58c0ebfedc',1,'Picto::MachineContainer']]],
-  ['main',['main',['../config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../director_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../embedded_2frontpanel_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../proxyserver_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../workstation_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp']]],
+  ['main',['main',['../config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../director_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../embedded_2frontpanel_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../proxyserver_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../server_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp'],['../workstation_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.cpp']]],
   ['main_2ecpp',['main.cpp',['../config_2main_8cpp.html',1,'']]],
   ['main_2ecpp',['main.cpp',['../workstation_2main_8cpp.html',1,'']]],
+  ['main_2ecpp',['main.cpp',['../server_2main_8cpp.html',1,'']]],
   ['main_2ecpp',['main.cpp',['../director_2main_8cpp.html',1,'']]],
   ['main_2ecpp',['main.cpp',['../embedded_2blankscreen_2main_8cpp.html',1,'']]],
   ['main_2ecpp',['main.cpp',['../embedded_2frontpanel_2main_8cpp.html',1,'']]],

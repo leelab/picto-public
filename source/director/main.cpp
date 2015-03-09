@@ -238,10 +238,6 @@ int main(int argc, char *argv[])
 	//Setup autoupdate system
 	UpdateDownloader::getInstance()->setRestartCommands(app.applicationFilePath(),app.arguments());
 
-	//For now, just use pixmap ------- Remove this/////////////////////
-	//visTarget = HardwareSetup::Pixmap;
-	///////////////////////////////////////////////////////////////////	
-
 	QSharedPointer<Director> director(new Director(newName,sigChan,visTarget,rewCont,outSigCont,eventGen,xChan,yChan,xDiamChan,yDiamChan,posPer,diamPer));
 	director->activate();
 	Picto::CloseLib();

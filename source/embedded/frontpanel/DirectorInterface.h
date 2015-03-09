@@ -16,7 +16,7 @@ using namespace Picto;
 
 
 /*! \file
- * \enum An enum describing the current status of the director
+ * \brief An enum describing the current status of the director
  */
 enum DirectorStatus {
 	DirUnknown, /*!< Cant connect to Director application, status is unknown*/

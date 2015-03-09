@@ -97,43 +97,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;GenericInput::GenericInput(QString name, QSharedPointer&lt;InputPort&gt; port ) </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    : <a class="code" href="class_picto_1_1_signal_channel.html">SignalChannel</a>(name, 4, port)</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="class_picto_1_1_doublet_signal_channel.html#ac426de86e8ef7f9dfc0dbf50c7bc630b">addSubchannel</a>(QString(<span class="stringliteral">&quot;input%1&quot;</span>).arg(i), i);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    }</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;GenericInput::GenericInput(QVector&lt;int&gt; &amp;qvUsedChannels, QString name, QSharedPointer&lt;InputPort&gt; port )</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    : <a class="code" href="class_picto_1_1_signal_channel.html">SignalChannel</a>(name, 4, port)</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">if</span> (!qvUsedChannels.contains(i))</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <a class="code" href="class_picto_1_1_doublet_signal_channel.html#ac426de86e8ef7f9dfc0dbf50c7bc630b">addSubchannel</a>(QString(<span class="stringliteral">&quot;input%1&quot;</span>).arg(i), i);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;QSharedPointer&lt;InputDataUnitPackage&gt; GenericInput::getDataPackage()</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    QSharedPointer&lt;InputDataUnitPackage&gt; returnVal(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_input_data_unit_package.html">InputDataUnitPackage</a>());</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    returnVal-&gt;setChannel(<a class="code" href="class_picto_1_1_signal_channel.html#a697b1be76af81057d3ce59fb892d2abe">getName</a>());</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    returnVal-&gt;setResolution(msPerSample_);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    returnVal-&gt;addData(<a class="code" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">getValues</a>(), <a class="code" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">latestUpdateEventOffset</a>());</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">if</span> (returnVal-&gt;length())</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">return</span> returnVal;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;InputDataUnitPackage&gt;();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_picto_1_1_generic_input.html#a323a34eba0445b24859043ee2ddde9bd">   13</a></span>&#160;<a class="code" href="class_picto_1_1_generic_input.html#a323a34eba0445b24859043ee2ddde9bd">GenericInput::GenericInput</a>(QString name, QSharedPointer&lt;InputPort&gt; port ) </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    : <a class="code" href="class_picto_1_1_signal_channel.html">SignalChannel</a>(name, 4, port)</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">addSubchannel</a>(QString(<span class="stringliteral">&quot;input%1&quot;</span>).arg(i), i);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_picto_1_1_generic_input.html#ad8282d4cc9c80c489dfc02aadd2d2861">   28</a></span>&#160;<a class="code" href="class_picto_1_1_generic_input.html#a323a34eba0445b24859043ee2ddde9bd">GenericInput::GenericInput</a>(QVector&lt;int&gt; &amp;qvUsedChannels, QString name, QSharedPointer&lt;InputPort&gt; port )</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    : <a class="code" href="class_picto_1_1_signal_channel.html">SignalChannel</a>(name, 4, port)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">if</span> (!qvUsedChannels.contains(i))</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">addSubchannel</a>(QString(<span class="stringliteral">&quot;input%1&quot;</span>).arg(i), i);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08">   40</a></span>&#160;QSharedPointer&lt;InputDataUnitPackage&gt; <a class="code" href="class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08">GenericInput::getDataPackage</a>()</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    QSharedPointer&lt;InputDataUnitPackage&gt; returnVal(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_input_data_unit_package.html">InputDataUnitPackage</a>());</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    returnVal-&gt;setChannel(<a class="code" href="class_picto_1_1_signal_channel.html#a697b1be76af81057d3ce59fb892d2abe">getName</a>());</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    returnVal-&gt;setResolution(msPerSample_);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    returnVal-&gt;addData(<a class="code" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">getValues</a>(), <a class="code" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">latestUpdateEventOffset</a>());</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (returnVal-&gt;length())</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> returnVal;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;InputDataUnitPackage&gt;();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_signal_channel_html_a656a421939ffd3f75fad08289e5f3ba2"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">Picto::SignalChannel::latestUpdateEventOffset</a></div><div class="ttdeci">double latestUpdateEventOffset()</div><div class="ttdoc">Returns the offset from the time that the previous frame occured to the time that the first sample ap...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00069">SignalChannel.cpp:69</a></div></div>
 <div class="ttc" id="class_picto_1_1_signal_channel_html_a697b1be76af81057d3ce59fb892d2abe"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a697b1be76af81057d3ce59fb892d2abe">Picto::SignalChannel::getName</a></div><div class="ttdeci">QString getName()</div><div class="ttdoc">Returns the name of this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00073">SignalChannel.h:73</a></div></div>
 <div class="ttc" id="class_picto_1_1_signal_channel_html_a6d3da16b7a2233f581617aabdb1c4c72"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">Picto::SignalChannel::getValues</a></div><div class="ttdeci">virtual QMap&lt; QString, QVector&lt; double &gt; &gt; getValues()</div><div class="ttdoc">Returns a map of data sample vectors indexed by sub-channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00140">SignalChannel.cpp:140</a></div></div>
 <div class="ttc" id="class_picto_1_1_input_data_unit_package_html"><div class="ttname"><a href="class_picto_1_1_input_data_unit_package.html">Picto::InputDataUnitPackage</a></div><div class="ttdoc">Stores input data (data from a SignalChannel) as a list of InputDataUnits (ie. x,y readings) ...</div><div class="ttdef"><b>Definition:</b> <a href="_input_data_unit_package_8h_source.html#l00024">InputDataUnitPackage.h:24</a></div></div>
 <div class="ttc" id="class_picto_1_1_signal_channel_html"><div class="ttname"><a href="class_picto_1_1_signal_channel.html">Picto::SignalChannel</a></div><div class="ttdoc">SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00047">SignalChannel.h:47</a></div></div>
-<div class="ttc" id="class_picto_1_1_doublet_signal_channel_html_ac426de86e8ef7f9dfc0dbf50c7bc630b"><div class="ttname"><a href="class_picto_1_1_doublet_signal_channel.html#ac426de86e8ef7f9dfc0dbf50c7bc630b">Picto::DoubletSignalChannel::addSubchannel</a></div><div class="ttdeci">virtual void addSubchannel(QString subchannelName, int channelIndex)</div><div class="ttdoc">Adds a subchannel for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_doublet_signal_channel_8cpp_source.html#l00034">DoubletSignalChannel.cpp:34</a></div></div>
+<div class="ttc" id="class_picto_1_1_generic_input_html_ae97ce452a265bf91ecd7747795c3bb08"><div class="ttname"><a href="class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08">Picto::GenericInput::getDataPackage</a></div><div class="ttdeci">QSharedPointer&lt; InputDataUnitPackage &gt; getDataPackage()</div><div class="ttdoc">Returns a pointer to a InputDataUnitPackage object with the Analog Input data. </div><div class="ttdef"><b>Definition:</b> <a href="_generic_input_8cpp_source.html#l00040">GenericInput.cpp:40</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_abfe16a2da824414da1ed01ae72604077"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">Picto::SignalChannel::addSubchannel</a></div><div class="ttdeci">virtual void addSubchannel(QString subchannelName, int channelIndex)</div><div class="ttdoc">Adds a subchannel for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00036">SignalChannel.cpp:36</a></div></div>
+<div class="ttc" id="class_picto_1_1_generic_input_html_a323a34eba0445b24859043ee2ddde9bd"><div class="ttname"><a href="class_picto_1_1_generic_input.html#a323a34eba0445b24859043ee2ddde9bd">Picto::GenericInput::GenericInput</a></div><div class="ttdeci">GenericInput(QString name, QSharedPointer&lt; InputPort &gt; port=QSharedPointer&lt; InputPort &gt;())</div><div class="ttdoc">Constructs a new GenericInput with the input name and InputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_generic_input_8cpp_source.html#l00013">GenericInput.cpp:13</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -83,6 +83,8 @@ static const char *const keywords[MAX_KEYWORD] = {
     0
 };
 
+/*! \brief Simple struct to encapsulate keywords
+*/
 struct KeywordHelper
 {
     inline KeywordHelper(const QString &word) : needle(word) {}

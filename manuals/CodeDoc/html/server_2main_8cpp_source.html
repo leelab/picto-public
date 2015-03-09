@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">main.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<a href="server_2main_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;QApplication&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;QDialog&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_win_get_p_i_d_8h.html">processinfo/WinGetPID.h</a>&quot;</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">int</span> serviceMain(<a class="code" href="class_system_service.html">SystemService</a> *)</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="server_2main_8cpp.html#a3ab4b02886383374f30a4a20684ee02f">   50</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="server_2main_8cpp.html#a3ab4b02886383374f30a4a20684ee02f">serviceMain</a>(<a class="code" href="class_system_service.html">SystemService</a> *)</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    Picto::InitializeNames();</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Picto::InitializePorts(Picto::Names-&gt;serverAppName,<span class="keyword">true</span>);</div>
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> eventLoop.exec();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="server_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">  102</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment">//This will cause memory leaks to print out on exit if they&#39;re enabled</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">    #if defined (DETECTMEMLEAKS) &amp;&amp; defined(_MSC_VER) &amp;&amp; defined(_DEBUG)</span></div>
@@ -309,7 +309,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                                Picto::Names-&gt;serverAppName,</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                                serviceDescription,</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                                <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                                serviceMain,</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                                <a class="code" href="server_2main_8cpp.html#a3ab4b02886383374f30a4a20684ee02f">serviceMain</a>,</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                                argc,</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                                argv);</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
@@ -450,6 +450,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="struct_server_protocols_html"><div class="ttname"><a href="struct_server_protocols.html">ServerProtocols</a></div><div class="ttdoc">A simple container object used to store all fo the Protocol objects used by the Server. </div><div class="ttdef"><b>Definition:</b> <a href="_server_protocols_8h_source.html#l00016">ServerProtocols.h:16</a></div></div>
 <div class="ttc" id="_win_get_p_i_d_8h_html"><div class="ttname"><a href="_win_get_p_i_d_8h.html">WinGetPID.h</a></div></div>
 <div class="ttc" id="struct_server_picto_protocol_html"><div class="ttname"><a href="struct_server_picto_protocol.html">ServerPictoProtocol</a></div><div class="ttdoc">The PICTO protocol. </div><div class="ttdef"><b>Definition:</b> <a href="_server_picto_protocol_8h_source.html#l00015">ServerPictoProtocol.h:15</a></div></div>
+<div class="ttc" id="server_2main_8cpp_html_a3ab4b02886383374f30a4a20684ee02f"><div class="ttname"><a href="server_2main_8cpp.html#a3ab4b02886383374f30a4a20684ee02f">serviceMain</a></div><div class="ttdeci">int serviceMain(SystemService *)</div><div class="ttdoc">This looks to me like the main method when the Picto Server runs as a service. I didn&#39;t write it...</div><div class="ttdef"><b>Definition:</b> <a href="server_2main_8cpp_source.html#l00050">main.cpp:50</a></div></div>
 <div class="ttc" id="class_dialog_html"><div class="ttname"><a href="class_dialog.html">Dialog</a></div><div class="ttdoc">A Dialog used by the TDTProxyPlugin. </div><div class="ttdef"><b>Definition:</b> <a href="proxyplugins_2tdtplugin_2dialog_8h_source.html#l00024">dialog.h:24</a></div></div>
 <div class="ttc" id="config_2main_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdoc">The main method for the PictoConfig application. </div><div class="ttdef"><b>Definition:</b> <a href="config_2main_8cpp_source.html#l00027">main.cpp:27</a></div></div>
 <div class="ttc" id="class_system_service_html"><div class="ttname"><a href="class_system_service.html">SystemService</a></div><div class="ttdoc">This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. </div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00022">systemservice.h:22</a></div></div>

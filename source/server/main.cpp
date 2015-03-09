@@ -1,5 +1,5 @@
-/*! \file server/main.cpp
- * \brief The PictoSErver application.
+/*! \file source/server/main.cpp
+ * \brief The PictoServer application.
  *
  *	PictoServer is the central server that ties all of the distributed pieces of Picto
  *	together.  Like any good server, it recieves commands, parses and replies to them.

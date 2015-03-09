@@ -4,6 +4,12 @@
 
 using namespace Picto;
 
+/*! \brief Constructs a new GenericInput with the input name and InputPort.
+*	\details When using this constructor a default value of 4 readings per ms is used.
+*	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
+*	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
+*	as "Position."
+*/
 GenericInput::GenericInput(QString name, QSharedPointer<InputPort> port ) 
 	: SignalChannel(name, 4, port)
 {
@@ -13,6 +19,12 @@ GenericInput::GenericInput(QString name, QSharedPointer<InputPort> port )
 	}
 }
 
+/*! \brief Constructs a new GenericInput using all channels not included in the qvUsedChannels vector.
+*	\details When using this constructor a default value of 4 readings per ms is used.
+*	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
+*	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
+*	as "Position."
+*/
 GenericInput::GenericInput(QVector<int> &qvUsedChannels, QString name, QSharedPointer<InputPort> port )
 	: SignalChannel(name, 4, port)
 {
