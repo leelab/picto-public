@@ -118,7 +118,6 @@ var searchData=
   ['getengine',['getEngine',['../class_picto_1_1_experiment.html#af1f0c10174056338e9624638453029f6',1,'Picto::Experiment::getEngine()'],['../class_director_status_manager.html#af3d315b6ea58398d992e297d8c70c06c',1,'DirectorStatusManager::getEngine()']]],
   ['getenginecommand',['getEngineCommand',['../class_picto_1_1_engine_1_1_picto_engine.html#acd4ee87ea24bdb2ead7aa47438251bed',1,'Picto::Engine::PictoEngine']]],
   ['geterrors',['getErrors',['../class_picto_1_1_serializable.html#a9b14c771646820d10e082d351cd4cf50',1,'Picto::Serializable']]],
-  ['geteventsocket',['getEventSocket',['../class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e',1,'FrontPanelInfo']]],
   ['getexclusivemode',['getExclusiveMode',['../class_picto_1_1_engine_1_1_picto_engine.html#a046e3d64216d1a8ce55ed52f37b776fa',1,'Picto::Engine::PictoEngine']]],
   ['getexperiment',['getExperiment',['../class_picto_1_1_design_root.html#a4b69e2bd671f36df8bdd903b664c7471',1,'Picto::DesignRoot::getExperiment()'],['../class_picto_1_1_picto_data.html#a586cc4820a47b2cc0ab0a0c5a3273e06',1,'Picto::PictoData::getExperiment()'],['../class_director_status_manager.html#a0dcb0e210becf04a832b35f0f3eb5247',1,'DirectorStatusManager::getExperiment()']]],
   ['getfields',['getFields',['../class_picto_1_1_operator_info_graphic.html#a33811e677b4b434d45d35145a6acb523',1,'Picto::OperatorInfoGraphic']]],
@@ -467,7 +466,7 @@ var searchData=
   ['giverewardrequest',['giveRewardRequest',['../class_control_panel_interface.html#aa31c026d69d3e7644c43f16ea25f82f2',1,'ControlPanelInterface']]],
   ['globals_2eh',['globals.h',['../globals_8h.html',1,'']]],
   ['green',['green',['../class_picto_1_1_color_parameter.html#a7cfab3390f7bee887cfa15e2e1cb82e6',1,'Picto::ColorParameter::green()'],['../struct_picto_1_1_visual_element.html#a1c795d02093276be88d7405bd4e42f64',1,'Picto::VisualElement::green()']]],
-  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html#a27af6c6c51429ea1f9ecb326fef9adb6',1,'Picto::GridGraphic']]],
   ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html',1,'Picto']]],
+  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html#a27af6c6c51429ea1f9ecb326fef9adb6',1,'Picto::GridGraphic']]],
   ['group',['group',['../struct_search_request.html#af1011ddf957c3617a37d47d08c171a9a',1,'SearchRequest']]]
 ];

@@ -115,7 +115,6 @@ var searchData=
   ['setenabledimportedanalyses',['setEnabledImportedAnalyses',['../class_playback_controller_data.html#a784a46c9d803fd51b80a503196d19181',1,'PlaybackControllerData']]],
   ['setengine',['setEngine',['../class_picto_1_1_experiment.html#a567673ce1a500a661712458086612005',1,'Picto::Experiment::setEngine()'],['../class_director_status_manager.html#a637aaf1e265f2df5b7fca45335c0468a',1,'DirectorStatusManager::setEngine()']]],
   ['seteventcodegenerator',['setEventCodeGenerator',['../class_picto_1_1_engine_1_1_picto_engine.html#a28e2fcc1ad7a6dccdda9581bf00198bc',1,'Picto::Engine::PictoEngine']]],
-  ['seteventsocket',['setEventSocket',['../class_front_panel_info.html#a67f78be189f14830325609f7bde592b4',1,'FrontPanelInfo']]],
   ['setexclusivemode',['setExclusiveMode',['../class_picto_1_1_engine_1_1_picto_engine.html#aef1a0c0744aaaa908ca1fe3bbc842f48',1,'Picto::Engine::PictoEngine']]],
   ['setexperiment',['setExperiment',['../class_director_status_manager.html#a24f41d8039a1011c9bc35b113273fa88',1,'DirectorStatusManager']]],
   ['setfieldvalue',['setFieldValue',['../struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d',1,'Picto::ProtocolCommand::setFieldValue()'],['../struct_picto_1_1_protocol_response.html#a282039f53393f6dc96b466ad41208422',1,'Picto::ProtocolResponse::setFieldValue()']]],

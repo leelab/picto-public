@@ -117,31 +117,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        commandSocket-&gt;close();</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    panelInfo-&gt;<a class="code" href="class_front_panel_info.html#add749a5bcfd4f7b36b3d4cdbb252db5c">setCommandSocket</a>(NULL);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    QTcpSocket *eventSocket = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e">getEventSocket</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span>(eventSocket)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        eventSocket-&gt;close();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a67f78be189f14830325609f7bde592b4">setEventSocket</a>(NULL);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    commandSocket-&gt;deleteLater();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    eventSocket-&gt;deleteLater();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    commandChannel-&gt;deleteLater();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> EngineConnections::setupCommandConnection()</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QTcpSocket *clientConnection = commandChannel-&gt;nextPendingConnection();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    panelInfo-&gt;<a class="code" href="class_front_panel_info.html#add749a5bcfd4f7b36b3d4cdbb252db5c">setCommandSocket</a>(clientConnection);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QTextStream out(stdout);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    out&lt;&lt;<span class="stringliteral">&quot;Command channel connected...&quot;</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    commandSocket-&gt;deleteLater();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    commandChannel-&gt;deleteLater();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> EngineConnections::setupCommandConnection()</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    QTcpSocket *clientConnection = commandChannel-&gt;nextPendingConnection();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    panelInfo-&gt;<a class="code" href="class_front_panel_info.html#add749a5bcfd4f7b36b3d4cdbb252db5c">setCommandSocket</a>(clientConnection);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    QTextStream out(stdout);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    out&lt;&lt;<span class="stringliteral">&quot;Command channel connected...&quot;</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
 <div class="ttc" id="class_front_panel_info_html_a4ecaff5133fcf4fbb926ad45165203b1"><div class="ttname"><a href="class_front_panel_info.html#a4ecaff5133fcf4fbb926ad45165203b1">FrontPanelInfo::getCommandSocket</a></div><div class="ttdeci">QTcpSocket * getCommandSocket()</div><div class="ttdoc">Returns the command socket that is used by the Front Panel Application to communicate with the Direct...</div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00054">FrontPanelInfo.h:54</a></div></div>
 <div class="ttc" id="class_front_panel_info_html_add749a5bcfd4f7b36b3d4cdbb252db5c"><div class="ttname"><a href="class_front_panel_info.html#add749a5bcfd4f7b36b3d4cdbb252db5c">FrontPanelInfo::setCommandSocket</a></div><div class="ttdeci">void setCommandSocket(QTcpSocket *socket)</div><div class="ttdoc">Returns the command socket that is used by the Front Panel Application to communicate with the Direct...</div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00058">FrontPanelInfo.h:58</a></div></div>
 <div class="ttc" id="class_engine_connections_html_acb38eac1a3302c4668d2f2b0be48788c"><div class="ttname"><a href="class_engine_connections.html#acb38eac1a3302c4668d2f2b0be48788c">EngineConnections::EngineConnections</a></div><div class="ttdeci">EngineConnections(FrontPanelInfo *panelInfo, QObject *parent=0)</div><div class="ttdoc">Creates an EngineConnections object which creates a commandChannel and puts it into the input FrontPa...</div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8cpp_source.html#l00012">engineconnections.cpp:12</a></div></div>
 <div class="ttc" id="class_engine_connections_html_a7d06ed516638c57ae407581ebe53781b"><div class="ttname"><a href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">EngineConnections::~EngineConnections</a></div><div class="ttdeci">virtual ~EngineConnections()</div><div class="ttdoc">Destroys the EngineConnections object, closing the FrontPanel->Director command channel in the proces...</div><div class="ttdef"><b>Definition:</b> <a href="engineconnections_8cpp_source.html#l00025">engineconnections.cpp:25</a></div></div>
-<div class="ttc" id="class_front_panel_info_html_a4db64aad7a688139090db23adbfcad9e"><div class="ttname"><a href="class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e">FrontPanelInfo::getEventSocket</a></div><div class="ttdeci">QTcpSocket * getEventSocket()</div><div class="ttdoc">NO LONGER USED. </div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00061">FrontPanelInfo.h:61</a></div></div>
-<div class="ttc" id="class_front_panel_info_html_a67f78be189f14830325609f7bde592b4"><div class="ttname"><a href="class_front_panel_info.html#a67f78be189f14830325609f7bde592b4">FrontPanelInfo::setEventSocket</a></div><div class="ttdeci">void setEventSocket(QTcpSocket *socket)</div><div class="ttdoc">NO LONGER USED. </div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00063">FrontPanelInfo.h:63</a></div></div>
 <div class="ttc" id="class_front_panel_info_html"><div class="ttname"><a href="class_front_panel_info.html">FrontPanelInfo</a></div><div class="ttdoc">Stores the command socket used by the Front Panel to communicate with the director as well as the cur...</div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00036">FrontPanelInfo.h:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

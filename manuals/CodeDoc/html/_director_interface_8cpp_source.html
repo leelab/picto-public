@@ -366,66 +366,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="class_director_interface.html#a66be82803781f998f822e1e151e2fb4a">  348</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_director_interface.html#a66be82803781f998f822e1e151e2fb4a">DirectorInterface::isConnected</a>()</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;{</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="comment">//check to see if we&#39;ve connected to the engine yet</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    QTcpSocket *commSock, *eventSock;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    QTcpSocket *commSock;</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    commSock = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4ecaff5133fcf4fbb926ad45165203b1">getCommandSocket</a>();</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    eventSock = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e">getEventSocket</a>();</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="comment">//The order in this &quot;if&quot; is important, since if we call isValid() on a </span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="comment">//null pointer, bad things will happen. (Remember, || will return true</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="comment">//when it encounters the first true expression.)</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">if</span>(!commSock || !eventSock ||</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        !commSock-&gt;isValid()  || !eventSock-&gt;isValid())</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    {</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    }</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;}</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="keywordtype">bool</span> DirectorInterface::sendCommandGetResponse(<a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command,QString* reply)</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;{</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    Q_ASSERT(reply);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    QTcpSocket *commSock = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4ecaff5133fcf4fbb926ad45165203b1">getCommandSocket</a>();</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">if</span>(!commSock)</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">if</span>(command.<a class="code" href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">getContent</a>().size())</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        command.<a class="code" href="struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d">setFieldValue</a>(<span class="stringliteral">&quot;Content-Length&quot;</span>, QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(command.<a class="code" href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">getContent</a>().size()));</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    QString commandId = QString::number(++lastCommandId_);</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d">setFieldValue</a>(<span class="stringliteral">&quot;Command-ID&quot;</span>,commandId);</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#aa889e2721083fde57ec986115e86870d">write</a>(commSock);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="comment">//qDebug(&quot;SentID: &quot; + commandId.toLatin1());</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> response;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordtype">int</span> r = response.<a class="code" href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70">read</a>(commSock,<a class="code" href="_director_interface_8cpp.html#a8ab3c21f736722719941d3c2f1237cab">RESPONSEDELAYMS</a>);</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="comment">//If we got a reponse (r&gt;=0) but it wasn&#39;t for our command, throw it out and read a new one.</span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <span class="keywordflow">while</span>((r &gt;= 0) &amp;&amp; (response.<a class="code" href="struct_picto_1_1_protocol_response.html#acb1dcfcf369c0c22466d2983450bc0c4">getFieldValue</a>(<span class="stringliteral">&quot;Command-ID&quot;</span>) != commandId))</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    {</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        <span class="comment">//qDebug(&quot;ReceivedID: &quot; + response.getFieldValue(&quot;Command-ID&quot;).toLatin1());</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        r = response.<a class="code" href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70">read</a>(commSock,<a class="code" href="_director_interface_8cpp.html#a8ab3c21f736722719941d3c2f1237cab">RESPONSEDELAYMS</a>);</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    }</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    (*reply) = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keywordflow">if</span>(r &lt; 0)   <span class="comment">//A response to our command didn&#39;t arrive in time.</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordflow">if</span> (!commSock || !commSock-&gt;isValid())</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    {</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    }</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keywordtype">bool</span> DirectorInterface::sendCommandGetResponse(<a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command,QString* reply)</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;{</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    Q_ASSERT(reply);</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    QTcpSocket *commSock = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4ecaff5133fcf4fbb926ad45165203b1">getCommandSocket</a>();</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">if</span>(!commSock)</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">if</span>(command.<a class="code" href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">getContent</a>().size())</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        command.<a class="code" href="struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d">setFieldValue</a>(<span class="stringliteral">&quot;Content-Length&quot;</span>, QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(command.<a class="code" href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">getContent</a>().size()));</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    QString commandId = QString::number(++lastCommandId_);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d">setFieldValue</a>(<span class="stringliteral">&quot;Command-ID&quot;</span>,commandId);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#aa889e2721083fde57ec986115e86870d">write</a>(commSock);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="comment">//qDebug(&quot;SentID: &quot; + commandId.toLatin1());</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> response;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="keywordtype">int</span> r = response.<a class="code" href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70">read</a>(commSock,<a class="code" href="_director_interface_8cpp.html#a8ab3c21f736722719941d3c2f1237cab">RESPONSEDELAYMS</a>);</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="comment">//If we got a reponse (r&gt;=0) but it wasn&#39;t for our command, throw it out and read a new one.</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordflow">while</span>((r &gt;= 0) &amp;&amp; (response.<a class="code" href="struct_picto_1_1_protocol_response.html#acb1dcfcf369c0c22466d2983450bc0c4">getFieldValue</a>(<span class="stringliteral">&quot;Command-ID&quot;</span>) != commandId))</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    {</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <span class="comment">//qDebug(&quot;ReceivedID: &quot; + response.getFieldValue(&quot;Command-ID&quot;).toLatin1());</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        r = response.<a class="code" href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70">read</a>(commSock,<a class="code" href="_director_interface_8cpp.html#a8ab3c21f736722719941d3c2f1237cab">RESPONSEDELAYMS</a>);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    }</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    (*reply) = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordflow">if</span>(r &lt; 0)   <span class="comment">//A response to our command didn&#39;t arrive in time.</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="comment">//qDebug(&quot;ReceivedID: &quot; + response.getFieldValue(&quot;Command-ID&quot;).toLatin1());</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    (*reply) = QString(response.<a class="code" href="struct_picto_1_1_protocol_response.html#a3c1ec9136c91f050ee4498ee7f7d3841">getDecodedContent</a>());</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keywordflow">if</span>(response.<a class="code" href="struct_picto_1_1_protocol_response.html#a71d3134d2731be4a5cd53a0ce3ad4790">getResponseCode</a>() != 200)</div>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="comment">//qDebug(&quot;ReceivedID: &quot; + response.getFieldValue(&quot;Command-ID&quot;).toLatin1());</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    (*reply) = QString(response.<a class="code" href="struct_picto_1_1_protocol_response.html#a3c1ec9136c91f050ee4498ee7f7d3841">getDecodedContent</a>());</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordflow">if</span>(response.<a class="code" href="struct_picto_1_1_protocol_response.html#a71d3134d2731be4a5cd53a0ce3ad4790">getResponseCode</a>() != 200)</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keywordtype">void</span> DirectorInterface::updateLocalRewards()</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;{</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    rewardController_-&gt;triggerRewards(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keywordflow">if</span>(rewardController_-&gt;hasPendingRewards())</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0;i&lt;5;i++)</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    {</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        <span class="keywordflow">if</span>(rewardController_-&gt;rewardInProgress(i) </div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            || rewardController_-&gt;isFlushing(i))</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    }</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">//qDebug(&quot;Stopping reward timer&quot;);</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    rewardTimer_-&gt;stop();</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;}</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;}</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="keywordtype">void</span> DirectorInterface::updateLocalRewards()</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;{</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    rewardController_-&gt;triggerRewards(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordflow">if</span>(rewardController_-&gt;hasPendingRewards())</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0;i&lt;5;i++)</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    {</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <span class="keywordflow">if</span>(rewardController_-&gt;rewardInProgress(i) </div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;            || rewardController_-&gt;isFlushing(i))</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    }</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <span class="comment">//qDebug(&quot;Stopping reward timer&quot;);</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    rewardTimer_-&gt;stop();</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;}</div>
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095">DirConnect</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00024">DirectorInterface.h:24</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_ae1b43ba627c6c89f9ca35084e72eb49e"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">Picto::ProtocolCommand::setContent</a></div><div class="ttdeci">int setContent(QByteArray _content)</div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8cpp_source.html#l00107">ProtocolCommand.cpp:107</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_a9b8e81cf4f3675fef7922d3ad3e13456"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">Picto::ProtocolCommand::getContent</a></div><div class="ttdeci">QByteArray getContent()</div><div class="ttdoc">Returns the content of this ProtocolCommand. </div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8h_source.html#l00071">ProtocolCommand.h:71</a></div></div>
@@ -453,7 +448,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_director_interface_html_a38dfc7b5d091c8ba5df16f608376f3b7"><div class="ttname"><a href="class_director_interface.html#a38dfc7b5d091c8ba5df16f608376f3b7">DirectorInterface::getFlushDuration</a></div><div class="ttdeci">int getFlushDuration(int controller)</div><div class="ttdoc">Returns the current flush duration for the input controller number. </div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00239">DirectorInterface.cpp:239</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_response_html_ace13e43b1f086e84cf6f9d782fe1ce70"><div class="ttname"><a href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70">Picto::ProtocolResponse::read</a></div><div class="ttdeci">int read(QAbstractSocket *socket, int timeoutMs=0)</div><div class="ttdoc">Reads an incoming ProtocolResponse from the input socket and returns the number of content bytes that...</div><div class="ttdef"><b>Definition:</b> <a href="_protocol_response_8cpp_source.html#l00462">ProtocolResponse.cpp:462</a></div></div>
 <div class="ttc" id="class_director_interface_html_ac461d58ad8cc8bd1e58d48420f48503b"><div class="ttname"><a href="class_director_interface.html#ac461d58ad8cc8bd1e58d48420f48503b">DirectorInterface::setIP</a></div><div class="ttdeci">bool setIP(QString addr)</div><div class="ttdoc">Not yet implemented in the director appliction. </div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00081">DirectorInterface.cpp:81</a></div></div>
-<div class="ttc" id="class_front_panel_info_html_a4db64aad7a688139090db23adbfcad9e"><div class="ttname"><a href="class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e">FrontPanelInfo::getEventSocket</a></div><div class="ttdeci">QTcpSocket * getEventSocket()</div><div class="ttdoc">NO LONGER USED. </div><div class="ttdef"><b>Definition:</b> <a href="_front_panel_info_8h_source.html#l00061">FrontPanelInfo.h:61</a></div></div>
 <div class="ttc" id="_director_interface_8h_html"><div class="ttname"><a href="_director_interface_8h.html">DirectorInterface.h</a></div><div class="ttdoc">An enum describing the current status of the director. </div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_aa889e2721083fde57ec986115e86870d"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#aa889e2721083fde57ec986115e86870d">Picto::ProtocolCommand::write</a></div><div class="ttdeci">int write(QAbstractSocket *socket)</div><div class="ttdoc">Writes this ProtocolCommand out over the input QAbstractSocket. </div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8cpp_source.html#l00170">ProtocolCommand.cpp:170</a></div></div>
 <div class="ttc" id="class_director_interface_html_a610f12491884aebd3b775b5fbbb3202c"><div class="ttname"><a href="class_director_interface.html#a610f12491884aebd3b775b5fbbb3202c">DirectorInterface::getRewardDuration</a></div><div class="ttdeci">int getRewardDuration(int controller)</div><div class="ttdoc">Returns the current reward duration for the input controller number. </div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00192">DirectorInterface.cpp:192</a></div></div>

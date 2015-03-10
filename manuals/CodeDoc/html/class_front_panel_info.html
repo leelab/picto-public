@@ -112,18 +112,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:add749a5bcfd4f7b36b3d4cdbb252db5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_front_panel_info.html#add749a5bcfd4f7b36b3d4cdbb252db5c">setCommandSocket</a> (QTcpSocket *socket)</td></tr>
 <tr class="memdesc:add749a5bcfd4f7b36b3d4cdbb252db5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the command socket that is used by the Front Panel Application to communicate with the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>.  <a href="#add749a5bcfd4f7b36b3d4cdbb252db5c">More...</a><br /></td></tr>
 <tr class="separator:add749a5bcfd4f7b36b3d4cdbb252db5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4db64aad7a688139090db23adbfcad9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4db64aad7a688139090db23adbfcad9e"></a>
-QTcpSocket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_front_panel_info.html#a4db64aad7a688139090db23adbfcad9e">getEventSocket</a> ()</td></tr>
-<tr class="memdesc:a4db64aad7a688139090db23adbfcad9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO LONGER USED. <br /></td></tr>
-<tr class="separator:a4db64aad7a688139090db23adbfcad9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67f78be189f14830325609f7bde592b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67f78be189f14830325609f7bde592b4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_front_panel_info.html#a67f78be189f14830325609f7bde592b4">setEventSocket</a> (QTcpSocket *socket)</td></tr>
-<tr class="memdesc:a67f78be189f14830325609f7bde592b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO LONGER USED. <br /></td></tr>
-<tr class="separator:a67f78be189f14830325609f7bde592b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores the command socket used by the Front Panel to communicate with the director as well as the current reward controller being used. </p>
-<p>This class used to be much more important. It could probably be removed and have its parts incorporated in other locations. In the meantime, it's still here. Note that the eventSocket is no longer used. The <a class="el" href="class_director_interface.html" title="An interface that encapsulates socket communicate to the director from the Front Panel Application...">DirectorInterface</a> is the chief user of the commandSocket and rewardController data stored here. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_director_interface.html" title="An interface that encapsulates socket communicate to the director from the Front Panel Application...">DirectorInterface</a> </dd></dl>
+<p>This class used to be much more important. It could probably be removed and have its parts incorporated in other locations. In the meantime, it's still here. The <a class="el" href="class_director_interface.html" title="An interface that encapsulates socket communicate to the director from the Front Panel Application...">DirectorInterface</a> is the chief user of the commandSocket and rewardController data stored here. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_director_interface.html" title="An interface that encapsulates socket communicate to the director from the Front Panel Application...">DirectorInterface</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
