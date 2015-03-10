@@ -348,15 +348,10 @@ bool DirectorInterface::startReward(int controller)
 bool DirectorInterface::isConnected()
 {
 	//check to see if we've connected to the engine yet
-	QTcpSocket *commSock, *eventSock;
+	QTcpSocket *commSock;
 	commSock = panelInfo->getCommandSocket();
-	eventSock = panelInfo->getEventSocket();
 
-	//The order in this "if" is important, since if we call isValid() on a 
-	//null pointer, bad things will happen. (Remember, || will return true
-	//when it encounters the first true expression.)
-	if(!commSock || !eventSock ||
-		!commSock->isValid()  || !eventSock->isValid())
+	if (!commSock || !commSock->isValid())
 	{
 		return false;
 	}

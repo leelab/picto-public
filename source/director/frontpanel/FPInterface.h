@@ -46,8 +46,6 @@ private:
 	QSharedPointer<Picto::ProtocolResponse> processCommand(QSharedPointer<Picto::ProtocolCommand> command);
 	void deliverResponse(QSharedPointer<Picto::ProtocolResponse> response);
 
-	void sendFPInterfaceEvent(QString xmlFragment);
-
 	QSharedPointer<FPGETCommandHandler> fpgetCommandHandler_;
 	QSharedPointer<FPPUTCommandHandler> fpputCommandHandler_;
 	QSharedPointer<FPREWARDCommandHandler> fprewardCommandHandler_;
@@ -55,7 +53,6 @@ private:
 
 	//front panel connections
 	QTcpSocket *commSocket;
-	QTcpSocket *eventSocket;
 
 	//protocol stuff
 	QMap<QString, QSharedPointer<Picto::ProtocolCommandHandler>> commandHandlers;

@@ -27,8 +27,8 @@ namespace PanelInfo
 /*!	\brief Stores the command socket used by the Front Panel to communicate with the director as well as the current reward controller being used.
  *
  * This class used to be much more important.  It could probably be removed and have its parts incorporated
- * in other locations.  In the meantime, it's still here.  Note that the eventSocket is no longer used.  The
- * DirectorInterface is the chief user of the commandSocket and rewardController data stored here.
+ * in other locations.  In the meantime, it's still here.  The DirectorInterface is the chief user of the 
+ * commandSocket and rewardController data stored here.
  * \sa DirectorInterface
  * \author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  * \date 2009-2015
@@ -57,16 +57,9 @@ public:
 	 */
 	void setCommandSocket(QTcpSocket* socket) { commandSocket = socket; };
 
-	/*! \brief NO LONGER USED */
-	QTcpSocket* getEventSocket() { return eventSocket; }
-	/*! \brief NO LONGER USED */
-	void setEventSocket(QTcpSocket* socket) { eventSocket = socket; };
-
-
 private:
 	int rewardController;
 
 	QTcpSocket *commandSocket;
-	QTcpSocket *eventSocket;
 };
 #endif

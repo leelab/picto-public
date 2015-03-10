@@ -29,13 +29,7 @@ EngineConnections::~EngineConnections()
 		commandSocket->close();
 	panelInfo->setCommandSocket(NULL);
 
-	QTcpSocket *eventSocket = panelInfo->getEventSocket();
-	if(eventSocket)
-		eventSocket->close();
-	panelInfo->setEventSocket(NULL);
-
 	commandSocket->deleteLater();
-	eventSocket->deleteLater();
 	commandChannel->deleteLater();
 }
 

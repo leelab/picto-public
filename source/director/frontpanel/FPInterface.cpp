@@ -15,12 +15,6 @@ FPInterface::FPInterface()
 	while(!commSocket->waitForConnected(20000))
 		commSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDCommandPort()), QIODevice::ReadWrite);
 
-
-	eventSocket = new QTcpSocket();
-	eventSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDEventPort()), QIODevice::ReadWrite);
-	while(!eventSocket->waitForConnected(20000))
-		eventSocket->connectToHost(QHostAddress::LocalHost, quint16(Picto::portNums->getLCDEventPort()), QIODevice::ReadWrite);
-
 	//set up the command handlers
 	fpgetCommandHandler_ = QSharedPointer<FPGETCommandHandler>(new FPGETCommandHandler);
 	commandHandlers[fpgetCommandHandler_->method()] = fpgetCommandHandler_;
@@ -222,26 +216,5 @@ void FPInterface::deliverResponse(QSharedPointer<Picto::ProtocolResponse> respon
 
 	return;
 }
-
-/*! \brief Sends an ENGEVENT command through the event channel.
- *	\details The command's content will be the passed in XML fragment.
- */
-void FPInterface::sendFPInterfaceEvent(QString xmlFragment)
-{
-	//prepend a start document tag so the xml reader doesn't get annoyed
-	xmlFragment.prepend("<?xml version=\"1.0\"?>\n");
-
-	//create the command
-	Picto::ProtocolCommand command("ENGEVENT /frontpanel PICTO/1.0");
-	QByteArray content = xmlFragment.toUtf8();
-	command.setContent(content);
-	command.setFieldValue("Content-Length",QString("%1").arg(content.size()));
-
-	//send it to the front panel
-	command.write(eventSocket);
-
-}
-
-
 
 
