@@ -73,12 +73,12 @@ HEADERS += $$(PICTO_TREE)/source/director/iodevices/WinSound.h
 SOURCES += $$(PICTO_TREE)/source/director/iodevices/WinSound.cpp
 
 contains(MACHINE_TYPE,X86) {
-	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
-	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib32/msvc/NIDAQmx.lib"
+	INCLUDEPATH +="$$(NIEXTCCOMPILERSUPP)/include"
+	LIBS += "$$(NIEXTCCOMPILERSUPP)/lib32/msvc/NIDAQmx.lib"
 }
 contains(MACHINE_TYPE,X64) {
-	INCLUDEPATH +="$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/include"
-	LIBS += "$$(NIDAQmxSwitchDir)/../../Shared/ExternalCompilerSupport/C/lib64/msvc/NIDAQmx.lib"
+	INCLUDEPATH +="$$(NIEXTCCOMPILERSUPP)/include"
+	LIBS += "$$(NIEXTCCOMPILERSUPP)/lib64/msvc/NIDAQmx.lib"
 }
 
 HEADERS += $$(PICTO_TREE)/source/director/engine/PictoBoxXPAnalogInputPort.h
