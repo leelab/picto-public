@@ -1,4 +1,5 @@
 #include "AssetDescriber.h"
+#include "../memleakdetect.h"
 
 /*! \brief Indicates whether documentation text has been fully loaded into the AssetDescriber
  *	system.

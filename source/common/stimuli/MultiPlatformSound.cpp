@@ -71,20 +71,24 @@ QSharedPointer<PreloadedSound> MultiplatformSound::createMultiplatformSound(QStr
 	return QSharedPointer<MultiplatformSound>(new MultiplatformSound(path));
 }
 
-
-
+/*! \brief Chunk provides a consistent interface for the Type and Size of a WAV data packet
+ */
 struct chunk
 {
     char        id[4];
     quint32     size;
 };
 
+/*! \brief RIFFHeader Stores the RIFFHeader of the loaded file
+*/
 struct RIFFHeader
 {
     chunk       descriptor;     // "RIFF"
     char        type[4];        // "WAVE"
 };
 
+/*! \brief RIFFHeader Stores the RIFFHeader of the loaded file
+*/
 struct WAVEHeader
 {
     chunk       descriptor;
@@ -96,11 +100,16 @@ struct WAVEHeader
     quint16     bitsPerSample;
 };
 
+/*! \brief DATAHeader Stores the header of the loaded WAV data
+*/
 struct DATAHeader
 {
     chunk       descriptor;
 };
 
+/*! \brief CombinedHeader simplifies the header-loading process by allowing the loading of both
+ * the RIFFHeader and the WAVEHeader at once
+*/
 struct CombinedHeader
 {
     RIFFHeader  riff;
@@ -109,7 +118,7 @@ struct CombinedHeader
 
 /*! \brief Checks if the file at the input path is supported by this PreloadedSound.
  *	\details This function uses code from the Qt Multimedia Spectrum app's wavFile.cpp
- * I didn't take a course in audio encoding protocols and work this all out on my own.
+ * Largely a result of referencing exiting code and trial-and-error.
  */
 bool MultiplatformSound::isFileSupported(QString path)
 {

@@ -1,5 +1,6 @@
 #include "../../common/globals.h"
 #include "ControlPanelInterface.h"
+#include "../memleakdetect.h"
 
 ControlPanelInterface::ControlPanelInterface()
 {
