@@ -74,10 +74,6 @@ void Reward::postDeserialize()
 	StateMachineElement::postDeserialize();
 	setPropertyRuntimeEditable("NumRewards");
 	setPropertyRuntimeEditable("RewardQty");
-
-	//Pictoboxes only have one reward channel right now, but maybe someday we will use this, so we're not getting rid of it, just hiding it from
-	//the UI.
-	//propertyContainer_->getProperty("RewardChan")->setVisible(false);
 }
 
 /*! \brief Extends StateMachineElement::validateObject() to verify that Property values for this element are greater than zero.

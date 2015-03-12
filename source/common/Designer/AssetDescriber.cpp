@@ -290,10 +290,12 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("Reward elements are used to supply reward to the user during the course of execution.  Reward elements do not consume any experimental time.  When execution reaches these elements they schedule rewards to be provided according to their property settings, with the first reward being supplied at the time that the first phosphor of the next displayed frame appears.");
 	curr->addProp("NumRewards","The number of rewards to initiate when execution reaches this reward element.");
 	curr->addProp("RewardQty","The number of milliseconds for which each reward will be supplied.");
-	curr->addProp("MinRewardPeriod","The minimum time that Picto will wait between supplying one reward from this element and the next.");
+	curr->addProp("MinRewardPeriod", "The minimum time that Picto will wait between supplying one reward from this element and the next.");
+	curr->addProp("RewardChan", "The channel that the reward is delivered on.");
 	curr->addSProp("number","Sets/Gets the current value of NumRewards.");
 	curr->addSProp("unitQuantity","Sets/Gets the current value of RewardQty.");
 	curr->addSProp("minRewardPeriod","Sets/Gets the current value of MinRewardPeriod.");
+	curr->addSProp("chan", "Sets/Gets the channel that the reward is delivered on.");
 
 	curr = addDescription("State");
 	curr->setInherits(getAssetDescription("MachineContainer"));

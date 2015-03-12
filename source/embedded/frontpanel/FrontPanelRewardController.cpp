@@ -40,10 +40,11 @@
  */
 #define PICTO_BOX_NIDAQ_RELAY_ENABLE_CHAN "Dev1/port2/line1"
 
-/*! \brief The number of reward lines on the Pictobox.  Currently only one is allowed.
- * \details currently, the reward enable line is on PFI 9, and the reward trigger is on PFI 12.
+/*! \brief The number of reward lines on the Pictobox.
+ *	\details The reward enable line is on PFI 9, and the reward triggers are on PFI 12,
+ *	PFI 13, PFI 14, and PFI 15.
  */
-#define NUMREWARDLINES 2
+#define NUMREWARDLINES 4
 
 
 namespace Picto
@@ -62,8 +63,6 @@ namespace Picto
 FrontPanelRewardController::FrontPanelRewardController()
 : RewardController(NUMREWARDLINES)
 {
-	outputData[0] = 0.0;
-	outputData[1] = 5.0;
 	// Skip if device doesn't exist
 	uInt32 tmp;
 	int channel = 1;

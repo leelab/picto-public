@@ -39,6 +39,8 @@ class Reward : public StateMachineElement
 	Q_PROPERTY(int unitQuantity READ getUnitQuantity WRITE setUnitQuantity)
 	/*! \brief Gets/Sets the minimum number of milliseconds between rewards when multiple rewards are provided.*/
 	Q_PROPERTY(int minRewardPeriod READ getMinRewardPeriod WRITE setMinRewardPeriod)
+	/*! \brief Sets/Gets the channel that the reward is delivered on.*/
+	Q_PROPERTY(int chan READ getRewardChan WRITE setRewardChan)
 public:
 	Reward();
 	virtual ~Reward(){};
@@ -60,7 +62,12 @@ public:
 	/*! \brief Gets the minimum number of milliseconds between rewards when multiple rewards are provided.*/
 	int getMinRewardPeriod(){return propertyContainer_->getPropertyValue("MinRewardPeriod").toInt();};
 	/*! \brief Sets the minimum number of milliseconds between rewards when multiple rewards are provided.*/	
-	void setMinRewardPeriod(int delay){propertyContainer_->setPropertyValue("MinRewardPeriod",delay);};
+	void setMinRewardPeriod(int delay){ propertyContainer_->setPropertyValue("MinRewardPeriod", delay); };
+	/*! \brief Gets the channel that the reward is delivered on..*/
+	int getRewardChan(){ return propertyContainer_->getPropertyValue("RewardChan").toInt(); };
+	/*! \brief Sets the channel that the reward is delivered on.*/
+	void setRewardChan(int chan){ propertyContainer_->setPropertyValue("RewardChan", chan); };
+
 
 protected:
 	virtual void postDeserialize();
