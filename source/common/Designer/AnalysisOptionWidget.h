@@ -10,8 +10,11 @@
 #include "../parameter/Analysis.h"
 
 namespace Picto {
-/*! \brief A drop down menu for selecting Analyses... currently not used.
- *	\details When we started the final version of the analysis system, we used
+/*! \brief A drop down menu for selecting Analyses for the Designer.
+ *	\details The original comment claimed that it wasn't in use, but it seems to be used to
+ *	select the analysis script being edited in the Designer.  Original comment preserved:
+ *	
+ *	When we started the final version of the analysis system, we used
  *	this widget to allow users to choose which Analysis they wanted to run.
  *	As time went on, features like selecting multiple Analyses and including
  *	built-in and importable analyses in one widget became apparent and we have
