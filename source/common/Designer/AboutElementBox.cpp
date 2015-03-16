@@ -51,9 +51,22 @@ void AboutElementBox::elementOfInterestChanged(QString className,QString friendl
 	//Q_ASSERT(desc);
 	if(desc)
 	{
-		description.append(QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyName));
+		//Add Class Name
+		description.append(QString("<h3 style=\"color:blue\">%1</h3>").arg(friendlyName));
+
 		QString sectionDescrip;
-		QString currDescrip;
+
+		//Add Warning
+		if (!desc->getWarning().isEmpty())
+		{
+			sectionDescrip.append(QString("<dd><span style=\"color:red;\">%2</span></dd>").arg(desc->getWarning()));
+			description.append("<h4 style=\"color:red\">Warning</h4>");
+			description.append(sectionDescrip);
+
+			sectionDescrip.clear();
+		}
+
+		//Add Overview
 		sectionDescrip.append(QString("<dd><span style=\"color:black;\">%2</span></dd>").arg(desc->getOverview()));
 		if(!sectionDescrip.isEmpty())
 		{
@@ -61,6 +74,9 @@ void AboutElementBox::elementOfInterestChanged(QString className,QString friendl
 			description.append(sectionDescrip);
 		}
 		sectionDescrip.clear();
+
+		QString currDescrip;
+
 		foreach(QString propName,desc->getProperties())
 		{
 			currDescrip = desc->getPropertyDescription(propName);

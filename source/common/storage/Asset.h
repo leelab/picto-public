@@ -108,9 +108,7 @@ public:
 	 *	available in the "About Element" box which gathers much clearer and fully documented information from the AssetDescriber.  We should consider
 	 *	removing that tab and this function.
 	 */
-	virtual QString getInfo(){return QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyTypeName());};
-	/*! \brief UNUSED.  This function appears to be completely unused in Picto.  We should probably delete it.*/
-	virtual QString getDescription(){return QString("<h3 style=\"color:red\">%1</h3>").arg(friendlyTypeName());};
+	virtual QString getInfo(){return QString("<h3 style=\"color:blue\">%1</h3>").arg(friendlyTypeName());};
 	QString getPath();
 	/*! \brief Returns true if this object's name is required to be unique within its parent.
 	 *	\details If an object is the parent of more than one asset with the same name and at least one of them

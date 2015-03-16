@@ -71,8 +71,6 @@ protected:
 	bool useScaleFactors_;
 
 private:
-	double scaleData(int subchannel, double rawData);
-	
 	/*! \brief Holds the scale factors needed used in converting the signal coming in on the InputPort to
 	 *	the clean SignalChannel data output from this object.
 	 *	\details The InputValue can be offset, scaled by a factor and sheared as a function of another sub-channel.  

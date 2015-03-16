@@ -5,7 +5,6 @@
 #include "../common.h"
 #include "MachineContainer.h"
 #include "../controlelements/ControlElement.h"
-#include "../controlelements/ControlLink.h"
 #include "scene.h"
 #include "../engine/PictoEngine.h"
 

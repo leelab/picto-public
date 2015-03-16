@@ -39,7 +39,7 @@ void SyntaxErrorBox::checkSyntax()
 	QString checkOutput;
 	if(designRoot_->compiles(&errors))
 	{
-		checkOutput = QString("<h3 style=\"color:red\">%1</h3>").arg("Syntax Check Passed!");
+		checkOutput = QString("<h3 style=\"color:blue\">%1</h3>").arg("Syntax Check Passed!");
 	}
 	else
 	{

@@ -3,6 +3,7 @@ var searchData=
   ['fileparameter',['FileParameter',['../class_picto_1_1_file_parameter.html',1,'Picto']]],
   ['fileselectwidget',['FileSelectWidget',['../class_file_select_widget.html',1,'']]],
   ['filesessionloader',['FileSessionLoader',['../class_picto_1_1_file_session_loader.html',1,'Picto']]],
+  ['fixationcontroller',['FixationController',['../class_picto_1_1_fixation_controller.html',1,'Picto']]],
   ['flushdurmode',['FlushDurMode',['../class_flush_dur_mode.html',1,'']]],
   ['fpflushcommandhandler',['FPFLUSHCommandHandler',['../struct_f_p_f_l_u_s_h_command_handler.html',1,'']]],
   ['fpgetcommandhandler',['FPGETCommandHandler',['../struct_f_p_g_e_t_command_handler.html',1,'']]],

@@ -112,7 +112,6 @@ Inheritance diagram for Picto::Transition:</div>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="61,112,173,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="61,56,173,80"/>
 <area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="122,0,234,24"/>
-<area href="class_picto_1_1_control_link.html" title="UNUSED This used to essentially be a Transition for inside a State. Now Elements inside a State just ..." alt="Picto::ControlLink" shape="rect" coords="61,224,173,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -362,10 +361,6 @@ virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memitem:a7dbcf2a6375ba18aa3a489f3fea2d71a inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a7dbcf2a6375ba18aa3a489f3fea2d71a">getInfo</a> ()</td></tr>
 <tr class="memdesc:a7dbcf2a6375ba18aa3a489f3fea2d71a inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information about this object for the user. In practice, the <a class="el" href="class_asset_describer.html" title="A tool used to query documentation for classes used in the Picto Designer. ">AssetDescriber</a> has taken ove this functionality to a great extent.  <a href="#a7dbcf2a6375ba18aa3a489f3fea2d71a">More...</a><br /></td></tr>
 <tr class="separator:a7dbcf2a6375ba18aa3a489f3fea2d71a inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a809157b144c05d01b3a2bd839e9298a0"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a809157b144c05d01b3a2bd839e9298a0">getDescription</a> ()</td></tr>
-<tr class="memdesc:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">UNUSED. This function appears to be completely unused in Picto. We should probably delete it. <br /></td></tr>
-<tr class="separator:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a> ()</td></tr>
 <tr class="memdesc:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the "::" separated path to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> in the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> tree.  <a href="#a310a0e5ffab1adff37039f27b998684a">More...</a><br /></td></tr>
 <tr class="separator:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -650,8 +645,6 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_data_store.html#a773e96bb8df73a90d56c1aa8fdc0dfa5">Picto::DataStore</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_control_link.html#a1565a71cfa7de5d4265cefb9c77ebb2f">Picto::ControlLink</a>.</p>
-
 <p>Definition at line <a class="el" href="transition_8h_source.html#l00061">61</a> of file <a class="el" href="transition_8h_source.html">transition.h</a>.</p>
 
 </div>
@@ -681,8 +674,6 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a>, "Total Time Excceeded" result). </p>
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_data_store.html#a964af19f287fffb7efb36a5f818704ab">Picto::DataStore</a>.</p>
-
-<p>Reimplemented in <a class="el" href="class_picto_1_1_control_link.html#aabf0bf910f45302c121c2457ae50e980">Picto::ControlLink</a>.</p>
 
 <p>Definition at line <a class="el" href="transition_8h_source.html#l00058">58</a> of file <a class="el" href="transition_8h_source.html">transition.h</a>.</p>
 

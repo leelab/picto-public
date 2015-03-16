@@ -480,10 +480,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#aa0e64136d6a51d342a55cd56a8bacd24">setSelfPtr</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; <a class="el" href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">selfPtr</a>)</td></tr>
 <tr class="memdesc:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a QSharedPointer to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> so that it will be able to give others QSharedPointers to itself, and not just regular pointers.  <a href="#aa0e64136d6a51d342a55cd56a8bacd24">More...</a><br /></td></tr>
 <tr class="separator:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a809157b144c05d01b3a2bd839e9298a0"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a809157b144c05d01b3a2bd839e9298a0">getDescription</a> ()</td></tr>
-<tr class="memdesc:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">UNUSED. This function appears to be completely unused in Picto. We should probably delete it. <br /></td></tr>
-<tr class="separator:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a> ()</td></tr>
 <tr class="memdesc:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the "::" separated path to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> in the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> tree.  <a href="#a310a0e5ffab1adff37039f27b998684a">More...</a><br /></td></tr>
 <tr class="separator:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -772,7 +768,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Apart from the <a class="el" href="class_picto_1_1_pause_point.html" title="A PausePoint is the place where execution is suspended when the operator presses pause during an Expe...">PausePoint</a> in which time passes only if the experiment is Paused, the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> is the only <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> in which experimental time actually passes. Essentially, everything that happens in the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a> is happening in order to prepare for the next <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> execution. States render all in scope OutputElements every frame. Beyond the usual EntryScript and ExitScript, States also contain a FrameScript that is run just before rendering each frame. States contain <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a> objects that monitor user input and time signals to see when certain events take place. Before the FrameScript is called every frame, these ControlElements are checked to see if any of these events have taken place. Execution continues in the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> until one of those <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a> events occurs at which point a corresponding result is triggered and the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> is finished. It should be 'nearly' possible, but extremely messy, to put all <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> code into a single <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a>. Complicated ScriptControllers can always be used to define when the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> ends, and complicated code can always be put into the FrameScript. We say it is 'nearly' possible because it wouldn't be possible to do things like provide rewards, but it is important to note that it is 'nearly' true. Of course, it would be incredibly messy to do this and no one ever should, but the fact that it is 'nearly' possible should be an indication of the importance of this class. With this in mind, be extremely careful before changing anything about this class, particularly in the <a class="el" href="class_picto_1_1_state.html#abd02d3ab244f4ff544e916b577c97213" title="Runs this State&#39;s execution logic within the framework of the input PictoEngine. ">run()</a> method. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_state_8h_source.html#l00036">36</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
+<p>Definition at line <a class="el" href="_state_8h_source.html#l00035">35</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a05d3d45aca98c85e3305cf4da2ccd15f"></a>
 <div class="memitem">
@@ -790,7 +786,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Constructs a new <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> object. </p>
 <p>Initializes the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a>'s <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> object, adds a 'FrameScript" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> and AssetFactories for the various ControlElements that can be added to the <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a>. </p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00028">28</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00029">29</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -821,7 +817,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_output_element_container.html#aeb790e110381366623cda30e484eba89">Picto::OutputElementContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8h_source.html#l00053">53</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
+<p>Definition at line <a class="el" href="_state_8h_source.html#l00052">52</a> of file <a class="el" href="_state_8h_source.html">State.h</a>.</p>
 
 </div>
 </div>
@@ -851,7 +847,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_state_machine_element.html#a2cea850bd3c3e7cd40a0b4b09984db70">Picto::StateMachineElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00313">313</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00318">318</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -881,7 +877,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_state_machine_element.html#ab93cc37be3b570575b812e13ec4f806a">Picto::StateMachineElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00306">306</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00311">311</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -911,7 +907,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_machine_container.html#a36591811c50d2086866100c246d751d0">Picto::MachineContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00279">279</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00284">284</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -947,7 +943,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Implements <a class="el" href="class_picto_1_1_state_machine_element.html#a7a1f1ca8905c111dd043178b9132c770">Picto::StateMachineElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00077">77</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00080">80</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>
@@ -976,7 +972,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#a12c0d0357c85854db9220c72c4941b15">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00249">249</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00253">253</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>

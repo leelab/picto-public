@@ -56,9 +56,21 @@ public:
 	void deactivateTargets();
 	virtual void upgradeVersion(QString deserializedVersion);
 
-	int getFixationTime(){return propertyContainer_->getPropertyValue("FixationTime").toInt();}; 
-	void setFixationTime(int time){propertyContainer_->setPropertyValue("FixationTime",time);};
-	int getTotalTime(){return propertyContainer_->getPropertyValue("TotalTime").toInt();};
+	/*! \brief Gets the current value of the FixationTime property
+	*	\sa fixationTime
+	*/
+	int getFixationTime(){ return propertyContainer_->getPropertyValue("FixationTime").toInt(); };
+	/*! \brief Sets the current value of the FixationTime property
+	*	\sa fixationTime
+	*/
+	void setFixationTime(int time){ propertyContainer_->setPropertyValue("FixationTime", time); };
+	/*! \brief Gets the current value of the TotalTime property
+	*	\sa totalTime
+	*/
+	int getTotalTime(){ return propertyContainer_->getPropertyValue("TotalTime").toInt(); };
+	/*! \brief Sets the current value of the TotalTime property
+	*	\sa totalTime
+	*/
 	void setTotalTime(int time){propertyContainer_->setPropertyValue("TotalTime",time);};
 
 	virtual QString getUITemplate(){return "ChoiceController";};
@@ -67,9 +79,6 @@ public slots:
 	bool userOnTarget();
 	bool userEnteredTarget();
 	bool userExitedTarget();
-	//DataStore Functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -86,10 +95,9 @@ private:
 	QStringList unitList_;
 	//QStringList shapeList_;
 
-	bool isDone_;
+	bool isDone_; //<! 
 	bool targetAcquired_;
 	QString result_;
-	//int shapeIndex_;
 	int timeUnits_;
 	int reentriesAllowedListIndex_;
 

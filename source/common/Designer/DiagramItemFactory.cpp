@@ -50,7 +50,8 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("ControlTarget",":/icons/controltarget.svg",75,75);
 		addIconDefinition("RectangleTarget",":/icons/rectangletarget.svg",75,75);
 		addIconDefinition("ControlElement",":/icons/controlelement.svg",75,100);
-		addIconDefinition("TargetController",":/icons/targetcontroller.svg",75,100);
+		addIconDefinition("TargetController", ":/icons/targetcontroller.svg", 75, 100);
+		addIconDefinition("FixationController", ":/icons/targetcontroller.svg", 75, 100);
 		addIconDefinition("ChoiceController",":/icons/choicecontroller.svg",75,100);
 		addIconDefinition("StopwatchController",":/icons/stopwatchcontroller.svg",75,100);
 		addIconDefinition("ScriptController",":/icons/scriptcontroller.svg",75,100);

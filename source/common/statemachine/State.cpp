@@ -17,6 +17,7 @@
 #include "../controlelements/ScriptController.h"
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
+#include "../controlelements/FixationController.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -45,6 +46,8 @@ State::State() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(TargetController::Create))));
 	elementFactory_->addAssetType(ChoiceController::ControllerType(),
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ChoiceController::Create))));
+	elementFactory_->addAssetType(FixationController::ControllerType(),
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FixationController::Create))));
 }
 
 /*! \brief Creates a new State object and returns a shared Asset pointer to it.*/
@@ -174,8 +177,9 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief When a State is run as a slave, it really doesn't do anything except render frames until the State ends, since the SlaveExperimentDriver handles
- *	changing of Property values.  This function is therefore empty and slaveRenderFrame() handles frame rendering.
+/*! \brief When a State is run as a slave, it really doesn't do anything except render frames until the State ends, since the
+ *	SlaveExperimentDriver handles changing of Property values.  This function is therefore empty and slaveRenderFrame()
+ *	handles frame rendering.
  */
 QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -183,7 +187,8 @@ QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief Handles rendering of the latest frame to the display while this State is active and when the Experiment is running in slave mode.
+/*! \brief Handles rendering of the latest frame to the display while this State is active and when the Experiment is
+ *	running in slave mode.
 */
 QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -204,8 +209,7 @@ QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 
 	//---------   Erase the latest cursor values (This happens in master when data is sent to server)
 	//sigChannel_->getValues();
-	engine->emptySignalChannels();	//Make sure all signal channels are emptied, not just the one that
-									//we used.
+	engine->emptySignalChannels();	//Make sure all signal channels are emptied, not just the one that we used.
 
 	//Deactivate control targets used by this state's control elements
 	foreach(QSharedPointer<ResultContainer> control, elements_)
@@ -264,12 +268,13 @@ void State::upgradeVersion(QString deserializedVersion)
 	}
 }
 
-/*! \brief Extends MachineContainer::setDesignConfig() to connect to signals associated with changing active Analyses so that we can respond
- *	when that happens.
+/*! \brief Extends MachineContainer::setDesignConfig() to connect to signals associated with changing active Analyses so
+ *	that we can respond when that happens.
  */
 void State::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
-	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the
+	//DesignConfig.
 	if(getDesignConfig())
 		disconnect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 	MachineContainer::setDesignConfig(designConfig);

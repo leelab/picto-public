@@ -130,59 +130,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> deactivateTargets();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> upgradeVersion(QString deserializedVersion);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> getFixationTime(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;FixationTime&quot;</span>).toInt();}; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> setFixationTime(<span class="keywordtype">int</span> time){propertyContainer_-&gt;setPropertyValue(<span class="stringliteral">&quot;FixationTime&quot;</span>,time);};</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">int</span> getTotalTime(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;TotalTime&quot;</span>).toInt();};</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> setTotalTime(<span class="keywordtype">int</span> time){propertyContainer_-&gt;setPropertyValue(<span class="stringliteral">&quot;TotalTime&quot;</span>,time);};</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">   64</a></span>&#160;    <span class="keyword">virtual</span> QString <a class="code" href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">getUITemplate</a>(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;ChoiceController&quot;</span>;};</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">   65</a></span>&#160;    <span class="keyword">virtual</span> QString <a class="code" href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">friendlyTypeName</a>(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;Choice Controller&quot;</span>;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">bool</span> userOnTarget();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">bool</span> userEnteredTarget();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">bool</span> userExitedTarget();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//DataStore Functions</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//bool serializeAsXml(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter);</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//bool deserializeFromXml(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">bool</span> isDonePrivate(QSharedPointer&lt;Engine::PictoEngine&gt; engine);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QString insideTarget(QSharedPointer&lt;Engine::PictoEngine&gt; engine);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">//bool checkSingleTarget(QRect targetRect);</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  cumulativeTimer_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  acquisitionTimer_;    </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  reacquisitionTimer_;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a43bdb03ae12e202c2b39a7d1120340e2">   62</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_choice_controller.html#a43bdb03ae12e202c2b39a7d1120340e2">getFixationTime</a>(){ <span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;FixationTime&quot;</span>).toInt(); };</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a21b6138513e314ab6186249b6d05b434">   66</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_choice_controller.html#a21b6138513e314ab6186249b6d05b434">setFixationTime</a>(<span class="keywordtype">int</span> time){ propertyContainer_-&gt;setPropertyValue(<span class="stringliteral">&quot;FixationTime&quot;</span>, time); };</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a41bc4b8dd5ffd925a80d6e7f77f9832b">   70</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_choice_controller.html#a41bc4b8dd5ffd925a80d6e7f77f9832b">getTotalTime</a>(){ <span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;TotalTime&quot;</span>).toInt(); };</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a84597979e0d9899c4f5b4f6bd6965d88">   74</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_choice_controller.html#a84597979e0d9899c4f5b4f6bd6965d88">setTotalTime</a>(<span class="keywordtype">int</span> time){propertyContainer_-&gt;setPropertyValue(<span class="stringliteral">&quot;TotalTime&quot;</span>,time);};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">   76</a></span>&#160;    <span class="keyword">virtual</span> QString <a class="code" href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">getUITemplate</a>(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;ChoiceController&quot;</span>;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">   77</a></span>&#160;    <span class="keyword">virtual</span> QString <a class="code" href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">friendlyTypeName</a>(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;Choice Controller&quot;</span>;};</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">bool</span> userOnTarget();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">bool</span> userEnteredTarget();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">bool</span> userExitedTarget();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    QStringList unitList_;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//QStringList shapeList_;</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">bool</span> isDone_;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">bool</span> targetAcquired_;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QString result_;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//int shapeIndex_;</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">int</span> timeUnits_;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">int</span> reentriesAllowedListIndex_;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    QString lastTarget_;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">bool</span> isDonePrivate(QSharedPointer&lt;Engine::PictoEngine&gt; engine);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    QString insideTarget(QSharedPointer&lt;Engine::PictoEngine&gt; engine);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//bool checkSingleTarget(QRect targetRect);</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  cumulativeTimer_;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  acquisitionTimer_;    </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    QSharedPointer&lt;Controller::FrameResolutionTimer&gt;  reacquisitionTimer_;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    QStringList unitList_;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">//QStringList shapeList_;</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    QSharedPointer&lt;SignalChannel&gt; signal_;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    QList&lt;QSharedPointer&lt;ControlTargetResult&gt;&gt; targets_;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">int</span> frameCtr_;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">bool</span> isDone_; <span class="comment">//&lt;! </span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">bool</span> targetAcquired_;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    QString result_;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">int</span> timeUnits_;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">int</span> reentriesAllowedListIndex_;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="class_picto_1_1_choice_controller_html_ac0ba6f4a836f383ddda56b484bd96c22"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">Picto::ChoiceController::friendlyTypeName</a></div><div class="ttdeci">virtual QString friendlyTypeName()</div><div class="ttdoc">Returns a friendly string identifying this type of Asset. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00065">ChoiceController.h:65</a></div></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    QString lastTarget_;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    QSharedPointer&lt;SignalChannel&gt; signal_;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    QList&lt;QSharedPointer&lt;ControlTargetResult&gt;&gt; targets_;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">int</span> frameCtr_;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_a43bdb03ae12e202c2b39a7d1120340e2"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a43bdb03ae12e202c2b39a7d1120340e2">Picto::ChoiceController::getFixationTime</a></div><div class="ttdeci">int getFixationTime()</div><div class="ttdoc">Gets the current value of the FixationTime property. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00062">ChoiceController.h:62</a></div></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_ac0ba6f4a836f383ddda56b484bd96c22"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#ac0ba6f4a836f383ddda56b484bd96c22">Picto::ChoiceController::friendlyTypeName</a></div><div class="ttdeci">virtual QString friendlyTypeName()</div><div class="ttdoc">Returns a friendly string identifying this type of Asset. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00077">ChoiceController.h:77</a></div></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_a21b6138513e314ab6186249b6d05b434"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a21b6138513e314ab6186249b6d05b434">Picto::ChoiceController::setFixationTime</a></div><div class="ttdeci">void setFixationTime(int time)</div><div class="ttdoc">Sets the current value of the FixationTime property. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00066">ChoiceController.h:66</a></div></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_a84597979e0d9899c4f5b4f6bd6965d88"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a84597979e0d9899c4f5b4f6bd6965d88">Picto::ChoiceController::setTotalTime</a></div><div class="ttdeci">void setTotalTime(int time)</div><div class="ttdoc">Sets the current value of the TotalTime property. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00074">ChoiceController.h:74</a></div></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_a41bc4b8dd5ffd925a80d6e7f77f9832b"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a41bc4b8dd5ffd925a80d6e7f77f9832b">Picto::ChoiceController::getTotalTime</a></div><div class="ttdeci">int getTotalTime()</div><div class="ttdoc">Gets the current value of the TotalTime property. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00070">ChoiceController.h:70</a></div></div>
 <div class="ttc" id="class_picto_1_1_control_element_html"><div class="ttname"><a href="class_picto_1_1_control_element.html">Picto::ControlElement</a></div><div class="ttdoc">Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...</div><div class="ttdef"><b>Definition:</b> <a href="_control_element_8h_source.html#l00031">ControlElement.h:31</a></div></div>
-<div class="ttc" id="class_picto_1_1_choice_controller_html_a1578256a998c5d533f0907f509685d89"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">Picto::ChoiceController::getUITemplate</a></div><div class="ttdeci">virtual QString getUITemplate()</div><div class="ttdoc">Returns the name of a user interface template that should be used to represent this element in a UI...</div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00064">ChoiceController.h:64</a></div></div>
+<div class="ttc" id="class_picto_1_1_choice_controller_html_a1578256a998c5d533f0907f509685d89"><div class="ttname"><a href="class_picto_1_1_choice_controller.html#a1578256a998c5d533f0907f509685d89">Picto::ChoiceController::getUITemplate</a></div><div class="ttdeci">virtual QString getUITemplate()</div><div class="ttdoc">Returns the name of a user interface template that should be used to represent this element in a UI...</div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00076">ChoiceController.h:76</a></div></div>
 <div class="ttc" id="class_picto_1_1_choice_controller_html"><div class="ttname"><a href="class_picto_1_1_choice_controller.html">Picto::ChoiceController</a></div><div class="ttdoc">Returns a result based on the region selected by the subject. </div><div class="ttdef"><b>Definition:</b> <a href="_choice_controller_8h_source.html#l00034">ChoiceController.h:34</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

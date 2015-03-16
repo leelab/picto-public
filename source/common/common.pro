@@ -63,6 +63,8 @@ HEADERS += $$(PICTO_TREE)/source/common/controlelements/FrameTracker.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/FrameTracker.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/TargetController.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/TargetController.cpp
+HEADERS += $$(PICTO_TREE)/source/common/controlelements/FixationController.h
+SOURCES += $$(PICTO_TREE)/source/common/controlelements/FixationController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ChoiceController.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ChoiceController.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlTarget.h
@@ -75,8 +77,6 @@ HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlTargetResult.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlTargetResult.cpp
 HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlElement.h
 SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlElement.cpp
-HEADERS += $$(PICTO_TREE)/source/common/controlelements/ControlLink.h
-SOURCES += $$(PICTO_TREE)/source/common/controlelements/ControlLink.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/design/DesignRoot.h
 SOURCES += $$(PICTO_TREE)/source/common/design/DesignRoot.cpp

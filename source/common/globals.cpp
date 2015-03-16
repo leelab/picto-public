@@ -23,6 +23,7 @@
 #include "../common/controlelements/StopwatchController.h"
 #include "../common/controlelements/TargetController.h"
 #include "../common/controlelements/ChoiceController.h"
+#include "../common/controlelements/FixationController.h"
 
 #include "../common/parameter/BooleanParameter.h"
 #include "../common/parameter/NumericParameter.h"
