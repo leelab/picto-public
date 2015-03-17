@@ -18,28 +18,32 @@
 struct AssetDescription
 {
 	QString overview;	//!< An overview of the class described by this object
+	QString warning;    //!< Any dire warnings associated with the class
 	QMap<QString,QString> props;	//!< A lookup table of Property descriptions by property name
 	QMap<QString,QString> scriptProps;	//!< A lookup table of script property descriptions by script property name
-	QMap<QString,QString> scriptFunctions;	//!< A lookup tbale of script function descriptions by script function name.
+	QMap<QString,QString> scriptFunctions;	//!< A lookup table of script function descriptions by script function name.
 	QSharedPointer<AssetDescription> inherits;	//!< A pointer to the AssetDescription of this AssetDescription's class's parent class.
 	/*! \brief Sets an descriptive overview of the class that this AssetDescription is handling.*/
-	void setOverview(QString value){overview = value;};
+	void setOverview(QString value){ overview = value; };
+	/*! \brief Sets the warning for the class that this AssetDescription is handling.*/
+	void setWarning(QString value){ warning = value; };
 	/*! \brief Sets the AssetDescription of the class that this AssetDescription's class inherits so that its documentation can be included with this class's documentation.*/
-	void setInherits(QSharedPointer<AssetDescription> parent){inherits = parent;};
+	void setInherits(QSharedPointer<AssetDescription> parent){ inherits = parent; };
 	/*! \brief Adds the input description for the property with the input name.
 	 *	\sa getPropertyDescription(), getProperties()
 	 */
-	void addProp(QString name,QString description){props[name] = description;};
+	void addProp(QString name,QString description){ props[name] = description; };
 	/*! \brief Adds the input description for the script property with the input name.
 	 *	\sa getScriptPropertyDescription(), getScriptProperties()
 	 */
-	void addSProp(QString name,QString description){scriptProps[name] = description;};
+	void addSProp(QString name,QString description){ scriptProps[name] = description; };
 	/*! \brief Adds the input description for the script function with the input name.
 	 *	\sa getScriptFunctionDescription(), getScriptFunctions()
 	 */
-	void addSFunc(QString name,QString description){scriptFunctions[name] = description;};
+	void addSFunc(QString name,QString description){ scriptFunctions[name] = description; };
 
 	QString getOverview();
+	QString getWarning();
 	QStringList getProperties();
 	QStringList getScriptProperties();
 	QStringList getScriptFunctions();

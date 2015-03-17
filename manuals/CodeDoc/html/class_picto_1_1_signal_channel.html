@@ -433,7 +433,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPor
 <p>Returns a map of data sample vectors indexed by sub-channel name. </p>
 <dl class="section note"><dt>Note</dt><dd>This function calls <a class="el" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520" title="Gets data for this SignalChannel from the InputPort and returns it. ">getRawValues()</a> which has a side effect in that it clears out all read data such that the next call to <a class="el" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72" title="Returns a map of data sample vectors indexed by sub-channel name. ">getValues()</a> will return only the values read since the function was last called. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_doublet_signal_channel.html#a04c1b4426185b1e07589830b3d4cc4f2">Picto::DoubletSignalChannel</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_doublet_signal_channel.html#a04c1b4426185b1e07589830b3d4cc4f2">Picto::DoubletSignalChannel</a>, and <a class="el" href="class_picto_1_1_generic_input.html#a06924324f1488dc17ea8e2638979486e">Picto::GenericInput</a>.</p>
 
 <p>Definition at line <a class="el" href="_signal_channel_8cpp_source.html#l00140">140</a> of file <a class="el" href="_signal_channel_8cpp_source.html">SignalChannel.cpp</a>.</p>
 
@@ -547,7 +547,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPor
 <p>Gets the most recent value from the subchannel. </p>
 <p>This function does not cause data to be deleted. The data returned by this function will still be returned in the next call to <a class="el" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72" title="Returns a map of data sample vectors indexed by sub-channel name. ">getValues()</a>. </p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_doublet_signal_channel.html#a2e69f4a247ac42962a44e4435dbace5b">Picto::DoubletSignalChannel</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_doublet_signal_channel.html#a2e69f4a247ac42962a44e4435dbace5b">Picto::DoubletSignalChannel</a>, and <a class="el" href="class_picto_1_1_generic_input.html#afcbaf8f24508ae61656332e32ae7a1ff">Picto::GenericInput</a>.</p>
 
 <p>Definition at line <a class="el" href="_signal_channel_8cpp_source.html#l00080">80</a> of file <a class="el" href="_signal_channel_8cpp_source.html">SignalChannel.cpp</a>.</p>
 

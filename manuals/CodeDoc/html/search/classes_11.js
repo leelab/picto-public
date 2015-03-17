@@ -64,8 +64,6 @@ var searchData=
   ['stopwatch',['Stopwatch',['../class_picto_1_1_stopwatch.html',1,'Picto']]],
   ['stopwatchcontroller',['StopwatchController',['../class_picto_1_1_stopwatch_controller.html',1,'Picto']]],
   ['storedsessiondata',['StoredSessionData',['../class_stored_session_data.html',1,'']]],
-  ['stringparameter',['StringParameter',['../class_picto_1_1_string_parameter.html',1,'Picto']]],
-  ['stringparameteroption',['StringParameterOption',['../struct_picto_1_1_string_parameter_option.html',1,'Picto']]],
   ['stringvariable',['StringVariable',['../class_picto_1_1_string_variable.html',1,'Picto']]],
   ['switchelement',['SwitchElement',['../class_picto_1_1_switch_element.html',1,'Picto']]],
   ['syntaxerrorbox',['SyntaxErrorBox',['../class_syntax_error_box.html',1,'']]],

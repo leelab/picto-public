@@ -164,6 +164,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward.html#a7d0807fc4c0d7e24910bcc7fd0d060f2">setMinRewardPeriod</a> (int delay)</td></tr>
 <tr class="memdesc:a7d0807fc4c0d7e24910bcc7fd0d060f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum number of milliseconds between rewards when multiple rewards are provided. <br /></td></tr>
 <tr class="separator:a7d0807fc4c0d7e24910bcc7fd0d060f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33c16196b38e247ccd7e8cc8eea42597"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33c16196b38e247ccd7e8cc8eea42597"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward.html#a33c16196b38e247ccd7e8cc8eea42597">getRewardChan</a> ()</td></tr>
+<tr class="memdesc:a33c16196b38e247ccd7e8cc8eea42597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the channel that the reward is delivered on.. <br /></td></tr>
+<tr class="separator:a33c16196b38e247ccd7e8cc8eea42597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa24a1a02287db8531a421d87153399b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa24a1a02287db8531a421d87153399b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward.html#aa24a1a02287db8531a421d87153399b0">setRewardChan</a> (int <a class="el" href="class_picto_1_1_reward.html#a0c7824ab2fd020beb9827e7047daf88d">chan</a>)</td></tr>
+<tr class="memdesc:aa24a1a02287db8531a421d87153399b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the channel that the reward is delivered on. <br /></td></tr>
+<tr class="separator:aa24a1a02287db8531a421d87153399b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_state_machine_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_state_machine_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_state_machine_element.html">Picto::StateMachineElement</a></td></tr>
 <tr class="memitem:af2bac57936cd727c5dcb46c23052414a inherit pub_methods_class_picto_1_1_state_machine_element"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element.html#af2bac57936cd727c5dcb46c23052414a">StateMachineElement</a> ()</td></tr>
 <tr class="memdesc:af2bac57936cd727c5dcb46c23052414a inherit pub_methods_class_picto_1_1_state_machine_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> object.  <a href="#af2bac57936cd727c5dcb46c23052414a">More...</a><br /></td></tr>
@@ -427,10 +435,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#aa0e64136d6a51d342a55cd56a8bacd24">setSelfPtr</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; <a class="el" href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">selfPtr</a>)</td></tr>
 <tr class="memdesc:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a QSharedPointer to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> so that it will be able to give others QSharedPointers to itself, and not just regular pointers.  <a href="#aa0e64136d6a51d342a55cd56a8bacd24">More...</a><br /></td></tr>
 <tr class="separator:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a809157b144c05d01b3a2bd839e9298a0"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a809157b144c05d01b3a2bd839e9298a0">getDescription</a> ()</td></tr>
-<tr class="memdesc:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">UNUSED. This function appears to be completely unused in Picto. We should probably delete it. <br /></td></tr>
-<tr class="separator:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a> ()</td></tr>
 <tr class="memdesc:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the "::" separated path to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> in the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> tree.  <a href="#a310a0e5ffab1adff37039f27b998684a">More...</a><br /></td></tr>
 <tr class="separator:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -610,6 +614,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward.html#ad06e280ebc6025df96111d994068c1e9">minRewardPeriod</a></td></tr>
 <tr class="memdesc:ad06e280ebc6025df96111d994068c1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets/Sets the minimum number of milliseconds between rewards when multiple rewards are provided. <br /></td></tr>
 <tr class="separator:ad06e280ebc6025df96111d994068c1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c7824ab2fd020beb9827e7047daf88d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c7824ab2fd020beb9827e7047daf88d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward.html#a0c7824ab2fd020beb9827e7047daf88d">chan</a></td></tr>
+<tr class="memdesc:a0c7824ab2fd020beb9827e7047daf88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the channel that the reward is delivered on. <br /></td></tr>
+<tr class="separator:a0c7824ab2fd020beb9827e7047daf88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -740,7 +748,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_state_machine_element.html#a71bb8021124ed8ce64e498e767b69e1d">Picto::StateMachineElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_reward_8h_source.html#l00050">50</a> of file <a class="el" href="_reward_8h_source.html">Reward.h</a>.</p>
+<p>Definition at line <a class="el" href="_reward_8h_source.html#l00052">52</a> of file <a class="el" href="_reward_8h_source.html">Reward.h</a>.</p>
 
 </div>
 </div>

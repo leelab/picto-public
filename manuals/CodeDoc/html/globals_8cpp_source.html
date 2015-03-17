@@ -116,70 +116,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;../common/controlelements/StopwatchController.h&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;../common/controlelements/TargetController.h&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;../common/controlelements/ChoiceController.h&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/BooleanParameter.h&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/NumericParameter.h&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/RangeParameter.h&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="memleakdetect_8h.html">memleakdetect.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;../common/controlelements/FixationController.h&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/BooleanParameter.h&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/NumericParameter.h&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;../common/parameter/RangeParameter.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="memleakdetect_8h.html">memleakdetect.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;Q_DECLARE_METATYPE(QHostAddress);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">const</span> TranslatedNames * Names = NULL;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;PortNums * portNums = NULL;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;QTranslator * qtTranslator = NULL;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;QTranslator * commonTranslator = NULL;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> InitializeNames()</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span>(!Names)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        Names = <span class="keyword">new</span> TranslatedNames();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> InitializeMetaTypes()</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    qRegisterMetaType&lt;QHostAddress&gt;();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    qRegisterMetaType&lt;QMap&lt;QString, QVariant&gt; &gt;();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    qRegisterMetaType&lt;QSharedPointer&lt;Asset&gt;&gt;(<span class="stringliteral">&quot;QSharedPointer&lt;Asset&gt;&quot;</span>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span>(coreApp)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        qtTranslator = <span class="keyword">new</span> QTranslator();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        qtTranslator-&gt;load(<span class="stringliteral">&quot;:/common/translations/qt_&quot;</span> + localeLanguageCode + <span class="stringliteral">&quot;.qm&quot;</span> );</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        coreApp-&gt;installTranslator(qtTranslator);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        commonTranslator = <span class="keyword">new</span> QTranslator();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        commonTranslator-&gt;load(<span class="stringliteral">&quot;:/common/translations/common_&quot;</span> + localeLanguageCode + <span class="stringliteral">&quot;.qm&quot;</span> );</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        coreApp-&gt;installTranslator(commonTranslator);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    InitializeNames();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    InitializeMetaTypes();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> InitializePorts(QString appName,<span class="keywordtype">bool</span> usedInSystemService)</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">if</span>(!portNums)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        portNums = <span class="keyword">new</span> PortNums(appName,usedInSystemService);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> CloseLib()</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">delete</span> Names;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">delete</span> portNums;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">delete</span> commonTranslator;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">delete</span> qtTranslator;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    Names = NULL;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    portNums = NULL;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    commonTranslator = NULL;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    qtTranslator = NULL;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;Q_DECLARE_METATYPE(QHostAddress);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">const</span> TranslatedNames * Names = NULL;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;PortNums * portNums = NULL;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;QTranslator * qtTranslator = NULL;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;QTranslator * commonTranslator = NULL;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> InitializeNames()</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span>(!Names)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        Names = <span class="keyword">new</span> TranslatedNames();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> InitializeMetaTypes()</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    qRegisterMetaType&lt;QHostAddress&gt;();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    qRegisterMetaType&lt;QMap&lt;QString, QVariant&gt; &gt;();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    qRegisterMetaType&lt;QSharedPointer&lt;Asset&gt;&gt;(<span class="stringliteral">&quot;QSharedPointer&lt;Asset&gt;&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> InitializeLib(QCoreApplication * coreApp, QString localeLanguageCode)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(coreApp)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        qtTranslator = <span class="keyword">new</span> QTranslator();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        qtTranslator-&gt;load(<span class="stringliteral">&quot;:/common/translations/qt_&quot;</span> + localeLanguageCode + <span class="stringliteral">&quot;.qm&quot;</span> );</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        coreApp-&gt;installTranslator(qtTranslator);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        commonTranslator = <span class="keyword">new</span> QTranslator();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        commonTranslator-&gt;load(<span class="stringliteral">&quot;:/common/translations/common_&quot;</span> + localeLanguageCode + <span class="stringliteral">&quot;.qm&quot;</span> );</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        coreApp-&gt;installTranslator(commonTranslator);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    InitializeNames();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    InitializeMetaTypes();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> InitializePorts(QString appName,<span class="keywordtype">bool</span> usedInSystemService)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span>(!portNums)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        portNums = <span class="keyword">new</span> PortNums(appName,usedInSystemService);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">void</span> CloseLib()</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">delete</span> Names;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">delete</span> portNums;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">delete</span> commonTranslator;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">delete</span> qtTranslator;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    Names = NULL;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    portNums = NULL;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    commonTranslator = NULL;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    qtTranslator = NULL;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="ttc" id="globals_8h_html"><div class="ttname"><a href="globals_8h.html">globals.h</a></div><div class="ttdoc">Initialization calls and global variables exposed by the Picto library. </div></div>
 <div class="ttc" id="memleakdetect_8h_html"><div class="ttname"><a href="memleakdetect_8h.html">memleakdetect.h</a></div><div class="ttdoc">Any cpp file that includes this file will have memory leak detection enabled. </div></div>
 <div class="ttc" id="namedefs_8h_html"><div class="ttname"><a href="namedefs_8h.html">namedefs.h</a></div><div class="ttdoc">Names used for Picto applications and hardware. </div></div>

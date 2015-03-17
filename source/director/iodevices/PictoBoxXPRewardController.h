@@ -37,10 +37,7 @@ protected:
 	virtual void stopFlush(unsigned int channel);
 private:
 	bool hasDevice_;
-	double outputData[2];
-	//quint32 daqTaskHandle_[5]; // For Nidaqmx 8.5
-	//void*  daqTaskHandle_[5];	// For Nidaqmx after 8.5
-	void*  daqTaskHandleDig_[5];	// For Nidaqmx after 8.5
+	void*  daqTaskHandleDig_[5];
 	int rewardLines_[5];
 	Stopwatch stopwatch_[5];
 	int latestOnTime_[5];

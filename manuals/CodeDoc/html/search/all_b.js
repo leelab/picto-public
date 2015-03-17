@@ -45,6 +45,6 @@ var searchData=
   ['loadpropvalsfromfile',['LoadPropValsFromFile',['../class_test_viewer.html#a8ff7fc29e9eb7473a8f6f2994ed7ea1d',1,'TestViewer']]],
   ['loadrun',['loadRun',['../class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c',1,'Picto::FileSessionLoader::loadRun()'],['../class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200',1,'Picto::PlaybackStateUpdater::loadRun()']]],
   ['loadrundata',['loadRunData',['../class_picto_1_1_file_session_loader.html#a7f02445db069cb6c8b1fb5110426cbd3',1,'Picto::FileSessionLoader']]],
-  ['loadsession',['loadSession',['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()']]],
+  ['loadsession',['LoadSession',['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()'],['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()']]],
   ['logicresult',['LogicResult',['../class_picto_1_1_logic_result.html',1,'Picto']]]
 ];

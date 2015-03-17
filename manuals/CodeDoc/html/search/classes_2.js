@@ -20,7 +20,6 @@ var searchData=
   ['containerelement',['ContainerElement',['../class_picto_1_1_container_element.html',1,'Picto']]],
   ['controlelement',['ControlElement',['../class_picto_1_1_control_element.html',1,'Picto']]],
   ['controlelementitem',['ControlElementItem',['../class_control_element_item.html',1,'']]],
-  ['controllink',['ControlLink',['../class_picto_1_1_control_link.html',1,'Picto']]],
   ['controlpanelinterface',['ControlPanelInterface',['../class_control_panel_interface.html',1,'']]],
   ['controltarget',['ControlTarget',['../class_picto_1_1_control_target.html',1,'Picto']]],
   ['controltargetresult',['ControlTargetResult',['../class_picto_1_1_control_target_result.html',1,'Picto']]],

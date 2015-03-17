@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>Picto: Picto::StringParameter Class Reference</title>
+<title>Picto: Picto::FixationController Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,69 +85,170 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>Picto</b></li><li class="navelem"><a class="el" href="class_picto_1_1_string_parameter.html">StringParameter</a></li>  </ul>
+<li class="navelem"><b>Picto</b></li><li class="navelem"><a class="el" href="class_picto_1_1_fixation_controller.html">FixationController</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
-<a href="class_picto_1_1_string_parameter-members.html">List of all members</a>  </div>
+<a href="class_picto_1_1_fixation_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Picto::StringParameter Class Reference</div>  </div>
+<div class="title">Picto::FixationController Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A parameter for storing strings that is not being used.  
- <a href="class_picto_1_1_string_parameter.html#details">More...</a></p>
+<p>Returns a result based on whether the subject fixated on a set target or failed to do so according to preset parameters.  
+ <a href="class_picto_1_1_fixation_controller.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_string_parameter_8h_source.html">StringParameter.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Picto::StringParameter:</div>
+Inheritance diagram for Picto::FixationController:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_picto_1_1_string_parameter.png" usemap="#Picto::StringParameter_map" alt=""/>
-  <map id="Picto::StringParameter_map" name="Picto::StringParameter_map">
-<area href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. " alt="Picto::Parameter" shape="rect" coords="147,280,284,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="147,224,284,248"/>
-<area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="73,168,210,192"/>
-<area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="73,112,210,136"/>
-<area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="73,56,210,80"/>
-<area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="147,0,284,24"/>
+  <img src="class_picto_1_1_fixation_controller.png" usemap="#Picto::FixationController_map" alt=""/>
+  <map id="Picto::FixationController_map" name="Picto::FixationController_map">
+<area href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its..." alt="Picto::ControlElement" shape="rect" coords="168,392,326,416"/>
+<area href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. " alt="Picto::ResultContainer" shape="rect" coords="168,336,326,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="168,280,326,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="168,224,326,248"/>
+<area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="84,168,242,192"/>
+<area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="84,112,242,136"/>
+<area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="84,56,242,80"/>
+<area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="168,0,326,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a7cc3b985414da3cf53ea496c3a216b1c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7cc3b985414da3cf53ea496c3a216b1c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a7cc3b985414da3cf53ea496c3a216b1c">userOnTarget</a> ()</td></tr>
+<tr class="memdesc:a7cc3b985414da3cf53ea496c3a216b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the user is currently fixating on the attached target. Returns false otherwise. <br /></td></tr>
+<tr class="separator:a7cc3b985414da3cf53ea496c3a216b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a369897e4cfe8c915bf3b60301d8e11f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a369897e4cfe8c915bf3b60301d8e11f3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a369897e4cfe8c915bf3b60301d8e11f3">userEnteredTarget</a> ()</td></tr>
+<tr class="memdesc:a369897e4cfe8c915bf3b60301d8e11f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the user started fixating on the attached target during the previous frame, false otherwise. <br /></td></tr>
+<tr class="separator:a369897e4cfe8c915bf3b60301d8e11f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8712c63f26211b6931416abfe1faf33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8712c63f26211b6931416abfe1faf33"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ac8712c63f26211b6931416abfe1faf33">userExitedTarget</a> ()</td></tr>
+<tr class="memdesc:ac8712c63f26211b6931416abfe1faf33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the user stopped fixating on the attached target during the previous frame, false otherwise. <br /></td></tr>
+<tr class="separator:ac8712c63f26211b6931416abfe1faf33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_slots_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
+<tr class="memitem:ada1e696915489f882b994774b4a2bf63 inherit pub_slots_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#ada1e696915489f882b994774b4a2bf63">getLatestResult</a> ()</td></tr>
+<tr class="memdesc:ada1e696915489f882b994774b4a2bf63 inherit pub_slots_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the latest <a class="el" href="class_picto_1_1_result.html" title="A Result is the control flow exit point from every element of a Picto StateMachine. ">Result</a> to have been triggered by this <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a>.  <a href="#ada1e696915489f882b994774b4a2bf63">More...</a><br /></td></tr>
+<tr class="separator:ada1e696915489f882b994774b4a2bf63 inherit pub_slots_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
+<tr class="memitem:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bb6ca0be073c2537c66b82242c26aa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
+<tr class="memdesc:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">This slot is called when a child is edited and causes this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s <a class="el" href="class_picto_1_1_asset.html#a2ca6303bf64730a9994a180bf2227da4" title="Emitted whenever something in this asset changes. ">edited()</a> signal to be emitted as well. <br /></td></tr>
+<tr class="separator:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afe6c7b7ceb0966f4ed31f5fbd1355b8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe6c7b7ceb0966f4ed31f5fbd1355b8d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addOption</b> (<a class="el" href="struct_picto_1_1_string_parameter_option.html">StringParameterOption</a> option)</td></tr>
-<tr class="separator:afe6c7b7ceb0966f4ed31f5fbd1355b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a439cde56cc8a6b77aaf485e525b40e8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a439cde56cc8a6b77aaf485e525b40e8e"></a>
-QString&#160;</td><td class="memItemRight" valign="bottom"><b>getValue</b> ()</td></tr>
-<tr class="separator:a439cde56cc8a6b77aaf485e525b40e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0064230c4a9619b8c14b3546351f7c47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0064230c4a9619b8c14b3546351f7c47"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setValue</b> (QString val)</td></tr>
-<tr class="separator:a0064230c4a9619b8c14b3546351f7c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4127d8059f5243fc0ec02605fd40a804"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_parameter.html#a4127d8059f5243fc0ec02605fd40a804">friendlyTypeName</a> ()</td></tr>
-<tr class="memdesc:a4127d8059f5243fc0ec02605fd40a804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>.  <a href="#a4127d8059f5243fc0ec02605fd40a804">More...</a><br /></td></tr>
-<tr class="separator:a4127d8059f5243fc0ec02605fd40a804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_picto_1_1_parameter"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_parameter')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_parameter.html">Picto::Parameter</a></td></tr>
-<tr class="memitem:a1f72bd3b6d881ef062db768ada609302 inherit pub_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f72bd3b6d881ef062db768ada609302"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#a1f72bd3b6d881ef062db768ada609302">getUITemplate</a> ()</td></tr>
-<tr class="memdesc:a1f72bd3b6d881ef062db768ada609302 inherit pub_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a user interface template that should be used to represent this element in a UI. <br /></td></tr>
-<tr class="separator:a1f72bd3b6d881ef062db768ada609302 inherit pub_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3fd80bab8d8086fedf29eb50e733f3"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#abc3fd80bab8d8086fedf29eb50e733f3">getUIGroup</a> ()</td></tr>
-<tr class="memdesc:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a type of elements with which this element should be grouped in things like ToolBox widget. <br /></td></tr>
-<tr class="separator:abc3fd80bab8d8086fedf29eb50e733f3 inherit pub_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3443808da4c3edf26f2c3c3772d95b10 inherit pub_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#a3443808da4c3edf26f2c3c3772d95b10">valuesAreValid</a> (QString &amp;warning=QString())</td></tr>
-<tr class="memdesc:a3443808da4c3edf26f2c3c3772d95b10 inherit pub_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this Parameters current <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values are valid. Returns false otherwise.  <a href="#a3443808da4c3edf26f2c3c3772d95b10">More...</a><br /></td></tr>
-<tr class="separator:a3443808da4c3edf26f2c3c3772d95b10 inherit pub_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a219dc74f193fc0f25e813275a945b822 inherit pub_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#a219dc74f193fc0f25e813275a945b822">fixValues</a> ()</td></tr>
-<tr class="memdesc:a219dc74f193fc0f25e813275a945b822 inherit pub_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixes values that are outside of valid ranges.  <a href="#a219dc74f193fc0f25e813275a945b822">More...</a><br /></td></tr>
-<tr class="separator:a219dc74f193fc0f25e813275a945b822 inherit pub_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d8d0c37dd6edca49793b1ea846740b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5d8d0c37dd6edca49793b1ea846740b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ad5d8d0c37dd6edca49793b1ea846740b">isDone</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:ad5d8d0c37dd6edca49793b1ea846740b"><td class="mdescLeft">&#160;</td><td class="mdescRight">isDone will return true if the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>'s logic determines that some condition has been met. <br /></td></tr>
+<tr class="separator:ad5d8d0c37dd6edca49793b1ea846740b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e05a212824f8518cc2fa41e841acada"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e05a212824f8518cc2fa41e841acada"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_result.html">Result</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a0e05a212824f8518cc2fa41e841acada">getResult</a> ()</td></tr>
+<tr class="memdesc:a0e05a212824f8518cc2fa41e841acada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the latest result after a <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a> <a class="el" href="class_picto_1_1_fixation_controller.html#ad5d8d0c37dd6edca49793b1ea846740b" title="isDone will return true if the ControlElement&#39;s logic determines that some condition has been met...">isDone()</a>. If the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a> is not done, this returns an empty result pointer. <br /></td></tr>
+<tr class="separator:a0e05a212824f8518cc2fa41e841acada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5a0eb000353556377afd91532e2ea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a6c5a0eb000353556377afd91532e2ea4">start</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:a6c5a0eb000353556377afd91532e2ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>.  <a href="#a6c5a0eb000353556377afd91532e2ea4">More...</a><br /></td></tr>
+<tr class="separator:a6c5a0eb000353556377afd91532e2ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae766ce7f098b46d692c86da8e1c61a1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ae766ce7f098b46d692c86da8e1c61a1c">stop</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:ae766ce7f098b46d692c86da8e1c61a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>.  <a href="#ae766ce7f098b46d692c86da8e1c61a1c">More...</a><br /></td></tr>
+<tr class="separator:ae766ce7f098b46d692c86da8e1c61a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e0a482f70bc972786d31f25e0b389bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a9e0a482f70bc972786d31f25e0b389bd">activateTargets</a> ()</td></tr>
+<tr class="memdesc:a9e0a482f70bc972786d31f25e0b389bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates all Control Targets managed by this Control Element.  <a href="#a9e0a482f70bc972786d31f25e0b389bd">More...</a><br /></td></tr>
+<tr class="separator:a9e0a482f70bc972786d31f25e0b389bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a228ca432c3d35d4fa8bed76becb563b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a228ca432c3d35d4fa8bed76becb563b1">deactivateTargets</a> ()</td></tr>
+<tr class="memdesc:a228ca432c3d35d4fa8bed76becb563b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deactivates all Control Targets managed by this Control Element.  <a href="#a228ca432c3d35d4fa8bed76becb563b1">More...</a><br /></td></tr>
+<tr class="separator:a228ca432c3d35d4fa8bed76becb563b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3e4decbc5a4665861218f109ddf1c36"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ac3e4decbc5a4665861218f109ddf1c36">getFixationTime</a> ()</td></tr>
+<tr class="memdesc:ac3e4decbc5a4665861218f109ddf1c36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the FixationTime property.  <a href="#ac3e4decbc5a4665861218f109ddf1c36">More...</a><br /></td></tr>
+<tr class="separator:ac3e4decbc5a4665861218f109ddf1c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058b625812dc2eb292e6b86ee9444ccd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a058b625812dc2eb292e6b86ee9444ccd">setFixationTime</a> (int time)</td></tr>
+<tr class="memdesc:a058b625812dc2eb292e6b86ee9444ccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current value of the FixationTime property.  <a href="#a058b625812dc2eb292e6b86ee9444ccd">More...</a><br /></td></tr>
+<tr class="separator:a058b625812dc2eb292e6b86ee9444ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa70750ada601d767c559e9a508e4147f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#aa70750ada601d767c559e9a508e4147f">getMinAcqTime</a> ()</td></tr>
+<tr class="memdesc:aa70750ada601d767c559e9a508e4147f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the MinInitialAcquisitionTime property.  <a href="#aa70750ada601d767c559e9a508e4147f">More...</a><br /></td></tr>
+<tr class="separator:aa70750ada601d767c559e9a508e4147f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a975d31c9017e761987ca59e7967be44f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a975d31c9017e761987ca59e7967be44f">setMinAcqTime</a> (int time)</td></tr>
+<tr class="memdesc:a975d31c9017e761987ca59e7967be44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current value of the MinInitialAcquisitionTime property.  <a href="#a975d31c9017e761987ca59e7967be44f">More...</a><br /></td></tr>
+<tr class="separator:a975d31c9017e761987ca59e7967be44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f96f03b8f2aa8844820f0fd4c880754"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a1f96f03b8f2aa8844820f0fd4c880754">getMaxAcqTime</a> ()</td></tr>
+<tr class="memdesc:a1f96f03b8f2aa8844820f0fd4c880754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the MaxInitialAcquisitionTime property.  <a href="#a1f96f03b8f2aa8844820f0fd4c880754">More...</a><br /></td></tr>
+<tr class="separator:a1f96f03b8f2aa8844820f0fd4c880754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e6e3eee55fe63c3ad1ca1f26857eba6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a6e6e3eee55fe63c3ad1ca1f26857eba6">setMaxAcqTime</a> (int time)</td></tr>
+<tr class="memdesc:a6e6e3eee55fe63c3ad1ca1f26857eba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current value of the MaxInitialAcquisitionTime property.  <a href="#a6e6e3eee55fe63c3ad1ca1f26857eba6">More...</a><br /></td></tr>
+<tr class="separator:a6e6e3eee55fe63c3ad1ca1f26857eba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f380c05b99a42743cbbb58d83fcc06f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a1f380c05b99a42743cbbb58d83fcc06f">getMaxReacqTime</a> ()</td></tr>
+<tr class="memdesc:a1f380c05b99a42743cbbb58d83fcc06f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the MaxReacquisitionTime property.  <a href="#a1f380c05b99a42743cbbb58d83fcc06f">More...</a><br /></td></tr>
+<tr class="separator:a1f380c05b99a42743cbbb58d83fcc06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2a2d0133a548160d856dea949410909"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#aa2a2d0133a548160d856dea949410909">setMaxReacqTime</a> (int time)</td></tr>
+<tr class="memdesc:aa2a2d0133a548160d856dea949410909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current value of the MaxReacquisitionTime property.  <a href="#aa2a2d0133a548160d856dea949410909">More...</a><br /></td></tr>
+<tr class="separator:aa2a2d0133a548160d856dea949410909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea449e89a293e0dbe9af522e6694ef9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeea449e89a293e0dbe9af522e6694ef9"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#aeea449e89a293e0dbe9af522e6694ef9">getUITemplate</a> ()</td></tr>
+<tr class="memdesc:aeea449e89a293e0dbe9af522e6694ef9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a user interface template that should be used to represent this element in a UI. <br /></td></tr>
+<tr class="separator:aeea449e89a293e0dbe9af522e6694ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1badc57eaf4649f452240e222ee8e97f"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a1badc57eaf4649f452240e222ee8e97f">friendlyTypeName</a> ()</td></tr>
+<tr class="memdesc:a1badc57eaf4649f452240e222ee8e97f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>.  <a href="#a1badc57eaf4649f452240e222ee8e97f">More...</a><br /></td></tr>
+<tr class="separator:a1badc57eaf4649f452240e222ee8e97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_control_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_control_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_control_element.html">Picto::ControlElement</a></td></tr>
+<tr class="memitem:a4882c645365d985cb0f8a46061be984e inherit pub_methods_class_picto_1_1_control_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4882c645365d985cb0f8a46061be984e"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_control_element.html#a4882c645365d985cb0f8a46061be984e">getUIGroup</a> ()</td></tr>
+<tr class="memdesc:a4882c645365d985cb0f8a46061be984e inherit pub_methods_class_picto_1_1_control_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a type of elements with which this element should be grouped in things like ToolBox widget. <br /></td></tr>
+<tr class="separator:a4882c645365d985cb0f8a46061be984e inherit pub_methods_class_picto_1_1_control_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
+<tr class="memitem:a4344b2309c82a06690a5d23f6bcb6ba4 inherit pub_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a4344b2309c82a06690a5d23f6bcb6ba4">ResultContainer</a> ()</td></tr>
+<tr class="memdesc:a4344b2309c82a06690a5d23f6bcb6ba4 inherit pub_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a> object.  <a href="#a4344b2309c82a06690a5d23f6bcb6ba4">More...</a><br /></td></tr>
+<tr class="separator:a4344b2309c82a06690a5d23f6bcb6ba4 inherit pub_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdddccb655674584da534256d7336545 inherit pub_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#afdddccb655674584da534256d7336545">enteredScope</a> ()</td></tr>
+<tr class="memdesc:afdddccb655674584da534256d7336545 inherit pub_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets this scriptable's data fields to their original values.  <a href="#afdddccb655674584da534256d7336545">More...</a><br /></td></tr>
+<tr class="separator:afdddccb655674584da534256d7336545 inherit pub_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e9cbc4c28db47285748e85594a55b87 inherit pub_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e9cbc4c28db47285748e85594a55b87"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a2e9cbc4c28db47285748e85594a55b87">getResultList</a> ()</td></tr>
+<tr class="memdesc:a2e9cbc4c28db47285748e85594a55b87 inherit pub_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all possible results in this <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a>. <br /></td></tr>
+<tr class="separator:a2e9cbc4c28db47285748e85594a55b87 inherit pub_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a559fc64ee804dd9c4d4278716aff4c81 inherit pub_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a559fc64ee804dd9c4d4278716aff4c81"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_result.html">Result</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a559fc64ee804dd9c4d4278716aff4c81">getResult</a> (QString name)</td></tr>
+<tr class="memdesc:a559fc64ee804dd9c4d4278716aff4c81 inherit pub_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_result.html" title="A Result is the control flow exit point from every element of a Picto StateMachine. ">Result</a> with the input name. <br /></td></tr>
+<tr class="separator:a559fc64ee804dd9c4d4278716aff4c81 inherit pub_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44cb41e834b9975f4a2d5e94609092c inherit pub_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#af44cb41e834b9975f4a2d5e94609092c">hasEditableDescendants</a> ()</td></tr>
+<tr class="memdesc:af44cb41e834b9975f4a2d5e94609092c inherit pub_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this object can or does have child objects that are editable.  <a href="#af44cb41e834b9975f4a2d5e94609092c">More...</a><br /></td></tr>
+<tr class="separator:af44cb41e834b9975f4a2d5e94609092c inherit pub_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
+<tr class="memitem:ab8b4c61dbb0dc6724544a6607efa93e6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab8b4c61dbb0dc6724544a6607efa93e6">addScriptable</a> (QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; scriptable)</td></tr>
+<tr class="memdesc:ab8b4c61dbb0dc6724544a6607efa93e6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> object to this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> and makes it accessible to all <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects for which it will be in scope.  <a href="#ab8b4c61dbb0dc6724544a6607efa93e6">More...</a><br /></td></tr>
+<tr class="separator:ab8b4c61dbb0dc6724544a6607efa93e6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2242d9ab9446dc8001d74670b19f2125 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a2242d9ab9446dc8001d74670b19f2125">addChildScriptableContainer</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_scriptable_container.html">ScriptableContainer</a> &gt; child)</td></tr>
+<tr class="memdesc:a2242d9ab9446dc8001d74670b19f2125 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a child <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> to this scriptable container so that this object can add its child <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects to that <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> and thereby make them available for scripts in that container.  <a href="#a2242d9ab9446dc8001d74670b19f2125">More...</a><br /></td></tr>
+<tr class="separator:a2242d9ab9446dc8001d74670b19f2125 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e9c8299a790e10d294c12ab1f6267c6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e9c8299a790e10d294c12ab1f6267c6"></a>
+QList&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a2e9c8299a790e10d294c12ab1f6267c6">getScriptableList</a> ()</td></tr>
+<tr class="memdesc:a2e9c8299a790e10d294c12ab1f6267c6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects available to scripts in this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a>. <br /></td></tr>
+<tr class="separator:a2e9c8299a790e10d294c12ab1f6267c6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d900d7a5403b8795b0edb54e50a750 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750">initScripting</a> (bool enableDebugging)</td></tr>
+<tr class="memdesc:ab3d900d7a5403b8795b0edb54e50a750 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes scripting for this and all child ScriptableContainers.  <a href="#ab3d900d7a5403b8795b0edb54e50a750">More...</a><br /></td></tr>
+<tr class="separator:ab3d900d7a5403b8795b0edb54e50a750 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15aa44cda4dfbc099b6da2f926a004e inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ad15aa44cda4dfbc099b6da2f926a004e">resetScriptableValues</a> ()</td></tr>
+<tr class="memdesc:ad15aa44cda4dfbc099b6da2f926a004e inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls reset on the scriptables serialized into this container.  <a href="#ad15aa44cda4dfbc099b6da2f926a004e">More...</a><br /></td></tr>
+<tr class="separator:ad15aa44cda4dfbc099b6da2f926a004e inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a532aa4ec0d4f15c9cf79b43a0663ded4 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a532aa4ec0d4f15c9cf79b43a0663ded4">resetScriptableAnalysisValues</a> ()</td></tr>
+<tr class="memdesc:a532aa4ec0d4f15c9cf79b43a0663ded4 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes all contained <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects that are currently active to have their <a class="el" href="class_picto_1_1_scriptable.html#ad1945e93d9ebf6cb1f1b8d0a400b73c5" title="Resets this scriptable&#39;s data fields to their original values. ">enteredScope()</a> function called.  <a href="#a532aa4ec0d4f15c9cf79b43a0663ded4">More...</a><br /></td></tr>
+<tr class="separator:a532aa4ec0d4f15c9cf79b43a0663ded4 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cb05271d66a66d63560f95b1f9d0c61 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a4cb05271d66a66d63560f95b1f9d0c61">getInfo</a> ()</td></tr>
+<tr class="memdesc:a4cb05271d66a66d63560f95b1f9d0c61 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a formatted string containing all in-scope script properties and script function for this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a>.  <a href="#a4cb05271d66a66d63560f95b1f9d0c61">More...</a><br /></td></tr>
+<tr class="separator:a4cb05271d66a66d63560f95b1f9d0c61 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5dda0b9e1a2e2d8f9e182d28099020 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae5dda0b9e1a2e2d8f9e182d28099020"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#aae5dda0b9e1a2e2d8f9e182d28099020">ClearAssociateChildren</a> (QUuid associateId)</td></tr>
+<tr class="memdesc:aae5dda0b9e1a2e2d8f9e182d28099020 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_data_store.html#a340c4d3fe20a1011002918820893192c" title="Removes all AssociateElement children with the input associateId from this DataStore. ">Scriptable::ClearAssociateChildren()</a> to remove all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects from this objects list of contained <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects and <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects. <br /></td></tr>
+<tr class="separator:aae5dda0b9e1a2e2d8f9e182d28099020 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_scriptable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable.html">Picto::Scriptable</a></td></tr>
 <tr class="memitem:a582fbaab4825738e4ec30c9fc55ced7c inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a582fbaab4825738e4ec30c9fc55ced7c"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a582fbaab4825738e4ec30c9fc55ced7c">hasContentsForScriptEngine</a> ()</td></tr>
@@ -157,9 +258,6 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#adce0998e15121e926dc77624a40a436e">bindToScriptEngine</a> (QScriptEngine &amp;engine)</td></tr>
 <tr class="memdesc:adce0998e15121e926dc77624a40a436e inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds this <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> to the input QScriptEngine so that it can be accessed by any scripts running in that QScriptEngine. <br /></td></tr>
 <tr class="separator:adce0998e15121e926dc77624a40a436e inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#ad1945e93d9ebf6cb1f1b8d0a400b73c5">enteredScope</a> ()</td></tr>
-<tr class="memdesc:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets this scriptable's data fields to their original values.  <a href="#ad1945e93d9ebf6cb1f1b8d0a400b73c5">More...</a><br /></td></tr>
-<tr class="separator:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f359a1dd735a8a66a5b6a8b76547f4a inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a8f359a1dd735a8a66a5b6a8b76547f4a">isUIEnabled</a> ()</td></tr>
 <tr class="separator:a8f359a1dd735a8a66a5b6a8b76547f4a inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c73838685227f004a22adb18133a07a inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a4c73838685227f004a22adb18133a07a">getUIOrder</a> ()</td></tr>
@@ -174,9 +272,6 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a728180eeacd1b8611eda1540a9dd1a0f">getScriptingInfo</a> ()</td></tr>
 <tr class="memdesc:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all of the script properties and script function for this <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> element.  <a href="#a728180eeacd1b8611eda1540a9dd1a0f">More...</a><br /></td></tr>
 <tr class="separator:a728180eeacd1b8611eda1540a9dd1a0f inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d8664f35c5127e7d5e861306e76c6bf inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a0d8664f35c5127e7d5e861306e76c6bf">getInfo</a> ()</td></tr>
-<tr class="memdesc:a0d8664f35c5127e7d5e861306e76c6bf inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information about this object for the user. In practice, the <a class="el" href="class_asset_describer.html" title="A tool used to query documentation for classes used in the Picto Designer. ">AssetDescriber</a> has taken ove this functionality to a great extent.  <a href="#a0d8664f35c5127e7d5e861306e76c6bf">More...</a><br /></td></tr>
-<tr class="separator:a0d8664f35c5127e7d5e861306e76c6bf inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a98007f02abd55321577ef5db5460caba inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98007f02abd55321577ef5db5460caba"></a>
 virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a> ()</td></tr>
@@ -198,9 +293,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a633ba2f43657af31ab75dde4ee57bee0 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a633ba2f43657af31ab75dde4ee57bee0">getNotes</a> ()</td></tr>
 <tr class="memdesc:a633ba2f43657af31ab75dde4ee57bee0 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the design notes for this object that appear in the Design window.  <a href="#a633ba2f43657af31ab75dde4ee57bee0">More...</a><br /></td></tr>
 <tr class="separator:a633ba2f43657af31ab75dde4ee57bee0 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9146adb2bb548fd5763be8d7a6f97d1 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#aa9146adb2bb548fd5763be8d7a6f97d1">hasEditableDescendants</a> ()</td></tr>
-<tr class="memdesc:aa9146adb2bb548fd5763be8d7a6f97d1 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this object can or does have child objects that are editable.  <a href="#aa9146adb2bb548fd5763be8d7a6f97d1">More...</a><br /></td></tr>
-<tr class="separator:aa9146adb2bb548fd5763be8d7a6f97d1 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12c0d0357c85854db9220c72c4941b15 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a12c0d0357c85854db9220c72c4941b15">upgradeVersion</a> (QString deserializedVersion)</td></tr>
 <tr class="separator:a12c0d0357c85854db9220c72c4941b15 inherit pub_methods_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
@@ -320,10 +412,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a4bb792f5bf63de9f929f49d1b9500ea8">ClearAllAssociateDescendants</a> ()</td></tr>
 <tr class="memdesc:a4bb792f5bf63de9f929f49d1b9500ea8 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children from this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> and all of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s descendants. <br /></td></tr>
 <tr class="separator:a4bb792f5bf63de9f929f49d1b9500ea8 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a340c4d3fe20a1011002918820893192c inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a340c4d3fe20a1011002918820893192c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a340c4d3fe20a1011002918820893192c">ClearAssociateChildren</a> (QUuid associateId)</td></tr>
-<tr class="memdesc:a340c4d3fe20a1011002918820893192c inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children with the input associateId from this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>. <br /></td></tr>
-<tr class="separator:a340c4d3fe20a1011002918820893192c inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa85e975a50ee2dd49dea4a9e3d4d0e8 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa85e975a50ee2dd49dea4a9e3d4d0e8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#aaa85e975a50ee2dd49dea4a9e3d4d0e8">ClearAllAssociateChildren</a> ()</td></tr>
 <tr class="memdesc:aaa85e975a50ee2dd49dea4a9e3d4d0e8 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children from this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>. <br /></td></tr>
@@ -368,10 +456,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#aa0e64136d6a51d342a55cd56a8bacd24">setSelfPtr</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; <a class="el" href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">selfPtr</a>)</td></tr>
 <tr class="memdesc:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a QSharedPointer to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> so that it will be able to give others QSharedPointers to itself, and not just regular pointers.  <a href="#aa0e64136d6a51d342a55cd56a8bacd24">More...</a><br /></td></tr>
 <tr class="separator:aa0e64136d6a51d342a55cd56a8bacd24 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a809157b144c05d01b3a2bd839e9298a0"></a>
-virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a809157b144c05d01b3a2bd839e9298a0">getDescription</a> ()</td></tr>
-<tr class="memdesc:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">UNUSED. This function appears to be completely unused in Picto. We should probably delete it. <br /></td></tr>
-<tr class="separator:a809157b144c05d01b3a2bd839e9298a0 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a> ()</td></tr>
 <tr class="memdesc:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the "::" separated path to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> in the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> tree.  <a href="#a310a0e5ffab1adff37039f27b998684a">More...</a><br /></td></tr>
 <tr class="separator:a310a0e5ffab1adff37039f27b998684a inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -395,12 +479,18 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a932e74490c507c5ac0614057ec98504e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a932e74490c507c5ac0614057ec98504e"></a>
-static <a class="el" href="class_picto_1_1_parameter.html">Parameter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>NewParameter</b> ()</td></tr>
-<tr class="separator:a932e74490c507c5ac0614057ec98504e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7085faf96f44d2653464994f448353da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7085faf96f44d2653464994f448353da"></a>
-static QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Create</b> ()</td></tr>
-<tr class="separator:a7085faf96f44d2653464994f448353da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1674db523c1005eac98b7513082e4580"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1674db523c1005eac98b7513082e4580"></a>
+static <a class="el" href="class_picto_1_1_control_element.html">ControlElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a1674db523c1005eac98b7513082e4580">NewFixationController</a> ()</td></tr>
+<tr class="memdesc:a1674db523c1005eac98b7513082e4580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and returns the pointer to a new <a class="el" href="class_picto_1_1_fixation_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">FixationController</a>. <br /></td></tr>
+<tr class="separator:a1674db523c1005eac98b7513082e4580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47a368198cca8a66d23f97a848f98d90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47a368198cca8a66d23f97a848f98d90"></a>
+static QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a47a368198cca8a66d23f97a848f98d90">Create</a> ()</td></tr>
+<tr class="memdesc:a47a368198cca8a66d23f97a848f98d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and returns a shared pointer to a new <a class="el" href="class_picto_1_1_fixation_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">FixationController</a>. <br /></td></tr>
+<tr class="separator:a47a368198cca8a66d23f97a848f98d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0e11c2d16287449e0255551bbef9b50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0e11c2d16287449e0255551bbef9b50"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ae0e11c2d16287449e0255551bbef9b50">ControllerType</a> ()</td></tr>
+<tr class="memdesc:ae0e11c2d16287449e0255551bbef9b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this type of <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>: "Fixation Controller". <br /></td></tr>
+<tr class="separator:ae0e11c2d16287449e0255551bbef9b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a150caa9544965aea41579bc38e9e2ac5 inherit pub_static_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a150caa9544965aea41579bc38e9e2ac5"></a>
 static QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a150caa9544965aea41579bc38e9e2ac5">Create</a> ()</td></tr>
@@ -417,24 +507,62 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac43c3d2830299761848f2faa982e088d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_parameter.html#ac43c3d2830299761848f2faa982e088d">postDeserialize</a> ()</td></tr>
-<tr class="memdesc:ac43c3d2830299761848f2faa982e088d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization.  <a href="#ac43c3d2830299761848f2faa982e088d">More...</a><br /></td></tr>
-<tr class="separator:ac43c3d2830299761848f2faa982e088d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3f4be0d90aea389c997542255473282"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_string_parameter.html#ae3f4be0d90aea389c997542255473282">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
-<tr class="memdesc:ae3f4be0d90aea389c997542255473282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to verify that the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values of this <a class="el" href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. ">Parameter</a> are within acceptable ranges.  <a href="#ae3f4be0d90aea389c997542255473282">More...</a><br /></td></tr>
-<tr class="separator:ae3f4be0d90aea389c997542255473282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_picto_1_1_parameter"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_parameter')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_parameter.html">Picto::Parameter</a></td></tr>
-<tr class="memitem:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_parameter.html#a78d708af5b8c02e1d7529250e1e2ee85">defaultTagName</a> ()</td></tr>
-<tr class="memdesc:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s default XML tag.  <a href="#a78d708af5b8c02e1d7529250e1e2ee85">More...</a><br /></td></tr>
-<tr class="separator:a78d708af5b8c02e1d7529250e1e2ee85 inherit pro_methods_class_picto_1_1_parameter"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1c8f9e458b13dd53e24b9e16a73c140"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#ab1c8f9e458b13dd53e24b9e16a73c140">postDeserialize</a> ()</td></tr>
+<tr class="memdesc:ab1c8f9e458b13dd53e24b9e16a73c140"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization.  <a href="#ab1c8f9e458b13dd53e24b9e16a73c140">More...</a><br /></td></tr>
+<tr class="separator:ab1c8f9e458b13dd53e24b9e16a73c140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06828018c149afe6b2700288aef0903f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06828018c149afe6b2700288aef0903f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a06828018c149afe6b2700288aef0903f">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
+<tr class="memdesc:a06828018c149afe6b2700288aef0903f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to check the syntax of this object's scripts and add a compilation error if any problems are found. <br /></td></tr>
+<tr class="separator:a06828018c149afe6b2700288aef0903f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc472dcc9fd8929e264afd26d5aa5687"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#adc472dcc9fd8929e264afd26d5aa5687">scriptableContainerWasReinitialized</a> ()</td></tr>
+<tr class="memdesc:adc472dcc9fd8929e264afd26d5aa5687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconnects this object to its attached controlTarget_.  <a href="#adc472dcc9fd8929e264afd26d5aa5687">More...</a><br /></td></tr>
+<tr class="separator:adc472dcc9fd8929e264afd26d5aa5687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a251fad502fc34df134f13c6d61348bab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a251fad502fc34df134f13c6d61348bab"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a251fad502fc34df134f13c6d61348bab">executeSearchAlgorithm</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
+<tr class="memdesc:a251fad502fc34df134f13c6d61348bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_u_i_enabled.html#a97cb540bf9702a5af91a9eeddde39db9" title="Searches this UIEnabled object&#39;s name for the input searchRequest. ">Scriptable::executeSearchAlgorithm</a> to check for the input searchRequest in this object's scripts. <br /></td></tr>
+<tr class="separator:a251fad502fc34df134f13c6d61348bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_picto_1_1_control_element"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_control_element')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_control_element.html">Picto::ControlElement</a></td></tr>
+<tr class="memitem:a43be19d011bffeb4ff95953a826c4635 inherit pro_methods_class_picto_1_1_control_element"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_control_element.html#a43be19d011bffeb4ff95953a826c4635">defaultTagName</a> ()</td></tr>
+<tr class="memdesc:a43be19d011bffeb4ff95953a826c4635 inherit pro_methods_class_picto_1_1_control_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s default XML tag.  <a href="#a43be19d011bffeb4ff95953a826c4635">More...</a><br /></td></tr>
+<tr class="separator:a43be19d011bffeb4ff95953a826c4635 inherit pro_methods_class_picto_1_1_control_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
+<tr class="memitem:ab7a332b07952bad7173ecf04f4c656bc inherit pro_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#ab7a332b07952bad7173ecf04f4c656bc">addRequiredResult</a> (QString resultName)</td></tr>
+<tr class="memdesc:ab7a332b07952bad7173ecf04f4c656bc inherit pro_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a required result to this <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a> with the input resultName.  <a href="#ab7a332b07952bad7173ecf04f4c656bc">More...</a><br /></td></tr>
+<tr class="separator:ab7a332b07952bad7173ecf04f4c656bc inherit pro_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a127ff113eda9671d7b7d18a0336302e9 inherit pro_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a127ff113eda9671d7b7d18a0336302e9">setMaxOptionalResults</a> (int max, QString type=&quot;&quot;)</td></tr>
+<tr class="memdesc:a127ff113eda9671d7b7d18a0336302e9 inherit pro_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the maximum number of allowed optional results of the input type to the input max value.  <a href="#a127ff113eda9671d7b7d18a0336302e9">More...</a><br /></td></tr>
+<tr class="separator:a127ff113eda9671d7b7d18a0336302e9 inherit pro_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c10f5402ea12abbab92e51af6f1f47 inherit pro_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a88c10f5402ea12abbab92e51af6f1f47">defineResultFactoryType</a> (QString type, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt; resultFactory)</td></tr>
+<tr class="memdesc:a88c10f5402ea12abbab92e51af6f1f47 inherit pro_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this function to add a result factory for a non-standard <a class="el" href="class_picto_1_1_result.html" title="A Result is the control flow exit point from every element of a Picto StateMachine. ">Result</a> type.  <a href="#a88c10f5402ea12abbab92e51af6f1f47">More...</a><br /></td></tr>
+<tr class="separator:a88c10f5402ea12abbab92e51af6f1f47 inherit pro_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a7351bf950410d0dd94e7cbdae73fff inherit pro_methods_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_result_container.html#a2a7351bf950410d0dd94e7cbdae73fff">setLatestResult</a> (QString latestResult)</td></tr>
+<tr class="memdesc:a2a7351bf950410d0dd94e7cbdae73fff inherit pro_methods_class_picto_1_1_result_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the name of the latest <a class="el" href="class_picto_1_1_result.html" title="A Result is the control flow exit point from every element of a Picto StateMachine. ">Result</a> to have been triggered by this <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a> so that it will be accessible from <a class="el" href="class_picto_1_1_result_container.html#ada1e696915489f882b994774b4a2bf63" title="Returns the name of the latest Result to have been triggered by this ResultContainer. ">getLatestResult()</a>.  <a href="#a2a7351bf950410d0dd94e7cbdae73fff">More...</a><br /></td></tr>
+<tr class="separator:a2a7351bf950410d0dd94e7cbdae73fff inherit pro_methods_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
+<tr class="memitem:a09a80e0a86d216983f258fb4fc78da88 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09a80e0a86d216983f258fb4fc78da88"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a09a80e0a86d216983f258fb4fc78da88">runScript</a> (QString scriptName)</td></tr>
+<tr class="memdesc:a09a80e0a86d216983f258fb4fc78da88 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used instead of <a class="el" href="class_picto_1_1_scriptable_container.html#a552fa1d97408cd4893c7f7ddd9213021" title="Runs the script with the input scriptName, setting the result of the script into the scriptReturnVal ...">runScript(QString,QScriptValue &amp;)</a> when no return value is needed. <br /></td></tr>
+<tr class="separator:a09a80e0a86d216983f258fb4fc78da88 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a552fa1d97408cd4893c7f7ddd9213021 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a552fa1d97408cd4893c7f7ddd9213021">runScript</a> (QString scriptName, QScriptValue &amp;scriptReturnVal)</td></tr>
+<tr class="memdesc:a552fa1d97408cd4893c7f7ddd9213021 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the script with the input scriptName, setting the result of the script into the scriptReturnVal reference.  <a href="#a552fa1d97408cd4893c7f7ddd9213021">More...</a><br /></td></tr>
+<tr class="separator:a552fa1d97408cd4893c7f7ddd9213021 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e0264aee7ce551d450dc07a6b369d56 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56">getReturnValueError</a> (QString scriptName, const QScriptValue &amp;returnValue)</td></tr>
+<tr class="memdesc:a1e0264aee7ce551d450dc07a6b369d56 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns an error string if the input returnValue is invalid or there was some other problem with the latest script that was run.  <a href="#a1e0264aee7ce551d450dc07a6b369d56">More...</a><br /></td></tr>
+<tr class="separator:a1e0264aee7ce551d450dc07a6b369d56 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dd4cb7038c3775ca19071bec78b3b1b"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a1dd4cb7038c3775ca19071bec78b3b1b">canHaveScripts</a> ()</td></tr>
+<tr class="memdesc:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> can potentially include scripts that would need access to the scripting engine. <br /></td></tr>
+<tr class="separator:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#acb933156df40af1820e623fa92d051a4">hasScripts</a> ()</td></tr>
+<tr class="memdesc:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> has scripts that need access to the scripting engine.  <a href="#acb933156df40af1820e623fa92d051a4">More...</a><br /></td></tr>
+<tr class="separator:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf">getScripts</a> ()</td></tr>
+<tr class="memdesc:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible.  <a href="#a6476dc86309bfa82d6b02b04e7dba4cf">More...</a><br /></td></tr>
+<tr class="separator:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:aa465db35db425df38af40754218249d7 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#aa465db35db425df38af40754218249d7">preSerialize</a> ()</td></tr>
 <tr class="memdesc:aa465db35db425df38af40754218249d7 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called before an asset is serialized in toXML().  <a href="#aa465db35db425df38af40754218249d7">More...</a><br /></td></tr>
 <tr class="separator:aa465db35db425df38af40754218249d7 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97cb540bf9702a5af91a9eeddde39db9 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97cb540bf9702a5af91a9eeddde39db9"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a97cb540bf9702a5af91a9eeddde39db9">executeSearchAlgorithm</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
-<tr class="memdesc:a97cb540bf9702a5af91a9eeddde39db9 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches this <a class="el" href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e...">UIEnabled</a> object's name for the input searchRequest. <br /></td></tr>
-<tr class="separator:a97cb540bf9702a5af91a9eeddde39db9 inherit pro_methods_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:a5876fddb6f37afd350faed293f549f64 inherit pro_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5876fddb6f37afd350faed293f549f64"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a5876fddb6f37afd350faed293f549f64">initializePropertiesToDefaults</a> ()</td></tr>
@@ -485,17 +613,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ad5af2cfab3812e49b752c9e7f67fcfd1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5af2cfab3812e49b752c9e7f67fcfd1"></a>
-QString&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
-<tr class="separator:ad5af2cfab3812e49b752c9e7f67fcfd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0700eaaf692510f2cdeb1d6f85ef2d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a5b0700eaaf692510f2cdeb1d6f85ef2d">fixationTime</a></td></tr>
+<tr class="memdesc:a5b0700eaaf692510f2cdeb1d6f85ef2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the current value of the necessary 'FixationTime' considered successful fixation.  <a href="#a5b0700eaaf692510f2cdeb1d6f85ef2d">More...</a><br /></td></tr>
+<tr class="separator:a5b0700eaaf692510f2cdeb1d6f85ef2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9789fcc37892a38032cf25d94d949623"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a9789fcc37892a38032cf25d94d949623">minAcquisitionTime</a></td></tr>
+<tr class="memdesc:a9789fcc37892a38032cf25d94d949623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the current value of 'MinInitialAcquisitionTime'.  <a href="#a9789fcc37892a38032cf25d94d949623">More...</a><br /></td></tr>
+<tr class="separator:a9789fcc37892a38032cf25d94d949623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84774297e06673ca3aff283b89c64bed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a84774297e06673ca3aff283b89c64bed">maxAcquisitionTime</a></td></tr>
+<tr class="memdesc:a84774297e06673ca3aff283b89c64bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the current value of 'MaxInitialAcquisitionTime'.  <a href="#a84774297e06673ca3aff283b89c64bed">More...</a><br /></td></tr>
+<tr class="separator:a84774297e06673ca3aff283b89c64bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c2d6f21cb643158a202bb4181e1c607"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_fixation_controller.html#a3c2d6f21cb643158a202bb4181e1c607">maxReacquisitionTime</a></td></tr>
+<tr class="memdesc:a3c2d6f21cb643158a202bb4181e1c607"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the current value of 'MaxReacquisitionTime'.  <a href="#a3c2d6f21cb643158a202bb4181e1c607">More...</a><br /></td></tr>
+<tr class="separator:a3c2d6f21cb643158a202bb4181e1c607"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
-<tr class="memitem:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bb6ca0be073c2537c66b82242c26aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
-<tr class="memdesc:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">This slot is called when a child is edited and causes this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s <a class="el" href="class_picto_1_1_asset.html#a2ca6303bf64730a9994a180bf2227da4" title="Emitted whenever something in this asset changes. ">edited()</a> signal to be emitted as well. <br /></td></tr>
-<tr class="separator:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323aef51f96a9a8a6102e768add07226"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a323aef51f96a9a8a6102e768add07226">nameEdited</a> ()</td></tr>
@@ -521,6 +653,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#af9dc9a5935284306615aa5e19a5be49e">assetIdEdited</a> ()</td></tr>
 <tr class="memdesc:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>'s <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID changes. <br /></td></tr>
 <tr class="separator:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_picto_1_1_control_element"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_control_element')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_control_element.html">Picto::ControlElement</a></td></tr>
+<tr class="memitem:a51e4b565d521ba6c264a8063d0bcd5cd inherit pro_attribs_class_picto_1_1_control_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51e4b565d521ba6c264a8063d0bcd5cd"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isDone_</b></td></tr>
+<tr class="separator:a51e4b565d521ba6c264a8063d0bcd5cd inherit pro_attribs_class_picto_1_1_control_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
+<tr class="memitem:a6f3071ebf4e55b68f37ddb907c4da2f4 inherit pro_attribs_class_picto_1_1_result_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f3071ebf4e55b68f37ddb907c4da2f4"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result.html">Result</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>results_</b></td></tr>
+<tr class="separator:a6f3071ebf4e55b68f37ddb907c4da2f4 inherit pro_attribs_class_picto_1_1_result_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
+<tr class="memitem:ab5c2f2b808f14d1722c77451dcc84a24 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5c2f2b808f14d1722c77451dcc84a24"></a>
+QSharedPointer&lt; QScriptEngine &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a></td></tr>
+<tr class="memdesc:ab5c2f2b808f14d1722c77451dcc84a24 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a shared pointer to the QScriptEngine. <br /></td></tr>
+<tr class="separator:ab5c2f2b808f14d1722c77451dcc84a24 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15a52a61d280e688b20b23a0f63586e1 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15a52a61d280e688b20b23a0f63586e1"></a>
+QSharedPointer&lt; QScriptEngineDebugger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a15a52a61d280e688b20b23a0f63586e1">qsEngineDebugger_</a></td></tr>
+<tr class="memdesc:a15a52a61d280e688b20b23a0f63586e1 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a shared pointer to the QScriptEngineDebugger. <br /></td></tr>
+<tr class="separator:a15a52a61d280e688b20b23a0f63586e1 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:af50c0cd3df239ba86be9edc72ded3ccf inherit pro_attribs_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af50c0cd3df239ba86be9edc72ded3ccf"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">PropertyContainer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a></td></tr>
@@ -533,13 +682,14 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A parameter for storing strings that is not being used. </p>
-<p>There is a <a class="el" href="class_picto_1_1_string_variable.html" title="A simple variable that is used for storing strings. ">StringVariable</a> for this purpose, so having a separate <a class="el" href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. ">Parameter</a> to do it doesn't seem to useful although one could imagine things like showing text messages to test subjects that are updatable during an experiment from the Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. This should be easy to implment someday if someone feels the need to do so. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<div class="textblock"><p>Returns a result based on whether the subject fixated on a set target or failed to do so according to preset parameters. </p>
+<p>The Fixation Controller is used to check if the user has fixated on a <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a>. The target is defined in the '<a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a>' property. While the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> is active, the target being considered will be visible to the operator. The possible results from a <a class="el" href="class_picto_1_1_fixation_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">FixationController</a> include Success, Broke Fixation, and Initial Acquisition Time Exceeded. </p><dl class="section note"><dt>Note</dt><dd>This is an updated version of the <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a>. It turns out that the <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a> had undesired and unintended behaviors, and this is meant to address those. The FixationTime is how long the state will last in the case of success. The way, the duration of the state can be strictly controlled. Reacquisition Time does not count against success. </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_string_parameter_8h_source.html#l00026">26</a> of file <a class="el" href="_string_parameter_8h_source.html">StringParameter.h</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00029">29</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a4127d8059f5243fc0ec02605fd40a804"></a>
+<a class="anchor" id="a9e0a482f70bc972786d31f25e0b389bd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -547,7 +697,67 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual QString Picto::StringParameter::friendlyTypeName </td>
+          <td class="memname">void Picto::FixationController::activateTargets </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Activates all Control Targets managed by this Control Element. </p>
+<p>This causes their bounding geometries to be highlighted in the operator view. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ac660682acd7da329220cc7c4d7a9d825">Picto::ControlElement</a>.</p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00063">63</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a228ca432c3d35d4fa8bed76becb563b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::deactivateTargets </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deactivates all Control Targets managed by this Control Element. </p>
+<p>This causes their bounding geometries to stop being highlighted in the operator view. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ac5d3e0d806747e930702b2444509ce82">Picto::ControlElement</a>.</p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00069">69</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1badc57eaf4649f452240e222ee8e97f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual QString Picto::FixationController::friendlyTypeName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -563,13 +773,13 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>. </p>
 <p>This is a string that users will see, so check the spelling... we've had problems with that in the past (ie. <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a>, "Total Time Excceeded" result). </p>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a379ef70ba283fa7c49f2548dad432dbb">Picto::Parameter</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ad9a828f49943e34a15a69138c64ac4da">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_string_parameter_8h_source.html#l00049">49</a> of file <a class="el" href="_string_parameter_8h_source.html">StringParameter.h</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00104">104</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac43c3d2830299761848f2faa982e088d"></a>
+<a class="anchor" id="ac3e4decbc5a4665861218f109ddf1c36"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -577,7 +787,119 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Picto::StringParameter::postDeserialize </td>
+          <td class="memname">int Picto::FixationController::getFixationTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current value of the FixationTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a5b0700eaaf692510f2cdeb1d6f85ef2d" title="Sets/Gets the current value of the necessary &#39;FixationTime&#39; considered successful fixation...">fixationTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00073">73</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f96f03b8f2aa8844820f0fd4c880754"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::getMaxAcqTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current value of the MaxInitialAcquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a84774297e06673ca3aff283b89c64bed" title="Sets/Gets the current value of &#39;MaxInitialAcquisitionTime&#39;. ">maxAcquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00089">89</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f380c05b99a42743cbbb58d83fcc06f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::getMaxReacqTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current value of the MaxReacquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a3c2d6f21cb643158a202bb4181e1c607" title="Sets/Gets the current value of &#39;MaxReacquisitionTime&#39;. ">maxReacquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00097">97</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa70750ada601d767c559e9a508e4147f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::getMinAcqTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the current value of the MinInitialAcquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a9789fcc37892a38032cf25d94d949623" title="Sets/Gets the current value of &#39;MinInitialAcquisitionTime&#39;. ">minAcquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00081">81</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab1c8f9e458b13dd53e24b9e16a73c140"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::postDeserialize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -593,13 +915,13 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization. </p>
 <p>In the case of the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> class, during postDeserialize we tell the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a> that if we have reached the stage of loading where <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs must be unique, it should make sure that our <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID is different from all others in this design. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0" title="Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...">DesignConfig::fixDuplicatedAssetIds()</a> </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#aacf1829d9c0e0dc44a7854412f3face6">Picto::Parameter</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#a51697af839f1b0f3e792516f59fd5941">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_string_parameter_8cpp_source.html#l00053">53</a> of file <a class="el" href="_string_parameter_8cpp_source.html">StringParameter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00299">299</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae3f4be0d90aea389c997542255473282"></a>
+<a class="anchor" id="adc472dcc9fd8929e264afd26d5aa5687"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -607,10 +929,9 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Picto::StringParameter::validateObject </td>
+          <td class="memname">void Picto::FixationController::scriptableContainerWasReinitialized </td>
           <td>(</td>
-          <td class="paramtype">QSharedPointer&lt; QXmlStreamReader &gt;&#160;</td>
-          <td class="paramname"><em>xmlStreamReader</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -621,18 +942,299 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </table>
 </div><div class="memdoc">
 
-<p>Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to verify that the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values of this <a class="el" href="class_picto_1_1_parameter.html" title="A base class for design variables that can be used as runtime parameters. ">Parameter</a> are within acceptable ranges. </p>
-<p><a class="el" href="class_picto_1_1_parameter.html#a3443808da4c3edf26f2c3c3772d95b10" title="Returns true if this Parameters current Property values are valid. Returns false otherwise. ">valuesAreValid()</a> is used for this. </p>
+<p>Reconnects this object to its attached controlTarget_. </p>
+<p>This function is called whenever something changed in the scripting system in this element's scope. Since the change could be the name of the attached <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a>, whenever this function is called we reconnect to the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> based on its name. </p>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_parameter.html#a94c0e4191ffcc0bd642b647d24557082">Picto::Parameter</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#acabb0f86283aefd4e247f076b56504cd">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_string_parameter_8cpp_source.html#l00059">59</a> of file <a class="el" href="_string_parameter_8cpp_source.html">StringParameter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00114">114</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a058b625812dc2eb292e6b86ee9444ccd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::setFixationTime </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the current value of the FixationTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a5b0700eaaf692510f2cdeb1d6f85ef2d" title="Sets/Gets the current value of the necessary &#39;FixationTime&#39; considered successful fixation...">fixationTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00077">77</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6e6e3eee55fe63c3ad1ca1f26857eba6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::setMaxAcqTime </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the current value of the MaxInitialAcquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a84774297e06673ca3aff283b89c64bed" title="Sets/Gets the current value of &#39;MaxInitialAcquisitionTime&#39;. ">maxAcquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00093">93</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa2a2d0133a548160d856dea949410909"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::setMaxReacqTime </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the current value of the MaxReacquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a3c2d6f21cb643158a202bb4181e1c607" title="Sets/Gets the current value of &#39;MaxReacquisitionTime&#39;. ">maxReacquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00101">101</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a975d31c9017e761987ca59e7967be44f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::setMinAcqTime </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the current value of the MinInitialAcquisitionTime property. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a9789fcc37892a38032cf25d94d949623" title="Sets/Gets the current value of &#39;MinInitialAcquisitionTime&#39;. ">minAcquisitionTime</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00085">85</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6c5a0eb000353556377afd91532e2ea4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::start </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>. </p>
+<p>Should be called when a <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> is first entered. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a9e0a482f70bc972786d31f25e0b389bd" title="Activates all Control Targets managed by this Control Element. ">activateTargets()</a> should be called by this function if <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> elements will be used. This will cause their bounding geometries to be highlighted in the operator view until they are deactivated. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>ActivateTargets() </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#a29316418d618837adeebf47bb8d58308">Picto::ControlElement</a>.</p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00043">43</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae766ce7f098b46d692c86da8e1c61a1c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FixationController::stop </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deinitializes the <a class="el" href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its...">ControlElement</a>. </p>
+<p>Should be called when a state is about to exit. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a228ca432c3d35d4fa8bed76becb563b1" title="Deactivates all Control Targets managed by this Control Element. ">deactivateTargets()</a> should be called by this function if <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> elements will be used. This will cause their bounding geometries to stop being highlighted. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_fixation_controller.html#a228ca432c3d35d4fa8bed76becb563b1" title="Deactivates all Control Targets managed by this Control Element. ">deactivateTargets()</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ad373499cb9f2b816627954d49e12de19">Picto::ControlElement</a>.</p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00058">58</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="a5b0700eaaf692510f2cdeb1d6f85ef2d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::fixationTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets/Gets the current value of the necessary 'FixationTime' considered successful fixation. </p>
+<p>FixationTime is the amount of time that the user must continuously fixate on the target defined in the '<a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a>' property in order for the 'Success' result to be triggered. </p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00037">37</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a84774297e06673ca3aff283b89c64bed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::maxAcquisitionTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets/Gets the current value of 'MaxInitialAcquisitionTime'. </p>
+<p>The time before which the user must begin their initial fixation. If the user does not fixate on the target for at least a single frame before this time, 'Initial Acquisition Time Exceeded' will be triggered. </p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00042">42</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c2d6f21cb643158a202bb4181e1c607"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::maxReacquisitionTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets/Gets the current value of 'MaxReacquisitionTime'. </p>
+<p>This is the amount of time that the user has to look outside the target after having left it before 'Reacquisition Time Exceeded' is triggered. </p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00047">47</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9789fcc37892a38032cf25d94d949623"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Picto::FixationController::minAcquisitionTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets/Gets the current value of 'MinInitialAcquisitionTime'. </p>
+<p>MinInitialAcquisitionTime is the time before which any fixation on the target is not counted toward the 'FixationTime'. </p>
+
+<p>Definition at line <a class="el" href="_fixation_controller_8h_source.html#l00037">37</a> of file <a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>source/common/parameter/<a class="el" href="_string_parameter_8h_source.html">StringParameter.h</a></li>
-<li>source/common/parameter/<a class="el" href="_string_parameter_8cpp_source.html">StringParameter.cpp</a></li>
+<li>source/common/controlelements/<a class="el" href="_fixation_controller_8h_source.html">FixationController.h</a></li>
+<li>source/common/controlelements/<a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -53,6 +53,7 @@ var searchData=
   ['restartrun',['restartRun',['../class_picto_1_1_session_state.html#a9538e5aed32615b554ecf31d35b96ff7',1,'Picto::SessionState']]],
   ['result',['Result',['../class_picto_1_1_result.html#a18fd5df5e2e98295ddf4d6f778fc8761',1,'Picto::Result']]],
   ['resultcontainer',['ResultContainer',['../class_picto_1_1_result_container.html#a4344b2309c82a06690a5d23f6bcb6ba4',1,'Picto::ResultContainer']]],
+  ['resume',['resume',['../class_picto_1_1_controller_1_1_frame_resolution_timer.html#ae54fe6e0338eccbcbf0ddeccab92a1b3',1,'Picto::Controller::FrameResolutionTimer']]],
   ['reward',['Reward',['../class_picto_1_1_reward.html#acc1d1c8281f093340b42414957376654',1,'Picto::Reward']]],
   ['rewardcontrollermode',['RewardControllerMode',['../class_reward_controller_mode.html#ab8d1a14ee21bb2d44f027c6e9298438e',1,'RewardControllerMode']]],
   ['rewarddataunit',['RewardDataUnit',['../class_picto_1_1_reward_data_unit.html#a023d4f4cd9a13420f24d8735a8b1408b',1,'Picto::RewardDataUnit']]],

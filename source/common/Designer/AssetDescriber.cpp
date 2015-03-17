@@ -1,4 +1,5 @@
 #include "AssetDescriber.h"
+#include "../memleakdetect.h"
 
 /*! \brief Indicates whether documentation text has been fully loaded into the AssetDescriber
  *	system.
@@ -25,6 +26,12 @@ void removeCopies(QStringList& stringList)
 QString AssetDescription::getOverview()
 {
 	return overview;
+}
+
+/*! \brief Returns a text warning associated with the class represented by this AssetDescription.*/
+QString AssetDescription::getWarning()
+{
+	return warning;
 }
 
 /*! \brief Returns a list of properties that elements of the class represented by this AssetDescription contain.
@@ -297,10 +304,12 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("Reward elements are used to supply reward to the user during the course of execution.  Reward elements do not consume any experimental time.  When execution reaches these elements they schedule rewards to be provided according to their property settings, with the first reward being supplied at the time that the first phosphor of the next displayed frame appears.");
 	curr->addProp("NumRewards","The number of rewards to initiate when execution reaches this reward element.");
 	curr->addProp("RewardQty","The number of milliseconds for which each reward will be supplied.");
-	curr->addProp("MinRewardPeriod","The minimum time that Picto will wait between supplying one reward from this element and the next.");
+	curr->addProp("MinRewardPeriod", "The minimum time that Picto will wait between supplying one reward from this element and the next.");
+	curr->addProp("RewardChan", "The channel that the reward is delivered on.");
 	curr->addSProp("number","Sets/Gets the current value of NumRewards.");
 	curr->addSProp("unitQuantity","Sets/Gets the current value of RewardQty.");
 	curr->addSProp("minRewardPeriod","Sets/Gets the current value of MinRewardPeriod.");
+	curr->addSProp("chan", "Sets/Gets the channel that the reward is delivered on.");
 
 	curr = addDescription("State");
 	curr->setInherits(getAssetDescription("MachineContainer"));
@@ -348,16 +357,17 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("TargetController");
 	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setWarning("This element has peculiar behavior.  FixationController is preferred.  Read the documentation and use at your own risk.");
 	curr->setOverview("The Target Controller is used to check if the user has fixated on a Control Target.  The target is defined in the 'ControlTarget' property.  While the Control Target is active, the target being considered will be visible to the operator.  The possible results from a Target Controller are hopefully self explanetory.");
-	curr->addProp("SignalChannel","The signal channel used to check for entry/exit into the target defined in 'ControlTarget'.  Currently only 'Position' (default) and 'Diameter' are acceptable, and 'Diameter' would me somewhat cumbersome considering that it is not mapped into any x,y screen position.");
+	curr->addProp("SignalChannel","The signal channel used to check for entry/exit into the target defined in 'ControlTarget'.  Currently only 'Position' (default) and 'Diameter' are acceptable, and 'Diameter' would be somewhat cumbersome considering that it is not mapped into any x,y screen position.");
 	curr->addProp("ControlTarget","The name of the target that the user must fixate on for 'FixationTime' in order for 'Success' to be triggered.");
 	curr->addProp("TimeUnits","The time units (Sec,Ms,Us) of the values in 'FixationTime', 'TotalTime', 'MinInitialAcquisitionTime', 'MaxInitialAcquisitionTime' and 'MaxReacquisitionTime'.");
 	curr->addProp("MinInitialAcquisitionTime","The time before which any fixation on the target is not counted toward the 'FixationTime'.");
 	curr->addProp("MaxInitialAcquisitionTime","The time before which the user must begin their initial fixation.  If the user does not fixate on the target for at least a single frame before this time, 'Initial Aquistion Time Exceeded' will be triggered.");
-	curr->addProp("MaxReacquisitionTime","When 'ReaquisitionAllowed' is true, this is the amount of time that the user has to look outside the target after having left it before 'Reacquisition Time Exceeded' is triggered.");
+	curr->addProp("MaxReacquisitionTime","When 'ReacquisitionAllowed' is true, this is the amount of time that the user has to look outside the target after having left it before 'Reacquisition Time Exceeded' is triggered.");
 	curr->addProp("FixationTime","The amount of time that the user must continuously fixate on the target defined in 'ControlTarget' before 'TotalTime' is reached in order for 'Success' to be triggered.");
 	curr->addProp("TotalTime","The amount of time that the user has to succesfully fixate on the target defined in 'ControlTarget' for a continuous 'FixationTime'.  Note: If the user is not fixating on the target at a time beyond 'TotalTime'-'FixationTime', 'Total Time Exceeded' will be triggered.");
-	curr->addProp("ReacquisitionAllowed","If true, the user's eye position may enter and exit the target defined in 'ControlTarget' without triggering a 'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.");
+	curr->addProp("ReacquisitionAllowed","If true, the user's eye position may enter and exit the target defined in 'ControlTarget' without triggering a 'Broke Fixation' result until they either fixate for 'FixationTime' or 'TotalTime' passes.  WARNING: Every time fixation is broken, the cumulative time spent fixated is reset.");
 	curr->addSProp("fixationTime","Sets/Gets the current value of the necessary 'FixationTime' considered succesful fixation.");
 	curr->addSProp("totalTime","Sets/Gets the current value of the 'TotalTime' that the user has in order to correctly fixate before 'Total Time Exceeded' is triggered.");
 	curr->addSProp("minAcquisitionTime","Sets/Gets the current value of 'MinInitialAcquisitionTime'.");
@@ -367,6 +377,24 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("bool userOnTarget()","Returns true if the user's eye position is on a target.");
 	curr->addSFunc("bool userEnteredTarget()","Returns true if the user's eye position entered a target between the last frame presented and the one before it.");
 	curr->addSFunc("bool userExitedTarget()","Returns true if the user's eye position exited a target between the last frame presented and the one before it.");
+
+	curr = addDescription("FixationController");
+	curr->setInherits(getAssetDescription("ControlElement"));
+	curr->setOverview("The Fixation Controller is used to check if the user has fixated on a Control Target.  The target is defined in the 'ControlTarget' property.  While the Control Target is active, the target being considered will be visible to the operator.  This is a reworked version of the TargetController, to allow for greater control over task timing.  Reacquisition doesn't restart the fixation timer.  Once Fixation is acquired, the state will last exactly FixationTime in duration, unless a the BrokeFixation failure state is activated.");
+	curr->addProp("SignalChannel", "The signal channel used to check for entry/exit into the target defined in 'ControlTarget'.  Currently only 'Position' (default) and 'Diameter' are acceptable, though 'Diameter' would not be well-defined considering that it is not mapped to screen position.");
+	curr->addProp("ControlTarget", "The name of the target that the user must fixate on for 'FixationTime' in order for 'Success' to be triggered.");
+	curr->addProp("TimeUnits", "The time units (Sec,Ms,Us) of the values in 'FixationTime', 'MinInitialAcquisitionTime', 'MaxInitialAcquisitionTime', and 'MaxReacquisitionTime'.");
+	curr->addProp("MinInitialAcquisitionTime", "The time before which any fixation on the target is not counted toward the 'FixationTime'.");
+	curr->addProp("MaxInitialAcquisitionTime", "The time before which the user must begin their initial fixation.  If the user does not fixate on the target for at least a single frame before this time, 'Initial Acquisition Time Exceeded' will be triggered.");
+	curr->addProp("MaxReacquisitionTime", "This is the amount of time that the user has to look outside the target after having left it before a 'Broke Fixation' result is triggered.  Set to 0 to turn off flexibility.");
+	curr->addProp("FixationTime", "The amount of time that the user must continuously fixate on the target defined in 'ControlTarget' for 'Success' to be triggered.  Once initial fixation is acquired, this is precisely how long the state will last.");
+	curr->addSProp("fixationTime", "Sets/Gets the current value of the necessary 'FixationTime' considered succesful fixation.");
+	curr->addSProp("minAcquisitionTime", "Sets/Gets the current value of 'MinInitialAcquisitionTime'.");
+	curr->addSProp("maxAcquisitionTime", "Sets/Gets the current value of 'MaxInitialAcquisitionTime'.");
+	curr->addSProp("maxReacquisitionTime", "Sets/Gets the current value of 'MaxReacquisitionTime'.");
+	curr->addSFunc("bool userOnTarget()", "Returns true if the user's eye position is on a target.");
+	curr->addSFunc("bool userEnteredTarget()", "Returns true if the user's eye position entered a target between the last frame presented and the one before it.");
+	curr->addSFunc("bool userExitedTarget()", "Returns true if the user's eye position exited a target between the last frame presented and the one before it.");
 
 	//Variables
 	curr = addDescription("NumberVariable");

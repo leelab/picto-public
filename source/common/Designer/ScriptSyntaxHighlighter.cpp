@@ -3,6 +3,7 @@
 #include <QTextLayout>
 #include <QTextDocumentFragment>
 #include "ScriptSyntaxHighlighter.h"
+#include "../memleakdetect.h"
 
 using namespace Picto;
 

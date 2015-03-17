@@ -11,7 +11,7 @@ namespace Picto {
  *
  *	We wanted to get rid of this parameter, because it is really just a RangeParameter with less options.  Since old 
  *	Experiments use this Parameter though, the easiest way to support them in newer code without allowing this Parameter
- *	into new designs was to keep it in Picto, but now let it show up in the Designer Toolbox, so that is what we have done.
+ *	into new designs was to keep it in Picto, but not let it show up in the Designer Toolbox, so that is what we have done.
  *	This Parameter stores integer values.  It does the same thing that the RangeParameter
  *	does except without the set range (ie. The range is just from INT_MIN to INT_MAX).
  *	The Value Property is runtime editable and appears as a numeric "integer only" input widget
