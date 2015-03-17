@@ -56,10 +56,10 @@ var searchData=
   ['closeevent',['closeEvent',['../class_picto_1_1_d3_d_visual_target.html#a51661155ec606aca79814cb68ea2ba13',1,'Picto::D3DVisualTarget::closeEvent()'],['../class_main_window.html#a4e20a4a065fbb0e4d3532a45a0a91425',1,'MainWindow::closeEvent()']]],
   ['closerenderloops',['closeRenderLoops',['../class_picto_1_1_scene.html#ae8009d1b0b96e81c50706fcccbd18b0b',1,'Picto::Scene']]],
   ['color',['color',['../struct_picto_1_1_visual_element.html#a45c3042c969717eb2ab60373369c7de7',1,'Picto::VisualElement']]],
-  ['colorparameter',['ColorParameter',['../class_picto_1_1_color_parameter.html#ac015cdd10c854825174c5741ab5c3949',1,'Picto::ColorParameter']]],
   ['colorparameter',['ColorParameter',['../class_picto_1_1_color_parameter.html',1,'Picto']]],
-  ['colorproperty',['ColorProperty',['../class_picto_1_1_color_property.html#a4d51a5ca057cc06d787ae542aff8c930',1,'Picto::ColorProperty']]],
+  ['colorparameter',['ColorParameter',['../class_picto_1_1_color_parameter.html#ac015cdd10c854825174c5741ab5c3949',1,'Picto::ColorParameter']]],
   ['colorproperty',['ColorProperty',['../class_picto_1_1_color_property.html',1,'Picto']]],
+  ['colorproperty',['ColorProperty',['../class_picto_1_1_color_property.html#a4d51a5ca057cc06d787ae542aff8c930',1,'Picto::ColorProperty']]],
   ['columns',['columns',['../class_picto_1_1_grid_graphic.html#ab4519f754954e50d06711fbc2ba4608f',1,'Picto::GridGraphic']]],
   ['combinedheader',['CombinedHeader',['../struct_picto_1_1_combined_header.html',1,'Picto']]],
   ['commandchannel',['CommandChannel',['../class_picto_1_1_command_channel.html#a85b38c5e9e5989ba8c1fec047e3cfbea',1,'Picto::CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QObject *parent=0)'],['../class_picto_1_1_command_channel.html#a0a93aed5d539ef0a4c3ab325e6440d98',1,'Picto::CommandChannel::CommandChannel(QUuid sourceId, QString sourceType, QHostAddress serverAddress, quint16 serverPort_, QObject *parent=0)']]],
@@ -120,6 +120,6 @@ var searchData=
   ['currrunduration',['currRunDuration',['../class_picto_1_1_file_session_loader.html#a6c36543d4bde4e441eaf1367e6305574',1,'Picto::FileSessionLoader']]],
   ['currrunname',['currRunName',['../class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1',1,'Picto::FileSessionLoader']]],
   ['currunit',['currUnit',['../class_neural_data_viewer.html#a17ce9132f1eacd87868566ac7c40bb62',1,'NeuralDataViewer']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]]
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]]
 ];
