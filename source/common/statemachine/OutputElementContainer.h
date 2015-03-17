@@ -7,11 +7,11 @@
 #include <QScriptEngineDebugger>
 
 #include "../common.h"
-#include "../statemachine/UIEnabled.h"
+#include "UIEnabled.h"
 #include "../property/Property.h"
 
 #include "../stimuli/OutputElement.h"
-#include "StateMachineElement.h"
+#include "StateMachineElementContainer.h"
 
 namespace Picto {
 
@@ -24,7 +24,7 @@ namespace Picto {
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_API OutputElementContainer : public StateMachineElement
+class PICTOLIB_API OutputElementContainer : public StateMachineElementContainer
 #else
 class OutputElementContainer : public StateMachineElement
 #endif
@@ -36,13 +36,7 @@ public:
 
 	virtual bool hasEditableDescendants(){return true;};
 
-	void addOutputElements(QSharedPointer<OutputElementContainer> outputElementContainer);
-	void addOutputElements(OutputElementContainer* outputElementContainer);
-	void addChildOutputElementContainer(QSharedPointer<OutputElementContainer> child);
-	QList<QSharedPointer<OutputElement>> getOutputElementList();
 	virtual QString friendlyTypeName(){return "Output Element Container";};
-	virtual void ClearAssociateChildren(QUuid associateId);
-
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
@@ -52,14 +46,6 @@ protected:
 	QSharedPointer<AssetFactory> outputSignalFactory_;
 	QSharedPointer<AssetFactory> inputSignalFactory_;
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
-
-private:
-	void addOutputElement(QSharedPointer<OutputElement> outputElement);
-	QList<QSharedPointer<OutputElement> > outputElements_;
-	QList<QSharedPointer<OutputElementContainer> > outputElementContainers_;
-
-private slots:
-	void addChildToElementLists(QSharedPointer<Asset> newChild);
 
 private:
 	friend class OutputElementContainer;

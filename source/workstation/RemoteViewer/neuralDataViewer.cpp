@@ -15,8 +15,6 @@
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/LFPDataUnitPackage.h"
 
-
-
 #include <QToolBar>
 #include <QAction>
 #include <QMessageBox>
@@ -38,9 +36,11 @@
 #include <QSpinBox>
 #include <QLineEdit>
 #include <QtConcurrentRun>
-#include "../../common/memleakdetect.h"
+
 #include <qwt_series_data.h>
 #include <qwt_legend.h>
+
+#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 /*! \brief The number of seconds shown on the X Axis in the plots.*/

@@ -54,6 +54,9 @@ SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/OutputWidgetHolder.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.h
 SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetHost.cpp
 
+HEADERS += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewWidget.h
+SOURCES += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewWidget.cpp
+
 #HEADERS += $$(PICTO_TREE)/source/workstation/commands.h
 #SOURCES += $$(PICTO_TREE)/source/workstation/commands.cpp
 #HEADERS += $$(PICTO_TREE)/source/workstation/document.h

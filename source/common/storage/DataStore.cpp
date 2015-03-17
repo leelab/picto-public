@@ -518,14 +518,16 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	return true;
 }
 
-/*! \brief In theory this just initializes all properties to default values.  In practice it just calls initializeToDefaults() to initialize the entire DataStore to its default values.
+/*! \brief In theory this just initializes all properties to default values.  In practice it just calls
+ *	initializeToDefaults() to initialize the entire DataStore to its default values.
 */
 void DataStore::initializePropertiesToDefaults()
 {
 	initializeToDefault();
 }
 
-/*! \brief Adds a required property to this DataStore with the input name and defaultValue of type defined by the input default value QVariant type.
+/*! \brief Adds a required property to this DataStore with the input name and defaultValue of type defined by the input
+ *	default value QVariant type.
  *	\sa AddDefinableProperty(int,QString,QVariant,QMap<QString,QVariant>,int,int)
  */
 void DataStore::AddDefinableProperty(
@@ -535,8 +537,8 @@ void DataStore::AddDefinableProperty(
 {
 	AddDefinableProperty(defaultValue.type(),tagName,defaultValue,QMap<QString,QVariant>(),1,1);
 }
-/*! \brief Adds a required property to this DataStore of the input type (a QVariant::Type) with the input name and defaultValue, plus a single 
- *attribute with input singleAttributeName and singleAttributeValue
+/*! \brief Adds a required property to this DataStore of the input type (a QVariant::Type) with the input name and
+ *	defaultValue, plus a single attribute with input singleAttributeName and singleAttributeValue
  *	\note I don't think we ever use this function because if we require any attributes (ie. EnumProperty)
  *	then we require more than one.
  *	\sa AddDefinableProperty(int,QString,QVariant,QMap<QString,QVariant>,int,int)
@@ -624,7 +626,8 @@ void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetF
 	factories_[tagName]=factory;
 }
 
-/*! \brief Adds the input child Asset to this DataStore's child list, under the tagName category (where tagName will also be the XML tag used to serialize the child)
+/*! \brief Adds the input child Asset to this DataStore's child list, under the tagName category (where tagName will also
+ *	be the XML tag used to serialize the child)
  *	\details This function provides the child with its shared pointer selfPtr, tells it who its parent is,
  *	adds it to this DataStore's children_ lookup table under the tagName category, and connects up the
  *	childs edited() signal to this DataStore's childEdited() slot.
@@ -648,8 +651,8 @@ bool DataStore::executeSearchAlgorithm(SearchRequest searchRequest)
 	return false;
 }
 
-/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
- *	with the input associateId.
+/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the
+ *	tagName category for the AssociateRoot with the input associateId.
  *	\details If the parentId matches this DataStore's AssetId, it is added.  Otherwise, child elements' AddAssociateChild()
  *	functions are called until on of them successfully adds the AssociateElement child.  If a match cannot be found for the
  *	parentId, false is returned.  If a match is found, the function returns true.
@@ -679,8 +682,8 @@ bool DataStore::AddAssociateChild(QUuid associateId, int parentId, QString tagNa
 	return false;
 }
 
-/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
- *	with the input associateId.
+/*! \brief Recursively attempts to add the input child Asset to this DataStore as an AssociateElement child under the
+ *	tagName category for the AssociateRoot with the input associateId.
  *	\details If the parentPath matches this DataStore's path, it is added.  Otherwise, child elements' AddAssociateChild()
  *	functions are called until on of them successfully adds the AssociateElement child.  If a match cannot be found for the
  *	parentPath, false is returned.  If a match is found, the function returns true.
@@ -712,7 +715,8 @@ bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString
 	return false;
 }
 
-/*! \brief Adds the input child Asset to this DataStore as an AssociateElement child under the tagName category for the AssociateRoot
+/*! \brief Adds the input child Asset to this DataStore as an AssociateElement child under the tagName category for the
+ *	AssociateRoot
  *	with the input associateId.
  *	\details The child is added to a lookup table of lookup tables, under its associateId and tagName.  It's 
  *	AssociateElement::linkToAsset() function is called to link it to this DataStore, its edited() signal is connected
@@ -730,7 +734,8 @@ void DataStore::AddAssociateChild(QUuid associateId, QString tagName, QSharedPoi
 	connect(child.data(),SIGNAL(edited()),this,SIGNAL(associateChildEdited()));
 }
 
-/*! \brief Removes all AssociateElement children with the input associateId from this DataStore and all of this DataStore's descendants.
+/*! \brief Removes all AssociateElement children with the input associateId from this DataStore and all of this DataStore's
+ *	descendants.
  */
 void DataStore::ClearAssociateDescendants(QUuid associateId)
 {
@@ -818,7 +823,8 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
-/*! \brief Returns a list of all XML tags / categories under which AssociateElement children were added to this DataStore for the input AssociateRoot associateId.
+/*! \brief Returns a list of all XML tags / categories under which AssociateElement children were added to this DataStore
+ *	for the input AssociateRoot associateId.
  *	\sa AddAssociateChild()
  */
 QStringList DataStore::getAssociateChildTags(QUuid associateId)
@@ -828,7 +834,8 @@ QStringList DataStore::getAssociateChildTags(QUuid associateId)
 	return associateChildrenByGuid_.value(associateId).keys();
 }
 
-/*! \brief Returns a list of all Associate Element child Assets that were added under the input XML tag/category for the input AssociateRoot associateId.
+/*! \brief Returns a list of all Associate Element child Assets that were added under the input XML tag/category for the
+ *	input AssociateRoot associateId.
  *	\sa AddAssociateChild()
  */
 QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, QString tagName)
@@ -838,7 +845,8 @@ QList<QSharedPointer<Asset>> DataStore::getAssociateChildren(QUuid associateId, 
 	return associateChildrenByGuid_[associateId][tagName];
 }
 
-/*! \brief Returns a list of all Associate Element Assets that were added to this DataStore and all of its descendants for the input AssociateRoot associateId.
+/*! \brief Returns a list of all Associate Element Assets that were added to this DataStore and all of its descendants for
+ *	the input AssociateRoot associateId.
  *	\details Returned values are according to a Pre-Ordered Depth-First-Search
  *	\sa AddAssociateChild()
  */
@@ -864,7 +872,8 @@ QList<QSharedPointer<Asset>> DataStore::getAssociateDescendants(QUuid associateI
 	return returnVal;
 }
 
-/*! \brief Returns a list of all AssociateRoot AssociateId's for which Associate Element children have been added to this DataStore.
+/*! \brief Returns a list of all AssociateRoot AssociateId's for which Associate Element children have been added to this
+ *	DataStore.
  */
 QList<QUuid> DataStore::getAttachedAssociateIds()
 {
@@ -987,7 +996,8 @@ void DataStore::clear()
 	ClearAllAssociateChildren();
 }
 
-/*! \brief A convenience function equivalent to getting the property with propName and calling its Property::setRuntimeEditable() function.
+/*! \brief A convenience function equivalent to getting the property with propName and calling its
+ *	Property::setRuntimeEditable() function.
  *	See that function for more details.
  */
 void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
@@ -995,8 +1005,9 @@ void DataStore::setPropertyRuntimeEditable(QString propName, bool editable)
 	propertyContainer_->getProperty(propName)->setRuntimeEditable(editable);
 }
 
-/*! \brief Sets whether this DataStore and its Descendants should act as if they are in an experimental run or in a design environment.
-	\details See DesignRoot::enableRunMode() for more detail.
+/*! \brief Sets whether this DataStore and its Descendants should act as if they are in an experimental run or in a design
+ *	environment.
+ *	\details See DesignRoot::enableRunMode() for more detail.
  */
 void DataStore::enableRunModeForDescendants(bool en)
 {

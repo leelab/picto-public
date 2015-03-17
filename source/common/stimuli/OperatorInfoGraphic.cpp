@@ -5,7 +5,7 @@
 
 namespace Picto {
 
-	const QString OperatorInfoGraphic::type = "Operator Info Graphic";
+const QString OperatorInfoGraphic::type = "Operator Info Graphic";
 
 /*! \brief Constructs an OperatorInfoGraphic object.
  *	\details Adds the following Properties:

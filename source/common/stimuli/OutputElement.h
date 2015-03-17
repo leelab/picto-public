@@ -8,7 +8,7 @@
 
 #include "../common.h"
 
-#include "../statemachine/scriptablecontainer.h"
+#include "../statemachine/ContainerElement.h"
 #include "../compositor/CompositingSurface.h"
 #include "../random/MersenneTwister.h"
 #include "../property/PropertyContainer.h"
@@ -26,9 +26,9 @@ namespace Picto {
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_CLASS OutputElement : public ScriptableContainer
+class PICTOLIB_CLASS OutputElement : public ContainerElement
 #else
-class OutputElement : public ScriptableContainer
+class OutputElement : public ContainerElement
 #endif
 {
 	Q_OBJECT

@@ -43,6 +43,7 @@ void AlignSessionData::insertData(int dataId, QVariantList data)
  */
 void AlignSessionData::writeData(int dataType, QVariantList data)
 {
+	Q_UNUSED(dataType);
 	Q_ASSERT(dataType == dataType_);
 	Q_ASSERT(data.size() > 0);
 	int dataId = data[0].toInt();

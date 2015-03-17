@@ -59,7 +59,8 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 		addToolGroup(QStringList() <<"Parameters","Parameters",asset);
 		addToolGroup(QStringList() <<"Logic Elements","Logic Elements",asset);
 		addToolGroup(QStringList() <<"Stimulus Elements","Stimulus Elements",asset);
-		addToolGroup(QStringList() <<"Sensors","Sensors",asset);
+		addToolGroup(QStringList() <<"Sensors", "Sensors", asset);
+		addToolGroup(QStringList() <<"Operator Features", "Operator Features", asset);
 	}
 	else //If we're working on analysis design
 	{
@@ -70,7 +71,8 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 			addToolGroup(QStringList() <<"Variables","Variables",currAnalysis);
 			addToolGroup(QStringList() <<"Outputs","Outputs",currAnalysis);
 			addToolGroup(QStringList() <<"Logic Elements","Logic Elements",currAnalysis);
-			addToolGroup(QStringList() <<"Sensors","Sensors",currAnalysis);
+			addToolGroup(QStringList() <<"Sensors", "Sensors", currAnalysis);
+			addToolGroup(QStringList() <<"Operator Features", "Operator Features", asset);
 		}
 	}
 

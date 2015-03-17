@@ -21,11 +21,11 @@ namespace Picto {
  *	codes for timing synchronization.  If the director is not configured to work with a neural 
  *	data acquisition system (-onesided flag is used) all 8 pins are available on the parallel port
  *	and the hardware wiring will depend on the needs of the customer for whom the Pictobox was 
- *	designed.  We did this for Arnsten lab, and in their case for example, we actually ended up 
+ *	designed.  We did this for Arnsten lab, and in their case, for example, we actually ended up 
  *	wiring one of the digital outputs to two separate parallel pins.  Regardless of the physical
  *	hardware setup, as far as the Picto experiment is concerned, the PAR0 port has 8 pins that 
  *	can be controlled as part of the experiment.  When these or the BNC0 port pins are used (ie.
- *	if a DigitalOutput or BinaryDataOutput object are used in the experiment, this
+ *	if a DigitalOutput or BinaryDataOutput object are used in the experiment), this
  *	OutputSignalWidget shows the current state of the output pins for the purpose of debugging
  *	as well as monitoring the experimental state of the Pictobox without using a state machine.
  *	The widget itself consists of a row of digital single digit displays, each indicating the
@@ -37,7 +37,7 @@ namespace Picto {
  */
 
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API OutputSignalWidget :  public QWidget
+	class PICTOLIB_API OutputSignalWidget : public QWidget
 #else
 class OutputSignalWidget : public QWidget
 #endif

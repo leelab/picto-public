@@ -96,6 +96,7 @@ QList<int>CurrentSessionData::readDataTypes()
  */
 QList<QVariantList> CurrentSessionData::readData(int dataType,QVariant condition,bool cut)
 {
+	Q_UNUSED(dataType);
 	Q_ASSERT(dataType == dataType_);
 	//Get an iterator to the first
 	QMap<double,QMap<int,int>>::Iterator startIter = dataByTime_.upperBound(condition.toDouble());

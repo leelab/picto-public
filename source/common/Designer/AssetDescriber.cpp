@@ -168,12 +168,18 @@ void AssetDescriber::setupDescriptions()
 	//curr->addProp("UIOrder","Not Yet Implemented.  Used to define the order of run-time editable properties");
 	curr = addDescription("ScriptableContainer");
 	curr->setInherits(getAssetDescription("Scriptable"));
-	curr = addDescription("OutputElement");
+	curr = addDescription("ContainerElement");
 	curr->setInherits(getAssetDescription("Scriptable"));
 	curr = addDescription("Parameter");
 	curr->setInherits(getAssetDescription("Scriptable"));
 	curr = addDescription("Variable");
 	curr->setInherits(getAssetDescription("Scriptable"));
+
+
+	curr = addDescription("OutputElement");
+	curr->setInherits(getAssetDescription("ContainerElement"));
+	curr = addDescription("DataViewElement");
+	curr->setInherits(getAssetDescription("ContainerElement"));
 
 	curr = addDescription("OutputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
@@ -183,9 +189,6 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("InputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
-	//curr->addProp("Port", "The name of the physical output port where the voltage signal will be read.  Currently on a standard Pictobox BNC0 (BNC lines 1-8) and PAR0 (8 Parallel lines in 20 pin rear output) are supported.");
-	//curr->addProp("Enabled", "Defines whether pins controlled by this element are active.  When set false, regardless of other settings, the value will not update.");
-	//curr->addSProp("enabled", "Sets or gets whether pins controlled by this element are currently active.  When set false, regardless of other settings, the value will not update.");
 
 	curr = addDescription("VisualElement");
 	curr->setInherits(getAssetDescription("OutputElement"));
@@ -234,8 +237,13 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("ControlElement");
 	curr->setInherits(getAssetDescription("ResultContainer"));
 
-	curr = addDescription("OutputElementContainer");
+	curr = addDescription("StateMachineElementContainer");
 	curr->setInherits(getAssetDescription("StateMachineElement"));
+
+	curr = addDescription("OutputElementContainer");
+	curr->setInherits(getAssetDescription("StateMachineElementContainer"));
+	curr = addDescription("DataViewElementContainer");
+	curr->setInherits(getAssetDescription("StateMachineElementContainer"));
 
 	curr = addDescription("MachineContainer");
 	curr->setInherits(getAssetDescription("OutputElementContainer"));
@@ -589,7 +597,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("CircleGraphic");
 	curr->setInherits(getAssetDescription("VisualElement"));
-curr->setOverview("This element is used to create a circular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
+	curr->setOverview("This element is used to create a circular graphic on screen.  The center of the graphic will lie at the set 'Position'.");
 	curr->addProp("Outline","If true, only the outline of this graphic will be drawn.");
 	curr->addProp("OutlineThickness","If 'Outline' is true, this defines the thickness in pixels of the outline.");
 	curr->addProp("Radius","The radius of the circle.");
@@ -986,7 +994,9 @@ curr->setOverview("This element is used to create a circular graphic on screen. 
 	curr->addSFunc("writeText(text)","Writes the input text string to the end of the file.");
 	curr->addSFunc("writeBinary(csvData,csvTypes)","Writes data out to file as binary values (ie. short, int, double). csvData is a string with values separated by commas.  csvTypes is a string with value types separated by commas.  Valid types are short, int, long, float, double.  If more values appear in csvData than there are types in csvTypes, the last type will be used for all remaining values.  (ex. [AnalysisFileOutputName].writeBinary('1.23,726374,2,0','float,int,short,short');");
 
-
-
+	//Operator Elements
+	curr = addDescription("OperatorPlot");
+	curr->setInherits(getAssetDescription("DataViewElement"));
+	curr->setOverview("Used to display realtime plots for the Operator.");
 
 }

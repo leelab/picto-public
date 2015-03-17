@@ -305,22 +305,15 @@ bool DesignRoot::compiles(QString* errors)
 }
 
 /*! \brief Enables/Disables run mode for all assets in the design
- *	\details Since every property has 3 underlying values, savedValue,
- *	initValue and runValue, we need to set the operation mode
- *	of the properties depending on what we are doing.  When we 
- *	are designing the experiment, we can alter any of the values
- *	that we want, by default we just set all 3 at once.  When we
- *	are running an experiment, scripts update only the runValue
- *	and parameter changes by the operator change the initValue 
- *	which is then set to the runValue each time a property's parent
- *	enters scope.  Depending on which runMode we are in, the standard
- *	setValue function on Property objects functions differenlty, setting 
- *	the appropriate underlying value, so we need to make sure to use 
- *	this function to assure that our updates are going to the right place.
- *  This is important because, for example, if we are building a Design and
- *	testing it during the course of development, we want to make sure that
- *	when we save the design out nothing that happened during a test will
- *	affect the saved file.
+ *	\details Since every property has 3 underlying values, savedValue, initValue and runValue, we need to set the
+ *	operation mode of the properties depending on what we are doing.  When we are designing the experiment, we can
+ *	alter any of the values that we want, by default we just set all 3 at once.  When we are running an experiment,
+ *	scripts update only the runValue and parameter changes by the operator change the initValue which is then set to
+ *	the runValue each time a property's parent enters scope.  Depending on which runMode we are in, the standard setValue
+ *	function on Property objects functions differenlty, setting the appropriate underlying value, so we need to make
+ *	sure to use this function to assure that our updates are going to the right place.  This is important because, for
+ *	example, if we are building a Design and testing it during the course of development, we want to make sure that when
+ *	we save the design out nothing that happened during a test will affect the saved file.
  *	\sa Property::setValue()
  */
 void DesignRoot::enableRunMode(bool runMode)

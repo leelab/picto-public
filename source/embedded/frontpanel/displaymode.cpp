@@ -19,7 +19,7 @@ PanelInfo::DisplayModeType DisplayMode::userInputSlot(PanelInfo::InputType type)
 		return myModeType();
 	
 	//Tell child to handle input
-	handleUserInput(type);
+	return handleUserInput(type);
 }
 
 /**

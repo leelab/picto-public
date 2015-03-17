@@ -7,6 +7,7 @@ var searchData=
   ['_7ecommandchannel',['~CommandChannel',['../class_picto_1_1_command_channel.html#af270c3f840dedc4d2d4f18d6471f5242',1,'Picto::CommandChannel']]],
   ['_7ecomponentinterface',['~ComponentInterface',['../class_component_interface.html#a9e0bf6312b07c414d29694740ca63817',1,'ComponentInterface']]],
   ['_7ed3dcompositingsurface',['~D3DCompositingSurface',['../class_picto_1_1_d3_d_compositing_surface.html#afa0df367f0ea3500dd135968ebb174e4',1,'Picto::D3DCompositingSurface']]],
+  ['_7edataviewwidget',['~DataViewWidget',['../class_data_view_widget.html#abcced93e90a047bc983dc3d9dcc50832',1,'DataViewWidget']]],
   ['_7eengineconnections',['~EngineConnections',['../class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b',1,'EngineConnections']]],
   ['_7efilesessionloader',['~FileSessionLoader',['../class_picto_1_1_file_session_loader.html#a9f28fba3c0be58a4d6397e7d3f6b13ca',1,'Picto::FileSessionLoader']]],
   ['_7efrontpanelrewardcontroller',['~FrontPanelRewardController',['../class_picto_1_1_front_panel_reward_controller.html#a0971824746bbf2e478fde6e03f835b8c',1,'Picto::FrontPanelRewardController']]],

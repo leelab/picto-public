@@ -546,6 +546,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getElementInfo()
 : <a class="el" href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">Picto::DesignConfig</a>
 </li>
+<li>getElementList()
+: <a class="el" href="class_picto_1_1_state_machine_element_container.html#a3a312db8c8e303ff28a809aa20a29b9b">Picto::StateMachineElementContainer</a>
+</li>
 <li>getEnabled()
 : <a class="el" href="class_picto_1_1_lfp_state.html#abaf0ee9c27ad1ffc9c2688fa9f173954">Picto::LfpState</a>
 , <a class="el" href="struct_picto_1_1_output_signal.html#a0d83ecaba4667407896d4fc8526fdd7a">Picto::OutputSignal</a>
@@ -662,7 +665,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="struct_picto_1_1_visual_element.html#add6251ffa70e382066dfb832e5a58fd8">Picto::VisualElement</a>
 </li>
 <li>getGroupTypeIndex()
-: <a class="el" href="struct_search_request.html#a903b8222a6552167bbd2027386102043">SearchRequest</a>
+: <a class="el" href="struct_search_request.html#afdd399870eb853d06f85eaa06d66b589">SearchRequest</a>
 </li>
 <li>getHeight()
 : <a class="el" href="class_diagram_item.html#aca162a02bd8990ade9e34251fc074da5">DiagramItem</a>
@@ -1132,9 +1135,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getOutlineWidth()
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a7f87d70ed67948ae1167ca698759e354">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#a2c2a13229cab7c0757a4ad3687c8b967">Picto::TokenTrayGraphic</a>
-</li>
-<li>getOutputElementList()
-: <a class="el" href="class_picto_1_1_output_element_container.html#af80a8acdfee1b95ca4cc9306fb27e8fe">Picto::OutputElementContainer</a>
 </li>
 <li>getOutputSignalControllers()
 : <a class="el" href="class_playback_controller.html#af0d0cdbc217bbefd48886b62132025cf">PlaybackController</a>
@@ -1855,9 +1855,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_analysis_timer.html#a013d88fe3a1f43cf6643e37e09adeab7">Picto::AnalysisTimer</a>
 , <a class="el" href="class_picto_1_1_analysis_variable.html#a7f8adaf6bc5f2041ce5078f68e5db077">Picto::AnalysisVariable</a>
 , <a class="el" href="class_picto_1_1_asset_factory.html#ae5664246cf0c06c1355c55d47e0fd394">Picto::AssetFactory</a>
+, <a class="el" href="class_picto_1_1_container_element.html#aae6a98a5b1ce14420a321ee5625daeda">Picto::ContainerElement</a>
 , <a class="el" href="class_picto_1_1_control_element.html#a4882c645365d985cb0f8a46061be984e">Picto::ControlElement</a>
 , <a class="el" href="class_picto_1_1_control_target.html#ac516e3849947ea0359a8e0f998f0f601">Picto::ControlTarget</a>
+, <a class="el" href="class_picto_1_1_data_view_element.html#ac381f9a09c467518daa94a65133fd7ca">Picto::DataViewElement</a>
 , <a class="el" href="class_picto_1_1_numeric_parameter.html#a517c3a6f97387e7932174e7c8e05e842">Picto::NumericParameter</a>
+, <a class="el" href="class_picto_1_1_operator_plot.html#a0f07badda243c79c35792cb7998613c6">Picto::OperatorPlot</a>
 , <a class="el" href="class_picto_1_1_output_element.html#a711908f1d7aea5caf829c1f2b79ea60a">Picto::OutputElement</a>
 , <a class="el" href="class_picto_1_1_parameter.html#abc3fd80bab8d8086fedf29eb50e733f3">Picto::Parameter</a>
 , <a class="el" href="class_picto_1_1_result.html#ab4cc8dfac5b3c92266265060366ad0d4">Picto::Result</a>
@@ -1910,6 +1913,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_numeric_parameter.html#aaf59771a428af9de553ed9a025ea8045">Picto::NumericParameter</a>
 , <a class="el" href="class_picto_1_1_operator_click_parameter.html#ac40d7661e8b7a5438b67cdba4f8a1605">Picto::OperatorClickParameter</a>
 , <a class="el" href="class_picto_1_1_operator_info_graphic.html#a53c222e79397fc9570ad6a660ada3499">Picto::OperatorInfoGraphic</a>
+, <a class="el" href="class_picto_1_1_operator_plot.html#aa5d90949473d0795614c56430e0eaacb">Picto::OperatorPlot</a>
 , <a class="el" href="struct_picto_1_1_output_signal.html#ac6a74459af41e7629188b270d620fae7">Picto::OutputSignal</a>
 , <a class="el" href="class_picto_1_1_parameter.html#a1f72bd3b6d881ef062db768ada609302">Picto::Parameter</a>
 , <a class="el" href="class_picto_1_1_pause_point.html#aa30efd030e05c5edb877e3b886690eaa">Picto::PausePoint</a>
@@ -2014,8 +2018,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">Picto::SignalChannel</a>
 </li>
 <li>getValuesSince()
-: <a class="el" href="class_picto_1_1_analysis_lfp_data.html#a30dd59b2bfdd0c1c4970d87bf9f4499a">Picto::AnalysisLfpData</a>
-, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a4280103b70f28f59ecefec25682d6104">Picto::AnalysisSignalData</a>
+: <a class="el" href="class_picto_1_1_analysis_lfp_data.html#ad51ccf2ac9698355184195cb5419003c">Picto::AnalysisLfpData</a>
+, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a73b8ff21df1c635f44581a1ab4efc3e7">Picto::AnalysisSignalData</a>
 , <a class="el" href="class_picto_1_1_lfp_reader.html#a2a203fbd2691534aa7c0cfa94e3d0629">Picto::LfpReader</a>
 , <a class="el" href="class_picto_1_1_lfp_state.html#adc00615a7a96217a74768eaa4ce929cc">Picto::LfpState</a>
 , <a class="el" href="class_picto_1_1_live_lfp_reader.html#abfef51f0ab5194657c3b7adfa23ef7bb">Picto::LiveLfpReader</a>
@@ -2025,7 +2029,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getValuesUntil()
 : <a class="el" href="class_picto_1_1_analysis_lfp_data.html#ac491a9b0ffa663f36f27cbccabe1cbec">Picto::AnalysisLfpData</a>
-, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a2e4b921b2946722b7926d90a108d38eb">Picto::AnalysisSignalData</a>
+, <a class="el" href="class_picto_1_1_analysis_signal_data.html#adb0f20fab12d57483f45dd4e7a3ec261">Picto::AnalysisSignalData</a>
 , <a class="el" href="class_picto_1_1_lfp_reader.html#af87044267aefc42bf205d54dff096144">Picto::LfpReader</a>
 , <a class="el" href="class_picto_1_1_lfp_state.html#a3f37b279a3fcc62ba348ed29000d24ed">Picto::LfpState</a>
 , <a class="el" href="class_picto_1_1_live_lfp_reader.html#a62252bcd22e61191d7ca25c030fe0657">Picto::LiveLfpReader</a>
@@ -2092,7 +2096,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>giveReward()
 : <a class="el" href="class_control_panel_interface.html#a0d304a64b1922ad1439ad9e97bc2e455">ControlPanelInterface</a>
-, <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a55c6bde2e8af2157edf79cef80533b67">Picto::Engine::PictoEngine</a>
+, <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a3a3557d928df88b0132a1f36fbfc78ce">Picto::Engine::PictoEngine</a>
 </li>
 <li>giveRewardRequest()
 : <a class="el" href="class_control_panel_interface.html#aa31c026d69d3e7644c43f16ea25f82f2">ControlPanelInterface</a>

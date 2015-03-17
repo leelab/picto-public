@@ -193,14 +193,14 @@ void PausePoint::rebuildScene()
 	//our output elements from the output element list.
 	scene_ = Scene::createScene();
 	hasCursor_ = false;
-	QList<QSharedPointer<OutputElement>> outputs = getOutputElementList();
+	QList<QSharedPointer<ContainerElement>> outputs = getElementList();
 	QList<QUuid> activeAnalyses = getDesignConfig()->getActiveAnalysisIds();
 	QHash<QUuid,bool> activeAnalysisHash;
 	foreach(QUuid analysisId,activeAnalyses)
 	{
 		activeAnalysisHash[analysisId] = true;
 	}
-	foreach(QSharedPointer<OutputElement> output,outputs)
+	foreach(QSharedPointer<ContainerElement> output, outputs)
 	{
 		if(output.isNull())
 			continue;

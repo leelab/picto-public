@@ -79,6 +79,7 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("RandomInt",":/icons/randomint.svg",50,75);
 		addIconDefinition("OperatorClick",":/icons/mouseclick.svg",50,75);
 		addIconDefinition("Task",":/icons/task.svg",100,100);
+
 		//Analysis Icons
 		addIconDefinition("DataSource",":/icons/datasource.svg",100,100);
 		addIconDefinition("ElementDataSource",":/icons/statemachineelement.svg",100,100);
@@ -110,6 +111,10 @@ DiagramItemFactory::DiagramItemFactory(QSharedPointer<EditorState> editorState, 
 		addIconDefinition("OutputSignal", ":/icons/outputsignal.svg", 100, 100);
 		addIconDefinition("InputSignal", ":/icons/outputsignal.svg", 100, 100);
 		addIconDefinition("BinarySignal",":/icons/binarysignal.svg",100,100);
+
+		//Operator Features Icons
+		addIconDefinition("OperatorFeature", ":/icons/lfpdatasource.svg", 100, 100);
+
 		mapInitialized_ = true;
 	}
 	editorState_ = editorState;

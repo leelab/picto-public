@@ -228,6 +228,13 @@ SOURCES += $$(PICTO_TREE)/source/common/iodevices/NullEventCodeGenerator.cpp
 HEADERS += $$(PICTO_TREE)/source/common/iodevices/AudioRewardController.h
 SOURCES += $$(PICTO_TREE)/source/common/iodevices/AudioRewardController.cpp
 
+HEADERS += $$(PICTO_TREE)/source/common/operator/OperatorPlot.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/OperatorPlot.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElement.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElement.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.cpp
+
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
 HEADERS += $$(PICTO_TREE)/source/common/network/CommandChannel.h
@@ -465,6 +472,10 @@ HEADERS += $$(PICTO_TREE)/source/common/statemachine/ScriptFunction.h
 SOURCES += $$(PICTO_TREE)/source/common/statemachine/ScriptFunction.cpp
 HEADERS += $$(PICTO_TREE)/source/common/statemachine/UIEnabled.h
 SOURCES += $$(PICTO_TREE)/source/common/statemachine/UIEnabled.cpp
+HEADERS += $$(PICTO_TREE)/source/common/statemachine/StateMachineElementContainer.h
+SOURCES += $$(PICTO_TREE)/source/common/statemachine/StateMachineElementContainer.cpp
+HEADERS += $$(PICTO_TREE)/source/common/statemachine/ContainerElement.h
+SOURCES += $$(PICTO_TREE)/source/common/statemachine/ContainerElement.cpp
 
 
 HEADERS += $$(PICTO_TREE)/source/common/stimuli/VisualElement.h
@@ -637,6 +648,7 @@ build_pass:CONFIG(debug, debug|release) {
   macx:DESTDIR += $$(PICTO_TREE)/intermediates/lib/debug
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/common/debug
   win32:DLLDESTDIR = $$(PICTO_TREE)/output/bin/debug
+  win32:LIBS += qwtd.lib
 }
 build_pass:CONFIG(release, debug|release) {
   win32:DESTDIR = $$(PICTO_TREE)/intermediates/lib/release
@@ -644,6 +656,7 @@ build_pass:CONFIG(release, debug|release) {
   macx:DESTDIR += $$(PICTO_TREE)/intermediates/lib/release
   OBJECTS_DIR	= $$(PICTO_TREE)/intermediates/obj/common/release
   win32:DLLDESTDIR = $$(PICTO_TREE)/output/bin/release
+  win32:LIBS += qwt.lib
 }
 RCC_DIR = $$(PICTO_TREE)/intermediates/resources/common
 UI_DIR = $$(PICTO_TREE)/intermediates/ui/common

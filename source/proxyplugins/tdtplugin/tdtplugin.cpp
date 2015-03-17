@@ -484,7 +484,7 @@ QList<QSharedPointer<Picto::DataUnit>> TdtPlugin::dumpData()
 			
 			//Loop through the list of "sec per sample" separated enties for the current channel adding
 			//them to the LFPDataUnitPackage
-			for(unsigned int j=0;j<sampsPerChanEntry;j++)
+			for(int j=0;j<sampsPerChanEntry;j++)
 			{	
 				//Make sure that the latest read time is greater than the last time that we recorded data for.
 				if(incomingTime > lfpData_[currChan].currTime)
