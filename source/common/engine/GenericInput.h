@@ -12,7 +12,7 @@
 namespace Picto{
 
 	/*! \brief A signal channel for representing Generic Inputs to be read by the State Machine.
-	*	\details This is the signal channel used for any analog inputs unitilzed by an Experiment.
+	*	\details This is the signal channel used for any analog inputs utilized by an Experiment.
 	*	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
 	*	\date 2009-2015
 	*/
@@ -29,6 +29,9 @@ public:
 
 	/*! \brief GenericInput virutal destructor.*/
 	virtual ~GenericInput() {};
+
+	virtual QMap<QString, QVector<double>> getValues();
+	virtual double peekValue(QString subchannel);
 
 	/*! \brief Returns a pointer to a InputDataUnitPackage object with the Analog Input data.*/
 	QSharedPointer<InputDataUnitPackage> getDataPackage();

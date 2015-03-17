@@ -24,7 +24,7 @@ var searchData=
   ['pcmmixingsample',['PCMMixingSample',['../class_picto_1_1_p_c_m_mixing_sample.html',1,'Picto']]],
   ['peekdata',['peekData',['../class_session_data.html#a5eb5642f14a897c65c31319580b23d5d',1,'SessionData']]],
   ['peekfirstdatapoint',['peekFirstDataPoint',['../class_picto_1_1_behavioral_data_unit_package.html#a9c609dfb302b35c38ca4a73e4596e4ef',1,'Picto::BehavioralDataUnitPackage::peekFirstDataPoint()'],['../class_picto_1_1_input_data_unit_package.html#a2e572ca73d7c08e79219bcab6c7916e6',1,'Picto::InputDataUnitPackage::peekFirstDataPoint()']]],
-  ['peekvalue',['peekValue',['../class_picto_1_1_doublet_signal_channel.html#a2e69f4a247ac42962a44e4435dbace5b',1,'Picto::DoubletSignalChannel::peekValue()'],['../class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb',1,'Picto::SignalChannel::peekValue()']]],
+  ['peekvalue',['peekValue',['../class_picto_1_1_doublet_signal_channel.html#a2e69f4a247ac42962a44e4435dbace5b',1,'Picto::DoubletSignalChannel::peekValue()'],['../class_picto_1_1_generic_input.html#afcbaf8f24508ae61656332e32ae7a1ff',1,'Picto::GenericInput::peekValue()'],['../class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb',1,'Picto::SignalChannel::peekValue()']]],
   ['pendingdirective',['pendingDirective',['../class_session_info.html#ae276671aa1731856342b9ca9ab4b5304',1,'SessionInfo']]],
   ['pendingresponses',['pendingResponses',['../class_picto_1_1_command_channel.html#a995ed26dfa4a7c97b2961279aec5f821',1,'Picto::CommandChannel']]],
   ['pendingsession',['pendingSession',['../class_connection_manager.html#aab7005e98b0721aa376e3ad37e96bd7f',1,'ConnectionManager']]],
