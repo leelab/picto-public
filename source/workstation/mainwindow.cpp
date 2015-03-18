@@ -568,7 +568,7 @@ bool MainWindow::loadFile(const QString filename)
 		designXML = file.readAll();
 #ifdef _WIN32
 		//Adds the file to Windows' list of recent documents
-		SHAddToRecentDocs(SHARD_PATHA,filename.data());
+		SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());
 #endif
 		file.close();
 	}
