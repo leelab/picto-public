@@ -19,9 +19,9 @@ SETLOCAL
 pushd %PICTO_TREE%
 
 echo Getting Qt libraries
-ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release Qt*Core.dll Qt*Gui.dll Qt*Script.dll Qt*Xml.dll Qt*Network.dll Qt*Sql.dll Qt*Svg.dll Qt*ScriptTools.dll Qt*Widgets.dll Qt*Multimedia.dll Qt*OpenGl.dll Qt*PrintSupport.dll Qt*Test.dll libGLESv2.dll libEGL.dll /NFL /NDL /NJH /NJS
+ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release Qt*Core.dll Qt*Gui.dll Qt*Script.dll Qt*Xml.dll Qt*Network.dll Qt*Sql.dll Qt*Svg.dll Qt*ScriptTools.dll Qt*Widgets.dll Qt*Multimedia.dll Qt*OpenGl.dll Qt*PrintSupport.dll Qt*Test.dll Qt*WinExtras.dll libGLESv2.dll libEGL.dll /NFL /NDL /NJH /NJS
 
-ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt*Cored.dll Qt*Guid.dll Qt*Scriptd.dll Qt*Xmld.dll Qt*Networkd.dll Qt*Sqld.dll Qt*Svgd.dll Qt*ScriptToolsd.dll Qt*Widgetsd.dll Qt*Multimediad.dll Qt*OpenGld.dll Qt*PrintSupportd.dll Qt*Testd.dll libGLESv2d.dll libEGLd.dll Qt*Cored.pdb Qt*Guid.pdb Qt*Scriptd.pdb Qt*Xmld.pdb Qt*Networkd.pdb Qt*Sqld.pdb Qt*Svgd.pdb Qt*ScriptToolsd.pdb Qt*Widgetsd.pdb Qt*Multimediad.pdb Qt*OpenGld.pdb Qt*PrintSupportd.pdb Qt*Testd.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
+ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\debug Qt*Cored.dll Qt*Guid.dll Qt*Scriptd.dll Qt*Xmld.dll Qt*Networkd.dll Qt*Sqld.dll Qt*Svgd.dll Qt*ScriptToolsd.dll Qt*Widgetsd.dll Qt*Multimediad.dll Qt*OpenGld.dll Qt*PrintSupportd.dll Qt*Testd.dll Qt*WinExtrasd.dll libGLESv2d.dll libEGLd.dll Qt*Cored.pdb Qt*Guid.pdb Qt*Scriptd.pdb Qt*Xmld.pdb Qt*Networkd.pdb Qt*Sqld.pdb Qt*Svgd.pdb Qt*ScriptToolsd.pdb Qt*Widgetsd.pdb Qt*Multimediad.pdb Qt*OpenGld.pdb Qt*PrintSupportd.pdb Qt*Testd.pdb Qt*WinExtrasd.pdb libGLESv2d.pdb libEGLd.pdb /NFL /NDL /NJH /NJS
 
 ROBOCOPY %QTDIR%\bin %PICTO_TREE%\output\bin\release icuin*.dll icuuc*.dll icudt*.dll D3DCompiler_43.dll /NFL /NDL /NJH /NJS
 

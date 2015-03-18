@@ -10,7 +10,12 @@
 #include "replayviewer/replayviewer.h"
 #include "statemachineeditor/stateeditviewer.h"
 #include "../common/update/updatedownloader.h"
+#ifdef _WIN32
+#include "Shlobj.h"
+#endif
+
 #include "../common/memleakdetect.h"
+
 
 #define DEFAULT_FILE ":/BuiltInExperiments/EyeCalibration.xml"
 
@@ -33,11 +38,30 @@ MainWindow::MainWindow()
 	setWindowIcon(QIcon(":/icons/scope.ico"));
 
 	isModified_ = false;
-	//newExperiment();
-	if(recentExperimentsActions_[0]->isVisible())
-		recentExperimentsActions_[0]->trigger();
-	else
-		newExperiment();
+	
+	//Load a file from a commandline argument
+	bool argFileFound = false;
+	for (int i = 1; i < QCoreApplication::arguments().size(); i++)
+	{
+		const QString arg = QCoreApplication::arguments().at(i);
+		if (!arg.isEmpty() && arg.at(0) != '-' && QFile(arg).exists())
+		{
+			if (loadFile(arg))
+			{
+				argFileFound = true;
+				break;
+			}
+		}
+	}
+
+	if (!argFileFound)
+	{
+		//Load Picto's internal most-recent file if no command-line argumnet present
+		if (recentExperimentsActions_[0]->isVisible())
+			recentExperimentsActions_[0]->trigger();
+		else
+			newExperiment();
+	}
 }
 
 /*****************************************************
@@ -542,6 +566,10 @@ bool MainWindow::loadFile(const QString filename)
 		}
 
 		designXML = file.readAll();
+#ifdef _WIN32
+		//Adds the file to Windows' list of recent documents
+		SHAddToRecentDocs(SHARD_PATHA,filename.data());
+#endif
 		file.close();
 	}
 	else
@@ -574,6 +602,10 @@ bool MainWindow::loadFile(const QString filename)
 			return false;
 		}
 		designXML = query.value(0).toString();
+#ifdef _WIN32
+		//Adds the file to Windows' list of recent documents
+		SHAddToRecentDocs(SHARD_PATHA, filename.toLocal8Bit());
+#endif
 		newSession.close();
 	}
 	if(designXML.isEmpty())
