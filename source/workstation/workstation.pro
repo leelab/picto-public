@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = PictoWorkstation
-QT = core gui xml network script scripttools sql svg multimedia concurrent
+QT = core gui xml network script scripttools sql svg multimedia concurrent 
 CONFIG += qt warn_on debug_and_release 
 CONFIG -= flat
 CONFIG += c++11
@@ -8,6 +8,11 @@ DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $$(PICTO_TREE)/3rdparty/include
 MACHINE_TYPE = $$(PICTO_MACHINE_TYPE)
+
+
+win32 {
+QT += winextras
+}
 
 # Input
 SOURCES += $$(PICTO_TREE)/source/workstation/main.cpp

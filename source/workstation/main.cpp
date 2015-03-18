@@ -35,6 +35,12 @@
 #include "mainwindow.h"
 #include "../common/mainmemleakdetect.h"
 
+#if WIN32
+#include <QSettings>
+#include <QDir>
+#include <QtWinExtras>
+#endif
+
 /*! \brief The main method of the Picto Workstation application.
  *	\details Goes through standard Picto application setup procedure, setting up the QApplication,
  *	the QTranslator, and calling Picto::InitializeLib() and Picto::IniitializePorts(), then sets up
@@ -55,6 +61,36 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(workstation);
 
 	QApplication app(argc, argv);
+
+	
+#if WIN32
+	//Register the application with its compatible filetypes
+	QString exeFileName = QCoreApplication::applicationFilePath();
+	exeFileName = exeFileName.right(exeFileName.length() - exeFileName.lastIndexOf("/") - 1);
+	QString appName = "PictoWorkstation";
+
+	QSettings regApplications("HKEY_CURRENT_USER\\Software\\Classes\\Applications\\" + exeFileName, QSettings::NativeFormat);
+	regApplications.setValue("FriendlyAppName", appName);
+
+	regApplications.beginGroup("SupportedTypes");
+	regApplications.setValue(".xml", QString());
+	regApplications.setValue(".sqlite", QString());
+	regApplications.endGroup();
+
+	regApplications.beginGroup("shell");
+	regApplications.beginGroup("open");
+	regApplications.setValue("FriendlyAppName", appName);
+	regApplications.beginGroup("command");
+	regApplications.setValue(".", '"' + QDir::toNativeSeparators(QCoreApplication::applicationFilePath()) + "\" \"%1\"");
+	regApplications.endGroup();
+	regApplications.endGroup();
+	regApplications.endGroup();
+
+	//Create the Jumplist for easy opening of recent files
+	QWinJumpList jumplist;
+	jumplist.recent()->setTitle("Recent Experiments");
+	jumplist.recent()->setVisible(true);
+#endif
 
 	QLocale systemLocale = QLocale();
 	QString localeLanguageCode = systemLocale.name().left(2);
