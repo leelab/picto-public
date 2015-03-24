@@ -20,6 +20,7 @@ var searchData=
   ['dataviewelement',['DataViewElement',['../class_picto_1_1_data_view_element.html',1,'Picto']]],
   ['dataviewelementcontainer',['DataViewElementContainer',['../class_picto_1_1_data_view_element_container.html',1,'Picto']]],
   ['dataviewelementcontainer',['DataViewElementContainer',['../class_picto_1_1_data_view_element_container.html#a0adb47fe3a7fe81a529bc795589ce54e',1,'Picto::DataViewElementContainer']]],
+  ['dataviewlayout',['DataViewLayout',['../class_data_view_layout.html',1,'DataViewLayout'],['../class_data_view_layout.html#a1a661df6f737f7f171285f79c2ca88db',1,'DataViewLayout::DataViewLayout()']]],
   ['dataviewwidget',['DataViewWidget',['../class_data_view_widget.html',1,'DataViewWidget'],['../class_data_view_widget.html#a5c333ffb8ac4599211f478bb9c49aa89',1,'DataViewWidget::DataViewWidget()']]],
   ['deactivate',['deActivate',['../class_component_interface.html#a5d5df5e3c0fddfdf2997467dfef8e94e',1,'ComponentInterface']]],
   ['deactivatetargets',['deactivateTargets',['../class_picto_1_1_choice_controller.html#a45208557f6ce245353971aa7bf22d36b',1,'Picto::ChoiceController::deactivateTargets()'],['../class_picto_1_1_control_element.html#ac5d3e0d806747e930702b2444509ce82',1,'Picto::ControlElement::deactivateTargets()'],['../class_picto_1_1_fixation_controller.html#a228ca432c3d35d4fa8bed76becb563b1',1,'Picto::FixationController::deactivateTargets()'],['../class_picto_1_1_target_controller.html#a2425a38079fab780c7ccbf0a2efaf3d5',1,'Picto::TargetController::deactivateTargets()']]],

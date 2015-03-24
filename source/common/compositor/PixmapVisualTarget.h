@@ -36,6 +36,7 @@ public:
 	void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer<CompositingSurface> compositingSurface);
 	void present();
 	void clear();
+	virtual void resizeEvent(QResizeEvent *event);
 	/*! \copydoc VisualTarget::latestFrameSuccesfullyRendered
 	 *	\details In the case of PixmapVisualTarget, QPixmaps are simple enough that we are just always returning true.
 	 */
@@ -52,6 +53,10 @@ private:
 	unsigned int surfaceActingAsBackBuffer_;
 	std::vector<QPixmap> pixmapCompositingSurfaces_;
 	float frameSynchedZoom_;
+	int targetWidth_;
+	int targetHeight_;
+	int widthOffset_;
+	int heightOffset_;
 };
 
 }; //namespace Picto

@@ -19,6 +19,7 @@ var searchData=
   ['hasselectedids',['hasSelectedIds',['../class_picto_1_1_analysis_selector_widget.html#a17a534c12c588843e10ef03c8f99f030',1,'Picto::AnalysisSelectorWidget']]],
   ['hasundo',['hasUndo',['../class_picto_1_1_design_root.html#aed754dcf76ca7ae16f30745f0a895758',1,'Picto::DesignRoot']]],
   ['haswarning',['hasWarning',['../class_picto_1_1_design_root.html#a92b713a874879cc6d6ae3f4f90cd92ac',1,'Picto::DesignRoot']]],
+  ['hidedefaulttitle',['hideDefaultTitle',['../class_data_view_widget.html#ad19fe407b0e8fea7e91723d53ad12e68',1,'DataViewWidget']]],
   ['highlightnamechars',['highlightNameChars',['../class_diagram_item.html#a6253ca849602d6f7487f2a33851f2fcc',1,'DiagramItem']]],
   ['hoverenterevent',['hoverEnterEvent',['../class_arrow_port_item.html#ac8365305e57f311dd1a673d8c8ff92a9',1,'ArrowPortItem::hoverEnterEvent()'],['../class_arrow_source_item.html#ac61a740c4936a783c92a1c7f13d9bb5b',1,'ArrowSourceItem::hoverEnterEvent()'],['../class_asset_item.html#a5035003fbe1c0901007a6402e2766e81',1,'AssetItem::hoverEnterEvent()'],['../class_experiment_item.html#acc9c0739670da642ed52042d55203f9e',1,'ExperimentItem::hoverEnterEvent()']]],
   ['hoverleaveevent',['hoverLeaveEvent',['../class_arrow_port_item.html#a12ee0e3740c3e6fbb303774232278013',1,'ArrowPortItem']]]

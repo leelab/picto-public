@@ -14,6 +14,8 @@ OperatorPlot::OperatorPlot()
 {
 	m_pPlot = new QwtPlot(QwtText("Operator Plot Test"));
 
+	m_pPlot->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+
 	m_pHistoPlotItem = new QwtPlotHistogram(QwtText("Operator Plot Histo Test"));
 	m_pHistoPlotItem->attach(m_pPlot);
 }
@@ -107,6 +109,14 @@ bool OperatorPlot::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	if (!DataViewElement::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+void OperatorPlot::setTitle(QString newTitle)
+{
+	if (m_pPlot)
+	{
+		m_pPlot->setTitle(QwtText(newTitle));
+	}
 }
 
 }; //namespace Picto

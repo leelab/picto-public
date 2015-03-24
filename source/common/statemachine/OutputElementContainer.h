@@ -26,7 +26,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API OutputElementContainer : public StateMachineElementContainer
 #else
-class OutputElementContainer : public StateMachineElement
+class OutputElementContainer : public StateMachineElementContainer
 #endif
 {
 	Q_OBJECT

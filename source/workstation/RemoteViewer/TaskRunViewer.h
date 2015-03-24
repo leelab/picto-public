@@ -35,8 +35,8 @@ public:
 signals:
 	/*! \brief Emitted when the widget is used to change values in the Run with the input runId.  When this is emitted, the
 	 *	latest values of the run with that runId should be sent to the server.
-	 *	\note The TaskRunViewer operates on the objects pointed to in the QMap passed into setTaskRunData().  When this signal
-	 *	is emitted, those object will have already been updated.
+	 *	\note The TaskRunViewer operates on the objects pointed to in the QMap passed into setTaskRunData().  When this
+	 *	signal is emitted, those object will have already been updated.
 	 */
 	void taskRunDataChanged(qulonglong runId);
 private:

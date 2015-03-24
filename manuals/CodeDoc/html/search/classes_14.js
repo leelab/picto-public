@@ -5,6 +5,7 @@ var searchData=
   ['variablemap',['VariableMap',['../class_picto_1_1_variable_map.html',1,'Picto']]],
   ['viewer',['Viewer',['../class_viewer.html',1,'']]],
   ['viewerwindow',['ViewerWindow',['../class_viewer_window.html',1,'']]],
+  ['viewselectionwidget',['ViewSelectionWidget',['../class_view_selection_widget.html',1,'']]],
   ['virtualdeviceplugin',['VirtualDevicePlugin',['../class_virtual_device_plugin.html',1,'']]],
   ['virtualevent',['VirtualEvent',['../struct_virtual_event.html',1,'']]],
   ['virtualeventsource',['VirtualEventSource',['../class_virtual_event_source.html',1,'']]],

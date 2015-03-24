@@ -17,8 +17,8 @@ namespace Picto {
 
 /*! \brief A base class for elements that hold DataViewElement objects.
  *
- *	\details This class contains the AssetFactory objects for creating OutputElements and manages
- *	their scoping issues so that descendant classes can easily access all in-scope OutputElements
+ *	\details This class contains the AssetFactory objects for creating DataViewElements and manages
+ *	their scoping issues so that descendant classes can easily access all in-scope DataViewElements
  *	from a single list.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -26,7 +26,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API DataViewElementContainer : public StateMachineElementContainer
 #else
-class DataViewElementContainer : public StateMachineElement
+class DataViewElementContainer : public StateMachineElementContainer
 #endif
 {
 	Q_OBJECT

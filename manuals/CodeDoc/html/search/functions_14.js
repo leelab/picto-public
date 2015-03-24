@@ -15,6 +15,7 @@ var searchData=
   ['version',['version',['../struct_picto_1_1_protocol.html#ac9f052a6361048803146b15fd8e0f05c',1,'Picto::Protocol']]],
   ['viewerwindow',['ViewerWindow',['../class_viewer_window.html#adfafdb32442c61f1cae5e0ef2dc0c669',1,'ViewerWindow']]],
   ['viewportpointtotargetpoint',['viewportPointToTargetPoint',['../struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a',1,'Picto::PixmapVisualTarget::viewportPointToTargetPoint()'],['../class_picto_1_1_visual_target.html#a8374c2da42cf1c438e043317b82b5318',1,'Picto::VisualTarget::viewportPointToTargetPoint()']]],
+  ['viewselectionwidget',['ViewSelectionWidget',['../class_view_selection_widget.html#a51171c6d2689354b1c5ee1f2e643cbcb',1,'ViewSelectionWidget']]],
   ['virtualdeviceplugin',['VirtualDevicePlugin',['../class_virtual_device_plugin.html#a1b4b61ed19aff589260827203ee7ba83',1,'VirtualDevicePlugin']]],
   ['virtualoutputsignalcontroller',['VirtualOutputSignalController',['../class_picto_1_1_virtual_output_signal_controller.html#a08694df6722f87e2220f6b7756c225b1',1,'Picto::VirtualOutputSignalController']]],
   ['visualelement',['VisualElement',['../struct_picto_1_1_visual_element.html#a73fe99d89a8af18c80c94dd43fb37b43',1,'Picto::VisualElement']]],

@@ -22,7 +22,8 @@ void VisualTargetHost::setVisualTarget(QSharedPointer<VisualTarget> target)
 	target_ = target;
 	QRect dims = target->getDimensions();
 
-	setFixedSize(dims.width(),dims.height());
+	//setMaximumSize(dims.width(),dims.height());
+	//setFixedSize(dims.width(), dims.height());
 	resize(dims.width(),dims.height());
 
 	connect(target_.data(), SIGNAL(presented(double)), this, SLOT(presented(double)));
@@ -48,6 +49,16 @@ void VisualTargetHost::mousePressEvent(QMouseEvent *event)
 		return;
 	emit clickDetected(target_->viewportPointToTargetPoint(event->pos()));
 	QWidget::mousePressEvent (event);
+}
+
+void VisualTargetHost::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+	if (!target_.isNull())
+	{
+		target_->resizeEvent(event);
+		update();
+	}
 }
 
 /*! \brief Causes this VisualTargetHost to be repainted.

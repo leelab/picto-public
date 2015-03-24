@@ -7,6 +7,7 @@ var searchData=
   ['_7ecommandchannel',['~CommandChannel',['../class_picto_1_1_command_channel.html#af270c3f840dedc4d2d4f18d6471f5242',1,'Picto::CommandChannel']]],
   ['_7ecomponentinterface',['~ComponentInterface',['../class_component_interface.html#a9e0bf6312b07c414d29694740ca63817',1,'ComponentInterface']]],
   ['_7ed3dcompositingsurface',['~D3DCompositingSurface',['../class_picto_1_1_d3_d_compositing_surface.html#afa0df367f0ea3500dd135968ebb174e4',1,'Picto::D3DCompositingSurface']]],
+  ['_7edataviewlayout',['~DataViewLayout',['../class_data_view_layout.html#afe53ff9d17da94103b9a857ce8b198b4',1,'DataViewLayout']]],
   ['_7edataviewwidget',['~DataViewWidget',['../class_data_view_widget.html#abcced93e90a047bc983dc3d9dcc50832',1,'DataViewWidget']]],
   ['_7eengineconnections',['~EngineConnections',['../class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b',1,'EngineConnections']]],
   ['_7efilesessionloader',['~FileSessionLoader',['../class_picto_1_1_file_session_loader.html#a9f28fba3c0be58a4d6397e7d3f6b13ca',1,'Picto::FileSessionLoader']]],
@@ -16,5 +17,6 @@ var searchData=
   ['_7elegacysystemxpanaloginputport',['~LegacySystemXPAnalogInputPort',['../class_picto_1_1_legacy_system_x_p_analog_input_port.html#a316f1a839eefb91fbf6b4b346eeb6351',1,'Picto::LegacySystemXPAnalogInputPort']]],
   ['_7ephidgets',['~Phidgets',['../class_phidgets.html#a63632587e91cd54861763eccee1d154c',1,'Phidgets']]],
   ['_7epictoboxxprewardcontroller',['~PictoBoxXPRewardController',['../class_picto_1_1_picto_box_x_p_reward_controller.html#a4679cf9cf4f423d44e5142a5d639fb26',1,'Picto::PictoBoxXPRewardController']]],
-  ['_7estoredsessiondata',['~StoredSessionData',['../class_stored_session_data.html#a71ce0fb4b14e50493e38515927205ac8',1,'StoredSessionData']]]
+  ['_7estoredsessiondata',['~StoredSessionData',['../class_stored_session_data.html#a71ce0fb4b14e50493e38515927205ac8',1,'StoredSessionData']]],
+  ['_7eviewselectionwidget',['~ViewSelectionWidget',['../class_view_selection_widget.html#a9223d3a7ae8e74675849a98368f38bdb',1,'ViewSelectionWidget']]]
 ];

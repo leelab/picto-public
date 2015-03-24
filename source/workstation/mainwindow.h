@@ -15,25 +15,27 @@ class QStackedWidget;
 /*! \brief The main window for the Workstation app.
  *
  *	\details This window includes multiple
- *	"Modes" which are accessed by a toolbar on the left of the window.  At the
- *	moment, the modes are:  
- *	- A StateMachineEditor - A graphical state machine based development environment that is used to design Picto Experiments and their Analysis.
- *	- A TestViewer - A test environment where Experiments and Analyses can be run and debugged before being deployed in a real experimental Session.
- *	- A RemoteViewer - A control panel that is used to start an experimental session on a Director/Proxy system, view it in real time, control
- *			its operation, and interact with the experiment subject.
- *	- A ReplayViewer - A playback system that allows for replaying completed experimental Sessions, recording their activity to video, running
- *		Analysis on the Sessions, and saving the Analysis output to disk. 
+ *	"Modes" which are accessed by a toolbar on the left of the window.  At the moment, the modes are:  
+ *	- A StateMachineEditor - A graphical state machine based development environment that is used to design Picto
+ *			Experiments and their Analysis.
+ *	- A TestViewer - A test environment where Experiments and Analyses can be run and debugged before being deployed in a
+ *			real experimental Session.
+ *	- A RemoteViewer - A control panel that is used to start an experimental session on a Director/Proxy system, view it
+ *			in real time, control its operation, and interact with the experiment subject.
+ *	- A ReplayViewer - A playback system that allows for replaying completed experimental Sessions, recording their
+ *			activity to video, running Analysis on the Sessions, and saving the Analysis output to disk. 
  *
- *	While each of these Workstation modes functions to a great extent in its own world, there are some loose ties between all Viewers.  The main
- *	tie between all of these viewers is a "current design file."  The Workstation as whole always has a design file loaded.  The Design stored in the
- *	design file's XML has different functions in each Viewer.  In the StateMachineEditor, the design is what is being created and edited.  In the 
- *	TestViewer the design is what is being run and tested.  In the RemoteViewer the design is what is being sent over to a Director in order to run
- *	an experimental Session.  In the ReplayViewer, the design defines the Analyses that can be imported into the currently loaded Session files
- *	in order to gather data that may not have been considered when a Session was first run.
+ *	While each of these Workstation modes functions to a great extent in its own world, there are some loose ties between
+ *	all Viewers.  The main tie between all of these viewers is a "current design file."  The Workstation as whole always
+ *	has a design file loaded.  The Design stored in the design file's XML has different functions in each Viewer.  In the
+ *	StateMachineEditor, the design is what is being created and edited.  In the TestViewer the design is what is being run
+ *	and tested.  In the RemoteViewer the design is what is being sent over to a Director in order to run an experimental
+ *	Session.  In the ReplayViewer, the design defines the Analyses that can be imported into the currently loaded Session
+ *	files in order to gather data that may not have been considered when a Session was first run.
  *
- *	This window also includes some simple menus with functionality for saving the current Design, opening a new Design from different types of files,
- *	changing the System number (Picto applications only communicate with the Server that has their System number) and retrieving broad "about" information
- *	on the Picto system.
+ *	This window also includes some simple menus with functionality for saving the current Design, opening a new Design
+ *	from different types of files, changing the System number (Picto applications only communicate with the Server that
+ *	has their System number) and retrieving broad "about" information on the Picto system.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

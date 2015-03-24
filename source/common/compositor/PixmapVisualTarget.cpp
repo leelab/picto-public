@@ -12,8 +12,8 @@ namespace Picto {
  *	\details Calls VisualTarget::VisualTarget with the input values, then 
  *	sets up the various data values used by this object
  */
-PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height) :
-	VisualTarget(_bWindowed, _width, _height)
+	PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
+		: VisualTarget(_bWindowed, _width, _height), widthOffset_(0), heightOffset_(0)
 {
 	if(!bWindowed_)
 	{
@@ -35,6 +35,10 @@ PixmapVisualTarget::PixmapVisualTarget(bool _bWindowed, int _width, int _height)
 		setFixedSize(width_,height_);
 		resize(width_, height_);  //This might be redundant...
 	}
+
+	targetHeight_ = height_;
+	targetWidth_ = width_;
+
 	setAttribute(Qt::WA_NativeWindow,true);
 	setAttribute(Qt::WA_PaintOnScreen,true);
 
@@ -63,7 +67,12 @@ void PixmapVisualTarget::paint(QPaintDevice *widget)
 {
 	//Note that we aren't assuming that we're drawing on ourselves.
 	QPainter painter(widget);
-	painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
+
+	QRect source(0,0,width_,height_);
+	QRect target(widthOffset_, heightOffset_, targetWidth_, targetHeight_);
+
+	//painter.drawPixmap(QPoint(0,0),pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1]);
+	painter.drawPixmap(target,pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ & 1],source);
 }
 
 QSharedPointer<CompositingSurface> PixmapVisualTarget::generateCompositingSurface()
@@ -96,7 +105,9 @@ void PixmapVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, 
 			location = targetPointToViewportPoint(location)-compositingSurfaceOffset;
 		}
 
-		painter.drawPixmap(location, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap());
+		QRect source(0, 0, targetWidth_, targetHeight_);
+		QRect target(location + QPoint(widthOffset_, heightOffset_), QPoint(width_, height_));
+		painter.drawPixmap(target, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap(), source);
 	}
 }
 
@@ -144,6 +155,28 @@ void PixmapVisualTarget::clear()
 	//Set first phosphor time !! THIS IS NOT ACCURATE YET
 	setFirstPhosphorTime();
 	repaint();
+}
+
+
+void PixmapVisualTarget::resizeEvent(QResizeEvent *event)
+{
+	//QWidget::resizeEvent(event);
+
+	targetWidth_ = event->size().width();
+	targetHeight_ = event->size().height();
+
+	if (3 * targetWidth_ > 4 * targetHeight_)
+	{
+		targetWidth_ = int(4.0 * targetHeight_ / 3.0);
+		widthOffset_ = (event->size().width() - targetWidth_)/2;
+		heightOffset_ = 0;
+	}
+	else
+	{
+		targetHeight_ = int(3.0 * targetWidth_ / 4.0);
+		widthOffset_ = 0;
+		heightOffset_ = (event->size().height() - targetHeight_)/2;
+	}
 }
 
 }; //namespace Picto

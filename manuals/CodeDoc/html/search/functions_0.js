@@ -71,6 +71,7 @@ var searchData=
   ['addtransition',['addTransition',['../class_picto_1_1_machine_container.html#a6269dc1f507e14af1d27c91a6c04cfc9',1,'Picto::MachineContainer::addTransition()'],['../class_picto_1_1_state_data_unit_package.html#af569a41cce6b6bd83ae4dd55e1891f38',1,'Picto::StateDataUnitPackage::addTransition(QSharedPointer&lt; Transition &gt; transition)'],['../class_picto_1_1_state_data_unit_package.html#a64a8803a14b8a4f25972a1c36832b9e8',1,'Picto::StateDataUnitPackage::addTransition(int id)']]],
   ['addvisualelement',['addVisualElement',['../class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059',1,'Picto::Scene']]],
   ['addwidget',['addWidget',['../class_picto_1_1_analysis_output_widget_container.html#a3a88420f7582d082b105642f792ec11d',1,'Picto::AnalysisOutputWidgetContainer']]],
+  ['addwidgetslot',['addWidgetSlot',['../class_data_view_layout.html#a3cfea8ad3be78cbe43ff542f331a9c7a',1,'DataViewLayout']]],
   ['alignmentinfo',['AlignmentInfo',['../class_picto_1_1_alignment_info.html#a7112d311fec2a90a4454ce36a5338472',1,'Picto::AlignmentInfo']]],
   ['alignmenttool',['alignmentTool',['../class_session_info.html#a2e1de58e8d906893dcc032d7e64a56ec',1,'SessionInfo']]],
   ['alignsessiondata',['AlignSessionData',['../class_align_session_data.html#ac77eec1a0456a1c24b21d10a6db0d905',1,'AlignSessionData']]],

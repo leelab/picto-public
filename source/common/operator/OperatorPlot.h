@@ -44,6 +44,10 @@ public:
 	virtual void submitValue(long iBin, double dValue);
 	virtual void dropBin(long iBin);
 
+	virtual QWidget *getWidget() { return m_pPlot; };
+
+	virtual void setTitle(QString newTitle);
+
 protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);

@@ -10,10 +10,10 @@ namespace Picto {
 
 /*!	\brief A container for a State Machine defined by StateMachineElement objects connected by Transitions.
  *
- *	\details A StateMachine contains multiple StateMachineElements and the Transitions between them.  It is also a StateMachineElement, 
- *	itself such that it can be contained by other StateMachines.  This class manages traversal of the StateMachine inside its
- *	run() function.  Essentially, all Logic for a Task is contained inside its StateMachine, so this is one of the more important
- *	classes in the Picto framework.
+ *	\details A StateMachine contains multiple StateMachineElements and the Transitions between them.  It is also a
+ *	StateMachineElement, itself such that it can be contained by other StateMachines.  This class manages traversal of the
+ *	StateMachine inside its run() function.  Essentially, all Logic for a Task is contained inside its StateMachine, so
+ *	this is one of the more important classes in the Picto framework.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

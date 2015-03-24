@@ -43,6 +43,11 @@
 #include "../../common/storage/directordata.h"
 #include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/designer/propertyframe.h"
+#include "../DataViewer/ViewSelectionWidget.h"
+#include "../DataViewer/DataViewWidget.h"
+#include "../DataViewer/DataViewLayout.h"
+
+#include "../../common/operator/OperatorPlot.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -55,23 +60,24 @@ using namespace Picto;
 #define SESSION_DATA_UPDATE_PERIOD 1000
 /*! \brief Special status message will appear in the bottom left status bar for this many ms.*/
 #define SPECIAL_STATUS_PERIOD 1000
-/*! \brief An adaptive timeout for waiting for Server responses is used to account for changes in network
- *	activity.  This is the minimum timeout (ms) that is allowed for this system.
+/*! \brief An adaptive timeout for waiting for Server responses is used to account for changes in network activity.  This
+ *	is the minimum timeout (ms) that is allowed for this system.
  */
 #define MIN_ADAPTIVE_TIMEOUT 50
-/*! \brief An adaptive timeout for waiting for Server responses is used to account for changes in network
- *	activity.  This is the maximum timeout(ms) that is allowed for this system.
+/*! \brief An adaptive timeout for waiting for Server responses is used to account for changes in network activity.  This
+ *	is the maximum timeout(ms) that is allowed for this system.
  */
 #define MAX_ADAPTIVE_TIMEOUT 500
-/*! \brief In order for changes to the default reward quantity that get sent to the Director and
- *	then back to this Workstation to not cause annoying echo effects when we are simply holding 
- *	down the increment/decrement buttons, we set a delay from the latest reward value change.  
- *	Only after this delay can new values coming in from the Director take effect.
+/*! \brief In order for changes to the default reward quantity that get sent to the Director and then back to this
+ *	Workstation to not cause annoying echo effects when we are simply holding down the increment/decrement buttons,
+ *	we set a delay from the latest reward value change.  Only after this delay can new values coming in from the Director
+ *	take effect.
  */
 #define REWARD_CHANGE_DELAY 5000
 
 /*! \brief Constructs a RemoteViewer object.
- *	\details Sets up the RemoteViewer UI. Initializes variables.  Gets the workstation ID from the Workstation's .config file.
+ *	\details Sets up the RemoteViewer UI. Initializes variables.  Gets the workstation ID from the Workstation's .config
+ *	file.
  */
 RemoteViewer::RemoteViewer(QWidget *parent) :
 	Viewer(parent),
@@ -131,8 +137,9 @@ RemoteViewer::~RemoteViewer()
 }
 /*! \brief The remote viewer is implemented as a state machine.  This is the main state machine run loop.
  *	\details Each time this function is called, it checks for state change triggers.  If they have occured, the
- *	state is changed, the enterState() function is called for the new state.  Every time updateState() is called, runState() is called 
- *	for the state.  Then if a new state change trigger is detected after that, endState() is called for that state. 
+ *	state is changed, the enterState() function is called for the new state.  Every time updateState() is called,
+ *	runState() is called for the state.  Then if a new state change trigger is detected after that, endState() is
+ *	called for that state. 
  */
 void RemoteViewer::updateState()
 {
@@ -281,10 +288,9 @@ void RemoteViewer::updateState()
 }
 
 /*! \brief This function is called once per state machine loop.
- * \details This function is used to run periodic state specific checks/logic and check 
- * for new state transitions.  A state triggers a new state transition by 
- * setting stateTrigger_ to a new value.  This transition will then be used to 
- * select the next state in updateState()
+ *  \details This function is used to run periodic state specific checks/logic and check for new state transitions.  A
+ *	state triggers a new state transition by setting stateTrigger_ to a new value.  This transition will then be used to
+ *  select the next state in updateState()
  */
 void RemoteViewer::runState()
 {
@@ -1017,14 +1023,60 @@ void RemoteViewer::setupUi()
 	zoomLayout->addWidget(new QLabel("Zoom: ", this));
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
-		
+	
+	DataViewWidget *behavioralView = new DataViewWidget("Behavioral", visualTargetHost_);
+	DataViewWidget *testView = new DataViewWidget("Test2", activeExpName_);
+
+	DataViewLayout *dataViewLayout = new DataViewLayout();
+
+	OperatorPlot *pOpPlot = new OperatorPlot();
+	DataViewWidget *testPlot = new DataViewWidget("Test Gaussian Histo", pOpPlot->getWidget());
+	pOpPlot->setTitle("Test Gaussian Histo");
+	testPlot->hideDefaultTitle();
+	pOpPlot->submitValue(0, 10);
+	pOpPlot->submitValue(1, 40);
+	pOpPlot->submitValue(2, 60);
+	pOpPlot->submitValue(3, 100);
+	pOpPlot->submitValue(4, 40);
+	pOpPlot->submitValue(5, 2);
+	pOpPlot->draw();
+	
+	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
+	viewSelectionWidget->registerView(behavioralView);
+	viewSelectionWidget->registerView(testView);
+	viewSelectionWidget->registerView(testPlot);
+	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
+
+	for (int i = 0; i < 12; i++)
+	{
+		OperatorPlot *pOpPlot = new OperatorPlot();
+		DataViewWidget *testPlot = new DataViewWidget(QString("Test Plot %1").arg(i), pOpPlot->getWidget());
+		testPlot->hideDefaultTitle();
+		pOpPlot->setTitle(QString("Test Plot %1").arg(i));
+		int range = rand() % 1000 + 10;
+		int numOfBins = 5 + rand() % 40;
+		for (int j = 0; j < 5 + numOfBins; j++)
+		{
+			pOpPlot->submitValue(j, rand() % range);
+		}
+		pOpPlot->draw();
+		viewSelectionWidget->registerView(testPlot);
+	}
+
+
+
+
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
+	leftPane->addWidget(viewSelectionWidget);
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	stimulusLayout->addWidget(visualTargetHost_);
+	//stimulusLayout->addWidget(visualTargetHost_);
+	stimulusLayout->addLayout(dataViewLayout);
+
+
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
@@ -1043,7 +1095,8 @@ void RemoteViewer::setupUi()
 	QHBoxLayout *operationLayout = new QHBoxLayout;
 	operationLayout->addLayout(leftPane);
 	operationLayout->addWidget(mainTabbedFrame_);
-	operationLayout->setStretch(0,0);
+	operationLayout->setStretch(0, 0);
+	operationLayout->setStretch(1, 1);
 	operationLayout->addStretch();
 
 

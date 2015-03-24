@@ -28,21 +28,22 @@ class QLineEdit;
 class QTabWidget;
 
 /*!	\brief	This allows Operators to view and control a remotely running Experimental Session.
- *
- *	\details This is the control panle that the operator uses while an experiment is running.  It has the
- *	following features:
+ *	\details This is the control panle that the operator uses while an experiment is running.  It has the following
+ *	features:
  *		- Allows for Creating/Ending a Session
  *		- Allows for Starting/Stopping a Task Run
  *		- Allows for Pausing/Resuming a Task Run
  *		- Allows for Rewarding the Experimental subject
  *		- Allows for updating the name, notes and saved value of the current Task Run.
  *		- Allows for chaging runtime Propety initValues in the remote Experiment. 
- *		- Displays the current Experimental activity, including the current visual state and behavioral input (eye tracker) as a moving cursor.
+ *		- Displays the current Experimental activity, including the current visual state and behavioral input (eye tracker)
+ *				as a moving cursor.
  *		- Displays the current neural activity including Neural spikes and local field potentials
  *		- Displays the names of all Director / Proxy instances currently attached to the Picto Server.
- *	Due to the Server-client architecture of the Picto system, multiple Workstations can be used to control/view the same Experiment (only Workstations
- *	with the correct password entered in the password box can control a Session).  All Workstations attached to the same Session are all synchronized. 
- *	When one changes something about the Experiment, all others are updated accordingly.
+ *	Due to the Server-client architecture of the Picto system, multiple Workstations can be used to control/view the same
+ *	Experiment (only Workstations with the correct password entered in the password box can control a Session).  All
+ *	Workstations attached to the same Session are all synchronized.  When one changes something about the Experiment,
+ *	all others are updated accordingly.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

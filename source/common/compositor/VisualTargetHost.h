@@ -61,7 +61,7 @@ public:
 	VisualTargetHost();
 	virtual ~VisualTargetHost(){};
 
-
+	virtual void resizeEvent(QResizeEvent *event);
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
 	/*! \brief Returns the VisualTarget hosted by this VisualTargetHost*/
 	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
