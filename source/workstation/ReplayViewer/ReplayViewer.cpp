@@ -30,6 +30,10 @@
 #include "../../common/iodevices/BufferFileGenerator.h"
 #include "../../common/playback/FileSessionLoader.h"
 
+#include "../DataViewer/DataViewLayout.h"
+#include "../DataViewer/DataViewWidget.h"
+#include "../DataViewer/ViewSelectionWidget.h"
+
 
 #include "../../common/memleakdetect.h"
 
@@ -197,9 +201,12 @@ void ReplayViewer::setupUi()
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
+
+	DataViewLayout *dataViewLayout = new DataViewLayout();
+
 	visualTargetHost_ = new RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
-	stimulusLayout->addWidget(visualTargetHost_);
+	stimulusLayout->addLayout(dataViewLayout);
 	connect(visualTargetHost_,SIGNAL(updateRecordingTime(double)),this,SLOT(setRecordTime(double)));
 
 	//Setup Output Signal Widgets
@@ -224,23 +231,33 @@ void ReplayViewer::setupUi()
 	analysisTabs->addTab(analysisSelector_,"Select Analyses");
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
+
+
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
+
+	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
+	viewSelectionWidget->registerView(taskView);
+	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
+
+
 	QVBoxLayout *infoLayout = new QVBoxLayout();
+	infoLayout->addWidget(viewSelectionWidget);
 	infoLayout->addWidget(analysisTabs);
+
 	QHBoxLayout *progressLayout = new QHBoxLayout();
 	progressLayout->addWidget(new QLabel("Load Progress:"));
 	progressLayout->addWidget(loadProgress_);
 	infoLayout->addLayout(progressLayout);
 
 	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(infoLayout);
-	operationLayout->addLayout(stimulusLayout);
+	operationLayout->addLayout(infoLayout,1);
+	operationLayout->addLayout(stimulusLayout,4);
 	operationLayout->addWidget(speed_);
-	operationLayout->addStretch();
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
-	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(operationLayout);
-	mainLayout->addStretch(1);
+	mainLayout->addLayout(toolbarLayout,0);
+	mainLayout->addLayout(operationLayout,1);
 	setLayout(mainLayout);
 }
 

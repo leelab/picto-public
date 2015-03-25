@@ -1024,7 +1024,7 @@ void RemoteViewer::setupUi()
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
 	
-	DataViewWidget *behavioralView = new DataViewWidget("Behavioral", visualTargetHost_);
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
 	DataViewWidget *testView = new DataViewWidget("Test2", activeExpName_);
 
 	DataViewLayout *dataViewLayout = new DataViewLayout();
@@ -1042,10 +1042,11 @@ void RemoteViewer::setupUi()
 	pOpPlot->draw();
 	
 	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
-	viewSelectionWidget->registerView(behavioralView);
+	viewSelectionWidget->registerView(taskView);
 	viewSelectionWidget->registerView(testView);
 	viewSelectionWidget->registerView(testPlot);
 	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
 
 	for (int i = 0; i < 12; i++)
 	{

@@ -39,6 +39,8 @@ public:
 	void setPosition(int xPos, int yPos);
 	void getPosition(int &xPos, int &yPos);
 
+	bool containsPosition(int xPos, int yPos);
+
 	void hideDefaultTitle();
 
 private:

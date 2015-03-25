@@ -105,9 +105,7 @@ void PixmapVisualTarget::draw(QPoint location, QPoint compositingSurfaceOffset, 
 			location = targetPointToViewportPoint(location)-compositingSurfaceOffset;
 		}
 
-		QRect source(0, 0, targetWidth_, targetHeight_);
-		QRect target(location + QPoint(widthOffset_, heightOffset_), QPoint(width_, height_));
-		painter.drawPixmap(target, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap(), source);
+		painter.drawPixmap(location, compositingSurface.staticCast<PixmapCompositingSurface>()->getPixmap());
 	}
 }
 

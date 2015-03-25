@@ -194,94 +194,92 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            location = <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">targetPointToViewportPoint</a>(location)-compositingSurfaceOffset;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        }</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        QRect source(0, 0, targetWidth_, targetHeight_);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        QRect target(location + QPoint(widthOffset_, heightOffset_), QPoint(width_, height_));</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        painter.drawPixmap(target, compositingSurface.staticCast&lt;<a class="code" href="class_picto_1_1_pixmap_compositing_surface.html">PixmapCompositingSurface</a>&gt;()-&gt;<a class="code" href="class_picto_1_1_pixmap_compositing_surface.html#a18cfc332c82987d3143ec2d71ad60932">getPixmap</a>(), source);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">  114</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">PixmapVisualTarget::present</a>()</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ &amp; 1;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        painter.drawPixmap(location, compositingSurface.staticCast&lt;<a class="code" href="class_picto_1_1_pixmap_compositing_surface.html">PixmapCompositingSurface</a>&gt;()-&gt;<a class="code" href="class_picto_1_1_pixmap_compositing_surface.html#a18cfc332c82987d3143ec2d71ad60932">getPixmap</a>());</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">  112</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">PixmapVisualTarget::present</a>()</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;{</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    surfaceActingAsBackBuffer_ = ~surfaceActingAsBackBuffer_ &amp; 1;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_].fill(QColor(0,0,0,0));</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="comment">//Set first phosphor time !! THIS IS NOT ACCURATE YET</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">setFirstPhosphorTime</a>();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    repaint();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">  126</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">PixmapVisualTarget::drawNonExperimentText</a>(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    QPainter painter(&amp;pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_]);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    painter.setPen(color);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    painter.setFont(font);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    painter.drawText(rect, alignment, text);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">  135</a></span>&#160;QPoint <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">PixmapVisualTarget::viewportPointToTargetPoint</a>(QPoint viewportPoint)</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    Q_ASSERT(frameSynchedZoom_ &gt; 0);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordtype">float</span> x = (viewportPoint.x()-(width_-(width_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">float</span> y = (viewportPoint.y()-(height_-(height_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> QPoint(x,y);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">  143</a></span>&#160;QPoint <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">PixmapVisualTarget::targetPointToViewportPoint</a>(QPoint targetPoint)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;{</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">float</span> x = (frameSynchedZoom_*targetPoint.x())+(width_-(width_ *frameSynchedZoom_))/2.0;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">float</span> y = (frameSynchedZoom_*targetPoint.y())+(height_-(height_*frameSynchedZoom_))/2.0;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordflow">return</span> QPoint(x,y);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">//Set first phosphor time !! THIS IS NOT ACCURATE YET</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">setFirstPhosphorTime</a>();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    repaint();</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">  124</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">PixmapVisualTarget::drawNonExperimentText</a>(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;{</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    QPainter painter(&amp;pixmapCompositingSurfaces_[surfaceActingAsBackBuffer_]);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    painter.setPen(color);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    painter.setFont(font);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    painter.drawText(rect, alignment, text);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">  133</a></span>&#160;QPoint <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">PixmapVisualTarget::viewportPointToTargetPoint</a>(QPoint viewportPoint)</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;{</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    Q_ASSERT(frameSynchedZoom_ &gt; 0);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">float</span> x = (viewportPoint.x()-(width_-(width_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordtype">float</span> y = (viewportPoint.y()-(height_-(height_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">return</span> QPoint(x,y);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">  141</a></span>&#160;QPoint <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">PixmapVisualTarget::targetPointToViewportPoint</a>(QPoint targetPoint)</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;{</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordtype">float</span> x = (frameSynchedZoom_*targetPoint.x())+(width_-(width_ *frameSynchedZoom_))/2.0;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">float</span> y = (frameSynchedZoom_*targetPoint.y())+(height_-(height_*frameSynchedZoom_))/2.0;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">return</span> QPoint(x,y);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;}</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">  151</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">PixmapVisualTarget::clear</a>()</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;{</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ &amp; 1].fill(QColor(0,0,0,0));</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="comment">//Set first phosphor time !! THIS IS NOT ACCURATE YET</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <a class="code" href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">setFirstPhosphorTime</a>();</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    repaint();</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">void</span> PixmapVisualTarget::resizeEvent(QResizeEvent *event)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="comment">//QWidget::resizeEvent(event);</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    targetWidth_ = <span class="keyword">event</span>-&gt;size().width();</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    targetHeight_ = <span class="keyword">event</span>-&gt;size().height();</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordflow">if</span> (3 * targetWidth_ &gt; 4 * targetHeight_)</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        targetWidth_ = int(4.0 * targetHeight_ / 3.0);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        widthOffset_ = (<span class="keyword">event</span>-&gt;size().width() - targetWidth_)/2;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        heightOffset_ = 0;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    {</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        targetHeight_ = int(3.0 * targetWidth_ / 4.0);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        widthOffset_ = 0;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        heightOffset_ = (<span class="keyword">event</span>-&gt;size().height() - targetHeight_)/2;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">  149</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">PixmapVisualTarget::clear</a>()</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    pixmapCompositingSurfaces_[~surfaceActingAsBackBuffer_ &amp; 1].fill(QColor(0,0,0,0));</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="comment">//Set first phosphor time !! THIS IS NOT ACCURATE YET</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <a class="code" href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">setFirstPhosphorTime</a>();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    repaint();</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keywordtype">void</span> PixmapVisualTarget::resizeEvent(QResizeEvent *event)</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;{</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="comment">//QWidget::resizeEvent(event);</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    targetWidth_ = <span class="keyword">event</span>-&gt;size().width();</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    targetHeight_ = <span class="keyword">event</span>-&gt;size().height();</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">if</span> (3 * targetWidth_ &gt; 4 * targetHeight_)</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        targetWidth_ = int(4.0 * targetHeight_ / 3.0);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        widthOffset_ = (<span class="keyword">event</span>-&gt;size().width() - targetWidth_)/2;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        heightOffset_ = 0;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        targetHeight_ = int(3.0 * targetWidth_ / 4.0);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        widthOffset_ = 0;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        heightOffset_ = (<span class="keyword">event</span>-&gt;size().height() - targetHeight_)/2;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;}</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="ttc" id="class_picto_1_1_visual_target_html"><div class="ttname"><a href="class_picto_1_1_visual_target.html">Picto::VisualTarget</a></div><div class="ttdoc">The surface on which all graphics are rendered. </div><div class="ttdef"><b>Definition:</b> <a href="_visual_target_8h_source.html#l00056">VisualTarget.h:56</a></div></div>
 <div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a307b27dc2b7556abbacd067ac66d5750"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a307b27dc2b7556abbacd067ac66d5750">Picto::PixmapVisualTarget::getTypeName</a></div><div class="ttdeci">QString getTypeName()</div><div class="ttdoc">Returns the name of this type of CompositingSurface. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00084">PixmapVisualTarget.cpp:84</a></div></div>
 <div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a22447d36b31e40ecb6f5ad13f20a5eb4"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a22447d36b31e40ecb6f5ad13f20a5eb4">Picto::PixmapVisualTarget::generateCompositingSurface</a></div><div class="ttdeci">QSharedPointer&lt; CompositingSurface &gt; generateCompositingSurface()</div><div class="ttdoc">Creates and returns a new CompositingSurface that can be used to translate a QImage into a graphical ...</div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00078">PixmapVisualTarget.cpp:78</a></div></div>
-<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a8f3cb13a38045e2730ac4da01990dd8a"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">Picto::PixmapVisualTarget::viewportPointToTargetPoint</a></div><div class="ttdeci">virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint)</div><div class="ttdoc">Converts a point on the viewport to a point in the VisualTarget itself. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00135">PixmapVisualTarget.cpp:135</a></div></div>
-<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_afa97c03ab5b75d3d3789313f08329062"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">Picto::PixmapVisualTarget::drawNonExperimentText</a></div><div class="ttdeci">void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)</div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00126">PixmapVisualTarget.cpp:126</a></div></div>
+<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a8f3cb13a38045e2730ac4da01990dd8a"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">Picto::PixmapVisualTarget::viewportPointToTargetPoint</a></div><div class="ttdeci">virtual QPoint viewportPointToTargetPoint(QPoint viewportPoint)</div><div class="ttdoc">Converts a point on the viewport to a point in the VisualTarget itself. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00133">PixmapVisualTarget.cpp:133</a></div></div>
+<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_afa97c03ab5b75d3d3789313f08329062"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#afa97c03ab5b75d3d3789313f08329062">Picto::PixmapVisualTarget::drawNonExperimentText</a></div><div class="ttdeci">void drawNonExperimentText(QFont font, QColor color, QRect rect, Qt::AlignmentFlag alignment, QString text)</div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00124">PixmapVisualTarget.cpp:124</a></div></div>
 <div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a3d7badfb82ab0b409950197f2284a129"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a3d7badfb82ab0b409950197f2284a129">Picto::PixmapVisualTarget::PixmapVisualTarget</a></div><div class="ttdeci">PixmapVisualTarget(bool _bWindowed=false, int _width=800, int _height=600)</div><div class="ttdoc">Constructs a new PixmapVisualTarget. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00015">PixmapVisualTarget.cpp:15</a></div></div>
-<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a2546a9881bd5ec96685d7e8c09e0f7a8"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">Picto::PixmapVisualTarget::present</a></div><div class="ttdeci">void present()</div><div class="ttdoc">Renders the latest frame to the display. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00114">PixmapVisualTarget.cpp:114</a></div></div>
+<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a2546a9881bd5ec96685d7e8c09e0f7a8"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a2546a9881bd5ec96685d7e8c09e0f7a8">Picto::PixmapVisualTarget::present</a></div><div class="ttdeci">void present()</div><div class="ttdoc">Renders the latest frame to the display. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00112">PixmapVisualTarget.cpp:112</a></div></div>
 <div class="ttc" id="class_picto_1_1_visual_target_html_abd0a5d10da5c642cb6e31f39635628ed"><div class="ttname"><a href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">Picto::VisualTarget::setFirstPhosphorTime</a></div><div class="ttdeci">void setFirstPhosphorTime()</div><div class="ttdoc">Stamps the current time as the latest first phosphor time and emits a presented() signal with that ti...</div><div class="ttdef"><b>Definition:</b> <a href="_visual_target_8cpp_source.html#l00087">VisualTarget.cpp:87</a></div></div>
 <div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a4b76078115a103d4f1fda8ae8a9812c3"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a4b76078115a103d4f1fda8ae8a9812c3">Picto::PixmapVisualTarget::paint</a></div><div class="ttdeci">void paint(QPaintDevice *widget)</div><div class="ttdoc">Draws the current frame onto the input widget. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00066">PixmapVisualTarget.cpp:66</a></div></div>
 <div class="ttc" id="class_picto_1_1_pixmap_compositing_surface_html"><div class="ttname"><a href="class_picto_1_1_pixmap_compositing_surface.html">Picto::PixmapCompositingSurface</a></div><div class="ttdoc">A compositing surface based on an underlying QPixmap data structure. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_compositing_surface_8h_source.html#l00022">PixmapCompositingSurface.h:22</a></div></div>
-<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a7c69972fed4a422d1d84dc57c5aa1fef"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">Picto::PixmapVisualTarget::targetPointToViewportPoint</a></div><div class="ttdeci">virtual QPoint targetPointToViewportPoint(QPoint targetPoint)</div><div class="ttdoc">Converts a point in the VisualTarget to a point on the Viewport window. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00143">PixmapVisualTarget.cpp:143</a></div></div>
+<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a7c69972fed4a422d1d84dc57c5aa1fef"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a7c69972fed4a422d1d84dc57c5aa1fef">Picto::PixmapVisualTarget::targetPointToViewportPoint</a></div><div class="ttdeci">virtual QPoint targetPointToViewportPoint(QPoint targetPoint)</div><div class="ttdoc">Converts a point in the VisualTarget to a point on the Viewport window. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00141">PixmapVisualTarget.cpp:141</a></div></div>
 <div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a85cadece274f7f94bd7f36e7fe2f34b0"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a85cadece274f7f94bd7f36e7fe2f34b0">Picto::PixmapVisualTarget::draw</a></div><div class="ttdeci">void draw(QPoint location, QPoint compositingSurfaceOffset, QSharedPointer&lt; CompositingSurface &gt; compositingSurface)</div><div class="ttdoc">Draws the compositing surface onto the visual target. The compositingSurfaceOffset is the offset at w...</div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00089">PixmapVisualTarget.cpp:89</a></div></div>
 <div class="ttc" id="class_picto_1_1_pixmap_compositing_surface_html_a18cfc332c82987d3143ec2d71ad60932"><div class="ttname"><a href="class_picto_1_1_pixmap_compositing_surface.html#a18cfc332c82987d3143ec2d71ad60932">Picto::PixmapCompositingSurface::getPixmap</a></div><div class="ttdeci">QPixmap getPixmap()</div><div class="ttdoc">Returns the pixmap that was created in this CompositingSurface based on the QImage input in convertIm...</div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_compositing_surface_8cpp_source.html#l00022">PixmapCompositingSurface.cpp:22</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a0f4e934a0efcc50c90718a24157ecd2f"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">Picto::PixmapVisualTarget::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears the rendering buffer and display. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00151">PixmapVisualTarget.cpp:151</a></div></div>
+<div class="ttc" id="struct_picto_1_1_pixmap_visual_target_html_a0f4e934a0efcc50c90718a24157ecd2f"><div class="ttname"><a href="struct_picto_1_1_pixmap_visual_target.html#a0f4e934a0efcc50c90718a24157ecd2f">Picto::PixmapVisualTarget::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears the rendering buffer and display. </div><div class="ttdef"><b>Definition:</b> <a href="_pixmap_visual_target_8cpp_source.html#l00149">PixmapVisualTarget.cpp:149</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

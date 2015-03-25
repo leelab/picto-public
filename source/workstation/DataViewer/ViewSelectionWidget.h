@@ -55,6 +55,7 @@ public:
 	ViewSelectionWidget();
 	virtual ~ViewSelectionWidget();
 
+	bool setDefaultView(DataViewWidget *pDefaultView, int x, int y, ViewSize eSize);
 	void registerView(DataViewWidget *pNewView);
 	void connectToViewerLayout(DataViewLayout *pLayout);
 signals:
@@ -74,7 +75,6 @@ private slots:
 	void selectedPlotIndexChanged(int selectedIndex);
 	void selectedSizeIndexChanged(int selectedIndex);
 	void checkClicked(bool);
-	void verifyNewWidgetSize(DataViewWidget *pWidget);
 	bool isWidgetPosValid(DataViewWidget *pWidget, int testX, int testY);
 protected:
 	QVector<DataViewWidget*> dataViewWidgets_;

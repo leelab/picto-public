@@ -64,3 +64,20 @@ void DataViewWidget::getPosition(int &xPos, int &yPos)
 	xPos = xPos_;
 	yPos = yPos_;
 }
+
+
+/*! \brief Returns whether or not the indicated position is occupied by this widget.
+ *	\note This does not check whether or not the current widget is set to be displayed.
+*/
+bool DataViewWidget::containsPosition(int xPos, int yPos)
+{
+	if (xPos >= xPos_ && xPos < xPos_ + lastViewSize_)
+	{
+		if (yPos >= yPos_ && yPos < yPos_ + lastViewSize_)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}

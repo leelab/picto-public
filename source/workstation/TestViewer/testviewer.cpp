@@ -24,6 +24,11 @@
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/compositor/OutputSignalWidget.h"
+
+#include "../DataViewer/DataViewLayout.h"
+#include "../DataViewer/DataViewWidget.h"
+#include "../DataViewer/ViewSelectionWidget.h"
+
 #include "../../common/memleakdetect.h"
 
 
@@ -259,8 +264,11 @@ void TestViewer::setupUi()
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
 
+	DataViewLayout *dataViewLayout = new DataViewLayout();
+
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	stimulusLayout->addWidget(visualTargetHost_);
+	stimulusLayout->addLayout(dataViewLayout);
+
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
@@ -276,17 +284,28 @@ void TestViewer::setupUi()
 	rightTabs->addTab(analysisSelector_,"Select Analyses");
 	rightTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
+
+	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
+	viewSelectionWidget->registerView(taskView);
+	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget->setDefaultView(taskView,0,0,VIEW_SIZE_3x3);
+
+
+	QVBoxLayout *leftToolFrame = new QVBoxLayout;
+	leftToolFrame->addWidget(viewSelectionWidget, 0);
+	leftToolFrame->addWidget(propertyFrame_, 1);
+	
+
 	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addWidget(propertyFrame_,Qt::AlignTop);
-	operationLayout->addLayout(stimulusLayout);
-	operationLayout->addWidget(rightTabs);
-	operationLayout->setStretch(0,0);
+	operationLayout->addLayout(leftToolFrame,0);
+	operationLayout->addLayout(stimulusLayout,3);
+	operationLayout->addWidget(rightTabs,1);
 	operationLayout->addStretch();
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
-	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(operationLayout);
-	mainLayout->addStretch(1);
+	mainLayout->addLayout(toolbarLayout,0);
+	mainLayout->addLayout(operationLayout,1);
 	setLayout(mainLayout);
 
 }

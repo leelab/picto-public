@@ -95,12 +95,17 @@ void ViewSelectionWidget::selectedSizeIndexChanged(int)
 
 	pCurrentView->setCurrentSize((ViewSize)sizeSelection_->currentData().toInt());
 
-	if (pCurrentView->getDisplayed())
-	{
-		verifyNewWidgetSize(pCurrentView);
+	int x, y;
+	pCurrentView->getPosition(x, y);
 
-		int x, y;
-		pCurrentView->getPosition(x, y);
+	if (!isWidgetPosValid(pCurrentView, x, y))
+	{
+		pCurrentView->setDisplayed(false);
+		emit(widgetRemoved(pCurrentView));
+		pCurrentView->hide();
+	}
+	else if (pCurrentView->getDisplayed())
+	{
 		emit(widgetRemoved(pCurrentView));
 		emit(widgetAdded(pCurrentView, x, y, pCurrentView->getCurrentSize()));
 		pCurrentView->show();
@@ -121,20 +126,20 @@ void ViewSelectionWidget::checkClicked(bool)
 	}
 }
 
-/*! \brief Callback when a checkbox is clicked.
+/*! \brief Callback when a checkbox is clicked.  This updates the associated values about the position in the DataViewWidget,
+ *	and the signal emitted removes and re-adds the widget to the connected DataViewLayout.  Finally, the current statuses of
+ *	the Checkboxes and ComboBoxes are reset to their current values.
 */
 void ViewSelectionWidget::checkboxChanged(bool bNewValue, int x, int y)
 {
 	//The current widget
 	DataViewWidget *pCurrentView = dataViewWidgets_[plotSelection_->currentData().toInt()];
 
-	QObject::sender();
-
 	if (bNewValue)
 	{
-		if (!isWidgetPosValid(pCurrentView, x, y))
+		while (!isWidgetPosValid(pCurrentView, x, y) && pCurrentView->getCurrentSize() > VIEW_SIZE_1x1)
 		{
-			pCurrentView->setCurrentSize(VIEW_SIZE_1x1);
+			pCurrentView->setCurrentSize((ViewSize)(pCurrentView->getCurrentSize() - 1));
 		}
 
 		pCurrentView->setPosition(x, y);
@@ -183,41 +188,46 @@ void ViewSelectionWidget::updateSizeAndPositionOptions()
 		for (int y = 0; y < VIEWGRIDHEIGHT; y++)
 		{
 			positionCheckBoxes_[x][y]->setDisabled(false);
-			positionCheckBoxes_[x][y]->setChecked(false);
+			positionCheckBoxes_[x][y]->setCheckState(Qt::Unchecked);
 		}
 	}
 
-	//Update position checkboxes to reflect current options
-	foreach(DataViewWidget *pWidget, dataViewWidgets_)
-	{
-		if (pWidget->getDisplayed())
-		{
-			int xPos, yPos;
-			pWidget->getPosition(xPos, yPos);
+	int xCurr, yCurr;
+	pCurrentView->getPosition(xCurr, yCurr);
 
-			if (pWidget != pCurrentView)
+	//Update position checkboxes to reflect current options
+	for (int x = 0; x < VIEWGRIDWIDTH; x++)
+	{
+		for (int y = 0; y < VIEWGRIDHEIGHT; y++)
+		{
+			foreach(DataViewWidget *pWidget, dataViewWidgets_)
 			{
-				for (int x = xPos; x < xPos + pWidget->getCurrentSize(); x++)
+				if (pWidget->getDisplayed())
 				{
-					for (int y = yPos; y < yPos + pWidget->getCurrentSize(); y++)
+					if (pWidget != pCurrentView)
 					{
-						Q_ASSERT(x < VIEWGRIDWIDTH);
-						Q_ASSERT(y < VIEWGRIDHEIGHT);
-						positionCheckBoxes_[x][y]->setDisabled(true);
-						positionCheckBoxes_[x][y]->setChecked(false);
+						if (pWidget->containsPosition(x, y))
+						{
+							positionCheckBoxes_[x][y]->setDisabled(true);
+							positionCheckBoxes_[x][y]->setCheckState(Qt::Unchecked);
+							break;  //break out of foreach loop
+						}
 					}
-				}
-			}
-			else
-			{
-				for (int x = xPos; x < xPos + pWidget->getCurrentSize(); x++)
-				{
-					for (int y = yPos; y < yPos + pWidget->getCurrentSize(); y++)
+					else
 					{
-						Q_ASSERT(x < VIEWGRIDWIDTH);
-						Q_ASSERT(y < VIEWGRIDHEIGHT);
-						positionCheckBoxes_[x][y]->setDisabled((x!=xPos)||(y!=yPos));
-						positionCheckBoxes_[x][y]->setChecked(true);
+						if (pWidget->containsPosition(x, y))
+						{
+							int xPos, yPos;
+							pWidget->getPosition(xPos, yPos);
+							if (x == xPos && y == yPos)
+							{
+								positionCheckBoxes_[x][y]->setCheckState(Qt::Checked);
+							}
+							else
+							{
+								positionCheckBoxes_[x][y]->setCheckState(Qt::PartiallyChecked);
+							}
+						}
 					}
 				}
 			}
@@ -242,26 +252,10 @@ void ViewSelectionWidget::updateSizeAndPositionOptions()
 	}
 }
 
-void ViewSelectionWidget::verifyNewWidgetSize(DataViewWidget *pTestWidget)
-{
-	int x, y;
-	pTestWidget->getPosition(x, y);
-	if (!isWidgetPosValid(pTestWidget, x, y))
-	{
-		pTestWidget->setDisplayed(false);
-	}
-}
-
 /*! \brief Runs through widgets and checks to see if the new widget size is valid.
  */
 bool ViewSelectionWidget::isWidgetPosValid(DataViewWidget *pTestWidget, int testX, int testY)
 {
-	if (!pTestWidget->getDisplayed())
-	{
-		//A hidden widget will always be valid.
-		return true;
-	}
-
 	bool positionFull[VIEWGRIDWIDTH][VIEWGRIDHEIGHT] = { false };
 
 	foreach(DataViewWidget *pWidget, dataViewWidgets_)
@@ -312,4 +306,31 @@ void ViewSelectionWidget::connectToViewerLayout(DataViewLayout *pLayout)
 	connect(this, SIGNAL(widgetRemoved(QWidget*)), pLayout, SLOT(removeWidgetSlot(QWidget*)));
 	connect(this, SIGNAL(widgetAdded(QWidget*, int, int, ViewSize)), pLayout, SLOT(addWidgetSlot(QWidget*, int, int, ViewSize)));
 
+}
+
+/*! \brief Sets a default widget to be shown.
+*/
+bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, int y, ViewSize eSize)
+{
+	Q_ASSERT(pDefaultView);
+
+	//Register the view if it's not already
+	registerView(pDefaultView);
+	pDefaultView->setCurrentSize(eSize);
+
+	//Return false if we can't set the view
+	if (!isWidgetPosValid(pDefaultView, x, y))
+	{
+		return false;
+	}
+
+	pDefaultView->setPosition(x, y);
+	pDefaultView->setDisplayed(true);
+	emit(widgetRemoved(pDefaultView));
+	emit(widgetAdded(pDefaultView, x, y, pDefaultView->getCurrentSize()));
+	pDefaultView->show();
+
+	updateSizeAndPositionOptions();
+
+	return true;
 }
