@@ -243,9 +243,7 @@ void ProgressWidget::updateHighlights(bool forceUpdate)
 		return;
 	frameTimer_.restart();
 	//Use styles to create highlight bar in widget
-	QString styleUpdate = QString(	"QSlider::groove:horizontal { \
-										background: #fff, stop: 1 #fff); \
-									}");
+	QString styleUpdate = QString("QSlider::groove:horizontal {background: #fff, stop:1 #fff;}");
 	if(progressToSlider(max_))
 	{	
 		//Build list of necessary color stops to include in style string

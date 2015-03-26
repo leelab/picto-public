@@ -108,7 +108,6 @@ void ViewSelectionWidget::selectedSizeIndexChanged(int)
 	{
 		emit(widgetRemoved(pCurrentView));
 		emit(widgetAdded(pCurrentView, x, y, pCurrentView->getCurrentSize()));
-		pCurrentView->show();
 	}
 
 	updateSizeAndPositionOptions();
@@ -195,38 +194,44 @@ void ViewSelectionWidget::updateSizeAndPositionOptions()
 	int xCurr, yCurr;
 	pCurrentView->getPosition(xCurr, yCurr);
 
+
 	//Update position checkboxes to reflect current options
-	for (int x = 0; x < VIEWGRIDWIDTH; x++)
+	foreach(DataViewWidget *pWidget, dataViewWidgets_)
 	{
-		for (int y = 0; y < VIEWGRIDHEIGHT; y++)
+		if (pWidget->getDisplayed())
 		{
-			foreach(DataViewWidget *pWidget, dataViewWidgets_)
+			int xPos, yPos;
+			pWidget->getPosition(xPos, yPos);
+
+			if (pWidget != pCurrentView)
 			{
-				if (pWidget->getDisplayed())
+				for (int x = xPos; x < xPos + pWidget->getCurrentSize(); x++)
 				{
-					if (pWidget != pCurrentView)
+					for (int y = yPos; y < yPos + pWidget->getCurrentSize(); y++)
 					{
-						if (pWidget->containsPosition(x, y))
-						{
-							positionCheckBoxes_[x][y]->setDisabled(true);
-							positionCheckBoxes_[x][y]->setCheckState(Qt::Unchecked);
-							break;  //break out of foreach loop
-						}
+						Q_ASSERT(x < VIEWGRIDWIDTH);
+						Q_ASSERT(y < VIEWGRIDHEIGHT);
+						positionCheckBoxes_[x][y]->setDisabled(true);
+						positionCheckBoxes_[x][y]->setCheckState(Qt::Unchecked);
 					}
-					else
+				}
+			}
+			else
+			{
+				for (int x = xPos; x < xPos + pWidget->getCurrentSize(); x++)
+				{
+					for (int y = yPos; y < yPos + pWidget->getCurrentSize(); y++)
 					{
-						if (pWidget->containsPosition(x, y))
+						Q_ASSERT(x < VIEWGRIDWIDTH);
+						Q_ASSERT(y < VIEWGRIDHEIGHT);
+
+						if (x == xPos && y == yPos)
 						{
-							int xPos, yPos;
-							pWidget->getPosition(xPos, yPos);
-							if (x == xPos && y == yPos)
-							{
-								positionCheckBoxes_[x][y]->setCheckState(Qt::Checked);
-							}
-							else
-							{
-								positionCheckBoxes_[x][y]->setCheckState(Qt::PartiallyChecked);
-							}
+							positionCheckBoxes_[x][y]->setCheckState(Qt::Checked);
+						}
+						else
+						{
+							positionCheckBoxes_[x][y]->setCheckState(Qt::PartiallyChecked);
 						}
 					}
 				}
@@ -328,7 +333,6 @@ bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, in
 	pDefaultView->setDisplayed(true);
 	emit(widgetRemoved(pDefaultView));
 	emit(widgetAdded(pDefaultView, x, y, pDefaultView->getCurrentSize()));
-	pDefaultView->show();
 
 	updateSizeAndPositionOptions();
 
