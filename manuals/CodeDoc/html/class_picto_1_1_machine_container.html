@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_machine_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::MachineContainer Class Reference</div>  </div>
@@ -641,6 +644,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a396cc340c10351bb32a67c30353b3f38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a396cc340c10351bb32a67c30353b3f38"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_machine_container.html#a396cc340c10351bb32a67c30353b3f38">childWasAdded</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
+<tr class="memdesc:a396cc340c10351bb32a67c30353b3f38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a child is added to this <a class="el" href="class_picto_1_1_machine_container.html" title="A base class for everything that can contain transitions and other elements. ">MachineContainer</a>. Calls <a class="el" href="class_picto_1_1_machine_container.html#a67a3043bdc6f4c04140f2e4fce038441" title="Repopulates all internal lists (element and transition lists) according to the current child elements...">updateListsFromChildren()</a> to update all of the various internal lists accordingly. <br /></td></tr>
+<tr class="separator:a396cc340c10351bb32a67c30353b3f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67a3043bdc6f4c04140f2e4fce038441"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67a3043bdc6f4c04140f2e4fce038441"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_machine_container.html#a67a3043bdc6f4c04140f2e4fce038441">updateListsFromChildren</a> ()</td></tr>
+<tr class="memdesc:a67a3043bdc6f4c04140f2e4fce038441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repopulates all internal lists (element and transition lists) according to the current child elements and their types. <br /></td></tr>
+<tr class="separator:a67a3043bdc6f4c04140f2e4fce038441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:abba6b4331808eb61144c38dcec416af7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_machine_container.html#abba6b4331808eb61144c38dcec416af7">getTransitionAssets</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt; transition, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;source, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;sourceResult, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;destination)</td></tr>
+<tr class="memdesc:abba6b4331808eb61144c38dcec416af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the source, sourceResult, and destination <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a> objects that are rerferenced in the input transition.  <a href="#abba6b4331808eb61144c38dcec416af7">More...</a><br /></td></tr>
+<tr class="separator:abba6b4331808eb61144c38dcec416af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab1b50e65718f065e7a1ccbdba15ba398"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1b50e65718f065e7a1ccbdba15ba398"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>transitionTag_</b></td></tr>
+<tr class="separator:ab1b50e65718f065e7a1ccbdba15ba398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef5333cbe487a0e4028a719dedc9f73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afef5333cbe487a0e4028a719dedc9f73"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>elementTag_</b></td></tr>
+<tr class="separator:afef5333cbe487a0e4028a719dedc9f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e55f7ac5b52905f7a83a8b1ecda6e45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e55f7ac5b52905f7a83a8b1ecda6e45"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>addingTransition_</b></td></tr>
+<tr class="separator:a2e55f7ac5b52905f7a83a8b1ecda6e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
@@ -737,6 +769,57 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abba6b4331808eb61144c38dcec416af7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MachineContainer::getTransitionAssets </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt;&#160;</td>
+          <td class="paramname"><em>transition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sourceResult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the source, sourceResult, and destination <a class="el" href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. ">ResultContainer</a> objects that are rerferenced in the input transition. </p>
+<p>This function looks up these <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>'s according to the names stored in the <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a>. If there is some problem in finding the Assets due to invalid names or ambiguity, the function returns false. Otherwise, the function returns true and the output data is avaiable in the reference parameters. </p>
+
+<p>Definition at line <a class="el" href="_machine_container_8cpp_source.html#l00305">305</a> of file <a class="el" href="_machine_container_8cpp_source.html">MachineContainer.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a36591811c50d2086866100c246d751d0"></a>
 <div class="memitem">
 <div class="memproto">

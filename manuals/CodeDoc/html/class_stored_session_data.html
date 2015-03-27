@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_stored_session_data-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StoredSessionData Class Reference</div>  </div>
@@ -109,6 +111,11 @@ Inheritance diagram for StoredSessionData:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_stored_session_data_1_1_table_info.html">TableInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad5633aa27b748431e835a6be90c04238"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5633aa27b748431e835a6be90c04238"></a>
@@ -176,6 +183,30 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a72da83d35fc78270dbfef9ba9a2b2b4c inherit pro_methods_class_session_data"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input QList of QVariantList data entries of the input type to this <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object.  <a href="#a72da83d35fc78270dbfef9ba9a2b2b4c">More...</a><br /></td></tr>
 <tr class="separator:a72da83d35fc78270dbfef9ba9a2b2b4c inherit pro_methods_class_session_data"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a89014048f7a30e42eded903f45eb3d55"><td class="memItemLeft" align="right" valign="top">QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_stored_session_data.html#a89014048f7a30e42eded903f45eb3d55">getSessionDb</a> ()</td></tr>
+<tr class="memdesc:a89014048f7a30e42eded903f45eb3d55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a thread-specific connection to the Session database.  <a href="#a89014048f7a30e42eded903f45eb3d55">More...</a><br /></td></tr>
+<tr class="separator:a89014048f7a30e42eded903f45eb3d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afe1650cc20d84dacc1b6165030a250a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe1650cc20d84dacc1b6165030a250a8"></a>
+QHash&lt; int, <a class="el" href="struct_stored_session_data_1_1_table_info.html">TableInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableByType_</b></td></tr>
+<tr class="separator:afe1650cc20d84dacc1b6165030a250a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d98d8678857c41bf399131df8cfbffa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d98d8678857c41bf399131df8cfbffa"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>sessionId_</b></td></tr>
+<tr class="separator:a3d98d8678857c41bf399131df8cfbffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad556a1c990ee0f787847dc55098084a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad556a1c990ee0f787847dc55098084a1"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>openDatabaseConnections_</b></td></tr>
+<tr class="separator:ad556a1c990ee0f787847dc55098084a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa3d2669d92027c4fe3b350e961f0d52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa3d2669d92027c4fe3b350e961f0d52"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>baseSessionDbConnection_</b></td></tr>
+<tr class="separator:afa3d2669d92027c4fe3b350e961f0d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b63a5f8eb854862831a83f9142bc08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79b63a5f8eb854862831a83f9142bc08"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:a79b63a5f8eb854862831a83f9142bc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_class_session_data"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_session_data')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_session_data.html">SessionData</a></td></tr>
@@ -240,6 +271,37 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Reimplemented from <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f">SessionData</a>.</p>
 
 <p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00208">208</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a89014048f7a30e42eded903f45eb3d55"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSqlDatabase StoredSessionData::getSessionDb </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a thread-specific connection to the Session database. </p>
+<p>The session database has threading issues because of the following:</p><ol type="1">
+<li>The session database may be accessed from different threads (remember, the commands coming into the server are processed by different threads)</li>
+<li>File Databases can be used from multiple threads, but QSqlDatabase database connections cannot be shared across threads. The current solution to these problems is to create a unique database connection for each thread. If you can figure out a cleaner way to do this go for it. </li>
+</ol>
+
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00288">288</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +398,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </div><div class="memdoc">
 
 <p>Sets the SessionId of the session that will use this <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> object. </p>
-<p>The SessionId is used in generating uniquely named database connections when multiple threads access this database. </p><dl class="section see"><dt>See also</dt><dd>getSessionDb() </dd></dl>
+<p>The SessionId is used in generating uniquely named database connections when multiple threads access this database. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_stored_session_data.html#a89014048f7a30e42eded903f45eb3d55" title="Generates a thread-specific connection to the Session database. ">getSessionDb()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00081">81</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 

@@ -94,6 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_file_session_loader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::FileSessionLoader Class Reference</div>  </div>
@@ -118,6 +121,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_file_session_loader_1_1_run_data.html">RunData</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores data about a particular <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Run.  <a href="struct_picto_1_1_file_session_loader_1_1_run_data.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_file_session_loader_1_1_sig_data.html">SigData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
@@ -139,7 +144,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a6a9035fea225651a072550cf6e315b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the file path to the session file that will be loaded into the <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>. <br /></td></tr>
 <tr class="separator:a6a9035fea225651a072550cf6e315b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9186678a41bd08b7ec73502537a53b4"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#ab9186678a41bd08b7ec73502537a53b4">getDesignRoot</a> ()</td></tr>
-<tr class="memdesc:ab9186678a41bd08b7ec73502537a53b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> for the Design loaded in loadDesignDefinition() when <a class="el" href="class_picto_1_1_file_session_loader.html#a6a9035fea225651a072550cf6e315b9c" title="Sets the file path to the session file that will be loaded into the SessionState. ...">setFile()</a> was called.  <a href="#ab9186678a41bd08b7ec73502537a53b4">More...</a><br /></td></tr>
+<tr class="memdesc:ab9186678a41bd08b7ec73502537a53b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> for the Design loaded in <a class="el" href="class_picto_1_1_file_session_loader.html#a7f60a3615da61586db2afb05a7728554" title="Loads the DesignRoot used in the session file so that it can be returned from getDesignRoot(). ">loadDesignDefinition()</a> when <a class="el" href="class_picto_1_1_file_session_loader.html#a6a9035fea225651a072550cf6e315b9c" title="Sets the file path to the session file that will be loaded into the SessionState. ...">setFile()</a> was called.  <a href="#ab9186678a41bd08b7ec73502537a53b4">More...</a><br /></td></tr>
 <tr class="separator:ab9186678a41bd08b7ec73502537a53b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a594062ade9010399ea05e273387ef9d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a594062ade9010399ea05e273387ef9d9"></a>
 QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#a594062ade9010399ea05e273387ef9d9">getRunNames</a> ()</td></tr>
@@ -172,6 +177,52 @@ Protected Member Functions</h2></td></tr>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#a7f02445db069cb6c8b1fb5110426cbd3">loadRunData</a> ()</td></tr>
 <tr class="memdesc:a7f02445db069cb6c8b1fb5110426cbd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads data about this sessions runs into this classes runs_ data structure for report in functions like <a class="el" href="class_picto_1_1_file_session_loader.html#a594062ade9010399ea05e273387ef9d9" title="Returns a list of names of runs that were loaded from the session file. ">getRunNames()</a>, <a class="el" href="class_picto_1_1_file_session_loader.html#a52ffa900efd0cece36ec15bf6e77840c" title="Returns a list of the notes saved by the operator for runs that were loaded from the session file...">getRunNotes()</a>, etc. <br /></td></tr>
 <tr class="separator:a7f02445db069cb6c8b1fb5110426cbd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a3e5341db5c6c4ac6cb950c2356bf96ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#a3e5341db5c6c4ac6cb950c2356bf96ae">getSignalInfo</a> ()</td></tr>
+<tr class="memdesc:a3e5341db5c6c4ac6cb950c2356bf96ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all information about which signals were used in the session and sets that data into the <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>.  <a href="#a3e5341db5c6c4ac6cb950c2356bf96ae">More...</a><br /></td></tr>
+<tr class="separator:a3e5341db5c6c4ac6cb950c2356bf96ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f60a3615da61586db2afb05a7728554"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#a7f60a3615da61586db2afb05a7728554">loadDesignDefinition</a> ()</td></tr>
+<tr class="memdesc:a7f60a3615da61586db2afb05a7728554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> used in the session file so that it can be returned from <a class="el" href="class_picto_1_1_file_session_loader.html#ab9186678a41bd08b7ec73502537a53b4" title="Returns the DesignRoot for the Design loaded in loadDesignDefinition() when setFile() was called...">getDesignRoot()</a>.  <a href="#a7f60a3615da61586db2afb05a7728554">More...</a><br /></td></tr>
+<tr class="separator:a7f60a3615da61586db2afb05a7728554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c095ba0c4cced04d3da357c445e86b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47c095ba0c4cced04d3da357c445e86b"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_session_loader.html#a47c095ba0c4cced04d3da357c445e86b">getDatabase</a> ()</td></tr>
+<tr class="memdesc:a47c095ba0c4cced04d3da357c445e86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a QSqlDatabase object that can be used to query data from the Session file. <br /></td></tr>
+<tr class="separator:a47c095ba0c4cced04d3da357c445e86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af26a93a2fcd20acd18bfb5869c8a918c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af26a93a2fcd20acd18bfb5869c8a918c"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>connectionName_</b></td></tr>
+<tr class="separator:af26a93a2fcd20acd18bfb5869c8a918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88bd699ddb990c108e51a4dff5d47477"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88bd699ddb990c108e51a4dff5d47477"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_session_state.html">SessionState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sessionState_</b></td></tr>
+<tr class="separator:a88bd699ddb990c108e51a4dff5d47477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecab3f32b946b7092981ad1a3a74296c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecab3f32b946b7092981ad1a3a74296c"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_file_session_loader_1_1_run_data.html">RunData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>runs_</b></td></tr>
+<tr class="separator:aecab3f32b946b7092981ad1a3a74296c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a297216579462ca2d78a3963d57c701d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a297216579462ca2d78a3963d57c701d4"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>dataBuffer_</b></td></tr>
+<tr class="separator:a297216579462ca2d78a3963d57c701d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af53e4ed67857843e51c61b6d3882967f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af53e4ed67857843e51c61b6d3882967f"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+<tr class="separator:af53e4ed67857843e51c61b6d3882967f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9101b9fb6472abc085f669b7d3a7ecb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9101b9fb6472abc085f669b7d3a7ecb"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>obsoleteAssetIds_</b></td></tr>
+<tr class="separator:aa9101b9fb6472abc085f669b7d3a7ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe6580b2bac9049aef152fd42001ec94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe6580b2bac9049aef152fd42001ec94"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>runIndex_</b></td></tr>
+<tr class="separator:afe6580b2bac9049aef152fd42001ec94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836687a3a4b079419b8d090aad99c7e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a836687a3a4b079419b8d090aad99c7e6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sessionDataLoaded_</b></td></tr>
+<tr class="separator:a836687a3a4b079419b8d090aad99c7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:af2e09ad979d2eb3347829789a2a175dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2e09ad979d2eb3347829789a2a175dd"></a>
+static QHash&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>connectionUsers_</b></td></tr>
+<tr class="separator:af2e09ad979d2eb3347829789a2a175dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Component of the Picto Playback system that loads data from a Session file into a <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>. </p>
@@ -257,7 +308,7 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
       </table>
 </div><div class="memdoc">
 
-<p>Returns the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> for the Design loaded in loadDesignDefinition() when <a class="el" href="class_picto_1_1_file_session_loader.html#a6a9035fea225651a072550cf6e315b9c" title="Sets the file path to the session file that will be loaded into the SessionState. ...">setFile()</a> was called. </p>
+<p>Returns the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> for the Design loaded in <a class="el" href="class_picto_1_1_file_session_loader.html#a7f60a3615da61586db2afb05a7728554" title="Loads the DesignRoot used in the session file so that it can be returned from getDesignRoot(). ">loadDesignDefinition()</a> when <a class="el" href="class_picto_1_1_file_session_loader.html#a6a9035fea225651a072550cf6e315b9c" title="Sets the file path to the session file that will be loaded into the SessionState. ...">setFile()</a> was called. </p>
 <p>If no design was loaded, an empty <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> shared pointer will be returned. </p>
 
 <p>Definition at line <a class="el" href="_file_session_loader_8cpp_source.html#l00087">87</a> of file <a class="el" href="_file_session_loader_8cpp_source.html">FileSessionLoader.cpp</a>.</p>
@@ -281,6 +332,62 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>One entry appears for each name returned from <a class="el" href="class_picto_1_1_file_session_loader.html#a594062ade9010399ea05e273387ef9d9" title="Returns a list of names of runs that were loaded from the session file. ">getRunNames()</a> and in the same order. </p>
 
 <p>Definition at line <a class="el" href="_file_session_loader_8cpp_source.html#l00107">107</a> of file <a class="el" href="_file_session_loader_8cpp_source.html">FileSessionLoader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3e5341db5c6c4ac6cb950c2356bf96ae"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSessionLoader::getSignalInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads all information about which signals were used in the session and sets that data into the <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a>. </p>
+<p>This tells the <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a> how many objects it needs to handle loading of the Session's signal data and causes it to set them up properly. </p>
+
+<p>Definition at line <a class="el" href="_file_session_loader_8cpp_source.html#l00240">240</a> of file <a class="el" href="_file_session_loader_8cpp_source.html">FileSessionLoader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7f60a3615da61586db2afb05a7728554"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileSessionLoader::loadDesignDefinition </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> used in the session file so that it can be returned from <a class="el" href="class_picto_1_1_file_session_loader.html#ab9186678a41bd08b7ec73502537a53b4" title="Returns the DesignRoot for the Design loaded in loadDesignDefinition() when setFile() was called...">getDesignRoot()</a>. </p>
+<p>This function needs to deal with interfacing different versions of Picto too. When the <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> is loaded, some of its Assets might be considered obsolete and upgraded automatically. This means that some <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID values may change. To be sure that the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID values in the upgraded design match those in the session file, we use a <a class="el" href="class_picto_1_1_session_version_interfacer.html" title="Resets the Asset ID values of an Experiment to those used in a Session file. ">SessionVersionInterfacer</a> which fixes the upgraded <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a>'s tree so that the AssetIDs match up with the values in the Session file. The <a class="el" href="class_picto_1_1_session_version_interfacer.html" title="Resets the Asset ID values of an Experiment to those used in a Session file. ">SessionVersionInterfacer</a> also provides us with a list of "obsolete asset ids" which we can send into the <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a> so that changes to values of Properties that are children of Obsolete Assets can be ignored. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_session_version_interfacer.html" title="Resets the Asset ID values of an Experiment to those used in a Session file. ">SessionVersionInterfacer</a>, <a class="el" href="class_picto_1_1_session_state.html#a54ef9957c7c3f166de6bcc76f61b65f9" title="Calls this function to load all session data into this SessionState. ">SessionState::setSessionData()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_file_session_loader_8cpp_source.html#l00281">281</a> of file <a class="el" href="_file_session_loader_8cpp_source.html">FileSessionLoader.cpp</a>.</p>
 
 </div>
 </div>

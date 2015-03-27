@@ -89,6 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_session_info-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -101,6 +105,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_session_info_8h_source.html">SessionInfo.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_session_info_1_1_neural_variable.html">NeuralVariable</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_session_info_1_1_variable.html">Variable</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a61e0959a79e819267bf4814f519ef99a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61e0959a79e819267bf4814f519ef99a"></a>
@@ -151,7 +162,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:aae12680d40fb18844c820b50d4dca29c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5369a72ae100ac6452e324e10361311b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5369a72ae100ac6452e324e10361311b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a5369a72ae100ac6452e324e10361311b">insertAlignmentData</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_alignment_data_unit.html">Picto::AlignmentDataUnit</a> &gt; data)</td></tr>
-<tr class="memdesc:a5369a72ae100ac6452e324e10361311b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an AlignmentDataUnit data point to the appropriate <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object attempts alignment with the latest data using alignTimeBases(). <br /></td></tr>
+<tr class="memdesc:a5369a72ae100ac6452e324e10361311b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an AlignmentDataUnit data point to the appropriate <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object attempts alignment with the latest data using <a class="el" href="class_session_info.html#a56cbcad35daa14a7b589e8ecce162c81" title="Runs the alignment algorithm to calculate the offset and linear coefficient that aligns the &quot;PROXY&quot; a...">alignTimeBases()</a>. <br /></td></tr>
 <tr class="separator:a5369a72ae100ac6452e324e10361311b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e8f84449a2afcb1723f8c60cae9d81f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e8f84449a2afcb1723f8c60cae9d81f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a7e8f84449a2afcb1723f8c60cae9d81f">insertLFPData</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_l_f_p_data_unit_package.html">Picto::LFPDataUnitPackage</a> &gt; data)</td></tr>
@@ -255,6 +266,260 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1a5929c7dfbfb94a18d7789c8c8ee6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles session deletion while maintaining a list of loaded sessions.  <a href="#a1a5929c7dfbfb94a18d7789c8c8ee6f2">More...</a><br /></td></tr>
 <tr class="separator:a1a5929c7dfbfb94a18d7789c8c8ee6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a6b60e9f5fafaec514c9165ef20078be0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b60e9f5fafaec514c9165ef20078be0"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>SessionTableType</b> { <br />
+&#160;&#160;<b>SESSION_INFO_TYPE</b>, 
+<b>COMPONENT_INFO_TYPE</b>, 
+<b>RUNS_TYPE</b>, 
+<b>SPIKES_TYPE</b>, 
+<br />
+&#160;&#160;<b>NEURAL_ALIGN_EVENTS_TYPE</b>, 
+<b>LFP_TYPE</b>, 
+<b>BEHAVIORAL_ALIGN_EVENTS_TYPE</b>, 
+<b>ALIGN_EVENTS_TYPE</b>, 
+<br />
+&#160;&#160;<b>TRANSITIONS_TYPE</b>, 
+<b>TRANSITION_LOOKUP_TYPE</b>, 
+<b>PROPERTIES_TYPE</b>, 
+<b>INIT_PROPERTIES_TYPE</b>, 
+<br />
+&#160;&#160;<b>PROPERTY_LOOKUP_TYPE</b>, 
+<b>ELEMENT_LOOKUP_TYPE</b>, 
+<b>FRAMES_TYPE</b>, 
+<b>REWARDS_TYPE</b>, 
+<br />
+&#160;&#160;<b>CURRENT_STATE_TYPE</b>, 
+<b>FIRST_SIGNAL_CHANNEL_TYPE</b>
+<br />
+ }</td></tr>
+<tr class="separator:a6b60e9f5fafaec514c9165ef20078be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a95b116f2f53950655a1711b0e958c82e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a95b116f2f53950655a1711b0e958c82e">SessionInfo</a> (QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)</td></tr>
+<tr class="memdesc:a95b116f2f53950655a1711b0e958c82e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object.  <a href="#a95b116f2f53950655a1711b0e958c82e">More...</a><br /></td></tr>
+<tr class="separator:a95b116f2f53950655a1711b0e958c82e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1671a308a8f2e0e3ba4ecd60d63d1dab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a1671a308a8f2e0e3ba4ecd60d63d1dab">SessionInfo</a> (QString databaseFilePath)</td></tr>
+<tr class="memdesc:a1671a308a8f2e0e3ba4ecd60d63d1dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object based on the contents of an old timed out Sqlite Session file at the input databaseFilePath.  <a href="#a1671a308a8f2e0e3ba4ecd60d63d1dab">More...</a><br /></td></tr>
+<tr class="separator:a1671a308a8f2e0e3ba4ecd60d63d1dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a027150fa0846fb216bf40d1636984c6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a027150fa0846fb216bf40d1636984c6a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a">InitializeVariables</a> ()</td></tr>
+<tr class="memdesc:a027150fa0846fb216bf40d1636984c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes all <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> member variables for a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object. <br /></td></tr>
+<tr class="separator:a027150fa0846fb216bf40d1636984c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36a6b049e80d3d41f7ad86ec5658afc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4">LoadBaseSessionDatabase</a> (QString path, QString databaseName)</td></tr>
+<tr class="memdesc:a36a6b049e80d3d41f7ad86ec5658afc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object necessary for storing Session data in this <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object.  <a href="#a36a6b049e80d3d41f7ad86ec5658afc4">More...</a><br /></td></tr>
+<tr class="separator:a36a6b049e80d3d41f7ad86ec5658afc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5200cc74d891c7372b7daa57bc8ec367"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5200cc74d891c7372b7daa57bc8ec367"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a5200cc74d891c7372b7daa57bc8ec367">SetupBaseSessionDatabase</a> ()</td></tr>
+<tr class="memdesc:a5200cc74d891c7372b7daa57bc8ec367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects created in <a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4" title="Creates all SessionData object necessary for storing Session data in this SessionInfo object...">LoadBaseSessionDatabase()</a>. In the case where this is a previously timed out Session, data in the existing Sqlite database needed to initialize this <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object is loaded into it. <br /></td></tr>
+<tr class="separator:a5200cc74d891c7372b7daa57bc8ec367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56cbcad35daa14a7b589e8ecce162c81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#a56cbcad35daa14a7b589e8ecce162c81">alignTimeBases</a> (bool realignAll=false)</td></tr>
+<tr class="memdesc:a56cbcad35daa14a7b589e8ecce162c81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the alignment algorithm to calculate the offset and linear coefficient that aligns the "PROXY" and "DIRECTOR" timestreams.  <a href="#a56cbcad35daa14a7b589e8ecce162c81">More...</a><br /></td></tr>
+<tr class="separator:a56cbcad35daa14a7b589e8ecce162c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae676db5c0a83833c9031768d06abfb0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#ae676db5c0a83833c9031768d06abfb0f">createSessionIndeces</a> ()</td></tr>
+<tr class="memdesc:ae676db5c0a83833c9031768d06abfb0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds all table indeces that have been set in <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> to improve Session read query speed.  <a href="#ae676db5c0a83833c9031768d06abfb0f">More...</a><br /></td></tr>
+<tr class="separator:ae676db5c0a83833c9031768d06abfb0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abccff9750819046f25b391d38c5aff51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#abccff9750819046f25b391d38c5aff51">setStateVariable</a> (int dataid, int varid, QString serializedValue)</td></tr>
+<tr class="memdesc:abccff9750819046f25b391d38c5aff51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new Picto current state variable to a list that will be added to a <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object for the purpose of updating the Picto Workstation with the current experimental state. The list's data is copied to the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object in <a class="el" href="class_session_info.html#ab636ab4b5a116c25071e14186033bf30" title="Adds all of the experimental state variables from setStateVariable() to the CurrentSessionData object...">updateCurrentStateTable()</a>.  <a href="#abccff9750819046f25b391d38c5aff51">More...</a><br /></td></tr>
+<tr class="separator:abccff9750819046f25b391d38c5aff51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0cf37b734e32e1636301b9ce263457e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#ab0cf37b734e32e1636301b9ce263457e">setLatestNeuralData</a> (int dataid, QString serializedValue, double fittedTime)</td></tr>
+<tr class="memdesc:ab0cf37b734e32e1636301b9ce263457e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input neural data to the latestNeuralData buffer.  <a href="#ab0cf37b734e32e1636301b9ce263457e">More...</a><br /></td></tr>
+<tr class="separator:ab0cf37b734e32e1636301b9ce263457e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab636ab4b5a116c25071e14186033bf30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#ab636ab4b5a116c25071e14186033bf30">updateCurrentStateTable</a> (QString updateTime)</td></tr>
+<tr class="memdesc:ab636ab4b5a116c25071e14186033bf30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds all of the experimental state variables from <a class="el" href="class_session_info.html#abccff9750819046f25b391d38c5aff51" title="Adds a new Picto current state variable to a list that will be added to a CurrentSessionData object f...">setStateVariable()</a> to the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object.  <a href="#ab636ab4b5a116c25071e14186033bf30">More...</a><br /></td></tr>
+<tr class="separator:ab636ab4b5a116c25071e14186033bf30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addfe094c467b6d30db2ff30b3a2340c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#addfe094c467b6d30db2ff30b3a2340c4">addAuthorizedObserver</a> (QUuid observerId)</td></tr>
+<tr class="memdesc:addfe094c467b6d30db2ff30b3a2340c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the Workstation with the input Uuid to the authorized observer list.  <a href="#addfe094c467b6d30db2ff30b3a2340c4">More...</a><br /></td></tr>
+<tr class="separator:addfe094c467b6d30db2ff30b3a2340c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa698d772ce42fbe3f384bd197cb01185"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa698d772ce42fbe3f384bd197cb01185"></a>
+QMap&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#aa698d772ce42fbe3f384bd197cb01185">sigChanTypes_</a></td></tr>
+<tr class="memdesc:aa698d772ce42fbe3f384bd197cb01185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the SessionTableType of the signal channel indexed by its name. <br /></td></tr>
+<tr class="separator:aa698d772ce42fbe3f384bd197cb01185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5189a5c01c0a2e88f0cc332378d2c7ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5189a5c01c0a2e88f0cc332378d2c7ac"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>uuid_</b></td></tr>
+<tr class="separator:a5189a5c01c0a2e88f0cc332378d2c7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7e61eb0b724cae919348248e9a01705"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7e61eb0b724cae919348248e9a01705"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>password_</b></td></tr>
+<tr class="separator:af7e61eb0b724cae919348248e9a01705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a496a81996e3af8e7a975427516166405"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a496a81996e3af8e7a975427516166405"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>baseSessionDbConnection_</b></td></tr>
+<tr class="separator:a496a81996e3af8e7a975427516166405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abd7a649ef14a6a94ae817f29336a30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7abd7a649ef14a6a94ae817f29336a30"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>cacheDb_</b></td></tr>
+<tr class="separator:a7abd7a649ef14a6a94ae817f29336a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b27d992e74aba59bba63de9a6053fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55b27d992e74aba59bba63de9a6053fb"></a>
+QSharedPointer&lt; <a class="el" href="class_stored_session_data.html">StoredSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>storedSessionData_</b></td></tr>
+<tr class="separator:a55b27d992e74aba59bba63de9a6053fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eed629533fb0dff8cd20746cf4b7c66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2eed629533fb0dff8cd20746cf4b7c66"></a>
+QSharedPointer&lt; <a class="el" href="class_cached_session_data.html">CachedSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cachedDirectorSessionData_</b></td></tr>
+<tr class="separator:a2eed629533fb0dff8cd20746cf4b7c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a055ec3bd7d799eba1adc8f1230d72923"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a055ec3bd7d799eba1adc8f1230d72923"></a>
+QSharedPointer&lt; <a class="el" href="class_cached_session_data.html">CachedSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cachedProxySessionData_</b></td></tr>
+<tr class="separator:a055ec3bd7d799eba1adc8f1230d72923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a909b89f9ba3b1b286a7cc8d9dbe2faa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a909b89f9ba3b1b286a7cc8d9dbe2faa6"></a>
+QSharedPointer&lt; <a class="el" href="class_align_session_data.html">AlignSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>neuralAlignSessionData_</b></td></tr>
+<tr class="separator:a909b89f9ba3b1b286a7cc8d9dbe2faa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a827d77d3766be906e36a4a96453885b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a827d77d3766be906e36a4a96453885b2"></a>
+QSharedPointer&lt; <a class="el" href="class_align_session_data.html">AlignSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>behavAlignSessionData_</b></td></tr>
+<tr class="separator:a827d77d3766be906e36a4a96453885b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b6d1f707775d09fa09cd2616d112f39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b6d1f707775d09fa09cd2616d112f39"></a>
+QSharedPointer&lt; <a class="el" href="class_current_session_data.html">CurrentSessionData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentSessionData_</b></td></tr>
+<tr class="separator:a0b6d1f707775d09fa09cd2616d112f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6ed1150966792ebfe8d16f2122dcf7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6ed1150966792ebfe8d16f2122dcf7f"></a>
+QSharedPointer&lt; <a class="el" href="class_alignment_tool.html">AlignmentTool</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentTool_</b></td></tr>
+<tr class="separator:ad6ed1150966792ebfe8d16f2122dcf7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916ce60fe067128b6d4de6b028673daf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a916ce60fe067128b6d4de6b028673daf"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>latestNeuralDataMutex_</b></td></tr>
+<tr class="separator:a916ce60fe067128b6d4de6b028673daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab94c3244684b0b1c53a0378950ba1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ab94c3244684b0b1c53a0378950ba1f"></a>
+QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>databaseWriteMutex_</b></td></tr>
+<tr class="separator:a3ab94c3244684b0b1c53a0378950ba1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2dd0448f933e9cf5c4b97dba40babff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2dd0448f933e9cf5c4b97dba40babff"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutTimer_</b></td></tr>
+<tr class="separator:ac2dd0448f933e9cf5c4b97dba40babff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc0299f8e6b41090aafdcb4bca3efd05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc0299f8e6b41090aafdcb4bca3efd05"></a>
+QMap&lt; QUuid, QStringList &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#acc0299f8e6b41090aafdcb4bca3efd05">pendingDirectives_</a></td></tr>
+<tr class="memdesc:acc0299f8e6b41090aafdcb4bca3efd05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uuid is the Uuid of the component who's pending directives are stored in the QStringList. <br /></td></tr>
+<tr class="separator:acc0299f8e6b41090aafdcb4bca3efd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8d2910c180bfc36b7c3c3673781ae64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8d2910c180bfc36b7c3c3673781ae64"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_component_info.html">ComponentInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#ac8d2910c180bfc36b7c3c3673781ae64">components_</a></td></tr>
+<tr class="memdesc:ac8d2910c180bfc36b7c3c3673781ae64"><td class="mdescLeft">&#160;</td><td class="mdescRight">QString is the type of the component (only one of each component type can be attached). <br /></td></tr>
+<tr class="separator:ac8d2910c180bfc36b7c3c3673781ae64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9329e7deb0b07b81ccf3a243791115a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9329e7deb0b07b81ccf3a243791115a0"></a>
+QMap&lt; QUuid, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>componentActivity_</b></td></tr>
+<tr class="separator:a9329e7deb0b07b81ccf3a243791115a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acba867ab513484d54573c4d80e332df5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acba867ab513484d54573c4d80e332df5"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_info.html#acba867ab513484d54573c4d80e332df5">alignToType_</a></td></tr>
+<tr class="memdesc:acba867ab513484d54573c4d80e332df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The component type who's timeframe should be used as a baseline in timing alignment. <br /></td></tr>
+<tr class="separator:acba867ab513484d54573c4d80e332df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0e947e42c8f74e3f707c8707cfdcbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e0e947e42c8f74e3f707c8707cfdcbf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>activity_</b></td></tr>
+<tr class="separator:a6e0e947e42c8f74e3f707c8707cfdcbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d40516e3c178a72502e89e8eae6265"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53d40516e3c178a72502e89e8eae6265"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>ignoreComponents_</b></td></tr>
+<tr class="separator:a53d40516e3c178a72502e89e8eae6265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a1392749e3fe2864199b85ed3a2bc55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a1392749e3fe2864199b85ed3a2bc55"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>sessionInfoDataId_</b></td></tr>
+<tr class="separator:a7a1392749e3fe2864199b85ed3a2bc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83ae2b6f9ec09db5c38c999dd2f4a32c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83ae2b6f9ec09db5c38c999dd2f4a32c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>aligmentInfoDataId_</b></td></tr>
+<tr class="separator:a83ae2b6f9ec09db5c38c999dd2f4a32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b7433b34b77c488b289d36c52f5b1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58b7433b34b77c488b289d36c52f5b1e"></a>
+QMap&lt; QString, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flushEnabled_</b></td></tr>
+<tr class="separator:a58b7433b34b77c488b289d36c52f5b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d32a4cb8073f32093e9c0716907b154"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d32a4cb8073f32093e9c0716907b154"></a>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>designXml_</b></td></tr>
+<tr class="separator:a3d32a4cb8073f32093e9c0716907b154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b5397f7ed30b89e2d6a19c89712f62c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b5397f7ed30b89e2d6a19c89712f62c"></a>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>DesignConfig_</b></td></tr>
+<tr class="separator:a7b5397f7ed30b89e2d6a19c89712f62c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a0626cd563eb530c423f3c22480774"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09a0626cd563eb530c423f3c22480774"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>baseSessionDbFilepath_</b></td></tr>
+<tr class="separator:a09a0626cd563eb530c423f3c22480774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a034a9a97dcafcdafc6c4087e8082792b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a034a9a97dcafcdafc6c4087e8082792b"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>timeCreated_</b></td></tr>
+<tr class="separator:a034a9a97dcafcdafc6c4087e8082792b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84edd553cff2e6d80106051500f82174"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84edd553cff2e6d80106051500f82174"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>latestNeuralTimestamp_</b></td></tr>
+<tr class="separator:a84edd553cff2e6d80106051500f82174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78c1bef0ad4d777e8947b4aec3e7e648"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78c1bef0ad4d777e8947b4aec3e7e648"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>latestBehavioralTimestamp_</b></td></tr>
+<tr class="separator:a78c1bef0ad4d777e8947b4aec3e7e648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a140de8e8c116739d3616012c62adfe2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a140de8e8c116739d3616012c62adfe2b"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>databaseVersion_</b></td></tr>
+<tr class="separator:a140de8e8c116739d3616012c62adfe2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af82fc8329ae3f6a049b2f3a09c908a01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af82fc8329ae3f6a049b2f3a09c908a01"></a>
+QList&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tables_</b></td></tr>
+<tr class="separator:af82fc8329ae3f6a049b2f3a09c908a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f40e1c456d8f32e03036d7b4438996a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f40e1c456d8f32e03036d7b4438996a"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableColumns_</b></td></tr>
+<tr class="separator:a7f40e1c456d8f32e03036d7b4438996a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5412c05cb15909513a8f83e3b294b09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5412c05cb15909513a8f83e3b294b09"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableColumnTypes_</b></td></tr>
+<tr class="separator:ae5412c05cb15909513a8f83e3b294b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5942bfdca949e8a940dfa2ffd6b5a278"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5942bfdca949e8a940dfa2ffd6b5a278"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableColumnConstraints_</b></td></tr>
+<tr class="separator:a5942bfdca949e8a940dfa2ffd6b5a278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe1c18aca13fe0d9864e42fb3a837d45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe1c18aca13fe0d9864e42fb3a837d45"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableDataProviders_</b></td></tr>
+<tr class="separator:abe1c18aca13fe0d9864e42fb3a837d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac12fdac36ef5d9cdce1c0f30ef131a89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac12fdac36ef5d9cdce1c0f30ef131a89"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tableIndexedColumns_</b></td></tr>
+<tr class="separator:ac12fdac36ef5d9cdce1c0f30ef131a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3424546ee840c4198cf6a6731eb77ec7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3424546ee840c4198cf6a6731eb77ec7"></a>
+QList&lt; <a class="el" href="struct_session_info_1_1_variable.html">Variable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentStateQuery_</b></td></tr>
+<tr class="separator:a3424546ee840c4198cf6a6731eb77ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b80c6d3ae704bf1ae4b201593ccc22b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b80c6d3ae704bf1ae4b201593ccc22b"></a>
+QLinkedList&lt; <a class="el" href="struct_session_info_1_1_neural_variable.html">NeuralVariable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>latestNeuralData_</b></td></tr>
+<tr class="separator:a1b80c6d3ae704bf1ae4b201593ccc22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaccf49ef188c84e88191b237d861c9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acaccf49ef188c84e88191b237d861c9a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestStateVarTime_</b></td></tr>
+<tr class="separator:acaccf49ef188c84e88191b237d861c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf111a281cf0d6102ec31a499a843eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cf111a281cf0d6102ec31a499a843eb"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestWrittenStateVarTime_</b></td></tr>
+<tr class="separator:a1cf111a281cf0d6102ec31a499a843eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a457dde4e1adda043d19f4d8754011128"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a457dde4e1adda043d19f4d8754011128"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>openDatabaseConnections_</b></td></tr>
+<tr class="separator:a457dde4e1adda043d19f4d8754011128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4571a1766214654680819784dfa6356a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4571a1766214654680819784dfa6356a"></a>
+qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>maxReceivedDataID_</b></td></tr>
+<tr class="separator:a4571a1766214654680819784dfa6356a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14327bebd922bb42da42eaeaa724f33a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14327bebd922bb42da42eaeaa724f33a"></a>
+QList&lt; QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>authorizedObservers_</b></td></tr>
+<tr class="separator:a14327bebd922bb42da42eaeaa724f33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad54a4740e8ba45d4d666c92d78bb716d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad54a4740e8ba45d4d666c92d78bb716d"></a>
+QMap&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sigChanVarIDs_</b></td></tr>
+<tr class="separator:ad54a4740e8ba45d4d666c92d78bb716d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab90ded2b4e135b77e2dd46bf20da064e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab90ded2b4e135b77e2dd46bf20da064e"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_source_info.html">Picto::DataSourceInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataSourceInfoMap_</b></td></tr>
+<tr class="separator:ab90ded2b4e135b77e2dd46bf20da064e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8aadf47e057487313d99a4526b448b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8aadf47e057487313d99a4526b448b9d"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_alignment_info.html">Picto::AlignmentInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentInfoMap_</b></td></tr>
+<tr class="separator:a8aadf47e057487313d99a4526b448b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a945b3f36b7bbcc3da102f487475fd2ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a945b3f36b7bbcc3da102f487475fd2ef"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nextSigChanVarId_</b></td></tr>
+<tr class="separator:a945b3f36b7bbcc3da102f487475fd2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5065069606adead39932a9fffa3ecdfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5065069606adead39932a9fffa3ecdfd"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_session_data_package.html">Picto::SessionDataPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currSessionDataPack_</b></td></tr>
+<tr class="separator:a5065069606adead39932a9fffa3ecdfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a259f41463a921767ad990e4daf008783"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a259f41463a921767ad990e4daf008783"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>sessionDataMutex_</b></td></tr>
+<tr class="separator:a259f41463a921767ad990e4daf008783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c4b6fd55d4ccba95f50f17c0a0ad180"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c4b6fd55d4ccba95f50f17c0a0ad180"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>stateVarTimeMutex_</b></td></tr>
+<tr class="separator:a2c4b6fd55d4ccba95f50f17c0a0ad180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988550cd99c4b12b858b809a6f3c60ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a988550cd99c4b12b858b809a6f3c60ee"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>flushingCache_</b></td></tr>
+<tr class="separator:a988550cd99c4b12b858b809a6f3c60ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26909fa6cb77291e21dbdb5b243a3d5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26909fa6cb77291e21dbdb5b243a3d5e"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>totalSessionTime_</b></td></tr>
+<tr class="separator:a26909fa6cb77291e21dbdb5b243a3d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac37c007cd369842cf590f2efc1ecda6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac37c007cd369842cf590f2efc1ecda6b"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>timeInFlush_</b></td></tr>
+<tr class="separator:ac37c007cd369842cf590f2efc1ecda6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16b56ad6c13107568199c74af1f3294d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16b56ad6c13107568199c74af1f3294d"></a>
+QHash&lt; QString, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataTimeBySource_</b></td></tr>
+<tr class="separator:a16b56ad6c13107568199c74af1f3294d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1e9835251a0e8b08b9af2e8100ce774"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1e9835251a0e8b08b9af2e8100ce774"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>flushTimingMutex_</b></td></tr>
+<tr class="separator:ac1e9835251a0e8b08b9af2e8100ce774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24bf124068ffc6add627c1b84e43d395"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24bf124068ffc6add627c1b84e43d395"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastFlushStartTime_</b></td></tr>
+<tr class="separator:a24bf124068ffc6add627c1b84e43d395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa226943e2851a1cfaf3622613e52ec17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa226943e2851a1cfaf3622613e52ec17"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastFlushEndTime_</b></td></tr>
+<tr class="separator:aa226943e2851a1cfaf3622613e52ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:af9af8174c50150fd85183d2d6a2f52cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9af8174c50150fd85183d2d6a2f52cc"></a>
+static QMap&lt; QUuid, QWeakPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>loadedSessions_</b></td></tr>
+<tr class="separator:af9af8174c50150fd85183d2d6a2f52cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:aaeb08ae6da3a23c3562ab2c1fcfa6a0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaeb08ae6da3a23c3562ab2c1fcfa6a0a"></a>
@@ -275,7 +540,111 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 </ul>
 
 <p>Definition at line <a class="el" href="_session_info_8h_source.html#l00052">52</a> of file <a class="el" href="_session_info_8h_source.html">SessionInfo.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a95b116f2f53950655a1711b0e958c82e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SessionInfo::SessionInfo </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>designName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>directorName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>designXml</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>DesignConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QUuid&#160;</td>
+          <td class="paramname"><em>initialObserverId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>password</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">designName</td><td>The name of the design that will be used in the Session. </td></tr>
+    <tr><td class="paramname">directorName</td><td>The name of the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> that will be used in the Session. </td></tr>
+    <tr><td class="paramname">designXml</td><td>The contents of the Design file that will be used in the Session. </td></tr>
+    <tr><td class="paramname">DesignConfig</td><td>The serialized DesignConfig object that manages the Design used in this session. This contains information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup tables in the session file. </td></tr>
+    <tr><td class="paramname">initialObserverId</td><td>The Uuid of the workstation that is starting this Session. It will be considered an Authorized observer (ie. It is authorized to make state changes to the Session). </td></tr>
+    <tr><td class="paramname">password</td><td>The password that gives workstations authorization to change the Session state.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Apart from the actual object construction, this function handles variable initialization by using <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. It also calls <a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4" title="Creates all SessionData object necessary for storing Session data in this SessionInfo object...">LoadBaseSessionDatabase()</a> to create neccessary <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects and <a class="el" href="class_session_info.html#a5200cc74d891c7372b7daa57bc8ec367" title="Sets up the SessionData objects created in LoadBaseSessionDatabase(). In the case where this is a pre...">SetupBaseSessionDatabase()</a> to setup those objects. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00122">122</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1671a308a8f2e0e3ba4ecd60d63d1dab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SessionInfo::SessionInfo </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>databaseFilePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object based on the contents of an old timed out Sqlite Session file at the input databaseFilePath. </p>
+<p>Apart from the actual object construction, this function handles variable initialization by using <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. It also calls <a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4" title="Creates all SessionData object necessary for storing Session data in this SessionInfo object...">LoadBaseSessionDatabase()</a> to create neccessary <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects and <a class="el" href="class_session_info.html#a5200cc74d891c7372b7daa57bc8ec367" title="Sets up the SessionData objects created in LoadBaseSessionDatabase(). In the case where this is a pre...">SetupBaseSessionDatabase()</a> to setup those objects. Once all of the <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects are setup, this constructor extracts all data from the Sqlite session file that needs to be in RAM (using a <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> object) and enters it into the relevant variables and <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00164">164</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aca010ce44ab021ce6b6a36ef6679f41f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -304,6 +673,65 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Returns true if the password was correct and the observer is authorized now </p>
 
 <p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00466">466</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="addfe094c467b6d30db2ff30b3a2340c4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::addAuthorizedObserver </td>
+          <td>(</td>
+          <td class="paramtype">QUuid&#160;</td>
+          <td class="paramname"><em>observerId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds the Workstation with the input Uuid to the authorized observer list. </p>
+<p>This means that Workstation will be able to use commands to change the Session state and not just watch what is happening in the Session. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01502">1502</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a56cbcad35daa14a7b589e8ecce162c81"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::alignTimeBases </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>realignAll</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Runs the alignment algorithm to calculate the offset and linear coefficient that aligns the "PROXY" and "DIRECTOR" timestreams. </p>
+<p>Whenever this function is called, it checks which behavioral and neural alignment events have not yet been matched, then goes through and attempts to make the match. When a match is found, <a class="el" href="class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457" title="Updates the coefficients when a new set of matching timestamps is found. ">AlignmentTool::updateCoefficients()</a> is used to improven the precision of the alignment parameters using a least squares algorithm.</p>
+<p>When realignAll is set to true, all alignment events from the entire session are rematched and the least squares timestamp alignment parameters are recalculated. This takes care of possible losses in precision that may arise if there is a connection problem and some alignment events arrive out of order during the Session. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01232">1232</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,6 +826,34 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 </dl>
 
 <p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00046">46</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae676db5c0a83833c9031768d06abfb0f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::createSessionIndeces </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Builds all table indeces that have been set in <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> to improve Session read query speed. </p>
+<p>This should be done only at the end of a session since extra unnecessary indeces slow down data write speed in SQL significantly. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01414">1414</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -553,6 +1009,45 @@ The time at which the flush starts and ends are also carefully marked for use wi
 
 </div>
 </div>
+<a class="anchor" id="a36a6b049e80d3d41f7ad86ec5658afc4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::LoadBaseSessionDatabase </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>databaseName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates all <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object necessary for storing Session data in this <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object. </p>
+<p>The name of this function is historical and should probably be changed to something more suitable. Alternatively, this can all just be moved to <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01061">1061</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a1f3c535a8c90e32cc0ec38caf2d0f42c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -674,6 +1169,97 @@ The time at which the flush starts and ends are also carefully marked for use wi
 
 </div>
 </div>
+<a class="anchor" id="ab0cf37b734e32e1636301b9ce263457e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::setLatestNeuralData </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dataid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>serializedValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>fittedTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds the input neural data to the latestNeuralData buffer. </p>
+<p>The buffer stays NEURAL_DATA_BUFFER_SECS long, and if the input data has a timestamp of more than NEURAL_DATA_BUFFER_SECS from the beginning of the buffer, values from the beginning are removed accordingly.</p>
+<p>This buffer is used to send neural data to Picto Workstations monitoring the current session so that the neural data can be displayed to the operator. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01446">1446</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abccff9750819046f25b391d38c5aff51"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::setStateVariable </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dataid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>varid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>serializedValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a new Picto current state variable to a list that will be added to a <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object for the purpose of updating the Picto Workstation with the current experimental state. The list's data is copied to the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object in <a class="el" href="class_session_info.html#ab636ab4b5a116c25071e14186033bf30" title="Adds all of the experimental state variables from setStateVariable() to the CurrentSessionData object...">updateCurrentStateTable()</a>. </p>
+<p>We use a single <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object to track the latest state of all variables needed to run a remote session on a Picto Workstation. Using this object, we can assure requests for the latest Picto state will have constant runtime independant of how long the the current experiment has been running. New variable values always update existing values with the same id if their timestamp is greater than that of their predecessor, such that the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object always contains the most up to date picture of the current Experimental state. </p>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01429">1429</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="acc27036c722407afba5bf30965084fbb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -691,6 +1277,36 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>If the component is still attached to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>, it is set as either Active or Inactive in this Session depending on whether it reports that it is attached to the current Session or to some other Session. </p>
 
 <p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00308">308</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab636ab4b5a116c25071e14186033bf30"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionInfo::updateCurrentStateTable </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>updateTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds all of the experimental state variables from <a class="el" href="class_session_info.html#abccff9750819046f25b391d38c5aff51" title="Adds a new Picto current state variable to a list that will be added to a CurrentSessionData object f...">setStateVariable()</a> to the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object. </p>
+<p>We don't just do this when the values come in so that we can always be sure that all of the data for a given time is in the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object when a Workstation requests it. Otherwise, the Workstation might miss some data if it requests data for a certain time, misses some of the final data for that time because it hasn't come in yet and then requests data for AFTER that first time later, such that the missed data is never read.</p>
+<p>updateTime is the time of the latest state variable to be read. </p><dl class="section note"><dt>Note</dt><dd>We should look into why updateTime can't just be read from the currestStateQuery_ list. </dd></dl>
+
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01478">1478</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>

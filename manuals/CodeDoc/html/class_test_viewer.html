@@ -88,6 +88,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_test_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TestViewer Class Reference</div>  </div>
@@ -158,6 +162,143 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called just before the application quits and is used to take-down anything that needs to be taken down before a quit. In particular, if there is some long running thread going on in the background, this function makes sure to end it. <br /></td></tr>
 <tr class="separator:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a934dbae906cf29a4453f6271c49284e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a934dbae906cf29a4453f6271c49284e5"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Status</b> { <b>Ending</b>, 
+<b>Stopped</b>, 
+<b>Running</b>, 
+<b>Paused</b>
+ }</td></tr>
+<tr class="separator:a934dbae906cf29a4453f6271c49284e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:af1ffc0c7b5d88c7fb2730bfd463f3087"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#af1ffc0c7b5d88c7fb2730bfd463f3087">playTriggered</a> ()</td></tr>
+<tr class="memdesc:af1ffc0c7b5d88c7fb2730bfd463f3087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the play button is pressed. Activates selected Analyses, disables the AnalysisSelectorWidget and sets up Live Data Readers for the active Analyses to use for the test.  <a href="#af1ffc0c7b5d88c7fb2730bfd463f3087">More...</a><br /></td></tr>
+<tr class="separator:af1ffc0c7b5d88c7fb2730bfd463f3087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d5deed17ddc96436cbe6818c2ca0b92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d5deed17ddc96436cbe6818c2ca0b92"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a0d5deed17ddc96436cbe6818c2ca0b92">running</a> ()</td></tr>
+<tr class="memdesc:a0d5deed17ddc96436cbe6818c2ca0b92"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a> reports that a Task is running. It changes various aspects of the UI accordingly. <br /></td></tr>
+<tr class="separator:a0d5deed17ddc96436cbe6818c2ca0b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01036f1680ca9341e219b61046728de7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01036f1680ca9341e219b61046728de7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a01036f1680ca9341e219b61046728de7">paused</a> ()</td></tr>
+<tr class="memdesc:a01036f1680ca9341e219b61046728de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a> reports that a Task is paused. It changes various aspects of the UI accordingly. <br /></td></tr>
+<tr class="separator:a01036f1680ca9341e219b61046728de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08053308084236f0451b7410ed609e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af08053308084236f0451b7410ed609e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#af08053308084236f0451b7410ed609e8">stopped</a> ()</td></tr>
+<tr class="memdesc:af08053308084236f0451b7410ed609e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a> reports that a Task is stopped. It changes various aspects of the UI accordingly, disables active Analyses, puts the splash screen up in the central window, and emits <a class="el" href="class_viewer.html#aa8f10afad8094330d363080b275daaeb" title="This is emitted when the Viewer&#39;s deinitialization process is completed. ">deinitComplete()</a> if the stopping was a result of the <a class="el" href="class_test_viewer.html#aa585afc2e81af645c57e31d2fe8e4d9f" title="Called just before hiding the viewer. ">deinit()</a> function (See <a class="el" href="class_test_viewer.html#aa585afc2e81af645c57e31d2fe8e4d9f" title="Called just before hiding the viewer. ">deinit()</a> for more details). <br /></td></tr>
+<tr class="separator:af08053308084236f0451b7410ed609e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239adf54565ccbd52d14c09b7151aa8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a239adf54565ccbd52d14c09b7151aa8e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a239adf54565ccbd52d14c09b7151aa8e">taskListIndexChanged</a> (int index)</td></tr>
+<tr class="memdesc:a239adf54565ccbd52d14c09b7151aa8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the selected Task in the task combobox changes. It updates the run time enabled Properties in the PropetyFrame for that Task and sets that Task as the active Task in the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a>. <br /></td></tr>
+<tr class="separator:a239adf54565ccbd52d14c09b7151aa8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc96805cbdb9633455ef9cb511cf0c86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc96805cbdb9633455ef9cb511cf0c86"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#abc96805cbdb9633455ef9cb511cf0c86">operatorClickDetected</a> (QPoint pos)</td></tr>
+<tr class="memdesc:abc96805cbdb9633455ef9cb511cf0c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the operator clicks somewhere in the display window. It informs the OperatorClickParameter that a click was detected (OperatorClickParameter::addClick()). This is important in order to be able to test experiments that use the OperatorClickParameter, like the Calibration Task. <br /></td></tr>
+<tr class="separator:abc96805cbdb9633455ef9cb511cf0c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa071d7ab722fd12123bce9957311b10e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#aa071d7ab722fd12123bce9957311b10e">setUserType</a> (int index)</td></tr>
+<tr class="memdesc:aa071d7ab722fd12123bce9957311b10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly.  <a href="#aa071d7ab722fd12123bce9957311b10e">More...</a><br /></td></tr>
+<tr class="separator:aa071d7ab722fd12123bce9957311b10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af244ba325acbab00b181a533e014a310"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af244ba325acbab00b181a533e014a310"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#af244ba325acbab00b181a533e014a310">runStarted</a> (QUuid runId)</td></tr>
+<tr class="memdesc:af244ba325acbab00b181a533e014a310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the run with the input runId starts. Calls <a class="el" href="class_output_widget_holder.html#a7d166ee59d83794a973e188d426a5143" title="Called when a new run is started with the input run Id. ">OutputWidgetHolder::newRunStarted()</a>. <br /></td></tr>
+<tr class="separator:af244ba325acbab00b181a533e014a310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a53c47e6094daccebd37253fe14f4061d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53c47e6094daccebd37253fe14f4061d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a53c47e6094daccebd37253fe14f4061d">setupEngine</a> ()</td></tr>
+<tr class="memdesc:a53c47e6094daccebd37253fe14f4061d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the engine with all of the appropriate pieces for testing. <br /></td></tr>
+<tr class="separator:a53c47e6094daccebd37253fe14f4061d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f5123d740a16099b5e68dcd9a63c39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#aa3f5123d740a16099b5e68dcd9a63c39">setupUi</a> ()</td></tr>
+<tr class="memdesc:aa3f5123d740a16099b5e68dcd9a63c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the user interface portions of the GUI.  <a href="#aa3f5123d740a16099b5e68dcd9a63c39">More...</a><br /></td></tr>
+<tr class="separator:aa3f5123d740a16099b5e68dcd9a63c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31b3eb52a7cd20160ba245214d16e58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad31b3eb52a7cd20160ba245214d16e58"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#ad31b3eb52a7cd20160ba245214d16e58">generateComboBox</a> ()</td></tr>
+<tr class="memdesc:ad31b3eb52a7cd20160ba245214d16e58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the task list combobox. <br /></td></tr>
+<tr class="separator:ad31b3eb52a7cd20160ba245214d16e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae8c4edc2065b9f6c1fca05c90834824e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8c4edc2065b9f6c1fca05c90834824e"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_rendering_target.html">Picto::RenderingTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>renderingTarget_</b></td></tr>
+<tr class="separator:ae8c4edc2065b9f6c1fca05c90834824e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad015bf5401d7128e3171e5d84d178a9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad015bf5401d7128e3171e5d84d178a9c"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_pixmap_visual_target.html">Picto::PixmapVisualTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pixmapVisualTarget_</b></td></tr>
+<tr class="separator:ad015bf5401d7128e3171e5d84d178a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7551cf0666ba116791ba6939e4288d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c7551cf0666ba116791ba6939e4288d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:a5c7551cf0666ba116791ba6939e4288d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6006ce484dde89b1a101d78150ef1ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6006ce484dde89b1a101d78150ef1ed"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:ab6006ce484dde89b1a101d78150ef1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad59aa0d6a9ea462838cdc40c93a298b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad59aa0d6a9ea462838cdc40c93a298b6"></a>
+QSharedPointer&lt; <a class="el" href="class_test_playback_controller.html">TestPlaybackController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>testController_</b></td></tr>
+<tr class="separator:ad59aa0d6a9ea462838cdc40c93a298b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4af7cfe85513e2fabbe085b399d82579"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4af7cfe85513e2fabbe085b399d82579"></a>
+QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_virtual_output_signal_controller.html">Picto::VirtualOutputSignalController</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outSigControllers_</b></td></tr>
+<tr class="separator:a4af7cfe85513e2fabbe085b399d82579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16d0beb7e5a8e5a195119922f8a987f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16d0beb7e5a8e5a195119922f8a987f5"></a>
+<a class="el" href="class_picto_1_1_visual_target_host.html">Picto::VisualTargetHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>visualTargetHost_</b></td></tr>
+<tr class="separator:a16d0beb7e5a8e5a195119922f8a987f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89a7314580f6aa6ea5f2f15408f7454e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89a7314580f6aa6ea5f2f15408f7454e"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>propertyFrame_</b></td></tr>
+<tr class="separator:a89a7314580f6aa6ea5f2f15408f7454e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaba6f78711855143d90b56e1ebfea617"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaba6f78711855143d90b56e1ebfea617"></a>
+<a class="el" href="class_picto_1_1_analysis_selector_widget.html">Picto::AnalysisSelectorWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>analysisSelector_</b></td></tr>
+<tr class="separator:aaba6f78711855143d90b56e1ebfea617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaef9c8f91510f334df691711cdac62d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaef9c8f91510f334df691711cdac62d6"></a>
+QVector&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputSignalsWidgets_</b></td></tr>
+<tr class="separator:aaef9c8f91510f334df691711cdac62d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ef3e05b62b3359454c307a6c06ac68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99ef3e05b62b3359454c307a6c06ac68"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>playAction_</b></td></tr>
+<tr class="separator:a99ef3e05b62b3359454c307a6c06ac68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddb4986adb21856ffcce01272d53fe4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ddb4986adb21856ffcce01272d53fe4"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>pauseAction_</b></td></tr>
+<tr class="separator:a0ddb4986adb21856ffcce01272d53fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c8cf5b6df08dacb235dc0793807eac3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c8cf5b6df08dacb235dc0793807eac3"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>stopAction_</b></td></tr>
+<tr class="separator:a1c8cf5b6df08dacb235dc0793807eac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5257551e16a8f63bb9c65adcc6ccceb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5257551e16a8f63bb9c65adcc6ccceb2"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>loadPropsAction_</b></td></tr>
+<tr class="separator:a5257551e16a8f63bb9c65adcc6ccceb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb19474b2c61327e9effc2c2f5c7bd42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb19474b2c61327e9effc2c2f5c7bd42"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>testToolbar_</b></td></tr>
+<tr class="separator:acb19474b2c61327e9effc2c2f5c7bd42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a05cc0c9cafb49cacd69935f9584ed2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a05cc0c9cafb49cacd69935f9584ed2"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>taskListBox_</b></td></tr>
+<tr class="separator:a1a05cc0c9cafb49cacd69935f9584ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a338ec38ad4c4ae8a12658df088613efe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a338ec38ad4c4ae8a12658df088613efe"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>userType_</b></td></tr>
+<tr class="separator:a338ec38ad4c4ae8a12658df088613efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52dc53d061ccb5be00f031161b631b5b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52dc53d061ccb5be00f031161b631b5b"></a>
+<a class="el" href="class_output_widget_holder.html">OutputWidgetHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>outputWidgetHolder_</b></td></tr>
+<tr class="separator:a52dc53d061ccb5be00f031161b631b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31232e7f2db8f1e4d2381fcb63a4d5ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31232e7f2db8f1e4d2381fcb63a4d5ad"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>deiniting_</b></td></tr>
+<tr class="separator:a31232e7f2db8f1e4d2381fcb63a4d5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68ae8353a7665530ea3280a9c1d0a9a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68ae8353a7665530ea3280a9c1d0a9a1"></a>
+Status&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
+<tr class="separator:a68ae8353a7665530ea3280a9c1d0a9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb85cc8d6064fb2abd264b81942e4d72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb85cc8d6064fb2abd264b81942e4d72"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_frame_reader.html">LiveFrameReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>liveFrameReader_</b></td></tr>
+<tr class="separator:acb85cc8d6064fb2abd264b81942e4d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb4878718174ca0c8ca047059eb4873"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0eb4878718174ca0c8ca047059eb4873"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_lfp_reader.html">LiveLfpReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>liveLfpReader_</b></td></tr>
+<tr class="separator:a0eb4878718174ca0c8ca047059eb4873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a828db3d7695c7ac89843203bfab42dc8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a828db3d7695c7ac89843203bfab42dc8"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_reward_reader.html">LiveRewardReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>liveRewardReader_</b></td></tr>
+<tr class="separator:a828db3d7695c7ac89843203bfab42dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa091e4de7e91859e6f021147eaf396f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa091e4de7e91859e6f021147eaf396f5"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_spike_reader.html">LiveSpikeReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>liveSpikeReader_</b></td></tr>
+<tr class="separator:aa091e4de7e91859e6f021147eaf396f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a909e2b922de2cf74d326308aa915546d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a909e2b922de2cf74d326308aa915546d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_run_notes_reader.html">LiveRunNotesReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>liveRunNotesReader_</b></td></tr>
+<tr class="separator:a909e2b922de2cf74d326308aa915546d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b04cba7e3eaaec7b33e12be32261545"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b04cba7e3eaaec7b33e12be32261545"></a>
+QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_signal_reader.html">LiveSignalReader</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalReaders_</b></td></tr>
+<tr class="separator:a9b04cba7e3eaaec7b33e12be32261545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_viewer"><td colspan="2" onclick="javascript:toggleInherit('signals_class_viewer')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_viewer.html">Viewer</a></td></tr>
@@ -212,7 +353,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 </div><div class="memdoc">
 
 <p>Called just before hiding the viewer. </p>
-<p>This function stops the current Task Run and clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. It is important that it clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> because otherwise an unexpected signal-&gt;slot-&gt;signal-&gt;... path leading from Property value changes through the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> back to a different part of the Property value would be active. This would lead to unexpected behavior in the StateMachineEditor. We also handle stopping the Experiment in a kind of round about way. Due to the fact that we don't yet run Experiments from a Qt Event loop and we need to just process events internally now and then, if an Experiment is running, this function will have been called from some QCoreApplication::processEvents() call internal to the Experiment. In that case, calling stop() here will not actually stop the Experiment until somewhere way up the call stack. If we were to directly emit deinitCompleted() here, we would be telling the next viewer that it can take the focus before this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s Experiment actually stopped running. Instead, we connect the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a>'s stopped() signal to our stopped() slot which emits deinitCompleted(). By doing things this way, we are sure that when the next <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> takes focus, this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s test Run will actually be fully stopped and done. </p>
+<p>This function stops the current Task Run and clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. It is important that it clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> because otherwise an unexpected signal-&gt;slot-&gt;signal-&gt;... path leading from Property value changes through the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> back to a different part of the Property value would be active. This would lead to unexpected behavior in the StateMachineEditor. We also handle stopping the Experiment in a kind of round about way. Due to the fact that we don't yet run Experiments from a Qt Event loop and we need to just process events internally now and then, if an Experiment is running, this function will have been called from some QCoreApplication::processEvents() call internal to the Experiment. In that case, calling stop() here will not actually stop the Experiment until somewhere way up the call stack. If we were to directly emit deinitCompleted() here, we would be telling the next viewer that it can take the focus before this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s Experiment actually stopped running. Instead, we connect the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a>'s <a class="el" href="class_test_viewer.html#af08053308084236f0451b7410ed609e8" title="This is called when the TestPlaybackController reports that a Task is stopped. It changes various asp...">stopped()</a> signal to our <a class="el" href="class_test_viewer.html#af08053308084236f0451b7410ed609e8" title="This is called when the TestPlaybackController reports that a Task is stopped. It changes various asp...">stopped()</a> slot which emits deinitCompleted(). By doing things this way, we are sure that when the next <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> takes focus, this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s test Run will actually be fully stopped and done. </p>
 
 <p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00113">113</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
@@ -271,6 +412,91 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <dl class="section warning"><dt>Warning</dt><dd>We haven't tested this in a while and it may not be working. Regardless, it might be good to do this differently and allow operators to save current Property configurations and restore them later. </dd></dl>
 
 <p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00298">298</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1ffc0c7b5d88c7fb2730bfd463f3087"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TestViewer::playTriggered </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the play button is pressed. Activates selected Analyses, disables the AnalysisSelectorWidget and sets up Live Data Readers for the active Analyses to use for the test. </p>
+<dl class="section note"><dt>Note</dt><dd>Live Data Readers are used by Analyses to access data over ranges of times. They are different from the Data Readers in played back Sessions in that they have no access to future data and in some cases their data is simulated (ie. LFP, since there is no neural system attached to the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>). </dd></dl>
+
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00327">327</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa3f5123d740a16099b5e68dcd9a63c39"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TestViewer::setupUi </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up the user interface portions of the GUI. </p>
+<p>play/pause/stop actions and toolbar </p>
+
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00198">198</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa071d7ab722fd12123bce9957311b10e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TestViewer::setUserType </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly. </p>
+<dl class="section note"><dt>Note</dt><dd>The active user, Operator or Subject, determines which graphics are shown in the display depending on each graphics OperatorView/SubjectView Properties. </dd></dl>
+
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00490">490</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>

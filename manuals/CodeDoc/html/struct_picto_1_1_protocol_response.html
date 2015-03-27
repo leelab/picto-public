@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_picto_1_1_protocol_response-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::ProtocolResponse Struct Reference</div>  </div>
@@ -205,6 +207,68 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_protocol_response.html#a8ef58e6dae323f1258626b5825a52b24">write</a> (QAbstractSocket *socket)</td></tr>
 <tr class="memdesc:a8ef58e6dae323f1258626b5825a52b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> to the passed in socket. Returns the total number of bytes written. <br /></td></tr>
 <tr class="separator:a8ef58e6dae323f1258626b5825a52b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2283015aabe988bbf0b261a5c40bc731"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2283015aabe988bbf0b261a5c40bc731"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_protocol_response.html#a2283015aabe988bbf0b261a5c40bc731">encodeContent</a> ()</td></tr>
+<tr class="memdesc:a2283015aabe988bbf0b261a5c40bc731"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class used to support zip/unzip of message content. When that was supporte, this function zipped the response content. <br /></td></tr>
+<tr class="separator:a2283015aabe988bbf0b261a5c40bc731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacdaee25ec63becbae6f4e030880ed57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacdaee25ec63becbae6f4e030880ed57"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_protocol_response.html#aacdaee25ec63becbae6f4e030880ed57">decodeContent</a> ()</td></tr>
+<tr class="memdesc:aacdaee25ec63becbae6f4e030880ed57"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class used to support zip/unzip of message content. When that was supported, this function unzipped the response content. <br /></td></tr>
+<tr class="separator:aacdaee25ec63becbae6f4e030880ed57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aede4fb8f28f247c4aca86ceda87dcfc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aede4fb8f28f247c4aca86ceda87dcfc3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parseHeaders</b> (QString headers)</td></tr>
+<tr class="separator:aede4fb8f28f247c4aca86ceda87dcfc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af8624f2b6aeb80cb0db0bb7132bf0bf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8624f2b6aeb80cb0db0bb7132bf0bf3"></a>
+ProtocolResponseType::ProtocolResponseType&#160;</td><td class="memItemRight" valign="bottom"><b>protocolResponseCode</b></td></tr>
+<tr class="separator:af8624f2b6aeb80cb0db0bb7132bf0bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67dd53aaaaa32f6cdd7e85e4ddcae651"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67dd53aaaaa32f6cdd7e85e4ddcae651"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>protocol</b></td></tr>
+<tr class="separator:a67dd53aaaaa32f6cdd7e85e4ddcae651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63a72f3fdce5aa2243b9915694f9fa6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63a72f3fdce5aa2243b9915694f9fa6e"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>version</b></td></tr>
+<tr class="separator:a63a72f3fdce5aa2243b9915694f9fa6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a482d262919d643f89302a64ccc0032d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a482d262919d643f89302a64ccc0032d7"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fields</b></td></tr>
+<tr class="separator:a482d262919d643f89302a64ccc0032d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22401764adaee208998955353499019e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22401764adaee208998955353499019e"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>multiPartContentType</b></td></tr>
+<tr class="separator:a22401764adaee208998955353499019e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae36873099c36d72e09d5a80dfdcdbe6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae36873099c36d72e09d5a80dfdcdbe6c"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>multiPartBoundary</b></td></tr>
+<tr class="separator:ae36873099c36d72e09d5a80dfdcdbe6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb3f88f2846fe4aa1d7fd4ae3bf4d9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affb3f88f2846fe4aa1d7fd4ae3bf4d9b"></a>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>content</b></td></tr>
+<tr class="separator:affb3f88f2846fe4aa1d7fd4ae3bf4d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1353a0a8ff97171a49508091dc74dcd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1353a0a8ff97171a49508091dc74dcd3"></a>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>encodedContent</b></td></tr>
+<tr class="separator:a1353a0a8ff97171a49508091dc74dcd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f5de2f148cbbc11c4611c39b6a6ddc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f5de2f148cbbc11c4611c39b6a6ddc9"></a>
+QMap&lt; ProtocolResponseType::ProtocolResponseType, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>protocolResponseTypeStrings</b></td></tr>
+<tr class="separator:a1f5de2f148cbbc11c4611c39b6a6ddc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9d68f03a21bd93c4dec44197a07f5c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9d68f03a21bd93c4dec44197a07f5c6"></a>
+QMap&lt; ContentEncodingType::ContentEncodingType, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>contentEncodingTypeStrings</b></td></tr>
+<tr class="separator:ab9d68f03a21bd93c4dec44197a07f5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab56c0c9cc404c61df9366ed5c78a3dc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab56c0c9cc404c61df9366ed5c78a3dc3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>bShouldTerminateConnection</b></td></tr>
+<tr class="separator:ab56c0c9cc404c61df9366ed5c78a3dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4887995afeee89d8de4496207eee9eaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4887995afeee89d8de4496207eee9eaa"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>bStreamingResponse</b></td></tr>
+<tr class="separator:a4887995afeee89d8de4496207eee9eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5a1b1abc704f6e00c9b070eb435e660"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a1b1abc704f6e00c9b070eb435e660"></a>
+<a class="el" href="namespace_picto_1_1_registered_response_type.html#abc60624d7d7b5a5d029fdaf2404311d2">RegisteredResponseType::RegisteredResponseType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>registeredType_</b></td></tr>
+<tr class="separator:ad5a1b1abc704f6e00c9b070eb435e660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0b189b9da0956b3342ae8a0f4d86d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe0b189b9da0956b3342ae8a0f4d86d6"></a>
+MultiPartResponseType::MultiPartResponseType&#160;</td><td class="memItemRight" valign="bottom"><b>multiPartResponseState</b></td></tr>
+<tr class="separator:afe0b189b9da0956b3342ae8a0f4d86d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91dc1068cea9e95b1eec074b4b3bde08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91dc1068cea9e95b1eec074b4b3bde08"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
+<tr class="separator:a91dc1068cea9e95b1eec074b4b3bde08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A response, issued as the result of a command. </p>

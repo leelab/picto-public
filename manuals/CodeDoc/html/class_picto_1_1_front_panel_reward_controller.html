@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_front_panel_reward_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::FrontPanelRewardController Class Reference</div>  </div>
@@ -153,6 +154,24 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_front_panel_reward_controller.html#aa29df7541e45f4f01aaf2f8f7dd186c3">stopFlush</a> (unsigned int channel)</td></tr>
 <tr class="memdesc:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops an active flush by setting the reward signal line back to high and then clearing the NiDaq task.  <a href="#aa29df7541e45f4f01aaf2f8f7dd186c3">More...</a><br /></td></tr>
 <tr class="separator:aa29df7541e45f4f01aaf2f8f7dd186c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a8112a4ea804c18a57a11f561801192ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8112a4ea804c18a57a11f561801192ad"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDevice_</b></td></tr>
+<tr class="separator:a8112a4ea804c18a57a11f561801192ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac5abd8e42bbeefd41a1ecec2a4a799e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac5abd8e42bbeefd41a1ecec2a4a799e"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandleDig_</b> [5]</td></tr>
+<tr class="separator:aac5abd8e42bbeefd41a1ecec2a4a799e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58c5be8338f5ee0167067373f01b559"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac58c5be8338f5ee0167067373f01b559"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>rewardLines_</b> [5]</td></tr>
+<tr class="separator:ac58c5be8338f5ee0167067373f01b559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf6bc696a3fef22dabce11bdab9403da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf6bc696a3fef22dabce11bdab9403da"></a>
+<a class="el" href="class_picto_1_1_stopwatch.html">Stopwatch</a>&#160;</td><td class="memItemRight" valign="bottom"><b>stopwatch_</b> [5]</td></tr>
+<tr class="separator:aaf6bc696a3fef22dabce11bdab9403da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad861b9697265a4a7c780923dbced5aa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad861b9697265a4a7c780923dbced5aa1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>latestOnTime_</b> [5]</td></tr>
+<tr class="separator:ad861b9697265a4a7c780923dbced5aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

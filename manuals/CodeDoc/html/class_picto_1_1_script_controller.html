@@ -93,6 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_script_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::ScriptController Class Reference</div>  </div>
@@ -561,6 +562,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a06e876624a40bdf453546911db87b7fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06e876624a40bdf453546911db87b7fc"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>currResult_</b></td></tr>
+<tr class="separator:a06e876624a40bdf453546911db87b7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_result_container"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_result_container')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_result_container.html">Picto::ResultContainer</a></td></tr>
@@ -695,7 +702,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div><div class="memdoc">
 
 <p>This function returns an error string if the input returnValue is invalid or there was some other problem with the latest script that was run. </p>
-<p>The QString sciptName entry is the name of the script that was just run as returned by <a class="el" href="class_picto_1_1_script_controller.html#a96c4021832e13bb6ab7727ac3646af92" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. This function is called by checkScriptResults() which will trigger a runtime error with the returned string as an error message if the returned string is not empty. </p><dl class="section see"><dt>See also</dt><dd>checkScriptResults(), <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
+<p>The QString sciptName entry is the name of the script that was just run as returned by <a class="el" href="class_picto_1_1_script_controller.html#a96c4021832e13bb6ab7727ac3646af92" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. This function is called by <a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a> which will trigger a runtime error with the returned string as an error message if the returned string is not empty. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a>, <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56">Picto::ScriptableContainer</a>.</p>
 

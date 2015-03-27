@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_start_bar_item.html#a78c794b44295cce4e1cd95c18756a796">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_start_bar_item.html#a78c794b44295cce4e1cd95c18756a796">StartBarItem::paint</a>( QPainter * painter, <span class="keyword">const</span> QStyleOptionGraphicsItem * option, QWidget * widget)</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">//Set the script manager&#39;s rectangle according to the visible part of the scene in the view.</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    updateForViewportChanges();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">updateForViewportChanges</a>();</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_diagram_item.html#a3a11a30164ef7c891c911a8f7277e2b5">ArrowSourceItem::paint</a>(painter,option,widget);</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
@@ -130,10 +130,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    setBrush(brush);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">//Set the script manager&#39;s rectangle according to the visible part of the scene in the view.</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    updateForViewportChanges();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">updateForViewportChanges</a>();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> StartBarItem::updateForViewportChanges()</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">   52</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">StartBarItem::updateForViewportChanges</a>()</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">//Set the script manager&#39;s rectangle according to the visible part of the scene in the view.</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    QGraphicsScene* myScene = scene();</div>
@@ -171,6 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_start_bar_item_html_a91ef14d7a5395aadc892a933bb5fbf1d"><div class="ttname"><a href="class_start_bar_item.html#a91ef14d7a5395aadc892a933bb5fbf1d">StartBarItem::getContactPoint</a></div><div class="ttdeci">virtual QPointF getContactPoint()</div><div class="ttdoc">The idea of this function was to define a point where the arrow should contact it. in practice, this function is not used. </div><div class="ttdef"><b>Definition:</b> <a href="_start_bar_item_8cpp_source.html#l00020">StartBarItem.cpp:20</a></div></div>
 <div class="ttc" id="class_diagram_item_html_a3a11a30164ef7c891c911a8f7277e2b5"><div class="ttname"><a href="class_diagram_item.html#a3a11a30164ef7c891c911a8f7277e2b5">DiagramItem::paint</a></div><div class="ttdeci">virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)</div><div class="ttdoc">Called by the QGraphicsItem system to paint this DiagramItem onto the QGraphicsScene. </div><div class="ttdef"><b>Definition:</b> <a href="diagramitem_8cpp_source.html#l00176">diagramitem.cpp:176</a></div></div>
 <div class="ttc" id="class_start_bar_item_html_a78c794b44295cce4e1cd95c18756a796"><div class="ttname"><a href="class_start_bar_item.html#a78c794b44295cce4e1cd95c18756a796">StartBarItem::paint</a></div><div class="ttdeci">virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)</div><div class="ttdoc">Wheneverr this item is repainted, we need to update the ScriptItemManager as to the current visible c...</div><div class="ttdef"><b>Definition:</b> <a href="_start_bar_item_8cpp_source.html#l00028">StartBarItem.cpp:28</a></div></div>
+<div class="ttc" id="class_start_bar_item_html_aaec166dfac6ef86c967000fe3dd5e783"><div class="ttname"><a href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">StartBarItem::updateForViewportChanges</a></div><div class="ttdeci">void updateForViewportChanges()</div><div class="ttdoc">Reads the position of the top and bottom areas of the displayed canvas and updates the ScriptItemMana...</div><div class="ttdef"><b>Definition:</b> <a href="_start_bar_item_8cpp_source.html#l00052">StartBarItem.cpp:52</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

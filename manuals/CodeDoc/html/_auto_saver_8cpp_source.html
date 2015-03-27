@@ -101,22 +101,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define AUTOSAVEROOT &quot;AutoSave&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;QWeakPointer&lt;AutoSaver&gt; AutoSaver::singleton_ = QWeakPointer&lt;AutoSaver&gt;();</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;QWeakPointer&lt;AutoSaver&gt; <a class="code" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">AutoSaver::singleton_</a> = QWeakPointer&lt;AutoSaver&gt;();</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;AutoSaver::AutoSaver()</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a026f2b8611fe506c61d7afa5a5af64c6">   18</a></span>&#160;<a class="code" href="class_picto_1_1_auto_saver.html#a026f2b8611fe506c61d7afa5a5af64c6">AutoSaver::AutoSaver</a>()</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;: QObject()</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    initAutoSaveDir();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594">initAutoSaveDir</a>();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    saveTimer_.stop();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    connect(&amp;saveTimer_,SIGNAL(timeout()),<span class="keyword">this</span>,SLOT(saveDesignToFile()));</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    connect(&amp;saveTimer_,SIGNAL(timeout()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">saveDesignToFile</a>()));</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a3eb3e497f67f3e3b76e2efb6ef8022d2">   26</a></span>&#160;QSharedPointer&lt;AutoSaver&gt; <a class="code" href="class_picto_1_1_auto_saver.html#a3eb3e497f67f3e3b76e2efb6ef8022d2">AutoSaver::getSingleton</a>()</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    QSharedPointer&lt;AutoSaver&gt; returnVal = singleton_.toStrongRef();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    QSharedPointer&lt;AutoSaver&gt; returnVal = <a class="code" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">singleton_</a>.toStrongRef();</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">if</span>(returnVal.isNull())</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        returnVal = QSharedPointer&lt;AutoSaver&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_auto_saver.html">AutoSaver</a>());</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        singleton_ = returnVal;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        returnVal = QSharedPointer&lt;AutoSaver&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_auto_saver.html#a026f2b8611fe506c61d7afa5a5af64c6">AutoSaver</a>());</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">singleton_</a> = returnVal;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
@@ -138,7 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">//is closing the application smoothly and will not need autosaved</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">//files, so we delete our autosave directory.</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        QDir subDir(autoSaveDir_);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        removeFilesThenDirectories(subDir);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">removeFilesThenDirectories</a>(subDir);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        subDir.rmdir(<span class="stringliteral">&quot;.&quot;</span>);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
@@ -151,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#aff98146527c802af3b1728d3321f9c49">   71</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#aff98146527c802af3b1728d3321f9c49">AutoSaver::stop</a>()</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    saveTimer_.stop();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    saveDesignToFile(); <span class="comment">//This will pick up any last changes before stop was called.</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">saveDesignToFile</a>(); <span class="comment">//This will pick up any last changes before stop was called.</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a0104d42c131f38a258bb0c0d14678241">   83</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#a0104d42c131f38a258bb0c0d14678241">AutoSaver::setDesignRoot</a>(QSharedPointer&lt;DesignRoot&gt; designRoot,<span class="keywordtype">bool</span> saveFirstVersion)</div>
@@ -174,7 +174,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(saveFirstVersion)</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    {</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="comment">//Go ahead and do the first autosave of the new design</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        saveDesignToFile();</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">saveDesignToFile</a>();</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    {</div>
@@ -220,8 +220,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    qSort(filePaths.begin(),filePaths.end(),putPathsWithLatestFileNamesFirst);</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <a class="code" href="class_picto_1_1_auto_save_dialog.html">AutoSaveDialog</a>* autoSaveDialog(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_auto_save_dialog.html">AutoSaveDialog</a>(filePaths,parent));</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    connect(autoSaveDialog,SIGNAL(deleteFileRequest(QString)),<span class="keyword">this</span>,SLOT(deleteRestorableDesignFile(QString)));</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    connect(autoSaveDialog,SIGNAL(restoreFileRequest(QString)),<span class="keyword">this</span>,SLOT(restoreDesignFile(QString)));</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    connect(autoSaveDialog,SIGNAL(deleteFileRequest(QString)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">deleteRestorableDesignFile</a>(QString)));</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    connect(autoSaveDialog,SIGNAL(restoreFileRequest(QString)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_picto_1_1_auto_saver.html#ab0a535ae80619e16c546dbefaf6fb85e">restoreDesignFile</a>(QString)));</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>QDialog*<span class="keyword">&gt;</span>(autoSaveDialog);</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
@@ -230,7 +230,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordflow">return</span> autoSaveDir_;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="keywordtype">void</span> AutoSaver::initAutoSaveDir()</div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594">  181</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594">AutoSaver::initAutoSaveDir</a>()</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;{</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="comment">//Create a directory object and position it at the autosave root directory</span></div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    Q_ASSERT(autoSaveDir_.isEmpty());</div>
@@ -248,7 +248,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="comment">//If the sub directory is empty, remove it</span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordflow">if</span>(subDirFiles.isEmpty())</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            removeFilesThenDirectories(subDir);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            <a class="code" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">removeFilesThenDirectories</a>(subDir);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            subDir.rmdir(<span class="stringliteral">&quot;.&quot;</span>);</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        }</div>
@@ -280,7 +280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    Q_ASSERT(rc);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;}</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keywordtype">void</span> AutoSaver::removeFilesThenDirectories(QDir container)</div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">  235</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">AutoSaver::removeFilesThenDirectories</a>(QDir container)</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;{</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    QStringList files = container.entryList(QDir::Files);</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">foreach</span>(QString fileName,files)</div>
@@ -297,18 +297,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            QDir subDir = container;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            subDir.cd(directory);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            removeFilesThenDirectories(subDir);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            <a class="code" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">removeFilesThenDirectories</a>(subDir);</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            container.rmdir(directory);</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        }</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    }</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;QString AutoSaver::buildDesignFileName(<span class="keyword">const</span> QString designName)</div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7">  262</a></span>&#160;QString <a class="code" href="class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7">AutoSaver::buildDesignFileName</a>(<span class="keyword">const</span> QString designName)</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;{</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    QDateTime dateTime = QDateTime::currentDateTime();</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">return</span> dateTime.toString(<span class="stringliteral">&quot;yyyy_MM_dd__hh_mm_ss_&quot;</span>) + designName + <span class="stringliteral">&quot;.xml&quot;</span>;</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="keywordtype">void</span> AutoSaver::saveDesignToFile()</div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">  270</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">AutoSaver::saveDesignToFile</a>()</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;{</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">//Make sure that there is a designRoot_ to save to file</span></div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordflow">if</span>(!designRoot_)</div>
@@ -338,7 +338,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    QString newDesignName;</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="keywordflow">if</span>(designRoot_)</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        newDesignName = designRoot_-&gt;getDesignName();</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    QString newFileName = buildDesignFileName(newDesignName);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    QString newFileName = <a class="code" href="class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7">buildDesignFileName</a>(newDesignName);</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    QString newDesignFilePath = QDir(autoSaveDir_).filePath(newFileName);</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="comment">//If there&#39;s no design file yet, make one</span></div>
@@ -366,7 +366,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    }</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;}</div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="keywordtype">void</span> AutoSaver::deleteRestorableDesignFile(QString filePath)</div>
+<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">  331</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">AutoSaver::deleteRestorableDesignFile</a>(QString filePath)</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;{</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    QFileInfo deleteFileInfo(filePath);</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    QDir deleteFileDir = deleteFileInfo.dir();</div>
@@ -376,10 +376,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="comment">//Remove the directory that contained the autosaved file from the </span></div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="comment">//savedDesignDirs list and then from the file system</span></div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    savedDesignDirs_.removeAll(deleteFileDir);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    removeFilesThenDirectories(deleteFileDir);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <a class="code" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">removeFilesThenDirectories</a>(deleteFileDir);</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    deleteFileDir.rmdir(<span class="stringliteral">&quot;.&quot;</span>);</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;}</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="keywordtype">void</span> AutoSaver::restoreDesignFile(QString filePath)</div>
+<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#ab0a535ae80619e16c546dbefaf6fb85e">  349</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_auto_saver.html#ab0a535ae80619e16c546dbefaf6fb85e">AutoSaver::restoreDesignFile</a>(QString filePath)</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;{</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="comment">//Open the file, get it&#39;s contents and name, then close it</span></div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    QFile savedFile(filePath);</div>
@@ -397,7 +397,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    QSharedPointer&lt;DesignRoot&gt; design;</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordflow">if</span>(fileContents.length())</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    {</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        design = QSharedPointer&lt;DesignRoot&gt;(<span class="keyword">new</span> DesignRoot());</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        design = QSharedPointer&lt;DesignRoot&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_design_root.html">DesignRoot</a>());</div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        <span class="keywordflow">if</span>(!design-&gt;resetDesignRoot(fileContents))</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;            design.clear();</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keywordflow">else</span></div>
@@ -405,23 +405,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    }</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="comment">//Remove the file and its autosave directory from the file system.</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    deleteRestorableDesignFile(filePath);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <a class="code" href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">deleteRestorableDesignFile</a>(filePath);</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="comment">//Tell our owner to open the design</span></div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    emit openDesign(design);</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_a40d60e4100bdf397309d3fda55071d27"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">Picto::AutoSaver::removeFilesThenDirectories</a></div><div class="ttdeci">void removeFilesThenDirectories(QDir container)</div><div class="ttdoc">This is a useful funciton for removing directories and all contents. We created it before Qt 5...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00235">AutoSaver.cpp:235</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_a015bfa9a11a52eed0e0466a5526b005f"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">Picto::AutoSaver::deleteRestorableDesignFile</a></div><div class="ttdeci">void deleteRestorableDesignFile(QString filePath)</div><div class="ttdoc">Called when requested by the AutoSaveWidget to delete an auto-saved file at the input path and its [P...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00331">AutoSaver.cpp:331</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_af62ed112fa85c09e4788f3846e42ab60"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#af62ed112fa85c09e4788f3846e42ab60">Picto::AutoSaver::start</a></div><div class="ttdeci">void start(int savePeriodMs)</div><div class="ttdoc">Starts autosaving the current design to file every savePeriodMs. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00064">AutoSaver.cpp:64</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_aff98146527c802af3b1728d3321f9c49"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#aff98146527c802af3b1728d3321f9c49">Picto::AutoSaver::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Saves the design to file, then stops AutoSaving the current design at a periodic interval. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00071">AutoSaver.cpp:71</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_a026f2b8611fe506c61d7afa5a5af64c6"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a026f2b8611fe506c61d7afa5a5af64c6">Picto::AutoSaver::AutoSaver</a></div><div class="ttdeci">AutoSaver()</div><div class="ttdoc">Constructs a new AutoSaver. Calls initAutoSaveDir() in the process. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00018">AutoSaver.cpp:18</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_save_dialog_html"><div class="ttname"><a href="class_picto_1_1_auto_save_dialog.html">Picto::AutoSaveDialog</a></div><div class="ttdoc">A dialog that presents the option to restore automatically saved design versions to the Picto designe...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_save_dialog_8h_source.html#l00033">AutoSaveDialog.h:33</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_a3eb3e497f67f3e3b76e2efb6ef8022d2"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a3eb3e497f67f3e3b76e2efb6ef8022d2">Picto::AutoSaver::getSingleton</a></div><div class="ttdeci">static QSharedPointer&lt; AutoSaver &gt; getSingleton()</div><div class="ttdoc">Returns the singleton instance of the AutoSaver object. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00026">AutoSaver.cpp:26</a></div></div>
-<div class="ttc" id="class_picto_1_1_auto_saver_html"><div class="ttname"><a href="class_picto_1_1_auto_saver.html">Picto::AutoSaver</a></div><div class="ttdoc">Handles automatically saving the current Picto Design at a defined interval and restoring previously ...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8h_source.html#l00029">AutoSaver.h:29</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_a587765d50aec742f9ab70b86d64c69e5"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">Picto::AutoSaver::singleton_</a></div><div class="ttdeci">static QWeakPointer&lt; AutoSaver &gt; singleton_</div><div class="ttdoc">We never need more than one AutoSaver, but we do need it to use signals and slots, so we implement it as a singleton. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8h_source.html#l00063">AutoSaver.h:63</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_ada8c2d9b0fbf7658af7fec16b1723355"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">Picto::AutoSaver::saveDesignToFile</a></div><div class="ttdeci">void saveDesignToFile()</div><div class="ttdoc">Saves the current version of the design to file if anything has changed since the last save...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00270">AutoSaver.cpp:270</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_a0104d42c131f38a258bb0c0d14678241"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a0104d42c131f38a258bb0c0d14678241">Picto::AutoSaver::setDesignRoot</a></div><div class="ttdeci">virtual void setDesignRoot(QSharedPointer&lt; DesignRoot &gt; design, bool saveFirstVersion)</div><div class="ttdoc">Sets the designRoot of the design that will be auto-saved to file. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00083">AutoSaver.cpp:83</a></div></div>
 <div class="ttc" id="common_8h_html_a9cf5e7238b478d65a8bacc3750eb3022"><div class="ttname"><a href="common_8h.html#a9cf5e7238b478d65a8bacc3750eb3022">IGNORED_PARAMETER</a></div><div class="ttdeci">#define IGNORED_PARAMETER(P)</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00059">common.h:59</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_aef6a93338d53f049173ca7b055949594"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594">Picto::AutoSaver::initAutoSaveDir</a></div><div class="ttdeci">void initAutoSaveDir()</div><div class="ttdoc">Gathers information from and initializes the AutoSave directory for auto-saving and restoring of prev...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00181">AutoSaver.cpp:181</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_aa003b23d0e5c82736a0609505dfdb80b"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#aa003b23d0e5c82736a0609505dfdb80b">Picto::AutoSaver::getDesignRestoreDialog</a></div><div class="ttdeci">QDialog * getDesignRestoreDialog(QWidget *parent)</div><div class="ttdoc">Constructs and returns an AutoSaveDialog to allow the designer to restore an auto saved design file...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00139">AutoSaver.cpp:139</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_ac64be0aa0911489d3d9912853e80f5d7"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7">Picto::AutoSaver::buildDesignFileName</a></div><div class="ttdeci">QString buildDesignFileName(const QString designName)</div><div class="ttdoc">Creates an automatic name for an autosaved design file by using the current date and time (yyyy_MM_dd...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00262">AutoSaver.cpp:262</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_a09344b067f544c9f860493e210baf2af"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a09344b067f544c9f860493e210baf2af">Picto::AutoSaver::getAutoSaveDir</a></div><div class="ttdeci">QString getAutoSaveDir()</div><div class="ttdoc">Returns the path where this AutoSaver&#39;s files should be saved (a sub-directory of [PictoInstallDir]/A...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00166">AutoSaver.cpp:166</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_ab0a535ae80619e16c546dbefaf6fb85e"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#ab0a535ae80619e16c546dbefaf6fb85e">Picto::AutoSaver::restoreDesignFile</a></div><div class="ttdeci">void restoreDesignFile(QString filePath)</div><div class="ttdoc">Called when requested by the AutoSaveWidget to open the auto-saved file at the input path...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00349">AutoSaver.cpp:349</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_a97bee7c7983bb8ba0189580248d45f57"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a97bee7c7983bb8ba0189580248d45f57">Picto::AutoSaver::~AutoSaver</a></div><div class="ttdeci">virtual ~AutoSaver()</div><div class="ttdoc">When the AutoSaver is deleted, we close our lockFile_ and designFile_ then remove the AutoSave subdir...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00041">AutoSaver.cpp:41</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_root_html"><div class="ttname"><a href="class_picto_1_1_design_root.html">Picto::DesignRoot</a></div><div class="ttdoc">The root of the Experiment/Analysis Design tree passed between different UI Viewers. </div><div class="ttdef"><b>Definition:</b> <a href="_design_root_8h_source.html#l00027">DesignRoot.h:27</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html_a8323b0f1510370ac878e35c4455e28be"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a8323b0f1510370ac878e35c4455e28be">Picto::AutoSaver::removeFileUntilNextChange</a></div><div class="ttdeci">void removeFileUntilNextChange()</div><div class="ttdoc">Deletes the auto-saved file and updates the saved file text such that no auto-saved file will exist u...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8cpp_source.html#l00116">AutoSaver.cpp:116</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

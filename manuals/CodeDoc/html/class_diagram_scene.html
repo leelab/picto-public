@@ -90,6 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_diagram_scene-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DiagramScene Class Reference</div>  </div>
@@ -212,6 +214,72 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:adfe114873fac1d13077a1c72deb58a1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#adfe114873fac1d13077a1c72deb58a1c">contextMenuEvent</a> (QGraphicsSceneContextMenuEvent *event)</td></tr>
 <tr class="memdesc:adfe114873fac1d13077a1c72deb58a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captures the position at which the designer right clicked for a ContextMenu in order to use it as the paste position should the designer choose the paste action.  <a href="#adfe114873fac1d13077a1c72deb58a1c">More...</a><br /></td></tr>
 <tr class="separator:adfe114873fac1d13077a1c72deb58a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7fefccde08545b0a1e5d1a0e036d217a"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a7fefccde08545b0a1e5d1a0e036d217a">createNewAsset</a> ()</td></tr>
+<tr class="memdesc:a7fefccde08545b0a1e5d1a0e036d217a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Asset based on the currently selected Asset type in the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>.  <a href="#a7fefccde08545b0a1e5d1a0e036d217a">More...</a><br /></td></tr>
+<tr class="separator:a7fefccde08545b0a1e5d1a0e036d217a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8d7b5a5eb07f044364a3d1ee5fa4e73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8d7b5a5eb07f044364a3d1ee5fa4e73"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#ab8d7b5a5eb07f044364a3d1ee5fa4e73">insertTextItem</a> (QString text, QPointF pos)</td></tr>
+<tr class="memdesc:ab8d7b5a5eb07f044364a3d1ee5fa4e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is never used and left over from the QtToolkit sample. It should probably be removed unless you want to keep it for reference. <br /></td></tr>
+<tr class="separator:ab8d7b5a5eb07f044364a3d1ee5fa4e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ae0361f0924caa15923837d22e955a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ae0361f0924caa15923837d22e955a9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a8ae0361f0924caa15923837d22e955a9">isItemChange</a> (int type)</td></tr>
+<tr class="memdesc:a8ae0361f0924caa15923837d22e955a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is never used and left over from the QtToolkit sample. It should probably be removed unless you want to keep it for reference. <br /></td></tr>
+<tr class="separator:a8ae0361f0924caa15923837d22e955a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe9ac3c8687b44bb5ffddc0b888cbfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fe9ac3c8687b44bb5ffddc0b888cbfd"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a3fe9ac3c8687b44bb5ffddc0b888cbfd">getSelectedAssets</a> ()</td></tr>
+<tr class="memdesc:a3fe9ac3c8687b44bb5ffddc0b888cbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of Asset objects referenced by the currently selected DiagramItems. <br /></td></tr>
+<tr class="separator:a3fe9ac3c8687b44bb5ffddc0b888cbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a47d95d0ff24cad3a3399e632f378d310"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47d95d0ff24cad3a3399e632f378d310"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:a47d95d0ff24cad3a3399e632f378d310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f5a47c942ad76f4fc3bdc281ac63b73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f5a47c942ad76f4fc3bdc281ac63b73"></a>
+QSharedPointer&lt; <a class="el" href="class_diagram_item_factory.html">DiagramItemFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>diagItemFactory_</b></td></tr>
+<tr class="separator:a0f5a47c942ad76f4fc3bdc281ac63b73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a6a887baa86e8758282a3f07e2ead8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a6a887baa86e8758282a3f07e2ead8d"></a>
+QSharedPointer&lt; <a class="el" href="class_copier.html">Copier</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>copier_</b></td></tr>
+<tr class="separator:a8a6a887baa86e8758282a3f07e2ead8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e95555215a7b6c9188de63dd8ab69a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e95555215a7b6c9188de63dd8ab69a8"></a>
+<a class="el" href="class_diagram_item.html">DiagramItem</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>startBar_</b></td></tr>
+<tr class="separator:a7e95555215a7b6c9188de63dd8ab69a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa692d554b2867e2f6018938a12ff066e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa692d554b2867e2f6018938a12ff066e"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>insertionItem_</b></td></tr>
+<tr class="separator:aa692d554b2867e2f6018938a12ff066e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c299a026cb1f409df619315d2131559"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c299a026cb1f409df619315d2131559"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>newItemIndex_</b></td></tr>
+<tr class="separator:a9c299a026cb1f409df619315d2131559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153029ac28a994171aef78a733fdecf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a153029ac28a994171aef78a733fdecf4"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>myItemMenu</b></td></tr>
+<tr class="separator:a153029ac28a994171aef78a733fdecf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380bf3f78fd3a1c73dcd47936d093a57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a380bf3f78fd3a1c73dcd47936d093a57"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>sceneMenu_</b></td></tr>
+<tr class="separator:a380bf3f78fd3a1c73dcd47936d093a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74b80a85563ad928d3807f739041db41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74b80a85563ad928d3807f739041db41"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>leftButtonDown</b></td></tr>
+<tr class="separator:a74b80a85563ad928d3807f739041db41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ad7ddf3b672760c1c2b3a37154e65e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09ad7ddf3b672760c1c2b3a37154e65e"></a>
+QPointF&#160;</td><td class="memItemRight" valign="bottom"><b>startPoint</b></td></tr>
+<tr class="separator:a09ad7ddf3b672760c1c2b3a37154e65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08325b32bbdafb60d1bc05ae3e91e483"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08325b32bbdafb60d1bc05ae3e91e483"></a>
+QGraphicsLineItem *&#160;</td><td class="memItemRight" valign="bottom"><b>line</b></td></tr>
+<tr class="separator:a08325b32bbdafb60d1bc05ae3e91e483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a529bdc267f4a107b8d74cad97bc138e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a529bdc267f4a107b8d74cad97bc138e3"></a>
+<a class="el" href="class_diagram_text_item.html">DiagramTextItem</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>textItem</b></td></tr>
+<tr class="separator:a529bdc267f4a107b8d74cad97bc138e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874570c374d27ad76ec47dc2ca3c46b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a874570c374d27ad76ec47dc2ca3c46b3"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><b>latestPastePos_</b></td></tr>
+<tr class="separator:a874570c374d27ad76ec47dc2ca3c46b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74871b11dcbc144a9a83fecac5af4294"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74871b11dcbc144a9a83fecac5af4294"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>useNavigateMode_</b></td></tr>
+<tr class="separator:a74871b11dcbc144a9a83fecac5af4294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10254a384385dcc95c79383c0f20a6ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10254a384385dcc95c79383c0f20a6ff"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></td></tr>
+<tr class="separator:a10254a384385dcc95c79383c0f20a6ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The QGraphicsScene shown in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s central widget to display the children of the current element of the Design's State Machine. </p>
@@ -329,9 +397,37 @@ Protected Member Functions</h2></td></tr>
 
 <p>Uses a <a class="el" href="class_copier.html" title="Uses the AssetExportImporter to implement copy/paste functionality within a Picto design...">Copier</a> object to copy the Asset objects referenced by all selected DiagramItems. </p>
 <dl class="section note"><dt>Note</dt><dd>Transitions are not copied even if they are selected. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>getSelectedAssets() </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#a3fe9ac3c8687b44bb5ffddc0b888cbfd" title="Returns a list of Asset objects referenced by the currently selected DiagramItems. ">getSelectedAssets()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00433">433</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7fefccde08545b0a1e5d1a0e036d217a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; DiagramScene::createNewAsset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new Asset based on the currently selected Asset type in the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#a361512439a7cf2bcd0388c78eb1bb301" title="Extends the QGraphicsScene::mouseReleaseEvent() for placing new DiagramItems and finishing the Transi...">mouseReleaseEvent()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00701">701</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -357,7 +453,7 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Deletes all currently selected DiagramItems and Arrows along with their referenced Asset and Transition objects. </p>
-<p>If a deletion actually took place, this function calls <a class="el" href="class_editor_state.html#a171f60df7de30e116e02eae6e8653143" title="Call to inform the EditorState that this experiment needs to be reloaded from XML. ">EditorState::triggerExperimentReset()</a> to cause the design to be reloaded from XML thereby removing deleted elements and reloading this scene with the correct diagrams. </p><dl class="section see"><dt>See also</dt><dd>Designer::resetExperiment() </dd></dl>
+<p>If a deletion actually took place, this function calls <a class="el" href="class_editor_state.html#a171f60df7de30e116e02eae6e8653143" title="Call to inform the EditorState that this experiment needs to be reloaded from XML. ">EditorState::triggerExperimentReset()</a> to cause the design to be reloaded from XML thereby removing deleted elements and reloading this scene with the correct diagrams. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026" title="Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...">Designer::resetExperiment()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00351">351</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 

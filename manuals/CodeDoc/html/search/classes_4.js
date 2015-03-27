@@ -2,6 +2,7 @@ var searchData=
 [
   ['editorstate',['EditorState',['../class_editor_state.html',1,'']]],
   ['elementnoteswidget',['ElementNotesWidget',['../class_element_notes_widget.html',1,'']]],
+  ['eleminfo',['ElemInfo',['../struct_asset_tool_group_1_1_elem_info.html',1,'AssetToolGroup']]],
   ['ellipsegraphic',['EllipseGraphic',['../class_picto_1_1_ellipse_graphic.html',1,'Picto']]],
   ['endsessioncommandhandler',['EndsessionCommandHandler',['../struct_endsession_command_handler.html',1,'']]],
   ['endsessionresponsehandler',['EndSessionResponseHandler',['../struct_picto_1_1_end_session_response_handler.html',1,'Picto']]],
@@ -10,6 +11,7 @@ var searchData=
   ['errorlist',['ErrorList',['../class_error_list.html',1,'']]],
   ['errorresponsehandler',['ErrorResponseHandler',['../struct_picto_1_1_error_response_handler.html',1,'Picto']]],
   ['eventcodegenerator',['EventCodeGenerator',['../class_picto_1_1_event_code_generator.html',1,'Picto']]],
+  ['eventdetails',['EventDetails',['../struct_tdt_plugin_1_1_event_details.html',1,'TdtPlugin']]],
   ['experiment',['Experiment',['../class_picto_1_1_experiment.html',1,'Picto']]],
   ['experimentitem',['ExperimentItem',['../class_experiment_item.html',1,'']]]
 ];

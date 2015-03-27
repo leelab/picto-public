@@ -87,6 +87,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_designer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Designer Class Reference</div>  </div>
@@ -117,6 +121,226 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a75f663af7babbf620ddf571f53371b50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a75f663af7babbf620ddf571f53371b50">activate</a> (bool enable)</td></tr>
 <tr class="memdesc:a75f663af7babbf620ddf571f53371b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this function instead of setEnabled() to enable/disable the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>.  <a href="#a75f663af7babbf620ddf571f53371b50">More...</a><br /></td></tr>
 <tr class="separator:a75f663af7babbf620ddf571f53371b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:ade58b82e00d05a05f32d00b7cace39a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade58b82e00d05a05f32d00b7cace39a4"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>INFOTABS</b> { <b>ABOUTELEMENT</b>, 
+<b>SCRIPTINFO</b>, 
+<b>SYNTAXCHECK</b>
+ }</td></tr>
+<tr class="separator:ade58b82e00d05a05f32d00b7cace39a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a12273d87e366ea295bdf01ba844460a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12273d87e366ea295bdf01ba844460a0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a12273d87e366ea295bdf01ba844460a0">sceneScaleChanged</a> (const QString &amp;scale)</td></tr>
+<tr class="memdesc:a12273d87e366ea295bdf01ba844460a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the zoom combo box is updated to change the zoom level of the designer canvas. <br /></td></tr>
+<tr class="separator:a12273d87e366ea295bdf01ba844460a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1ed427c7882fc19efab4be37421c13b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1ed427c7882fc19efab4be37421c13b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ad1ed427c7882fc19efab4be37421c13b">about</a> ()</td></tr>
+<tr class="memdesc:ad1ed427c7882fc19efab4be37421c13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">No longer used. This used to present simple information about the StateMachineEditor, like... it exists. It was unnecessary. <br /></td></tr>
+<tr class="separator:ad1ed427c7882fc19efab4be37421c13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac25bc4154a4a4b4b344047d0fa021e1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">loadScene</a> (<a class="el" href="class_diagram_scene.html">DiagramScene</a> *newScene)</td></tr>
+<tr class="memdesc:ac25bc4154a4a4b4b344047d0fa021e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an initialization function that loads the input scene as the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> Scene.  <a href="#ac25bc4154a4a4b4b344047d0fa021e1b">More...</a><br /></td></tr>
+<tr class="separator:ac25bc4154a4a4b4b344047d0fa021e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e2f40ef01fc309032a9c0cd9ef68026"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">resetExperiment</a> ()</td></tr>
+<tr class="memdesc:a7e2f40ef01fc309032a9c0cd9ef68026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the associated DesignRoot from its XML code and then resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to function with the newly reset object.  <a href="#a7e2f40ef01fc309032a9c0cd9ef68026">More...</a><br /></td></tr>
+<tr class="separator:a7e2f40ef01fc309032a9c0cd9ef68026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9a6d5e594e6a4b4a9e55f9b5ad67db0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">insertEditBlock</a> ()</td></tr>
+<tr class="memdesc:ae9a6d5e594e6a4b4a9e55f9b5ad67db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations.  <a href="#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">More...</a><br /></td></tr>
+<tr class="separator:ae9a6d5e594e6a4b4a9e55f9b5ad67db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98b0f012253a516d6deb316f9584014"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">performUndoAction</a> ()</td></tr>
+<tr class="memdesc:ab98b0f012253a516d6deb316f9584014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Undoes the last significant action in the Design.  <a href="#ab98b0f012253a516d6deb316f9584014">More...</a><br /></td></tr>
+<tr class="separator:ab98b0f012253a516d6deb316f9584014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81538552ba4b84302354a882933917a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a81538552ba4b84302354a882933917a4">performRedoAction</a> ()</td></tr>
+<tr class="memdesc:a81538552ba4b84302354a882933917a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redoes a previously undone significant action in the Design.  <a href="#a81538552ba4b84302354a882933917a4">More...</a><br /></td></tr>
+<tr class="separator:a81538552ba4b84302354a882933917a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bb1ee2787b4a6c8081480fe09e481af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">setOpenAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
+<tr class="memdesc:a7bb1ee2787b4a6c8081480fe09e481af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the DesignRoot which asset is currently open in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> so that this information can be saved out with the Design.  <a href="#a7bb1ee2787b4a6c8081480fe09e481af">More...</a><br /></td></tr>
+<tr class="separator:a7bb1ee2787b4a6c8081480fe09e481af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df4966f0713a6e45d6b5fa3c3dffff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">selectedAssetChanged</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
+<tr class="memdesc:a8df4966f0713a6e45d6b5fa3c3dffff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the selected Asset in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.  <a href="#a8df4966f0713a6e45d6b5fa3c3dffff0">More...</a><br /></td></tr>
+<tr class="separator:a8df4966f0713a6e45d6b5fa3c3dffff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50b32ea1609d95d1b70e5e854be7d5ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">selectedItemChanged</a> (QGraphicsItem *item)</td></tr>
+<tr class="memdesc:a50b32ea1609d95d1b70e5e854be7d5ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the selected Graphics Item in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.  <a href="#a50b32ea1609d95d1b70e5e854be7d5ab">More...</a><br /></td></tr>
+<tr class="separator:a50b32ea1609d95d1b70e5e854be7d5ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4d4fb46ee86ed57711f7ffd3d8a7d88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">currentAnalysisChanged</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt; analysis)</td></tr>
+<tr class="memdesc:ae4d4fb46ee86ed57711f7ffd3d8a7d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the current Analysis changes to reload the window asset.  <a href="#ae4d4fb46ee86ed57711f7ffd3d8a7d88">More...</a><br /></td></tr>
+<tr class="separator:ae4d4fb46ee86ed57711f7ffd3d8a7d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad161cdae08ac31d145d2db8eab21ed0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">checkSyntax</a> ()</td></tr>
+<tr class="separator:ad161cdae08ac31d145d2db8eab21ed0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa403b97c0d4aead5dc7216024f877abb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa403b97c0d4aead5dc7216024f877abb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">undoAvailable</a> (bool available)</td></tr>
+<tr class="memdesc:aa403b97c0d4aead5dc7216024f877abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when an undo is first available to enable the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s undo action. <br /></td></tr>
+<tr class="separator:aa403b97c0d4aead5dc7216024f877abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd37002df13cc765000349295a634dd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd37002df13cc765000349295a634dd3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#afd37002df13cc765000349295a634dd3">redoAvailable</a> (bool available)</td></tr>
+<tr class="memdesc:afd37002df13cc765000349295a634dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a redo is first available to enable the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s redo action. <br /></td></tr>
+<tr class="separator:afd37002df13cc765000349295a634dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88ecce6e764ca0283cb0541b0b2833e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">searchTextChanged</a> (const QString &amp;text)</td></tr>
+<tr class="memdesc:a88ecce6e764ca0283cb0541b0b2833e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when text in the search box changes to initiate a search for the input string.  <a href="#a88ecce6e764ca0283cb0541b0b2833e6">More...</a><br /></td></tr>
+<tr class="separator:a88ecce6e764ca0283cb0541b0b2833e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2f2fd596ee880e69a7c04106eb553f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2f2fd596ee880e69a7c04106eb553f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">matchCaseChanged</a> (int state)</td></tr>
+<tr class="memdesc:af2f2fd596ee880e69a7c04106eb553f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the matchCase checkbox changes to update the active search using <a class="el" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6" title="Called when text in the search box changes to initiate a search for the input string. ">searchTextChanged()</a>. <br /></td></tr>
+<tr class="separator:af2f2fd596ee880e69a7c04106eb553f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ad08f5c94fd044431b93303b2801715b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad08f5c94fd044431b93303b2801715b9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">createActions</a> ()</td></tr>
+<tr class="memdesc:ad08f5c94fd044431b93303b2801715b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creats actions used in various parts of the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> (ie. Toolbar, ContextMenu, etc). <br /></td></tr>
+<tr class="separator:ad08f5c94fd044431b93303b2801715b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f74c1265458425a581bc9ad305cf4c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f74c1265458425a581bc9ad305cf4c1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">connectActions</a> ()</td></tr>
+<tr class="memdesc:a2f74c1265458425a581bc9ad305cf4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects actions created in <a class="el" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9" title="Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc). ">createActions()</a> to the functionality that should occur when they are triggered. <br /></td></tr>
+<tr class="separator:a2f74c1265458425a581bc9ad305cf4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47621c844ac5d0c13e716c38ace367c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af47621c844ac5d0c13e716c38ace367c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">createMenus</a> ()</td></tr>
+<tr class="memdesc:af47621c844ac5d0c13e716c38ace367c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates context menus using actions created in <a class="el" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9" title="Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc). ">createActions()</a>. <br /></td></tr>
+<tr class="separator:af47621c844ac5d0c13e716c38ace367c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1f33d36da192385cec3dfdb24f187c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1f33d36da192385cec3dfdb24f187c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">createToolbars</a> ()</td></tr>
+<tr class="memdesc:ad1f33d36da192385cec3dfdb24f187c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s Toolbars using actions created in <a class="el" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9" title="Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc). ">createActions()</a> as well as other widgets created here. <br /></td></tr>
+<tr class="separator:ad1f33d36da192385cec3dfdb24f187c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad67bfe0ade9532d93690e8b8f3093f1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a> ()</td></tr>
+<tr class="memdesc:ad67bfe0ade9532d93690e8b8f3093f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> based on the current DesignRoot.  <a href="#ad67bfe0ade9532d93690e8b8f3093f1e">More...</a><br /></td></tr>
+<tr class="separator:ad67bfe0ade9532d93690e8b8f3093f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d428d8f99e670ea4d76f2da80791ce1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">updateEnabledActions</a> ()</td></tr>
+<tr class="memdesc:a6d428d8f99e670ea4d76f2da80791ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> actions that are enabled based on the currently <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> context.  <a href="#a6d428d8f99e670ea4d76f2da80791ce1">More...</a><br /></td></tr>
+<tr class="separator:a6d428d8f99e670ea4d76f2da80791ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a218dc2f72aba3b56e82fb2920fcf52c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a218dc2f72aba3b56e82fb2920fcf52c1"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+<tr class="separator:a218dc2f72aba3b56e82fb2920fcf52c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae75f8e95d585b33cd7aca02886e63ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae75f8e95d585b33cd7aca02886e63ad"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:aae75f8e95d585b33cd7aca02886e63ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d07b9a0f2e94d2d7183bbbcbe1e361"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4d07b9a0f2e94d2d7183bbbcbe1e361"></a>
+<a class="el" href="class_diagram_scene.html">DiagramScene</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>scene</b></td></tr>
+<tr class="separator:af4d07b9a0f2e94d2d7183bbbcbe1e361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8115bb9b53320c72f0c2e1acd7f7d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe8115bb9b53320c72f0c2e1acd7f7d7"></a>
+<a class="el" href="class_diagram_scene.html">DiagramScene</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>topmostScene</b></td></tr>
+<tr class="separator:afe8115bb9b53320c72f0c2e1acd7f7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab64f226038b5996d49f0ba89f2827eae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab64f226038b5996d49f0ba89f2827eae"></a>
+<a class="el" href="class_toolbox.html">Toolbox</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>toolbox_</b></td></tr>
+<tr class="separator:ab64f226038b5996d49f0ba89f2827eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f51edd3b36b466b31d2349790b5baa7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f51edd3b36b466b31d2349790b5baa7"></a>
+QGraphicsView *&#160;</td><td class="memItemRight" valign="bottom"><b>view</b></td></tr>
+<tr class="separator:a4f51edd3b36b466b31d2349790b5baa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb30d1f2e18830794488f6902ad5b852"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb30d1f2e18830794488f6902ad5b852"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>exitAction</b></td></tr>
+<tr class="separator:aeb30d1f2e18830794488f6902ad5b852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60cc728cf210cb9f68167bc228da2c91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60cc728cf210cb9f68167bc228da2c91"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>addAction</b></td></tr>
+<tr class="separator:a60cc728cf210cb9f68167bc228da2c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90f4ed971484aff37bf467724b8530da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90f4ed971484aff37bf467724b8530da"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>deleteAction</b></td></tr>
+<tr class="separator:a90f4ed971484aff37bf467724b8530da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac1bc6b5a0b85b2c13f9633e71cdf2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaac1bc6b5a0b85b2c13f9633e71cdf2f"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>copyAction</b></td></tr>
+<tr class="separator:aaac1bc6b5a0b85b2c13f9633e71cdf2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43de6caa822853379ff4d38c04cb937f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43de6caa822853379ff4d38c04cb937f"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>analysisExportAction</b></td></tr>
+<tr class="separator:a43de6caa822853379ff4d38c04cb937f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697050a8738d59ee0167d746c0275f66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a697050a8738d59ee0167d746c0275f66"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>analysisImportAction</b></td></tr>
+<tr class="separator:a697050a8738d59ee0167d746c0275f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0e310660efc6f8553b31937c20c632"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca0e310660efc6f8553b31937c20c632"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>pasteAction</b></td></tr>
+<tr class="separator:aca0e310660efc6f8553b31937c20c632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71318d37687fe1a3324cbf12894acae7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71318d37687fe1a3324cbf12894acae7"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>aboutAction</b></td></tr>
+<tr class="separator:a71318d37687fe1a3324cbf12894acae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad581232cb9f9ce87c81fb33fc16f3d8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad581232cb9f9ce87c81fb33fc16f3d8f"></a>
+QLineEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>searchBox</b></td></tr>
+<tr class="separator:ad581232cb9f9ce87c81fb33fc16f3d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c0ecef514ea82e18489b8e6009bc79f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c0ecef514ea82e18489b8e6009bc79f"></a>
+QCheckBox *&#160;</td><td class="memItemRight" valign="bottom"><b>matchCase</b></td></tr>
+<tr class="separator:a2c0ecef514ea82e18489b8e6009bc79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a082c84304e16d0b9033cd52cbacebc8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a082c84304e16d0b9033cd52cbacebc8e"></a>
+QFrame *&#160;</td><td class="memItemRight" valign="bottom"><b>searchWidget</b></td></tr>
+<tr class="separator:a082c84304e16d0b9033cd52cbacebc8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8419c359c54006cc61cc97196489564c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8419c359c54006cc61cc97196489564c"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>checkSyntaxAction_</b></td></tr>
+<tr class="separator:a8419c359c54006cc61cc97196489564c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bbd996e46ebf788daa899b1e05f2978"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bbd996e46ebf788daa899b1e05f2978"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>undoAction</b></td></tr>
+<tr class="separator:a1bbd996e46ebf788daa899b1e05f2978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a281c751317698e2e1550764c2adb3173"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a281c751317698e2e1550764c2adb3173"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>redoAction</b></td></tr>
+<tr class="separator:a281c751317698e2e1550764c2adb3173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25a4032fbbc6827413c2ab74307db210"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25a4032fbbc6827413c2ab74307db210"></a>
+<a class="el" href="class_picto_1_1_analysis_option_widget.html">AnalysisOptionWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>analysisOption_</b></td></tr>
+<tr class="separator:a25a4032fbbc6827413c2ab74307db210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9f79d9a73419583c54ead8b34fb720e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9f79d9a73419583c54ead8b34fb720e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedIndex_</b></td></tr>
+<tr class="separator:ac9f79d9a73419583c54ead8b34fb720e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e5891011e445b3dae3f249cc83b96cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e5891011e445b3dae3f249cc83b96cd"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>fileMenu</b></td></tr>
+<tr class="separator:a3e5891011e445b3dae3f249cc83b96cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674a17f0960409a57deb49ef96de388d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a674a17f0960409a57deb49ef96de388d"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>itemMenu</b></td></tr>
+<tr class="separator:a674a17f0960409a57deb49ef96de388d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78caf0ce37604c26652d6665c22b32fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78caf0ce37604c26652d6665c22b32fb"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>sceneMenu</b></td></tr>
+<tr class="separator:a78caf0ce37604c26652d6665c22b32fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45124748c52ba0449aef038593a10538"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45124748c52ba0449aef038593a10538"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>aboutMenu</b></td></tr>
+<tr class="separator:a45124748c52ba0449aef038593a10538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676aded3abe61565556841b08159a0a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a676aded3abe61565556841b08159a0a5"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>editToolBar</b></td></tr>
+<tr class="separator:a676aded3abe61565556841b08159a0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52af9c804bc84a673f924ecd10c2226"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa52af9c804bc84a673f924ecd10c2226"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>pointerToolbar</b></td></tr>
+<tr class="separator:aa52af9c804bc84a673f924ecd10c2226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf3cb30fb649989d3ebb05e7e48f7789"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf3cb30fb649989d3ebb05e7e48f7789"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>sceneScaleCombo</b></td></tr>
+<tr class="separator:adf3cb30fb649989d3ebb05e7e48f7789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5a548f0828d61f742fbf4fa938a0cbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5a548f0828d61f742fbf4fa938a0cbe"></a>
+QSharedPointer&lt; QButtonGroup &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buttonGroup</b></td></tr>
+<tr class="separator:ab5a548f0828d61f742fbf4fa938a0cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec278fa80407958a56611c6c52530eff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec278fa80407958a56611c6c52530eff"></a>
+QSharedPointer&lt; QButtonGroup &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundButtonGroup</b></td></tr>
+<tr class="separator:aec278fa80407958a56611c6c52530eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a428165f245727ad5e7651629a45e960a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a428165f245727ad5e7651629a45e960a"></a>
+QToolButton *&#160;</td><td class="memItemRight" valign="bottom"><b>fillColorToolButton</b></td></tr>
+<tr class="separator:a428165f245727ad5e7651629a45e960a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1dfbb5c126f671a16fd47bd7109ed8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c1dfbb5c126f671a16fd47bd7109ed8"></a>
+QToolButton *&#160;</td><td class="memItemRight" valign="bottom"><b>lineColorToolButton</b></td></tr>
+<tr class="separator:a5c1dfbb5c126f671a16fd47bd7109ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a22446a13afe87cf8f33396f6ec286f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a22446a13afe87cf8f33396f6ec286f"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>textAction</b></td></tr>
+<tr class="separator:a0a22446a13afe87cf8f33396f6ec286f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dca1d0a44ec3a2689cbaa4174ab5935"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dca1d0a44ec3a2689cbaa4174ab5935"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>fillAction</b></td></tr>
+<tr class="separator:a7dca1d0a44ec3a2689cbaa4174ab5935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a590696af54a8aea552e8f1defe911c1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a590696af54a8aea552e8f1defe911c1b"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>lineAction</b></td></tr>
+<tr class="separator:a590696af54a8aea552e8f1defe911c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942273f2fdd2243551ad711dbd64bfe0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a942273f2fdd2243551ad711dbd64bfe0"></a>
+<a class="el" href="class_level_up_button.html">LevelUpButton</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>upButton</b></td></tr>
+<tr class="separator:a942273f2fdd2243551ad711dbd64bfe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd417523ee181c3827429f3e5e284d67"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd417523ee181c3827429f3e5e284d67"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>propertyEditor_</b></td></tr>
+<tr class="separator:abd417523ee181c3827429f3e5e284d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818345a930d93f0c88816ede0ddd3a42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a818345a930d93f0c88816ede0ddd3a42"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>notesWidget_</b></td></tr>
+<tr class="separator:a818345a930d93f0c88816ede0ddd3a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe966a33c1e4e0197a531434626a84a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfe966a33c1e4e0197a531434626a84a"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>assetInfoBox_</b></td></tr>
+<tr class="separator:adfe966a33c1e4e0197a531434626a84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4963d01c97498b1b2439ca3fb18f2afe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4963d01c97498b1b2439ca3fb18f2afe"></a>
+<a class="el" href="class_syntax_error_box.html">SyntaxErrorBox</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>syntaxErrorBox_</b></td></tr>
+<tr class="separator:a4963d01c97498b1b2439ca3fb18f2afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e8835917cac3822a8bac3d34b4e3c4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e8835917cac3822a8bac3d34b4e3c4a"></a>
+<a class="el" href="class_about_element_box.html">AboutElementBox</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>aboutElementBox_</b></td></tr>
+<tr class="separator:a9e8835917cac3822a8bac3d34b4e3c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa60d183d4a7bec3df45d13865859f8c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa60d183d4a7bec3df45d13865859f8c7"></a>
+QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b></td></tr>
+<tr class="separator:aa60d183d4a7bec3df45d13865859f8c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analyses. </p>
@@ -172,7 +396,91 @@ Public Member Functions</h2></td></tr>
 <p>Use this function instead of setEnabled() to enable/disable the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
 <p>This function not only enable/disables user interaction with the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> like setEnabled() does, it also disables some of the internal operations of the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> such that editing of the Design from other locations will not have undesirable side effects. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00139">139</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00142">142</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad161cdae08ac31d145d2db8eab21ed0c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::checkSyntax </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Checks the syntax of the current XML to see if it is a legal experiment</p>
+<p>In the process it sets the displayed tab in the InfoPane to the <a class="el" href="class_syntax_error_box.html" title="A Syntax Error widget used to display the output of the Picto Design Validation (ie. compilation) process. ">SyntaxErrorBox</a> tab. so that the designer can see the output. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00303">303</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae4d4fb46ee86ed57711f7ffd3d8a7d88"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::currentAnalysisChanged </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt;&#160;</td>
+          <td class="paramname"><em>analysis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the current Analysis changes to reload the window asset. </p>
+<p>If we are switching Analyses or into or out of an Analysis mode, things are displayed differently on the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas. AnalysisElement specific to the current Analysis are shown. If an Analysis is active, experimental elements need to be grayed out. This assures that the editorState redraws its window properly now that it knows about the currently selected analysis. </p><dl class="section note"><dt>Note</dt><dd>This appears to just be helping the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> do its job. Probably this functionality should be moved out of this class and just happen automatically inside the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> when it emits the <a class="el" href="class_editor_state.html#a50e0836cdfe1d8272171575b2f33a918" title="Emitted if the Analysis currently being displayed in the Designer changed. currAnalysis is the new ac...">EditorState::currentAnalysisChanged()</a> signal. </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00290">290</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae9a6d5e594e6a4b4a9e55f9b5ad67db0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::insertEditBlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations. </p>
+<p>We make undo/redo slow but easy to program by serializing the Design every time an important change was made and copying it into a document who's operations are tracked for undo/redo purposes. That way to undo/redo we just undo/redo the document and reload the Design from that document. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00225">225</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -193,7 +501,292 @@ Public Member Functions</h2></td></tr>
 <p>Called before displaying the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> on screen to set the DesignRoot on which it will operate. </p>
 <p>In essence, a <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s entire purpose is to operate on a DesignRoot. Call this function to initialize it for operation with the input DesignRoot. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00105">105</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00108">108</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac25bc4154a4a4b4b344047d0fa021e1b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::loadScene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_diagram_scene.html">DiagramScene</a> *&#160;</td>
+          <td class="paramname"><em>newScene</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is an initialization function that loads the input scene as the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> Scene. </p>
+<p>Originally, the designer used to function differently with lots of different scenes being loaded back and forth depengin on which Element was the Window Asset. Now we only use a single scene that updates itself depending on th Window Asset. This functions contents could probably just be moved into a larger intialization function at some point. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00176">176</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a81538552ba4b84302354a882933917a4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::performRedoAction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Redoes a previously undone significant action in the Design. </p>
+<p>Calls redo on the underlying XML document, rebuilds the designRoot based on that document and resets this <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with the new objects underlying the DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0" title="Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...">insertEditBlock()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00247">247</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab98b0f012253a516d6deb316f9584014"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::performUndoAction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Undoes the last significant action in the Design. </p>
+<p>Calls undo on the underlying XML document, rebuilds the designRoot based on that document and resets this <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with the new objects underlying the DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0" title="Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...">insertEditBlock()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00235">235</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad67bfe0ade9532d93690e8b8f3093f1e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Designer::resetEditor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> based on the current DesignRoot. </p>
+<p>There are a number of actions that result in the element objects contained in the DesignRoot changing. This function resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with whatever elements are contained in the currently loaded DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a88737acaeeaf7223fdd2f928df93ba8d" title="Called before displaying the Designer on screen to set the DesignRoot on which it will operate...">loadDesign()</a>, <a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026" title="Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...">resetExperiment()</a>, <a class="el" href="class_designer.html#ab98b0f012253a516d6deb316f9584014" title="Undoes the last significant action in the Design. ">performUndoAction()</a>, <a class="el" href="class_designer.html#a81538552ba4b84302354a882933917a4" title="Redoes a previously undone significant action in the Design. ">performRedoAction()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00465">465</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7e2f40ef01fc309032a9c0cd9ef68026"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::resetExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the associated DesignRoot from its XML code and then resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to function with the newly reset object. </p>
+<p>This is useful because some operations currently require rebuildling the design from text. For example, currently deleting an element in Picto just sets a deleted flag on that element that tells it not to serialize itself out. This helps with maintaining the general serialized XML structure through changes to the design, but in order to actually make the element disappear in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> we need to then rebuild the whole design from its XML text. Obviously that is extremely inefficient but this is the kind of tradeoff that sometimes sped up the Picto development schedule at the expense of runtime efficiency. If you have time, please rework the system such that we won't need to use inefficient functions like this one. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00211">211</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a88ecce6e764ca0283cb0541b0b2833e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::searchTextChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when text in the search box changes to initiate a search for the input string. </p>
+<p>Whenever the text in the searchbox is updated, a search is initiated within the Experimental and Active Analysis assets. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00575">575</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8df4966f0713a6e45d6b5fa3c3dffff0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::selectedAssetChanged </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the selected Asset in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly. </p>
+<dl class="section note"><dt>Note</dt><dd>This would appear to be redundant with <a class="el" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab" title="Called when the selected Graphics Item in the Designer canvas changes to update the actions available...">selectedItemChanged()</a>, it might be worth looking into. </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00269">269</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a50b32ea1609d95d1b70e5e854be7d5ab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::selectedItemChanged </td>
+          <td>(</td>
+          <td class="paramtype">QGraphicsItem *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the selected Graphics Item in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly. </p>
+<dl class="section note"><dt>Note</dt><dd>This would appear to be redundant with <a class="el" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0" title="Called when the selected Asset in the Designer canvas changes to update the actions available in the ...">selectedAssetChanged()</a>, it might be worth looking into. </dd></dl>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00277">277</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7bb1ee2787b4a6c8081480fe09e481af"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::setOpenAsset </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tells the DesignRoot which asset is currently open in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> so that this information can be saved out with the Design. </p>
+<p>Along with the other UI specific information like Elements' canvas positions, we save the currently opened asset in the Design file. This allows the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to open Designs to the last Window Asset that was open when they were saved. It also helps in Undo/Redo by moving us to the spot where we were before the last edit block occured (for undo) or after the next redo block occured (for redo). </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00260">260</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6d428d8f99e670ea4d76f2da80791ce1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Designer::updateEnabledActions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> actions that are enabled based on the currently <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> context. </p>
+<p>Which actions are enabled depends on what element is currently selected as well as whether the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> is operating in Experiment or Analysis mode. This updates the available actions accordingly. </p>
+
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00486">486</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>

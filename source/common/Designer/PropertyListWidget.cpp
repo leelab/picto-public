@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <QMetaObject>
+#include <QSpacerItem>
 #include "PropertyListWidget.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/memleakdetect.h"
@@ -7,10 +8,10 @@ using namespace Picto;
 ;
 
 /*! \brief Constructs a new PropertyListWidget
- *	\details trackInitVals indicates whether Property widgets created for this PropertyListWidget should set/show init values for the input Properties
- *	or if they should set/show saveValues for the input Properties.  editorState is passed into the PropertyEditorFactory constructor.
- *	We connect the PropertyEditorFactory::propertyEdited() signal to propertyWasEdited() so that we can update Property values when their 
- *	widget's values are updated.
+ *	\details trackInitVals indicates whether Property widgets created for this PropertyListWidget should set/show init
+ *	values for the input Properties or if they should set/show saveValues for the input Properties.  editorState is
+ *	passed into the PropertyEditorFactory constructor. We connect the PropertyEditorFactory::propertyEdited() signal
+ *	to propertyWasEdited() so that we can update Property values when their widget's values are updated.
  */
  PropertyListWidget::PropertyListWidget(bool trackInitVals, QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
@@ -23,11 +24,14 @@ using namespace Picto;
         this, SLOT(propertyWasEdited(QSharedPointer<Property>,QVariant)));
 	setLayout(new QVBoxLayout());
 	layout()->addWidget(browser_);
-	layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);//This makes sure resizing of internal widgets is handled correctly
+
+	//This makes sure the resizing of internal widgets is handled correctly
+	layout()->setSizeConstraint(QLayout::SetMinAndMaxSize);
 	layout()->setContentsMargins(QMargins(0,0,0,0));
 
-	//Set up the property browser by connecting the input propManager with the input propertyFactory such that QtVariantProperties in
-	//the input property manager will have their widgets created by the input property factory and displayed in the browser_.
+	//Set up the property browser by connecting the input propManager with the input propertyFactory such that
+	// QtVariantProperties in the input property manager will have their widgets created by the input property factory
+	// and displayed in the browser_.
 	//See http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html#setFactoryForManager
 	browser_->setFactoryForManager(&propManager_, &propertyFactory_);
 }
@@ -41,9 +45,8 @@ PropertyListWidget::~PropertyListWidget()
 }
 
 /*! \brief Creates widgets for the input Properties and displays them.
- *	\details This function separates out regular Property objects from Script Property objects.
- *	The details of actually creating the approriate widgets and displaying them are handled by
- *	addScriptProperty() and addProperty().
+ *	\details This function separates out regular Property objects from Script Property objects. The details of actually
+ *	creating the approriate widgets and displaying them are handled by addScriptProperty() and addProperty().
  */
 void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Property>> props)
 {
@@ -63,28 +66,30 @@ void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Pro
 	show();
 }
 
-/*! \brief Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored to the input Property.
- *	and display it.
+/*! \brief Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored to the
+ *	input Property and display it.
  *	\details Since we called
  *	\code browser_->setFactoryForManager(&propManager_, &propertyFactory_); \endcode
- *	in the constructor, QtVariantProperties created by the input manager will have their widgets created by our PropertyEditorFactory and
- *	displayed in the browser when we call
+ *	in the constructor, QtVariantProperties created by the input manager will have their widgets created by our
+ *	PropertyEditorFactory and displayed in the browser when we call
  *	\code browser->addProperty(item); \endcode.
- *	In this function, we first use the input manager to create a QtVariantProperty for the input Property, then set its value to the current
- *	value of the Property and add it to the browser.  This causes the PropertyEditorFactory to create a widget of the appropraite type for the 
- *	QtVariantProperty.  We then connect the input Properties Property::valueChanged() or Property::initValueChanged() signal (according to 
- *	trackInitVals) to propertyWasEditedExternally().  This allows us to update the QtVariantProperty value whenever the Property value
- *	changes so that our widget values will always be up to date.  In the opposite direction, just before creating each widget in the 
- *	PropertyEditorFactory, we call PropertyEditorFactory::setNextProperty().  This allows it to track which QtVariantProperty is connected to
- *	which Picto Property.  Since we connected the PropertyEditorFactory::propertyEdited() signal to propertyWasEdited() in the constructor, 
- *	whenever the PropertyEditorFactory detects that a widget value for a particular Propery was edited, we will find out about it and 
- *	can the change the Property value accordingly in that function.
- *	This all seems very convoluded, but doing things this way allows us to make use of the QtPropertyBrowser system which gives us a lot
- *	of nice automatically generated widget functionality for free.  Someday when someone has time we should probably just implement all
- *	of this ourselves and get rid of the complexity.
- *	\note There is another possible source of confusion here which is that when we are not using trackInitVals_ we set/get the Property
- *	value and not the Property saveValue.  This has to do with the fact that when set Properties into runMode, value() references the
- *	Property's runValue but when it isn't in runMode value() references the Property's saveValue.  For more detail see Property.
+ *	In this function, we first use the input manager to create a QtVariantProperty for the input Property, then set its
+ *	value to the current value of the Property and add it to the browser.  This causes the PropertyEditorFactory to create
+ *	a widget of the appropraite type for the QtVariantProperty.  We then connect the input Properties
+ *	Property::valueChanged() or Property::initValueChanged() signal (according to trackInitVals) to
+ *	propertyWasEditedExternally().  This allows us to update the QtVariantProperty value whenever the Property value
+ *	changes so that our widget values will always be up to date.  In the opposite direction, just before creating each
+ *	widget in the PropertyEditorFactory, we call PropertyEditorFactory::setNextProperty().  This allows it to track which
+ *	QtVariantProperty is connected to which Picto Property.  Since we connected the PropertyEditorFactory::propertyEdited()
+ *	signal to propertyWasEdited() in the constructor, whenever the PropertyEditorFactory detects that a widget value for a
+ *	particular Propery was edited, we will find out about it and can the change the Property value accordingly in that
+ *	function. This all seems very convoluded, but doing things this way allows us to make use of the QtPropertyBrowser
+ *	system which gives us a lot of nice automatically generated widget functionality for free.  Someday when someone has
+ *	time we should probably just implement all of this ourselves and get rid of the complexity.
+ *	\note There is another possible source of confusion here which is that when we are not using trackInitVals_ we
+ *	set/get the Property value and not the Property saveValue.  This has to do with the fact that when set Properties
+ *	into runMode, value() references the Property's runValue but when it isn't in runMode value() references the
+ *	Property's saveValue.  For more detail see Property.
  *	\sa http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html#setFactoryForManager
 */
 void PropertyListWidget::addProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser)
@@ -109,11 +114,12 @@ void PropertyListWidget::addProperty(QSharedPointer<Property> prop,QtVariantProp
 	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*,QSharedPointer<Property>>(item,prop);
 }
 
-/*! \brief Works like addProperty() accept that ScriptProperties come with a button that allows them to be opened or closed so as to save space in the UI.
- *	\details To implement the open/close button we just create a group QtVariantProperty in the QtVariantPropertyManager and then add the QtVariantProperty representing
- *	the script as a sub-QtVariantProperty of that group QtVariantProperty.  This causes the property to appear "within" a button when we add the group to the
- *	browser.  
- *	\note This is probably very difficult to understand if you haven't read the documentation for addProperty() yet.  
+/*! \brief Works like addProperty() except that ScriptProperties come with a button that allows them to be opened or
+ *	closed so as to save space in the UI.
+ *	\details To implement the open/close button we just create a group QtVariantProperty in the QtVariantPropertyManager
+ *	and then add the QtVariantProperty representing the script as a sub-QtVariantProperty of that group QtVariantProperty.
+ *	This causes the property to appear "within" a button when we add the group to the browser.  
+ *	\note This is probably very difficult to understand if you haven't read the documentation for addProperty() yet.
  */
 void PropertyListWidget::addScriptProperty(QSharedPointer<Property> prop,QtVariantPropertyManager* manager,QtAbstractPropertyBrowser* browser)
 {
@@ -125,10 +131,11 @@ void PropertyListWidget::addScriptProperty(QSharedPointer<Property> prop,QtVaria
 	item->setValue(trackInitVals_?prop->initValue():prop->value());
 	propertyFactory_.setNextProperty(prop);
 	QtBrowserItem* browserItem = browser->addProperty(groupItem);
+
 	if(!item->value().toString().trimmed().isEmpty())
 	{	//When first opening scripts in a property bar, if they have contents, expand them.
-		Q_ASSERT(dynamic_cast<QtButtonPropertyBrowser*>(browser));
-		dynamic_cast<QtButtonPropertyBrowser*>(browser)->setExpanded(browserItem,true);
+		Q_ASSERT(qobject_cast<QtButtonPropertyBrowser*>(browser));
+		qobject_cast<QtButtonPropertyBrowser*>(browser)->setExpanded(browserItem, true);
 	}
 	if(trackInitVals_)
 		connect(prop.data(),SIGNAL(initValueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
@@ -167,9 +174,8 @@ void PropertyListWidget::propertyWasEdited(QSharedPointer<Property> prop,QVarian
 	emit propertyEdited(prop,val);
 }
 
-/*! \brief Called when a Property was edited.  Sets the new value of the Property
- *	to the corresponding QtVariantProperty whose value is driving the Property's 
- *	Widget.
+/*! \brief Called when a Property was edited.  Sets the new value of the Property to the corresponding QtVariantProperty
+ *	whose value is driving the Property's Widget.
  *	\sa addProperty()
  */
 void PropertyListWidget::propertyWasEditedExternally(Property* prop,QVariant val)

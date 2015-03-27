@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_spike_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::SpikeState Class Reference</div>  </div>
@@ -213,6 +215,45 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_spike_state.html#a4368c50ce8f6a06395b1ea41cae26b2b">getWaveformsUntil</a> (double time)</td></tr>
 <tr class="memdesc:a4368c50ce8f6a06395b1ea41cae26b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of waveforms for spikes that occured with times &gt; the current time and &lt;= the input time on the all channels and units. There is a one to one matchup of waveforms from this function and channels from <a class="el" href="class_picto_1_1_spike_state.html#aaab7883be0f0a4f035a9b0c7eb567da1" title="Returns a list of channels for spikes that occured with times > the current time and <= the input tim...">getChannelsUntil()</a>, units from <a class="el" href="class_picto_1_1_spike_state.html#a73c82b648f2dc88b51c6b0de31b0a21a" title="Returns a list of units for spikes that occured with times > the current time and <= the input time o...">getUnitsUntil()</a> and times from <a class="el" href="class_picto_1_1_spike_state.html#ae132eb7cc369b9c174eac9dd38e00413" title="Returns a list of spike times when that occured with times > the current time and <= the input time o...">getTimesUntil()</a>. <br /></td></tr>
 <tr class="separator:a4368c50ce8f6a06395b1ea41cae26b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a63dd7dabc3a7a9f409bc5ba14781f8b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63dd7dabc3a7a9f409bc5ba14781f8b4"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getNextIndex</b> ()</td></tr>
+<tr class="separator:a63dd7dabc3a7a9f409bc5ba14781f8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f3bac4ec72352991a57a161c92d7835"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f3bac4ec72352991a57a161c92d7835"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>globalTimeToRunIndex</b> (double time)</td></tr>
+<tr class="separator:a0f3bac4ec72352991a57a161c92d7835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6fa4e4a8c08234188602770a4c98e920"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fa4e4a8c08234188602770a4c98e920"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:a6fa4e4a8c08234188602770a4c98e920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18256afc1e812688c0dda1beb991b38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab18256afc1e812688c0dda1beb991b38"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:ab18256afc1e812688c0dda1beb991b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab267e33ef9746dd371bad1c1412d4664"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab267e33ef9746dd371bad1c1412d4664"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runStart_</b></td></tr>
+<tr class="separator:ab267e33ef9746dd371bad1c1412d4664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a623fd72d09270c9aea292280fa58e9dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a623fd72d09270c9aea292280fa58e9dd"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runEnd_</b></td></tr>
+<tr class="separator:a623fd72d09270c9aea292280fa58e9dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa2dc39621b79d12d5e96d23277c793"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fa2dc39621b79d12d5e96d23277c793"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>curr_</b></td></tr>
+<tr class="separator:a4fa2dc39621b79d12d5e96d23277c793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac267705b295f46b03c3f239f2c73a05a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac267705b295f46b03c3f239f2c73a05a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sampPeriod_</b></td></tr>
+<tr class="separator:ac267705b295f46b03c3f239f2c73a05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cda631e019644f8ba7f9fe5a8c2a953"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cda631e019644f8ba7f9fe5a8c2a953"></a>
+QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>channels_</b></td></tr>
+<tr class="separator:a5cda631e019644f8ba7f9fe5a8c2a953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f6d637916a7b7b1912d32bc962a9d57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f6d637916a7b7b1912d32bc962a9d57"></a>
+QHash&lt; int, QVariantList &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>unitsLookup_</b></td></tr>
+<tr class="separator:a4f6d637916a7b7b1912d32bc962a9d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb6adb7b3f8cb28472e1aee6c97421c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb6adb7b3f8cb28472e1aee6c97421c0"></a>
+QList&lt; <a class="el" href="struct_picto_1_1_playback_spike_data.html">PlaybackSpikeData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:afb6adb7b3f8cb28472e1aee6c97421c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> and <a class="el" href="class_picto_1_1_spike_reader.html" title="An base class for classes that can provide Spike data over input time ranges. ">SpikeReader</a> classes to load a Picto Session database, extract neural spike data and implement functions for traversing through that data. </p>

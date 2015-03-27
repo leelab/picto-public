@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_start_bar_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StartBarItem Class Reference</div>  </div>
@@ -121,7 +123,7 @@ virtual QPointF&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="separator:a91ef14d7a5395aadc892a933bb5fbf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78c794b44295cce4e1cd95c18756a796"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78c794b44295cce4e1cd95c18756a796"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_start_bar_item.html#a78c794b44295cce4e1cd95c18756a796">paint</a> (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0)</td></tr>
-<tr class="memdesc:a78c794b44295cce4e1cd95c18756a796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wheneverr this item is repainted, we need to update the <a class="el" href="class_script_item_manager.html" title="Manages creation and layout of ScriptItems for the various DiagramItems that use them. ">ScriptItemManager</a> as to the current visible canvas region. so that the scripts will all show up on screen. This calls updateForViewportChanges() to do that. <br /></td></tr>
+<tr class="memdesc:a78c794b44295cce4e1cd95c18756a796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wheneverr this item is repainted, we need to update the <a class="el" href="class_script_item_manager.html" title="Manages creation and layout of ScriptItems for the various DiagramItems that use them. ">ScriptItemManager</a> as to the current visible canvas region. so that the scripts will all show up on screen. This calls <a class="el" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783" title="Reads the position of the top and bottom areas of the displayed canvas and updates the ScriptItemMana...">updateForViewportChanges()</a> to do that. <br /></td></tr>
 <tr class="separator:a78c794b44295cce4e1cd95c18756a796"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_arrow_source_item"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_arrow_source_item')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_arrow_source_item.html">ArrowSourceItem</a></td></tr>
 <tr class="memitem:acf013d5d37182de531c144bb3e536c66 inherit pub_methods_class_arrow_source_item"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf013d5d37182de531c144bb3e536c66"></a>
@@ -254,6 +256,22 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#afe6a5812a322d49ea7da56bfccdc98dc">getEditorState</a> ()</td></tr>
 <tr class="memdesc:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> object that is being used with this <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. <br /></td></tr>
 <tr class="separator:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aaec166dfac6ef86c967000fe3dd5e783"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaec166dfac6ef86c967000fe3dd5e783"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_start_bar_item.html#aaec166dfac6ef86c967000fe3dd5e783">updateForViewportChanges</a> ()</td></tr>
+<tr class="memdesc:aaec166dfac6ef86c967000fe3dd5e783"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the position of the top and bottom areas of the displayed canvas and updates the <a class="el" href="class_script_item_manager.html" title="Manages creation and layout of ScriptItems for the various DiagramItems that use them. ">ScriptItemManager</a> accordingly so that all scripts will appear on screen. <br /></td></tr>
+<tr class="separator:aaec166dfac6ef86c967000fe3dd5e783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa1a46b9e21c7137a3886a7bbfccb6456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1a46b9e21c7137a3886a7bbfccb6456"></a>
+QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>scriptRect_</b></td></tr>
+<tr class="separator:aa1a46b9e21c7137a3886a7bbfccb6456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf4afa35f708b012b751a9ea35a890b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdf4afa35f708b012b751a9ea35a890b"></a>
+QSharedPointer&lt; <a class="el" href="class_script_item_manager.html">ScriptItemManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptItemManager_</b></td></tr>
+<tr class="separator:afdf4afa35f708b012b751a9ea35a890b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

@@ -95,6 +95,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_reward_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::RewardController Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -119,6 +121,15 @@ Inheritance diagram for Picto::RewardController:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_reward_controller_1_1_reward_channel.html">RewardChannel</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains data about a give <a class="el" href="class_picto_1_1_reward.html" title="A StateMachineElement that initiates reward feedback for the test subject. ">Reward</a> channel.  <a href="struct_picto_1_1_reward_controller_1_1_reward_channel.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_reward_controller_1_1_reward_unit.html">RewardUnit</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds data about a particular reward to be supplied.  <a href="struct_picto_1_1_reward_controller_1_1_reward_unit.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a287522c7b84e646e85f5aa85dc49bb74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward_controller.html#a287522c7b84e646e85f5aa85dc49bb74">addReward</a> (unsigned int channel, int quantity, int minRewardPeriod)</td></tr>
@@ -196,6 +207,28 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>channelCount_</b></td>
 <tr class="memitem:ad6f932bbc885d692776095ce1f907593"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6f932bbc885d692776095ce1f907593"></a>
 QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardVolumes_</b></td></tr>
 <tr class="separator:ad6f932bbc885d692776095ce1f907593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a0fdf778975117e1fd3c507bb2a71a33a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fdf778975117e1fd3c507bb2a71a33a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward_controller.html#a0fdf778975117e1fd3c507bb2a71a33a">appendDeliveredRewards</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_data_unit.html">RewardDataUnit</a> &gt; rewardUnit)</td></tr>
+<tr class="memdesc:a0fdf778975117e1fd3c507bb2a71a33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">triggerRewards()</a> to append a reward that has been supplied to a list that is accessable from <a class="el" href="class_picto_1_1_reward_controller.html#a1a56936f22612a215077b3ab494b27c5" title="Returns a list of the latest rewards to have been supplied, clearing it in the process. ">getDeliveredRewards()</a> <br /></td></tr>
+<tr class="separator:a0fdf778975117e1fd3c507bb2a71a33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a01205fd62ce73e3e7716e1266cf543af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01205fd62ce73e3e7716e1266cf543af"></a>
+QHash&lt; int, <a class="el" href="struct_picto_1_1_reward_controller_1_1_reward_channel.html">RewardChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardChannels_</b></td></tr>
+<tr class="separator:a01205fd62ce73e3e7716e1266cf543af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa44f3834b2aededdd0c8a8d72ef6fca2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa44f3834b2aededdd0c8a8d72ef6fca2"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_data_unit.html">RewardDataUnit</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deliveredRewards_</b></td></tr>
+<tr class="separator:aa44f3834b2aededdd0c8a8d72ef6fca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ae2ca5070991c1e9358840501c116e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ae2ca5070991c1e9358840501c116e9"></a>
+<a class="el" href="class_picto_1_1_timestamper.html">Timestamper</a>&#160;</td><td class="memItemRight" valign="bottom"><b>stamper_</b></td></tr>
+<tr class="separator:a4ae2ca5070991c1e9358840501c116e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9e348e4c65cde00e4ad1850a86a41b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9e348e4c65cde00e4ad1850a86a41b3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>discardOverlap_</b></td></tr>
+<tr class="separator:aa9e348e4c65cde00e4ad1850a86a41b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the base class for classes that provide rewards to the subject of a Picto experiment. </p>

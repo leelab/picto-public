@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_d3_d_compositing_surface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::D3DCompositingSurface Class Reference</div>  </div>
@@ -142,6 +144,25 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a5f83658c486a563a563578965b2f0d22 inherit pub_methods_struct_picto_1_1_compositing_surface"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_compositing_surface.html#a5f83658c486a563a563578965b2f0d22">scalable</a> ()</td></tr>
 <tr class="memdesc:a5f83658c486a563a563578965b2f0d22 inherit pub_methods_struct_picto_1_1_compositing_surface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the compositing surface is scalable, and false otherwise.  <a href="#a5f83658c486a563a563578965b2f0d22">More...</a><br /></td></tr>
 <tr class="separator:a5f83658c486a563a563578965b2f0d22 inherit pub_methods_struct_picto_1_1_compositing_surface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a56fa74fbc8863325da2b19641bdcd7a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56fa74fbc8863325da2b19641bdcd7a9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">d3dFail</a> (QString)</td></tr>
+<tr class="memdesc:a56fa74fbc8863325da2b19641bdcd7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs an error message if something goes wrong with IDirect3DDevice9. <br /></td></tr>
+<tr class="separator:a56fa74fbc8863325da2b19641bdcd7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a928c1c6833cf6b464044f8fcdb1aaa50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a928c1c6833cf6b464044f8fcdb1aaa50"></a>
+LPDIRECT3DTEXTURE9&#160;</td><td class="memItemRight" valign="bottom"><b>texture_</b></td></tr>
+<tr class="separator:a928c1c6833cf6b464044f8fcdb1aaa50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a3628d20af2ba51c429081f8fa6d0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21a3628d20af2ba51c429081f8fa6d0f"></a>
+IDirect3DDevice9 *&#160;</td><td class="memItemRight" valign="bottom"><b>pD3dDevice_</b></td></tr>
+<tr class="separator:a21a3628d20af2ba51c429081f8fa6d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf63dbf2e20b18dde634e6f47e22ba41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf63dbf2e20b18dde634e6f47e22ba41"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>imageHeight_</b></td></tr>
+<tr class="separator:aaf63dbf2e20b18dde634e6f47e22ba41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="struct_picto_1_1_compositing_surface.html" title="A base class that represents an area with a drawing on it. ">CompositingSurface</a> that converts a QImage to a LPDIRECT3DTEXTURE9 for Direct3D. </p>

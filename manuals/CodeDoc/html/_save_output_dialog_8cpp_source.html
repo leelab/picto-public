@@ -105,8 +105,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;defaultPath_(savePath),</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;defaultSubDirSetting_(defaultSubDirSetting)</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    setup();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    addCheckBox();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="class_save_output_dialog.html#a19eb5189e48104d74feaa6a99bc23329">setup</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="class_save_output_dialog.html#aa368b82311e4bde107047df0e05cff9f">addCheckBox</a>();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="class_save_output_dialog.html#a4040f42ae9a12d196e689d1bc6d9eb2e">   25</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_save_output_dialog.html#a4040f42ae9a12d196e689d1bc6d9eb2e">SaveOutputDialog::showDialog</a>()</div>
@@ -135,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> saveState();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> SaveOutputDialog::setup()</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_save_output_dialog.html#a19eb5189e48104d74feaa6a99bc23329">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_save_output_dialog.html#a19eb5189e48104d74feaa6a99bc23329">SaveOutputDialog::setup</a>()</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(QDir(defaultPath_).exists())</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        setDirectory(defaultPath_);</div>
@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    selectedDir_ = <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> SaveOutputDialog::addCheckBox()</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_save_output_dialog.html#aa368b82311e4bde107047df0e05cff9f">   70</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_save_output_dialog.html#aa368b82311e4bde107047df0e05cff9f">SaveOutputDialog::addCheckBox</a>()</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;{</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QDialogButtonBox *box = findChild&lt;QDialogButtonBox*&gt;();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    Q_ASSERT(box);</div>
@@ -155,9 +155,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    subDirOpCheck_-&gt;setChecked(defaultSubDirSetting_);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    l-&gt;insertWidget(0, subDirOpCheck_);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="ttc" id="class_save_output_dialog_html_aa368b82311e4bde107047df0e05cff9f"><div class="ttname"><a href="class_save_output_dialog.html#aa368b82311e4bde107047df0e05cff9f">SaveOutputDialog::addCheckBox</a></div><div class="ttdeci">void addCheckBox()</div><div class="ttdoc">Adds a "use seperate subdirs" checkbox to the dialog. </div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00070">SaveOutputDialog.cpp:70</a></div></div>
 <div class="ttc" id="class_save_output_dialog_html_a4040f42ae9a12d196e689d1bc6d9eb2e"><div class="ttname"><a href="class_save_output_dialog.html#a4040f42ae9a12d196e689d1bc6d9eb2e">SaveOutputDialog::showDialog</a></div><div class="ttdeci">void showDialog()</div><div class="ttdoc">Presents the the dialog UI to the user and gets the results which can be accessed with getSelectedDir...</div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00025">SaveOutputDialog.cpp:25</a></div></div>
 <div class="ttc" id="class_save_output_dialog_html_a8ffa63356170be233940b800b3be8074"><div class="ttname"><a href="class_save_output_dialog.html#a8ffa63356170be233940b800b3be8074">SaveOutputDialog::getCurrentState</a></div><div class="ttdeci">QByteArray getCurrentState()</div><div class="ttdoc">This returns QFileDialog::saveState() which is used to save the state of the dialog. It could be used with QFileDialog::restoreState(), but we aren&#39;t doing that right now. </div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00051">SaveOutputDialog.cpp:51</a></div></div>
 <div class="ttc" id="class_save_output_dialog_html_a3f7bba3a4efe68a2f38e444d68682144"><div class="ttname"><a href="class_save_output_dialog.html#a3f7bba3a4efe68a2f38e444d68682144">SaveOutputDialog::getSelectedDir</a></div><div class="ttdeci">QString getSelectedDir()</div><div class="ttdoc">Returns the directory that as selected in the dialog. </div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00037">SaveOutputDialog.cpp:37</a></div></div>
+<div class="ttc" id="class_save_output_dialog_html_a19eb5189e48104d74feaa6a99bc23329"><div class="ttname"><a href="class_save_output_dialog.html#a19eb5189e48104d74feaa6a99bc23329">SaveOutputDialog::setup</a></div><div class="ttdeci">void setup()</div><div class="ttdoc">Sets up the SaveOutputDialog parameters. </div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00058">SaveOutputDialog.cpp:58</a></div></div>
 <div class="ttc" id="class_save_output_dialog_html_a542d237dada5dafeb6e6493a38941292"><div class="ttname"><a href="class_save_output_dialog.html#a542d237dada5dafeb6e6493a38941292">SaveOutputDialog::useSeperateSubDirs</a></div><div class="ttdeci">bool useSeperateSubDirs()</div><div class="ttdoc">Returns the directory that was selected in the dialog. </div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00043">SaveOutputDialog.cpp:43</a></div></div>
 <div class="ttc" id="class_save_output_dialog_html_afea7bb5cab6b702a34753c498806854e"><div class="ttname"><a href="class_save_output_dialog.html#afea7bb5cab6b702a34753c498806854e">SaveOutputDialog::SaveOutputDialog</a></div><div class="ttdeci">SaveOutputDialog(QWidget *parent, QString savePath=&quot;.&quot;, bool defaultSubDirSetting=true)</div><div class="ttdoc">Constructs a SaveOutputDialog with the input default savePath and the input default setting for savin...</div><div class="ttdef"><b>Definition:</b> <a href="_save_output_dialog_8cpp_source.html#l00013">SaveOutputDialog.cpp:13</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

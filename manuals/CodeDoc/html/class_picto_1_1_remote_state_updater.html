@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_remote_state_updater-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::RemoteStateUpdater Class Reference</div>  </div>
@@ -216,6 +217,15 @@ virtual QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class=
 virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_reader.html">SignalReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#ad7f79399c5f0fd293cace5018319b58f">getSignalReader</a> (QString name)</td></tr>
 <tr class="memdesc:ad7f79399c5f0fd293cace5018319b58f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an empty pointer since Analaysis Data Readers aren't yet supported in live Experiments. <br /></td></tr>
 <tr class="separator:ad7f79399c5f0fd293cace5018319b58f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a130f6deba79b5332e0b11965f359ad54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a130f6deba79b5332e0b11965f359ad54"></a>
+<a class="el" href="class_picto_1_1_command_channel.html">CommandChannel</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>serverChan_</b></td></tr>
+<tr class="separator:a130f6deba79b5332e0b11965f359ad54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a248926c47744844f4e033f46983a82cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a248926c47744844f4e033f46983a82cc"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataRequested_</b></td></tr>
+<tr class="separator:a248926c47744844f4e033f46983a82cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> that gathers Session events from the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> in real time. </p>

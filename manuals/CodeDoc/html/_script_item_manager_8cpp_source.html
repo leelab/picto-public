@@ -117,15 +117,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    scriptTypeColors_.append(QColor(Qt::blue));</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    scriptTypeColors_.append(QColor(Qt::yellow));</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    minScriptItemHeight_ = float(1.0)/(1+TYPE_NUM);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    minScriptItemHeight_ = float(1.0)/(1+<a class="code" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea">TYPE_NUM</a>);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    scriptRegionStartPos_.append(0);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    scriptRegionStartPos_.append(2.5*minScriptItemHeight_);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    scriptRegionStartPos_.append(5.0*minScriptItemHeight_);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    updateScriptItems();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">updateScriptItems</a>();</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">//If the asset is edited, it may be a change in the script values so we call updateScriptItems whenever this happens</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    connect(asset_.data(),SIGNAL(edited()),<span class="keyword">this</span>,SLOT(updateScriptItems()));</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    connect(asset_.data(),SIGNAL(edited()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">updateScriptItems</a>()));</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">//If the asset has an AnalysisScriptHolder, we need to connect its edited signal too since it doesn&#39;t propegate</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">//to its connected experimental asset.  This happens in performAnalysisScriptHolderOps();</span></div>
@@ -135,13 +135,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">if</span>(!asset_.staticCast&lt;<a class="code" href="class_picto_1_1_data_store.html">DataStore</a>&gt;()-&gt;<a class="code" href="class_picto_1_1_data_store.html#a8b9c70f5ab91278d774249654396b6bd">getAssociateChildren</a>(activeAnalysis-&gt;getAssociateId(),<span class="stringliteral">&quot;AnalysisScriptHolder&quot;</span>).isEmpty())</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            QSharedPointer&lt;Asset&gt; anaScriptContainer = asset_.staticCast&lt;<a class="code" href="class_picto_1_1_data_store.html">DataStore</a>&gt;()-&gt;getAssociateChildren(editorState_-&gt;getCurrentAnalysis()-&gt;getAssociateId(),<span class="stringliteral">&quot;AnalysisScriptHolder&quot;</span>).first();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            performAnalysisScriptHolderOps(anaScriptContainer);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">performAnalysisScriptHolderOps</a>(anaScriptContainer);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        }</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="comment">//If the asset does not have an AnalysisScriptHolder, we need will connect to its childAddedAfterDeserialize() signal</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="comment">//so that performAnalysisScriptHolderOps() can operate if one is added.</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            connect(asset_.data(),SIGNAL(childAddedAfterDeserialize(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(performAnalysisScriptHolderOps(QSharedPointer&lt;Asset&gt;)));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            connect(asset_.data(),SIGNAL(childAddedAfterDeserialize(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">performAnalysisScriptHolderOps</a>(QSharedPointer&lt;Asset&gt;)));</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
@@ -149,15 +149,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_script_item_manager.html#a0328456c18f63cad615465088fce1231">   66</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_script_item_manager.html#a0328456c18f63cad615465088fce1231">ScriptItemManager::setScriptBoundingRect</a>(QRectF rect)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    scriptBoundingRect_ = rect;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    updateScriptItemDimensions();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">updateScriptItemDimensions</a>();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">void</span> ScriptItemManager::updateScriptItemDimensions()</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">   76</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">ScriptItemManager::updateScriptItemDimensions</a>()</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;{</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">float</span> currPos = 0;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">float</span> totalHeight = horizontal_?scriptBoundingRect_.width():scriptBoundingRect_.height();</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">float</span> elementHeight = 0;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; TYPE_NUM; i++)</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea">TYPE_NUM</a>; i++)</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">if</span>(scriptItems_.contains(i))</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        {</div>
@@ -193,11 +193,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keywordtype">void</span> ScriptItemManager::updateScriptItems()</div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">  124</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">ScriptItemManager::updateScriptItems</a>()</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;{</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    QSharedPointer&lt;PropertyContainer&gt; propContainer;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    QSharedPointer&lt;Property&gt; prop;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; TYPE_NUM; i++)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea">TYPE_NUM</a>; i++)</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    {</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordtype">bool</span> isAnalysisScript = orderedScriptNames_[i].left(1).toLower() == <span class="stringliteral">&quot;a&quot;</span>;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="comment">//If its a run Script</span></div>
@@ -237,10 +237,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        }</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        </div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    }</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    updateScriptItemDimensions();</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <a class="code" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">updateScriptItemDimensions</a>();</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">void</span> ScriptItemManager::performAnalysisScriptHolderOps(QSharedPointer&lt;Asset&gt; assetChild)</div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">  176</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">ScriptItemManager::performAnalysisScriptHolderOps</a>(QSharedPointer&lt;Asset&gt; assetChild)</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;{</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="comment">//If the input assetChild is not an AnalysisScriptHolder, we have nothing to do stop here.</span></div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span>(!assetChild-&gt;inherits(<span class="stringliteral">&quot;Picto::AnalysisScriptHolder&quot;</span>))</div>
@@ -248,12 +248,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="comment">//We need to connect the AnalysisScriptHolder&#39;s edited signal to updateScriptItems() because it won&#39;t </span></div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="comment">//propegate to the experimental assets edited signal.</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    connect(assetChild.data(),SIGNAL(edited()),<span class="keyword">this</span>,SLOT(updateScriptItems()));</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    updateScriptItems();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    connect(assetChild.data(),SIGNAL(edited()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">updateScriptItems</a>()));</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <a class="code" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">updateScriptItems</a>();</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
+<div class="ttc" id="class_script_item_manager_html_ab62b08fedb6f0a07b1fe0d7c32102a47"><div class="ttname"><a href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">ScriptItemManager::performAnalysisScriptHolderOps</a></div><div class="ttdeci">void performAnalysisScriptHolderOps(QSharedPointer&lt; Asset &gt; assetChild)</div><div class="ttdoc">Sets up a connection between newly added AnalysisScriptHolder objects and this manager so that change...</div><div class="ttdef"><b>Definition:</b> <a href="_script_item_manager_8cpp_source.html#l00176">ScriptItemManager.cpp:176</a></div></div>
+<div class="ttc" id="class_script_item_manager_html_a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea"><div class="ttname"><a href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea">ScriptItemManager::TYPE_NUM</a></div><div class="ttdoc">The total number of script types. </div><div class="ttdef"><b>Definition:</b> <a href="_script_item_manager_8h_source.html#l00040">ScriptItemManager.h:40</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_store_html_a8b9c70f5ab91278d774249654396b6bd"><div class="ttname"><a href="class_picto_1_1_data_store.html#a8b9c70f5ab91278d774249654396b6bd">Picto::DataStore::getAssociateChildren</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; Asset &gt; &gt; getAssociateChildren(QUuid associateId, QString tagName)</div><div class="ttdoc">Returns a list of all Associate Element child Assets that were added under the input XML tag/category...</div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8cpp_source.html#l00834">DataStore.cpp:834</a></div></div>
+<div class="ttc" id="class_script_item_manager_html_aa166159f2d32085b60b0a3c495eee2e6"><div class="ttname"><a href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">ScriptItemManager::updateScriptItems</a></div><div class="ttdeci">void updateScriptItems()</div><div class="ttdoc">Creates and lays out all ScriptItems. </div><div class="ttdef"><b>Definition:</b> <a href="_script_item_manager_8cpp_source.html#l00124">ScriptItemManager.cpp:124</a></div></div>
 <div class="ttc" id="class_diagram_item_html_a72bf07606aa85cb0b546f936643f8cdd"><div class="ttname"><a href="class_diagram_item.html#a72bf07606aa85cb0b546f936643f8cdd">DiagramItem::setHeight</a></div><div class="ttdeci">void setHeight(float height)</div><div class="ttdoc">Sets the height of the DiagramItem. </div><div class="ttdef"><b>Definition:</b> <a href="diagramitem_8cpp_source.html#l00077">diagramitem.cpp:77</a></div></div>
 <div class="ttc" id="class_picto_1_1_analysis_script_holder_html"><div class="ttname"><a href="class_picto_1_1_analysis_script_holder.html">Picto::AnalysisScriptHolder</a></div><div class="ttdoc">A container for scripts that are used in an Analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_script_holder_8h_source.html#l00028">AnalysisScriptHolder.h:28</a></div></div>
+<div class="ttc" id="class_script_item_manager_html_a02a1599aa0c3d4f72d8642ac9a2527c0"><div class="ttname"><a href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">ScriptItemManager::updateScriptItemDimensions</a></div><div class="ttdeci">void updateScriptItemDimensions()</div><div class="ttdoc">Updates the positions and sizes of all ScriptItems managed by this object. </div><div class="ttdef"><b>Definition:</b> <a href="_script_item_manager_8cpp_source.html#l00076">ScriptItemManager.cpp:76</a></div></div>
 <div class="ttc" id="class_script_item_manager_html_ae6864baaa9e9d07e94129d8b86b39b3a"><div class="ttname"><a href="class_script_item_manager.html#ae6864baaa9e9d07e94129d8b86b39b3a">ScriptItemManager::ScriptItemManager</a></div><div class="ttdeci">ScriptItemManager(QSharedPointer&lt; EditorState &gt; editorState, QGraphicsItem *scriptsParent, QSharedPointer&lt; Asset &gt; asset, bool horizontal)</div><div class="ttdoc">Constructs a new ScriptItemManager. </div><div class="ttdef"><b>Definition:</b> <a href="_script_item_manager_8cpp_source.html#l00013">ScriptItemManager.cpp:13</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_store_html"><div class="ttname"><a href="class_picto_1_1_data_store.html">Picto::DataStore</a></div><div class="ttdoc">A base class for all Asset objects that can have children. </div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8h_source.html#l00062">DataStore.h:62</a></div></div>
 <div class="ttc" id="class_diagram_item_html_a4ece373a865d039b186625777074543e"><div class="ttname"><a href="class_diagram_item.html#a4ece373a865d039b186625777074543e">DiagramItem::setWidth</a></div><div class="ttdeci">void setWidth(float width)</div><div class="ttdoc">Sets the width of the DiagramItem. </div><div class="ttdef"><b>Definition:</b> <a href="diagramitem_8cpp_source.html#l00063">diagramitem.cpp:63</a></div></div>

@@ -94,6 +94,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_auto_saver-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AutoSaver Class Reference</div>  </div>
@@ -157,6 +161,68 @@ Protected Member Functions</h2></td></tr>
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#a09344b067f544c9f860493e210baf2af">getAutoSaveDir</a> ()</td></tr>
 <tr class="memdesc:a09344b067f544c9f860493e210baf2af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the path where this <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a>'s files should be saved (a sub-directory of [PictoInstallDir]/AutoSave). <br /></td></tr>
 <tr class="separator:a09344b067f544c9f860493e210baf2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ada8c2d9b0fbf7658af7fec16b1723355"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada8c2d9b0fbf7658af7fec16b1723355"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355">saveDesignToFile</a> ()</td></tr>
+<tr class="memdesc:ada8c2d9b0fbf7658af7fec16b1723355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the current version of the design to file if anything has changed since the last save. <br /></td></tr>
+<tr class="separator:ada8c2d9b0fbf7658af7fec16b1723355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015bfa9a11a52eed0e0466a5526b005f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a015bfa9a11a52eed0e0466a5526b005f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#a015bfa9a11a52eed0e0466a5526b005f">deleteRestorableDesignFile</a> (QString filePath)</td></tr>
+<tr class="memdesc:a015bfa9a11a52eed0e0466a5526b005f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when requested by the AutoSaveWidget to delete an auto-saved file at the input path and its [PictoInstallDir]/AutoSave sub-directory. <br /></td></tr>
+<tr class="separator:a015bfa9a11a52eed0e0466a5526b005f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a535ae80619e16c546dbefaf6fb85e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#ab0a535ae80619e16c546dbefaf6fb85e">restoreDesignFile</a> (QString filePath)</td></tr>
+<tr class="memdesc:ab0a535ae80619e16c546dbefaf6fb85e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when requested by the AutoSaveWidget to open the auto-saved file at the input path.  <a href="#ab0a535ae80619e16c546dbefaf6fb85e">More...</a><br /></td></tr>
+<tr class="separator:ab0a535ae80619e16c546dbefaf6fb85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a026f2b8611fe506c61d7afa5a5af64c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a026f2b8611fe506c61d7afa5a5af64c6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#a026f2b8611fe506c61d7afa5a5af64c6">AutoSaver</a> ()</td></tr>
+<tr class="memdesc:a026f2b8611fe506c61d7afa5a5af64c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a>. Calls <a class="el" href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594" title="Gathers information from and initializes the AutoSave directory for auto-saving and restoring of prev...">initAutoSaveDir()</a> in the process. <br /></td></tr>
+<tr class="separator:a026f2b8611fe506c61d7afa5a5af64c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6a93338d53f049173ca7b055949594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#aef6a93338d53f049173ca7b055949594">initAutoSaveDir</a> ()</td></tr>
+<tr class="memdesc:aef6a93338d53f049173ca7b055949594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gathers information from and initializes the AutoSave directory for auto-saving and restoring of previously auto-saved files.  <a href="#aef6a93338d53f049173ca7b055949594">More...</a><br /></td></tr>
+<tr class="separator:aef6a93338d53f049173ca7b055949594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40d60e4100bdf397309d3fda55071d27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40d60e4100bdf397309d3fda55071d27"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#a40d60e4100bdf397309d3fda55071d27">removeFilesThenDirectories</a> (QDir container)</td></tr>
+<tr class="memdesc:a40d60e4100bdf397309d3fda55071d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a useful funciton for removing directories and all contents. We created it before Qt 5.0 when there was not Qt version of a function that would do this. I believe that there is one now, so that can be used the next time this class is refactored. <br /></td></tr>
+<tr class="separator:a40d60e4100bdf397309d3fda55071d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac64be0aa0911489d3d9912853e80f5d7"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7">buildDesignFileName</a> (const QString designName)</td></tr>
+<tr class="memdesc:ac64be0aa0911489d3d9912853e80f5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an automatic name for an autosaved design file by using the current date and time (yyyy_MM_dd__hh_mm_ss_)+designName+.xml.  <a href="#ac64be0aa0911489d3d9912853e80f5d7">More...</a><br /></td></tr>
+<tr class="separator:ac64be0aa0911489d3d9912853e80f5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afb533e67eea47c8bc5d88d71d4f05f85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb533e67eea47c8bc5d88d71d4f05f85"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+<tr class="separator:afb533e67eea47c8bc5d88d71d4f05f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc577c26ecb29134785fd0e5ccdba292"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc577c26ecb29134785fd0e5ccdba292"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestDesignCode_</b></td></tr>
+<tr class="separator:adc577c26ecb29134785fd0e5ccdba292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6f56b9b5994d8ce97bf18aca544dec3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6f56b9b5994d8ce97bf18aca544dec3"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>autoSaveDir_</b></td></tr>
+<tr class="separator:ac6f56b9b5994d8ce97bf18aca544dec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa59a9147a96fd93660a950786234c84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa59a9147a96fd93660a950786234c84"></a>
+QList&lt; QDir &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>savedDesignDirs_</b></td></tr>
+<tr class="separator:afa59a9147a96fd93660a950786234c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69720fa061e62e139e5bdbbad76c6c0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69720fa061e62e139e5bdbbad76c6c0d"></a>
+QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lockFile_</b></td></tr>
+<tr class="separator:a69720fa061e62e139e5bdbbad76c6c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9a9b6669e1c9cf1b083428d04ea24b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9a9b6669e1c9cf1b083428d04ea24b1"></a>
+QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designFile_</b></td></tr>
+<tr class="separator:ab9a9b6669e1c9cf1b083428d04ea24b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a742e40de7c9d8bae96d51a2361fbfccd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a742e40de7c9d8bae96d51a2361fbfccd"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>saveTimer_</b></td></tr>
+<tr class="separator:a742e40de7c9d8bae96d51a2361fbfccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a587765d50aec742f9ab70b86d64c69e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a587765d50aec742f9ab70b86d64c69e5"></a>
+static QWeakPointer&lt; <a class="el" href="class_picto_1_1_auto_saver.html">AutoSaver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">singleton_</a> = QWeakPointer&lt;<a class="el" href="class_picto_1_1_auto_saver.html">AutoSaver</a>&gt;()</td></tr>
+<tr class="memdesc:a587765d50aec742f9ab70b86d64c69e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">We never need more than one <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a>, but we do need it to use signals and slots, so we implement it as a singleton. <br /></td></tr>
+<tr class="separator:a587765d50aec742f9ab70b86d64c69e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles automatically saving the current Picto Design at a defined interval and restoring previously Auto-Saved files. </p>
@@ -195,6 +261,92 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac64be0aa0911489d3d9912853e80f5d7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Picto::AutoSaver::buildDesignFileName </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>designName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an automatic name for an autosaved design file by using the current date and time (yyyy_MM_dd__hh_mm_ss_)+designName+.xml. </p>
+<p>This way, alphabetized auto-saved version can appear in the order of their creation. </p>
+
+<p>Definition at line <a class="el" href="_auto_saver_8cpp_source.html#l00262">262</a> of file <a class="el" href="_auto_saver_8cpp_source.html">AutoSaver.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aef6a93338d53f049173ca7b055949594"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AutoSaver::initAutoSaveDir </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gathers information from and initializes the AutoSave directory for auto-saving and restoring of previously auto-saved files. </p>
+<p>The <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a> object creates a sub directory in [PictoInstallDir]/AutoSave to put its auto-saved design file in. It also creates a "lock file" in that directory which is removed along with the design file when the object is deleted on closing the workstation. When initAutoSaveDir is called, it checks all sub-directories of [PictoInstallDir]/AutoSave. If any have lock files, it attempts to remove them. If it succeeds that means that the workstation that created the lock file is no longer open and using it, and that it crashed since otherwise that directory would no longer be there. Therefore, once the LockFile removal has been attempted, this object can go through all the AutoSave subdirectories and every file that is found in a directory with no lock file is an auto-saved file that should be available for restoring. Paths to all files of this kind are added to a list for usage in a AutoSaveWidget. </p>
+
+<p>Definition at line <a class="el" href="_auto_saver_8cpp_source.html#l00181">181</a> of file <a class="el" href="_auto_saver_8cpp_source.html">AutoSaver.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0a535ae80619e16c546dbefaf6fb85e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AutoSaver::restoreDesignFile </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when requested by the AutoSaveWidget to open the auto-saved file at the input path. </p>
+<dl class="section note"><dt>Note</dt><dd>Once the design has been opened, the auto-saved file is deleted. The designer must press save to save this restored design; however, since the restored version will also be auto-saved there isn't too much danger of losing the restored file if the designer forgets to save the restored version. </dd></dl>
+
+<p>Definition at line <a class="el" href="_auto_saver_8cpp_source.html#l00349">349</a> of file <a class="el" href="_auto_saver_8cpp_source.html">AutoSaver.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a0104d42c131f38a258bb0c0d14678241"></a>
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +380,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </div><div class="memdoc">
 
 <p>Sets the designRoot of the design that will be auto-saved to file. </p>
-<p>The designRoot will be saved fo file each time saveDesignToFile() is called by the saveTimer_ so long as something about the design has changed. The saveFirstVersion input tells the <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a> to save the input designRoot right away and not to wait for the next change to be made before saving the file for the first time </p>
+<p>The designRoot will be saved fo file each time <a class="el" href="class_picto_1_1_auto_saver.html#ada8c2d9b0fbf7658af7fec16b1723355" title="Saves the current version of the design to file if anything has changed since the last save...">saveDesignToFile()</a> is called by the saveTimer_ so long as something about the design has changed. The saveFirstVersion input tells the <a class="el" href="class_picto_1_1_auto_saver.html" title="Handles automatically saving the current Picto Design at a defined interval and restoring previously ...">AutoSaver</a> to save the input designRoot right away and not to wait for the next change to be made before saving the file for the first time </p>
 
 <p>Definition at line <a class="el" href="_auto_saver_8cpp_source.html#l00083">83</a> of file <a class="el" href="_auto_saver_8cpp_source.html">AutoSaver.cpp</a>.</p>
 

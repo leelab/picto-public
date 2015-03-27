@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_asset_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AssetFactory Class Reference</div>  </div>
@@ -185,6 +187,52 @@ Protected Member Functions</h2></td></tr>
 virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset_factory.html#a14e947ad4b201432c1cf59e1211fc47a">generateNewAsset</a> ()</td></tr>
 <tr class="memdesc:a14e947ad4b201432c1cf59e1211fc47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> using the creation function pointer and returns a shared pointer to it. <br /></td></tr>
 <tr class="separator:a14e947ad4b201432c1cf59e1211fc47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a2e08439cd640728828db855b75e67594"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e08439cd640728828db855b75e67594"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset_factory.html#a2e08439cd640728828db855b75e67594">createdAssetDestroyed</a> (QObject *obj)</td></tr>
+<tr class="memdesc:a2e08439cd640728828db855b75e67594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted this allows the <a class="el" href="class_picto_1_1_asset_factory.html" title="A Factory class used to generate Asset objects. ">AssetFactory</a> to create an additional <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> if the maxAssets value has been reached. <br /></td></tr>
+<tr class="separator:a2e08439cd640728828db855b75e67594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a74639a2c4245aaaeb05b3bffbae1f842"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74639a2c4245aaaeb05b3bffbae1f842"></a>
+QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>defaultAssets_</b></td></tr>
+<tr class="separator:a74639a2c4245aaaeb05b3bffbae1f842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36440b9d900c9acfd6fc2d32ca15881e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36440b9d900c9acfd6fc2d32ca15881e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>minAssets_</b></td></tr>
+<tr class="separator:a36440b9d900c9acfd6fc2d32ca15881e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb4566ad976b3f548eaa192d9b954c3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb4566ad976b3f548eaa192d9b954c3f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxAssets_</b></td></tr>
+<tr class="separator:aeb4566ad976b3f548eaa192d9b954c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc703aa75c5acf21f3cecb2e1af63df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bc703aa75c5acf21f3cecb2e1af63df"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numSourcedAssets_</b></td></tr>
+<tr class="separator:a4bc703aa75c5acf21f3cecb2e1af63df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d3f12da5c0b37183a9ae78ab412c3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78d3f12da5c0b37183a9ae78ab412c3e"></a>
+const bool&#160;</td><td class="memItemRight" valign="bottom"><b>isGroupFactory_</b></td></tr>
+<tr class="separator:a78d3f12da5c0b37183a9ae78ab412c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a988da1770ef75e41f76f386e92c6ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a988da1770ef75e41f76f386e92c6ba"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>uITemplate_</b></td></tr>
+<tr class="separator:a8a988da1770ef75e41f76f386e92c6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5791f8d61d2aa11784358ce900839291"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5791f8d61d2aa11784358ce900839291"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>uIGroup_</b></td></tr>
+<tr class="separator:a5791f8d61d2aa11784358ce900839291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b58d7290a964ee3070e675d2e241a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65b58d7290a964ee3070e675d2e241a9"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>generatedAssetTypeName_</b></td></tr>
+<tr class="separator:a65b58d7290a964ee3070e675d2e241a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74b0939bb1f8abca490c37a2089e008"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa74b0939bb1f8abca490c37a2089e008"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>assetClassName_</b></td></tr>
+<tr class="separator:aa74b0939bb1f8abca490c37a2089e008"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b32ce3a91a0b13644923053759c6d48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b32ce3a91a0b13644923053759c6d48"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>uITemplateInitialized_</b></td></tr>
+<tr class="separator:a3b32ce3a91a0b13644923053759c6d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16415f77fc1c0d062371999a59203a33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16415f77fc1c0d062371999a59203a33"></a>
+NewAssetFnPtr&#160;</td><td class="memItemRight" valign="bottom"><b>newAssetFn_</b></td></tr>
+<tr class="separator:a16415f77fc1c0d062371999a59203a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5faa7b56dfda04ee87a9bfb3be2ea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c5faa7b56dfda04ee87a9bfb3be2ea7"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>factoriesByType_</b></td></tr>
+<tr class="separator:a3c5faa7b56dfda04ee87a9bfb3be2ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Factory class used to generate <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> objects. </p>

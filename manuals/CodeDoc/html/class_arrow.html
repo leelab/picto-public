@@ -91,6 +91,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_arrow-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Arrow Class Reference</div>  </div>
@@ -178,6 +181,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6d9409982fc2ff7f44676c319c3016f2"><td class="memItemLeft" align="right" valign="top">virtual QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arrow.html#a6d9409982fc2ff7f44676c319c3016f2">itemChange</a> (GraphicsItemChange change, const QVariant &amp;value)</td></tr>
 <tr class="memdesc:a6d9409982fc2ff7f44676c319c3016f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reimplements various selection funtionality.  <a href="#a6d9409982fc2ff7f44676c319c3016f2">More...</a><br /></td></tr>
 <tr class="separator:a6d9409982fc2ff7f44676c319c3016f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a461ec1cd586e1a1ac0b9692a3a8dfb11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arrow.html#a461ec1cd586e1a1ac0b9692a3a8dfb11">Arrow</a> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; transition, <a class="el" href="class_diagram_item.html">DiagramItem</a> *<a class="el" href="class_arrow.html#aca1c4bf8681a1449b8e09af3dac9b797">startItem</a>, <a class="el" href="class_diagram_item.html">DiagramItem</a> *<a class="el" href="class_arrow.html#a363d170cfcc7db0472843a93de7e86d4">endItem</a>, QMenu *contextMenu, QGraphicsItem *parent=0)</td></tr>
+<tr class="memdesc:a461ec1cd586e1a1ac0b9692a3a8dfb11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> that represents the input transition, starts at startItem and ends at endItem.  <a href="#a461ec1cd586e1a1ac0b9692a3a8dfb11">More...</a><br /></td></tr>
+<tr class="separator:a461ec1cd586e1a1ac0b9692a3a8dfb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a6733f31f47f0e13b71aa8fbd60bd49f4"><td class="memItemLeft" align="right" valign="top">static QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_arrow.html#a6733f31f47f0e13b71aa8fbd60bd49f4">getAssetAncestor</a> (<a class="el" href="class_diagram_item.html">DiagramItem</a> *item)</td></tr>
+<tr class="memdesc:a6733f31f47f0e13b71aa8fbd60bd49f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Asset associated with the input <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>.  <a href="#a6733f31f47f0e13b71aa8fbd60bd49f4">More...</a><br /></td></tr>
+<tr class="separator:a6733f31f47f0e13b71aa8fbd60bd49f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a511a2340c1c7e69477bedeb4fae19d5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a511a2340c1c7e69477bedeb4fae19d5c"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transition_</b></td></tr>
+<tr class="separator:a511a2340c1c7e69477bedeb4fae19d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1f27258826ec31ae2829fb06f9a54ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1f27258826ec31ae2829fb06f9a54ec"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:ac1f27258826ec31ae2829fb06f9a54ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2472474441f5410e60a5d3d0fbb0d087"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2472474441f5410e60a5d3d0fbb0d087"></a>
+<a class="el" href="class_arrow_port_item.html">ArrowPortItem</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>myStartItem</b></td></tr>
+<tr class="separator:a2472474441f5410e60a5d3d0fbb0d087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d34c82a0268ad678e4a1a3a324a06e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d34c82a0268ad678e4a1a3a324a06e3"></a>
+<a class="el" href="class_arrow_port_item.html">ArrowPortItem</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>myEndItem</b></td></tr>
+<tr class="separator:a4d34c82a0268ad678e4a1a3a324a06e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad60cd88b83fd0b35724cd610933f59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ad60cd88b83fd0b35724cd610933f59"></a>
+QColor&#160;</td><td class="memItemRight" valign="bottom"><b>myColor</b></td></tr>
+<tr class="separator:a5ad60cd88b83fd0b35724cd610933f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8914364c8586b9309ec3bbc3a1c16276"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8914364c8586b9309ec3bbc3a1c16276"></a>
+QPolygonF&#160;</td><td class="memItemRight" valign="bottom"><b>arrowHead</b></td></tr>
+<tr class="separator:a8914364c8586b9309ec3bbc3a1c16276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aeff112200f8998f583af3204ed10d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aeff112200f8998f583af3204ed10d6"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>myContextMenu</b></td></tr>
+<tr class="separator:a1aeff112200f8998f583af3204ed10d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An arrow diagram that represents a transition in the Experimental Design's StateMachine. </p>
@@ -186,7 +225,71 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="arrow_8h_source.html#l00075">75</a> of file <a class="el" href="arrow_8h_source.html">arrow.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a461ec1cd586e1a1ac0b9692a3a8dfb11"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Arrow::Arrow </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td>
+          <td class="paramname"><em>editorState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>transition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_diagram_item.html">DiagramItem</a> *&#160;</td>
+          <td class="paramname"><em>startItem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_diagram_item.html">DiagramItem</a> *&#160;</td>
+          <td class="paramname"><em>endItem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QMenu *&#160;</td>
+          <td class="paramname"><em>contextMenu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QGraphicsItem *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> that represents the input transition, starts at startItem and ends at endItem. </p>
+<p>The input contextMenu will be displayed when the transition is "right clicked". editorState is used to retrieve various information about the current state of the designer system. This constructor is private because Arrows should be created with the create() functions. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a>'s are always drawn with a ZValue that is higher than both of the DiagramItems to which it is attached so that it will always be visible on top of them. </dd></dl>
+
+<p>Definition at line <a class="el" href="arrow_8cpp_source.html#l00023">23</a> of file <a class="el" href="arrow_8cpp_source.html">arrow.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aad0a27ad145b1ffec4a07a75e7e6cf0c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -310,6 +413,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#aa8b98aea4192297641cb2347106fa31d" title="Creates an Arrow to represent the input transition from the source DiagramItem to the dest DiagramIte...">DiagramScene::insertTransition()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="arrow_8cpp_source.html#l00074">74</a> of file <a class="el" href="arrow_8cpp_source.html">arrow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6733f31f47f0e13b71aa8fbd60bd49f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; Arrow::getAssetAncestor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_diagram_item.html">DiagramItem</a> *&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the Asset associated with the input <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. </p>
+<p>Since the arrow isn't terminated at AssetItems but at ArrowPort items, this function allows us to retrieve the Asset objects associated with the Asset Items containing the ArrowPort items to which this arrow is attached. </p>
+
+<p>Definition at line <a class="el" href="arrow_8cpp_source.html#l00275">275</a> of file <a class="el" href="arrow_8cpp_source.html">arrow.cpp</a>.</p>
 
 </div>
 </div>

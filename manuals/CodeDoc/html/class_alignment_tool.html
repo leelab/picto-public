@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_alignment_tool-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AlignmentTool Class Reference</div>  </div>
@@ -99,6 +100,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="alignmenttool_8h_source.html">alignmenttool.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_alignment_tool_1_1_alignment_event.html">AlignmentEvent</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_alignment_tool_1_1coefficients.html">coefficients</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad29f55cfe853cdce46f0bc1ccc5df709"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad29f55cfe853cdce46f0bc1ccc5df709"></a>
@@ -134,6 +142,36 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457">updateCoefficients</a> (double bAlignTimestamp, double nAlignTimestamp)</td></tr>
 <tr class="memdesc:a2c7eadcedb53d5e7f282168c8da3d457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the coefficients when a new set of matching timestamps is found.  <a href="#a2c7eadcedb53d5e7f282168c8da3d457">More...</a><br /></td></tr>
 <tr class="separator:a2c7eadcedb53d5e7f282168c8da3d457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a70685c6062c2d57df6ee52715917044d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70685c6062c2d57df6ee52715917044d"></a>
+<a class="el" href="struct_alignment_tool_1_1coefficients.html">coefficients</a>&#160;</td><td class="memItemRight" valign="bottom"><b>coeff_</b></td></tr>
+<tr class="separator:a70685c6062c2d57df6ee52715917044d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2464c3de696b3db3cb20257cad3b9106"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2464c3de696b3db3cb20257cad3b9106"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sumXX_</b></td></tr>
+<tr class="separator:a2464c3de696b3db3cb20257cad3b9106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcd3f0470254fc604a0740bf9fcead25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcd3f0470254fc604a0740bf9fcead25"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sumYY_</b></td></tr>
+<tr class="separator:abcd3f0470254fc604a0740bf9fcead25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59eb2cd8f891acaaafd1988678b765b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59eb2cd8f891acaaafd1988678b765b2"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sumXY_</b></td></tr>
+<tr class="separator:a59eb2cd8f891acaaafd1988678b765b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accc82f8198f331e22f79037fbc0fe769"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accc82f8198f331e22f79037fbc0fe769"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sumX_</b></td></tr>
+<tr class="separator:accc82f8198f331e22f79037fbc0fe769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29d72ffb929d53c7324e82e6f2e5e3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad29d72ffb929d53c7324e82e6f2e5e3d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sumY_</b></td></tr>
+<tr class="separator:ad29d72ffb929d53c7324e82e6f2e5e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1c57cda6918892a21c8f986b54e069"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d1c57cda6918892a21c8f986b54e069"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>n_</b></td></tr>
+<tr class="separator:a4d1c57cda6918892a21c8f986b54e069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238b12e34828b94f5420a5f7a40bec03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a238b12e34828b94f5420a5f7a40bec03"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>trials_</b></td></tr>
+<tr class="separator:a238b12e34828b94f5420a5f7a40bec03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ed965b8cd26d2852bfc7b65846f5912"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ed965b8cd26d2852bfc7b65846f5912"></a>
+QSharedPointer&lt; QMutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentMutex_</b></td></tr>
+<tr class="separator:a4ed965b8cd26d2852bfc7b65846f5912"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Calculates the alignment coefficients to move the neural timebase into the behavioral timebase. </p>

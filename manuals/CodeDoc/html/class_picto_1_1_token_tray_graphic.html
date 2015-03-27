@@ -96,6 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_token_tray_graphic-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::TokenTrayGraphic Class Reference</div>  </div>
@@ -931,6 +933,58 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 <tr class="memitem:a45c3042c969717eb2ab60373369c7de7 inherit properties_struct_picto_1_1_visual_element"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_visual_element.html#a45c3042c969717eb2ab60373369c7de7">color</a></td></tr>
 <tr class="memdesc:a45c3042c969717eb2ab60373369c7de7 inherit properties_struct_picto_1_1_visual_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the this <a class="el" href="struct_picto_1_1_visual_element.html" title="A base class for all elements that represent graphics to be drawn onto the the display&#39;s Scene...">VisualElement</a>'s color in the #rrbbgg format (ex. #FF2255).  <a href="#a45c3042c969717eb2ab60373369c7de7">More...</a><br /></td></tr>
 <tr class="separator:a45c3042c969717eb2ab60373369c7de7 inherit properties_struct_picto_1_1_visual_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a43fb05a985e9c1da0df5e530866891e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43fb05a985e9c1da0df5e530866891e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_tray_graphic.html#a43fb05a985e9c1da0df5e530866891e5">updateListSizes</a> ()</td></tr>
+<tr class="memdesc:a43fb05a985e9c1da0df5e530866891e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the sizes of the lists stored in this object's <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values when necessary (ie. number of tokens changes). <br /></td></tr>
+<tr class="separator:a43fb05a985e9c1da0df5e530866891e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8647bb7de14e3b5f12231e1343ef08e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8647bb7de14e3b5f12231e1343ef08e9"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_tray_graphic.html#a8647bb7de14e3b5f12231e1343ef08e9">getTokenPosition</a> (int index)</td></tr>
+<tr class="memdesc:a8647bb7de14e3b5f12231e1343ef08e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the x,y position of the token at the input index. <br /></td></tr>
+<tr class="separator:a8647bb7de14e3b5f12231e1343ef08e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e700f63aaa13a92452465b202819db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90e700f63aaa13a92452465b202819db"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_tray_graphic.html#a90e700f63aaa13a92452465b202819db">getTokenOffset</a> (int index)</td></tr>
+<tr class="memdesc:a90e700f63aaa13a92452465b202819db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the x,y position of the token at the input index relative to the center of the token tray. <br /></td></tr>
+<tr class="separator:a90e700f63aaa13a92452465b202819db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6726ee4386a7be96f3db7cbc8af96666"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6726ee4386a7be96f3db7cbc8af96666"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_tray_graphic.html#a6726ee4386a7be96f3db7cbc8af96666">getMaxTokenDiam</a> ()</td></tr>
+<tr class="memdesc:a6726ee4386a7be96f3db7cbc8af96666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum possible diameter of a token. This is used to calculate the size of the QImage that we need in order to be sure that none of the token graphics gets clipped. <br /></td></tr>
+<tr class="separator:a6726ee4386a7be96f3db7cbc8af96666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a850d864571dfca9f7cf07b42e444d938"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a850d864571dfca9f7cf07b42e444d938"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><b>posOffset_</b></td></tr>
+<tr class="separator:a850d864571dfca9f7cf07b42e444d938"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a44a67941e5521db2a92a4b9cfbe81f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a44a67941e5521db2a92a4b9cfbe81f"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>shapeList_</b></td></tr>
+<tr class="separator:a5a44a67941e5521db2a92a4b9cfbe81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a577e1b6cce8134820806cddabde71830"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a577e1b6cce8134820806cddabde71830"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sizeDelta_</b></td></tr>
+<tr class="separator:a577e1b6cce8134820806cddabde71830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bc4a4587a45e8f63af5b577f3c9d504"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bc4a4587a45e8f63af5b577f3c9d504"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>colorDelta_</b></td></tr>
+<tr class="separator:a6bc4a4587a45e8f63af5b577f3c9d504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8555ed8edd5a605e100af16a18b41739"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8555ed8edd5a605e100af16a18b41739"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>shapeDelta_</b></td></tr>
+<tr class="separator:a8555ed8edd5a605e100af16a18b41739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adff830c14c3a11c71769cf6e99b11159"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adff830c14c3a11c71769cf6e99b11159"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outlineDelta_</b></td></tr>
+<tr class="separator:adff830c14c3a11c71769cf6e99b11159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02e3cc30808d8c634f214ac392d60b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa02e3cc30808d8c634f214ac392d60b4"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outlineWidthDelta_</b></td></tr>
+<tr class="separator:aa02e3cc30808d8c634f214ac392d60b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35e48373db9f68361e55a9724609cb65"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35e48373db9f68361e55a9724609cb65"></a>
+QVector&lt; QHash&lt; int, QString &gt; * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deltaHashs_</b></td></tr>
+<tr class="separator:a35e48373db9f68361e55a9724609cb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e8522dcee33e5eded00373dc72a67d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e8522dcee33e5eded00373dc72a67d5"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>defaults_</b></td></tr>
+<tr class="separator:a9e8522dcee33e5eded00373dc72a67d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d48d7462113fb9f3344aaf6c938a24f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d48d7462113fb9f3344aaf6c938a24f"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>listNames_</b></td></tr>
+<tr class="separator:a1d48d7462113fb9f3344aaf6c938a24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

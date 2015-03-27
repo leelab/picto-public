@@ -95,6 +95,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_operator_info_graphic-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::OperatorInfoGraphic Class Reference</div>  </div>
@@ -702,6 +705,35 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">addErrorToList</a> (QString errorMsg)</td></tr>
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ae2f724061def8c984d64467e09e3a651"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2f724061def8c984d64467e09e3a651"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_info_graphic.html#ae2f724061def8c984d64467e09e3a651">propValueChanged</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *, QVariant)</td></tr>
+<tr class="memdesc:ae2f724061def8c984d64467e09e3a651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whenever the Fields or Values Properties change due to an outside source (a <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> might set them in playback for example) this object's internal data needs to be updated accordingly. This takes care of that. <br /></td></tr>
+<tr class="separator:ae2f724061def8c984d64467e09e3a651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a94e87776c1af461ceabd958f53ca7289"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94e87776c1af461ceabd958f53ca7289"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>deserializePropertiesFromXML</b> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
+<tr class="separator:a94e87776c1af461ceabd958f53ca7289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a429aa792c0345eac32283add7743a8a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a429aa792c0345eac32283add7743a8a6"></a>
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_info_graphic.html#a429aa792c0345eac32283add7743a8a6">getData</a> (QString field)</td></tr>
+<tr class="memdesc:a429aa792c0345eac32283add7743a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the input field if it exists or an empty QVariant otherwise. <br /></td></tr>
+<tr class="separator:a429aa792c0345eac32283add7743a8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af215654e83c860ffdd939449813029b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af215654e83c860ffdd939449813029b9"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>orderedFields_</b></td></tr>
+<tr class="separator:af215654e83c860ffdd939449813029b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc36c0409ac8ea83ccfec89001a1fd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbc36c0409ac8ea83ccfec89001a1fd7"></a>
+QHash&lt; QString, QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>infoMap_</b></td></tr>
+<tr class="separator:acbc36c0409ac8ea83ccfec89001a1fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae585de79c0ce98d3509b5649877e158c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae585de79c0ce98d3509b5649877e158c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>settingPropsFromMap_</b></td></tr>
+<tr class="separator:ae585de79c0ce98d3509b5649877e158c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

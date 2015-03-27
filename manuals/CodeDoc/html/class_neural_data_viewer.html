@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_neural_data_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">NeuralDataViewer Class Reference</div>  </div>
@@ -108,6 +111,11 @@ Inheritance diagram for NeuralDataViewer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_neural_data_viewer_1_1_data_list.html">DataList</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a2ca4a819f8149a661a30bb1fe64f455c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ca4a819f8149a661a30bb1fe64f455c"></a>
@@ -149,6 +157,95 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#a17ce9132f1eacd87868566ac7c40bb62">currUnit</a> ()</td></tr>
 <tr class="memdesc:a17ce9132f1eacd87868566ac7c40bb62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the unit of the spike data currently being displayed. <br /></td></tr>
 <tr class="separator:a17ce9132f1eacd87868566ac7c40bb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ab45cc2341a23cdb35cff6fc3d8a73b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#ab45cc2341a23cdb35cff6fc3d8a73b6e">plotChannelChanged</a> (int index)</td></tr>
+<tr class="memdesc:ab45cc2341a23cdb35cff6fc3d8a73b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the currently selected plot channel (from the drop down) changes.  <a href="#ab45cc2341a23cdb35cff6fc3d8a73b6e">More...</a><br /></td></tr>
+<tr class="separator:ab45cc2341a23cdb35cff6fc3d8a73b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad486c730a3f854e8431b109e48b80197"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#ad486c730a3f854e8431b109e48b80197">plotUnitChanged</a> (int index)</td></tr>
+<tr class="memdesc:ad486c730a3f854e8431b109e48b80197"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the currently selected unit (from the drop down) changes.  <a href="#ad486c730a3f854e8431b109e48b80197">More...</a><br /></td></tr>
+<tr class="separator:ad486c730a3f854e8431b109e48b80197"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a3b6fc04c181524c2e4f9bfb783a028bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b6fc04c181524c2e4f9bfb783a028bb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#a3b6fc04c181524c2e4f9bfb783a028bb">setupUi</a> ()</td></tr>
+<tr class="memdesc:a3b6fc04c181524c2e4f9bfb783a028bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the user interface portions of the GUI, widgets, labels, etc. <br /></td></tr>
+<tr class="separator:a3b6fc04c181524c2e4f9bfb783a028bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fb02be61fb6cf5b93cc28dd5013f0b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fb02be61fb6cf5b93cc28dd5013f0b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#a0fb02be61fb6cf5b93cc28dd5013f0b1">updatePlotOptions</a> ()</td></tr>
+<tr class="memdesc:a0fb02be61fb6cf5b93cc28dd5013f0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the plot options (ie. channel, unit dropdowns) according to the latest available neural data. <br /></td></tr>
+<tr class="separator:a0fb02be61fb6cf5b93cc28dd5013f0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a19bf86861564033a2b85921c2a826b87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19bf86861564033a2b85921c2a826b87"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>neuralDataTimer_</b></td></tr>
+<tr class="separator:a19bf86861564033a2b85921c2a826b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa241a6f7e548442b4b4e132d90e66fcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa241a6f7e548442b4b4e132d90e66fcf"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>axisMin_</b></td></tr>
+<tr class="separator:aa241a6f7e548442b4b4e132d90e66fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac195e6399caac35c46107d2f01ee9a0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac195e6399caac35c46107d2f01ee9a0f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>axisMax_</b></td></tr>
+<tr class="separator:ac195e6399caac35c46107d2f01ee9a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63d806896ce36ea6557d1cb1cc99039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab63d806896ce36ea6557d1cb1cc99039"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:ab63d806896ce36ea6557d1cb1cc99039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9779340f236724402e6301dfe03b67f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9779340f236724402e6301dfe03b67f7"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>channelBox_</b></td></tr>
+<tr class="separator:a9779340f236724402e6301dfe03b67f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562951ec45b18d0918ddeaaf80726d1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a562951ec45b18d0918ddeaaf80726d1b"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>unitBox_</b></td></tr>
+<tr class="separator:a562951ec45b18d0918ddeaaf80726d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7805dd797770b1b90017f388719ed10e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7805dd797770b1b90017f388719ed10e"></a>
+QwtPlot *&#160;</td><td class="memItemRight" valign="bottom"><b>lfpPlot_</b></td></tr>
+<tr class="separator:a7805dd797770b1b90017f388719ed10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a834b2b799051992dc61a647b39019316"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a834b2b799051992dc61a647b39019316"></a>
+QwtPlot *&#160;</td><td class="memItemRight" valign="bottom"><b>spikePlot_</b></td></tr>
+<tr class="separator:a834b2b799051992dc61a647b39019316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68fdcded63cb4356b48fd39daceab70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad68fdcded63cb4356b48fd39daceab70"></a>
+QVector&lt; <a class="el" href="struct_neural_data_viewer_1_1_data_list.html">DataList</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lfpPlotData_</b></td></tr>
+<tr class="separator:ad68fdcded63cb4356b48fd39daceab70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae23c3b4ab07725d13936bd5d261d3454"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae23c3b4ab07725d13936bd5d261d3454"></a>
+QwtPlotMarker *&#160;</td><td class="memItemRight" valign="bottom"><b>lfpCurrTimeBar_</b></td></tr>
+<tr class="separator:ae23c3b4ab07725d13936bd5d261d3454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a175e8d006117e32a30987ac689c72518"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a175e8d006117e32a30987ac689c72518"></a>
+QVector&lt; QwtPlotMarker * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lfpStateChangeMarkers_</b></td></tr>
+<tr class="separator:a175e8d006117e32a30987ac689c72518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9998f90d0594cb84abf0129aa06e8341"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9998f90d0594cb84abf0129aa06e8341"></a>
+QwtPlotCurve *&#160;</td><td class="memItemRight" valign="bottom"><b>lfpPlotCurve_</b></td></tr>
+<tr class="separator:a9998f90d0594cb84abf0129aa06e8341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2417e309e1d6686ed959beb05a78522"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2417e309e1d6686ed959beb05a78522"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>lfpPlotNeedsUpdate_</b></td></tr>
+<tr class="separator:aa2417e309e1d6686ed959beb05a78522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9415696c3db793b05b2ddd34b9f5c474"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9415696c3db793b05b2ddd34b9f5c474"></a>
+QVector&lt; QVector&lt; <a class="el" href="struct_neural_data_viewer_1_1_data_list.html">DataList</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikePlotData_</b></td></tr>
+<tr class="separator:a9415696c3db793b05b2ddd34b9f5c474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df730fa458aa4f2994bc03658f5b5b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3df730fa458aa4f2994bc03658f5b5b6"></a>
+QwtPlotMarker *&#160;</td><td class="memItemRight" valign="bottom"><b>spikeCurrTimeBar_</b></td></tr>
+<tr class="separator:a3df730fa458aa4f2994bc03658f5b5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a766cdd4e0b44ab0859312c3fc3fda8cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a766cdd4e0b44ab0859312c3fc3fda8cc"></a>
+QVector&lt; QwtPlotMarker * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikeStateChangeMarkers_</b></td></tr>
+<tr class="separator:a766cdd4e0b44ab0859312c3fc3fda8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a176e348fae229491447e15bc57000d01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a176e348fae229491447e15bc57000d01"></a>
+QwtPlotCurve *&#160;</td><td class="memItemRight" valign="bottom"><b>spikePlotCurve_</b></td></tr>
+<tr class="separator:a176e348fae229491447e15bc57000d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad9e9b0c9a086461a0294d606afd6e38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad9e9b0c9a086461a0294d606afd6e38"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>spikePlotNeedsUpdate_</b></td></tr>
+<tr class="separator:aad9e9b0c9a086461a0294d606afd6e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fed48ca21d7912cb0ab83dbf1a37c72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8fed48ca21d7912cb0ab83dbf1a37c72"></a>
+QMap&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>units_</b></td></tr>
+<tr class="separator:a8fed48ca21d7912cb0ab83dbf1a37c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e1f191f9c8efe58e0287e46a91f217"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17e1f191f9c8efe58e0287e46a91f217"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestRunningPath_</b></td></tr>
+<tr class="separator:a17e1f191f9c8efe58e0287e46a91f217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47467b87d6b2233f248b10e0e3c7adaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47467b87d6b2233f248b10e0e3c7adaf"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>latestNeuralDataId_</b></td></tr>
+<tr class="separator:a47467b87d6b2233f248b10e0e3c7adaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1780f1e930478d869bea6c41fcfeae2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1780f1e930478d869bea6c41fcfeae2"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td></tr>
+<tr class="separator:ae1780f1e930478d869bea6c41fcfeae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget used to display live lfp and spike data in the Workstation's Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> during an experimental session. </p>
@@ -231,6 +328,64 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <dl class="section note"><dt>Note</dt><dd>This function does not actually cause anything to be redrawn. It sets a spikePlotNeedsUpdate_ flag in case the new data is on the channel/unit being displayed. <a class="el" href="class_neural_data_viewer.html#a4157c87495c85be09e6450f94642efd0" title="Updates the spike and lfp plots for the latest times and any new data that has arrived. ">replot()</a> needs to be called to actually redraw the plot on screen. That function looks at the spikePlotNeedsUpdate_ flag to decide whether to add the new data to the displayed spike plot. </dd></dl>
 
 <p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00159">159</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab45cc2341a23cdb35cff6fc3d8a73b6e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeuralDataViewer::plotChannelChanged </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the currently selected plot channel (from the drop down) changes. </p>
+<p>This causes the units dropdown to be updated with units available in this channel and causes the plots to be redrawn for the new channel. </p>
+
+<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00493">493</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad486c730a3f854e8431b109e48b80197"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NeuralDataViewer::plotUnitChanged </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the currently selected unit (from the drop down) changes. </p>
+<p>This causes the spike plot to be redrawn for the new unit selection. </p>
+
+<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00522">522</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
 
 </div>
 </div>

@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_level_up_button-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">LevelUpButton Class Reference</div>  </div>
@@ -111,6 +113,29 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa07bb8c59553adb960a46105551c5fab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_level_up_button.html#aa07bb8c59553adb960a46105551c5fab">LevelUpButton</a> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QWidget *parent=NULL)</td></tr>
 <tr class="memdesc:aa07bb8c59553adb960a46105551c5fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_level_up_button.html" title="A simple button widget containing an up arrow that turns red if the current Window Asset&#39;s ancestors ...">LevelUpButton</a>.  <a href="#aa07bb8c59553adb960a46105551c5fab">More...</a><br /></td></tr>
 <tr class="separator:aa07bb8c59553adb960a46105551c5fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a7dac48fb16c81bc00193dee020930d62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dac48fb16c81bc00193dee020930d62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_level_up_button.html#a7dac48fb16c81bc00193dee020930d62">searchRequested</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
+<tr class="memdesc:a7dac48fb16c81bc00193dee020930d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a new search is requested to search the current Window Asset's ancestors for the search query and highlight the button red if the query is found or remove the highlight if it isn't. <br /></td></tr>
+<tr class="separator:a7dac48fb16c81bc00193dee020930d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8056c2d96bb2d47071bbe89359a21a39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8056c2d96bb2d47071bbe89359a21a39"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_level_up_button.html#a8056c2d96bb2d47071bbe89359a21a39">windowAssetChanged</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; windowAsset)</td></tr>
+<tr class="memdesc:a8056c2d96bb2d47071bbe89359a21a39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Window Asset changes to redo the current search and rehighlight the button accordingly. <br /></td></tr>
+<tr class="separator:a8056c2d96bb2d47071bbe89359a21a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1fbf61682dc42258e77a1d8fa48db267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fbf61682dc42258e77a1d8fa48db267"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:a1fbf61682dc42258e77a1d8fa48db267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb1b3a24cad8672192dd6b29b1f13dc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb1b3a24cad8672192dd6b29b1f13dc0"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>origStyleSheet_</b></td></tr>
+<tr class="separator:afb1b3a24cad8672192dd6b29b1f13dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01bbfc5b74c602aefc6e98f183fa377"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad01bbfc5b74c602aefc6e98f183fa377"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>highlightByGroup_</b></td></tr>
+<tr class="separator:ad01bbfc5b74c602aefc6e98f183fa377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple button widget containing an up arrow that turns red if the current Window Asset's ancestors contain the current search query. </p>

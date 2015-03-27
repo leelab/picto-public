@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_property_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PropertyContainer Class Reference</div>  </div>
@@ -174,6 +176,21 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af9d2775a07e882dc28967b0eadabf5c9"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">enumTypeId</a> ()</td></tr>
 <tr class="memdesc:af9d2775a07e882dc28967b0eadabf5c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type Id to be used when creating <a class="el" href="class_picto_1_1_enum_property.html" title="A Property for storing enums. ">EnumProperty</a> objects with <a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a>.  <a href="#af9d2775a07e882dc28967b0eadabf5c9">More...</a><br /></td></tr>
 <tr class="separator:af9d2775a07e882dc28967b0eadabf5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2aab419913dabde07fb2514404f5f3a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_container.html#a2aab419913dabde07fb2514404f5f3a1">PropertyContainer</a> (QString _containerName)</td></tr>
+<tr class="memdesc:a2aab419913dabde07fb2514404f5f3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a> with the input name.  <a href="#a2aab419913dabde07fb2514404f5f3a1">More...</a><br /></td></tr>
+<tr class="separator:a2aab419913dabde07fb2514404f5f3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a50a83092bf613b23a8ee555039a84777"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50a83092bf613b23a8ee555039a84777"></a>
+QHash&lt; QString, QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>properties_</b></td></tr>
+<tr class="separator:a50a83092bf613b23a8ee555039a84777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8125bad9eae5865027dfdd803a8faccc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8125bad9eae5865027dfdd803a8faccc"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b></td></tr>
+<tr class="separator:a8125bad9eae5865027dfdd803a8faccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A container that groups together a set of <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects. </p>
@@ -183,7 +200,37 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_property_container_8h_source.html#l00037">37</a> of file <a class="el" href="_property_container_8h_source.html">PropertyContainer.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a2aab419913dabde07fb2514404f5f3a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PropertyContainer::PropertyContainer </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>_containerName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a> with the input name. </p>
+<dl class="section note"><dt>Note</dt><dd>The _containerName is not currently used in Picto, nor is there any foreseeable reason that it would be used. We should probably get rid of it. </dd></dl>
+
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00017">17</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a6b76b949dbb3fd855a052ecc6335ebb3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -248,7 +295,7 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a new <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a> with the input name and returns a shared pointer to it. </p>
-<dl class="section see"><dt>See also</dt><dd>PropertyContainer::PropertyContainer() </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property_container.html#a2aab419913dabde07fb2514404f5f3a1" title="Constructs a new PropertyContainer with the input name. ">PropertyContainer::PropertyContainer()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00026">26</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 

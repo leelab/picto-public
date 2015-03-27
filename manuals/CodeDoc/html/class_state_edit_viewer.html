@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_state_edit_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StateEditViewer Class Reference</div>  </div>
@@ -164,6 +165,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a36fd548283a09aeec9a56819287bf782">aboutToQuit</a> ()</td></tr>
 <tr class="memdesc:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called just before the application quits and is used to take-down anything that needs to be taken down before a quit. In particular, if there is some long running thread going on in the background, this function makes sure to end it. <br /></td></tr>
 <tr class="separator:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0e11dfddf20321ce25c36b151c551611"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e11dfddf20321ce25c36b151c551611"></a>
+<a class="el" href="class_designer.html">Designer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>expDesigner_</b></td></tr>
+<tr class="separator:a0e11dfddf20321ce25c36b151c551611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac011b300db58ce5a4b31a16874dd78f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac011b300db58ce5a4b31a16874dd78f4"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_auto_saver.html">AutoSaver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>autoSaver_</b></td></tr>
+<tr class="separator:ac011b300db58ce5a4b31a16874dd78f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e15eadb32b81686f87c5d3871b8abb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e15eadb32b81686f87c5d3871b8abb3"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>autoSaveTimer_</b></td></tr>
+<tr class="separator:a0e15eadb32b81686f87c5d3871b8abb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e294ec0b4720eb386f236479eaf1727"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e294ec0b4720eb386f236479eaf1727"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkedAutoSave_</b></td></tr>
+<tr class="separator:a1e294ec0b4720eb386f236479eaf1727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

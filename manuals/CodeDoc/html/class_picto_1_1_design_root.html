@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_design_root-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::DesignRoot Class Reference</div>  </div>
@@ -212,6 +214,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ae51a2bad89a82242374c605c075ce233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_picto_1_1_design_message.html">DesignMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#ae51a2bad89a82242374c605c075ce233">getLastWarning</a> ()</td></tr>
 <tr class="memdesc:ae51a2bad89a82242374c605c075ce233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the latest deserialization warning message, and clears it out in the process.  <a href="#ae51a2bad89a82242374c605c075ce233">More...</a><br /></td></tr>
 <tr class="separator:ae51a2bad89a82242374c605c075ce233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:af005c97febd8c93d81ddc73a4089f307"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#af005c97febd8c93d81ddc73a4089f307">designEdited</a> ()</td></tr>
+<tr class="memdesc:af005c97febd8c93d81ddc73a4089f307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks this design as "not compiled".  <a href="#af005c97febd8c93d81ddc73a4089f307">More...</a><br /></td></tr>
+<tr class="separator:af005c97febd8c93d81ddc73a4089f307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ace7c7a3acf7f104cef734026cfb8ecfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace7c7a3acf7f104cef734026cfb8ecfa"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_picto_data.html">PictoData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pictoData_</b></td></tr>
+<tr class="separator:ace7c7a3acf7f104cef734026cfb8ecfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa9d978a96e4224518e05ec998e2797d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa9d978a96e4224518e05ec998e2797d"></a>
+QTextDocument&#160;</td><td class="memItemRight" valign="bottom"><b>designRootText_</b></td></tr>
+<tr class="separator:afa9d978a96e4224518e05ec998e2797d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b89a00268456e4a209341727971df6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36b89a00268456e4a209341727971df6"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>designName</b></td></tr>
+<tr class="separator:a36b89a00268456e4a209341727971df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e7eeedcb7849705b39ae99d82b117e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e7eeedcb7849705b39ae99d82b117e1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></tr>
+<tr class="separator:a4e7eeedcb7849705b39ae99d82b117e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4fec531a92f8a71c4af63775e30a86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa4fec531a92f8a71c4af63775e30a86"></a>
+<a class="el" href="struct_picto_1_1_design_message.html">DesignMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastError_</b></td></tr>
+<tr class="separator:aaa4fec531a92f8a71c4af63775e30a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22b15f60155648c126395751e5523b8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22b15f60155648c126395751e5523b8e"></a>
+<a class="el" href="struct_picto_1_1_design_message.html">DesignMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastWarning_</b></td></tr>
+<tr class="separator:a22b15f60155648c126395751e5523b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The root of the Experiment/Analysis Design tree passed between different UI Viewers. </p>
@@ -239,6 +268,34 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section note"><dt>Note</dt><dd>Rather than recompiling every time this function is called, a compiled_ flag is maintained to mark if a new compiliation needs to occur or not. The run time of this function is therefore highly dependent on whether the design has been changed since the last time it was called. It should also be pointed out that there is no need to actually "compile" Picto design code. The code is simply interpreted by Picto and turned into a design tree in RAM that is run to perform an experiment. Compiling is therefore simply checking for valid syntax. If a design has valid syntax we say that it compiles. This does not preclude runtime errors in Javascript however. Javascript is so flexible that it is notoriously hard to catch javascript syntax errors before run time. Any syntax errors that are catchable will be caught in this function; however, runtime errors will not be exposed until the experiment is tested, and these will show up in the debug viewer during the test run. </dd></dl>
 
 <p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00292">292</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af005c97febd8c93d81ddc73a4089f307"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DesignRoot::designEdited </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Marks this design as "not compiled". </p>
+<p>This is called every time anything in the underlying design is edited. It sets the compiled_ flag to false so that the <a class="el" href="class_picto_1_1_design_root.html#aa0fbfa60b431b196b01616f4107d101c" title="Returns true if the current Design succesfully compiles without errors (ie. has valid syntax)...">compiles()</a> function will not that it has to recheck the design syntax before it can return true. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#aa0fbfa60b431b196b01616f4107d101c" title="Returns true if the current Design succesfully compiles without errors (ie. has valid syntax)...">compiles()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00340">340</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>

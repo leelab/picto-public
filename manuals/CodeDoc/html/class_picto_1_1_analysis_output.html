@@ -95,6 +95,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-slots">Protected Slots</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_analysis_output-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AnalysisOutput Class Reference</div>  </div>
@@ -571,6 +575,57 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a8dfcc745ea219323befdb49fcb7892e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_picto_1_1_analysis_output_widget.html">AnalysisOutputWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output.html#a8dfcc745ea219323befdb49fcb7892e0">loadWidget</a> ()</td></tr>
+<tr class="memdesc:a8dfcc745ea219323befdb49fcb7892e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls createWidget to create a new Widget to display this <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a>'s contents and returns it.  <a href="#a8dfcc745ea219323befdb49fcb7892e0">More...</a><br /></td></tr>
+<tr class="separator:a8dfcc745ea219323befdb49fcb7892e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a61fa0d1e6571bfa9186a7e6c4cca0eeb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output.html#a61fa0d1e6571bfa9186a7e6c4cca0eeb">initTempOutputDir</a> ()</td></tr>
+<tr class="memdesc:a61fa0d1e6571bfa9186a7e6c4cca0eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty "analysisoutput" directory in the runpath once per executable run, clearing out any previous contents if there were any.  <a href="#a61fa0d1e6571bfa9186a7e6c4cca0eeb">More...</a><br /></td></tr>
+<tr class="separator:a61fa0d1e6571bfa9186a7e6c4cca0eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7635959871e76c62e3cdcaedab821be1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output.html#a7635959871e76c62e3cdcaedab821be1">removeFilesThenDirectories</a> (QDir container)</td></tr>
+<tr class="memdesc:a7635959871e76c62e3cdcaedab821be1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenience function that deletes all files within the input directory and then deletes the directory itself.  <a href="#a7635959871e76c62e3cdcaedab821be1">More...</a><br /></td></tr>
+<tr class="separator:a7635959871e76c62e3cdcaedab821be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa9d983508d84b444774024d45e6168c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9d983508d84b444774024d45e6168c7"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>widgetIdentifier_</b></td></tr>
+<tr class="separator:aa9d983508d84b444774024d45e6168c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d34f3b3f6bb5a6eabf9c5d3be9ccb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17d34f3b3f6bb5a6eabf9c5d3be9ccb2"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>latestRunId_</b></td></tr>
+<tr class="separator:a17d34f3b3f6bb5a6eabf9c5d3be9ccb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b71cdcd616835c15ee9ae9ba98a2e08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b71cdcd616835c15ee9ae9ba98a2e08"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>wasReset_</b></td></tr>
+<tr class="separator:a2b71cdcd616835c15ee9ae9ba98a2e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b62b60c278c854bd765668c6b6b8a8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b62b60c278c854bd765668c6b6b8a8d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>valid_</b></td></tr>
+<tr class="separator:a4b62b60c278c854bd765668c6b6b8a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aef57bab84d55ba79f9a50641909c8c5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef57bab84d55ba79f9a50641909c8c5d"></a>
+static QHash&lt; QUuid, QList&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_analysis_output.html">AnalysisOutput</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputsByRunId_</b></td></tr>
+<tr class="separator:aef57bab84d55ba79f9a50641909c8c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86abfcc1a3aa4531b7f9567299d9b7a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86abfcc1a3aa4531b7f9567299d9b7a8"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><b>outputDir_</b></td></tr>
+<tr class="separator:a86abfcc1a3aa4531b7f9567299d9b7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a48cc24754d3e1086d2df9c918645f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a48cc24754d3e1086d2df9c918645f6"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>loadedObjects_</b></td></tr>
+<tr class="separator:a9a48cc24754d3e1086d2df9c918645f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92f59f26f9e3fb8c2da26c0d64ea5802"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92f59f26f9e3fb8c2da26c0d64ea5802"></a>
+static QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lockFile_</b></td></tr>
+<tr class="separator:a92f59f26f9e3fb8c2da26c0d64ea5802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e27ec56e062e27c1a94764b60cd1271"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e27ec56e062e27c1a94764b60cd1271"></a>
+static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>containerWidgetMutex_</b></td></tr>
+<tr class="separator:a4e27ec56e062e27c1a94764b60cd1271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e10441b998ded2c676b2aacb51492f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e10441b998ded2c676b2aacb51492f0"></a>
+static QHash&lt; QUuid, QPointer&lt; <a class="el" href="class_picto_1_1_analysis_output_widget_container.html">AnalysisOutputWidgetContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>containerWidgets_</b></td></tr>
+<tr class="separator:a2e10441b998ded2c676b2aacb51492f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_class_picto_1_1_associate_element"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_picto_1_1_associate_element')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="class_picto_1_1_associate_element.html">Picto::AssociateElement</a></td></tr>
@@ -749,7 +804,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div><div class="memdoc">
 
 <p>Returns an <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> containing all of the <a class="el" href="class_picto_1_1_analysis_output_widget.html" title="The base class of widgets that display a representation of the output of an AnalysisOutput object...">AnalysisOutputWidget</a> objects associated with the run that has the input runId. </p>
-<p>The <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> class tracks all <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> objects that are created in order to be able to provide all AnalysisOutputWidgets for a given run. When this function is called, a new <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> is created and loaded. Widgets are requested for all <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> objects for the input runId by calling loadWidget() and they are added to the <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> before it is returned. If no <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> object are associated with the inputn runId, a Null pointer will be returned. </p><dl class="section note"><dt>Note</dt><dd>The class calling this function is responsible for deleting the returned <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a>. </dd></dl>
+<p>The <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> class tracks all <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> objects that are created in order to be able to provide all AnalysisOutputWidgets for a given run. When this function is called, a new <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> is created and loaded. Widgets are requested for all <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> objects for the input runId by calling <a class="el" href="class_picto_1_1_analysis_output.html#a8dfcc745ea219323befdb49fcb7892e0" title="Calls createWidget to create a new Widget to display this AnalysisOutput&#39;s contents and returns it...">loadWidget()</a> and they are added to the <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> before it is returned. If no <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> object are associated with the inputn runId, a Null pointer will be returned. </p><dl class="section note"><dt>Note</dt><dd>The class calling this function is responsible for deleting the returned <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a>. </dd></dl>
 
 <p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00062">62</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
 
@@ -803,6 +858,62 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 </div>
 </div>
+<a class="anchor" id="a61fa0d1e6571bfa9186a7e6c4cca0eeb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AnalysisOutput::initTempOutputDir </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an empty "analysisoutput" directory in the runpath once per executable run, clearing out any previous contents if there were any. </p>
+<p>This allows the analysisoutput directory to act as a temporary container for any analysis output files created by the Picto workstation. If the data stored in the "analysisoutput" directory needs to be saved to a permanent location, this can be done by calling the <a class="el" href="class_picto_1_1_analysis_output_widget.html#a02b8a713faebd966c1a72565de9eb73d" title="Saves the data represnted in this widget to the input directory, returns true if successful, false otherwise. ">AnalysisOutputWidget::saveOutputTo()</a> function which will be responsible for copying its associated data files from the "analysisoutput" directory to the directory path input in that function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_output_widget.html#a02b8a713faebd966c1a72565de9eb73d" title="Saves the data represnted in this widget to the input directory, returns true if successful, false otherwise. ">AnalysisOutputWidget::saveOutputTo()</a>, <a class="el" href="class_picto_1_1_analysis_output_widget_container.html#abed82b90e4457b75480415763a3e2e11" title="Saves all of the saveable output from this widgets AnalysisOutputWidgets to the input directory...">AnalysisOutputWidgetContainer::saveOutputTo()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00183">183</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8dfcc745ea219323befdb49fcb7892e0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_picto_1_1_analysis_output_widget.html">AnalysisOutputWidget</a> * Picto::AnalysisOutput::loadWidget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls createWidget to create a new Widget to display this <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a>'s contents and returns it. </p>
+<p>If this <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> has no associated widget, a NULL pointer is returned. Also, when a widget is created, a unique ID is generated for the widget that can be accessed from <a class="el" href="class_picto_1_1_analysis_output.html#a093574fc0610c897f7ae61145ca8a1eb" title="Returns a QUuid associated with the widget that displays this AnalysisOutput&#39;s contents. ">getWidgetIdentifier()</a>. This will allow the widget to be uniquely identifiable in an <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a> since the widget identifier is used in <a class="el" href="class_picto_1_1_analysis_output_widget_container.html#a3a88420f7582d082b105642f792ec11d" title="Adds the input AnalysisOutputWidget to this AnalysisOutputWidgetContainer&#39;s layout. ">AnalysisOutputWidgetContainer::addWidget()</a> to add the widget. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_output.html#a8598720d301be74ad5639e2d08140c3c" title="Returns an AnalysisOutputWidgetContainer containing all of the AnalysisOutputWidget objects associate...">getContainerWidget()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00165">165</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2a9b708fdcd043db3239c267a8fa3418"></a>
 <div class="memitem">
 <div class="memproto">
@@ -832,6 +943,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_file_output.html#a1f03bef9d6e5395471475d685f1e918c">Picto::AnalysisFileOutput</a>.</p>
 
 <p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00105">105</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7635959871e76c62e3cdcaedab821be1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AnalysisOutput::removeFilesThenDirectories </td>
+          <td>(</td>
+          <td class="paramtype">QDir&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A convenience function that deletes all files within the input directory and then deletes the directory itself. </p>
+<p>If any files in the directory can't be removed, the function returns and nothing else is touched. </p><dl class="section note"><dt>Note</dt><dd>This was created since, at the time of its writing, Qt had no single function for performing a directory deletion. The latest version of Qt should have this function, so we may want to replace this with the Qt version. </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00219">219</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
 
 </div>
 </div>

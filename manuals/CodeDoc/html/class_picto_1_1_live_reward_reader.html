@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_live_reward_reader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LiveRewardReader Class Reference</div>  </div>
@@ -112,6 +113,11 @@ Inheritance diagram for Picto::LiveRewardReader:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_live_reward_reader_1_1_reward_data.html">RewardData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f016e92c0b7fce54ce6690786705878"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f016e92c0b7fce54ce6690786705878"></a>
@@ -157,6 +163,12 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_reward_reader.html#a5847f68ff39a0ca11ef70c3856840d32">getDurationsUntil</a> (double time)</td></tr>
 <tr class="memdesc:a5847f68ff39a0ca11ef70c3856840d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of reward durations that occured with times &gt; the current time and &lt;= the input time. From the input reward channel. There is a one to one matchup of values from this function to times from the <a class="el" href="class_picto_1_1_live_reward_reader.html#aaa642f941e1bc609dca54c8c98208700" title="Returns a list of reward times that occured with times > the current time and <= the input time...">getTimesUntil()</a> function. <br /></td></tr>
 <tr class="separator:a5847f68ff39a0ca11ef70c3856840d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aadf39a7a1e9ae5dfc2e2e0ebfbbf2b89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadf39a7a1e9ae5dfc2e2e0ebfbbf2b89"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_live_reward_reader_1_1_reward_data.html">RewardData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardData_</b></td></tr>
+<tr class="separator:aadf39a7a1e9ae5dfc2e2e0ebfbbf2b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_reward_reader.html" title="An base class for classes that can provide Reward data over input time ranges. ">RewardReader</a> class for a live test experiment. </p>

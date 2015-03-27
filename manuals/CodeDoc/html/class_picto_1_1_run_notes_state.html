@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_run_notes_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::RunNotesState Class Reference</div>  </div>
@@ -112,6 +114,11 @@ Inheritance diagram for Picto::RunNotesState:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_run_notes_state_1_1_run_info.html">RunInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afb6539ae286fcd84331e170e2a17f3b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb6539ae286fcd84331e170e2a17f3b2"></a>
@@ -141,6 +148,27 @@ virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_notes_state.html#a39ab76599c0eb7e3dfdf655d8f6c4e7e">getRunIndex</a> ()</td></tr>
 <tr class="memdesc:a39ab76599c0eb7e3dfdf655d8f6c4e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of this run in this sessions list of task runs, where the first run has an index of zero. <br /></td></tr>
 <tr class="separator:a39ab76599c0eb7e3dfdf655d8f6c4e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a629f3d6fa68689d1ede8893aa571f7b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a629f3d6fa68689d1ede8893aa571f7b0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>currRunIsValid</b> ()</td></tr>
+<tr class="separator:a629f3d6fa68689d1ede8893aa571f7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acf545802cf8c18d28dc5931c36d6cf76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf545802cf8c18d28dc5931c36d6cf76"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:acf545802cf8c18d28dc5931c36d6cf76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea7d2628d43f3a61b46b57de1896c43f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea7d2628d43f3a61b46b57de1896c43f"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:aea7d2628d43f3a61b46b57de1896c43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cb254d986f553888ff4c7e6cf0286f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cb254d986f553888ff4c7e6cf0286f8"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_run_notes_state_1_1_run_info.html">RunInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>runs_</b></td></tr>
+<tr class="separator:a3cb254d986f553888ff4c7e6cf0286f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0203a3277ed777ddc49631d9404ec3e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0203a3277ed777ddc49631d9404ec3e9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currRun_</b></td></tr>
+<tr class="separator:a0203a3277ed777ddc49631d9404ec3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> classes to load a Picto Session database, extract the Run Notes data and implement functions for accessing it. </p>

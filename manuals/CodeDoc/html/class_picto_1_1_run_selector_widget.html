@@ -94,6 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_run_selector_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::RunSelectorWidget Class Reference</div>  </div>
@@ -113,6 +116,12 @@ Inheritance diagram for Picto::RunSelectorWidget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_run_selector_widget_1_1_run_info.html">RunInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple struct used for storing information about a particular run.  <a href="struct_picto_1_1_run_selector_widget_1_1_run_info.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:ac540ab59a379b3bfb5534ecde54dc2aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#ac540ab59a379b3bfb5534ecde54dc2aa">RunStatus</a> { <a class="el" href="class_picto_1_1_run_selector_widget.html#ac540ab59a379b3bfb5534ecde54dc2aaac90c3e6a9887ce38cb4d5e388a6da6cb">IDLE</a>, 
@@ -178,6 +187,64 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#a50c5be487bb6716e7446bb684818382f">enableCheckBoxes</a> (bool enabled)</td></tr>
 <tr class="memdesc:a50c5be487bb6716e7446bb684818382f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables user input for all runs based on the input boolean. <br /></td></tr>
 <tr class="separator:a50c5be487bb6716e7446bb684818382f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a06ca70f99e4335408ac8111cdc1f1c68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06ca70f99e4335408ac8111cdc1f1c68"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68">buttonClicked</a> (int buttonIndex)</td></tr>
+<tr class="memdesc:a06ca70f99e4335408ac8111cdc1f1c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when any run's checkbox changes its state. Resets all run statuses to Idle and emits <a class="el" href="class_picto_1_1_run_selector_widget.html#a49bd945e717287fefe6efe75f1c6b7fb" title="Emitted when the selection changed somehow (a run was selected or deselected) in the RunSelectorWidge...">runSelectionChanged()</a> signal. <br /></td></tr>
+<tr class="separator:a06ca70f99e4335408ac8111cdc1f1c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab97c499bf01104c0e676a2ff27ff46e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#ab97c499bf01104c0e676a2ff27ff46e4">selectAll</a> ()</td></tr>
+<tr class="memdesc:ab97c499bf01104c0e676a2ff27ff46e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Select All button is clicked. Causes all runs to be selected.  <a href="#ab97c499bf01104c0e676a2ff27ff46e4">More...</a><br /></td></tr>
+<tr class="separator:ab97c499bf01104c0e676a2ff27ff46e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ccb1816da21a02afdd55d83d16cf57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#a77ccb1816da21a02afdd55d83d16cf57">selectSaved</a> ()</td></tr>
+<tr class="memdesc:a77ccb1816da21a02afdd55d83d16cf57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Select Saved button is clicked. Causes all saved runs to be selected.  <a href="#a77ccb1816da21a02afdd55d83d16cf57">More...</a><br /></td></tr>
+<tr class="separator:a77ccb1816da21a02afdd55d83d16cf57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41780f8fe0264739def3b4f10c1876cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#a41780f8fe0264739def3b4f10c1876cc">clearSelection</a> ()</td></tr>
+<tr class="memdesc:a41780f8fe0264739def3b4f10c1876cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Clear Selection button is clicked. Causes all runs to be deselected.  <a href="#a41780f8fe0264739def3b4f10c1876cc">More...</a><br /></td></tr>
+<tr class="separator:a41780f8fe0264739def3b4f10c1876cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a91cd364135820703e5b6e192ec9ab59b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_run_selector_widget.html#a91cd364135820703e5b6e192ec9ab59b">setRunColor</a> (QString fileName, int runIndex, QColor color)</td></tr>
+<tr class="memdesc:a91cd364135820703e5b6e192ec9ab59b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the highlight color of the run at runIndex of the session at the fileName path to color.  <a href="#a91cd364135820703e5b6e192ec9ab59b">More...</a><br /></td></tr>
+<tr class="separator:a91cd364135820703e5b6e192ec9ab59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad51e414e11e7bbad9bc57e0ce779efa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad51e414e11e7bbad9bc57e0ce779efa6"></a>
+QScrollArea *&#160;</td><td class="memItemRight" valign="bottom"><b>scrollArea_</b></td></tr>
+<tr class="separator:ad51e414e11e7bbad9bc57e0ce779efa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0e3d2a7ee36f5aa921a7f38bfefc55e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0e3d2a7ee36f5aa921a7f38bfefc55e"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>mainWidget_</b></td></tr>
+<tr class="separator:ac0e3d2a7ee36f5aa921a7f38bfefc55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae685123dbfd71f16ef2fffee08833201"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae685123dbfd71f16ef2fffee08833201"></a>
+QButtonGroup *&#160;</td><td class="memItemRight" valign="bottom"><b>buttonGroup_</b></td></tr>
+<tr class="separator:ae685123dbfd71f16ef2fffee08833201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c503c6371d7a6d221811e0d8d4b86eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c503c6371d7a6d221811e0d8d4b86eb"></a>
+QGroupBox *&#160;</td><td class="memItemRight" valign="bottom"><b>currGroupBox_</b></td></tr>
+<tr class="separator:a4c503c6371d7a6d221811e0d8d4b86eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a889ffdb215723a33322c3f827c8031aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a889ffdb215723a33322c3f827c8031aa"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>selectAll_</b></td></tr>
+<tr class="separator:a889ffdb215723a33322c3f827c8031aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47faff3ad15cdb24a4700798555c966e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47faff3ad15cdb24a4700798555c966e"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>clearSelection_</b></td></tr>
+<tr class="separator:a47faff3ad15cdb24a4700798555c966e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c46224e6d95e06dcf94a4100272985"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74c46224e6d95e06dcf94a4100272985"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>selectSaved_</b></td></tr>
+<tr class="separator:a74c46224e6d95e06dcf94a4100272985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15cf99d137da1687f781301e689e82f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15cf99d137da1687f781301e689e82f6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numRuns_</b></td></tr>
+<tr class="separator:a15cf99d137da1687f781301e689e82f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d2ae31bab6a792e6825a5a5a836c9fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d2ae31bab6a792e6825a5a5a836c9fd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numSessions_</b></td></tr>
+<tr class="separator:a5d2ae31bab6a792e6825a5a5a836c9fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42ff2af3672923008927859de33361f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac42ff2af3672923008927859de33361f"></a>
+QMap&lt; int, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_run_selector_widget_1_1_run_info.html">RunInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buttonIdRunLookup_</b></td></tr>
+<tr class="separator:ac42ff2af3672923008927859de33361f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c4d3bbda5e0044b39c80144127b168e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c4d3bbda5e0044b39c80144127b168e"></a>
+QMap&lt; QString, QMap&lt; int, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_run_selector_widget_1_1_run_info.html">RunInfo</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileRunLookup_</b></td></tr>
+<tr class="separator:a5c4d3bbda5e0044b39c80144127b168e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A list of selectable <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> runs for use with the Playback <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. </p>
@@ -286,6 +353,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a41780f8fe0264739def3b4f10c1876cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunSelectorWidget::clearSelection </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the Clear Selection button is clicked. Causes all runs to be deselected. </p>
+<p>If any selections end up changing, run statuses are all reset and <a class="el" href="class_picto_1_1_run_selector_widget.html#a49bd945e717287fefe6efe75f1c6b7fb" title="Emitted when the selection changed somehow (a run was selected or deselected) in the RunSelectorWidge...">runSelectionChanged()</a> is emitted a single time rather than once for every selection change. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68" title="Called when any run&#39;s checkbox changes its state. Resets all run statuses to Idle and emits runSelect...">buttonClicked()</a>, <a class="el" href="class_picto_1_1_run_selector_widget.html#a8c21deac73e7d1887abf0c13392fc465" title="Resets the status of all runs to Idle. Highlight will be removed and tooltip will be restored to the ...">resetAllRunStatus()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_run_selector_widget_8cpp_source.html#l00348">348</a> of file <a class="el" href="_run_selector_widget_8cpp_source.html">RunSelectorWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a9b8666af84027eef6c9539be57c0cfc2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -338,6 +433,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="ab97c499bf01104c0e676a2ff27ff46e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunSelectorWidget::selectAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the Select All button is clicked. Causes all runs to be selected. </p>
+<p>If any selections end up changing, run statuses are all reset and <a class="el" href="class_picto_1_1_run_selector_widget.html#a49bd945e717287fefe6efe75f1c6b7fb" title="Emitted when the selection changed somehow (a run was selected or deselected) in the RunSelectorWidge...">runSelectionChanged()</a> is emitted a single time rather than once for every selection change. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68" title="Called when any run&#39;s checkbox changes its state. Resets all run statuses to Idle and emits runSelect...">buttonClicked()</a>, <a class="el" href="class_picto_1_1_run_selector_widget.html#a8c21deac73e7d1887abf0c13392fc465" title="Resets the status of all runs to Idle. Highlight will be removed and tooltip will be restored to the ...">resetAllRunStatus()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_run_selector_widget_8cpp_source.html#l00292">292</a> of file <a class="el" href="_run_selector_widget_8cpp_source.html">RunSelectorWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab8427a8e297e63cc72d4a70577a1e070"></a>
 <div class="memitem">
 <div class="memproto">
@@ -366,6 +489,79 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This allows us to select runs programmatically. </p>
 
 <p>Definition at line <a class="el" href="_run_selector_widget_8cpp_source.html#l00214">214</a> of file <a class="el" href="_run_selector_widget_8cpp_source.html">RunSelectorWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a77ccb1816da21a02afdd55d83d16cf57"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunSelectorWidget::selectSaved </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the Select Saved button is clicked. Causes all saved runs to be selected. </p>
+<p>If any selections end up changing, run statuses are all reset and <a class="el" href="class_picto_1_1_run_selector_widget.html#a49bd945e717287fefe6efe75f1c6b7fb" title="Emitted when the selection changed somehow (a run was selected or deselected) in the RunSelectorWidge...">runSelectionChanged()</a> is emitted a single time rather than once for every selection change. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68" title="Called when any run&#39;s checkbox changes its state. Resets all run statuses to Idle and emits runSelect...">buttonClicked()</a>, <a class="el" href="class_picto_1_1_run_selector_widget.html#a8c21deac73e7d1887abf0c13392fc465" title="Resets the status of all runs to Idle. Highlight will be removed and tooltip will be restored to the ...">resetAllRunStatus()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_run_selector_widget_8cpp_source.html#l00316">316</a> of file <a class="el" href="_run_selector_widget_8cpp_source.html">RunSelectorWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a91cd364135820703e5b6e192ec9ab59b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RunSelectorWidget::setRunColor </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>runIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the highlight color of the run at runIndex of the session at the fileName path to color. </p>
+<p>If an invalid color is entered, any previous highlight will be removed. </p>
+
+<p>Definition at line <a class="el" href="_run_selector_widget_8cpp_source.html#l00263">263</a> of file <a class="el" href="_run_selector_widget_8cpp_source.html">RunSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>

@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_asset_describer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AssetDescriber Class Reference</div>  </div>
@@ -103,6 +105,27 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abbb4f0834484d1fc3611f3adf7d97ceb"><td class="memItemLeft" align="right" valign="top">static QSharedPointer&lt; <a class="el" href="struct_asset_description.html">AssetDescription</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_describer.html#abbb4f0834484d1fc3611f3adf7d97ceb">getAssetDescription</a> (QString className)</td></tr>
 <tr class="memdesc:abbb4f0834484d1fc3611f3adf7d97ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> object describing Assets of the input className.  <a href="#abbb4f0834484d1fc3611f3adf7d97ceb">More...</a><br /></td></tr>
 <tr class="separator:abbb4f0834484d1fc3611f3adf7d97ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:afd1005c017ec4e2db7ddf50444f41111"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd1005c017ec4e2db7ddf50444f41111"></a>
+static QSharedPointer&lt; <a class="el" href="struct_asset_description.html">AssetDescription</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_describer.html#afd1005c017ec4e2db7ddf50444f41111">addDescription</a> (QString className)</td></tr>
+<tr class="memdesc:afd1005c017ec4e2db7ddf50444f41111"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> for the input className, adds it to the className lookup table and returns it so that it can be filled with descriptive text. <br /></td></tr>
+<tr class="separator:afd1005c017ec4e2db7ddf50444f41111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5634a179e8cc4750709f30fe974b6cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_describer.html#ad5634a179e8cc4750709f30fe974b6cb">setupDescriptions</a> ()</td></tr>
+<tr class="memdesc:ad5634a179e8cc4750709f30fe974b6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">A giant function that loads all descriptive text into all AssetDescriptions for every class used in the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>.  <a href="#ad5634a179e8cc4750709f30fe974b6cb">More...</a><br /></td></tr>
+<tr class="separator:ad5634a179e8cc4750709f30fe974b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a258a4780aee57fb02a3609b8246d5a15"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a258a4780aee57fb02a3609b8246d5a15"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_describer.html#a258a4780aee57fb02a3609b8246d5a15">isSetup_</a> = false</td></tr>
+<tr class="memdesc:a258a4780aee57fb02a3609b8246d5a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether documentation text has been fully loaded into the <a class="el" href="class_asset_describer.html" title="A tool used to query documentation for classes used in the Picto Designer. ">AssetDescriber</a> system. <br /></td></tr>
+<tr class="separator:a258a4780aee57fb02a3609b8246d5a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a4357d99040ea29eb05a523b5bb44fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a4357d99040ea29eb05a523b5bb44fb"></a>
+static QHash&lt; QString, QSharedPointer&lt; <a class="el" href="struct_asset_description.html">AssetDescription</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_describer.html#a7a4357d99040ea29eb05a523b5bb44fb">assetHash_</a></td></tr>
+<tr class="memdesc:a7a4357d99040ea29eb05a523b5bb44fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lookup table containing <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> objects under className keys. <br /></td></tr>
+<tr class="separator:a7a4357d99040ea29eb05a523b5bb44fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A tool used to query documentation for classes used in the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
@@ -138,6 +161,34 @@ Static Public Member Functions</h2></td></tr>
 <p>If no information is found for the input className, an empty <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> QSharedPointer is returned. </p>
 
 <p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00131">131</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad5634a179e8cc4750709f30fe974b6cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AssetDescriber::setupDescriptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A giant function that loads all descriptive text into all AssetDescriptions for every class used in the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
+<p>Putting all the text in this one big function is a somewhat clunky way to do things, but has some nice features such as allowing us to only load the documentation if we need it. It would be cleaner to store the documentation with the class being documented and we should probably do this at some point. There are a few things to think about if we do that though. We want the documentation to be stored statically, not in every class instance. We also want to be able to retreive inherited function, data descriptions, and it would be nice if we could set things up so that no ducumnentation is stored if not necessary. </p>
+
+<p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00163">163</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
 
 </div>
 </div>

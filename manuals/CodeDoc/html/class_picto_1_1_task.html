@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_task-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::Task Class Reference</div>  </div>
@@ -521,6 +523,27 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a072fef578d7723c45a4e0a66305d3a70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task.html#a072fef578d7723c45a4e0a66305d3a70">sendInitialStateDataToServer</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:a072fef578d7723c45a4e0a66305d3a70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the initial state transition to the server.  <a href="#a072fef578d7723c45a4e0a66305d3a70">More...</a><br /></td></tr>
+<tr class="separator:a072fef578d7723c45a4e0a66305d3a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d262ba3618b03511bd9077d7db9dc7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task.html#a5d262ba3618b03511bd9077d7db9dc7f">sendFinalStateDataToServer</a> (QString result, QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:a5d262ba3618b03511bd9077d7db9dc7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the final <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a> <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> to the server.  <a href="#a5d262ba3618b03511bd9077d7db9dc7f">More...</a><br /></td></tr>
+<tr class="separator:a5d262ba3618b03511bd9077d7db9dc7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a81f82a58ba315948689b6941a436440a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81f82a58ba315948689b6941a436440a"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_machine.html">StateMachine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateMachine_</b></td></tr>
+<tr class="separator:a81f82a58ba315948689b6941a436440a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78a242e4819236b56fd1035bb1f1d09a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78a242e4819236b56fd1035bb1f1d09a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>taskNumber_</b></td></tr>
+<tr class="separator:a78a242e4819236b56fd1035bb1f1d09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec66f148e4daba11aa8fed9de062c38c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec66f148e4daba11aa8fed9de062c38c"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>initTransition_</b></td></tr>
+<tr class="separator:aec66f148e4daba11aa8fed9de062c38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
@@ -742,6 +765,82 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Since the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> only ever contains a single <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, this function just takes care of initializing the new <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> run, running the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, and sending any final data to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> (if necessary). </p><dl class="section note"><dt>Note</dt><dd>Currently, this function blocks the Qt Event Loop execution until it finishes except in the case where the PictoEngine is running in slave mode, in which case the event loop is processed at various times from within this engine (which is not a very clean way to do things). In the future this function should be rewritten to run a single frame at a time from within an event loop. See <a class="el" href="class_picto_1_1_command_channel.html#aafe619791fb542563544ecf50628238b" title="This is a REALLY IMPORTANT function that reads ProtocolResponse objects coming in from the server...">CommandChannel::processResponses()</a> for more details. </dd></dl>
 
 <p>Definition at line <a class="el" href="_task_8cpp_source.html#l00039">39</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d262ba3618b03511bd9077d7db9dc7f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::Task::sendFinalStateDataToServer </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt;&#160;</td>
+          <td class="paramname"><em>engine</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends the final <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a> <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> to the server. </p>
+<p>When a task completes, the final <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> never gets sent to the server. by the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, so we send it here. We also create a fake final frame whose frameId can be used to stamp all of the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes, etc that occured after the last frame that was actually presented. </p>
+
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00179">179</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a072fef578d7723c45a4e0a66305d3a70"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::Task::sendInitialStateDataToServer </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends the initial state transition to the server. </p>
+<p>Takes care of some initial operations for the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> before it is actually run. These include things like, marking the start time of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>, setting up the default name of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Run using this <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> start time, sending the initial transition data to the server, etc.</p>
+<dl class="section note"><dt>Note</dt><dd>If a task is stopped, and then restarted, the transitions recordered by the server would be this:<ul>
+<li>Final transition before stop command recieved</li>
+<li>First transition within state machine after start This is a problem for a remotely viewed session, since if it tries to join just after the task is restarted, it will put itself into the destination state from 1, which probably won't be the source state for 2. To fix this issue, we generate a "starting the task" transition with the following values:</li>
+<li>source: NULL</li>
+<li>sourceResult: NULL</li>
+<li>destination: the task's statemachine </li>
+</ul>
+</dd></dl>
+
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00136">136</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
 
 </div>
 </div>

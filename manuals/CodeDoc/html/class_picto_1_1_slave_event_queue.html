@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_slave_event_queue-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::SlaveEventQueue Class Reference</div>  </div>
@@ -124,6 +126,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="class_picto_1_1_slave_event.html">SlaveEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_event_queue.html#aef57823f47a577d8bb8291815f4ef86b">takeFirstEvent</a> ()</td></tr>
 <tr class="memdesc:aef57823f47a577d8bb8291815f4ef86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes and returns the first <a class="el" href="class_picto_1_1_slave_event.html" title="Holds information about an experimental state change event. Used by SlaveExperimentDriver. ">SlaveEvent</a> from the <a class="el" href="class_picto_1_1_slave_event_queue.html" title="A FIFO for storing ordered SlaveEvent objects. ">SlaveEventQueue</a>. <br /></td></tr>
 <tr class="separator:aef57823f47a577d8bb8291815f4ef86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aba3ed8b33dfeb82ec0af99d8af876820"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba3ed8b33dfeb82ec0af99d8af876820"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_event_queue.html#aba3ed8b33dfeb82ec0af99d8af876820">getNextAddLoc</a> ()</td></tr>
+<tr class="memdesc:aba3ed8b33dfeb82ec0af99d8af876820"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the location in the circular buffer where the next <a class="el" href="class_picto_1_1_slave_event.html" title="Holds information about an experimental state change event. Used by SlaveExperimentDriver. ">SlaveEvent</a> should be added. <br /></td></tr>
+<tr class="separator:aba3ed8b33dfeb82ec0af99d8af876820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3d4a2af1179e588f61333fe408104fa9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d4a2af1179e588f61333fe408104fa9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>firstLoc_</b></td></tr>
+<tr class="separator:a3d4a2af1179e588f61333fe408104fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c902917605bb46864edd98045b51e74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c902917605bb46864edd98045b51e74"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>endLoc_</b></td></tr>
+<tr class="separator:a8c902917605bb46864edd98045b51e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a451fda497220686257b85e340ff40033"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a451fda497220686257b85e340ff40033"></a>
+QVector&lt; <a class="el" href="class_picto_1_1_slave_event.html">SlaveEvent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>eventQueue_</b></td></tr>
+<tr class="separator:a451fda497220686257b85e340ff40033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A FIFO for storing ordered <a class="el" href="class_picto_1_1_slave_event.html" title="Holds information about an experimental state change event. Used by SlaveExperimentDriver. ">SlaveEvent</a> objects. </p>

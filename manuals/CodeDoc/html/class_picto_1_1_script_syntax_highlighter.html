@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_script_syntax_highlighter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::ScriptSyntaxHighlighter Class Reference</div>  </div>
@@ -125,6 +128,36 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:acb904895af1627266c3b05150e09abc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb904895af1627266c3b05150e09abc0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>highlightBlock</b> (const QString &amp;text)</td></tr>
 <tr class="separator:acb904895af1627266c3b05150e09abc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a93b1cc73bd04a20da0c1c96726b3ff54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93b1cc73bd04a20da0c1c96726b3ff54"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ScriptFormats</b> { <br />
+&#160;&#160;<b>ScriptTextFormat</b>, 
+<b>ScriptNumberFormat</b>, 
+<b>ScriptStringFormat</b>, 
+<b>ScriptTypeFormat</b>, 
+<br />
+&#160;&#160;<b>ScriptKeywordFormat</b>, 
+<b>ScriptPreprocessorFormat</b>, 
+<b>ScriptLabelFormat</b>, 
+<b>ScriptCommentFormat</b>, 
+<br />
+&#160;&#160;<b>NumScriptFormats</b>
+<br />
+ }</td></tr>
+<tr class="separator:a93b1cc73bd04a20da0c1c96726b3ff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac74e1ae06f4015c8a9668c37185ca0a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac74e1ae06f4015c8a9668c37185ca0a7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>highlightWord</b> (int currentPos, const QString &amp;buffer)</td></tr>
+<tr class="separator:ac74e1ae06f4015c8a9668c37185ca0a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a041c036ddb8c9850caec89462cc78421"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a041c036ddb8c9850caec89462cc78421"></a>
+QTextCharFormat&#160;</td><td class="memItemRight" valign="bottom"><b>m_formats</b> [NumScriptFormats]</td></tr>
+<tr class="separator:a041c036ddb8c9850caec89462cc78421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A syntax highlighter for Picto Scripts. </p>

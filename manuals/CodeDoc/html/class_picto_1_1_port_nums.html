@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_port_nums-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PortNums Class Reference</div>  </div>
@@ -138,6 +140,43 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_port_nums.html#ae22fd5815fcfc65c9324ce1fcb3d2b03">getLCDEventPort</a> ()</td></tr>
 <tr class="memdesc:ae22fd5815fcfc65c9324ce1fcb3d2b03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the port on which event packets will be sent between the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> and the Pictobox FrontPanel. <br /></td></tr>
 <tr class="separator:ae22fd5815fcfc65c9324ce1fcb3d2b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aa1b357729451a13691d7ad7a3196b455"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1b357729451a13691d7ad7a3196b455"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_port_nums.html#aa1b357729451a13691d7ad7a3196b455">updatePortNumbers</a> ()</td></tr>
+<tr class="memdesc:aa1b357729451a13691d7ad7a3196b455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the port numbers based on the current systemNumber_ value. <br /></td></tr>
+<tr class="separator:aa1b357729451a13691d7ad7a3196b455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a50c228fd3cd3ce14fb2729cd62a81c05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50c228fd3cd3ce14fb2729cd62a81c05"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>appName_</b></td></tr>
+<tr class="separator:a50c228fd3cd3ce14fb2729cd62a81c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68155b079efea1da85da9d7665d10a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68155b079efea1da85da9d7665d10a0b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>systemNumber_</b></td></tr>
+<tr class="separator:a68155b079efea1da85da9d7665d10a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a429be4e8362561cdb2742743ad75bfa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a429be4e8362561cdb2742743ad75bfa6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>appUpdatePort_</b></td></tr>
+<tr class="separator:a429be4e8362561cdb2742743ad75bfa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ad364e3679d0133b9ca552162258bcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ad364e3679d0133b9ca552162258bcd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>minDiscoverPort_</b></td></tr>
+<tr class="separator:a3ad364e3679d0133b9ca552162258bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa96b50ce31d8b01ecc68151d2eb7611a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa96b50ce31d8b01ecc68151d2eb7611a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxDiscoverPort_</b></td></tr>
+<tr class="separator:aa96b50ce31d8b01ecc68151d2eb7611a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9f322432e35a373b8f64940081576f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9f322432e35a373b8f64940081576f4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>serverPort_</b></td></tr>
+<tr class="separator:ae9f322432e35a373b8f64940081576f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d5ff8c35e95bb27aa94a39421704475"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d5ff8c35e95bb27aa94a39421704475"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lcdCommandPort_</b></td></tr>
+<tr class="separator:a9d5ff8c35e95bb27aa94a39421704475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c23d47b846995da64121a1e077c8914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c23d47b846995da64121a1e077c8914"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lcdEventPort_</b></td></tr>
+<tr class="separator:a8c23d47b846995da64121a1e077c8914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464e793c48866a61a80314ec78588191"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a464e793c48866a61a80314ec78588191"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>usedInSystemService_</b></td></tr>
+<tr class="separator:a464e793c48866a61a80314ec78588191"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines which port numbers will be used for Picto applications based on the current Picto system number. </p>

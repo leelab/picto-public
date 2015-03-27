@@ -5,7 +5,6 @@
 #include "../parameter/AssociateElement.h"
 #include "ScriptWidget.h"
 #include "FileSelectWidget.h"
-//#include "DeletableWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 

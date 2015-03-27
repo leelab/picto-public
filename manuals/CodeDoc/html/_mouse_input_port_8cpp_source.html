@@ -137,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//samplePeriod += samplePeriodError;</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QPoint mousePos = pollMouse();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QPoint mousePos = <a class="code" href="class_picto_1_1_mouse_input_port.html#a250af436e195d613e93e8b520a883483">pollMouse</a>();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> numSamps = (curr-lastTime_)/samplePeriod;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//Loop through channelBuffer vectors adding latest mouse pos for all</span></div>
@@ -174,7 +174,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">return</span> curr;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;QPoint MouseInputPort::pollMouse()</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="class_picto_1_1_mouse_input_port.html#a250af436e195d613e93e8b520a883483">  110</a></span>&#160;QPoint <a class="code" href="class_picto_1_1_mouse_input_port.html#a250af436e195d613e93e8b520a883483">MouseInputPort::pollMouse</a>()</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <a class="code" href="class_picto_1_1_timestamper.html">Timestamper</a> stamper;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    QPoint point = QCursor::pos();</div>
@@ -191,6 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_picto_1_1_mouse_input_port_html_a4e10a7c9f34b0e5992061411e842e4dd"><div class="ttname"><a href="class_picto_1_1_mouse_input_port.html#a4e10a7c9f34b0e5992061411e842e4dd">Picto::MouseInputPort::stopSampling</a></div><div class="ttdeci">virtual void stopSampling()</div><div class="ttdoc">Deinitializes mouse sampling. </div><div class="ttdef"><b>Definition:</b> <a href="_mouse_input_port_8cpp_source.html#l00042">MouseInputPort.cpp:42</a></div></div>
 <div class="ttc" id="class_picto_1_1_input_port_html_ab903e1969d02f8ec9f7644b302b224c1"><div class="ttname"><a href="class_picto_1_1_input_port.html#ab903e1969d02f8ec9f7644b302b224c1">Picto::InputPort::deviceSampRate_</a></div><div class="ttdeci">double deviceSampRate_</div><div class="ttdoc">This is the rate at which the Daq device will be sampled. </div><div class="ttdef"><b>Definition:</b> <a href="_input_port_8h_source.html#l00050">InputPort.h:50</a></div></div>
 <div class="ttc" id="class_picto_1_1_mouse_input_port_html_a598e2169686e062dbd04aa58b7488895"><div class="ttname"><a href="class_picto_1_1_mouse_input_port.html#a598e2169686e062dbd04aa58b7488895">Picto::MouseInputPort::MouseInputPort</a></div><div class="ttdeci">MouseInputPort(QWidget *widget)</div><div class="ttdoc">Constructs a new MouseInputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_mouse_input_port_8cpp_source.html#l00019">MouseInputPort.cpp:19</a></div></div>
+<div class="ttc" id="class_picto_1_1_mouse_input_port_html_a250af436e195d613e93e8b520a883483"><div class="ttname"><a href="class_picto_1_1_mouse_input_port.html#a250af436e195d613e93e8b520a883483">Picto::MouseInputPort::pollMouse</a></div><div class="ttdeci">QPoint pollMouse()</div><div class="ttdoc">Returns a QPoint with the current mouse position in the coordinate frame of the widget passed into th...</div><div class="ttdef"><b>Definition:</b> <a href="_mouse_input_port_8cpp_source.html#l00110">MouseInputPort.cpp:110</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_lfp_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LfpState Class Reference</div>  </div>
@@ -191,6 +193,75 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_lfp_state.html#aca7c7c342ced94f37610fcaa23333d76">getTimesUntil</a> (double time)</td></tr>
 <tr class="memdesc:aca7c7c342ced94f37610fcaa23333d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of lfp sample times that occured with times &gt; the current time and &lt;= the input time. <br /></td></tr>
 <tr class="separator:aca7c7c342ced94f37610fcaa23333d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af26e3d86b3bb361ecde49ea142d04358"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af26e3d86b3bb361ecde49ea142d04358"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>loadData</b> ()</td></tr>
+<tr class="separator:af26e3d86b3bb361ecde49ea142d04358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b715b90e4c14e723e5525c6307be2ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b715b90e4c14e723e5525c6307be2ca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resetDataVariables</b> ()</td></tr>
+<tr class="separator:a2b715b90e4c14e723e5525c6307be2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d9e8732e3c421bb355d87ea73925ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4d9e8732e3c421bb355d87ea73925ca"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getNextIndex</b> ()</td></tr>
+<tr class="separator:af4d9e8732e3c421bb355d87ea73925ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82b35d16ea6040ec0bdede20a1b0027d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82b35d16ea6040ec0bdede20a1b0027d"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>globalToRunIndex</b> (<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> index)</td></tr>
+<tr class="separator:a82b35d16ea6040ec0bdede20a1b0027d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82b78ab3ac4b543d8b3ff5ada84e8837"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82b78ab3ac4b543d8b3ff5ada84e8837"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>globalTimeFromArrayIndex</b> (const int &amp;index)</td></tr>
+<tr class="separator:a82b78ab3ac4b543d8b3ff5ada84e8837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae7ce24c946c263a6cca2540993b967"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ae7ce24c946c263a6cca2540993b967"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>arrayIndexFromGlobalTime</b> (const double &amp;time)</td></tr>
+<tr class="separator:a1ae7ce24c946c263a6cca2540993b967"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbbc3dc6316efb4d710705bf5d96470f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbbc3dc6316efb4d710705bf5d96470f"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getDataValue</b> (const int &amp;arrayIndex, const int &amp;channelIndex)</td></tr>
+<tr class="separator:acbbc3dc6316efb4d710705bf5d96470f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f49e2b8677541b56c6a5711bf19e9cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f49e2b8677541b56c6a5711bf19e9cc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDataValue</b> (const int &amp;arrayIndex, const int &amp;channelIndex, const float &amp;value)</td></tr>
+<tr class="separator:a4f49e2b8677541b56c6a5711bf19e9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae3edf147f10e6b00854638f1de9eded2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3edf147f10e6b00854638f1de9eded2"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:ae3edf147f10e6b00854638f1de9eded2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada748914b077e2bd1cd0909785891b1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada748914b077e2bd1cd0909785891b1d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr>
+<tr class="separator:ada748914b077e2bd1cd0909785891b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa61019a7694e2a003d89fd3062e53837"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa61019a7694e2a003d89fd3062e53837"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:aa61019a7694e2a003d89fd3062e53837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611accd520bc17814110e6e018f3bcc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a611accd520bc17814110e6e018f3bcc5"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runStart_</b></td></tr>
+<tr class="separator:a611accd520bc17814110e6e018f3bcc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53f8932e5f1b95c3062ccf31345e4130"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53f8932e5f1b95c3062ccf31345e4130"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runEnd_</b></td></tr>
+<tr class="separator:a53f8932e5f1b95c3062ccf31345e4130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac19655aed62d037c2bdd1c6cabe23ccb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac19655aed62d037c2bdd1c6cabe23ccb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>curr_</b></td></tr>
+<tr class="separator:ac19655aed62d037c2bdd1c6cabe23ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a573d7a8f066546f7280c8be070448b12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a573d7a8f066546f7280c8be070448b12"></a>
+QList&lt; QList&lt; float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:a573d7a8f066546f7280c8be070448b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc53c4ac416b8fc9b884c24ec0454752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc53c4ac416b8fc9b884c24ec0454752"></a>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>chanIndexMap_</b></td></tr>
+<tr class="separator:adc53c4ac416b8fc9b884c24ec0454752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb18327407add19e824e006714f786e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cb18327407add19e824e006714f786e"></a>
+QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>channels_</b></td></tr>
+<tr class="separator:a0cb18327407add19e824e006714f786e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3ef72b5e8f460c11379568faee42311"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3ef72b5e8f460c11379568faee42311"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numChannels_</b></td></tr>
+<tr class="separator:ae3ef72b5e8f460c11379568faee42311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b911bfac68024dacb77be4572549cfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b911bfac68024dacb77be4572549cfb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numValues_</b></td></tr>
+<tr class="separator:a1b911bfac68024dacb77be4572549cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70f258c636907a718a790a03d1be3d98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70f258c636907a718a790a03d1be3d98"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>sampPeriod_</b></td></tr>
+<tr class="separator:a70f258c636907a718a790a03d1be3d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae27d84f27b7c9b76bee8cf0b6f4404bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae27d84f27b7c9b76bee8cf0b6f4404bf"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>minLfpTime_</b></td></tr>
+<tr class="separator:ae27d84f27b7c9b76bee8cf0b6f4404bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> and <a class="el" href="class_picto_1_1_lfp_reader.html" title="An base class for classes that can provide Local Field Potential data over input time ranges...">LfpReader</a> classes to load a Picto Session database, extract the lfp data and implement functions for traversing through that data. </p>

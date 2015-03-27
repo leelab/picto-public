@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_wireable_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">WireableItem Class Reference</div>  </div>
@@ -272,6 +274,25 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#afe6a5812a322d49ea7da56bfccdc98dc">getEditorState</a> ()</td></tr>
 <tr class="memdesc:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> object that is being used with this <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. <br /></td></tr>
 <tr class="separator:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:acc8e2ae0869e7923884eb1dd92304690"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc8e2ae0869e7923884eb1dd92304690"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">updateArrowPortDimensions</a> ()</td></tr>
+<tr class="memdesc:acc8e2ae0869e7923884eb1dd92304690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the dimensions of all of the attached <a class="el" href="class_arrow_port_item.html" title="A box that acts as a port for the tail or head of a transition arrow. ">ArrowPortItem</a> objects according to this <a class="el" href="class_wireable_item.html" title="An ExperimentItem that represents a StateMachineElement. It is a &quot;Wireable Item&quot; in that it takes par...">WireableItem</a>'s current size. <br /></td></tr>
+<tr class="separator:acc8e2ae0869e7923884eb1dd92304690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5182d4b7ef0d5e30a4e3c9ca0016ebf2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5182d4b7ef0d5e30a4e3c9ca0016ebf2"></a>
+QList&lt; <a class="el" href="class_diagram_item.html">DiagramItem</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>arrowSources_</b></td></tr>
+<tr class="separator:a5182d4b7ef0d5e30a4e3c9ca0016ebf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab35489311ff7858aee880c211afd8d9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab35489311ff7858aee880c211afd8d9d"></a>
+<a class="el" href="class_diagram_item.html">DiagramItem</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>arrowDest_</b></td></tr>
+<tr class="separator:ab35489311ff7858aee880c211afd8d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d84e2e66f7dee6038881e8cf5681cb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d84e2e66f7dee6038881e8cf5681cb1"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>maxArrowSourceWidth_</b></td></tr>
+<tr class="separator:a9d84e2e66f7dee6038881e8cf5681cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

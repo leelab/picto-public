@@ -90,6 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_phidgets-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Phidgets Class Reference</div>  </div>
@@ -195,6 +197,21 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>cumTime</b></td></tr>
 <tr class="memitem:ad4755b6633f47f534ad68b45aa5d8974"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4755b6633f47f534ad68b45aa5d8974"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>prevClickState</b></td></tr>
 <tr class="separator:ad4755b6633f47f534ad68b45aa5d8974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:afe78e3f94d24ea6d27b240c9f57beb75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_phidgets.html#afe78e3f94d24ea6d27b240c9f57beb75">turnWasTriggered</a> (int)</td></tr>
+<tr class="memdesc:afe78e3f94d24ea6d27b240c9f57beb75"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function used internally to assure that multiple turn userInputSignals aren't emitted in a row before the FrontPanel Application can handle them.  <a href="#afe78e3f94d24ea6d27b240c9f57beb75">More...</a><br /></td></tr>
+<tr class="separator:afe78e3f94d24ea6d27b240c9f57beb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab0eac47000bfc92933370991d07a13e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0eac47000bfc92933370991d07a13e4"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex_</b></td></tr>
+<tr class="separator:ab0eac47000bfc92933370991d07a13e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2893aacbfcba1f036591864f5672a3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2893aacbfcba1f036591864f5672a3b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>turnWasTriggered_</b></td></tr>
+<tr class="separator:ac2893aacbfcba1f036591864f5672a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides an interface to the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> devices used by the FrontPanel Application. </p>
@@ -284,6 +301,35 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>prevClickState</b></td
 <p>In the PictoBox, the reward button is connected to digital input 0 of the LCD display. The flush button is connected to digital input 7. </p>
 
 <p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00240">240</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afe78e3f94d24ea6d27b240c9f57beb75"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Phidgets::turnWasTriggered </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A function used internally to assure that multiple turn userInputSignals aren't emitted in a row before the FrontPanel Application can handle them. </p>
+<p>This gets called whenever a userInputSignal is triggered by the qt event loop in the FrontPanel Application thread, whereas we find out when the phidgets knob was turned from a separate phidgets thread. By using the turnWasTriggered_ bool, we can be sure that we don't put multiple turn signals into the qt event queue before earlier ones were triggered. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_phidgets.html#a224bc2b322e60fce68f515ee5504e2cd" title="Called by the phidgets API whenever the knob is turned left and emits the PanelInfo::rotateLeft or Pa...">dialTurnedLeft()</a>, <a class="el" href="class_phidgets.html#a2f3335dae70f28d466f26c321be3cd04" title="Called by the phidgets API whenever the knob is turned right and emits the PanelInfo::rotateRight or ...">dialTurnedRight()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="phidgets_8cpp_source.html#l00260">260</a> of file <a class="el" href="phidgets_8cpp_source.html">phidgets.cpp</a>.</p>
 
 </div>
 </div>

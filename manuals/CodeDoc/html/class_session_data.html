@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_session_data-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -165,6 +166,18 @@ Protected Attributes</h2></td></tr>
 QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_data.html#a4f56f91d83e09645d853339fe5067181">readWriteLock_</a></td></tr>
 <tr class="memdesc:a4f56f91d83e09645d853339fe5067181"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Read/Write mutex for handling reads and write from multiple threads. <br /></td></tr>
 <tr class="separator:a4f56f91d83e09645d853339fe5067181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aeee41b6bf89c48e88891500bd0bfc254"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_data.html#aeee41b6bf89c48e88891500bd0bfc254">startDataWriteAndLock</a> (QString *error)</td></tr>
+<tr class="memdesc:aeee41b6bf89c48e88891500bd0bfc254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks this object for writing and calls <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97" title="Called before the first of a single or batched up calls to writeData(). ">startDataWrite()</a>.  <a href="#aeee41b6bf89c48e88891500bd0bfc254">More...</a><br /></td></tr>
+<tr class="separator:aeee41b6bf89c48e88891500bd0bfc254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68d1c762666e6b372eb95325def3c523"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_data.html#a68d1c762666e6b372eb95325def3c523">endDataWriteAndUnlock</a> (QString *error)</td></tr>
+<tr class="memdesc:a68d1c762666e6b372eb95325def3c523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f" title="Called after a completed batch of writeData() calls to finalize the data write. Should return false i...">endDataWrite()</a> and unlocks this object after writing.  <a href="#a68d1c762666e6b372eb95325def3c523">More...</a><br /></td></tr>
+<tr class="separator:a68d1c762666e6b372eb95325def3c523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdfa6349376276e2f38598399089c74a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_data.html#abdfa6349376276e2f38598399089c74a">copyDataPrivate</a> (<a class="el" href="class_session_data.html">SessionData</a> *receiver, QVariant condition, bool cut)</td></tr>
+<tr class="memdesc:abdfa6349376276e2f38598399089c74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads all data from this object that meets the input condition and writes it to the input reciever.  <a href="#abdfa6349376276e2f38598399089c74a">More...</a><br /></td></tr>
+<tr class="separator:abdfa6349376276e2f38598399089c74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -264,9 +277,60 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>SessionData</b></td>
   </table>
   </dd>
 </dl>
-<p>Internally, this uses startDataWriteAndLock() to lock multithreaded access to this object and call <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97" title="Called before the first of a single or batched up calls to writeData(). ">startDataWrite()</a>, then it calls <a class="el" href="class_session_data.html#ad05a594d8410d638f1a066bfa5a10ba3" title="Write the data of the input dataType to this object. ">writeData()</a> one by one for all data entries, then calls endDataWriteAndUnlock() to call <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f" title="Called after a completed batch of writeData() calls to finalize the data write. Should return false i...">endDataWrite()</a> and unlock multithreaded access to this object. </p>
+<p>Internally, this uses <a class="el" href="class_session_data.html#aeee41b6bf89c48e88891500bd0bfc254" title="Locks this object for writing and calls startDataWrite(). ">startDataWriteAndLock()</a> to lock multithreaded access to this object and call <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97" title="Called before the first of a single or batched up calls to writeData(). ">startDataWrite()</a>, then it calls <a class="el" href="class_session_data.html#ad05a594d8410d638f1a066bfa5a10ba3" title="Write the data of the input dataType to this object. ">writeData()</a> one by one for all data entries, then calls <a class="el" href="class_session_data.html#a68d1c762666e6b372eb95325def3c523" title="Calls endDataWrite() and unlocks this object after writing. ">endDataWriteAndUnlock()</a> to call <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f" title="Called after a completed batch of writeData() calls to finalize the data write. Should return false i...">endDataWrite()</a> and unlock multithreaded access to this object. </p>
 
 <p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00069">69</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abdfa6349376276e2f38598399089c74a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionData::copyDataPrivate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_session_data.html">SessionData</a> *&#160;</td>
+          <td class="paramname"><em>receiver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVariant&#160;</td>
+          <td class="paramname"><em>condition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>cut</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads all data from this object that meets the input condition and writes it to the input reciever. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cut</td><td>If true, all data that is read from this object by this function will be deleted from this object (this happens in <a class="el" href="class_session_data.html#a81f4eb49b8a23eb9c1a1575abc2fad4c" title="Reads all data of the input dataType into a QVector or VariantList. ">readData()</a>).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This gets all of this object's data types, then passes the condition and cut inputs into <a class="el" href="class_session_data.html#a81f4eb49b8a23eb9c1a1575abc2fad4c" title="Reads all data of the input dataType into a QVector or VariantList. ">readData()</a> for each data type, and writes that data to the input reciever in a manner similar to that used in <a class="el" href="class_session_data.html#a72da83d35fc78270dbfef9ba9a2b2b4c" title="Adds the input QList of QVariantList data entries of the input type to this SessionData object...">addData(int, QList&lt;QVariantList&gt;)</a>. </p>
+
+<p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00139">139</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,7 +366,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>SessionData</b></td>
   </table>
   </dd>
 </dl>
-<p>Internally, this forwards calls to copyDataPrivate() with "false" for the cut condition. </p>
+<p>Internally, this forwards calls to <a class="el" href="class_session_data.html#abdfa6349376276e2f38598399089c74a" title="Reads all data from this object that meets the input condition and writes it to the input reciever...">copyDataPrivate()</a> with "false" for the cut condition. </p>
 
 <p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00045">45</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
 
@@ -339,6 +403,35 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>SessionData</b></td>
 
 </div>
 </div>
+<a class="anchor" id="a68d1c762666e6b372eb95325def3c523"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SessionData::endDataWriteAndUnlock </td>
+          <td>(</td>
+          <td class="paramtype">QString *&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f" title="Called after a completed batch of writeData() calls to finalize the data write. Should return false i...">endDataWrite()</a> and unlocks this object after writing. </p>
+<p>Returns the result of <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f" title="Called after a completed batch of writeData() calls to finalize the data write. Should return false i...">endDataWrite()</a>. error is set from that function as well. </p>
+
+<p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00124">124</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a15c17ef02068f6ec8bf717044c21b487"></a>
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +464,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>SessionData</b></td>
   </table>
   </dd>
 </dl>
-<p>Internally, this forwards calls to copyDataPrivate() with "true" for the cut condition. </p>
+<p>Internally, this forwards calls to <a class="el" href="class_session_data.html#abdfa6349376276e2f38598399089c74a" title="Reads all data from this object that meets the input condition and writes it to the input reciever...">copyDataPrivate()</a> with "true" for the cut condition. </p>
 
 <p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00028">28</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
 
@@ -478,6 +571,35 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>SessionData</b></td>
 <p>Reimplemented in <a class="el" href="class_stored_session_data.html#a9ff975024ea9a09048a8e7e14129b357">StoredSessionData</a>.</p>
 
 <p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00097">97</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeee41b6bf89c48e88891500bd0bfc254"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SessionData::startDataWriteAndLock </td>
+          <td>(</td>
+          <td class="paramtype">QString *&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Locks this object for writing and calls <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97" title="Called before the first of a single or batched up calls to writeData(). ">startDataWrite()</a>. </p>
+<p>Returns the result of <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97" title="Called before the first of a single or batched up calls to writeData(). ">startDataWrite()</a>. error is set from that function as well. </p>
+
+<p>Definition at line <a class="el" href="_session_data_8cpp_source.html#l00114">114</a> of file <a class="el" href="_session_data_8cpp_source.html">SessionData.cpp</a>.</p>
 
 </div>
 </div>

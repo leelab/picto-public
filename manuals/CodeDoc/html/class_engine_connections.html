@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_engine_connections-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">EngineConnections Class Reference</div>  </div>
@@ -124,6 +126,22 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine_connections.html#a7d06ed516638c57ae407581ebe53781b">~EngineConnections</a> ()</td></tr>
 <tr class="memdesc:a7d06ed516638c57ae407581ebe53781b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <a class="el" href="class_engine_connections.html" title="Sets up the connections between the engine and the front panel. ">EngineConnections</a> object, closing the FrontPanel-&gt;<a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> command channel in the process. <br /></td></tr>
 <tr class="separator:a7d06ed516638c57ae407581ebe53781b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a542dba5e8966d601d46d8191e5f10729"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a542dba5e8966d601d46d8191e5f10729"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine_connections.html#a542dba5e8966d601d46d8191e5f10729">setupCommandConnection</a> ()</td></tr>
+<tr class="memdesc:a542dba5e8966d601d46d8191e5f10729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches the commandChannel created by this object to the panelInfo object. <br /></td></tr>
+<tr class="separator:a542dba5e8966d601d46d8191e5f10729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6fab31ead9383c4f26a0ad0a7386bf1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fab31ead9383c4f26a0ad0a7386bf1a"></a>
+<a class="el" href="class_front_panel_info.html">FrontPanelInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>panelInfo</b></td></tr>
+<tr class="separator:a6fab31ead9383c4f26a0ad0a7386bf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f2b682557a85c714e9eb1d004a73893"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f2b682557a85c714e9eb1d004a73893"></a>
+QTcpServer *&#160;</td><td class="memItemRight" valign="bottom"><b>commandChannel</b></td></tr>
+<tr class="separator:a6f2b682557a85c714e9eb1d004a73893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Sets up the connections between the engine and the front panel. </p>

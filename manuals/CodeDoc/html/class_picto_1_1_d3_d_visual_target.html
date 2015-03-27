@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_d3_d_visual_target-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::D3DVisualTarget Class Reference</div>  </div>
@@ -113,6 +115,11 @@ Inheritance diagram for Picto::D3DVisualTarget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_d3_d_visual_target_1_1_c_u_s_t_o_m_v_e_r_t_e_x.html">CUSTOMVERTEX</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6a80056eca2a58d1cca22bec7ec26b70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_d3_d_visual_target.html#a6a80056eca2a58d1cca22bec7ec26b70">D3DVisualTarget</a> (bool timingCritical)</td></tr>
@@ -184,6 +191,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:abd0a5d10da5c642cb6e31f39635628ed inherit pro_methods_class_picto_1_1_visual_target"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target.html#abd0a5d10da5c642cb6e31f39635628ed">setFirstPhosphorTime</a> ()</td></tr>
 <tr class="memdesc:abd0a5d10da5c642cb6e31f39635628ed inherit pro_methods_class_picto_1_1_visual_target"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stamps the current time as the latest first phosphor time and emits a <a class="el" href="class_picto_1_1_visual_target.html#ad04e5a944c2b5d31814ba32b2b93180e" title="Emitted when the VisualTarget determines that the first phosphor has been drawn to the display...">presented()</a> signal with that time.  <a href="#abd0a5d10da5c642cb6e31f39635628ed">More...</a><br /></td></tr>
 <tr class="separator:abd0a5d10da5c642cb6e31f39635628ed inherit pro_methods_class_picto_1_1_visual_target"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2cd1c21032c8abf0c96cc01d07253de6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cd1c21032c8abf0c96cc01d07253de6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_d3_d_visual_target.html#a2cd1c21032c8abf0c96cc01d07253de6">initializeD3DDevice</a> ()</td></tr>
+<tr class="memdesc:a2cd1c21032c8abf0c96cc01d07253de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this function to inialized the D3D device for rendering. <br /></td></tr>
+<tr class="separator:a2cd1c21032c8abf0c96cc01d07253de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6561359ff06cb04416873cd6cd5aedbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6561359ff06cb04416873cd6cd5aedbe"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_d3_d_visual_target.html#a6561359ff06cb04416873cd6cd5aedbe">d3dFail</a> (QString)</td></tr>
+<tr class="memdesc:a6561359ff06cb04416873cd6cd5aedbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs an error message if something goes wrong with IDirect3D API. <br /></td></tr>
+<tr class="separator:a6561359ff06cb04416873cd6cd5aedbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a257a19bd533143052d97bbae6cc2fe31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a257a19bd533143052d97bbae6cc2fe31"></a>
+IDirect3D9 *&#160;</td><td class="memItemRight" valign="bottom"><b>pD3D_</b></td></tr>
+<tr class="separator:a257a19bd533143052d97bbae6cc2fe31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20714e51365166a7697c4a6ac3e397a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af20714e51365166a7697c4a6ac3e397a"></a>
+IDirect3DDevice9 *&#160;</td><td class="memItemRight" valign="bottom"><b>pD3dDevice_</b></td></tr>
+<tr class="separator:af20714e51365166a7697c4a6ac3e397a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a538f70a9c208e0a789fadc48003b1142"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a538f70a9c208e0a789fadc48003b1142"></a>
+HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>hCRT</b></td></tr>
+<tr class="separator:a538f70a9c208e0a789fadc48003b1142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa68af0f4e6ece269df53c8159a4886bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa68af0f4e6ece269df53c8159a4886bc"></a>
+HWND&#160;</td><td class="memItemRight" valign="bottom"><b>hWnd_</b></td></tr>
+<tr class="separator:aa68af0f4e6ece269df53c8159a4886bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae878ac9c6e6d04f39e3937c80b45f3af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae878ac9c6e6d04f39e3937c80b45f3af"></a>
+D3DPRESENT_PARAMETERS&#160;</td><td class="memItemRight" valign="bottom"><b>d3dpp_</b></td></tr>
+<tr class="separator:ae878ac9c6e6d04f39e3937c80b45f3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d920738899cad406528cb07596ee6c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d920738899cad406528cb07596ee6c4"></a>
+LPDIRECT3DVERTEXBUFFER9&#160;</td><td class="memItemRight" valign="bottom"><b>pVertexBuffer_</b></td></tr>
+<tr class="separator:a2d920738899cad406528cb07596ee6c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a190222abd5816ce50b6c7be7952044e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a190222abd5816ce50b6c7be7952044e2"></a>
+QList&lt; LPDIRECT3DTEXTURE9 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>textureList_</b></td></tr>
+<tr class="separator:a190222abd5816ce50b6c7be7952044e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bf0bc0c2d8c7815a86552dc929a527f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bf0bc0c2d8c7815a86552dc929a527f"></a>
+QList&lt; QPointF &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>positionList_</b></td></tr>
+<tr class="separator:a9bf0bc0c2d8c7815a86552dc929a527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3efc4019a05a847efa46dcd620183629"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3efc4019a05a847efa46dcd620183629"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>renderSuccess_</b></td></tr>
+<tr class="separator:a3efc4019a05a847efa46dcd620183629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

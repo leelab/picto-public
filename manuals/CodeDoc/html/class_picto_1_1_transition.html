@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_transition-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::Transition Class Reference</div>  </div>
@@ -462,6 +464,29 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">addErrorToList</a> (QString errorMsg)</td></tr>
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:afdaacf96874452cc544f479e6262defe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdaacf96874452cc544f479e6262defe"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_transition.html#afdaacf96874452cc544f479e6262defe">setValuesFromAssets</a> ()</td></tr>
+<tr class="memdesc:afdaacf96874452cc544f479e6262defe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updtes all <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values according to the stored source, sourceResult and destination <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> pointers. <br /></td></tr>
+<tr class="separator:afdaacf96874452cc544f479e6262defe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63b7455b3577292ae03753c18d1851e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af63b7455b3577292ae03753c18d1851e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_transition.html#af63b7455b3577292ae03753c18d1851e">linkedAssetDeleted</a> ()</td></tr>
+<tr class="memdesc:af63b7455b3577292ae03753c18d1851e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when one of the Assets to which this <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> is linked is deleted. Causes this <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> to be deleted. <br /></td></tr>
+<tr class="separator:af63b7455b3577292ae03753c18d1851e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a8bb5ec945896911a799d4c9b08f1d6fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bb5ec945896911a799d4c9b08f1d6fc"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sourceAsset_</b></td></tr>
+<tr class="separator:a8bb5ec945896911a799d4c9b08f1d6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7c79df49bde86b3eb8f926e3ce66189"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7c79df49bde86b3eb8f926e3ce66189"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sourceResultAsset_</b></td></tr>
+<tr class="separator:ae7c79df49bde86b3eb8f926e3ce66189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a222836316dc82363df9accab7caf8789"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a222836316dc82363df9accab7caf8789"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>destinationAsset_</b></td></tr>
+<tr class="separator:a222836316dc82363df9accab7caf8789"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

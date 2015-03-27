@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;DisplayMode::DisplayMode()</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    connect(&amp;messageTimer_,SIGNAL(timeout()),<span class="keyword">this</span>,SLOT(messageTimedOut()));</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    connect(&amp;messageTimer_,SIGNAL(timeout()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_display_mode.html#a02502cdbade1da8ed6761a70778a632e">messageTimedOut</a>()));</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;}</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;DisplayMode::~DisplayMode()</div>
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    messageTimer_.start();</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span> DisplayMode::messageTimedOut()</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="class_display_mode.html#a02502cdbade1da8ed6761a70778a632e">   82</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_display_mode.html#a02502cdbade1da8ed6761a70778a632e">DisplayMode::messageTimedOut</a>()</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    messageTimer_.stop();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="class_display_mode.html#a7f084ba9fa63656644ae736abed8902c">drawText</a>(lastLine1_,lastLine2_);</div>
@@ -167,6 +167,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_display_mode_html_a7f084ba9fa63656644ae736abed8902c"><div class="ttname"><a href="class_display_mode.html#a7f084ba9fa63656644ae736abed8902c">DisplayMode::drawText</a></div><div class="ttdeci">void drawText(QString line1, QString line2)</div><div class="ttdef"><b>Definition:</b> <a href="displaymode_8cpp_source.html#l00051">displaymode.cpp:51</a></div></div>
 <div class="ttc" id="class_display_mode_html_a1e7318ccee20933fbe6e1193aa0a19e7"><div class="ttname"><a href="class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7">DisplayMode::myModeType</a></div><div class="ttdeci">virtual PanelInfo::DisplayModeType myModeType()=0</div></div>
 <div class="ttc" id="class_display_mode_html_a2ebabc8a9ccbdea91a7b10cf65c6a8f3"><div class="ttname"><a href="class_display_mode.html#a2ebabc8a9ccbdea91a7b10cf65c6a8f3">DisplayMode::updateLCD</a></div><div class="ttdeci">void updateLCD(int line, QString text)</div></div>
+<div class="ttc" id="class_display_mode_html_a02502cdbade1da8ed6761a70778a632e"><div class="ttname"><a href="class_display_mode.html#a02502cdbade1da8ed6761a70778a632e">DisplayMode::messageTimedOut</a></div><div class="ttdeci">void messageTimedOut()</div><div class="ttdef"><b>Definition:</b> <a href="displaymode_8cpp_source.html#l00082">displaymode.cpp:82</a></div></div>
 <div class="ttc" id="class_display_mode_html_ae3ba1617fac36e0cea757a12575fffa7"><div class="ttname"><a href="class_display_mode.html#ae3ba1617fac36e0cea757a12575fffa7">DisplayMode::userInputSlot</a></div><div class="ttdeci">PanelInfo::DisplayModeType userInputSlot(InputType type)</div><div class="ttdef"><b>Definition:</b> <a href="displaymode_8cpp_source.html#l00015">displaymode.cpp:15</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

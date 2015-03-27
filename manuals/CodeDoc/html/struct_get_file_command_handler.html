@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="struct_get_file_command_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GetFileCommandHandler Struct Reference</div>  </div>
@@ -119,6 +120,18 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 <tr class="memitem:a30b0e0ab89c22075878ed1fa39ac806d"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_get_file_command_handler.html#a30b0e0ab89c22075878ed1fa39ac806d">processCommand</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt;)</td></tr>
 <tr class="memdesc:a30b0e0ab89c22075878ed1fa39ac806d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the input ProtocolCommand to check its syntax, responds with a ProtocolResponse including the compressed file with the index that was sent as the command target in the Response content area.  <a href="#a30b0e0ab89c22075878ed1fa39ac806d">More...</a><br /></td></tr>
 <tr class="separator:a30b0e0ab89c22075878ed1fa39ac806d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a7e0e8416132d48b2d9f22c0f9dcbfa08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e0e8416132d48b2d9f22c0f9dcbfa08"></a>
+static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>workingWithFiles_</b></td></tr>
+<tr class="separator:a7e0e8416132d48b2d9f22c0f9dcbfa08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ea54c06c8453445451a0c9e59e762d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ea54c06c8453445451a0c9e59e762d9"></a>
+static QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>fileNames_</b></td></tr>
+<tr class="separator:a9ea54c06c8453445451a0c9e59e762d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1898e2225ae6ca1c65d6f6c451d54b28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1898e2225ae6ca1c65d6f6c451d54b28"></a>
+static QList&lt; QByteArray &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>files_</b></td></tr>
+<tr class="separator:a1898e2225ae6ca1c65d6f6c451d54b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles the GETFILE commands sent by all of the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>'s clients. </p>

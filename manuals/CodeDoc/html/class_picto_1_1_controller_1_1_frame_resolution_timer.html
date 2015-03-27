@@ -91,6 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_controller_1_1_frame_resolution_timer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::Controller::FrameResolutionTimer Class Reference</div>  </div>
@@ -123,6 +124,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5b3ecce7dba5d83dea3a8e6e5100e09c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html#a5b3ecce7dba5d83dea3a8e6e5100e09c">elapsedTime</a> (Controller::TimerUnits::TimerUnits units)</td></tr>
 <tr class="memdesc:a5b3ecce7dba5d83dea3a8e6e5100e09c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time that has passed from the first phophor of the frame before the latest call to <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html#afd3ea47b095ea4225b61bdcde9b07e88" title="Resets the &quot;zero time&quot; of the timer to the latest first phosphor time. ">start()</a> to the first phophor of the latest frame.  <a href="#a5b3ecce7dba5d83dea3a8e6e5100e09c">More...</a><br /></td></tr>
 <tr class="separator:a5b3ecce7dba5d83dea3a8e6e5100e09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a64b6fafb6f0e6ba5b4e773ea501bf0b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64b6fafb6f0e6ba5b4e773ea501bf0b5"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>startTime_</b></td></tr>
+<tr class="separator:a64b6fafb6f0e6ba5b4e773ea501bf0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a013e6fd4e76c792ab3f1ae7585bbdc57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a013e6fd4e76c792ab3f1ae7585bbdc57"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>stopTime_</b></td></tr>
+<tr class="separator:a013e6fd4e76c792ab3f1ae7585bbdc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5771cd3f7fb06efed06f690c28290790"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5771cd3f7fb06efed06f690c28290790"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_controller_1_1_frame_tracker.html">FrameTracker</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frameTracker_</b></td></tr>
+<tr class="separator:a5771cd3f7fb06efed06f690c28290790"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A timer object that returns times in single frame increments. </p>

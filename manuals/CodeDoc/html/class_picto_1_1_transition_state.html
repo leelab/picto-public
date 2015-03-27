@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_transition_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::TransitionState Class Reference</div>  </div>
@@ -143,6 +145,42 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_transition_state.html#a5bfa66cb7103c0b3bcda6de0613fb34f">getFirstTransIdInRun</a> ()</td></tr>
 <tr class="memdesc:a5bfa66cb7103c0b3bcda6de0613fb34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> Id of the first <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> in the current run. <br /></td></tr>
 <tr class="separator:a5bfa66cb7103c0b3bcda6de0613fb34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a90b47c4ce142cb8f6369645368a7e41b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90b47c4ce142cb8f6369645368a7e41b"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getNextIndex</b> ()</td></tr>
+<tr class="separator:a90b47c4ce142cb8f6369645368a7e41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad66759daa3f5b8c795b5d6ca8ea134"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afad66759daa3f5b8c795b5d6ca8ea134"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>globalToRunIndex</b> (<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> index)</td></tr>
+<tr class="separator:afad66759daa3f5b8c795b5d6ca8ea134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afb628489dbf07e4d5f96e5ec0930838b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb628489dbf07e4d5f96e5ec0930838b"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:afb628489dbf07e4d5f96e5ec0930838b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e458a568594003578981ac0194b4575"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e458a568594003578981ac0194b4575"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:a7e458a568594003578981ac0194b4575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1458f31da2feeea529d3e61a696fba80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1458f31da2feeea529d3e61a696fba80"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runStart_</b></td></tr>
+<tr class="separator:a1458f31da2feeea529d3e61a696fba80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc45840d9ee3d58a0ffb967e37a0f2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebc45840d9ee3d58a0ffb967e37a0f2f"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runEnd_</b></td></tr>
+<tr class="separator:aebc45840d9ee3d58a0ffb967e37a0f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46fdb242a430d9176dbd614dc09b9279"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46fdb242a430d9176dbd614dc09b9279"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>curr_</b></td></tr>
+<tr class="separator:a46fdb242a430d9176dbd614dc09b9279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc9630cd3c99940354fb9e538cd4263"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abbc9630cd3c99940354fb9e538cd4263"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>firstLocationInRun_</b></td></tr>
+<tr class="separator:abbc9630cd3c99940354fb9e538cd4263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acae87b453d236c5f44bbbcc49520d5ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acae87b453d236c5f44bbbcc49520d5ce"></a>
+QList&lt; <a class="el" href="struct_picto_1_1_playback_trans_data.html">PlaybackTransData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:acae87b453d236c5f44bbbcc49520d5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe670d5d306b2ba34644070c4b062e05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe670d5d306b2ba34644070c4b062e05"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>obsoleteAssetIds_</b></td></tr>
+<tr class="separator:afe670d5d306b2ba34644070c4b062e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> and TransitionReader classes to load a Picto Session database, extract transition traversal data and implement functions for traversing through that data. </p>

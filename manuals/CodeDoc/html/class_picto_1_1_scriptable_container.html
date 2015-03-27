@@ -93,6 +93,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_scriptable_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -518,6 +523,67 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a366bced14d365f8a924078ce9f619f6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a366bced14d365f8a924078ce9f619f6f">deinitScripting</a> ()</td></tr>
+<tr class="memdesc:a366bced14d365f8a924078ce9f619f6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if something about a scriptable changes, so that the script engine will be reinitialized before use.  <a href="#a366bced14d365f8a924078ce9f619f6f">More...</a><br /></td></tr>
+<tr class="separator:a366bced14d365f8a924078ce9f619f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d681487b0b1f755ce8791009b983d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a58d681487b0b1f755ce8791009b983d4">deinitScripting</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *prop, QVariant value)</td></tr>
+<tr class="memdesc:a58d681487b0b1f755ce8791009b983d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to <a class="el" href="class_picto_1_1_scriptable_container.html#a366bced14d365f8a924078ce9f619f6f" title="Called if something about a scriptable changes, so that the script engine will be reinitialized befor...">deinitScripting()</a> with a different signature so that it can be attached to signals with the same inputs.  <a href="#a58d681487b0b1f755ce8791009b983d4">More...</a><br /></td></tr>
+<tr class="separator:a58d681487b0b1f755ce8791009b983d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef85bc29bd06c74a3c23fc2db64f900"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afef85bc29bd06c74a3c23fc2db64f900"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#afef85bc29bd06c74a3c23fc2db64f900">addChildToScriptLists</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
+<tr class="memdesc:afef85bc29bd06c74a3c23fc2db64f900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input newChild <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> to this objects <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> or <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> lists if it is of either of those types. <br /></td></tr>
+<tr class="separator:afef85bc29bd06c74a3c23fc2db64f900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a385c09a891f18eede04e3a5ce3a8f34c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a385c09a891f18eede04e3a5ce3a8f34c">bindScriptablesToScriptEngine</a> (QScriptEngine &amp;engine)</td></tr>
+<tr class="memdesc:a385c09a891f18eede04e3a5ce3a8f34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> to bind all of this objects contained <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects to the input script engine so that they can be accessed by this object's scripts.  <a href="#a385c09a891f18eede04e3a5ce3a8f34c">More...</a><br /></td></tr>
+<tr class="separator:a385c09a891f18eede04e3a5ce3a8f34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a8316a3321898fdce62de0164f8fc2fa5"><td class="memItemLeft" align="right" valign="top">static QScriptValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5">checkScriptResults</a> (QScriptContext *context, QScriptEngine *engine)</td></tr>
+<tr class="memdesc:a8316a3321898fdce62de0164f8fc2fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">When debugging is enabled, this function is used to call a <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function and trigger a runtime error if there was some problem with the latest script that was called.  <a href="#a8316a3321898fdce62de0164f8fc2fa5">More...</a><br /></td></tr>
+<tr class="separator:a8316a3321898fdce62de0164f8fc2fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a775c1fec9eb1569818ee1c35667bdf27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a775c1fec9eb1569818ee1c35667bdf27"></a>
+QList&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptables_</b></td></tr>
+<tr class="separator:a775c1fec9eb1569818ee1c35667bdf27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750ae601cbb4089ee3f58b3835100791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a750ae601cbb4089ee3f58b3835100791"></a>
+QList&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>unboundScriptables_</b></td></tr>
+<tr class="separator:a750ae601cbb4089ee3f58b3835100791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582e7b10567800b6b0a98ebb5d57c8e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a582e7b10567800b6b0a98ebb5d57c8e0"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_scriptable_container.html">ScriptableContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptableContainers_</b></td></tr>
+<tr class="separator:a582e7b10567800b6b0a98ebb5d57c8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a9a2c8a1ef665cb27b2f988705088a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27a9a2c8a1ef665cb27b2f988705088a"></a>
+QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptableListProperties_</b></td></tr>
+<tr class="separator:a27a9a2c8a1ef665cb27b2f988705088a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a4ae577046870c08c4c28ab7790852"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6a4ae577046870c08c4c28ab7790852"></a>
+QHash&lt; QString, QSharedPointer&lt; QScriptProgram &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptPrograms_</b></td></tr>
+<tr class="separator:ac6a4ae577046870c08c4c28ab7790852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7a980bb624ecc061dba1185e0c3a932"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7a980bb624ecc061dba1185e0c3a932"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>scriptingInitialized_</b></td></tr>
+<tr class="separator:ae7a980bb624ecc061dba1185e0c3a932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af8caf7e14edef87c474db58aa46c33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af8caf7e14edef87c474db58aa46c33"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>debuggingEnabled_</b></td></tr>
+<tr class="separator:a2af8caf7e14edef87c474db58aa46c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cbef097cd6523d9f5a44c5ec0b9326a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cbef097cd6523d9f5a44c5ec0b9326a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAssociateElement_</b></td></tr>
+<tr class="separator:a9cbef097cd6523d9f5a44c5ec0b9326a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:ae0f439f4f9f299aa6b6a0a78e8bc26a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0f439f4f9f299aa6b6a0a78e8bc26a4"></a>
+static <a class="el" href="class_picto_1_1_scriptable_container.html">ScriptableContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>objectForResultCheck_</b> = NULL</td></tr>
+<tr class="separator:ae0f439f4f9f299aa6b6a0a78e8bc26a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af37091e820e1a1cbff72956d92c530a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af37091e820e1a1cbff72956d92c530a9"></a>
+static QScriptValue&#160;</td><td class="memItemRight" valign="bottom"><b>checkScriptResultScript_</b></td></tr>
+<tr class="separator:af37091e820e1a1cbff72956d92c530a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a48b61ce110d838ebb3089c9f25fa7ba4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48b61ce110d838ebb3089c9f25fa7ba4"></a>
@@ -616,10 +682,78 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Adds a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> object to this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> and makes it accessible to all <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects for which it will be in scope. </p>
-<p>This function adds the <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> to a list of contained scriptables_, recursively calls <a class="el" href="class_picto_1_1_scriptable_container.html#ab8b4c61dbb0dc6724544a6607efa93e6" title="Adds a Scriptable object to this ScriptableContainer and makes it accessible to all ScriptableContain...">addScriptable()</a> on child ScriptableContainers to add it to them, connects to various signals from the input <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> so that this object will know when something about a child <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> changes, then calls deinitScripting() so that the new <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> will be correctly added to the scripting engine when the time comes for setting it up. </p><dl class="section note"><dt>Note</dt><dd>If the input <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> is an <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>, this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> takes care to only add it to its own contained scriptables_ list if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is also an <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> with the same AssocaiteId. This way, <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects will only be accessible to scripts in the same <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>, but experimental <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects will be accessible to all ScriptableContainers, experimental or <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>. </dd></dl>
+<p>This function adds the <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> to a list of contained scriptables_, recursively calls <a class="el" href="class_picto_1_1_scriptable_container.html#ab8b4c61dbb0dc6724544a6607efa93e6" title="Adds a Scriptable object to this ScriptableContainer and makes it accessible to all ScriptableContain...">addScriptable()</a> on child ScriptableContainers to add it to them, connects to various signals from the input <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> so that this object will know when something about a child <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> changes, then calls <a class="el" href="class_picto_1_1_scriptable_container.html#a366bced14d365f8a924078ce9f619f6f" title="Called if something about a scriptable changes, so that the script engine will be reinitialized befor...">deinitScripting()</a> so that the new <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> will be correctly added to the scripting engine when the time comes for setting it up. </p><dl class="section note"><dt>Note</dt><dd>If the input <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> is an <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>, this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> takes care to only add it to its own contained scriptables_ list if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is also an <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> with the same AssocaiteId. This way, <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects will only be accessible to scripts in the same <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>, but experimental <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects will be accessible to all ScriptableContainers, experimental or <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_script_holder.html" title="A container for scripts that are used in an Analysis. ">AnalysisScriptHolder</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00043">43</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a385c09a891f18eede04e3a5ce3a8f34c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ScriptableContainer::bindScriptablesToScriptEngine </td>
+          <td>(</td>
+          <td class="paramtype">QScriptEngine &amp;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called by <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> to bind all of this objects contained <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects to the input script engine so that they can be accessed by this object's scripts. </p>
+<p>To maintain a logical scoping system, when two in scope <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects have the same name only the one with the longer path (ie. the one that is closer to this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> in the design tree) will be added to the engine. </p>
+
+<p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00516">516</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8316a3321898fdce62de0164f8fc2fa5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QScriptValue ScriptableContainer::checkScriptResults </td>
+          <td>(</td>
+          <td class="paramtype">QScriptContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QScriptEngine *&#160;</td>
+          <td class="paramname"><em>engine</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When debugging is enabled, this function is used to call a <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function and trigger a runtime error if there was some problem with the latest script that was called. </p>
+<p>Qt requires us to use a QScriptContext object in order to trigger a runtime error manually. Since we sometimes want to trigger runtime errors from C++, when debugging is enabled we tell the script engine to call this function with the results of the latest script just after it is called. Since the <a class="el" href="class_picto_1_1_scriptable_container.html#a09a80e0a86d216983f258fb4fc78da88" title="Used instead of runScript(QString,QScriptValue &) when no return value is needed. ...">runScript()</a> function makes sure to store which object just called a script, this function can then call its <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function to find out if there was any problem with the script call, and if so trigger a runtime error. This may seem like a complicated way to do something trivial, but it is simply the way that Qt forces us to do it. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a>, <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00585">585</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -652,6 +786,73 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Reimplemented in <a class="el" href="class_picto_1_1_experiment.html#a48d8fbffdb96bb5022e0daba4c6dad72">Picto::Experiment</a>, <a class="el" href="class_picto_1_1_control_element.html#a43be19d011bffeb4ff95953a826c4635">Picto::ControlElement</a>, <a class="el" href="class_picto_1_1_state_machine_element.html#afcfbbc6a685a8df36e44ba713eedc811">Picto::StateMachineElement</a>, <a class="el" href="class_picto_1_1_text_graphic.html#a8f558f2c47015b39817a7b9b29baf17f">Picto::TextGraphic</a>, <a class="el" href="class_picto_1_1_operator_info_graphic.html#a756efd8ba69d89e91584f98034c7fd12">Picto::OperatorInfoGraphic</a>, <a class="el" href="class_picto_1_1_task.html#a1a4c648ccf8389bc35b3785527e0213b">Picto::Task</a>, <a class="el" href="class_picto_1_1_script_function.html#aa2718851ab93401f5efdf6f70df199d0">Picto::ScriptFunction</a>, <a class="el" href="class_picto_1_1_analysis_script_holder.html#a8424afe1832f1b1b7c0753a9b19d3bc9">Picto::AnalysisScriptHolder</a>, <a class="el" href="class_picto_1_1_state_machine.html#a97b7fe78eab6d54c1e8c3d6a932fc73e">Picto::StateMachine</a>, <a class="el" href="class_picto_1_1_picture_graphic.html#a92db57f574c60db5e468276f972903e3">Picto::PictureGraphic</a>, <a class="el" href="class_picto_1_1_result.html#a559d83849d9112ea474ea8b8bbfa9a8e">Picto::Result</a>, and <a class="el" href="class_picto_1_1_analysis_function.html#abffd30d757e70e11c3dbbdd108c34081">Picto::AnalysisFunction</a>.</p>
 
 <p>Definition at line <a class="el" href="_scriptable_container_8h_source.html#l00072">72</a> of file <a class="el" href="_scriptable_container_8h_source.html">ScriptableContainer.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a366bced14d365f8a924078ce9f619f6f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ScriptableContainer::deinitScripting </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called if something about a scriptable changes, so that the script engine will be reinitialized before use. </p>
+<p>If a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> object's name changes for example, we need to reinitialize scripting so that the object is accessible in the script engine under the correct name. </p>
+
+<p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00548">548</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a58d681487b0b1f755ce8791009b983d4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ScriptableContainer::deinitScripting </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_picto_1_1_property.html">Property</a> *&#160;</td>
+          <td class="paramname"><em>prop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVariant&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Equivalent to <a class="el" href="class_picto_1_1_scriptable_container.html#a366bced14d365f8a924078ce9f619f6f" title="Called if something about a scriptable changes, so that the script engine will be reinitialized befor...">deinitScripting()</a> with a different signature so that it can be attached to signals with the same inputs. </p>
+<dl class="section note"><dt>Note</dt><dd>This appears to no longer be used. We should probably get rid of it. </dd></dl>
+
+<p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00556">556</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -751,7 +952,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>This function returns an error string if the input returnValue is invalid or there was some other problem with the latest script that was run. </p>
-<p>The QString sciptName entry is the name of the script that was just run as returned by <a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. This function is called by checkScriptResults() which will trigger a runtime error with the returned string as an error message if the returned string is not empty. </p><dl class="section see"><dt>See also</dt><dd>checkScriptResults(), <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
+<p>The QString sciptName entry is the name of the script that was just run as returned by <a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. This function is called by <a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a> which will trigger a runtime error with the returned string as an error message if the returned string is not empty. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a>, <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_script_holder.html#a18c4144aa6c25fcb6e1ec01304d5ed2b">Picto::AnalysisScriptHolder</a>, <a class="el" href="class_picto_1_1_script_controller.html#aa4cc92c24d03887890452e350cf5aac4">Picto::ScriptController</a>, and <a class="el" href="class_picto_1_1_switch_element.html#a5e85db73b4d74a5c5301579d9212ca83">Picto::SwitchElement</a>.</p>
 
@@ -842,8 +1043,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <p>This function also sets up all QScriptProgram objects for this objects scripts so that they can be used to operate on contained <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects. By using the scriptingInitialized_ flag we can assure that the actual initialization only occurs if something changed about this object that requires everything to be reinitialized. This function also creates a QScriptEngineDebugger object and attaches it to the engine when debugging is enabled by setting the enableDebugging input to true. This causes a debugging console to appear whenever a scripting runtime error occurs.</p>
-<dl class="section note"><dt>Note</dt><dd>Sometimes C++ code needs to have the capability to trigger a runtime error. This is true in the case of <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> scripts that have access to experimental <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects but are not allowed to change their values, only read them, and if they do change a value, a runtime error is triggered. To support this case, when debugging is enabled and after every script that is called, checkScriptResults() is called with the result of that script which eventually ends up calling the virtual <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function to check for an error. This system is set up in this function. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>checkScriptResults(), <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Sometimes C++ code needs to have the capability to trigger a runtime error. This is true in the case of <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> scripts that have access to experimental <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects but are not allowed to change their values, only read them, and if they do change a value, a runtime error is triggered. To support this case, when debugging is enabled and after every script that is called, <a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a> is called with the result of that script which eventually ends up calling the virtual <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function to check for an error. This system is set up in this function. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a>, <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00134">134</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
 
@@ -956,8 +1157,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Runs the script with the input scriptName, setting the result of the script into the scriptReturnVal reference. </p>
-<p>The scriptName here is the script name returned from <a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. </p><dl class="section note"><dt>Note</dt><dd>This function takes part in the system allowing C++ code to trigger script runtime errors by telling the static checkScriptResults() function that return values should be checked using this object's <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>checkScriptResults(), <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
+<p>The scriptName here is the script name returned from <a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf" title="Returns a lookup table containing the names of Properties containing scripts indexed by the name by w...">getScripts()</a>. </p><dl class="section note"><dt>Note</dt><dd>This function takes part in the system allowing C++ code to trigger script runtime errors by telling the static <a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a> function that return values should be checked using this object's <a class="el" href="class_picto_1_1_scriptable_container.html#a1e0264aee7ce551d450dc07a6b369d56" title="This function returns an error string if the input returnValue is invalid or there was some other pro...">getReturnValueError()</a> function. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#a8316a3321898fdce62de0164f8fc2fa5" title="When debugging is enabled, this function is used to call a ScriptableContainer objects getReturnValue...">checkScriptResults()</a>, <a class="el" href="class_picto_1_1_scriptable_container.html#ab3d900d7a5403b8795b0edb54e50a750" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_scriptable_container_8cpp_source.html#l00383">383</a> of file <a class="el" href="_scriptable_container_8cpp_source.html">ScriptableContainer.cpp</a>.</p>
 

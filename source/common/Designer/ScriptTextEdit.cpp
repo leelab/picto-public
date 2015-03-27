@@ -11,11 +11,11 @@ SearchableTextEdit(singleLine)
 	setTabStopWidth(16);
 }
 
-/*! \brief Extends SearchableTextEdit::focusOutEvent() to handle updating of this Text Editor when the ScriptTextEdit loses focus.
- *	\details Since some parts of Picto consider a script as "existing" so long as it contains
- *	any characters, when focusing out of a script text edit, if the box contains only
- *	white space, we just empty it of its contents such that the rest of Picto will
- *	know that it's empty.
+/*! \brief Extends SearchableTextEdit::focusOutEvent() to handle updating of this Text Editor when the ScriptTextEdit
+ *	loses focus.
+ *	\details Since some parts of Picto consider a script as "existing" so long as it contains any characters, when
+ *	focusing out of a script text edit, if the box contains only white space, we just empty it of its contents such
+ *	that the rest of Picto will know that it's empty.
  */
 void ScriptTextEdit::focusOutEvent(QFocusEvent *e)
 {

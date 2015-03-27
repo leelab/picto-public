@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_live_spike_reader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LiveSpikeReader Class Reference</div>  </div>
@@ -112,6 +113,11 @@ Inheritance diagram for Picto::LiveSpikeReader:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_live_spike_reader_1_1_spike_data.html">SpikeData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abd39bfe29088aa9432f98ed39989cd77"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_spike_reader.html#abd39bfe29088aa9432f98ed39989cd77">LiveSpikeReader</a> (int maxChan, int maxUnit, int waveformSize)</td></tr>
@@ -204,6 +210,27 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_spike_reader.html#a77284a20bc8375b58957c3853dd24f5c">getWaveformsUntil</a> (double time)</td></tr>
 <tr class="memdesc:a77284a20bc8375b58957c3853dd24f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of waveforms for spikes that occured with times &gt; the current time and &lt;= the input time on the all channels and units. There is a one to one matchup of waveforms from this function and channels from <a class="el" href="class_picto_1_1_live_spike_reader.html#a8068875b5d7ff0785ba6e21e2b947681" title="Returns a list of channels for spikes that occured with times > the current time and <= the input tim...">getChannelsUntil()</a>, units from <a class="el" href="class_picto_1_1_live_spike_reader.html#ad285c7f58f3d0e910a969ae351da6198" title="Returns a list of units for spikes that occured with times > the current time and <= the input time o...">getUnitsUntil()</a> and times from <a class="el" href="class_picto_1_1_live_spike_reader.html#af76447878e8fcf2d18b92a7739baed80" title="Returns a list of spike times when that occured with times > the current time and <= the input time o...">getTimesUntil()</a>. <br /></td></tr>
 <tr class="separator:a77284a20bc8375b58957c3853dd24f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a050384b679dbde299390e116c2074992"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a050384b679dbde299390e116c2074992"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_live_spike_reader_1_1_spike_data.html">SpikeData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikeData_</b></td></tr>
+<tr class="separator:a050384b679dbde299390e116c2074992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e3c5fb2ed64262b6edadedaf64911c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91e3c5fb2ed64262b6edadedaf64911c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxChans_</b></td></tr>
+<tr class="separator:a91e3c5fb2ed64262b6edadedaf64911c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29159ec8e6f1a3e8b7f077b2ce5d899"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac29159ec8e6f1a3e8b7f077b2ce5d899"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxUnits_</b></td></tr>
+<tr class="separator:ac29159ec8e6f1a3e8b7f077b2ce5d899"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ecaca14c672f079854f02ab3287d312"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ecaca14c672f079854f02ab3287d312"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>waveformSize_</b></td></tr>
+<tr class="separator:a2ecaca14c672f079854f02ab3287d312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a151aba6913a2938e6c6c61957cc92058"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a151aba6913a2938e6c6c61957cc92058"></a>
+QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>chans_</b></td></tr>
+<tr class="separator:a151aba6913a2938e6c6c61957cc92058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5058e8c189fcdfc2d1c49b592a6de44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5058e8c189fcdfc2d1c49b592a6de44"></a>
+QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>units_</b></td></tr>
+<tr class="separator:aa5058e8c189fcdfc2d1c49b592a6de44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_spike_reader.html" title="An base class for classes that can provide Spike data over input time ranges. ">SpikeReader</a> class for a live test experiment. </p>

@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_status_mode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StatusMode Class Reference</div>  </div>
@@ -134,6 +137,34 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a brief temporary message to the display.  <a href="#a8aa3f4ab2efbcb2ff6988aa7befe4af0">More...</a><br /></td></tr>
 <tr class="separator:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a3818177da60fac01eaa3e299318ee8db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_status_mode.html#a3818177da60fac01eaa3e299318ee8db">updateStatus</a> ()</td></tr>
+<tr class="separator:a3818177da60fac01eaa3e299318ee8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac3fb1f7b9693e85c3ccee87ca3eb4c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_status_mode.html#ac3fb1f7b9693e85c3ccee87ca3eb4c71">drawStatus</a> ()</td></tr>
+<tr class="separator:ac3fb1f7b9693e85c3ccee87ca3eb4c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab216bc0b793f55d48cb14c42f301f457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab216bc0b793f55d48cb14c42f301f457"></a>
+QList&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>statusItems_</b></td></tr>
+<tr class="separator:ab216bc0b793f55d48cb14c42f301f457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ab156956bec2e6aa50ed9747cc4f13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99ab156956bec2e6aa50ed9747cc4f13"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currTopItem_</b></td></tr>
+<tr class="separator:a99ab156956bec2e6aa50ed9747cc4f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b134ad9541d9dc40ca7052f60e9361a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b134ad9541d9dc40ca7052f60e9361a"></a>
+QSharedPointer&lt; <a class="el" href="class_director_interface.html">DirectorInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorIf_</b></td></tr>
+<tr class="separator:a8b134ad9541d9dc40ca7052f60e9361a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4adb9e6f9a460cdd1d43d634fff9c1e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4adb9e6f9a460cdd1d43d634fff9c1e3"></a>
+<a class="el" href="class_front_panel_info.html">FrontPanelInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>panelInfo_</b></td></tr>
+<tr class="separator:a4adb9e6f9a460cdd1d43d634fff9c1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464793ea6b0b99e9820b2c89b96f6096"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a464793ea6b0b99e9820b2c89b96f6096"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>updateTimer_</b></td></tr>
+<tr class="separator:a464793ea6b0b99e9820b2c89b96f6096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_display_mode"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_display_mode')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_display_mode.html">DisplayMode</a></td></tr>
@@ -154,6 +185,32 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="statusmode_8h_source.html#l00016">16</a> of file <a class="el" href="statusmode_8h_source.html">statusmode.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac3fb1f7b9693e85c3ccee87ca3eb4c71"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StatusMode::drawStatus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Draws the current status to the LCD display. </p>
+
+<p>Definition at line <a class="el" href="statusmode_8cpp_source.html#l00067">67</a> of file <a class="el" href="statusmode_8cpp_source.html">statusmode.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aea87d00264d99e1ef0eaf5c41e007f01"></a>
 <div class="memitem">
 <div class="memproto">
@@ -236,6 +293,32 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7">DisplayMode</a>.</p>
 
 <p>Definition at line <a class="el" href="statusmode_8h_source.html#l00027">27</a> of file <a class="el" href="statusmode_8h_source.html">statusmode.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3818177da60fac01eaa3e299318ee8db"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StatusMode::updateStatus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Polls status information and displays it by calling <a class="el" href="class_status_mode.html#ac3fb1f7b9693e85c3ccee87ca3eb4c71">drawStatus()</a> </p>
+
+<p>Definition at line <a class="el" href="statusmode_8cpp_source.html#l00075">75</a> of file <a class="el" href="statusmode_8cpp_source.html">statusmode.cpp</a>.</p>
 
 </div>
 </div>

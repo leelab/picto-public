@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_property_frame-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PropertyFrame Class Reference</div>  </div>
@@ -127,6 +129,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clearProperties</b> (
 <tr class="memitem:a8daea01e3537d392421270edfe6d71f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_frame.html#a8daea01e3537d392421270edfe6d71f8">updatePropertiesFromFile</a> (QString filename)</td></tr>
 <tr class="memdesc:a8daea01e3537d392421270edfe6d71f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a session at the input filename path and sets all of the final init property values from that session to their corresponding RuntimeEditable Properties that are displayed in this <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>.  <a href="#a8daea01e3537d392421270edfe6d71f8">More...</a><br /></td></tr>
 <tr class="separator:a8daea01e3537d392421270edfe6d71f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a323e3f5efe6b8490e4b23d68423a8692"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323e3f5efe6b8490e4b23d68423a8692"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_frame.html#a323e3f5efe6b8490e4b23d68423a8692">propertyEdited</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; prop, QVariant val)</td></tr>
+<tr class="memdesc:a323e3f5efe6b8490e4b23d68423a8692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever a Property is edited whose widget appears in this <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. Verifies that the new Property value is legal, then emits a <a class="el" href="class_property_frame.html#ad7ddd1a1b2d9cf25db6670a8c458bcc7" title="Indicates that the changedProp Property&#39;s initValue has changed. ">parameterMessageReady()</a> signal if it is. <br /></td></tr>
+<tr class="separator:a323e3f5efe6b8490e4b23d68423a8692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a56f753cc2c6ed4b802b617f4f267bf53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56f753cc2c6ed4b802b617f4f267bf53"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>mainWidget_</b></td></tr>
+<tr class="separator:a56f753cc2c6ed4b802b617f4f267bf53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a509a0d9032b9a5ab1efc5e25cdca93c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a509a0d9032b9a5ab1efc5e25cdca93c3"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>propValsSession_</b></td></tr>
+<tr class="separator:a509a0d9032b9a5ab1efc5e25cdca93c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad75fd46b540210ad80d43765fb774bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad75fd46b540210ad80d43765fb774bd"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pathMap_</b></td></tr>
+<tr class="separator:aad75fd46b540210ad80d43765fb774bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues during an experimental run. </p>

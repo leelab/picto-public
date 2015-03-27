@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_property_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PropertyState Class Reference</div>  </div>
@@ -142,6 +144,42 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:adfe617b2617ed924a8cddf2f0a49c400"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_state.html#adfe617b2617ed924a8cddf2f0a49c400">setObsoleteAssets</a> (QHash&lt; int, bool &gt; obsoleteAssetIds)</td></tr>
 <tr class="memdesc:adfe617b2617ed924a8cddf2f0a49c400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a lookup table of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> Ids for Assets that have become obsolete.  <a href="#adfe617b2617ed924a8cddf2f0a49c400">More...</a><br /></td></tr>
 <tr class="separator:adfe617b2617ed924a8cddf2f0a49c400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a19af0463a5f6e74500f9b4f24b013545"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19af0463a5f6e74500f9b4f24b013545"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getNextIndex</b> ()</td></tr>
+<tr class="separator:a19af0463a5f6e74500f9b4f24b013545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a8e08842b8c9619c6ade755a83b2954"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a8e08842b8c9619c6ade755a83b2954"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>globalToRunIndex</b> (<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> index)</td></tr>
+<tr class="separator:a6a8e08842b8c9619c6ade755a83b2954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1e6d7507b3c41a5c8aa1b530bc67ffb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e6d7507b3c41a5c8aa1b530bc67ffb0"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:a1e6d7507b3c41a5c8aa1b530bc67ffb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc93859fefbc8bfa8958e5cc033c64a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfc93859fefbc8bfa8958e5cc033c64a"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:acfc93859fefbc8bfa8958e5cc033c64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcb2912e42cee586091e54077bef2ef5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcb2912e42cee586091e54077bef2ef5"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runStart_</b></td></tr>
+<tr class="separator:adcb2912e42cee586091e54077bef2ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6da7a17f7535f38b545905db3c6e7a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6da7a17f7535f38b545905db3c6e7a3"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runEnd_</b></td></tr>
+<tr class="separator:ab6da7a17f7535f38b545905db3c6e7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0d3bd4ed2d0a3c56dfc3dd978b104ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0d3bd4ed2d0a3c56dfc3dd978b104ab"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>curr_</b></td></tr>
+<tr class="separator:ad0d3bd4ed2d0a3c56dfc3dd978b104ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9965bdb6701707460bc26794e18299ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9965bdb6701707460bc26794e18299ec"></a>
+QList&lt; <a class="el" href="struct_picto_1_1_property_data.html">PropertyData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:a9965bdb6701707460bc26794e18299ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22e414b1771c0942adf256ddaa996695"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22e414b1771c0942adf256ddaa996695"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>obsoleteAssetIds_</b></td></tr>
+<tr class="separator:a22e414b1771c0942adf256ddaa996695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bbcbc59a03538db034775c4b26757b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bbcbc59a03538db034775c4b26757b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>forInitProperties_</b></td></tr>
+<tr class="separator:a6bbcbc59a03538db034775c4b26757b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> and PropertyReader classes to load a Picto Session database, extract the data for <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes and implement functions for traversing through that data. </p>

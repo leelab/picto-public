@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_frame_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::FrameState Class Reference</div>  </div>
@@ -157,6 +159,36 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_frame_state.html#a9a6d24543965b408b409e5c3a5575588">getTimesUntil</a> (double time)</td></tr>
 <tr class="memdesc:a9a6d24543965b408b409e5c3a5575588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of values with times &gt; the current time and &lt;= the input time. <br /></td></tr>
 <tr class="separator:a9a6d24543965b408b409e5c3a5575588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a3a8c1ecbfb5ce2026f7a54ffc4d44c81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a8c1ecbfb5ce2026f7a54ffc4d44c81"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getNextIndex</b> ()</td></tr>
+<tr class="separator:a3a8c1ecbfb5ce2026f7a54ffc4d44c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f51a1da59b6ff47e9d973fc13a21dcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f51a1da59b6ff47e9d973fc13a21dcb"></a>
+<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>globalToRunIndex</b> (<a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> index)</td></tr>
+<tr class="separator:a0f51a1da59b6ff47e9d973fc13a21dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a73b749137e5170667c41771246911a98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73b749137e5170667c41771246911a98"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>session_</b></td></tr>
+<tr class="separator:a73b749137e5170667c41771246911a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5110764d0e53287a173cfbc37907fe44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5110764d0e53287a173cfbc37907fe44"></a>
+QSharedPointer&lt; QSqlQuery &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_</b></td></tr>
+<tr class="separator:a5110764d0e53287a173cfbc37907fe44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98fb33c5cb10460c7a8c63ac5b90e816"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98fb33c5cb10460c7a8c63ac5b90e816"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runStart_</b></td></tr>
+<tr class="separator:a98fb33c5cb10460c7a8c63ac5b90e816"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2defc03a5d2e2b863dfe9672cb553509"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2defc03a5d2e2b863dfe9672cb553509"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runEnd_</b></td></tr>
+<tr class="separator:a2defc03a5d2e2b863dfe9672cb553509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79fd9a54af01ffa11d26268e69db9500"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79fd9a54af01ffa11d26268e69db9500"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>curr_</b></td></tr>
+<tr class="separator:a79fd9a54af01ffa11d26268e69db9500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99e6585041de2e241980d5878c8c2a2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99e6585041de2e241980d5878c8c2a2f"></a>
+QList&lt; <a class="el" href="struct_picto_1_1_playback_index.html">PlaybackIndex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:a99e6585041de2e241980d5878c8c2a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> and <a class="el" href="class_picto_1_1_frame_reader.html" title="An base class for classes that can provide Frame data over input time ranges. ">FrameReader</a> classes to load a Picto Session database, extract the frame data and implement functions for traversing through that data. </p>

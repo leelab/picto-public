@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_tdt_plugin-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TdtPlugin Class Reference</div>  </div>
@@ -108,6 +111,18 @@ Inheritance diagram for TdtPlugin:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tdt_plugin_1_1_event_details.html">EventDetails</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple struct used for organizing Event code data.  <a href="struct_tdt_plugin_1_1_event_details.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tdt_plugin_1_1_l_f_p_data.html">LFPData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple struct used for organizing <a class="el" href="struct_tdt_plugin_1_1_l_f_p_data.html" title="A simple struct used for organizing LFPData. ">LFPData</a>.  <a href="struct_tdt_plugin_1_1_l_f_p_data.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tdt_plugin_1_1_spike_details.html">SpikeDetails</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple struct used for organizing Spike data.  <a href="struct_tdt_plugin_1_1_spike_details.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a87b239c83c34ea24d4e96633ed293ce8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87b239c83c34ea24d4e96633ed293ce8"></a>
@@ -143,6 +158,67 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <tr class="memitem:abd4555dee2a147e85cc47493bf038a0d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#abd4555dee2a147e85cc47493bf038a0d">acqDataAfterNow</a> ()</td></tr>
 <tr class="memdesc:abd4555dee2a147e85cc47493bf038a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes the interface to throw out all data collected before now.  <a href="#abd4555dee2a147e85cc47493bf038a0d">More...</a><br /></td></tr>
 <tr class="separator:abd4555dee2a147e85cc47493bf038a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a8d7322cd42ebebc37b170a2d2dd78763"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#a8d7322cd42ebebc37b170a2d2dd78763">getRunningBlockInfo</a> ()</td></tr>
+<tr class="memdesc:a8d7322cd42ebebc37b170a2d2dd78763"><td class="mdescLeft">&#160;</td><td class="mdescRight">To access data from the TDT system, we need the TDT server name, and the names of the Tank and Block that to which data is currently being written. This function gets that data and stores it.  <a href="#a8d7322cd42ebebc37b170a2d2dd78763">More...</a><br /></td></tr>
+<tr class="separator:a8d7322cd42ebebc37b170a2d2dd78763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8d4369c5cba6e37b8676659613d17a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8d4369c5cba6e37b8676659613d17a8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#aa8d4369c5cba6e37b8676659613d17a8">startCOM</a> ()</td></tr>
+<tr class="memdesc:aa8d4369c5cba6e37b8676659613d17a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to open the Tank and Block discovered in <a class="el" href="class_tdt_plugin.html#a8d7322cd42ebebc37b170a2d2dd78763" title="To access data from the TDT system, we need the TDT server name, and the names of the Tank and Block ...">getRunningBlockInfo()</a> through the COM interface, returns true on success, false otherwise. <br /></td></tr>
+<tr class="separator:aa8d4369c5cba6e37b8676659613d17a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3d8d5a1c2c0430f0763200c630099f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3d8d5a1c2c0430f0763200c630099f7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#ae3d8d5a1c2c0430f0763200c630099f7">stopCOM</a> ()</td></tr>
+<tr class="memdesc:ae3d8d5a1c2c0430f0763200c630099f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes resources that were opened in <a class="el" href="class_tdt_plugin.html#aa8d4369c5cba6e37b8676659613d17a8" title="Attempts to open the Tank and Block discovered in getRunningBlockInfo() through the COM interface...">startCOM()</a>. <br /></td></tr>
+<tr class="separator:ae3d8d5a1c2c0430f0763200c630099f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a075946d98a850b23808f63f428738485"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a075946d98a850b23808f63f428738485"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#a075946d98a850b23808f63f428738485">spikeTimestampLessThan</a> (const <a class="el" href="struct_tdt_plugin_1_1_spike_details.html">SpikeDetails</a> &amp;sd1, const <a class="el" href="struct_tdt_plugin_1_1_spike_details.html">SpikeDetails</a> &amp;sd2)</td></tr>
+<tr class="memdesc:a075946d98a850b23808f63f428738485"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a comparison function for easy sorting of <a class="el" href="struct_tdt_plugin_1_1_spike_details.html" title="A simple struct used for organizing Spike data. ">SpikeDetails</a> structs according to time. <br /></td></tr>
+<tr class="separator:a075946d98a850b23808f63f428738485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a843e40276d89b2a96da8d9b48da5bb50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a843e40276d89b2a96da8d9b48da5bb50"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tdt_plugin.html#a843e40276d89b2a96da8d9b48da5bb50">eventTimestampLessThan</a> (const <a class="el" href="struct_tdt_plugin_1_1_event_details.html">EventDetails</a> &amp;ed1, const <a class="el" href="struct_tdt_plugin_1_1_event_details.html">EventDetails</a> &amp;ed2)</td></tr>
+<tr class="memdesc:a843e40276d89b2a96da8d9b48da5bb50"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a comparison function for easy sorting of <a class="el" href="struct_tdt_plugin_1_1_event_details.html" title="A simple struct used for organizing Event code data. ">EventDetails</a> structs according to time. <br /></td></tr>
+<tr class="separator:a843e40276d89b2a96da8d9b48da5bb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a9dcd3f86c51b5ee9230d0146c1cd99a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dcd3f86c51b5ee9230d0146c1cd99a4"></a>
+TTANKXLib::_DTTankXPtr&#160;</td><td class="memItemRight" valign="bottom"><b>tdtTank</b></td></tr>
+<tr class="separator:a9dcd3f86c51b5ee9230d0146c1cd99a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae266ed8c1e3cedea39bc24f40a29b1e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae266ed8c1e3cedea39bc24f40a29b1e0"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b></td></tr>
+<tr class="separator:ae266ed8c1e3cedea39bc24f40a29b1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f64117f3eac4ff7d1628c16e107505d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f64117f3eac4ff7d1628c16e107505d"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>samplePeriod</b></td></tr>
+<tr class="separator:a8f64117f3eac4ff7d1628c16e107505d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5ea3243c9a51a77a030d554ecf9545"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f5ea3243c9a51a77a030d554ecf9545"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastEventTimestamp_</b></td></tr>
+<tr class="separator:a5f5ea3243c9a51a77a030d554ecf9545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b058d95130ecdf88a31f76e166f7426"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b058d95130ecdf88a31f76e166f7426"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastSpikeTimestamp_</b></td></tr>
+<tr class="separator:a2b058d95130ecdf88a31f76e166f7426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ea71483b0b74426d5beb0a347b6fa49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ea71483b0b74426d5beb0a347b6fa49"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastLFPTimestamp_</b></td></tr>
+<tr class="separator:a1ea71483b0b74426d5beb0a347b6fa49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e02a4a1e9ca39c078e1deb47e4360b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e02a4a1e9ca39c078e1deb47e4360b5"></a>
+wchar_t *&#160;</td><td class="memItemRight" valign="bottom"><b>szServerName</b></td></tr>
+<tr class="separator:a2e02a4a1e9ca39c078e1deb47e4360b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6007a27c27acb1a6a968e441d53f94a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6007a27c27acb1a6a968e441d53f94a1"></a>
+wchar_t *&#160;</td><td class="memItemRight" valign="bottom"><b>szTankName</b></td></tr>
+<tr class="separator:a6007a27c27acb1a6a968e441d53f94a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a7e7a20ae967752a94d7dc28ea776a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a7e7a20ae967752a94d7dc28ea776a9"></a>
+wchar_t *&#160;</td><td class="memItemRight" valign="bottom"><b>szBlockName</b></td></tr>
+<tr class="separator:a1a7e7a20ae967752a94d7dc28ea776a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4abfeec1de5655c9f3ee513599b5e576"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4abfeec1de5655c9f3ee513599b5e576"></a>
+QVector&lt; <a class="el" href="struct_tdt_plugin_1_1_l_f_p_data.html">LFPData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lfpData_</b></td></tr>
+<tr class="separator:a4abfeec1de5655c9f3ee513599b5e576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42a86fbcf20ff1208506038809f71c80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42a86fbcf20ff1208506038809f71c80"></a>
+<a class="el" href="class_neural_data_acq_interface.html#a18d2ffb89521e40cba91a159e47fd449">deviceStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>deviceStatus_</b></td></tr>
+<tr class="separator:a42a86fbcf20ff1208506038809f71c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -219,6 +295,34 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="class_neural_data_acq_interface.html#a5726ef21daaedd9947640b146e554c97">NeuralDataAcqInterface</a>.</p>
 
 <p>Definition at line <a class="el" href="tdtplugin_8cpp_source.html#l00311">311</a> of file <a class="el" href="tdtplugin_8cpp_source.html">tdtplugin.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d7322cd42ebebc37b170a2d2dd78763"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool TdtPlugin::getRunningBlockInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>To access data from the TDT system, we need the TDT server name, and the names of the Tank and Block that to which data is currently being written. This function gets that data and stores it. </p>
+<p>In the general case, the Proxy application runs on the same computer as the TDT <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>, in this case, the "local" name can be used for the tdt server. To get the names of the Tank and the currently running Block, we run through all available tanks and use the TDT API to check each one for a running block with TTANKXLib::_DTTankXPtr::GetHotBlock(). When we find the "HotBlock" we store it and its Tank. In the case where DEVELOPMENTBUILD is defined, the Proxy application needn't run on the TDT <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> computer. We get the name of the TDT <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> from a dialog and then use that to access the server and get the active Block/Tank. In either case, if we fail to find an active block we return false, otherwise we return true. </p>
+
+<p>Definition at line <a class="el" href="tdtplugin_8cpp_source.html#l00034">34</a> of file <a class="el" href="tdtplugin_8cpp_source.html">tdtplugin.cpp</a>.</p>
 
 </div>
 </div>

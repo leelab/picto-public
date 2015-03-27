@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_test_playback_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TestPlaybackController Class Reference</div>  </div>
@@ -149,6 +150,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_playback_controller.html#aff890606e7850a84ca37f00515814f29">isRunning</a> ()</td></tr>
 <tr class="memdesc:aff890606e7850a84ca37f00515814f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if a Task is running. <br /></td></tr>
 <tr class="separator:aff890606e7850a84ca37f00515814f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a65a7caf664b3d3a7c5ae42ef02705366"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65a7caf664b3d3a7c5ae42ef02705366"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:a65a7caf664b3d3a7c5ae42ef02705366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75e5dcc355d7f0fa385d7684451d16e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae75e5dcc355d7f0fa385d7684451d16e"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>taskName_</b></td></tr>
+<tr class="separator:ae75e5dcc355d7f0fa385d7684451d16e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75afe161d925276d4814eaef38276582"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75afe161d925276d4814eaef38276582"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>running_</b></td></tr>
+<tr class="separator:a75afe161d925276d4814eaef38276582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb1a55dc85e49c0436026808883657b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb1a55dc85e49c0436026808883657b7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>paused_</b></td></tr>
+<tr class="separator:adb1a55dc85e49c0436026808883657b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acebe432bc2fe3a074abe1c78da61408f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acebe432bc2fe3a074abe1c78da61408f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>stopping_</b></td></tr>
+<tr class="separator:acebe432bc2fe3a074abe1c78da61408f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a> handles the <a class="el" href="class_test_playback_controller.html#a169259eb2f0c71d173efdf1b3f00bef3" title="Starts / Resume playback of the current Task. ">play()</a>, <a class="el" href="class_test_playback_controller.html#a7699c2c9b554951f3d14214c02496b33" title="Pauses the currently running Task and emits the paused() signal. ">pause()</a>, <a class="el" href="class_test_playback_controller.html#a6a4a3a56fea5a3639094abc21b5db3ab" title="Stops the currently running task. ">stop()</a> interface to an Experiment. </p>

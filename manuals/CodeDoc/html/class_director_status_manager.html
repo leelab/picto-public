@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_director_status_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DirectorStatusManager Class Reference</div>  </div>
@@ -187,6 +189,36 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a8149f3706ab34107c3faf01d8dcef3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements ComponentStatusManager::doServerUpdate() to send alignment events to an attached neural system. Also sends records of recent Alignment events and COMPONENTUPDATE "keep alive" commands to the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. <br /></td></tr>
 <tr class="separator:a8149f3706ab34107c3faf01d8dcef3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:aa3fa8fe21de2953e42be54d7c50f3d6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director_status_manager.html#aa3fa8fe21de2953e42be54d7c50f3d6e">pauseRequested</a> ()</td></tr>
+<tr class="memdesc:aa3fa8fe21de2953e42be54d7c50f3d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when experimental elements programatically request that a pause be triggered.  <a href="#aa3fa8fe21de2953e42be54d7c50f3d6e">More...</a><br /></td></tr>
+<tr class="separator:aa3fa8fe21de2953e42be54d7c50f3d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a607299b65d46a31b39eb39dd432182a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a607299b65d46a31b39eb39dd432182a8"></a>
+ComponentStatus&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
+<tr class="separator:a607299b65d46a31b39eb39dd432182a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fe08b246e0900c3a397b8de1790a246"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fe08b246e0900c3a397b8de1790a246"></a>
+QWeakPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:a6fe08b246e0900c3a397b8de1790a246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab39fe1a8ebdc264138021044c7326dfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab39fe1a8ebdc264138021044c7326dfb"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_director_data.html">Picto::DirectorData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorData_</b></td></tr>
+<tr class="separator:ab39fe1a8ebdc264138021044c7326dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c35213a836d19a7c17a27690a348834"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c35213a836d19a7c17a27690a348834"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:a4c35213a836d19a7c17a27690a348834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31122b34f775df90b52f3de39c83ad55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31122b34f775df90b52f3de39c83ad55"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentCode_</b></td></tr>
+<tr class="separator:a31122b34f775df90b52f3de39c83ad55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8063de24b7edf9bfab281b2bac091655"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8063de24b7edf9bfab281b2bac091655"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>alignmentID_</b></td></tr>
+<tr class="separator:a8063de24b7edf9bfab281b2bac091655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a4e1a738616a395296b2c09308d660"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5a4e1a738616a395296b2c09308d660"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>lastAlignTime_</b></td></tr>
+<tr class="separator:aa5a4e1a738616a395296b2c09308d660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_component_status_manager"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_component_status_manager')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_component_status_manager.html">ComponentStatusManager</a></td></tr>
@@ -201,7 +233,36 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_director_status_manager_8h_source.html#l00017">17</a> of file <a class="el" href="_director_status_manager_8h_source.html">DirectorStatusManager.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa3fa8fe21de2953e42be54d7c50f3d6e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DirectorStatusManager::pauseRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when experimental elements programatically request that a pause be triggered. </p>
+<p>Updates the current <a class="el" href="class_component_status_manager.html" title="Handles overall status operations for a ComponentInterface object. ">ComponentStatusManager</a> status (<a class="el" href="class_director_status_manager.html#a9fa585fdad94b511c03380b9a5926fb5" title="Extends ComponentStatusManager::setStatus() to send the current Status to attached ControlPanelInterf...">setStatus()</a>) and tells the PictoEngine to pause. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ae1ce1dd892f6c79d5e32d5d2397f6d7e" title="Emitted when an experimental element wants the task to pause. ">Picto::Engine::PictoEngine::pauseRequested()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_director_status_manager_8cpp_source.html#l00199">199</a> of file <a class="el" href="_director_status_manager_8cpp_source.html">DirectorStatusManager.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/director/network/<a class="el" href="_director_status_manager_8h_source.html">DirectorStatusManager.h</a></li>
 <li>source/director/network/<a class="el" href="_director_status_manager_8cpp_source.html">DirectorStatusManager.cpp</a></li>
 </ul>

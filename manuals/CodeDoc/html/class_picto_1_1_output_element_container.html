@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_output_element_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -605,6 +608,29 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73">designConfig_</a></td></tr>
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a92e366b41cdf23c2fe1dab22fd6db557"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92e366b41cdf23c2fe1dab22fd6db557"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_output_element_container.html#a92e366b41cdf23c2fe1dab22fd6db557">addChildToElementLists</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
+<tr class="memdesc:a92e366b41cdf23c2fe1dab22fd6db557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the case where a child is added to this element after <a class="el" href="class_picto_1_1_output_element_container.html#a0aa8ba5d35859292b2f3365f99c242c3" title="This function is called in fromXml() after successful deserialization and is used to initialize the A...">postDeserialize()</a>. In that case, depending on the child's type, we may need to add it using either <a class="el" href="class_picto_1_1_output_element_container.html#a22c0bd49edc07babf230dcf1a7a07ff7" title="Adds a new OutputElement to this object&#39;s in-scope OutputElements list as well as those of its child ...">addOutputElement()</a> or <a class="el" href="class_picto_1_1_output_element_container.html#a840f8ffeb644964b6169f2500c44d1f2" title="Adds the input OutputElementContainer to this one&#39;s list of child OutputElementContainers and uses th...">addChildOutputElementContainer()</a>. We handle that here. <br /></td></tr>
+<tr class="separator:a92e366b41cdf23c2fe1dab22fd6db557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a22c0bd49edc07babf230dcf1a7a07ff7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22c0bd49edc07babf230dcf1a7a07ff7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_output_element_container.html#a22c0bd49edc07babf230dcf1a7a07ff7">addOutputElement</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_output_element.html">OutputElement</a> &gt; outputElement)</td></tr>
+<tr class="memdesc:a22c0bd49edc07babf230dcf1a7a07ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new <a class="el" href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame...">OutputElement</a> to this object's in-scope OutputElements list as well as those of its child OutputElementContainers. <br /></td></tr>
+<tr class="separator:a22c0bd49edc07babf230dcf1a7a07ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aee9c4c691115dcc7276cc4196ac14f1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee9c4c691115dcc7276cc4196ac14f1e"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_output_element.html">OutputElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputElements_</b></td></tr>
+<tr class="separator:aee9c4c691115dcc7276cc4196ac14f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af79c9c1f296355d907cc288aade35b8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af79c9c1f296355d907cc288aade35b8e"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_output_element_container.html">OutputElementContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputElementContainers_</b></td></tr>
+<tr class="separator:af79c9c1f296355d907cc288aade35b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

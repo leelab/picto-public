@@ -89,6 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_system_service-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SystemService Class Reference</div>  </div>
@@ -100,6 +104,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="proxyserver_2service_2systemservice_8h_source.html">systemservice.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_system_service_1_1work_thread.html">workThread</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aade6a13f66c8c5a18978c52f87f3ebc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aade6a13f66c8c5a18978c52f87f3ebc6"></a>
@@ -189,6 +198,59 @@ int &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>argc</b> ()</td>
 <tr class="memitem:a0954ce8d857694cc75746232370e74a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0954ce8d857694cc75746232370e74a3"></a>
 char **&#160;</td><td class="memItemRight" valign="bottom"><b>argv</b> ()</td></tr>
 <tr class="separator:a0954ce8d857694cc75746232370e74a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:ab3fdd9a2b9ce4199136d6f8e3c980b3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3fdd9a2b9ce4199136d6f8e3c980b3d"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>workThreadFunctionPtr</b>) (void *)</td></tr>
+<tr class="separator:ab3fdd9a2b9ce4199136d6f8e3c980b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fdd9a2b9ce4199136d6f8e3c980b3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3fdd9a2b9ce4199136d6f8e3c980b3d"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>workThreadFunctionPtr</b>) (void *)</td></tr>
+<tr class="separator:ab3fdd9a2b9ce4199136d6f8e3c980b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a2fd9778756087e77425adb65ff87c5d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fd9778756087e77425adb65ff87c5d9"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>serviceMainThread</b> (void *)</td></tr>
+<tr class="separator:a2fd9778756087e77425adb65ff87c5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd9778756087e77425adb65ff87c5d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fd9778756087e77425adb65ff87c5d9"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>serviceMainThread</b> (void *)</td></tr>
+<tr class="separator:a2fd9778756087e77425adb65ff87c5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae21c9b0e332ebacf131a7aa4e440bfdb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae21c9b0e332ebacf131a7aa4e440bfdb"></a>
+const QString&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
+<tr class="separator:ae21c9b0e332ebacf131a7aa4e440bfdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464ca7c6e9a1d2a0a473d8a0311fc1d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a464ca7c6e9a1d2a0a473d8a0311fc1d2"></a>
+const QString&#160;</td><td class="memItemRight" valign="bottom"><b>m_arg</b></td></tr>
+<tr class="separator:a464ca7c6e9a1d2a0a473d8a0311fc1d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cd37d54214375c02f3486ffaceaca95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cd37d54214375c02f3486ffaceaca95"></a>
+const QString&#160;</td><td class="memItemRight" valign="bottom"><b>m_displayName</b></td></tr>
+<tr class="separator:a9cd37d54214375c02f3486ffaceaca95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ceb44311b3b335e53190d2ae7d0c11a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ceb44311b3b335e53190d2ae7d0c11a"></a>
+const QString&#160;</td><td class="memItemRight" valign="bottom"><b>m_service_description</b></td></tr>
+<tr class="separator:a8ceb44311b3b335e53190d2ae7d0c11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac744cb546b3f0299c12a5d014e7b2305"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac744cb546b3f0299c12a5d014e7b2305"></a>
+const QString&#160;</td><td class="memItemRight" valign="bottom"><b>m_dependencies</b></td></tr>
+<tr class="separator:ac744cb546b3f0299c12a5d014e7b2305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d821409ba4dc88d18cd71c3862a28da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d821409ba4dc88d18cd71c3862a28da"></a>
+service_main&#160;</td><td class="memItemRight" valign="bottom"><b>m_serviceMain</b></td></tr>
+<tr class="separator:a0d821409ba4dc88d18cd71c3862a28da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d408343ddd26604a32f3a4bf74798df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d408343ddd26604a32f3a4bf74798df"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_running</b></td></tr>
+<tr class="separator:a7d408343ddd26604a32f3a4bf74798df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d7273868b8dfbb1f7b6f736199fd6d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d7273868b8dfbb1f7b6f736199fd6d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_argc</b></td></tr>
+<tr class="separator:af6d7273868b8dfbb1f7b6f736199fd6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8024a6fefefedb6926f84b116bb46609"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8024a6fefefedb6926f84b116bb46609"></a>
+char **&#160;</td><td class="memItemRight" valign="bottom"><b>m_argv</b></td></tr>
+<tr class="separator:a8024a6fefefedb6926f84b116bb46609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a8d129c09fa92d836a49082585ae36d2d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_system_service_1_1work_thread.html">workThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">serviceWorkThread</a> = NULL</td></tr>
+<tr class="separator:a8d129c09fa92d836a49082585ae36d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file is derived from system_service.h which is part of the iTALC project (<a href="http://italc.sourceforge.net">http://italc.sourceforge.net</a>) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn't write almost any of it, we're not going to provide detailed documentation. </p>
@@ -196,7 +258,30 @@ char **&#160;</td><td class="memItemRight" valign="bottom"><b>argv</b> ()</td></
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="proxyserver_2service_2systemservice_8h_source.html#l00022">22</a> of file <a class="el" href="proxyserver_2service_2systemservice_8h_source.html">systemservice.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a8d129c09fa92d836a49082585ae36d2d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_system_service_1_1work_thread.html">workThread</a> * SystemService::serviceWorkThread = NULL</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="proxyserver_2service_2systemservice_8h_source.html#l00100">100</a> of file <a class="el" href="proxyserver_2service_2systemservice_8h_source.html">systemservice.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/proxyserver/service/<a class="el" href="proxyserver_2service_2systemservice_8h_source.html">systemservice.h</a></li>
 <li>source/proxyserver/service/<a class="el" href="proxyserver_2service_2systemservice_8cpp_source.html">systemservice.cpp</a></li>
 </ul>

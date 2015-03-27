@@ -87,6 +87,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_script_item_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ScriptItemManager Class Reference</div>  </div>
@@ -114,6 +118,70 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0328456c18f63cad615465088fce1231"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item_manager.html#a0328456c18f63cad615465088fce1231">setScriptBoundingRect</a> (QRectF rect)</td></tr>
 <tr class="memdesc:a0328456c18f63cad615465088fce1231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the bounding rectangle in which ScriptItems will be layed out.  <a href="#a0328456c18f63cad615465088fce1231">More...</a><br /></td></tr>
 <tr class="separator:a0328456c18f63cad615465088fce1231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a63d8896dc79368870b45e9dd47d1ab81"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81">SCRIPTTYPE</a> { <br />
+&#160;&#160;<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a35518f480e0df9eac4bb60a405776ee3">ANALYSISENTRY</a> =0, 
+<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a78f6350b9e11167e79972021354f7aab">ENTRY</a>, 
+<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81af881591384efe83bd1bd44b301b927c1">FRAME</a>, 
+<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a37ae4ea2e2d93bcc60f8561a8790ecc7">ANALYSISFRAME</a>, 
+<br />
+&#160;&#160;<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a2c42f072bd36a3ed7afa009472439daa">EXIT</a>, 
+<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81acd885ecf214bf0a03c6d9275d1ba6d63">ANALYSISEXIT</a>, 
+<a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea">TYPE_NUM</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:a63d8896dc79368870b45e9dd47d1ab81"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of a particular script.  <a href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81">More...</a><br /></td></tr>
+<tr class="separator:a63d8896dc79368870b45e9dd47d1ab81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:aa166159f2d32085b60b0a3c495eee2e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6">updateScriptItems</a> ()</td></tr>
+<tr class="memdesc:aa166159f2d32085b60b0a3c495eee2e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and lays out all ScriptItems.  <a href="#aa166159f2d32085b60b0a3c495eee2e6">More...</a><br /></td></tr>
+<tr class="separator:aa166159f2d32085b60b0a3c495eee2e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab62b08fedb6f0a07b1fe0d7c32102a47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item_manager.html#ab62b08fedb6f0a07b1fe0d7c32102a47">performAnalysisScriptHolderOps</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; assetChild)</td></tr>
+<tr class="memdesc:ab62b08fedb6f0a07b1fe0d7c32102a47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up a connection between newly added AnalysisScriptHolder objects and this manager so that changes in those elements will be tracked.  <a href="#ab62b08fedb6f0a07b1fe0d7c32102a47">More...</a><br /></td></tr>
+<tr class="separator:ab62b08fedb6f0a07b1fe0d7c32102a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a02a1599aa0c3d4f72d8642ac9a2527c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0">updateScriptItemDimensions</a> ()</td></tr>
+<tr class="memdesc:a02a1599aa0c3d4f72d8642ac9a2527c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the positions and sizes of all ScriptItems managed by this object.  <a href="#a02a1599aa0c3d4f72d8642ac9a2527c0">More...</a><br /></td></tr>
+<tr class="separator:a02a1599aa0c3d4f72d8642ac9a2527c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3a7ac2b33cd80f53123e44d653f8a13d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a7ac2b33cd80f53123e44d653f8a13d"></a>
+QVector&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>orderedScriptNames_</b></td></tr>
+<tr class="separator:a3a7ac2b33cd80f53123e44d653f8a13d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a264cb5472ebb0d6b62114cc8b9b81253"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a264cb5472ebb0d6b62114cc8b9b81253"></a>
+QVector&lt; QColor &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptTypeColors_</b></td></tr>
+<tr class="separator:a264cb5472ebb0d6b62114cc8b9b81253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fe17cda3484922830ac80784062bc2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44fe17cda3484922830ac80784062bc2"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>minScriptItemHeight_</b></td></tr>
+<tr class="separator:a44fe17cda3484922830ac80784062bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7d6369800e6ceda5b0be12c5a7f549e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7d6369800e6ceda5b0be12c5a7f549e"></a>
+QVector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptRegionStartPos_</b></td></tr>
+<tr class="separator:ae7d6369800e6ceda5b0be12c5a7f549e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b065d219e87399fcb93c72bcfcb82cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b065d219e87399fcb93c72bcfcb82cd"></a>
+QMap&lt; int, <a class="el" href="class_script_item.html">ScriptItem</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptItems_</b></td></tr>
+<tr class="separator:a7b065d219e87399fcb93c72bcfcb82cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475a65c4f772e9eb9fbdcb51b23dc8f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a475a65c4f772e9eb9fbdcb51b23dc8f9"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:a475a65c4f772e9eb9fbdcb51b23dc8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000b6e061e0ecb8fa6f60a7e53939ce3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a000b6e061e0ecb8fa6f60a7e53939ce3"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>asset_</b></td></tr>
+<tr class="separator:a000b6e061e0ecb8fa6f60a7e53939ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a804ef159f36818a7d4bfda6ee894b6dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a804ef159f36818a7d4bfda6ee894b6dd"></a>
+QRectF&#160;</td><td class="memItemRight" valign="bottom"><b>scriptBoundingRect_</b></td></tr>
+<tr class="separator:a804ef159f36818a7d4bfda6ee894b6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9f93baaba6f0b180636d00bb140519"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b9f93baaba6f0b180636d00bb140519"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>horizontal_</b></td></tr>
+<tr class="separator:a7b9f93baaba6f0b180636d00bb140519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec018f67ee1881036c817995b72417c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec018f67ee1881036c817995b72417c3"></a>
+QGraphicsItem *&#160;</td><td class="memItemRight" valign="bottom"><b>scriptsParent_</b></td></tr>
+<tr class="separator:aec018f67ee1881036c817995b72417c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages creation and layout of ScriptItems for the various DiagramItems that use them. </p>
@@ -121,7 +189,55 @@ Public Member Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_script_item_manager_8h_source.html#l00022">22</a> of file <a class="el" href="_script_item_manager_8h_source.html">ScriptItemManager.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_script_item_manager.html#a63d8896dc79368870b45e9dd47d1ab81">ScriptItemManager::SCRIPTTYPE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The type of a particular script. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81a35518f480e0df9eac4bb60a405776ee3"></a>ANALYSISENTRY&#160;</td><td class="fielddoc">
+<p>An analysis script called just before a StateMachineElement's EntryScript during analysis. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81a78f6350b9e11167e79972021354f7aab"></a>ENTRY&#160;</td><td class="fielddoc">
+<p>A run time script that is called after control reaches a StateMachineElement and its properties are reset to their init conditions. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81af881591384efe83bd1bd44b301b927c1"></a>FRAME&#160;</td><td class="fielddoc">
+<p>A run time frame script that is called when a frame is rendered just before rendering that frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81a37ae4ea2e2d93bcc60f8561a8790ecc7"></a>ANALYSISFRAME&#160;</td><td class="fielddoc">
+<p>An analysis script that is called just when a frame is rendered just after rendering that frame during analysis. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81a2c42f072bd36a3ed7afa009472439daa"></a>EXIT&#160;</td><td class="fielddoc">
+<p>An exit script that is called just before control flow leads a StateMachineElement. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81acd885ecf214bf0a03c6d9275d1ba6d63"></a>ANALYSISEXIT&#160;</td><td class="fielddoc">
+<p>An analysis script this is called just after the Exit script during analysis. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a63d8896dc79368870b45e9dd47d1ab81a38dbe535884296b175d24a26e4a596ea"></a>TYPE_NUM&#160;</td><td class="fielddoc">
+<p>The total number of script types. </p>
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="_script_item_manager_8h_source.html#l00032">32</a> of file <a class="el" href="_script_item_manager_8h_source.html">ScriptItemManager.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ae6864baaa9e9d07e94129d8b86b39b3a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -166,6 +282,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab62b08fedb6f0a07b1fe0d7c32102a47"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ScriptItemManager::performAnalysisScriptHolderOps </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>assetChild</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up a connection between newly added AnalysisScriptHolder objects and this manager so that changes in those elements will be tracked. </p>
+<p>AnalysisScriptHolders' edited signals don't propegate up to the experimental assets to which they are connected. This means that if their contents are edited, this object won't find out about it unless we make sure to connect the AnalysisScriptHolder's edited() signal itself to <a class="el" href="class_script_item_manager.html#aa166159f2d32085b60b0a3c495eee2e6" title="Creates and lays out all ScriptItems. ">updateScriptItems()</a>. That is what we do here. </p>
+
+<p>Definition at line <a class="el" href="_script_item_manager_8cpp_source.html#l00176">176</a> of file <a class="el" href="_script_item_manager_8cpp_source.html">ScriptItemManager.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a0328456c18f63cad615465088fce1231"></a>
 <div class="memitem">
 <div class="memproto">
@@ -192,6 +337,62 @@ Public Member Functions</h2></td></tr>
 <p>Generally this is going to just be the shape of the parent <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. </p>
 
 <p>Definition at line <a class="el" href="_script_item_manager_8cpp_source.html#l00066">66</a> of file <a class="el" href="_script_item_manager_8cpp_source.html">ScriptItemManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02a1599aa0c3d4f72d8642ac9a2527c0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ScriptItemManager::updateScriptItemDimensions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the positions and sizes of all ScriptItems managed by this object. </p>
+<p>This is called if something changes that requires the ScriptItems to be redrawn. (ie. scriptBoundingRect changes, a ScriptItems are added/deleted). </p>
+
+<p>Definition at line <a class="el" href="_script_item_manager_8cpp_source.html#l00076">76</a> of file <a class="el" href="_script_item_manager_8cpp_source.html">ScriptItemManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa166159f2d32085b60b0a3c495eee2e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ScriptItemManager::updateScriptItems </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates and lays out all ScriptItems. </p>
+<p>This is called whenever something changes that causes <a class="el" href="class_script_item.html" title="A small box placed on arrow sources and destinations that represents a non-empty script. ">ScriptItem</a> objects to be added or removed. This happens, for example, when we switch the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> mode from Experimental design to Analysis design. When that happens there are suddenly extra analysis scripts that need to appear within StartBars. Also, when a Script's text is emptied, corresponding <a class="el" href="class_script_item.html" title="A small box placed on arrow sources and destinations that represents a non-empty script. ">ScriptItem</a> objects are removed. Layout is handled by calling <a class="el" href="class_script_item_manager.html#a02a1599aa0c3d4f72d8642ac9a2527c0" title="Updates the positions and sizes of all ScriptItems managed by this object. ">updateScriptItemDimensions()</a>. </p>
+
+<p>Definition at line <a class="el" href="_script_item_manager_8cpp_source.html#l00124">124</a> of file <a class="el" href="_script_item_manager_8cpp_source.html">ScriptItemManager.cpp</a>.</p>
 
 </div>
 </div>

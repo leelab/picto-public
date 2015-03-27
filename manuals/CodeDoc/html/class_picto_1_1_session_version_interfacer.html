@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_session_version_interfacer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::SessionVersionInterfacer Class Reference</div>  </div>
@@ -103,6 +105,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_session_version_interfacer_8h_source.html">SessionVersionInterfacer.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1aa560edb0ed8850b8191846a5510d31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_version_interfacer.html#a1aa560edb0ed8850b8191846a5510d31">SessionVersionInterfacer</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Experiment</a> &gt; initializedExperiment)</td></tr>
@@ -125,6 +132,34 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a226ca2af73c8ebbd2c475a38b791b50a"><td class="memItemLeft" align="right" valign="top">QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_version_interfacer.html#a226ca2af73c8ebbd2c475a38b791b50a">getObsoleteAssets</a> ()</td></tr>
 <tr class="memdesc:a226ca2af73c8ebbd2c475a38b791b50a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lookup table of AssetIDs from the Session.  <a href="#a226ca2af73c8ebbd2c475a38b791b50a">More...</a><br /></td></tr>
 <tr class="separator:a226ca2af73c8ebbd2c475a38b791b50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a50f4be5b94d2eae673ad1b6087a54455"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_version_interfacer.html#a50f4be5b94d2eae673ad1b6087a54455">recurseResetAssetIds</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a> &gt; node)</td></tr>
+<tr class="memdesc:a50f4be5b94d2eae673ad1b6087a54455"><td class="mdescLeft">&#160;</td><td class="mdescRight">A recursive function used to reset the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID the input asset from that of the input node and do the same for all child Assets of the input asset and node.  <a href="#a50f4be5b94d2eae673ad1b6087a54455">More...</a><br /></td></tr>
+<tr class="separator:a50f4be5b94d2eae673ad1b6087a54455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30c0ee2eaf157be0aef1bf9796b07f40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30c0ee2eaf157be0aef1bf9796b07f40"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_version_interfacer.html#a30c0ee2eaf157be0aef1bf9796b07f40">recurseAddObsoleteAssets</a> (int assetId)</td></tr>
+<tr class="memdesc:a30c0ee2eaf157be0aef1bf9796b07f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input assetId to the obsoleteAssets_ lookup. Then recurses to add all descendant <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs to the lookup table as well. <br /></td></tr>
+<tr class="separator:a30c0ee2eaf157be0aef1bf9796b07f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acbcc0603cab45a30434e331593f5daff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbcc0603cab45a30434e331593f5daff"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:acbcc0603cab45a30434e331593f5daff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af33b6faa21b3647c2d77e8aaef4c0a64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af33b6faa21b3647c2d77e8aaef4c0a64"></a>
+QHash&lt; int, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>nodesById_</b></td></tr>
+<tr class="separator:af33b6faa21b3647c2d77e8aaef4c0a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad23d1149161552f0b4c517bc834ed5b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad23d1149161552f0b4c517bc834ed5b9"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>nodesByPath_</b></td></tr>
+<tr class="separator:ad23d1149161552f0b4c517bc834ed5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c58dd8aeb85cc5b64b5ac09483547a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68c58dd8aeb85cc5b64b5ac09483547a"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>obsoleteAssets_</b></td></tr>
+<tr class="separator:a68c58dd8aeb85cc5b64b5ac09483547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3141b1c9b9c820888423abbab24f21d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3141b1c9b9c820888423abbab24f21d9"></a>
+QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>namelessIds_</b></td></tr>
+<tr class="separator:a3141b1c9b9c820888423abbab24f21d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Resets the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID values of an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> to those used in a Session file. </p>
@@ -207,6 +242,45 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Assets that were added through the <a class="el" href="class_picto_1_1_session_version_interfacer.html#a85fa3836fd8d081936dfecd74424e220" title="Adds a Property from the current Session file which will be used to correct the asset id of the corre...">addSessionProperty()</a>, <a class="el" href="class_picto_1_1_session_version_interfacer.html#a65d97b008ff49d9b9451687d8cc178ec" title="Adds a Transition from the current Session file which will be used to correct the asset id of the cor...">addSessionTransition()</a>, and <a class="el" href="class_picto_1_1_session_version_interfacer.html#a159bb9cf03088be02f43d30022914ee4" title="Adds an Experimental Element from the current Session file which will be used to correct the asset id...">addSessionElement()</a> functions that could not be identified in the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> handled by this <a class="el" href="class_picto_1_1_session_version_interfacer.html" title="Resets the Asset ID values of an Experiment to those used in a Session file. ">SessionVersionInterfacer</a> must have been removed due to an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> version upgrade. Use this lookup table to identify these Assets so that changes in their values can be ignored. </p>
 
 <p>Definition at line <a class="el" href="_session_version_interfacer_8cpp_source.html#l00208">208</a> of file <a class="el" href="_session_version_interfacer_8cpp_source.html">SessionVersionInterfacer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a50f4be5b94d2eae673ad1b6087a54455"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString SessionVersionInterfacer::recurseResetAssetIds </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a> &gt;&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A recursive function used to reset the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID the input asset from that of the input node and do the same for all child Assets of the input asset and node. </p>
+<p>If no matching <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> is found for any <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a>, that <a class="el" href="struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html">SVIAssetNode</a>'s asset ID along with any <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs of its children are added to the obsoleteAssets_ table that can be accessed with <a class="el" href="class_picto_1_1_session_version_interfacer.html#a226ca2af73c8ebbd2c475a38b791b50a" title="Returns a lookup table of AssetIDs from the Session. ">getObsoleteAssets()</a>. <a class="el" href="class_picto_1_1_session_version_interfacer.html#a30c0ee2eaf157be0aef1bf9796b07f40" title="Adds the input assetId to the obsoleteAssets_ lookup. Then recurses to add all descendant Asset IDs t...">recurseAddObsoleteAssets()</a> is used for this purpose. Returns an empty string on success and an error message on failure. </p>
+
+<p>Definition at line <a class="el" href="_session_version_interfacer_8cpp_source.html#l00220">220</a> of file <a class="el" href="_session_version_interfacer_8cpp_source.html">SessionVersionInterfacer.cpp</a>.</p>
 
 </div>
 </div>

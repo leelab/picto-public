@@ -2,6 +2,7 @@ var searchData=
 [
   ['aboutelementbox',['AboutElementBox',['../class_about_element_box.html',1,'']]],
   ['alignmentdataunit',['AlignmentDataUnit',['../class_picto_1_1_alignment_data_unit.html',1,'Picto']]],
+  ['alignmentevent',['AlignmentEvent',['../struct_alignment_tool_1_1_alignment_event.html',1,'AlignmentTool']]],
   ['alignmentinfo',['AlignmentInfo',['../class_picto_1_1_alignment_info.html',1,'Picto']]],
   ['alignmenttool',['AlignmentTool',['../class_alignment_tool.html',1,'']]],
   ['alignsessiondata',['AlignSessionData',['../class_align_session_data.html',1,'']]],
@@ -13,6 +14,7 @@ var searchData=
   ['analysisfileoutputwidget',['AnalysisFileOutputWidget',['../class_picto_1_1_analysis_file_output_widget.html',1,'Picto']]],
   ['analysisframedata',['AnalysisFrameData',['../class_picto_1_1_analysis_frame_data.html',1,'Picto']]],
   ['analysisfunction',['AnalysisFunction',['../class_picto_1_1_analysis_function.html',1,'Picto']]],
+  ['analysisinfo',['AnalysisInfo',['../struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html',1,'Picto::AnalysisSelectorWidget']]],
   ['analysisitem',['AnalysisItem',['../class_analysis_item.html',1,'']]],
   ['analysislfpdata',['AnalysisLfpData',['../class_picto_1_1_analysis_lfp_data.html',1,'Picto']]],
   ['analysisnumbervariable',['AnalysisNumberVariable',['../class_picto_1_1_analysis_number_variable.html',1,'Picto']]],

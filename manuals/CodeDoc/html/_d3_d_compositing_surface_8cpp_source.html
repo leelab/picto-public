@@ -158,12 +158,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        D3DCAPS9 caps;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        hr = pD3dDevice_-&gt;GetDeviceCaps(&amp;caps);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">if</span>(hr)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            d3dFail(<span class="stringliteral">&quot;D3DCompositingSurface: GetDeviceCaps FAILED&quot;</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <a class="code" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">d3dFail</a>(<span class="stringliteral">&quot;D3DCompositingSurface: GetDeviceCaps FAILED&quot;</span>);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="comment">//Create a texture with dimensions large enough for the image</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        hr = pD3dDevice_-&gt;CreateTexture(texWidth,texHeight,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&amp;texture_, NULL);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">if</span>(hr)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            d3dFail(<span class="stringliteral">&quot;D3DCompositingSurface: CreateTexture FAILED&quot;</span>);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <a class="code" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">d3dFail</a>(<span class="stringliteral">&quot;D3DCompositingSurface: CreateTexture FAILED&quot;</span>);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//store the image height (since this information will be lost when we</span></div>
@@ -180,7 +180,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    D3DLOCKED_RECT lockedRect;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    hr = texture_-&gt;LockRect(0,&amp;lockedRect,0,0);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span>(hr)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        d3dFail(<span class="stringliteral">&quot;D3DCompositingSurface: texture_-&gt;LockRect FAILED&quot;</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">d3dFail</a>(<span class="stringliteral">&quot;D3DCompositingSurface: texture_-&gt;LockRect FAILED&quot;</span>);</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    DWORD *pTexel;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    pTexel = (DWORD*)lockedRect.pBits;</div>
@@ -226,7 +226,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordflow">return</span> texture_;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keywordtype">void</span> D3DCompositingSurface::d3dFail(QString errorMsg)</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">  152</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">D3DCompositingSurface::d3dFail</a>(QString errorMsg)</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;{</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    QString text = <span class="stringliteral">&quot;If you are seeing this message, something has gone &quot;</span>;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    text += <span class="stringliteral">&quot;horribly wrong.  Try restarting the PictoBox.\n\n&quot;</span>;</div>
@@ -241,6 +241,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_d3_d_compositing_surface_html_a56fa74fbc8863325da2b19641bdcd7a9"><div class="ttname"><a href="class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9">Picto::D3DCompositingSurface::d3dFail</a></div><div class="ttdeci">void d3dFail(QString)</div><div class="ttdoc">Outputs an error message if something goes wrong with IDirect3DDevice9. </div><div class="ttdef"><b>Definition:</b> <a href="_d3_d_compositing_surface_8cpp_source.html#l00152">D3DCompositingSurface.cpp:152</a></div></div>
 <div class="ttc" id="class_picto_1_1_d3_d_compositing_surface_html_a18dac94238cb68b7c779bff4fe4af069"><div class="ttname"><a href="class_picto_1_1_d3_d_compositing_surface.html#a18dac94238cb68b7c779bff4fe4af069">Picto::D3DCompositingSurface::getTexture</a></div><div class="ttdeci">LPDIRECT3DTEXTURE9 getTexture()</div><div class="ttdoc">Returns the QImage that was passed into convertImage() in LPDIRECT3DTEXTURE9 form. </div><div class="ttdef"><b>Definition:</b> <a href="_d3_d_compositing_surface_8cpp_source.html#l00145">D3DCompositingSurface.cpp:145</a></div></div>
 <div class="ttc" id="class_picto_1_1_d3_d_compositing_surface_html_ad13ea262a3a1165ac6c2098a11816405"><div class="ttname"><a href="class_picto_1_1_d3_d_compositing_surface.html#ad13ea262a3a1165ac6c2098a11816405">Picto::D3DCompositingSurface::D3DCompositingSurface</a></div><div class="ttdeci">D3DCompositingSurface(IDirect3DDevice9 *_pD3dDevice)</div><div class="ttdoc">Creates a D3DCompositingSurface object. </div><div class="ttdef"><b>Definition:</b> <a href="_d3_d_compositing_surface_8cpp_source.html#l00014">D3DCompositingSurface.cpp:14</a></div></div>
 <div class="ttc" id="class_picto_1_1_d3_d_compositing_surface_html_a42827c980224cf6c3bd813c5efa7e7c9"><div class="ttname"><a href="class_picto_1_1_d3_d_compositing_surface.html#a42827c980224cf6c3bd813c5efa7e7c9">Picto::D3DCompositingSurface::getTypeName</a></div><div class="ttdeci">QString getTypeName()</div><div class="ttdoc">Returns the name of the compositing surface (e.g. "Direct3D") </div><div class="ttdef"><b>Definition:</b> <a href="_d3_d_compositing_surface_8cpp_source.html#l00139">D3DCompositingSurface.cpp:139</a></div></div>

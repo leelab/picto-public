@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_text_edit_mode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TextEditMode Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -138,6 +140,38 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_mode.html#a8aa3f4ab2efbcb2ff6988aa7befe4af0">drawMessage</a> (int durationSecs, QString line1, QString line2)</td></tr>
 <tr class="memdesc:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a brief temporary message to the display.  <a href="#a8aa3f4ab2efbcb2ff6988aa7befe4af0">More...</a><br /></td></tr>
 <tr class="separator:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7f8f2d3db994372a3cb69d660ca85aec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">drawDisplay</a> ()</td></tr>
+<tr class="separator:a7f8f2d3db994372a3cb69d660ca85aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a688ea738a051195400e06e71128f2c3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a688ea738a051195400e06e71128f2c3d"></a>
+QSharedPointer&lt; <a class="el" href="class_director_interface.html">DirectorInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorIf_</b></td></tr>
+<tr class="separator:a688ea738a051195400e06e71128f2c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20adcaa17c77cc34032a81a8835a026d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20adcaa17c77cc34032a81a8835a026d"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>currText_</b></td></tr>
+<tr class="separator:a20adcaa17c77cc34032a81a8835a026d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab386cfc2743572c1036f141f54af60e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab386cfc2743572c1036f141f54af60e3"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>textAtInit_</b></td></tr>
+<tr class="separator:ab386cfc2743572c1036f141f54af60e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8acb027ddb14d9c755cf245a70a175d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8acb027ddb14d9c755cf245a70a175d0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currTextChar_</b></td></tr>
+<tr class="separator:a8acb027ddb14d9c755cf245a70a175d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008721ded0dc96762323c0180dca44e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a008721ded0dc96762323c0180dca44e5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxChars_</b></td></tr>
+<tr class="separator:a008721ded0dc96762323c0180dca44e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a917c84b4a5cb97c1656d4cb02d15c09a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a917c84b4a5cb97c1656d4cb02d15c09a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>valName_</b></td></tr>
+<tr class="separator:a917c84b4a5cb97c1656d4cb02d15c09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9b3e98c44be4760b3bd75f56566e7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b9b3e98c44be4760b3bd75f56566e7f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>slowInc_</b></td></tr>
+<tr class="separator:a6b9b3e98c44be4760b3bd75f56566e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab87d53530a19d4cee975165ceee0f7d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab87d53530a19d4cee975165ceee0f7d1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fastInc_</b></td></tr>
+<tr class="separator:ab87d53530a19d4cee975165ceee0f7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -201,6 +235,32 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a7f8f2d3db994372a3cb69d660ca85aec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TextEditMode::drawDisplay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Draws the current display including data name, data value and cursor. </p>
+
+<p>Definition at line <a class="el" href="_text_edit_mode_8cpp_source.html#l00125">125</a> of file <a class="el" href="_text_edit_mode_8cpp_source.html">TextEditMode.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3230fa49040fb5e79fadafad94f035f7"></a>
 <div class="memitem">
 <div class="memproto">

@@ -95,6 +95,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_random_double_parameter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::RandomDoubleParameter Class Reference</div>  </div>
@@ -502,6 +504,31 @@ Properties</h2></td></tr>
 <tr class="memitem:a56665a410b8ac41b4b6a983b9f39ef65"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_random_double_parameter.html#a56665a410b8ac41b4b6a983b9f39ef65">value</a></td></tr>
 <tr class="memdesc:a56665a410b8ac41b4b6a983b9f39ef65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the latest random value that was selected when <a class="el" href="class_picto_1_1_random_double_parameter.html#a8de295a1b08b19b4c413419df42fe7e9" title="Causes a new random value between the Min (>=) and Max (<) Property values to be set to the Value Pro...">randomize()</a> was called.  <a href="#a56665a410b8ac41b4b6a983b9f39ef65">More...</a><br /></td></tr>
 <tr class="separator:a56665a410b8ac41b4b6a983b9f39ef65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ab0b4b07e0bf1f55c88006138b3fdb873"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0b4b07e0bf1f55c88006138b3fdb873"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_random_double_parameter.html#ab0b4b07e0bf1f55c88006138b3fdb873">checkForPropertyChanges</a> ()</td></tr>
+<tr class="memdesc:ab0b4b07e0bf1f55c88006138b3fdb873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this object's "UseSeed" or "Seed" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values changed. If so, the seed is updated. <br /></td></tr>
+<tr class="separator:ab0b4b07e0bf1f55c88006138b3fdb873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a93afa677aff9305f54ec55c6c38ba082"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93afa677aff9305f54ec55c6c38ba082"></a>
+<a class="el" href="class_picto_1_1_m_t_rand.html">MTRand</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mtRand_</b></td></tr>
+<tr class="separator:a93afa677aff9305f54ec55c6c38ba082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a586ff8f28976de1681cb9d5e4942750d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a586ff8f28976de1681cb9d5e4942750d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>useSeed_</b></td></tr>
+<tr class="separator:a586ff8f28976de1681cb9d5e4942750d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e29074b2ad07f72a2d1089bd26755f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92e29074b2ad07f72a2d1089bd26755f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>seed_</b></td></tr>
+<tr class="separator:a92e29074b2ad07f72a2d1089bd26755f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afec1746c2c948fd8a9a7a69f6de6a37d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afec1746c2c948fd8a9a7a69f6de6a37d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>value_</b></td></tr>
+<tr class="separator:afec1746c2c948fd8a9a7a69f6de6a37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d64811c16244421f43c2a5c1170b874"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d64811c16244421f43c2a5c1170b874"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>units_</b></td></tr>
+<tr class="separator:a4d64811c16244421f43c2a5c1170b874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

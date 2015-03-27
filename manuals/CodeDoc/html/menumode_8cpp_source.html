@@ -100,11 +100,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;currSelItem_(0),</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;currTopItem_(0)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    menuItems_.append(MenuItem(RewardDurModeType,<span class="stringliteral">&quot;Set Reward Duration&quot;</span>));</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    menuItems_.append(MenuItem(FlushDurModeType,<span class="stringliteral">&quot;Set Flush Duration&quot;</span>));</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    menuItems_.append(MenuItem(RewardControllerModeType,<span class="stringliteral">&quot;Set Controller Num&quot;</span>));</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    menuItems_.append(MenuItem(ChangeNameModeType,<span class="stringliteral">&quot;Change Name&quot;</span>));</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    menuItems_.append(MenuItem(StatusModeType,<span class="stringliteral">&quot;Settings...&quot;</span>));</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    menuItems_.append(<a class="code" href="struct_menu_mode_1_1_menu_item.html">MenuItem</a>(RewardDurModeType,<span class="stringliteral">&quot;Set Reward Duration&quot;</span>));</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    menuItems_.append(<a class="code" href="struct_menu_mode_1_1_menu_item.html">MenuItem</a>(FlushDurModeType,<span class="stringliteral">&quot;Set Flush Duration&quot;</span>));</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    menuItems_.append(<a class="code" href="struct_menu_mode_1_1_menu_item.html">MenuItem</a>(RewardControllerModeType,<span class="stringliteral">&quot;Set Controller Num&quot;</span>));</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    menuItems_.append(<a class="code" href="struct_menu_mode_1_1_menu_item.html">MenuItem</a>(ChangeNameModeType,<span class="stringliteral">&quot;Change Name&quot;</span>));</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    menuItems_.append(<a class="code" href="struct_menu_mode_1_1_menu_item.html">MenuItem</a>(StatusModeType,<span class="stringliteral">&quot;Settings...&quot;</span>));</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;MenuMode::~MenuMode()</div>
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_menu_mode.html#ab022c00df508989d4687a19d397dc3f6">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_menu_mode.html#ab022c00df508989d4687a19d397dc3f6">MenuMode::initMode</a>()</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    drawMenu();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_menu_mode.html#a6d1f375a39283ab41587a599684a585c">drawMenu</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_menu_mode.html#ad4a3f4a11d3f85417e074c5b2c05e21a">   37</a></span>&#160;<a class="code" href="namespace_panel_info.html#adb8b98e092c15e831aa524d39701d565">PanelInfo::DisplayModeType</a> <a class="code" href="class_menu_mode.html#ad4a3f4a11d3f85417e074c5b2c05e21a">MenuMode::handleUserInput</a>(<a class="code" href="namespace_panel_info.html#aeeb3b627166cd15c3898f93a1a499c65">PanelInfo::InputType</a> type)</div>
@@ -142,11 +142,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">default</span>:</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_menu_mode.html#aaecee7eee391908a83e43d8bac505033">myModeType</a>();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    drawMenu();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="class_menu_mode.html#a6d1f375a39283ab41587a599684a585c">drawMenu</a>();</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">return</span> PanelInfo::MenuModeType;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> MenuMode::drawMenu()</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_menu_mode.html#a6d1f375a39283ab41587a599684a585c">   70</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_menu_mode.html#a6d1f375a39283ab41587a599684a585c">MenuMode::drawMenu</a>()</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;{</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="class_display_mode.html#a9a12e6ca60143d4e447479a36f44df5d">drawMenuRows</a>((currSelItem_-currTopItem_)%2,menuItems_[currTopItem_].text,menuItems_[currTopItem_+1].text);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
@@ -156,7 +156,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_menu_mode_html_aaecee7eee391908a83e43d8bac505033"><div class="ttname"><a href="class_menu_mode.html#aaecee7eee391908a83e43d8bac505033">MenuMode::myModeType</a></div><div class="ttdeci">virtual PanelInfo::DisplayModeType myModeType()</div><div class="ttdef"><b>Definition:</b> <a href="menumode_8h_source.html#l00026">menumode.h:26</a></div></div>
 <div class="ttc" id="class_display_mode_html_a9a12e6ca60143d4e447479a36f44df5d"><div class="ttname"><a href="class_display_mode.html#a9a12e6ca60143d4e447479a36f44df5d">DisplayMode::drawMenuRows</a></div><div class="ttdeci">void drawMenuRows(int cursorPos, QString line1, QString line2)</div><div class="ttdef"><b>Definition:</b> <a href="displaymode_8cpp_source.html#l00031">displaymode.cpp:31</a></div></div>
 <div class="ttc" id="class_menu_mode_html_ab022c00df508989d4687a19d397dc3f6"><div class="ttname"><a href="class_menu_mode.html#ab022c00df508989d4687a19d397dc3f6">MenuMode::initMode</a></div><div class="ttdeci">virtual void initMode()</div><div class="ttdef"><b>Definition:</b> <a href="menumode_8cpp_source.html#l00028">menumode.cpp:28</a></div></div>
+<div class="ttc" id="struct_menu_mode_1_1_menu_item_html"><div class="ttname"><a href="struct_menu_mode_1_1_menu_item.html">MenuMode::MenuItem</a></div><div class="ttdef"><b>Definition:</b> <a href="menumode_8h_source.html#l00033">menumode.h:33</a></div></div>
 <div class="ttc" id="class_menu_mode_html_ade6be821ba40792588697e58edfeff07"><div class="ttname"><a href="class_menu_mode.html#ade6be821ba40792588697e58edfeff07">MenuMode::MenuMode</a></div><div class="ttdeci">MenuMode()</div><div class="ttdoc">Constructs a new MenuMode object. </div><div class="ttdef"><b>Definition:</b> <a href="menumode_8cpp_source.html#l00010">menumode.cpp:10</a></div></div>
+<div class="ttc" id="class_menu_mode_html_a6d1f375a39283ab41587a599684a585c"><div class="ttname"><a href="class_menu_mode.html#a6d1f375a39283ab41587a599684a585c">MenuMode::drawMenu</a></div><div class="ttdeci">void drawMenu()</div><div class="ttdef"><b>Definition:</b> <a href="menumode_8cpp_source.html#l00070">menumode.cpp:70</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

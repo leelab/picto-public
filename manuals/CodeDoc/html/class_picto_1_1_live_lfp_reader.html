@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_live_lfp_reader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LiveLfpReader Class Reference</div>  </div>
@@ -167,6 +169,36 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_lfp_reader.html#ade90e7f616735cf415e041cd57c82c56">getTimesUntil</a> (double time)</td></tr>
 <tr class="memdesc:ade90e7f616735cf415e041cd57c82c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of lfp sample times that occured with times &gt; the current time and &lt;= the input time. <br /></td></tr>
 <tr class="separator:ade90e7f616735cf415e041cd57c82c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a1deef32d5dd0248b7733ac7861d60af9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1deef32d5dd0248b7733ac7861d60af9"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getValue</b> (int channel, double time)</td></tr>
+<tr class="separator:a1deef32d5dd0248b7733ac7861d60af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5c62f44db685db853511a45b4f8b4433"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c62f44db685db853511a45b4f8b4433"></a>
+QVector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>periods_</b></td></tr>
+<tr class="separator:a5c62f44db685db853511a45b4f8b4433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b767cd94d9bc1141e594858623f8ece"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b767cd94d9bc1141e594858623f8ece"></a>
+QVector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>amplitudes_</b></td></tr>
+<tr class="separator:a2b767cd94d9bc1141e594858623f8ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5bece2d29908a3b9069d26159a76a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a5bece2d29908a3b9069d26159a76a3"></a>
+QVector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>data_</b></td></tr>
+<tr class="separator:a6a5bece2d29908a3b9069d26159a76a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22a629c341367a1b53cb2872bba8026c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22a629c341367a1b53cb2872bba8026c"></a>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>chanIndexMap_</b></td></tr>
+<tr class="separator:a22a629c341367a1b53cb2872bba8026c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab17ee26b31f4d741a8c031dfebd15997"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab17ee26b31f4d741a8c031dfebd15997"></a>
+QVariantList&#160;</td><td class="memItemRight" valign="bottom"><b>channels_</b></td></tr>
+<tr class="separator:ab17ee26b31f4d741a8c031dfebd15997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2957fb85598f565ca5622265d044e26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2957fb85598f565ca5622265d044e26"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numChannels_</b></td></tr>
+<tr class="separator:af2957fb85598f565ca5622265d044e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad67221b04ffee8e1dd5c821ee6683292"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad67221b04ffee8e1dd5c821ee6683292"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>samplePeriod_</b></td></tr>
+<tr class="separator:ad67221b04ffee8e1dd5c821ee6683292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_lfp_reader.html" title="An base class for classes that can provide Local Field Potential data over input time ranges...">LfpReader</a> class for a live test experiment. </p>

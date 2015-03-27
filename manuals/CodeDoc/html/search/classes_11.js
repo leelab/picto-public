@@ -1,6 +1,7 @@
 var searchData=
 [
   ['saveoutputdialog',['SaveOutputDialog',['../class_save_output_dialog.html',1,'']]],
+  ['scalefactors',['scaleFactors',['../struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html',1,'Picto::DoubletSignalChannel']]],
   ['scene',['Scene',['../class_picto_1_1_scene.html',1,'Picto']]],
   ['scriptable',['Scriptable',['../class_picto_1_1_scriptable.html',1,'Picto']]],
   ['scriptablecontainer',['ScriptableContainer',['../class_picto_1_1_scriptable_container.html',1,'Picto']]],
@@ -30,6 +31,7 @@ var searchData=
   ['sessionstate',['SessionState',['../class_picto_1_1_session_state.html',1,'Picto']]],
   ['sessionversioninterfacer',['SessionVersionInterfacer',['../class_picto_1_1_session_version_interfacer.html',1,'Picto']]],
   ['shapeshiftergraphic',['ShapeShifterGraphic',['../class_picto_1_1_shape_shifter_graphic.html',1,'Picto']]],
+  ['sigdata',['SigData',['../struct_picto_1_1_file_session_loader_1_1_sig_data.html',1,'Picto::FileSessionLoader']]],
   ['signalchannel',['SignalChannel',['../class_picto_1_1_signal_channel.html',1,'Picto']]],
   ['signalchannelinfo',['SignalChannelInfo',['../class_picto_1_1_signal_channel_info.html',1,'Picto']]],
   ['signalreader',['SignalReader',['../class_picto_1_1_signal_reader.html',1,'Picto']]],
@@ -44,6 +46,8 @@ var searchData=
   ['slaveeventqueue',['SlaveEventQueue',['../class_picto_1_1_slave_event_queue.html',1,'Picto']]],
   ['slaveexperimentdriver',['SlaveExperimentDriver',['../class_picto_1_1_slave_experiment_driver.html',1,'Picto']]],
   ['speedwidget',['SpeedWidget',['../class_speed_widget.html',1,'']]],
+  ['spikedata',['SpikeData',['../struct_picto_1_1_live_spike_reader_1_1_spike_data.html',1,'Picto::LiveSpikeReader']]],
+  ['spikedetails',['SpikeDetails',['../struct_tdt_plugin_1_1_spike_details.html',1,'TdtPlugin']]],
   ['spikereader',['SpikeReader',['../class_picto_1_1_spike_reader.html',1,'Picto']]],
   ['spikestate',['SpikeState',['../class_picto_1_1_spike_state.html',1,'Picto']]],
   ['startbaritem',['StartBarItem',['../class_start_bar_item.html',1,'']]],
@@ -64,6 +68,7 @@ var searchData=
   ['stopwatchcontroller',['StopwatchController',['../class_picto_1_1_stopwatch_controller.html',1,'Picto']]],
   ['storedsessiondata',['StoredSessionData',['../class_stored_session_data.html',1,'']]],
   ['stringvariable',['StringVariable',['../class_picto_1_1_string_variable.html',1,'Picto']]],
+  ['sviassetnode',['SVIAssetNode',['../struct_picto_1_1_session_version_interfacer_1_1_s_v_i_asset_node.html',1,'Picto::SessionVersionInterfacer']]],
   ['switchelement',['SwitchElement',['../class_picto_1_1_switch_element.html',1,'Picto']]],
   ['syntaxerrorbox',['SyntaxErrorBox',['../class_syntax_error_box.html',1,'']]],
   ['systemservice',['SystemService',['../class_system_service.html',1,'']]]

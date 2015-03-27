@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_playback_state_updater-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PlaybackStateUpdater Class Reference</div>  </div>
@@ -281,6 +284,86 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#ae2544385f15ca6b775bbd0cbb9289156">enableLfp</a> (bool enable)</td></tr>
 <tr class="memdesc:ae2544385f15ca6b775bbd0cbb9289156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disables LFP loading. When LFP loading is enabled, load times are significantly longer. <br /></td></tr>
 <tr class="separator:ae2544385f15ca6b775bbd0cbb9289156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a6585b847a1f2b24b8c91557df963651e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6585b847a1f2b24b8c91557df963651e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a6585b847a1f2b24b8c91557df963651e">reachedEnd</a> ()</td></tr>
+<tr class="memdesc:a6585b847a1f2b24b8c91557df963651e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_session_player.html" title="Controls the timing and ordering of played back events during Picto Session playback. ">SessionPlayer</a> indicates that a Run is over. Stops playback and emits the <a class="el" href="class_picto_1_1_playback_state_updater.html#af06ac849db666c605e1706960b12cd58" title="Emitted when playback ends for the current run. ">finishedPlayback()</a> signal. <br /></td></tr>
+<tr class="separator:a6585b847a1f2b24b8c91557df963651e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a56e4a1070a723759509a3f34dca44dc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a56e4a1070a723759509a3f34dca44dc1">enableRendering</a> (bool en)</td></tr>
+<tr class="memdesc:a56e4a1070a723759509a3f34dca44dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input.  <a href="#a56e4a1070a723759509a3f34dca44dc1">More...</a><br /></td></tr>
+<tr class="separator:a56e4a1070a723759509a3f34dca44dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732030574bda7ebfdf2658214c91485e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e">suspendPlayback</a> ()</td></tr>
+<tr class="memdesc:a732030574bda7ebfdf2658214c91485e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used whenever playback needs to stop for some amount of time.  <a href="#a732030574bda7ebfdf2658214c91485e">More...</a><br /></td></tr>
+<tr class="separator:a732030574bda7ebfdf2658214c91485e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f3ed54c6c91f21f64b0863e4a3a05f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a8f3ed54c6c91f21f64b0863e4a3a05f3">resumePlayback</a> ()</td></tr>
+<tr class="memdesc:a8f3ed54c6c91f21f64b0863e4a3a05f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used with <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a>. When this is called, if <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a> was called, the timer used to define the times sent into <a class="el" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c" title="Steps the Session time up to the input time. SessionState signals indicating that Session events occu...">SessionPlayer::stepToTime()</a> is restarted. If we didn't do this, the timer would have kept running, and when we resumed from a pause playback would fast forward to where it would have been had pause never happened.  <a href="#a8f3ed54c6c91f21f64b0863e4a3a05f3">More...</a><br /></td></tr>
+<tr class="separator:a8f3ed54c6c91f21f64b0863e4a3a05f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4005449a649263ed2bfe496e1e29a8a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a4005449a649263ed2bfe496e1e29a8a0">playbackSuspended</a> ()</td></tr>
+<tr class="memdesc:a4005449a649263ed2bfe496e1e29a8a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if playback was suspended.  <a href="#a4005449a649263ed2bfe496e1e29a8a0">More...</a><br /></td></tr>
+<tr class="separator:a4005449a649263ed2bfe496e1e29a8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30ecab7434c725a9978407fdfd69a088"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30ecab7434c725a9978407fdfd69a088"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a30ecab7434c725a9978407fdfd69a088">getPlaybackOffsetTime</a> ()</td></tr>
+<tr class="memdesc:a30ecab7434c725a9978407fdfd69a088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time that should be used to offset the latest timerOffset_ value to generate the time used in <a class="el" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c" title="Steps the Session time up to the input time. SessionState signals indicating that Session events occu...">SessionPlayer::stepToTime()</a>. <br /></td></tr>
+<tr class="separator:a30ecab7434c725a9978407fdfd69a088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a417751bcad9fe49e3bfdeb6cde5aff33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a417751bcad9fe49e3bfdeb6cde5aff33"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_file_session_loader.html">FileSessionLoader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileSessionLoader_</b></td></tr>
+<tr class="separator:a417751bcad9fe49e3bfdeb6cde5aff33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e40df3d9c1b3e6da3c08d5abaf92cab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e40df3d9c1b3e6da3c08d5abaf92cab"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_session_state.html">SessionState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sessionState_</b></td></tr>
+<tr class="separator:a0e40df3d9c1b3e6da3c08d5abaf92cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05967c112bee2c4a848d20300639fcfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05967c112bee2c4a848d20300639fcfb"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_session_player.html">SessionPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sessionPlayer_</b></td></tr>
+<tr class="separator:a05967c112bee2c4a848d20300639fcfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd325cbc4e12233e79af3dc417018fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd325cbc4e12233e79af3dc417018fa"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+<tr class="separator:accd325cbc4e12233e79af3dc417018fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb31dfc17cac3e93d9931bdfaa960ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fb31dfc17cac3e93d9931bdfaa960ed"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>paused_</b></td></tr>
+<tr class="separator:a3fb31dfc17cac3e93d9931bdfaa960ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec800b8b0abc5e3ae3e9060f9deb3ba0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec800b8b0abc5e3ae3e9060f9deb3ba0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>waiting_</b></td></tr>
+<tr class="separator:aec800b8b0abc5e3ae3e9060f9deb3ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a131c6fb8eff10ca227612cd4c229d868"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a131c6fb8eff10ca227612cd4c229d868"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>timer_</b></td></tr>
+<tr class="separator:a131c6fb8eff10ca227612cd4c229d868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd96ad41b5dc7f9ee9f3e9a87e49b0d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd96ad41b5dc7f9ee9f3e9a87e49b0d6"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>timerOffset_</b></td></tr>
+<tr class="separator:abd96ad41b5dc7f9ee9f3e9a87e49b0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eb959bcd5b178206358c06d11922073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3eb959bcd5b178206358c06d11922073"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>playbackSpeed_</b></td></tr>
+<tr class="separator:a3eb959bcd5b178206358c06d11922073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e8cacea8b41831f958fde2bc61fd1e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e8cacea8b41831f958fde2bc61fd1e0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>firstResumeFrame_</b></td></tr>
+<tr class="separator:a6e8cacea8b41831f958fde2bc61fd1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a365ccc75c8aa1ed7977a9c90019cafe5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a365ccc75c8aa1ed7977a9c90019cafe5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>renderingEnabled_</b></td></tr>
+<tr class="separator:a365ccc75c8aa1ed7977a9c90019cafe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7d1eb2e0c8053f7e3f1fd7c468aba9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f7d1eb2e0c8053f7e3f1fd7c468aba9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>runLoaded_</b></td></tr>
+<tr class="separator:a0f7d1eb2e0c8053f7e3f1fd7c468aba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4aa3aa77454481344a03a9e7b9c2ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf4aa3aa77454481344a03a9e7b9c2ce"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>enableLfp_</b></td></tr>
+<tr class="separator:acf4aa3aa77454481344a03a9e7b9c2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09629c5739a1493064da7062add4b428"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09629c5739a1493064da7062add4b428"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currRunLength_</b></td></tr>
+<tr class="separator:a09629c5739a1493064da7062add4b428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a684bd2e4658ea5f758b9947b938d75ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a684bd2e4658ea5f758b9947b938d75ca"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currRunIndex_</b></td></tr>
+<tr class="separator:a684bd2e4658ea5f758b9947b938d75ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef0770c4611f551555ae557ca53b916"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ef0770c4611f551555ae557ca53b916"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxBehav_</b></td></tr>
+<tr class="separator:a3ef0770c4611f551555ae557ca53b916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a196861834c543c4aadd3ba36f4f28102"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a196861834c543c4aadd3ba36f4f28102"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b></td></tr>
+<tr class="separator:a196861834c543c4aadd3ba36f4f28102"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extends <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> to update the Picto <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> based on a Session file. </p>
@@ -317,6 +400,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a56e4a1070a723759509a3f34dca44dc1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlaybackStateUpdater::enableRendering </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>en</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Causes the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input. </p>
+<p>It is the responsibility of whoever connects to the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to actually implement the rendering change. </p>
+
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00281">281</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a074e3dabbfb0409cd9d85f9073183200"></a>
 <div class="memitem">
 <div class="memproto">
@@ -335,6 +447,62 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section note"><dt>Note</dt><dd>This function calls the <a class="el" href="class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c" title="Loads the run at the input index (with respect to the list returned from getRunNames()) into the Sess...">FileSessionLoader::loadRun()</a> function which takes a significant amount of time because it loads the Run's Session if it has not yet been loaded. </dd></dl>
 
 <p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00181">181</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4005449a649263ed2bfe496e1e29a8a0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PlaybackStateUpdater::playbackSuspended </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if playback was suspended. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00316">316</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f3ed54c6c91f21f64b0863e4a3a05f3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlaybackStateUpdater::resumePlayback </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Used with <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a>. When this is called, if <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a> was called, the timer used to define the times sent into <a class="el" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c" title="Steps the Session time up to the input time. SessionState signals indicating that Session events occu...">SessionPlayer::stepToTime()</a> is restarted. If we didn't do this, the timer would have kept running, and when we resumed from a pause playback would fast forward to where it would have been had pause never happened. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_playback_state_updater.html#a30ecab7434c725a9978407fdfd69a088" title="Returns the time that should be used to offset the latest timerOffset_ value to generate the time use...">PlaybackStateUpdater::getPlaybackOffsetTime()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00304">304</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -442,6 +610,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Emitted when new signal data comes in. </p>
 <p>name is the name of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> for which new data is available. subChanNames is a list of names of this SIgnalChannel's sub-channels. vals is a list of the new values. If subChanNames is x,y, vals will have data ordered like x1,y1,x2,y2,x3,y3,... </p><dl class="section note"><dt>Note</dt><dd>Unlike in the master, signal data only comes in once per frame, not once per <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> sample period. <a class="el" href="class_picto_1_1_playback_state_updater.html#a8507e9d1f7975a49b9d45632a71e306a" title="Emitted when new signal data comes in. ">signalChanged()</a> should be emitted with all of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> data since the previous frame after all <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value change and transition traversal signals have been emitted and before <a class="el" href="class_picto_1_1_playback_state_updater.html#a88f03fadc5d5f8c5b488ccffd355e9c9" title="Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the d...">framePresented()</a> is emitted. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a732030574bda7ebfdf2658214c91485e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlaybackStateUpdater::suspendPlayback </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is used whenever playback needs to stop for some amount of time. </p>
+<p>The function sets firstResumeFrame_ to true. This way, when playback resumes timimg offsets won't be calculated according to the last time that the <a class="el" href="class_picto_1_1_session_player.html" title="Controls the timing and ordering of played back events during Picto Session playback. ">SessionPlayer</a> was stepped forward but will be calculated according to the new resume time. </p>
+
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00294">294</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>

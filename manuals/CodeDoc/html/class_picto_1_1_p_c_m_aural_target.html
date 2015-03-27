@@ -91,6 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_p_c_m_aural_target-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PCMAuralTarget Class Reference</div>  </div>
@@ -126,6 +127,17 @@ virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memitem:a61b64002c04ef85b30be6a24c04b43f5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_c_m_aural_target.html#a61b64002c04ef85b30be6a24c04b43f5">present</a> ()</td></tr>
 <tr class="memdesc:a61b64002c04ef85b30be6a24c04b43f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes all of the mixed in MixingSamples to correctly play back in this <a class="el" href="class_picto_1_1_aural_target.html" title="Objects of this class handle mixing of MixingSample sounds and playing over the computer&#39;s speakers...">AuralTarget</a>. Should be called every frame.  <a href="#a61b64002c04ef85b30be6a24c04b43f5">More...</a><br /></td></tr>
 <tr class="separator:a61b64002c04ef85b30be6a24c04b43f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab1b523beaeb8d7d749299da102904b8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1b523beaeb8d7d749299da102904b8e"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_mixing_sample.html">MixingSample</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_c_m_aural_target.html#ab1b523beaeb8d7d749299da102904b8e">soundsToMix_</a></td></tr>
+<tr class="memdesc:ab1b523beaeb8d7d749299da102904b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all sounds that should be mixed into the audio channel this frame. <br /></td></tr>
+<tr class="separator:ab1b523beaeb8d7d749299da102904b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab65401c15ebb13bf30113e6c473edb46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab65401c15ebb13bf30113e6c473edb46"></a>
+QSharedPointer&lt; QHash&lt; <a class="el" href="class_picto_1_1_mixing_sample.html">MixingSample</a> *, QSharedPointer&lt; <a class="el" href="class_picto_1_1_mixing_sample.html">MixingSample</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_c_m_aural_target.html#ab65401c15ebb13bf30113e6c473edb46">activeSoundLookup_</a></td></tr>
+<tr class="memdesc:ab65401c15ebb13bf30113e6c473edb46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all sounds that were playing last frame. <br /></td></tr>
+<tr class="separator:ab65401c15ebb13bf30113e6c473edb46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A pulse code modulation (PCM) aural target. </p>
