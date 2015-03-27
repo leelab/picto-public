@@ -119,7 +119,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    rewardController_ = QSharedPointer&lt;FrontPanelRewardController&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_front_panel_reward_controller.html">FrontPanelRewardController</a>());</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    rewardTimer_ = QSharedPointer&lt;QTimer&gt;(<span class="keyword">new</span> QTimer);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    rewardTimer_-&gt;setInterval(16);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    connect(rewardTimer_.data(), SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(updateLocalRewards()));</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    connect(rewardTimer_.data(), SIGNAL(timeout()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022">updateLocalRewards</a>()));</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">//Figure out reward durations</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QSettings settings(<span class="stringliteral">&quot;Block Designs&quot;</span>, Picto::Names-&gt;frontPanelAppName);</div>
@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(<span class="stringliteral">&quot;FPPUT /IP PICTO/1.0&quot;</span>);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    QByteArray content = QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(addr).toUtf8();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">setContent</a>(content);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
@@ -164,7 +164,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">//send a command</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(<span class="stringliteral">&quot;FPGET /IP PICTO/1.0&quot;</span>);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        QString reply;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    {</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">return</span> lastIp_;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
@@ -178,7 +178,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPPUT /boxname PICTO/1.0&quot;</span>));</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    QByteArray content = QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(name).toUtf8();</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">setContent</a>(content);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
@@ -188,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="comment">//send a command</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(<span class="stringliteral">&quot;FPGET /boxname PICTO/1.0&quot;</span>);</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    QString reply;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Picto Not Found&quot;</span>;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
@@ -200,7 +200,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">//send a command</span></div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(<span class="stringliteral">&quot;FPGET /status PICTO/1.0&quot;</span>);</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    QString reply;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    {</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7">DirUnknown</a>;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    }</div>
@@ -235,7 +235,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPPUT /reward/%1/duration PICTO/1.0&quot;</span>).arg(controller));</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    QByteArray content = QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(rewardDur).toUtf8();</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">setContent</a>(content);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
@@ -247,7 +247,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="comment">//send a command</span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPGET /reward/%1/duration PICTO/1.0&quot;</span>).arg(controller));</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    QString reply;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    {</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keywordflow">return</span> rewardDurs_[controller].toInt();</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    }</div>
@@ -277,7 +277,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPPUT /reward/%1/flushduration PICTO/1.0&quot;</span>).arg(controller));</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    QByteArray content = QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(flushDur).toUtf8();</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    command.<a class="code" href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">setContent</a>(content);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
@@ -288,7 +288,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="comment">//send a command</span></div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPGET /reward/%1/flushduration PICTO/1.0&quot;</span>).arg(controller));</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    QString reply;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    {</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordflow">return</span> flushDurs_[controller].toInt();</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
@@ -315,7 +315,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="comment">//send out a start flushing command</span></div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPFLUSH /reward/%1 PICTO/1.0&quot;</span>).arg(controller));</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    {</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="comment">//Couldn&#39;t reach director.  Do reward locally.</span></div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordtype">int</span> flushDur = <a class="code" href="class_director_interface.html#a38dfc7b5d091c8ba5df16f608376f3b7">getFlushDuration</a>(controller);</div>
@@ -335,7 +335,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPGET /reward/%1/flushtimeremain PICTO/1.0&quot;</span>).arg(controller));</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    QString reply;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;reply))</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;reply))</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">return</span> reply.toInt();</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;}</div>
@@ -348,7 +348,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="comment">//tell the engine to give a reward</span></div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command(QString(<span class="stringliteral">&quot;FPREWARD /reward/%1 PICTO/1.0&quot;</span>).arg(controller));</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">if</span>(!sendCommandGetResponse(command,&amp;QString()))</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a>(command,&amp;QString()))</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    {</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="comment">//Couldn&#39;t reach director.  Do reward locally.</span></div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        <span class="keywordtype">int</span> rewDur = <a class="code" href="class_director_interface.html#a610f12491884aebd3b775b5fbbb3202c">getRewardDuration</a>(controller);</div>
@@ -376,7 +376,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keywordtype">bool</span> DirectorInterface::sendCommandGetResponse(<a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command,QString* reply)</div>
+<div class="line"><a name="l00367"></a><span class="lineno"><a class="line" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">  367</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">DirectorInterface::sendCommandGetResponse</a>(<a class="code" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command,QString* reply)</div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;{</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    Q_ASSERT(reply);</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    QTcpSocket *commSock = panelInfo-&gt;<a class="code" href="class_front_panel_info.html#a4ecaff5133fcf4fbb926ad45165203b1">getCommandSocket</a>();</div>
@@ -407,7 +407,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;}</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="keywordtype">void</span> DirectorInterface::updateLocalRewards()</div>
+<div class="line"><a name="l00406"></a><span class="lineno"><a class="line" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022">  406</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022">DirectorInterface::updateLocalRewards</a>()</div>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;{</div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    rewardController_-&gt;triggerRewards(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordflow">if</span>(rewardController_-&gt;hasPendingRewards())</div>
@@ -424,6 +424,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4a97379f09c86204e656b50770adfd6095">DirConnect</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00024">DirectorInterface.h:24</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_ae1b43ba627c6c89f9ca35084e72eb49e"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#ae1b43ba627c6c89f9ca35084e72eb49e">Picto::ProtocolCommand::setContent</a></div><div class="ttdeci">int setContent(QByteArray _content)</div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8cpp_source.html#l00107">ProtocolCommand.cpp:107</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_a9b8e81cf4f3675fef7922d3ad3e13456"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#a9b8e81cf4f3675fef7922d3ad3e13456">Picto::ProtocolCommand::getContent</a></div><div class="ttdeci">QByteArray getContent()</div><div class="ttdoc">Returns the content of this ProtocolCommand. </div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8h_source.html#l00071">ProtocolCommand.h:71</a></div></div>
+<div class="ttc" id="class_director_interface_html_a5f13f01bccd3606cb96e93614166ba9a"><div class="ttname"><a href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">DirectorInterface::sendCommandGetResponse</a></div><div class="ttdeci">bool sendCommandGetResponse(Picto::ProtocolCommand command, QString *reply)</div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00367">DirectorInterface.cpp:367</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_command_html_a5861b74db064cda1640facab025a5c4d"><div class="ttname"><a href="struct_picto_1_1_protocol_command.html#a5861b74db064cda1640facab025a5c4d">Picto::ProtocolCommand::setFieldValue</a></div><div class="ttdeci">void setFieldValue(QString field, QString value)</div><div class="ttdoc">Sets the input value to the input field type. If this field does not yet exist in the ProtocolCommand...</div><div class="ttdef"><b>Definition:</b> <a href="_protocol_command_8cpp_source.html#l00129">ProtocolCommand.cpp:129</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_response_html_a3c1ec9136c91f050ee4498ee7f7d3841"><div class="ttname"><a href="struct_picto_1_1_protocol_response.html#a3c1ec9136c91f050ee4498ee7f7d3841">Picto::ProtocolResponse::getDecodedContent</a></div><div class="ttdeci">QByteArray getDecodedContent()</div><div class="ttdoc">This class used to support zip/unzip of message content, but that support was removed. This function used to return the unizipped content of this ProtocolResponse. Now it is really just the same as getContent(). </div><div class="ttdef"><b>Definition:</b> <a href="_protocol_response_8cpp_source.html#l00192">ProtocolResponse.cpp:192</a></div></div>
 <div class="ttc" id="struct_picto_1_1_protocol_response_html_acb1dcfcf369c0c22466d2983450bc0c4"><div class="ttname"><a href="struct_picto_1_1_protocol_response.html#acb1dcfcf369c0c22466d2983450bc0c4">Picto::ProtocolResponse::getFieldValue</a></div><div class="ttdeci">QString getFieldValue(QString field)</div><div class="ttdoc">Gets the value of the input field. If the field is not found, an empty string is returned. </div><div class="ttdef"><b>Definition:</b> <a href="_protocol_response_8cpp_source.html#l00394">ProtocolResponse.cpp:394</a></div></div>
@@ -443,6 +444,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4abca78d1dd8459a77c27ddcfc268ca99a"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4abca78d1dd8459a77c27ddcfc268ca99a">DirEnding</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00025">DirectorInterface.h:25</a></div></div>
 <div class="ttc" id="class_director_interface_html_af038ceceaba3376519b2fac8f6124a3c"><div class="ttname"><a href="class_director_interface.html#af038ceceaba3376519b2fac8f6124a3c">DirectorInterface::DirectorInterface</a></div><div class="ttdeci">DirectorInterface(FrontPanelInfo *panelInfo)</div><div class="ttdoc">Constructs a new DirectorInterface object. </div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00034">DirectorInterface.cpp:34</a></div></div>
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4a0fb4288cdac7db0af2a2c0fd5fd2d8ee"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4a0fb4288cdac7db0af2a2c0fd5fd2d8ee">DirDisconnect</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00023">DirectorInterface.h:23</a></div></div>
+<div class="ttc" id="class_director_interface_html_a6c96e539b8d7dd8b40e46454cd1d4022"><div class="ttname"><a href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022">DirectorInterface::updateLocalRewards</a></div><div class="ttdeci">void updateLocalRewards()</div><div class="ttdoc">This function is called periodically by the reward timer to update the state of the local rewards and...</div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00406">DirectorInterface.cpp:406</a></div></div>
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4ada4f02c0132c0988a0b0dfbf3f4759b7">DirUnknown</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00022">DirectorInterface.h:22</a></div></div>
 <div class="ttc" id="_director_interface_8h_html_add118e59eefaadc163fc7f91ddadd7a4accbce942e6b94ead3b22cc6226c81634"><div class="ttname"><a href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4accbce942e6b94ead3b22cc6226c81634">DirStop</a></div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8h_source.html#l00026">DirectorInterface.h:26</a></div></div>
 <div class="ttc" id="class_director_interface_html_a38dfc7b5d091c8ba5df16f608376f3b7"><div class="ttname"><a href="class_director_interface.html#a38dfc7b5d091c8ba5df16f608376f3b7">DirectorInterface::getFlushDuration</a></div><div class="ttdeci">int getFlushDuration(int controller)</div><div class="ttdoc">Returns the current flush duration for the input controller number. </div><div class="ttdef"><b>Definition:</b> <a href="_director_interface_8cpp_source.html#l00239">DirectorInterface.cpp:239</a></div></div>

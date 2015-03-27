@@ -138,10 +138,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    connect(installButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doInstall()));</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    connect(removeButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doRemove()));</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    connect(startButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doStart()));</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    connect(stopButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doStop()));</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    connect(installButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">doInstall</a>()));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    connect(removeButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">doRemove</a>()));</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    connect(startButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">doStart</a>()));</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    connect(stopButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">doStop</a>()));</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QHBoxLayout *textLayout = <span class="keyword">new</span> QHBoxLayout;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    textLayout-&gt;addStretch(1);</div>
@@ -181,7 +181,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    setWindowFlags(Qt::Window);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> Dialog::doInstall()</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">   91</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">Dialog::doInstall</a>()</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;install())</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
@@ -200,7 +200,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> Dialog::doRemove()</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">  110</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">Dialog::doRemove</a>()</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;remove())</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    {</div>
@@ -219,7 +219,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keywordtype">void</span> Dialog::doStart()</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">  129</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">Dialog::doStart</a>()</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;start())</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
@@ -236,7 +236,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    }</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">void</span> Dialog::doStop()</div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">  146</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">Dialog::doStop</a>()</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;{</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;stop())</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    {</div>
@@ -252,7 +252,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                    <span class="keyword">this</span>).exec();</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    }</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;}</div>
+<div class="ttc" id="class_dialog_html_a1e47c0b42613b5d9cffb4607d54dc063"><div class="ttname"><a href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">Dialog::doRemove</a></div><div class="ttdeci">void doRemove()</div><div class="ttdoc">Removes the SystemService from the OS using SystemService::remove(). Shows an error message box if re...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00110">dialog.cpp:110</a></div></div>
 <div class="ttc" id="class_dialog_html_acfa2063f9f962d394c6a645b6e7e08d8"><div class="ttname"><a href="class_dialog.html#acfa2063f9f962d394c6a645b6e7e08d8">Dialog::Dialog</a></div><div class="ttdeci">Dialog(QWidget *parent=0)</div><div class="ttdoc">Creates a new Dialog widget. </div><div class="ttdef"><b>Definition:</b> <a href="proxyplugins_2tdtplugin_2dialog_8cpp_source.html#l00012">dialog.cpp:12</a></div></div>
+<div class="ttc" id="class_dialog_html_abe988c75851cd2fb9afbe31403d0e4ae"><div class="ttname"><a href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">Dialog::doStop</a></div><div class="ttdeci">void doStop()</div><div class="ttdoc">Stops the SystemService using SystemService::stop(). Shows an error message box if the service cannot...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00146">dialog.cpp:146</a></div></div>
+<div class="ttc" id="class_dialog_html_a7928dd6a4b684391a930164a0272ab90"><div class="ttname"><a href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">Dialog::doInstall</a></div><div class="ttdeci">void doInstall()</div><div class="ttdoc">Installs the SystemService to the OS using SystemService::install(). Shows an error message box if in...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00091">dialog.cpp:91</a></div></div>
+<div class="ttc" id="class_dialog_html_a3dfd8d3ea4b271c7a683929ef726bd7d"><div class="ttname"><a href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">Dialog::doStart</a></div><div class="ttdeci">void doStart()</div><div class="ttdoc">Starts the SystemService using SystemService::start(). Shows an error message box if the service cann...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00129">dialog.cpp:129</a></div></div>
 <div class="ttc" id="class_system_service_html"><div class="ttname"><a href="class_system_service.html">SystemService</a></div><div class="ttdoc">This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. </div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00022">systemservice.h:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -20,7 +20,7 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 
 	propGroupWidget_ = new PropertyGroupWidget(false,editorState);
 	QVBoxLayout* myLayout = new QVBoxLayout();
-	myLayout->addWidget(propGroupWidget_,Qt::AlignTop | Qt::AlignLeft);
+	myLayout->addWidget(propGroupWidget_);
 	setLayout(myLayout);
 	myLayout->setContentsMargins(QMargins(0,0,0,0));
 

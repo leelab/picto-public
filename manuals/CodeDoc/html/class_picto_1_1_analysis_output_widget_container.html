@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_analysis_output_widget_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -139,6 +141,31 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a3a88420f7582d082b105642f792ec11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output_widget_container.html#a3a88420f7582d082b105642f792ec11d">addWidget</a> (QUuid identifier, <a class="el" href="class_picto_1_1_analysis_output_widget.html">AnalysisOutputWidget</a> *widget)</td></tr>
 <tr class="memdesc:a3a88420f7582d082b105642f792ec11d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input <a class="el" href="class_picto_1_1_analysis_output_widget.html" title="The base class of widgets that display a representation of the output of an AnalysisOutput object...">AnalysisOutputWidget</a> to this <a class="el" href="class_picto_1_1_analysis_output_widget_container.html" title="A container widget that lays out all AnalysisOutputWidgets for a particular run and displays them to ...">AnalysisOutputWidgetContainer</a>'s layout.  <a href="#a3a88420f7582d082b105642f792ec11d">More...</a><br /></td></tr>
 <tr class="separator:a3a88420f7582d082b105642f792ec11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a92d7901bd7f01b7eefd066d3faa7091b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92d7901bd7f01b7eefd066d3faa7091b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output_widget_container.html#a92d7901bd7f01b7eefd066d3faa7091b">widgetIsValid</a> (QUuid widgetIdentifier)</td></tr>
+<tr class="memdesc:a92d7901bd7f01b7eefd066d3faa7091b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> that created the widget stored under the input widgetIdentifier enters scope. Enables that widget in the layout and emits <a class="el" href="class_picto_1_1_analysis_output_widget_container.html#aa6f1046005005642cb58fcbac0554194" title="Emitted when this widget first detects that it has saveable child widgets. ">detectedSaveable()</a> if it is saveable. <br /></td></tr>
+<tr class="separator:a92d7901bd7f01b7eefd066d3faa7091b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a172c8a470cd56965f9a6af47ffc55cf9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a172c8a470cd56965f9a6af47ffc55cf9"></a>
+QHash&lt; QUuid, <a class="el" href="class_picto_1_1_analysis_output_widget.html">AnalysisOutputWidget</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>widgetLookup_</b></td></tr>
+<tr class="separator:a172c8a470cd56965f9a6af47ffc55cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef54b249eb778339412f63f5f5d1a20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeef54b249eb778339412f63f5f5d1a20"></a>
+QHash&lt; QUuid, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>enabledLookup_</b></td></tr>
+<tr class="separator:aeef54b249eb778339412f63f5f5d1a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaed03c3b89cf5e50f202274f6aa0929f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaed03c3b89cf5e50f202274f6aa0929f"></a>
+QToolBox *&#160;</td><td class="memItemRight" valign="bottom"><b>tabWidget_</b></td></tr>
+<tr class="separator:aaed03c3b89cf5e50f202274f6aa0929f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8d14c21c5225a52d32fdc9223244f25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8d14c21c5225a52d32fdc9223244f25"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>fractionOutputSaved_</b></td></tr>
+<tr class="separator:aa8d14c21c5225a52d32fdc9223244f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57553689637686c67dbc7513f944758a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57553689637686c67dbc7513f944758a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>runName_</b></td></tr>
+<tr class="separator:a57553689637686c67dbc7513f944758a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

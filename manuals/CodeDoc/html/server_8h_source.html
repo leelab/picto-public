@@ -118,14 +118,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ~<a class="code" href="class_server.html">Server</a>();</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> processPendingDatagrams();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> endThread();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_server.html#a4032f7682e6ba46bbe2cbf7e1c85173e">processPendingDatagrams</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_server.html#a606fdb024c34424a87ac5169e37d985e">endThread</a>();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QHostAddress serverAddress;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    quint16 serverPort;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> incomingConnection(qintptr socketDescriptor);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62">incomingConnection</a>(qintptr socketDescriptor);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QUdpSocket *udpSocket;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QSharedPointer&lt;ServerProtocols&gt; protocols;</div>
@@ -137,6 +137,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_server_html"><div class="ttname"><a href="class_server.html">Server</a></div><div class="ttdoc">The Server object managing the actual incoming connections and ServerThread generation for the PictoS...</div><div class="ttdef"><b>Definition:</b> <a href="server_8h_source.html#l00032">server.h:32</a></div></div>
+<div class="ttc" id="class_server_html_a4032f7682e6ba46bbe2cbf7e1c85173e"><div class="ttname"><a href="class_server.html#a4032f7682e6ba46bbe2cbf7e1c85173e">Server::processPendingDatagrams</a></div><div class="ttdeci">void processPendingDatagrams()</div><div class="ttdoc">Called when new datagrams come in over the UDP socket. Checks if the datagram is a DISCOVER command...</div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00078">server.cpp:78</a></div></div>
+<div class="ttc" id="class_server_html_a3952d37b7bc53a4377f411d9ccaa9d62"><div class="ttname"><a href="class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62">Server::incomingConnection</a></div><div class="ttdeci">void incomingConnection(qintptr socketDescriptor)</div><div class="ttdoc">Called when a new connection comes in. Creates a ServerThread to handle the incoming connection...</div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00066">server.cpp:66</a></div></div>
+<div class="ttc" id="class_server_html_a606fdb024c34424a87ac5169e37d985e"><div class="ttname"><a href="class_server.html#a606fdb024c34424a87ac5169e37d985e">Server::endThread</a></div><div class="ttdeci">void endThread()</div><div class="ttdoc">Called when a server thread ends. Marks it to be deleted. </div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00127">server.cpp:127</a></div></div>
 <div class="ttc" id="class_server_html_a48f04a181844fc1610e16bd4b9e5c190"><div class="ttname"><a href="class_server.html#a48f04a181844fc1610e16bd4b9e5c190">Server::Server</a></div><div class="ttdeci">Server(quint16 port, QSharedPointer&lt; ServerProtocols &gt; _protocols, QObject *parent=0)</div><div class="ttdoc">Creates a Server object on the input port that uses the Protocol objects in the input ServerProtocols...</div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00019">server.cpp:19</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

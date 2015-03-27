@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_current_session_data-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CurrentSessionData Class Reference</div>  </div>
@@ -164,6 +165,18 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>eraseEverythi
 <tr class="memitem:aae9d3e70ed86c81f56f5c063d1a2ff2f inherit pro_methods_class_session_data"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f">endDataWrite</a> (QString *error=NULL)</td></tr>
 <tr class="memdesc:aae9d3e70ed86c81f56f5c063d1a2ff2f inherit pro_methods_class_session_data"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after a completed batch of <a class="el" href="class_session_data.html#ad05a594d8410d638f1a066bfa5a10ba3" title="Write the data of the input dataType to this object. ">writeData()</a> calls to finalize the data write. Should return false if the data write could not be finalized.  <a href="#aae9d3e70ed86c81f56f5c063d1a2ff2f">More...</a><br /></td></tr>
 <tr class="separator:aae9d3e70ed86c81f56f5c063d1a2ff2f inherit pro_methods_class_session_data"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:abfe35d872db863d985ce4cd266e71e95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfe35d872db863d985ce4cd266e71e95"></a>
+QMap&lt; int, QVariantList &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataMap_</b></td></tr>
+<tr class="separator:abfe35d872db863d985ce4cd266e71e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b81daa41163f262a5b71db4ac464ecf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b81daa41163f262a5b71db4ac464ecf"></a>
+QMap&lt; double, QMap&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataByTime_</b></td></tr>
+<tr class="separator:a8b81daa41163f262a5b71db4ac464ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d0c5ff6692174372cbb5a213cf0ddee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d0c5ff6692174372cbb5a213cf0ddee"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dataType_</b></td></tr>
+<tr class="separator:a0d0c5ff6692174372cbb5a213cf0ddee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

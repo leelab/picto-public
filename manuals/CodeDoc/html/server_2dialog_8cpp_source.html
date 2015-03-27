@@ -142,11 +142,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    connect(installButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doInstall()));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    connect(removeButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doRemove()));</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    connect(startButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doStart()));</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    connect(stopButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(doStop()));</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    connect(systemNumberBox, SIGNAL(valueChanged(<span class="keywordtype">int</span>)),<span class="keyword">this</span>,SLOT(systemNumberChanged(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    connect(installButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">doInstall</a>()));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    connect(removeButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">doRemove</a>()));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    connect(startButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">doStart</a>()));</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    connect(stopButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">doStop</a>()));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    connect(systemNumberBox, SIGNAL(valueChanged(<span class="keywordtype">int</span>)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_dialog.html#aec5cd13ada69b56e284abad1f2a48599">systemNumberChanged</a>(<span class="keywordtype">int</span>)));</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QHBoxLayout *textLayout = <span class="keyword">new</span> QHBoxLayout;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    textLayout-&gt;addStretch(1);</div>
@@ -191,7 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    setWindowFlags(Qt::Window);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">void</span> Dialog::doInstall()</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">Dialog::doInstall</a>()</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;install())</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    {</div>
@@ -211,7 +211,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">void</span> Dialog::doRemove()</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">Dialog::doRemove</a>()</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;remove())</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    {</div>
@@ -231,7 +231,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    }</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keywordtype">void</span> Dialog::doStart()</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">Dialog::doStart</a>()</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;start())</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    {</div>
@@ -249,7 +249,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    }</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keywordtype">void</span> Dialog::doStop()</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">Dialog::doStop</a>()</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">if</span>(targetService-&gt;stop())</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    {</div>
@@ -267,16 +267,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keywordtype">void</span> Dialog::systemNumberChanged(<span class="keywordtype">int</span> num)</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="class_dialog.html#aec5cd13ada69b56e284abad1f2a48599">  189</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_dialog.html#aec5cd13ada69b56e284abad1f2a48599">Dialog::systemNumberChanged</a>(<span class="keywordtype">int</span> num)</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;{</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">int</span> currSysNum = Picto::portNums-&gt;<a class="code" href="class_picto_1_1_port_nums.html#aa3208b7490eb372b8415004ddafbb473">getSystemNumber</a>();</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">if</span>(num == currSysNum)</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    Picto::portNums-&gt;<a class="code" href="class_picto_1_1_port_nums.html#a31ecb0650e5eb7cf1c1d650180ddcf9b">setSystemNumber</a>(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),num,<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;}</div>
+<div class="ttc" id="class_dialog_html_a1e47c0b42613b5d9cffb4607d54dc063"><div class="ttname"><a href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">Dialog::doRemove</a></div><div class="ttdeci">void doRemove()</div><div class="ttdoc">Removes the SystemService from the OS using SystemService::remove(). Shows an error message box if re...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00110">dialog.cpp:110</a></div></div>
 <div class="ttc" id="class_picto_1_1_port_nums_html_a31ecb0650e5eb7cf1c1d650180ddcf9b"><div class="ttname"><a href="class_picto_1_1_port_nums.html#a31ecb0650e5eb7cf1c1d650180ddcf9b">Picto::PortNums::setSystemNumber</a></div><div class="ttdeci">void setSystemNumber(QString appExePath, QStringList appExeArgs, int systemNumber, bool restart)</div><div class="ttdoc">Sets the system number for this system internally and in the QSettings saved configuration. </div><div class="ttdef"><b>Definition:</b> <a href="portdefs_8cpp_source.html#l00031">portdefs.cpp:31</a></div></div>
 <div class="ttc" id="class_dialog_html_acfa2063f9f962d394c6a645b6e7e08d8"><div class="ttname"><a href="class_dialog.html#acfa2063f9f962d394c6a645b6e7e08d8">Dialog::Dialog</a></div><div class="ttdeci">Dialog(QWidget *parent=0)</div><div class="ttdoc">Creates a new Dialog widget. </div><div class="ttdef"><b>Definition:</b> <a href="proxyplugins_2tdtplugin_2dialog_8cpp_source.html#l00012">dialog.cpp:12</a></div></div>
+<div class="ttc" id="class_dialog_html_abe988c75851cd2fb9afbe31403d0e4ae"><div class="ttname"><a href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">Dialog::doStop</a></div><div class="ttdeci">void doStop()</div><div class="ttdoc">Stops the SystemService using SystemService::stop(). Shows an error message box if the service cannot...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00146">dialog.cpp:146</a></div></div>
 <div class="ttc" id="class_picto_1_1_port_nums_html_aa3208b7490eb372b8415004ddafbb473"><div class="ttname"><a href="class_picto_1_1_port_nums.html#aa3208b7490eb372b8415004ddafbb473">Picto::PortNums::getSystemNumber</a></div><div class="ttdeci">int getSystemNumber()</div><div class="ttdoc">Returns the current system number. </div><div class="ttdef"><b>Definition:</b> <a href="portdefs_8cpp_source.html#l00052">portdefs.cpp:52</a></div></div>
+<div class="ttc" id="class_dialog_html_a7928dd6a4b684391a930164a0272ab90"><div class="ttname"><a href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">Dialog::doInstall</a></div><div class="ttdeci">void doInstall()</div><div class="ttdoc">Installs the SystemService to the OS using SystemService::install(). Shows an error message box if in...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00091">dialog.cpp:91</a></div></div>
+<div class="ttc" id="class_dialog_html_aec5cd13ada69b56e284abad1f2a48599"><div class="ttname"><a href="class_dialog.html#aec5cd13ada69b56e284abad1f2a48599">Dialog::systemNumberChanged</a></div><div class="ttdeci">void systemNumberChanged(int num)</div><div class="ttdoc">Called when the user changes the system number using the spinbox. Updates the system number using Pic...</div><div class="ttdef"><b>Definition:</b> <a href="server_2dialog_8cpp_source.html#l00189">dialog.cpp:189</a></div></div>
+<div class="ttc" id="class_dialog_html_a3dfd8d3ea4b271c7a683929ef726bd7d"><div class="ttname"><a href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">Dialog::doStart</a></div><div class="ttdeci">void doStart()</div><div class="ttdoc">Starts the SystemService using SystemService::start(). Shows an error message box if the service cann...</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2dialog_8cpp_source.html#l00129">dialog.cpp:129</a></div></div>
 <div class="ttc" id="class_system_service_html"><div class="ttname"><a href="class_system_service.html">SystemService</a></div><div class="ttdoc">This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. </div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00022">systemservice.h:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

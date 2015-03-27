@@ -87,6 +87,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_server-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Server Class Reference</div>  </div>
@@ -111,6 +115,45 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a48f04a181844fc1610e16bd4b9e5c190"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server.html#a48f04a181844fc1610e16bd4b9e5c190">Server</a> (quint16 port, QSharedPointer&lt; <a class="el" href="struct_server_protocols.html">ServerProtocols</a> &gt; _protocols, QObject *parent=0)</td></tr>
 <tr class="memdesc:a48f04a181844fc1610e16bd4b9e5c190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> object on the input port that uses the Protocol objects in the input <a class="el" href="struct_server_protocols.html" title="A simple container object used to store all fo the Protocol objects used by the Server. ">ServerProtocols</a> object to handle incoming messages.  <a href="#a48f04a181844fc1610e16bd4b9e5c190">More...</a><br /></td></tr>
 <tr class="separator:a48f04a181844fc1610e16bd4b9e5c190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a4032f7682e6ba46bbe2cbf7e1c85173e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4032f7682e6ba46bbe2cbf7e1c85173e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server.html#a4032f7682e6ba46bbe2cbf7e1c85173e">processPendingDatagrams</a> ()</td></tr>
+<tr class="memdesc:a4032f7682e6ba46bbe2cbf7e1c85173e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when new datagrams come in over the UDP socket. Checks if the datagram is a DISCOVER command. If it is, an ANNOUNCE response is sent with this <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>'s IP Address and Port. <br /></td></tr>
+<tr class="separator:a4032f7682e6ba46bbe2cbf7e1c85173e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a606fdb024c34424a87ac5169e37d985e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a606fdb024c34424a87ac5169e37d985e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server.html#a606fdb024c34424a87ac5169e37d985e">endThread</a> ()</td></tr>
+<tr class="memdesc:a606fdb024c34424a87ac5169e37d985e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a server thread ends. Marks it to be deleted. <br /></td></tr>
+<tr class="separator:a606fdb024c34424a87ac5169e37d985e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a3952d37b7bc53a4377f411d9ccaa9d62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3952d37b7bc53a4377f411d9ccaa9d62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62">incomingConnection</a> (qintptr socketDescriptor)</td></tr>
+<tr class="memdesc:a3952d37b7bc53a4377f411d9ccaa9d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a new connection comes in. Creates a <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> to handle the incoming connection. <br /></td></tr>
+<tr class="separator:a3952d37b7bc53a4377f411d9ccaa9d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5c4ea34aa4a9e44a2109fc5fbe68e510"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c4ea34aa4a9e44a2109fc5fbe68e510"></a>
+QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>serverAddress</b></td></tr>
+<tr class="separator:a5c4ea34aa4a9e44a2109fc5fbe68e510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55dbcd75e24dc4f7be02729b81c4cf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae55dbcd75e24dc4f7be02729b81c4cf4"></a>
+quint16&#160;</td><td class="memItemRight" valign="bottom"><b>serverPort</b></td></tr>
+<tr class="separator:ae55dbcd75e24dc4f7be02729b81c4cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5ff8ccc32bb2c1953159bfba32820e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f5ff8ccc32bb2c1953159bfba32820e"></a>
+QUdpSocket *&#160;</td><td class="memItemRight" valign="bottom"><b>udpSocket</b></td></tr>
+<tr class="separator:a5f5ff8ccc32bb2c1953159bfba32820e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3e1b8de00b5704bb126a2528a82ca8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3e1b8de00b5704bb126a2528a82ca8a"></a>
+QSharedPointer&lt; <a class="el" href="struct_server_protocols.html">ServerProtocols</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>protocols</b></td></tr>
+<tr class="separator:ac3e1b8de00b5704bb126a2528a82ca8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a4ee143525a52967fd09d3a54e2b81c5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ee143525a52967fd09d3a54e2b81c5d"></a>
+static const int&#160;</td><td class="memItemRight" valign="bottom"><b>maxConnections</b> = 500</td></tr>
+<tr class="separator:a4ee143525a52967fd09d3a54e2b81c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> object managing the actual incoming connections and <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> generation for the PictoServer. </p>

@@ -95,6 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_data_store-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::DataStore Class Reference</div>  </div>
@@ -464,6 +465,41 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73">designConfig_</a></td></tr>
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0bc374b8aa5f6e755313f950121e47d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bc374b8aa5f6e755313f950121e47d6"></a>
+QMap&lt; QString, QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a0bc374b8aa5f6e755313f950121e47d6">children_</a></td></tr>
+<tr class="memdesc:a0bc374b8aa5f6e755313f950121e47d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores lists of child Assets according to their XML tags. <br /></td></tr>
+<tr class="separator:a0bc374b8aa5f6e755313f950121e47d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09bd3ad979745a9c39ffa4ce63d933eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09bd3ad979745a9c39ffa4ce63d933eb"></a>
+QMap&lt; QUuid, QMap&lt; QString, QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a09bd3ad979745a9c39ffa4ce63d933eb">associateChildrenByGuid_</a></td></tr>
+<tr class="memdesc:a09bd3ad979745a9c39ffa4ce63d933eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores XML tag based lookup tables of associate Children by their Associate ID GUID. <br /></td></tr>
+<tr class="separator:a09bd3ad979745a9c39ffa4ce63d933eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aed848ac1d3ec483daff171ed095bc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aed848ac1d3ec483daff171ed095bc5"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a7aed848ac1d3ec483daff171ed095bc5">factories_</a></td></tr>
+<tr class="memdesc:a7aed848ac1d3ec483daff171ed095bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores AssetFactories based on the XML tag of the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> type that they create. <br /></td></tr>
+<tr class="separator:a7aed848ac1d3ec483daff171ed095bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a5e254a98736458687a0b9517c0d6d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a5e254a98736458687a0b9517c0d6d2"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a9a5e254a98736458687a0b9517c0d6d2">orderedPropList_</a></td></tr>
+<tr class="memdesc:a9a5e254a98736458687a0b9517c0d6d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the XML tags of child properties in the order that they should appear in the UI. <br /></td></tr>
+<tr class="separator:a9a5e254a98736458687a0b9517c0d6d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2bad1a694fe8c8c34c10c0505836e04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2bad1a694fe8c8c34c10c0505836e04"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ae2bad1a694fe8c8c34c10c0505836e04">tagText_</a></td></tr>
+<tr class="memdesc:ae2bad1a694fe8c8c34c10c0505836e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the XML tag contents which were deserialized into this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>. Only child tags without their contents are stored here. <br /></td></tr>
+<tr class="separator:ae2bad1a694fe8c8c34c10c0505836e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27c98cf61fa8b7c750abf96c03f81a11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27c98cf61fa8b7c750abf96c03f81a11"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a27c98cf61fa8b7c750abf96c03f81a11">myTagName_</a></td></tr>
+<tr class="memdesc:a27c98cf61fa8b7c750abf96c03f81a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the XML tag under which this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> was deserialized. <br /></td></tr>
+<tr class="separator:a27c98cf61fa8b7c750abf96c03f81a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513d18939293cd27fc89f6b1d2538017"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a513d18939293cd27fc89f6b1d2538017"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a513d18939293cd27fc89f6b1d2538017">needsUniqueChildNames_</a></td></tr>
+<tr class="memdesc:a513d18939293cd27fc89f6b1d2538017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores whether children of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> that want their names to be unique, must indeed have unique names for design syntax to be valid. <br /></td></tr>
+<tr class="separator:a513d18939293cd27fc89f6b1d2538017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd829fae7e10ab7f69d1e8da5b620bf2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd829fae7e10ab7f69d1e8da5b620bf2"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#afd829fae7e10ab7f69d1e8da5b620bf2">assetId_</a></td></tr>
+<tr class="memdesc:afd829fae7e10ab7f69d1e8da5b620bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID. <br /></td></tr>
+<tr class="separator:afd829fae7e10ab7f69d1e8da5b620bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -1612,7 +1648,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Emits the <a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a" title="Emitted when this Asset is marked to be deleted. ">deleted()</a> signal when called to inform interested parties that this asset needs to be removed from the design. Calls <a class="el" href="class_picto_1_1_data_store.html#a114c737439034a916c9ae50c88da27d7" title="Emits the deleted() signal when called to inform interested parties that this asset needs to be remov...">setDeleted()</a> on all children and associate children as well. </p>
-<p>Since internally we connect <a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a" title="Emitted when this Asset is marked to be deleted. ">deleted()</a> to receivedDeletedSignal(), it also causes our deleted_ flag to be set so that this object itself will know if it has been deleted_. </p><dl class="section note"><dt>Note</dt><dd>Currently in Picto, in order to delete an asset we just set it as deleted, then when the time comes for serialization, we don't serialize out any of the "delete marked" assets. Doing things this way helps us maintain a general order and structure in xml design files from one serialization to the next to aid in comparison of different versions of a design file. </dd></dl>
+<p>Since internally we connect <a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a" title="Emitted when this Asset is marked to be deleted. ">deleted()</a> to <a class="el" href="class_picto_1_1_asset.html#aeaf657a24853b7a2d9ccc37cbf750a33" title="Sets this Asset&#39;s deleted_ flag to true so that it will know that it should not be serialized out...">receivedDeletedSignal()</a>, it also causes our deleted_ flag to be set so that this object itself will know if it has been deleted_. </p><dl class="section note"><dt>Note</dt><dd>Currently in Picto, in order to delete an asset we just set it as deleted, then when the time comes for serialization, we don't serialize out any of the "delete marked" assets. Doing things this way helps us maintain a general order and structure in xml design files from one serialization to the next to aid in comparison of different versions of a design file. </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Probably for the sake of future proofing, instead of directly emitting <a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a" title="Emitted when this Asset is marked to be deleted. ">deleted()</a>, this function should call <a class="el" href="class_picto_1_1_asset.html#a18d0b5155b57ca24254afde1dfb765cd" title="Emits the deleted() signal when called to inform interested parties that this asset needs to be remov...">Asset::setDeleted()</a> and let it do it. I am not changing this now, but you probably should. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_data_store.html#a691063f5662f5db9c48deabc0f2e972b" title="Serializes this DataStore along with descendants into a descriptive XML string using the input QXmlSt...">serializeAsXml()</a> </dd></dl>
 

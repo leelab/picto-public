@@ -89,6 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_remote_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">RemoteViewer Class Reference</div>  </div>
@@ -109,6 +113,11 @@ Inheritance diagram for RemoteViewer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_remote_viewer_1_1_component_instance.html">ComponentInstance</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:ae7ff2f824481f7a8b1078b556c7322ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ae7ff2f824481f7a8b1078b556c7322ae">init</a> ()</td></tr>
@@ -150,6 +159,397 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_viewer.html#a2006f795f8a96b722d21f0cc982ae111">setDesignRoot</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt; designRoot)</td></tr>
 <tr class="memdesc:a2006f795f8a96b722d21f0cc982ae111 inherit pub_methods_class_viewer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s DesignRoot to the input. <br /></td></tr>
 <tr class="separator:a2006f795f8a96b722d21f0cc982ae111 inherit pub_methods_class_viewer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a2f8780aea9ec0408cadfb805b5e093b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f8780aea9ec0408cadfb805b5e093b2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ViewerState</b> { <br />
+&#160;&#160;<b>InitState</b>, 
+<b>WaitForConnect</b>, 
+<b>WaitForJoin</b>, 
+<b>JoiningSession</b>, 
+<br />
+&#160;&#160;<b>CreatingSession</b>, 
+<b>StoppedSession</b>, 
+<b>PausedSession</b>, 
+<b>RunningSession</b>, 
+<br />
+&#160;&#160;<b>EndingSession</b>
+<br />
+ }</td></tr>
+<tr class="separator:a2f8780aea9ec0408cadfb805b5e093b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741121e28be545a55a2df39e98bb496d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a741121e28be545a55a2df39e98bb496d"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ViewerTrigger</b> { <br />
+&#160;&#160;<b>NoViewerTrigger</b>, 
+<b>Connected</b>, 
+<b>Disconnected</b>, 
+<b>JoinSessionRequest</b>, 
+<br />
+&#160;&#160;<b>StartSessionRequest</b>, 
+<b>DisjoinSessionRequest</b>, 
+<b>SessionStarted</b>, 
+<b>SessionDidntStart</b>, 
+<br />
+&#160;&#160;<b>SessionStopped</b>, 
+<b>SessionPaused</b>, 
+<b>SessionRunning</b>, 
+<b>EndSessionRequest</b>, 
+<br />
+&#160;&#160;<b>SessionEnded</b>
+<br />
+ }</td></tr>
+<tr class="separator:a741121e28be545a55a2df39e98bb496d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cc3c563e1142fa01c7a86dd713cc65e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cc3c563e1142fa01c7a86dd713cc65e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ComponentStatus</b> { <br />
+&#160;&#160;<b>NotFound</b>, 
+<b>Idle</b>, 
+<b>Ending</b>, 
+<b>Stopped</b>, 
+<br />
+&#160;&#160;<b>Paused</b>, 
+<b>Running</b>
+<br />
+ }</td></tr>
+<tr class="separator:a8cc3c563e1142fa01c7a86dd713cc65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a175cc0bbf8ff06e6b2ed3f5574c52c11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a175cc0bbf8ff06e6b2ed3f5574c52c11"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a175cc0bbf8ff06e6b2ed3f5574c52c11">playAction</a> ()</td></tr>
+<tr class="memdesc:a175cc0bbf8ff06e6b2ed3f5574c52c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the play button is pressed. Calls <a class="el" href="class_remote_viewer.html#ad50ddf3592af8e5199da21c8fcc1ee84" title="Tells the Server to start running the currently selected Task. ">play()</a> or <a class="el" href="class_remote_viewer.html#a8e71865d82aad348eb3e723ac2b17e1b" title="Tells the Server to resume running the current Task from its paused state. ">resume()</a> depending on the current run state. <br /></td></tr>
+<tr class="separator:a175cc0bbf8ff06e6b2ed3f5574c52c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad50ddf3592af8e5199da21c8fcc1ee84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad50ddf3592af8e5199da21c8fcc1ee84"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ad50ddf3592af8e5199da21c8fcc1ee84">play</a> ()</td></tr>
+<tr class="memdesc:ad50ddf3592af8e5199da21c8fcc1ee84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> to start running the currently selected Task. <br /></td></tr>
+<tr class="separator:ad50ddf3592af8e5199da21c8fcc1ee84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e71865d82aad348eb3e723ac2b17e1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e71865d82aad348eb3e723ac2b17e1b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a8e71865d82aad348eb3e723ac2b17e1b">resume</a> ()</td></tr>
+<tr class="memdesc:a8e71865d82aad348eb3e723ac2b17e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> to resume running the current Task from its paused state. <br /></td></tr>
+<tr class="separator:a8e71865d82aad348eb3e723ac2b17e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76500864aff61b11b0202d85f43347f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76500864aff61b11b0202d85f43347f4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a76500864aff61b11b0202d85f43347f4">pause</a> ()</td></tr>
+<tr class="memdesc:a76500864aff61b11b0202d85f43347f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> to pause the current Task. <br /></td></tr>
+<tr class="separator:a76500864aff61b11b0202d85f43347f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90b890c90f8cbfb5008d755e5f64eccd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a90b890c90f8cbfb5008d755e5f64eccd">stop</a> ()</td></tr>
+<tr class="separator:a90b890c90f8cbfb5008d755e5f64eccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf9d8702171b5641e51a673ee90c586"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadf9d8702171b5641e51a673ee90c586"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#aadf9d8702171b5641e51a673ee90c586">reward</a> ()</td></tr>
+<tr class="memdesc:aadf9d8702171b5641e51a673ee90c586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests that a new reward be given to the Experiment subject with the default value. <br /></td></tr>
+<tr class="separator:aadf9d8702171b5641e51a673ee90c586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fae21c74d52ca9ea6b791e85ecadb05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fae21c74d52ca9ea6b791e85ecadb05"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a4fae21c74d52ca9ea6b791e85ecadb05">changeRewardDuration</a> ()</td></tr>
+<tr class="memdesc:a4fae21c74d52ca9ea6b791e85ecadb05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests that the default reward duration be changed to the current value in the UI spinbox. <br /></td></tr>
+<tr class="separator:a4fae21c74d52ca9ea6b791e85ecadb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64d7245d10252b02db070adc8d17f418"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64d7245d10252b02db070adc8d17f418"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a64d7245d10252b02db070adc8d17f418">modifyRunDataUnit</a> (qulonglong runId)</td></tr>
+<tr class="memdesc:a64d7245d10252b02db070adc8d17f418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests that the Session's TaskRun data for the TaskRun with the input runId be updated with the latest values from this Workstation (set in the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a>). <br /></td></tr>
+<tr class="separator:a64d7245d10252b02db070adc8d17f418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a700f3c17ebf70389a5ee01219ba50be7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a700f3c17ebf70389a5ee01219ba50be7">LoadPropValsFromFile</a> ()</td></tr>
+<tr class="memdesc:a700f3c17ebf70389a5ee01219ba50be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads runtime Property initValues from a previous Session to replace those in the current Experiment.  <a href="#a700f3c17ebf70389a5ee01219ba50be7">More...</a><br /></td></tr>
+<tr class="separator:a700f3c17ebf70389a5ee01219ba50be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4751e2037d49cfd300f8d0d6025accf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ad4751e2037d49cfd300f8d0d6025accf">parameterMessageReady</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; changedProp)</td></tr>
+<tr class="memdesc:ad4751e2037d49cfd300f8d0d6025accf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever an Experiment Parameter (runtime Property) from the left side bar is changed. Sends a request to the server to change that value in the Experiment.  <a href="#ad4751e2037d49cfd300f8d0d6025accf">More...</a><br /></td></tr>
+<tr class="separator:ad4751e2037d49cfd300f8d0d6025accf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ce5e6385e667c7a2e2f6783b6528d41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a7ce5e6385e667c7a2e2f6783b6528d41">operatorClickDetected</a> (QPoint pos)</td></tr>
+<tr class="memdesc:a7ce5e6385e667c7a2e2f6783b6528d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> that the operator just clicked on the main window, along with where the click occured.  <a href="#a7ce5e6385e667c7a2e2f6783b6528d41">More...</a><br /></td></tr>
+<tr class="separator:a7ce5e6385e667c7a2e2f6783b6528d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a49aadc03628ad9713f01bb36208092"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a49aadc03628ad9713f01bb36208092"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a1a49aadc03628ad9713f01bb36208092">zoomChanged</a> (int zoom)</td></tr>
+<tr class="memdesc:a1a49aadc03628ad9713f01bb36208092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Zoom slider value changes. Adjusts the zoom level in the <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> accordingly. <br /></td></tr>
+<tr class="separator:a1a49aadc03628ad9713f01bb36208092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02492626141174485a7f913a2907fc8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b">updateState</a> ()</td></tr>
+<tr class="memdesc:a02492626141174485a7f913a2907fc8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The remote viewer is implemented as a state machine. This is the main state machine run loop.  <a href="#a02492626141174485a7f913a2907fc8b">More...</a><br /></td></tr>
+<tr class="separator:a02492626141174485a7f913a2907fc8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9111ce64f67ead7b47688689d0faaa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#aa9111ce64f67ead7b47688689d0faaa2">updateComponentLists</a> (bool immediate=false)</td></tr>
+<tr class="memdesc:aa9111ce64f67ead7b47688689d0faaa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">updates the combo boxes containing <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> and Proxy instances.  <a href="#aa9111ce64f67ead7b47688689d0faaa2">More...</a><br /></td></tr>
+<tr class="separator:aa9111ce64f67ead7b47688689d0faaa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa9e4e4a20ae520bd86fb38630c6c7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5aa9e4e4a20ae520bd86fb38630c6c7e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a5aa9e4e4a20ae520bd86fb38630c6c7e">updateNeuralData</a> ()</td></tr>
+<tr class="memdesc:a5aa9e4e4a20ae520bd86fb38630c6c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from <a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2" title="This function is called once per state machine loop. ">runState()</a> to retrieve Neural data from the PictoServer and add it to the <a class="el" href="class_neural_data_viewer.html" title="A widget used to display live lfp and spike data in the Workstation&#39;s Remote Viewer during an experim...">NeuralDataViewer</a>. <br /></td></tr>
+<tr class="separator:a5aa9e4e4a20ae520bd86fb38630c6c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31dbba1b7b610efe6a4bdc2e48a005c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31dbba1b7b610efe6a4bdc2e48a005c3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a31dbba1b7b610efe6a4bdc2e48a005c3">taskListIndexChanged</a> (int index)</td></tr>
+<tr class="memdesc:a31dbba1b7b610efe6a4bdc2e48a005c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever a new task is selected in the Combobox. Updates the values in the left hand <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> to reflect the new Task. <br /></td></tr>
+<tr class="separator:a31dbba1b7b610efe6a4bdc2e48a005c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbdc0146d38a470328623ee0221798e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#acbdc0146d38a470328623ee0221798e6">assureChannelConnections</a> ()</td></tr>
+<tr class="memdesc:acbdc0146d38a470328623ee0221798e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assures that the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> channels are connected. Returns false, sets the status accordingly and attempts to reconnect if the connection is lost.  <a href="#acbdc0146d38a470328623ee0221798e6">More...</a><br /></td></tr>
+<tr class="separator:acbdc0146d38a470328623ee0221798e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8fbd9bbf8ddebc82789765c2e888925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#af8fbd9bbf8ddebc82789765c2e888925">currTaskChanged</a> (QString task)</td></tr>
+<tr class="memdesc:af8fbd9bbf8ddebc82789765c2e888925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the running Task on the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> changes. Updates the currently selected Task in the combobox accordingly (which results in updating the left hand <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>.  <a href="#af8fbd9bbf8ddebc82789765c2e888925">More...</a><br /></td></tr>
+<tr class="separator:af8fbd9bbf8ddebc82789765c2e888925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a4342c752696262c52def4765fa972496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a4342c752696262c52def4765fa972496">enterState</a> ()</td></tr>
+<tr class="memdesc:a4342c752696262c52def4765fa972496"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called once each time a new state is entered.  <a href="#a4342c752696262c52def4765fa972496">More...</a><br /></td></tr>
+<tr class="separator:a4342c752696262c52def4765fa972496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aede717175586803accac3876102409c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2">runState</a> ()</td></tr>
+<tr class="memdesc:aede717175586803accac3876102409c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called once per state machine loop.  <a href="#aede717175586803accac3876102409c2">More...</a><br /></td></tr>
+<tr class="separator:aede717175586803accac3876102409c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade57e4294d78c0c0c73ff5d1b4e2322e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ade57e4294d78c0c0c73ff5d1b4e2322e">endState</a> ()</td></tr>
+<tr class="memdesc:ade57e4294d78c0c0c73ff5d1b4e2322e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function is called when a state is ending and a new state will start on the next <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> call.  <a href="#ade57e4294d78c0c0c73ff5d1b4e2322e">More...</a><br /></td></tr>
+<tr class="separator:ade57e4294d78c0c0c73ff5d1b4e2322e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd4d12bc2f592a1c3b3075c78faa020"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd4d12bc2f592a1c3b3075c78faa020"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#accd4d12bc2f592a1c3b3075c78faa020">setupEngine</a> ()</td></tr>
+<tr class="memdesc:accd4d12bc2f592a1c3b3075c78faa020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the engine for running the <a class="el" href="class_remote_viewer.html" title="This allows Operators to view and control a remotely running Experimental Session. ">RemoteViewer</a> environment (PixmapVisualTarget, AudioRewardController, etc). <br /></td></tr>
+<tr class="separator:accd4d12bc2f592a1c3b3075c78faa020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed74b342683b1cac7ee9bda6f7c4296"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ed74b342683b1cac7ee9bda6f7c4296"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a6ed74b342683b1cac7ee9bda6f7c4296">setupServerChannel</a> ()</td></tr>
+<tr class="memdesc:a6ed74b342683b1cac7ee9bda6f7c4296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the CommandChannel objects that will be used to gather Session data and send commands to change the Session state. <br /></td></tr>
+<tr class="separator:a6ed74b342683b1cac7ee9bda6f7c4296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41ed2e600c83fd9e6f9eaf4ae1c5b295"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41ed2e600c83fd9e6f9eaf4ae1c5b295"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a41ed2e600c83fd9e6f9eaf4ae1c5b295">setupUi</a> ()</td></tr>
+<tr class="memdesc:a41ed2e600c83fd9e6f9eaf4ae1c5b295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the user interface portions of the GUI. <br /></td></tr>
+<tr class="separator:a41ed2e600c83fd9e6f9eaf4ae1c5b295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20bba2eb1e5c15884d4207330ad865c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac20bba2eb1e5c15884d4207330ad865c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ac20bba2eb1e5c15884d4207330ad865c">generateTaskList</a> ()</td></tr>
+<tr class="memdesc:ac20bba2eb1e5c15884d4207330ad865c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the task list combobox if it is empty. <br /></td></tr>
+<tr class="separator:ac20bba2eb1e5c15884d4207330ad865c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679cc840acba81019b138c12bbac1146"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a679cc840acba81019b138c12bbac1146"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateUI</b> ()</td></tr>
+<tr class="separator:a679cc840acba81019b138c12bbac1146"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a429ca46d3038f8666b0e8cb3b0b731"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a6a429ca46d3038f8666b0e8cb3b0b731">setStatus</a> (QString status, bool highPriority=false)</td></tr>
+<tr class="memdesc:a6a429ca46d3038f8666b0e8cb3b0b731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the status message to the passed in string.  <a href="#a6a429ca46d3038f8666b0e8cb3b0b731">More...</a><br /></td></tr>
+<tr class="separator:a6a429ca46d3038f8666b0e8cb3b0b731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c21cc3d7f6891573985cda20b864461"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c21cc3d7f6891573985cda20b864461"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a8c21cc3d7f6891573985cda20b864461">updateStatus</a> ()</td></tr>
+<tr class="memdesc:a8c21cc3d7f6891573985cda20b864461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called once per <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a>, this displays statuses at the bottom of window, giving special statuses precedence over defaults for a set length of time. <br /></td></tr>
+<tr class="separator:a8c21cc3d7f6891573985cda20b864461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f84284dca09ad94bf55c8f4be0ec0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a87f84284dca09ad94bf55c8f4be0ec0a">sendTaskCommand</a> (QString target, QString msgContent=&quot;&quot;)</td></tr>
+<tr class="separator:a87f84284dca09ad94bf55c8f4be0ec0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9131593550ed12242f63678c29eb282"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282">startSession</a> ()</td></tr>
+<tr class="memdesc:ab9131593550ed12242f63678c29eb282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new session.  <a href="#ab9131593550ed12242f63678c29eb282">More...</a><br /></td></tr>
+<tr class="separator:ab9131593550ed12242f63678c29eb282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a9f240aa21b60bcba8ce05e04e4917c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a1a9f240aa21b60bcba8ce05e04e4917c">endSession</a> ()</td></tr>
+<tr class="memdesc:a1a9f240aa21b60bcba8ce05e04e4917c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends a currently running session.  <a href="#a1a9f240aa21b60bcba8ce05e04e4917c">More...</a><br /></td></tr>
+<tr class="separator:a1a9f240aa21b60bcba8ce05e04e4917c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9797fc32fdd55f9ffa163d9791a345"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345">joinSession</a> ()</td></tr>
+<tr class="memdesc:a9f9797fc32fdd55f9ffa163d9791a345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joins to a currently running session. In order to observe or control it.  <a href="#a9f9797fc32fdd55f9ffa163d9791a345">More...</a><br /></td></tr>
+<tr class="separator:a9f9797fc32fdd55f9ffa163d9791a345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd100c2c8d7fa7346404887d31dac18d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#acd100c2c8d7fa7346404887d31dac18d">stopExperiment</a> ()</td></tr>
+<tr class="memdesc:acd100c2c8d7fa7346404887d31dac18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes the engine to stop the currently running experiment before the next time <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> runs.  <a href="#acd100c2c8d7fa7346404887d31dac18d">More...</a><br /></td></tr>
+<tr class="separator:acd100c2c8d7fa7346404887d31dac18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0009a239edbed400229fb4ee3d31688"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#ab0009a239edbed400229fb4ee3d31688">disjoinSession</a> ()</td></tr>
+<tr class="memdesc:ab0009a239edbed400229fb4ee3d31688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disjoins a currently running session.  <a href="#ab0009a239edbed400229fb4ee3d31688">More...</a><br /></td></tr>
+<tr class="separator:ab0009a239edbed400229fb4ee3d31688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676a3bf04d7dda62164a42d9b3e5d4e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a676a3bf04d7dda62164a42d9b3e5d4e9">shouldEndSession</a> ()</td></tr>
+<tr class="memdesc:a676a3bf04d7dda62164a42d9b3e5d4e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets feedback from the operator as whether they would like to end the current session.  <a href="#a676a3bf04d7dda62164a42d9b3e5d4e9">More...</a><br /></td></tr>
+<tr class="separator:a676a3bf04d7dda62164a42d9b3e5d4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50c3e1597e2d1ec1a156fbc1a1195c9f"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a50c3e1597e2d1ec1a156fbc1a1195c9f">sendCommandGetReply</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt; cmd, int nonDefaultTimeoutMs=-1)</td></tr>
+<tr class="memdesc:a50c3e1597e2d1ec1a156fbc1a1195c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes care of sending an input cmd ProtocolCommand to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> and returning the received response.  <a href="#a50c3e1597e2d1ec1a156fbc1a1195c9f">More...</a><br /></td></tr>
+<tr class="separator:a50c3e1597e2d1ec1a156fbc1a1195c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8560976d6db5531277dafbf643b7f248"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8560976d6db5531277dafbf643b7f248"></a>
+ComponentStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a8560976d6db5531277dafbf643b7f248">directorStatus</a> (QString id)</td></tr>
+<tr class="memdesc:a8560976d6db5531277dafbf643b7f248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current status (ComponentStatus) of the remote <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> with the input Component Id. <br /></td></tr>
+<tr class="separator:a8560976d6db5531277dafbf643b7f248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c233e04518e7e76f3f356205fb28c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55c233e04518e7e76f3f356205fb28c4"></a>
+ComponentStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a55c233e04518e7e76f3f356205fb28c4">proxyStatus</a> (QString id)</td></tr>
+<tr class="memdesc:a55c233e04518e7e76f3f356205fb28c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current status (ComponentStatus) of the remote Proxy with the input Component Id. <br /></td></tr>
+<tr class="separator:a55c233e04518e7e76f3f356205fb28c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5355b44534960a5ce350f6593c35c9d6"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">ComponentInstance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a5355b44534960a5ce350f6593c35c9d6">getDirectorList</a> ()</td></tr>
+<tr class="memdesc:a5355b44534960a5ce350f6593c35c9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of Directors and their properties.  <a href="#a5355b44534960a5ce350f6593c35c9d6">More...</a><br /></td></tr>
+<tr class="separator:a5355b44534960a5ce350f6593c35c9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8847b97b213b2c3e1b2e52cc92fc9782"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">ComponentInstance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#a8847b97b213b2c3e1b2e52cc92fc9782">getProxyList</a> ()</td></tr>
+<tr class="memdesc:a8847b97b213b2c3e1b2e52cc92fc9782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of Proxy components and their addresses.  <a href="#a8847b97b213b2c3e1b2e52cc92fc9782">More...</a><br /></td></tr>
+<tr class="separator:a8847b97b213b2c3e1b2e52cc92fc9782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69ec03950f5f3b8e7c5a96e9152eb03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_remote_viewer.html#af69ec03950f5f3b8e7c5a96e9152eb03">updateSessionDataPackage</a> (bool immediate=false)</td></tr>
+<tr class="memdesc:af69ec03950f5f3b8e7c5a96e9152eb03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the latest Task Run data from the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> (run names, notes, saved values, etc) and sets them to the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a>.  <a href="#af69ec03950f5f3b8e7c5a96e9152eb03">More...</a><br /></td></tr>
+<tr class="separator:af69ec03950f5f3b8e7c5a96e9152eb03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf502f55a593b80639b35d8182b822e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf502f55a593b80639b35d8182b822e6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updatePlotOptions</b> ()</td></tr>
+<tr class="separator:abf502f55a593b80639b35d8182b822e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af5212385837b0dd804adc8a251a9b42c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5212385837b0dd804adc8a251a9b42c"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>componentListsTimer_</b></td></tr>
+<tr class="separator:af5212385837b0dd804adc8a251a9b42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe13e1a4c180986dc702db0f0f31d44a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe13e1a4c180986dc702db0f0f31d44a"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>neuralDataTimer_</b></td></tr>
+<tr class="separator:abe13e1a4c180986dc702db0f0f31d44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa17339f84275a6c5449e921b753d2d32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa17339f84275a6c5449e921b753d2d32"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>sessionDataTimer_</b></td></tr>
+<tr class="separator:aa17339f84275a6c5449e921b753d2d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15ae236b21a08339de82ae8b665aa6ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15ae236b21a08339de82ae8b665aa6ae"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>rewardDurChangeTimer_</b></td></tr>
+<tr class="separator:a15ae236b21a08339de82ae8b665aa6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a639687f08cea40974cb6b222f15caa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a639687f08cea40974cb6b222f15caa"></a>
+enum RemoteViewer::ViewerState&#160;</td><td class="memItemRight" valign="bottom"><b>currState_</b></td></tr>
+<tr class="separator:a3a639687f08cea40974cb6b222f15caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4711ee7fd177609a61d6217e9317435c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4711ee7fd177609a61d6217e9317435c"></a>
+enum RemoteViewer::ViewerTrigger&#160;</td><td class="memItemRight" valign="bottom"><b>stateTrigger_</b></td></tr>
+<tr class="separator:a4711ee7fd177609a61d6217e9317435c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7df5518a76b24d3b53b8c9bce8b1d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c7df5518a76b24d3b53b8c9bce8b1d5"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>stateUpdateTimer_</b></td></tr>
+<tr class="separator:a3c7df5518a76b24d3b53b8c9bce8b1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe6d5ba64e43adb782152660b258e223"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe6d5ba64e43adb782152660b258e223"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>initState_</b></td></tr>
+<tr class="separator:abe6d5ba64e43adb782152660b258e223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cfe3c8c71b01537cd5eefdba9a418f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cfe3c8c71b01537cd5eefdba9a418f6"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>activeExperiment_</b></td></tr>
+<tr class="separator:a4cfe3c8c71b01537cd5eefdba9a418f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a779d8b3b81625cd2eaf8a02c56b27690"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a779d8b3b81625cd2eaf8a02c56b27690"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>activeDesignRoot_</b></td></tr>
+<tr class="separator:a779d8b3b81625cd2eaf8a02c56b27690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3e7ede77d599c004ab617b3999e50fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3e7ede77d599c004ab617b3999e50fd"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_rendering_target.html">Picto::RenderingTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>renderingTarget_</b></td></tr>
+<tr class="separator:af3e7ede77d599c004ab617b3999e50fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa27cc27a07f6102a5af9d418d26c90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fa27cc27a07f6102a5af9d418d26c90"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_pixmap_visual_target.html">Picto::PixmapVisualTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pixmapVisualTarget_</b></td></tr>
+<tr class="separator:a4fa27cc27a07f6102a5af9d418d26c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fafcefcb6266a9ea1c1ece45fbf321a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fafcefcb6266a9ea1c1ece45fbf321a"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:a4fafcefcb6266a9ea1c1ece45fbf321a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6281d456daf1549801b1323e11dfcca8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6281d456daf1549801b1323e11dfcca8"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_remote_state_updater.html">RemoteStateUpdater</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>updater_</b></td></tr>
+<tr class="separator:a6281d456daf1549801b1323e11dfcca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afada98c806ce283758619fbc869d310f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afada98c806ce283758619fbc869d310f"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_slave_experiment_driver.html">SlaveExperimentDriver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>slaveExpDriver_</b></td></tr>
+<tr class="separator:afada98c806ce283758619fbc869d310f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0c4cc00b78ce1570f5d93b2d08f325b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0c4cc00b78ce1570f5d93b2d08f325b"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>myDesignRoot_</b></td></tr>
+<tr class="separator:ae0c4cc00b78ce1570f5d93b2d08f325b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11b9e8d29b131340ec0f0513b8671c96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11b9e8d29b131340ec0f0513b8671c96"></a>
+QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_virtual_output_signal_controller.html">Picto::VirtualOutputSignalController</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outSigControllers_</b></td></tr>
+<tr class="separator:a11b9e8d29b131340ec0f0513b8671c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12ac0e7540d023038609763e5e46e7cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12ac0e7540d023038609763e5e46e7cc"></a>
+<a class="el" href="class_picto_1_1_visual_target_host.html">Picto::VisualTargetHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>visualTargetHost_</b></td></tr>
+<tr class="separator:a12ac0e7540d023038609763e5e46e7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d3645d1a28cda754fe6f923fb8084dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d3645d1a28cda754fe6f923fb8084dd"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:a2d3645d1a28cda754fe6f923fb8084dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2022556cac611411333d3b5fd1c49a73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2022556cac611411333d3b5fd1c49a73"></a>
+QHash&lt; QUuid, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pendingResponses_</b></td></tr>
+<tr class="separator:a2022556cac611411333d3b5fd1c49a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fc97918f3e1550bfafcd502ecdebb99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fc97918f3e1550bfafcd502ecdebb99"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>propertyFrame_</b></td></tr>
+<tr class="separator:a0fc97918f3e1550bfafcd502ecdebb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874a2acce6da8f6dce7760a4cb7d41f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a874a2acce6da8f6dce7760a4cb7d41f1"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>playAction_</b></td></tr>
+<tr class="separator:a874a2acce6da8f6dce7760a4cb7d41f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2837ec2835d0bd399a99a01a8315e626"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2837ec2835d0bd399a99a01a8315e626"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>pauseAction_</b></td></tr>
+<tr class="separator:a2837ec2835d0bd399a99a01a8315e626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad86cbaecbe5d1dee7d81cc1075e9b671"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad86cbaecbe5d1dee7d81cc1075e9b671"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>stopAction_</b></td></tr>
+<tr class="separator:ad86cbaecbe5d1dee7d81cc1075e9b671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b4def1774ea810c27d54c7f71b85d9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b4def1774ea810c27d54c7f71b85d9c"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>rewardAction_</b></td></tr>
+<tr class="separator:a7b4def1774ea810c27d54c7f71b85d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a604e372de9c2b781fbfe7721585e0bb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a604e372de9c2b781fbfe7721585e0bb4"></a>
+QSpinBox *&#160;</td><td class="memItemRight" valign="bottom"><b>rewardQuantity_</b></td></tr>
+<tr class="separator:a604e372de9c2b781fbfe7721585e0bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a567ce4aa940f156ef640e2f38a3c2076"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a567ce4aa940f156ef640e2f38a3c2076"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>connectAction_</b></td></tr>
+<tr class="separator:a567ce4aa940f156ef640e2f38a3c2076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa731148e2a5c2863679c66053f47002"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa731148e2a5c2863679c66053f47002"></a>
+QLineEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>passwordEdit_</b></td></tr>
+<tr class="separator:afa731148e2a5c2863679c66053f47002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1113a8645ce7ffae2331976a2e07b3e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1113a8645ce7ffae2331976a2e07b3e9"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>loadPropsAction_</b></td></tr>
+<tr class="separator:a1113a8645ce7ffae2331976a2e07b3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5fa197b0a186388e8816ded4ce7e025"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5fa197b0a186388e8816ded4ce7e025"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>toolBar_</b></td></tr>
+<tr class="separator:ae5fa197b0a186388e8816ded4ce7e025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46dcd4c0d66825fdf333c504325cffc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46dcd4c0d66825fdf333c504325cffc0"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>taskListBox_</b></td></tr>
+<tr class="separator:a46dcd4c0d66825fdf333c504325cffc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add6f0b9a2bb140eb731650a543489720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add6f0b9a2bb140eb731650a543489720"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>directorListBox_</b></td></tr>
+<tr class="separator:add6f0b9a2bb140eb731650a543489720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8005bd637d14dc2b88aa4954f787b1bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8005bd637d14dc2b88aa4954f787b1bd"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>proxyListBox_</b></td></tr>
+<tr class="separator:a8005bd637d14dc2b88aa4954f787b1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062a3af304b76b46d291978225e5865b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a062a3af304b76b46d291978225e5865b"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>activeExpName_</b></td></tr>
+<tr class="separator:a062a3af304b76b46d291978225e5865b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d163cca05c8d5d748668f4efdf1f763"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d163cca05c8d5d748668f4efdf1f763"></a>
+QSlider *&#160;</td><td class="memItemRight" valign="bottom"><b>zoomSlider_</b></td></tr>
+<tr class="separator:a7d163cca05c8d5d748668f4efdf1f763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871a4b86b8cde218ad2e9875663f4aac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a871a4b86b8cde218ad2e9875663f4aac"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>zoomPercentage_</b></td></tr>
+<tr class="separator:a871a4b86b8cde218ad2e9875663f4aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1145c9e8376eb025080fd94766632c63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1145c9e8376eb025080fd94766632c63"></a>
+QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>mainTabbedFrame_</b></td></tr>
+<tr class="separator:a1145c9e8376eb025080fd94766632c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7501760f480a35e0b1b9852883a1fb55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7501760f480a35e0b1b9852883a1fb55"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>statusBar_</b></td></tr>
+<tr class="separator:a7501760f480a35e0b1b9852883a1fb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729c82e984f9abf3b5a2c1f98927685a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a729c82e984f9abf3b5a2c1f98927685a"></a>
+<a class="el" href="class_neural_data_viewer.html">NeuralDataViewer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>neuralDataViewer_</b></td></tr>
+<tr class="separator:a729c82e984f9abf3b5a2c1f98927685a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2ed822852f03bffc29e84c8f94c068"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c2ed822852f03bffc29e84c8f94c068"></a>
+<a class="el" href="class_task_run_viewer.html">TaskRunViewer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>currentRunViewer_</b></td></tr>
+<tr class="separator:a5c2ed822852f03bffc29e84c8f94c068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b43c9c2faf0d765e8ee35e106a1f0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12b43c9c2faf0d765e8ee35e106a1f0c"></a>
+QVector&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputSignalsWidgets_</b></td></tr>
+<tr class="separator:a12b43c9c2faf0d765e8ee35e106a1f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac45c4fddcdbde014714b31de999dd351"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac45c4fddcdbde014714b31de999dd351"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>updateTimer_</b></td></tr>
+<tr class="separator:ac45c4fddcdbde014714b31de999dd351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae29031cd3bc052f9182f59b467f540e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae29031cd3bc052f9182f59b467f540e"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>reconnectTimer_</b></td></tr>
+<tr class="separator:aae29031cd3bc052f9182f59b467f540e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8abbb98bf0118684ecb949e81d2b9469"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8abbb98bf0118684ecb949e81d2b9469"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutTimer_</b></td></tr>
+<tr class="separator:a8abbb98bf0118684ecb949e81d2b9469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52cf7828912ea5d29b30e2437ad107d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52cf7828912ea5d29b30e2437ad107d2"></a>
+<a class="el" href="class_picto_1_1_command_channel.html">Picto::CommandChannel</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>serverChannel_</b></td></tr>
+<tr class="separator:a52cf7828912ea5d29b30e2437ad107d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad6889b2491830fbd70cce84e82c02d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad6889b2491830fbd70cce84e82c02d8"></a>
+<a class="el" href="class_picto_1_1_command_channel.html">Picto::CommandChannel</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>engineSlaveChannel_</b></td></tr>
+<tr class="separator:aad6889b2491830fbd70cce84e82c02d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3f7e756e55d3c5510c872a68605f7dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3f7e756e55d3c5510c872a68605f7dd"></a>
+<a class="el" href="class_picto_1_1_command_channel.html">Picto::CommandChannel</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>neuralSlaveChannel_</b></td></tr>
+<tr class="separator:ae3f7e756e55d3c5510c872a68605f7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762656e9d1f1f292c1a876932fe39aee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a762656e9d1f1f292c1a876932fe39aee"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAuthorized_</b></td></tr>
+<tr class="separator:a762656e9d1f1f292c1a876932fe39aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e2116d7cc31eb5cd29e957eaa4b9842"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e2116d7cc31eb5cd29e957eaa4b9842"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>sessionId_</b></td></tr>
+<tr class="separator:a2e2116d7cc31eb5cd29e957eaa4b9842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad21fdcf4170a39e1974ce6580b79a1df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad21fdcf4170a39e1974ce6580b79a1df"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>observerId_</b></td></tr>
+<tr class="separator:ad21fdcf4170a39e1974ce6580b79a1df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a628aac6c471c656cce3fc92bb4d167f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a628aac6c471c656cce3fc92bb4d167f8"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>rewardChannel_</b></td></tr>
+<tr class="separator:a628aac6c471c656cce3fc92bb4d167f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff84942c7f947c8a3bf9c96eb140b7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ff84942c7f947c8a3bf9c96eb140b7c"></a>
+QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">ComponentInstance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currDirectorList_</b></td></tr>
+<tr class="separator:a4ff84942c7f947c8a3bf9c96eb140b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a809bee4c472185d147f994044738b317"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a809bee4c472185d147f994044738b317"></a>
+QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">ComponentInstance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currProxyList_</b></td></tr>
+<tr class="separator:a809bee4c472185d147f994044738b317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af541eb2db4217d574c7a98dc510bd263"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af541eb2db4217d574c7a98dc510bd263"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_session_data_package.html">Picto::SessionDataPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currSessionDataPack_</b></td></tr>
+<tr class="separator:af541eb2db4217d574c7a98dc510bd263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a019f79e29c99ed2b8f64e08d5ebe03c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a019f79e29c99ed2b8f64e08d5ebe03c9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>channelSignalsConnected_</b></td></tr>
+<tr class="separator:a019f79e29c99ed2b8f64e08d5ebe03c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21d2c494f7ba83e7a1bd9cb248c561a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21d2c494f7ba83e7a1bd9cb248c561a6"></a>
+QWeakPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lastTask_</b></td></tr>
+<tr class="separator:a21d2c494f7ba83e7a1bd9cb248c561a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e1e9eba3723bb252cdef780b2fc343"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87e1e9eba3723bb252cdef780b2fc343"></a>
+QWeakPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lastActiveExperiment_</b></td></tr>
+<tr class="separator:a87e1e9eba3723bb252cdef780b2fc343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe9bc21c4f88a04392dee0a86b0766a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe9bc21c4f88a04392dee0a86b0766a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>updatingState_</b></td></tr>
+<tr class="separator:acfe9bc21c4f88a04392dee0a86b0766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47836b751d6644964d827087369fac16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47836b751d6644964d827087369fac16"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>specialStatus_</b></td></tr>
+<tr class="separator:a47836b751d6644964d827087369fac16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac042a905c68d81b4e964a9f85558d49b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac042a905c68d81b4e964a9f85558d49b"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>defaultStatus_</b></td></tr>
+<tr class="separator:ac042a905c68d81b4e964a9f85558d49b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dead338f074f465118d86f85709fb1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2dead338f074f465118d86f85709fb1f"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>statusTimer_</b></td></tr>
+<tr class="separator:a2dead338f074f465118d86f85709fb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a92af70be78d06c8a991b3d861be319"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a92af70be78d06c8a991b3d861be319"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>zoomChanged_</b></td></tr>
+<tr class="separator:a0a92af70be78d06c8a991b3d861be319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a8ffbd065a0f6ffc229bb2fac14f459"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a8ffbd065a0f6ffc229bb2fac14f459"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>zoomValue_</b></td></tr>
+<tr class="separator:a7a8ffbd065a0f6ffc229bb2fac14f459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f6b2b7b5cbe6062587adc99499d2796"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f6b2b7b5cbe6062587adc99499d2796"></a>
+QHash&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>adaptiveResponseDelays_</b></td></tr>
+<tr class="separator:a8f6b2b7b5cbe6062587adc99499d2796"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -224,11 +624,68 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 </div><div class="memdoc">
 
 <p>Called when the application is about to quit. Takes care of closing this window's resources. </p>
-<p>If a Session is open and stopped, this triggers an endSession() request. This also calls <a class="el" href="class_remote_viewer.html#a5a3b67136d8aaaa3a6fdbb6d9b3f519e" title="Called just before hiding the viewer. ">deinit()</a> because otherwise the Experiment could continue running even though the GUI was closed and the process would stick around until we restarted the computer or closed it from the task manager. </p>
+<p>If a Session is open and stopped, this triggers an <a class="el" href="class_remote_viewer.html#a1a9f240aa21b60bcba8ce05e04e4917c" title="Ends a currently running session. ">endSession()</a> request. This also calls <a class="el" href="class_remote_viewer.html#a5a3b67136d8aaaa3a6fdbb6d9b3f519e" title="Called just before hiding the viewer. ">deinit()</a> because otherwise the Experiment could continue running even though the GUI was closed and the process would stick around until we restarted the computer or closed it from the task manager. </p>
 
 <p>Reimplemented from <a class="el" href="class_viewer.html#a36fd548283a09aeec9a56819287bf782">Viewer</a>.</p>
 
 <p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00820">820</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acbdc0146d38a470328623ee0221798e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::assureChannelConnections </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Assures that the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> channels are connected. Returns false, sets the status accordingly and attempts to reconnect if the connection is lost. </p>
+<p>This function is called for each <a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2" title="This function is called once per state machine loop. ">runState()</a> call. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02144">2144</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af8fbd9bbf8ddebc82789765c2e888925"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::currTaskChanged </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the running Task on the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> changes. Updates the currently selected Task in the combobox accordingly (which results in updating the left hand <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>This is necessary since another Workstation might be controlling the same Session that this one is connected to. </dd></dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02180">2180</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -260,6 +717,174 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 
 </div>
 </div>
+<a class="anchor" id="ab0009a239edbed400229fb4ee3d31688"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::disjoinSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disjoins a currently running session. </p>
+<p>This is the opposite of the join function. This detaches us from a running session (but it doesn't actually end the session). </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01959">1959</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1a9f240aa21b60bcba8ce05e04e4917c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::endSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ends a currently running session. </p>
+<p>This is the opposite of <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a>. Again note that this function has no real effect on our local workstation instance. See the comments on <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a> for a more detailed explanation. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01816">1816</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade57e4294d78c0c0c73ff5d1b4e2322e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::endState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The function is called when a state is ending and a new state will start on the next <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> call. </p>
+<p>A state may have different ending actions depending on the trigger that it is ending with. This function is called after that trigger has been determined. </p><dl class="section note"><dt>Note</dt><dd>Actions on the engine by this function (ie. stop) will always be completed before the next call to <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a>. </dd></dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00446">446</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4342c752696262c52def4765fa972496"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::enterState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is called once each time a new state is entered. </p>
+<p>The function is used to update the UI such that it logically reflects the actions available in the new state. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00490">490</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5355b44534960a5ce350f6593c35c9d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">RemoteViewer::ComponentInstance</a> &gt; RemoteViewer::getDirectorList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a list of Directors and their properties. </p>
+<p>This sends out a DIRECTORLIST command, and then parses the response into a QList of ComponentInstances (really just a struct with a couple of strings). If something goes wrong, or no director instances are found, an empty list is returned. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01545">1545</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8847b97b213b2c3e1b2e52cc92fc9782"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="struct_remote_viewer_1_1_component_instance.html">RemoteViewer::ComponentInstance</a> &gt; RemoteViewer::getProxyList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a list of Proxy components and their addresses. </p>
+<p>This sends out a PROXYLIST command, and then parses the response into a QList of ComponentInstances (really just a struct with a few strings). If something goes wrong, or no Proxy instances are found, an empty list is returned. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01615">1615</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae7ff2f824481f7a8b1078b556c7322ae"></a>
 <div class="memitem">
 <div class="memproto">
@@ -285,6 +910,473 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Loads the current Experiment and starts various timers. </p>
 
 <p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00748">748</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9f9797fc32fdd55f9ffa163d9791a345"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::joinSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Joins to a currently running session. In order to observe or control it. </p>
+<p>Joining to a Session is the act of connecting this Workstation to an already running Session. This is what allows us to see the Session on the Workstation screen.</p>
+<dl class="section note"><dt>Note</dt><dd>We always keep the latest active Experiment in memory so that this function will go quickly if we rejoin to a Session that we were previously connected too. </dd></dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01865">1865</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a700f3c17ebf70389a5ee01219ba50be7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::LoadPropValsFromFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads runtime Property initValues from a previous Session to replace those in the current Experiment. </p>
+<dl class="section warning"><dt>Warning</dt><dd>We haven't tested this in a while and it may not be working. Regardless, it might be good to do this differently and allow operators to save current Property configurations and restore them later. </dd></dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01198">1198</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7ce5e6385e667c7a2e2f6783b6528d41"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::operatorClickDetected </td>
+          <td>(</td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tells the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> that the operator just clicked on the main window, along with where the click occured. </p>
+<p>This is useful for Experiments that require spatial feedback like the Eye Calibration task. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01225">1225</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad4751e2037d49cfd300f8d0d6025accf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::parameterMessageReady </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt;&#160;</td>
+          <td class="paramname"><em>changedProp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever an Experiment Parameter (runtime Property) from the left side bar is changed. Sends a request to the server to change that value in the Experiment. </p>
+<p>In practice, what happens is the value is sent to the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> which loads it into the initValue of the corresponding Property. When the Property's parent next re-enters scope, this InitValue is copied to the runtime value such that the value only goes into effect at a safe defined time. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01212">1212</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aede717175586803accac3876102409c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::runState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is called once per state machine loop. </p>
+<p>This function is used to run periodic state specific checks/logic and check for new state transitions. A state triggers a new state transition by setting stateTrigger_ to a new value. This transition will then be used to select the next state in <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00295">295</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a50c3e1597e2d1ec1a156fbc1a1195c9f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt; RemoteViewer::sendCommandGetReply </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt;&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nonDefaultTimeoutMs</em> = <code>-1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Takes care of sending an input cmd ProtocolCommand to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> and returning the received response. </p>
+<p>If the response times out, this function returns an empty pointer. If nonDefaultTimeoutMs is not set, an adaptiveTimeout is used that is adjusted based on historical timeouts and reply times. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01990">1990</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a87f84284dca09ad94bf55c8f4be0ec0a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::sendTaskCommand </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>msgContent</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sends a Task command with the given target. Returns true if execution was successful.</p>
+<p>TASK commands are responsible for most of the commands that change the Experimental state. They handle things like play, stop, pause, resume, reward, etc. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l02082">2082</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6a429ca46d3038f8666b0e8cb3b0b731"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::setStatus </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>highPriority</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the status message to the passed in string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The new status string to be displayed. </td></tr>
+    <tr><td class="paramname">highPriority</td><td>If true, the input status will override the regular default status and be displayed for a short time after which the default status will be shown again. If false, the status will be set as the new default status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01251">1251</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a676a3bf04d7dda62164a42d9b3e5d4e9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::shouldEndSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets feedback from the operator as whether they would like to end the current session. </p>
+<dl class="section note"><dt>Note</dt><dd>If the user is not authorized on the current Session, this will always return false. </dd></dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01970">1970</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab9131593550ed12242f63678c29eb282"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RemoteViewer::startSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Starts a new session. </p>
+<p>This starts a new session on the server. The act of starting a session basically ties together the various components involved (<a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>, and Proxy) and starts a new Session database file on the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. Note that the Workstation instance isn't really tied to the session. This is intentional, and makes it easy to remotely view and control running sessions from multiple Workstations. It also allows Experiments to continue even if no Workstations are watching it.</p>
+<dl class="section note"><dt>Note</dt><dd>Starting the session is really just a remote command and has no effect on the local workstation. If we want to actually watch the session, we'll then need to join the session (<a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a>).</dd></dl>
+<p>The order of function calls that would occur for a single user running an experiment will look like this: <a class="el" href="class_remote_viewer.html#ab9131593550ed12242f63678c29eb282" title="Starts a new session. ">startSession()</a> <a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a> <a class="el" href="class_remote_viewer.html#ab0009a239edbed400229fb4ee3d31688" title="Disjoins a currently running session. ">disjoinSession()</a> <a class="el" href="class_remote_viewer.html#a1a9f240aa21b60bcba8ce05e04e4917c" title="Ends a currently running session. ">endSession()</a> If a user simply wants to observe a session that someone else started, it would look like this: <a class="el" href="class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345" title="Joins to a currently running session. In order to observe or control it. ">joinSession()</a> <a class="el" href="class_remote_viewer.html#ab0009a239edbed400229fb4ee3d31688" title="Disjoins a currently running session. ">disjoinSession()</a> </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01738">1738</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a90b890c90f8cbfb5008d755e5f64eccd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Tells the server to stop running the current Task. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01158">1158</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acd100c2c8d7fa7346404887d31dac18d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::stopExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Causes the engine to stop the currently running experiment before the next time <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> runs. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01948">1948</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa9111ce64f67ead7b47688689d0faaa2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::updateComponentLists </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>immediate</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>updates the combo boxes containing <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> and Proxy instances. </p>
+<p>This function asks the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> for a current list of Director/Proxy instances, and then adds new ones to the combo box and removes old ones, as needed. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01290">1290</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af69ec03950f5f3b8e7c5a96e9152eb03"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::updateSessionDataPackage </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>immediate</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the latest Task Run data from the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> (run names, notes, saved values, etc) and sets them to the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">immediate</td><td>If true, the retrieval / set will occur immediately. If false, the function will only actually perform the retrieval/set once for every SESSION_DATA_UPDATE_PERIOD milliseconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l01672">1672</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02492626141174485a7f913a2907fc8b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RemoteViewer::updateState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The remote viewer is implemented as a state machine. This is the main state machine run loop. </p>
+<p>Each time this function is called, it checks for state change triggers. If they have occured, the state is changed, the <a class="el" href="class_remote_viewer.html#a4342c752696262c52def4765fa972496" title="This function is called once each time a new state is entered. ">enterState()</a> function is called for the new state. Every time <a class="el" href="class_remote_viewer.html#a02492626141174485a7f913a2907fc8b" title="The remote viewer is implemented as a state machine. This is the main state machine run loop...">updateState()</a> is called, <a class="el" href="class_remote_viewer.html#aede717175586803accac3876102409c2" title="This function is called once per state machine loop. ">runState()</a> is called for the state. Then if a new state change trigger is detected after that, <a class="el" href="class_remote_viewer.html#ade57e4294d78c0c0c73ff5d1b4e2322e" title="The function is called when a state is ending and a new state will start on the next updateState() ca...">endState()</a> is called for that state. </p>
+
+<p>Definition at line <a class="el" href="remoteviewer_8cpp_source.html#l00144">144</a> of file <a class="el" href="remoteviewer_8cpp_source.html">remoteviewer.cpp</a>.</p>
 
 </div>
 </div>

@@ -89,6 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_update_downloader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">UpdateDownloader Class Reference</div>  </div>
@@ -144,6 +148,121 @@ Static Public Member Functions</h2></td></tr>
 static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">UpdateDownloader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#aba23de83959a7e9aea32fd2d5bb7b72e">getInstance</a> ()</td></tr>
 <tr class="memdesc:aba23de83959a7e9aea32fd2d5bb7b72e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a singleton instance of an <a class="el" href="class_update_downloader.html" title="A singleton class used to check for and automatically update to a newer version of the Picto Applicat...">UpdateDownloader</a>. <br /></td></tr>
 <tr class="separator:aba23de83959a7e9aea32fd2d5bb7b72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a83b51a63e433bac44cf7c3bb3ecfb86e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83b51a63e433bac44cf7c3bb3ecfb86e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a83b51a63e433bac44cf7c3bb3ecfb86e">serverDiscovered</a> (QHostAddress pictoServerAddress, quint16 pictoServerPort)</td></tr>
+<tr class="memdesc:a83b51a63e433bac44cf7c3bb3ecfb86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the server is discovered with <a class="el" href="class_update_downloader.html#ace2c5d929e9802a3b72da92941058cd7" title="Use this function to set up automatic checking for updates in an application that wouldn&#39;t normally b...">autoCheckForUpdates()</a>. Connects to the server to check for updated code. <br /></td></tr>
+<tr class="separator:a83b51a63e433bac44cf7c3bb3ecfb86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf899fcaef2670c9218879e2d44b235f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf899fcaef2670c9218879e2d44b235f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#adf899fcaef2670c9218879e2d44b235f">requestServerPictoVersion</a> ()</td></tr>
+<tr class="memdesc:adf899fcaef2670c9218879e2d44b235f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests the version of Picto currently being used by the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. <br /></td></tr>
+<tr class="separator:adf899fcaef2670c9218879e2d44b235f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86f7830af54399cb529ab41125b39c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a86f7830af54399cb529ab41125b39c71">serverVersionResponseReceived</a> ()</td></tr>
+<tr class="memdesc:a86f7830af54399cb529ab41125b39c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a response is received indicating the version of Picto currently being used by the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. If the version is higher that this applications version, <a class="el" href="class_update_downloader.html#a99281f34f99bab55ac7f4f314f610d9d" title="Called when Picto Server indicated that a new version is available. Uses update() to try to update th...">newVersionAvailable()</a> is called, otherwise <a class="el" href="class_update_downloader.html#ab37de8dabf0ce63b7feba5f149837d09" title="Called when Picto Server indicated that no new version is available. Resets timer to check for a new ...">noNewVersionAvailable()</a> is called.  <a href="#a86f7830af54399cb529ab41125b39c71">More...</a><br /></td></tr>
+<tr class="separator:a86f7830af54399cb529ab41125b39c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab37de8dabf0ce63b7feba5f149837d09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#ab37de8dabf0ce63b7feba5f149837d09">noNewVersionAvailable</a> ()</td></tr>
+<tr class="memdesc:ab37de8dabf0ce63b7feba5f149837d09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> indicated that no new version is available. Resets timer to check for a new version again according to autoCheckFreq_.  <a href="#ab37de8dabf0ce63b7feba5f149837d09">More...</a><br /></td></tr>
+<tr class="separator:ab37de8dabf0ce63b7feba5f149837d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99281f34f99bab55ac7f4f314f610d9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a99281f34f99bab55ac7f4f314f610d9d">newVersionAvailable</a> ()</td></tr>
+<tr class="memdesc:a99281f34f99bab55ac7f4f314f610d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> indicated that a new version is available. Uses <a class="el" href="class_update_downloader.html#ae085db8c029b141c6a21b85c6f10e46b" title="Call this to update this application to the latest code available on the server. ">update()</a> to try to update the application.  <a href="#a99281f34f99bab55ac7f4f314f610d9d">More...</a><br /></td></tr>
+<tr class="separator:a99281f34f99bab55ac7f4f314f610d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4cd0aefb7e6c8f56889bc093d94cea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f4cd0aefb7e6c8f56889bc093d94cea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a0f4cd0aefb7e6c8f56889bc093d94cea">reattemptDiscovery</a> ()</td></tr>
+<tr class="memdesc:a0f4cd0aefb7e6c8f56889bc093d94cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_update_downloader.html#ace2c5d929e9802a3b72da92941058cd7" title="Use this function to set up automatic checking for updates in an application that wouldn&#39;t normally b...">autoCheckForUpdates()</a> unless stopAutoUpdate_ is set. <br /></td></tr>
+<tr class="separator:a0f4cd0aefb7e6c8f56889bc093d94cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6bec5c40dc7b7c1f48e16ed7277aa820"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bec5c40dc7b7c1f48e16ed7277aa820"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a6bec5c40dc7b7c1f48e16ed7277aa820">getFiles</a> ()</td></tr>
+<tr class="memdesc:a6bec5c40dc7b7c1f48e16ed7277aa820"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downloads all files from the server, unzips them and saves them with added ".new" suffixes in the application directory. <br /></td></tr>
+<tr class="separator:a6bec5c40dc7b7c1f48e16ed7277aa820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076198e9e5bb0c1180fcbdd0548ef590"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a076198e9e5bb0c1180fcbdd0548ef590">updateApps</a> ()</td></tr>
+<tr class="memdesc:a076198e9e5bb0c1180fcbdd0548ef590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes the process of updating application files and restarts the application.  <a href="#a076198e9e5bb0c1180fcbdd0548ef590">More...</a><br /></td></tr>
+<tr class="separator:a076198e9e5bb0c1180fcbdd0548ef590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3f8f6381420028625789f4ac5a3ec6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#ade3f8f6381420028625789f4ac5a3ec6">reportUnableToRemoveOldFiles</a> ()</td></tr>
+<tr class="memdesc:ade3f8f6381420028625789f4ac5a3ec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box with an error message indicating that Picto couldn't remove the old application files for the update.  <a href="#ade3f8f6381420028625789f4ac5a3ec6">More...</a><br /></td></tr>
+<tr class="separator:ade3f8f6381420028625789f4ac5a3ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab52358135bcc5023d165dd32184ae849"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#ab52358135bcc5023d165dd32184ae849">reportUnableToGetFiles</a> ()</td></tr>
+<tr class="memdesc:ab52358135bcc5023d165dd32184ae849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box with an error message indicating that Picto couldn't download the new files for the update.  <a href="#ab52358135bcc5023d165dd32184ae849">More...</a><br /></td></tr>
+<tr class="separator:ab52358135bcc5023d165dd32184ae849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3710d53a0175d63eedcc1ff96cb68105"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a3710d53a0175d63eedcc1ff96cb68105">reportUnableToCompleteUpdate</a> ()</td></tr>
+<tr class="memdesc:a3710d53a0175d63eedcc1ff96cb68105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box with an error message indicating that Picto couldn't complete the update process.  <a href="#a3710d53a0175d63eedcc1ff96cb68105">More...</a><br /></td></tr>
+<tr class="separator:a3710d53a0175d63eedcc1ff96cb68105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a888b9b2b4ac6ec516482aec68f8b44ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#a888b9b2b4ac6ec516482aec68f8b44ef">reportCorruptState</a> ()</td></tr>
+<tr class="memdesc:a888b9b2b4ac6ec516482aec68f8b44ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box with an error message indicating that Picto has entered a corrupt state. New files couldn't get properly named and then the old application files couldn't be rolled back.  <a href="#a888b9b2b4ac6ec516482aec68f8b44ef">More...</a><br /></td></tr>
+<tr class="separator:a888b9b2b4ac6ec516482aec68f8b44ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1d96989ea84181e8a7fe57d56b7f506"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#ae1d96989ea84181e8a7fe57d56b7f506">reportUnableToRestart</a> ()</td></tr>
+<tr class="memdesc:ae1d96989ea84181e8a7fe57d56b7f506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box with an error message indicating that Picto couldn't automatically restart for the update.  <a href="#ae1d96989ea84181e8a7fe57d56b7f506">More...</a><br /></td></tr>
+<tr class="separator:ae1d96989ea84181e8a7fe57d56b7f506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad74df7da6bcabd6029192d395dd25687"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_update_downloader.html#ad74df7da6bcabd6029192d395dd25687">acceptUpdate</a> ()</td></tr>
+<tr class="memdesc:ad74df7da6bcabd6029192d395dd25687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a message box requesting permission to automatically update the application.  <a href="#ad74df7da6bcabd6029192d395dd25687">More...</a><br /></td></tr>
+<tr class="separator:ad74df7da6bcabd6029192d395dd25687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7d657864d61bf15533efd7295a4408df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d657864d61bf15533efd7295a4408df"></a>
+QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>serverAddress_</b></td></tr>
+<tr class="separator:a7d657864d61bf15533efd7295a4408df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51a3eaef76b0f3337ee6e3fc5972668e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51a3eaef76b0f3337ee6e3fc5972668e"></a>
+quint16&#160;</td><td class="memItemRight" valign="bottom"><b>appUpdatePort_</b></td></tr>
+<tr class="separator:a51a3eaef76b0f3337ee6e3fc5972668e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae164608030e6e8b4a0cea456d02c37ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae164608030e6e8b4a0cea456d02c37ea"></a>
+QSharedPointer&lt; QTcpSocket &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>updateSocket_</b></td></tr>
+<tr class="separator:ae164608030e6e8b4a0cea456d02c37ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d0d9726aa001bf8f9bdcd081761e54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7d0d9726aa001bf8f9bdcd081761e54"></a>
+QSharedPointer&lt; QTcpSocket &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>updateCheckSocket_</b></td></tr>
+<tr class="separator:aa7d0d9726aa001bf8f9bdcd081761e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d0de209336d3a74b640f3321ea8833a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d0de209336d3a74b640f3321ea8833a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>updaterFileName_</b></td></tr>
+<tr class="separator:a0d0de209336d3a74b640f3321ea8833a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae50e413eed7d8d7cc613cbf6732ccf1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae50e413eed7d8d7cc613cbf6732ccf1"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>exePath_</b></td></tr>
+<tr class="separator:aae50e413eed7d8d7cc613cbf6732ccf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13692b09ccdac05d90230dbd0907c47b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13692b09ccdac05d90230dbd0907c47b"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>exeArgs_</b></td></tr>
+<tr class="separator:a13692b09ccdac05d90230dbd0907c47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace4afad66519f1bfb13f4751d401a255"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace4afad66519f1bfb13f4751d401a255"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>useWarning_</b></td></tr>
+<tr class="separator:ace4afad66519f1bfb13f4751d401a255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0832bc7535358ad02ef469bc0fbf4b91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0832bc7535358ad02ef469bc0fbf4b91"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>requireInteraction_</b></td></tr>
+<tr class="separator:a0832bc7535358ad02ef469bc0fbf4b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57580d5c46f625eb771b51a4eca4231"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af57580d5c46f625eb771b51a4eca4231"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>updating_</b></td></tr>
+<tr class="separator:af57580d5c46f625eb771b51a4eca4231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab977c6cc12403d24e1ee072e9271e957"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab977c6cc12403d24e1ee072e9271e957"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>lastAutoCheckStart_</b></td></tr>
+<tr class="separator:ab977c6cc12403d24e1ee072e9271e957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73801b8ee416490cc82bd742dbda0291"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73801b8ee416490cc82bd742dbda0291"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>reattemptDiscoveryTimer_</b></td></tr>
+<tr class="separator:a73801b8ee416490cc82bd742dbda0291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a933f01944cac3f9781784c7bf326f94c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a933f01944cac3f9781784c7bf326f94c"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>serverVersionRequestTimer_</b></td></tr>
+<tr class="separator:a933f01944cac3f9781784c7bf326f94c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af677c07435a34906577edc4418398493"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af677c07435a34906577edc4418398493"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>autoCheckFreq_</b></td></tr>
+<tr class="separator:af677c07435a34906577edc4418398493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8caf7a66c1f90c006860e8b883409bde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8caf7a66c1f90c006860e8b883409bde"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>stopAutoUpdate_</b></td></tr>
+<tr class="separator:a8caf7a66c1f90c006860e8b883409bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a891ec2a3eef928b14c4682ac491b3b63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a891ec2a3eef928b14c4682ac491b3b63"></a>
+QPointer&lt; QWidget &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rootWidgetPointer_</b></td></tr>
+<tr class="separator:a891ec2a3eef928b14c4682ac491b3b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b64d27d6ef66ea6a8f5140d9af9be7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1b64d27d6ef66ea6a8f5140d9af9be7"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_server_discoverer.html">ServerDiscoverer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>serverDiscoverer_</b></td></tr>
+<tr class="separator:ad1b64d27d6ef66ea6a8f5140d9af9be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a12fcb2c622baeefa977f76cc47ce3ef5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12fcb2c622baeefa977f76cc47ce3ef5"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>lastCommandId_</b> = 0</td></tr>
+<tr class="separator:a12fcb2c622baeefa977f76cc47ce3ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a110180f61dee67205487f38e416fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4a110180f61dee67205487f38e416fe"></a>
+static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">UpdateDownloader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>singleton_</b></td></tr>
+<tr class="separator:ac4a110180f61dee67205487f38e416fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A singleton class used to check for and automatically update to a newer version of the Picto Application. </p>
@@ -155,6 +274,34 @@ static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">Upda
 
 <p>Definition at line <a class="el" href="_update_downloader_8h_source.html#l00053">53</a> of file <a class="el" href="_update_downloader_8h_source.html">UpdateDownloader.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ad74df7da6bcabd6029192d395dd25687"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool UpdateDownloader::acceptUpdate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box requesting permission to automatically update the application. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. In that case permission is implicitely granted. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00472">472</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ace2c5d929e9802a3b72da92941058cd7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -197,6 +344,202 @@ static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">Upda
 
 </div>
 </div>
+<a class="anchor" id="a99281f34f99bab55ac7f4f314f610d9d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::newVersionAvailable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> indicated that a new version is available. Uses <a class="el" href="class_update_downloader.html#ae085db8c029b141c6a21b85c6f10e46b" title="Call this to update this application to the latest code available on the server. ">update()</a> to try to update the application. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_update_downloader.html#ace2c5d929e9802a3b72da92941058cd7" title="Use this function to set up automatic checking for updates in an application that wouldn&#39;t normally b...">autoCheckForUpdates()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00576">576</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab37de8dabf0ce63b7feba5f149837d09"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::noNewVersionAvailable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> indicated that no new version is available. Resets timer to check for a new version again according to autoCheckFreq_. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_update_downloader.html#ace2c5d929e9802a3b72da92941058cd7" title="Use this function to set up automatic checking for updates in an application that wouldn&#39;t normally b...">autoCheckForUpdates()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00561">561</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a888b9b2b4ac6ec516482aec68f8b44ef"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::reportCorruptState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box with an error message indicating that Picto has entered a corrupt state. New files couldn't get properly named and then the old application files couldn't be rolled back. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00447">447</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3710d53a0175d63eedcc1ff96cb68105"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::reportUnableToCompleteUpdate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box with an error message indicating that Picto couldn't complete the update process. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00434">434</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab52358135bcc5023d165dd32184ae849"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::reportUnableToGetFiles </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box with an error message indicating that Picto couldn't download the new files for the update. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00418">418</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade3f8f6381420028625789f4ac5a3ec6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::reportUnableToRemoveOldFiles </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box with an error message indicating that Picto couldn't remove the old application files for the update. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00403">403</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae1d96989ea84181e8a7fe57d56b7f506"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::reportUnableToRestart </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a message box with an error message indicating that Picto couldn't automatically restart for the update. </p>
+<p>The MessageBox times itself out after MESSAGEBOXDELAYSEC if requireInteraction_ is not set. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00459">459</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af8d0a5cbab8130f584e769d962fa2e66"></a>
 <div class="memitem">
 <div class="memproto">
@@ -215,6 +558,34 @@ static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">Upda
 <dl class="section note"><dt>Note</dt><dd>By default, the user interaction is disabled. </dd></dl>
 
 <p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00062">62</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86f7830af54399cb529ab41125b39c71"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UpdateDownloader::serverVersionResponseReceived </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when a response is received indicating the version of Picto currently being used by the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. If the version is higher that this applications version, <a class="el" href="class_update_downloader.html#a99281f34f99bab55ac7f4f314f610d9d" title="Called when Picto Server indicated that a new version is available. Uses update() to try to update th...">newVersionAvailable()</a> is called, otherwise <a class="el" href="class_update_downloader.html#ab37de8dabf0ce63b7feba5f149837d09" title="Called when Picto Server indicated that no new version is available. Resets timer to check for a new ...">noNewVersionAvailable()</a> is called. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_update_downloader.html#ace2c5d929e9802a3b72da92941058cd7" title="Use this function to set up automatic checking for updates in an application that wouldn&#39;t normally b...">autoCheckForUpdates()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00531">531</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
 
 </div>
 </div>
@@ -311,12 +682,41 @@ static QSharedPointer&lt; <a class="el" href="class_update_downloader.html">Upda
 </dl>
 <p>This function starts out by requesting user permission to perform the update if necessary, it then goes through the following procedure:</p><ul>
 <li>Deletes all files in the Picto directory with ".new" or ".old" suffixes. (deleteOldFiles())</li>
-<li>Downloads all files from the server, unzips them and saves them with added ".new" suffixes in the application directory (getFiles())</li>
-<li>Append ".old" suffixes to everything in the application directory that isn't ".new", removes all ".new" suffixes, starts a new instance of the application in a new process and exits the current application process. (updateApps())</li>
+<li>Downloads all files from the server, unzips them and saves them with added ".new" suffixes in the application directory (<a class="el" href="class_update_downloader.html#a6bec5c40dc7b7c1f48e16ed7277aa820" title="Downloads all files from the server, unzips them and saves them with added &quot;.new&quot; suffixes in the app...">getFiles()</a>)</li>
+<li>Append ".old" suffixes to everything in the application directory that isn't ".new", removes all ".new" suffixes, starts a new instance of the application in a new process and exits the current application process. (<a class="el" href="class_update_downloader.html#a076198e9e5bb0c1180fcbdd0548ef590" title="Finishes the process of updating application files and restarts the application. ">updateApps()</a>)</li>
 </ul>
 <p>If any of the above steps fails, an appropriate error message is displayed, and any changes that would make the current installation corrupt (ie. if the ".old" suffixes were appended to the current application files) are fixed. </p>
 
 <p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00118">118</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a076198e9e5bb0c1180fcbdd0548ef590"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool UpdateDownloader::updateApps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finishes the process of updating application files and restarts the application. </p>
+<p>/brief Updates apps Runs UpdatePicto.exe in a new process, and exits this process to rename the directory with the new executables and delete the old one, then restart the application.</p>
+<p>Appends ".old" suffixes to everything in the application directory that isn't ".new", removes all ".new" suffixes from newly downloaded application files, starts a new instance of the application in a new process and exits the current application process. </p>
+
+<p>Definition at line <a class="el" href="_update_downloader_8cpp_source.html#l00364">364</a> of file <a class="el" href="_update_downloader_8cpp_source.html">UpdateDownloader.cpp</a>.</p>
 
 </div>
 </div>

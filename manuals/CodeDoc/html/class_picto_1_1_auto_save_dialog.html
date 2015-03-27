@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_auto_save_dialog-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AutoSaveDialog Class Reference</div>  </div>
@@ -126,6 +128,60 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#ab401992e2aaca2faa0aeb6a1f9ff84cc">AutoSaveDialog</a> (QStringList files, QWidget *parent)</td></tr>
 <tr class="memdesc:ab401992e2aaca2faa0aeb6a1f9ff84cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_auto_save_dialog.html" title="A dialog that presents the option to restore automatically saved design versions to the Picto designe...">AutoSaveDialog</a> that will display the files whose paths are entered in files. <br /></td></tr>
 <tr class="separator:ab401992e2aaca2faa0aeb6a1f9ff84cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a9326c4bf5a0f9f004b626028a01cd3dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#a9326c4bf5a0f9f004b626028a01cd3dc">updateContents</a> ()</td></tr>
+<tr class="memdesc:a9326c4bf5a0f9f004b626028a01cd3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the contents of the <a class="el" href="class_picto_1_1_auto_save_dialog.html" title="A dialog that presents the option to restore automatically saved design versions to the Picto designe...">AutoSaveDialog</a> based on the latest available information.  <a href="#a9326c4bf5a0f9f004b626028a01cd3dc">More...</a><br /></td></tr>
+<tr class="separator:a9326c4bf5a0f9f004b626028a01cd3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935fc6b64912b8f9457f90d629725222"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#a935fc6b64912b8f9457f90d629725222">checkboxChanged</a> (bool checked)</td></tr>
+<tr class="memdesc:a935fc6b64912b8f9457f90d629725222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever one of the files' checkboxes is checked or unchecked.  <a href="#a935fc6b64912b8f9457f90d629725222">More...</a><br /></td></tr>
+<tr class="separator:a935fc6b64912b8f9457f90d629725222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fd545c9d46189cc4fa0a9c871a875b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72fd545c9d46189cc4fa0a9c871a875b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#a72fd545c9d46189cc4fa0a9c871a875b">deleteTriggered</a> (int buttonIndex)</td></tr>
+<tr class="memdesc:a72fd545c9d46189cc4fa0a9c871a875b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever one of the files' delete buttons is pressed. details Emits a deleteFileRequest(), removes the file from the files_ list and schedules a call to <a class="el" href="class_picto_1_1_auto_save_dialog.html#a9326c4bf5a0f9f004b626028a01cd3dc" title="Draws the contents of the AutoSaveDialog based on the latest available information. ">updateContents()</a> <br /></td></tr>
+<tr class="separator:a72fd545c9d46189cc4fa0a9c871a875b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c155f3b3ae644353feb14c04ee972d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c155f3b3ae644353feb14c04ee972d6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#a3c155f3b3ae644353feb14c04ee972d6">restoreTriggered</a> (bool)</td></tr>
+<tr class="memdesc:a3c155f3b3ae644353feb14c04ee972d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the restore button is pressed. Emits restoreFileRequest() and closes the dialog. <br /></td></tr>
+<tr class="separator:a3c155f3b3ae644353feb14c04ee972d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cb4db188a0509e2c662d13501a2d92d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cb4db188a0509e2c662d13501a2d92d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_auto_save_dialog.html#a6cb4db188a0509e2c662d13501a2d92d">ignoreTriggered</a> (bool)</td></tr>
+<tr class="memdesc:a6cb4db188a0509e2c662d13501a2d92d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the ignore button is pressed. Closes the dialog. <br /></td></tr>
+<tr class="separator:a6cb4db188a0509e2c662d13501a2d92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5057adff1b57fdc2de67bb133e77c997"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5057adff1b57fdc2de67bb133e77c997"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>instructions_</b></td></tr>
+<tr class="separator:a5057adff1b57fdc2de67bb133e77c997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b56de7e13a488d78ab280a09e41711b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b56de7e13a488d78ab280a09e41711b"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>mainWidget_</b></td></tr>
+<tr class="separator:a5b56de7e13a488d78ab280a09e41711b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9cf318a8b9a9eb4d1e559f91667e287"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9cf318a8b9a9eb4d1e559f91667e287"></a>
+QScrollArea *&#160;</td><td class="memItemRight" valign="bottom"><b>scrollArea_</b></td></tr>
+<tr class="separator:ad9cf318a8b9a9eb4d1e559f91667e287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f44ac19468f35ad7cff5d3d9a91ff5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f44ac19468f35ad7cff5d3d9a91ff5d"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>restoreButton_</b></td></tr>
+<tr class="separator:a6f44ac19468f35ad7cff5d3d9a91ff5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa99cb712b97e73ea8e14e37d8da108c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa99cb712b97e73ea8e14e37d8da108c9"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>ignoreButton_</b></td></tr>
+<tr class="separator:aa99cb712b97e73ea8e14e37d8da108c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dabc1bc2727e3ddc04370e9577fb51e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dabc1bc2727e3ddc04370e9577fb51e"></a>
+QSharedPointer&lt; QButtonGroup &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buttonGroup_</b></td></tr>
+<tr class="separator:a3dabc1bc2727e3ddc04370e9577fb51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ad04447982f0be3612c310d9027830b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ad04447982f0be3612c310d9027830b"></a>
+QSharedPointer&lt; QButtonGroup &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deleteButtonGroup_</b></td></tr>
+<tr class="separator:a2ad04447982f0be3612c310d9027830b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42dde2c6d85c55e50c7a387dadeffd4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42dde2c6d85c55e50c7a387dadeffd4a"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>files_</b></td></tr>
+<tr class="separator:a42dde2c6d85c55e50c7a387dadeffd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5e49af71a4d5e3701f2347e1df0b6e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5e49af71a4d5e3701f2347e1df0b6e5"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>filePathLookup_</b></td></tr>
+<tr class="separator:af5e49af71a4d5e3701f2347e1df0b6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9063cd085d128c3d12fde49ec9b5d993"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9063cd085d128c3d12fde49ec9b5d993"></a>
+QIcon&#160;</td><td class="memItemRight" valign="bottom"><b>deleteIcon_</b></td></tr>
+<tr class="separator:a9063cd085d128c3d12fde49ec9b5d993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A dialog that presents the option to restore automatically saved design versions to the Picto designer when starting up after a crash. </p>
@@ -135,7 +191,65 @@ Public Member Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_auto_save_dialog_8h_source.html#l00033">33</a> of file <a class="el" href="_auto_save_dialog_8h_source.html">AutoSaveDialog.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a935fc6b64912b8f9457f90d629725222"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AutoSaveDialog::checkboxChanged </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>checked</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever one of the files' checkboxes is checked or unchecked. </p>
+<p>Currently we are not doing anything in this function. </p>
+
+<p>Definition at line <a class="el" href="_auto_save_dialog_8cpp_source.html#l00095">95</a> of file <a class="el" href="_auto_save_dialog_8cpp_source.html">AutoSaveDialog.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9326c4bf5a0f9f004b626028a01cd3dc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AutoSaveDialog::updateContents </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws the contents of the <a class="el" href="class_picto_1_1_auto_save_dialog.html" title="A dialog that presents the option to restore automatically saved design versions to the Picto designe...">AutoSaveDialog</a> based on the latest available information. </p>
+<p>When a file is deleted from the widget for example, its path is removed from the list of files. <a class="el" href="class_picto_1_1_auto_save_dialog.html#a9326c4bf5a0f9f004b626028a01cd3dc" title="Draws the contents of the AutoSaveDialog based on the latest available information. ">updateContents()</a> is then called to redraw the widget without the file that was deleted. </p>
+
+<p>Definition at line <a class="el" href="_auto_save_dialog_8cpp_source.html#l00048">48</a> of file <a class="el" href="_auto_save_dialog_8cpp_source.html">AutoSaveDialog.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/Designer/<a class="el" href="_auto_save_dialog_8h_source.html">AutoSaveDialog.h</a></li>
 <li>source/common/Designer/<a class="el" href="_auto_save_dialog_8cpp_source.html">AutoSaveDialog.cpp</a></li>
 </ul>

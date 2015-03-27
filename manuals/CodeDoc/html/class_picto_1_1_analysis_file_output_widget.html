@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_analysis_file_output_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AnalysisFileOutputWidget Class Reference</div>  </div>
@@ -112,6 +115,11 @@ Inheritance diagram for Picto::AnalysisFileOutputWidget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_analysis_file_output_widget_1_1_page_def.html">PageDef</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abbad0997bb19606b8f24a887930b2690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_file_output_widget.html#abbad0997bb19606b8f24a887930b2690">AnalysisFileOutputWidget</a> (unsigned int linesPerPage, QWidget *parent=0)</td></tr>
@@ -138,6 +146,54 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ab41bc2f661ea3d7afc2fef6774019efb inherit pub_methods_class_picto_1_1_analysis_output_widget"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_output_widget.html#ab41bc2f661ea3d7afc2fef6774019efb">getName</a> ()</td></tr>
 <tr class="memdesc:ab41bc2f661ea3d7afc2fef6774019efb inherit pub_methods_class_picto_1_1_analysis_output_widget"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this widget.  <a href="#ab41bc2f661ea3d7afc2fef6774019efb">More...</a><br /></td></tr>
 <tr class="separator:ab41bc2f661ea3d7afc2fef6774019efb inherit pub_methods_class_picto_1_1_analysis_output_widget"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a058a2f39bc9957ecd2c51ffe1d39e4e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_file_output_widget.html#a058a2f39bc9957ecd2c51ffe1d39e4e1">loadCurrPage</a> ()</td></tr>
+<tr class="memdesc:a058a2f39bc9957ecd2c51ffe1d39e4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the current page of text into the widget's read-only text edit.  <a href="#a058a2f39bc9957ecd2c51ffe1d39e4e1">More...</a><br /></td></tr>
+<tr class="separator:a058a2f39bc9957ecd2c51ffe1d39e4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a421fa03e635dd11e7e4cd5ae0501a053"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_file_output_widget.html#a421fa03e635dd11e7e4cd5ae0501a053">prevPage</a> ()</td></tr>
+<tr class="memdesc:a421fa03e635dd11e7e4cd5ae0501a053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the currently displayed page backwards to the previous page.  <a href="#a421fa03e635dd11e7e4cd5ae0501a053">More...</a><br /></td></tr>
+<tr class="separator:a421fa03e635dd11e7e4cd5ae0501a053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5802ac848cffa0a2749b67ab1e35d1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_file_output_widget.html#af5802ac848cffa0a2749b67ab1e35d1d">nextPage</a> ()</td></tr>
+<tr class="memdesc:af5802ac848cffa0a2749b67ab1e35d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the currently displayed page forwards to the next page.  <a href="#af5802ac848cffa0a2749b67ab1e35d1d">More...</a><br /></td></tr>
+<tr class="separator:af5802ac848cffa0a2749b67ab1e35d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ab74771bee2d09d3acb77c79abbe33b58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_file_output_widget.html#ab74771bee2d09d3acb77c79abbe33b58">patchQtTextStreamBug</a> ()</td></tr>
+<tr class="memdesc:ab74771bee2d09d3acb77c79abbe33b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patches a QTextStream bug.  <a href="#ab74771bee2d09d3acb77c79abbe33b58">More...</a><br /></td></tr>
+<tr class="separator:ab74771bee2d09d3acb77c79abbe33b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad996e1f37111107f7018219204eb25e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad996e1f37111107f7018219204eb25e6"></a>
+QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>file_</b></td></tr>
+<tr class="separator:ad996e1f37111107f7018219204eb25e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ecb31f3ccba9c1a6a8ae0f5e283bcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77ecb31f3ccba9c1a6a8ae0f5e283bcd"></a>
+QSharedPointer&lt; QTextStream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputFileStream_</b></td></tr>
+<tr class="separator:a77ecb31f3ccba9c1a6a8ae0f5e283bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a257cc6d3d5ab77ef2f9f835abeb43e17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a257cc6d3d5ab77ef2f9f835abeb43e17"></a>
+QTextEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>textEdit_</b></td></tr>
+<tr class="separator:a257cc6d3d5ab77ef2f9f835abeb43e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95549b9eaccf2838c0c2ce7fd12bf371"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95549b9eaccf2838c0c2ce7fd12bf371"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>prev_</b></td></tr>
+<tr class="separator:a95549b9eaccf2838c0c2ce7fd12bf371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f478245f5def2d98db32c40dd4c840"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44f478245f5def2d98db32c40dd4c840"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>next_</b></td></tr>
+<tr class="separator:a44f478245f5def2d98db32c40dd4c840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d1f33e527f6de8d84210c87032c81d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43d1f33e527f6de8d84210c87032c81d"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_analysis_file_output_widget_1_1_page_def.html">PageDef</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pages_</b></td></tr>
+<tr class="separator:a43d1f33e527f6de8d84210c87032c81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4518df878e1a8f1c6edb2490695b4900"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4518df878e1a8f1c6edb2490695b4900"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currPage_</b></td></tr>
+<tr class="separator:a4518df878e1a8f1c6edb2490695b4900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae024afc64918106c66a31fa870efc2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae024afc64918106c66a31fa870efc2d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lastPage_</b></td></tr>
+<tr class="separator:aae024afc64918106c66a31fa870efc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa060121bf5613b7beb97c516509cbc36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa060121bf5613b7beb97c516509cbc36"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>linesPerPage_</b></td></tr>
+<tr class="separator:aa060121bf5613b7beb97c516509cbc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An <a class="el" href="class_picto_1_1_analysis_output_widget.html" title="The base class of widgets that display a representation of the output of an AnalysisOutput object...">AnalysisOutputWidget</a> for displaying textual file contents. </p>
@@ -180,6 +236,118 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a058a2f39bc9957ecd2c51ffe1d39e4e1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnalysisFileOutputWidget::loadCurrPage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the current page of text into the widget's read-only text edit. </p>
+<p>If new data is available in the underlying file, it will show up in the text edit. If the forward or back buttons were pressed, the widget will show the next or previous page of data if it exists. </p>
+
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00152">152</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af5802ac848cffa0a2749b67ab1e35d1d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnalysisFileOutputWidget::nextPage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves the currently displayed page forwards to the next page. </p>
+<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p><dl class="section note"><dt>Note</dt><dd>Things can slow down pretty drastically in the GUI if there are no line breaks in the file. We should probably do something about this. </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00099">99</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab74771bee2d09d3acb77c79abbe33b58"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnalysisFileOutputWidget::patchQtTextStreamBug </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Patches a QTextStream bug. </p>
+<p>There is some kind of Qt bug that makes the text stream stop functioning intermittently, possibly due to the text pointer reaching the end of the file stream. In these cases, pos() returns -1. To fix the issue whenever this occurs, we recreate the QTextStream from scratch. </p>
+
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00141">141</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a421fa03e635dd11e7e4cd5ae0501a053"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnalysisFileOutputWidget::prevPage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves the currently displayed page backwards to the previous page. </p>
+<p>Pages are defined by numbers of lines (linesPerPage input into the constructor). </p><dl class="section note"><dt>Note</dt><dd>Things can slow down pretty drastically in the GUI if there are no line breaks in the file. We should probably do something about this. </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00084">84</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ad795bf5960ffd4d47a55733c2abefffb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +394,7 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div><div class="memdoc">
 
 <p>Sets the file who's contents this widget will display. </p>
-<p>This function also opens the file and starts a timer that calls loadCurrPage() to refresh the contents of the file once every 3 seconds so that the widget will be updated with new data as it comes in during an actively running <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>. </p><dl class="section note"><dt>Note</dt><dd>The input filename should be the full name including filepath. </dd></dl>
+<p>This function also opens the file and starts a timer that calls <a class="el" href="class_picto_1_1_analysis_file_output_widget.html#a058a2f39bc9957ecd2c51ffe1d39e4e1" title="Loads the current page of text into the widget&#39;s read-only text edit. ">loadCurrPage()</a> to refresh the contents of the file once every 3 seconds so that the widget will be updated with new data as it comes in during an actively running <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a>. </p><dl class="section note"><dt>Note</dt><dd>The input filename should be the full name including filepath. </dd></dl>
 
 <p>Definition at line <a class="el" href="_analysis_file_output_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="_analysis_file_output_widget_8cpp_source.html">AnalysisFileOutputWidget.cpp</a>.</p>
 

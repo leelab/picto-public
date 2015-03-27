@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_legacy_system_x_p_reward_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LegacySystemXPRewardController Class Reference</div>  </div>
@@ -151,6 +152,30 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a00f99b4c7d166d2c51d4c1598cc0a0c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_legacy_system_x_p_reward_controller.html#a00f99b4c7d166d2c51d4c1598cc0a0c1">stopFlush</a> (unsigned int channel)</td></tr>
 <tr class="memdesc:a00f99b4c7d166d2c51d4c1598cc0a0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="class_picto_1_1_reward_controller.html#a5a14b4f103def1711b485cc05f4c53bb" title="Stops a flush on the input channel. ">RewardController::stopFlush()</a> to lower the reward line voltage.  <a href="#a00f99b4c7d166d2c51d4c1598cc0a0c1">More...</a><br /></td></tr>
 <tr class="separator:a00f99b4c7d166d2c51d4c1598cc0a0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acd97ce74f117b8404a622e11c4115d7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd97ce74f117b8404a622e11c4115d7d"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b></td></tr>
+<tr class="separator:acd97ce74f117b8404a622e11c4115d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66b4e32e73d59a4c60705a83fe8eb3ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66b4e32e73d59a4c60705a83fe8eb3ea"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>rewardLines_</b> [4]</td></tr>
+<tr class="separator:a66b4e32e73d59a4c60705a83fe8eb3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78ce8b283cfce2d95f6421f11ce7e48e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78ce8b283cfce2d95f6421f11ce7e48e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDevice_</b></td></tr>
+<tr class="separator:a78ce8b283cfce2d95f6421f11ce7e48e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7200020e2f362fb7a813914afdcb7741"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7200020e2f362fb7a813914afdcb7741"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>outputData</b> [2]</td></tr>
+<tr class="separator:a7200020e2f362fb7a813914afdcb7741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9573c65124d672a3ae6feaf93d91e27c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9573c65124d672a3ae6feaf93d91e27c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>taskExists_</b></td></tr>
+<tr class="separator:a9573c65124d672a3ae6feaf93d91e27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc1b64fed5c6b3151ca57ed2206bdd54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc1b64fed5c6b3151ca57ed2206bdd54"></a>
+<a class="el" href="class_picto_1_1_stopwatch.html">Stopwatch</a>&#160;</td><td class="memItemRight" valign="bottom"><b>stopwatch_</b></td></tr>
+<tr class="separator:adc1b64fed5c6b3151ca57ed2206bdd54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa5f23e0a453d67656704502f0e61de7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa5f23e0a453d67656704502f0e61de7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>latestOnTime_</b></td></tr>
+<tr class="separator:aaa5f23e0a453d67656704502f0e61de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

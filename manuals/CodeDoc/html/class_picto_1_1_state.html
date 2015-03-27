@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -652,6 +655,40 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a35d0d4a0dfef7cd739b512976a54b217"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state.html#a35d0d4a0dfef7cd739b512976a54b217">activeAnalysisIdsChanged</a> ()</td></tr>
+<tr class="memdesc:a35d0d4a0dfef7cd739b512976a54b217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_picto_1_1_state.html#a8e2d844164bb5f45fb14e53e24385e05" title="Initializes the Scene based on all current in scope OutputElement objects so that it can correctly re...">rebuildScene()</a> any time the Active <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> changes.  <a href="#a35d0d4a0dfef7cd739b512976a54b217">More...</a><br /></td></tr>
+<tr class="separator:a35d0d4a0dfef7cd739b512976a54b217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a5ca9d9d4fee25d7e9431d1c3513299d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ca9d9d4fee25d7e9431d1c3513299d0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state.html#a5ca9d9d4fee25d7e9431d1c3513299d0">checkForEngineStop</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:a5ca9d9d4fee25d7e9431d1c3513299d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the current engine command and returns true if we need to stop, false otherwise. <br /></td></tr>
+<tr class="separator:a5ca9d9d4fee25d7e9431d1c3513299d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0f6cf052bae0dc0ffc671b39b547fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state.html#aaa0f6cf052bae0dc0ffc671b39b547fe">addCursor</a> ()</td></tr>
+<tr class="memdesc:aaa0f6cf052bae0dc0ffc671b39b547fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a cursor to the <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> so that it can display the current value of the Position signal.  <a href="#aaa0f6cf052bae0dc0ffc671b39b547fe">More...</a><br /></td></tr>
+<tr class="separator:aaa0f6cf052bae0dc0ffc671b39b547fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e2d844164bb5f45fb14e53e24385e05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state.html#a8e2d844164bb5f45fb14e53e24385e05">rebuildScene</a> ()</td></tr>
+<tr class="memdesc:a8e2d844164bb5f45fb14e53e24385e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> based on all current in scope <a class="el" href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame...">OutputElement</a> objects so that it can correctly render the current scene each frame.  <a href="#a8e2d844164bb5f45fb14e53e24385e05">More...</a><br /></td></tr>
+<tr class="separator:a8e2d844164bb5f45fb14e53e24385e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aaf5d85f5c4d4cb5df7dacfc700644926"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf5d85f5c4d4cb5df7dacfc700644926"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_scene.html">Scene</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scene_</b></td></tr>
+<tr class="separator:aaf5d85f5c4d4cb5df7dacfc700644926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268e1ed046375f86c0143697e6688cb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a268e1ed046375f86c0143697e6688cb5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasCursor_</b></td></tr>
+<tr class="separator:a268e1ed046375f86c0143697e6688cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92ce66bdd2da411fbed10f7b9b57a7c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92ce66bdd2da411fbed10f7b9b57a7c1"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_channel.html">SignalChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sigChannel_</b></td></tr>
+<tr class="separator:a92ce66bdd2da411fbed10f7b9b57a7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed877f75b8a94196db8c0578f2084b40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed877f75b8a94196db8c0578f2084b40"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>rebuildSceneMutex_</b></td></tr>
+<tr class="separator:aed877f75b8a94196db8c0578f2084b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a90c7971ba26fd5050e30ed8ff64e0e29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90c7971ba26fd5050e30ed8ff64e0e29"></a>
@@ -703,7 +740,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="inherit_header pro_slots_class_picto_1_1_state_machine_element_container"><td colspan="2" onclick="javascript:toggleInherit('pro_slots_class_picto_1_1_state_machine_element_container')"><img src="closed.png" alt="-"/>&#160;Protected Slots inherited from <a class="el" href="class_picto_1_1_state_machine_element_container.html">Picto::StateMachineElementContainer</a></td></tr>
 <tr class="memitem:a6831e26dace63b48ba80480958a225d0 inherit pro_slots_class_picto_1_1_state_machine_element_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6831e26dace63b48ba80480958a225d0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element_container.html#a6831e26dace63b48ba80480958a225d0">addChildToElementLists</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
-<tr class="memdesc:a6831e26dace63b48ba80480958a225d0 inherit pro_slots_class_picto_1_1_state_machine_element_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the case where a child is added to this element after <a class="el" href="class_picto_1_1_state_machine_element_container.html#a5c4e35f0ef8d92e8518d86741211abc9" title="This function is called in fromXml() after successful deserialization and is used to initialize the A...">postDeserialize()</a>. In that case, depending on the child's type, we may need to add it using either addElement() or <a class="el" href="class_picto_1_1_state_machine_element_container.html#aec29a8d0b550c4491073faae5114c61e" title="Adds the input ElementContainer to this one&#39;s list of child ElementContainers and uses the child&#39;s ad...">addChildElementContainer()</a>. We handle that here. <br /></td></tr>
+<tr class="memdesc:a6831e26dace63b48ba80480958a225d0 inherit pro_slots_class_picto_1_1_state_machine_element_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the case where a child is added to this element after <a class="el" href="class_picto_1_1_state_machine_element_container.html#a5c4e35f0ef8d92e8518d86741211abc9" title="This function is called in fromXml() after successful deserialization and is used to initialize the A...">postDeserialize()</a>. In that case, depending on the child's type, we may need to add it using either <a class="el" href="class_picto_1_1_state_machine_element_container.html#a657a22b0d4e0fed5f9e5f4d1d51f895a" title="Adds a new Element to this object&#39;s in-scope Elements list as well as those of its child ElementConta...">addElement()</a> or <a class="el" href="class_picto_1_1_state_machine_element_container.html#aec29a8d0b550c4491073faae5114c61e" title="Adds the input ElementContainer to this one&#39;s list of child ElementContainers and uses the child&#39;s ad...">addChildElementContainer()</a>. We handle that here. <br /></td></tr>
 <tr class="separator:a6831e26dace63b48ba80480958a225d0 inherit pro_slots_class_picto_1_1_state_machine_element_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_machine_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_machine_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_machine_container.html">Picto::MachineContainer</a></td></tr>
 <tr class="memitem:ac682abf8e80e278e573ee94bc9040fbf inherit pro_attribs_class_picto_1_1_machine_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac682abf8e80e278e573ee94bc9040fbf"></a>
@@ -802,6 +839,62 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a35d0d4a0dfef7cd739b512976a54b217"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::State::activeAnalysisIdsChanged </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls <a class="el" href="class_picto_1_1_state.html#a8e2d844164bb5f45fb14e53e24385e05" title="Initializes the Scene based on all current in scope OutputElement objects so that it can correctly re...">rebuildScene()</a> any time the Active <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> changes. </p>
+<p>This should be more useful when/if we start adding <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Output Elements (plots or text info) to the scene in the Workstation when Analyses are active. </p>
+
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00387">387</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa0f6cf052bae0dc0ffc671b39b547fe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::State::addCursor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a cursor to the <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> so that it can display the current value of the Position signal. </p>
+<p>This should only be used in Slave mode since we don't show the cursor to the test subject. </p>
+
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00239">239</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a852150ca9027d53252cd0cefb04f3c1d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -919,6 +1012,34 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reimplemented from <a class="el" href="class_picto_1_1_machine_container.html#a36591811c50d2086866100c246d751d0">Picto::MachineContainer</a>.</p>
 
 <p>Definition at line <a class="el" href="_state_8cpp_source.html#l00284">284</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8e2d844164bb5f45fb14e53e24385e05"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::State::rebuildScene </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes the <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> based on all current in scope <a class="el" href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame...">OutputElement</a> objects so that it can correctly render the current scene each frame. </p>
+<p>This needs to be called at least once before a <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> is run and after all <a class="el" href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame...">OutputElement</a> objects that are in scope have been added. </p>
+
+<p>Definition at line <a class="el" href="_state_8cpp_source.html#l00340">340</a> of file <a class="el" href="_state_8cpp_source.html">State.cpp</a>.</p>
 
 </div>
 </div>

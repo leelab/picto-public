@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_tool_group-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ToolGroup Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -150,6 +152,43 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:adf3e25748f41ba5490aac857e375260d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tool_group.html#adf3e25748f41ba5490aac857e375260d">isEnabled</a> (int buttonId)=0</td></tr>
 <tr class="memdesc:adf3e25748f41ba5490aac857e375260d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out.  <a href="#adf3e25748f41ba5490aac857e375260d">More...</a><br /></td></tr>
 <tr class="separator:adf3e25748f41ba5490aac857e375260d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a542edd6618a823fd7c7f905d1e5f7d34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tool_group.html#a542edd6618a823fd7c7f905d1e5f7d34">buttonGroupClicked</a> (int id)</td></tr>
+<tr class="memdesc:a542edd6618a823fd7c7f905d1e5f7d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">A slot called to handle button click actions.  <a href="#a542edd6618a823fd7c7f905d1e5f7d34">More...</a><br /></td></tr>
+<tr class="separator:a542edd6618a823fd7c7f905d1e5f7d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294340e34715125e763487626cb0f087"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a294340e34715125e763487626cb0f087"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tool_group.html#a294340e34715125e763487626cb0f087">disableAllButtons</a> ()</td></tr>
+<tr class="memdesc:a294340e34715125e763487626cb0f087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unchecks all buttons in this <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> and calls <a class="el" href="class_tool_group.html#ab340659ee03a519aa249bda3592255a6" title="Called when all buttons are unpressed and similar situations to disable all button actions that may h...">disableButtonActions()</a>. <br /></td></tr>
+<tr class="separator:a294340e34715125e763487626cb0f087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a50370cf208708f046f837c91c4a23c80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50370cf208708f046f837c91c4a23c80"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:a50370cf208708f046f837c91c4a23c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcc2ecc63ee20b880563928d818e40e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcc2ecc63ee20b880563928d818e40e3"></a>
+QSharedPointer&lt; QButtonGroup &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buttonGroup_</b></td></tr>
+<tr class="separator:abcc2ecc63ee20b880563928d818e40e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a511563a6a01f019f2accad497521928e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a511563a6a01f019f2accad497521928e"></a>
+QGridLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>layout_</b></td></tr>
+<tr class="separator:a511563a6a01f019f2accad497521928e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb10b791dbd527dbd14091d293965626"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb10b791dbd527dbd14091d293965626"></a>
+QList&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>widgets_</b></td></tr>
+<tr class="separator:aeb10b791dbd527dbd14091d293965626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c93f74d6081d1c36427bd207cb74a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5c93f74d6081d1c36427bd207cb74a0"></a>
+QMap&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>nameMap_</b></td></tr>
+<tr class="separator:ab5c93f74d6081d1c36427bd207cb74a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac94c93dbb854eb2a9544e74b38ee69cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac94c93dbb854eb2a9544e74b38ee69cc"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>selectedButton_</b></td></tr>
+<tr class="separator:ac94c93dbb854eb2a9544e74b38ee69cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04621b80c2b1c456ca25050f06308c34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04621b80c2b1c456ca25050f06308c34"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>row_</b></td></tr>
+<tr class="separator:a04621b80c2b1c456ca25050f06308c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79dd1935d936207f8eaf39b552c55708"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79dd1935d936207f8eaf39b552c55708"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>col_</b></td></tr>
+<tr class="separator:a79dd1935d936207f8eaf39b552c55708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A group of buttons of a particular type that have some affect on activity in the designer. </p>
@@ -200,6 +239,35 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>The button may be set disabled if it can't currently be used by passing false into the enabled parameter. </p>
 
 <p>Definition at line <a class="el" href="_tool_group_8cpp_source.html#l00029">29</a> of file <a class="el" href="_tool_group_8cpp_source.html">ToolGroup.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a542edd6618a823fd7c7f905d1e5f7d34"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ToolGroup::buttonGroupClicked </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A slot called to handle button click actions. </p>
+<p>This is the function responsible for calling <a class="el" href="class_tool_group.html#a749e84cf4dfdf68033b44aa0b4cb7734" title="Called when the a button is pressed so that the button can do whatever it&#39;s supposed to do...">doButtonAction()</a> or <a class="el" href="class_tool_group.html#ab340659ee03a519aa249bda3592255a6" title="Called when all buttons are unpressed and similar situations to disable all button actions that may h...">disableButtonActions()</a> when buttons are pressed or released. Similarly it makes sure that no more than one button in the <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> is ever pressed at a time. </p>
+
+<p>Definition at line <a class="el" href="_tool_group_8cpp_source.html#l00088">88</a> of file <a class="el" href="_tool_group_8cpp_source.html">ToolGroup.cpp</a>.</p>
 
 </div>
 </div>

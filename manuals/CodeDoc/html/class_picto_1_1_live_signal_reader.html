@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_live_signal_reader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::LiveSignalReader Class Reference</div>  </div>
@@ -112,6 +113,11 @@ Inheritance diagram for Picto::LiveSignalReader:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_live_signal_reader_1_1_playback_signal_data.html">PlaybackSignalData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a26231054a01a62062b44dc3e741ba55e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_signal_reader.html#a26231054a01a62062b44dc3e741ba55e">LiveSignalReader</a> (QString name, QStringList subChanNames, double samplePeriod)</td></tr>
@@ -172,6 +178,27 @@ virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class
 virtual QVariantList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_live_signal_reader.html#aba43af8313cdd555ae78095caff7f619">getTimesUntil</a> (double time)</td></tr>
 <tr class="memdesc:aba43af8313cdd555ae78095caff7f619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of signal read times that occured &gt; the current time and &lt;= the input time. There is a one to one matchup of times from this function and values from getValuesUntil(channel,time). <br /></td></tr>
 <tr class="separator:aba43af8313cdd555ae78095caff7f619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3d56a52fd9f76f792f5a7acd63d04e56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d56a52fd9f76f792f5a7acd63d04e56"></a>
+QVector&lt; <a class="el" href="struct_picto_1_1_live_signal_reader_1_1_playback_signal_data.html">PlaybackSignalData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalData_</b></td></tr>
+<tr class="separator:a3d56a52fd9f76f792f5a7acd63d04e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d42ed19406e65f2f12202c96c2d360a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d42ed19406e65f2f12202c96c2d360a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>name_</b></td></tr>
+<tr class="separator:a9d42ed19406e65f2f12202c96c2d360a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6c77bb90b599676fe8f0a6e25542e56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6c77bb90b599676fe8f0a6e25542e56"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>subChanNames_</b></td></tr>
+<tr class="separator:ad6c77bb90b599676fe8f0a6e25542e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48e2c0c3d763ba86d6a3235d9736174e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48e2c0c3d763ba86d6a3235d9736174e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numSubChans_</b></td></tr>
+<tr class="separator:a48e2c0c3d763ba86d6a3235d9736174e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7fbbcf1d65cece7355a2b559357df2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e7fbbcf1d65cece7355a2b559357df2"></a>
+QHash&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>subChanIndexLookup_</b></td></tr>
+<tr class="separator:a9e7fbbcf1d65cece7355a2b559357df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eed4ff535dc70e23d22683c99d1e0c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8eed4ff535dc70e23d22683c99d1e0c4"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>samplePeriod_</b></td></tr>
+<tr class="separator:a8eed4ff535dc70e23d22683c99d1e0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the <a class="el" href="class_picto_1_1_signal_reader.html" title="An base class for classes that can provide Input Signal data over input time ranges (ie...">SignalReader</a> class for a live test experiment. </p>

@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_save_output_dialog-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SaveOutputDialog Class Reference</div>  </div>
@@ -128,6 +130,35 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_output_dialog.html#a8ffa63356170be233940b800b3be8074">getCurrentState</a> ()</td></tr>
 <tr class="memdesc:a8ffa63356170be233940b800b3be8074"><td class="mdescLeft">&#160;</td><td class="mdescRight">This returns QFileDialog::saveState() which is used to save the state of the dialog. It could be used with QFileDialog::restoreState(), but we aren't doing that right now. <br /></td></tr>
 <tr class="separator:a8ffa63356170be233940b800b3be8074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a19eb5189e48104d74feaa6a99bc23329"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19eb5189e48104d74feaa6a99bc23329"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_output_dialog.html#a19eb5189e48104d74feaa6a99bc23329">setup</a> ()</td></tr>
+<tr class="memdesc:a19eb5189e48104d74feaa6a99bc23329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the <a class="el" href="class_save_output_dialog.html" title="A dialog for saving analysis output. ">SaveOutputDialog</a> parameters. <br /></td></tr>
+<tr class="separator:a19eb5189e48104d74feaa6a99bc23329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa368b82311e4bde107047df0e05cff9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa368b82311e4bde107047df0e05cff9f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_output_dialog.html#aa368b82311e4bde107047df0e05cff9f">addCheckBox</a> ()</td></tr>
+<tr class="memdesc:aa368b82311e4bde107047df0e05cff9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a "use seperate subdirs" checkbox to the dialog. <br /></td></tr>
+<tr class="separator:aa368b82311e4bde107047df0e05cff9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5262fbb61d5f9477bd2c3ceb2828e8e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5262fbb61d5f9477bd2c3ceb2828e8e8"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>subDirOpLabel_</b></td></tr>
+<tr class="separator:a5262fbb61d5f9477bd2c3ceb2828e8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1830f5d6e34bca9865169c0fc20d3164"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1830f5d6e34bca9865169c0fc20d3164"></a>
+QCheckBox *&#160;</td><td class="memItemRight" valign="bottom"><b>subDirOpCheck_</b></td></tr>
+<tr class="separator:a1830f5d6e34bca9865169c0fc20d3164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eff11f7e9c5bdfa25cc9c1c9820e58a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7eff11f7e9c5bdfa25cc9c1c9820e58a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>defaultPath_</b></td></tr>
+<tr class="separator:a7eff11f7e9c5bdfa25cc9c1c9820e58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2222ba593429972c2081df3ab4b267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe2222ba593429972c2081df3ab4b267"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>selectedDir_</b></td></tr>
+<tr class="separator:abe2222ba593429972c2081df3ab4b267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae05bc667b2081c1bdabbd07abc07c005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae05bc667b2081c1bdabbd07abc07c005"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>defaultSubDirSetting_</b></td></tr>
+<tr class="separator:ae05bc667b2081c1bdabbd07abc07c005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A dialog for saving analysis output. </p>

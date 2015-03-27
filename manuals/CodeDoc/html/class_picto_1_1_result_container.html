@@ -94,6 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_result_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -555,6 +556,24 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73">designConfig_</a></td></tr>
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6d7605bdf6883982a3f7474533286011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d7605bdf6883982a3f7474533286011"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>resultFactory_</b></td></tr>
+<tr class="separator:a6d7605bdf6883982a3f7474533286011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf590502ac8a4fddfd7b53ae9f4d97f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bf590502ac8a4fddfd7b53ae9f4d97f"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>resultFactoryByType_</b></td></tr>
+<tr class="separator:a6bf590502ac8a4fddfd7b53ae9f4d97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a391e4a7298e43b527cb210e05cdd27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a391e4a7298e43b527cb210e05cdd27"></a>
+QMap&lt; QString, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>maxOptionalResults_</b></td></tr>
+<tr class="separator:a6a391e4a7298e43b527cb210e05cdd27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee2b166b169c3088fdc06f48e26b74e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee2b166b169c3088fdc06f48e26b74e8"></a>
+QMultiMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result.html">Result</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>requiredResults_</b></td></tr>
+<tr class="separator:aee2b166b169c3088fdc06f48e26b74e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a507e188a0f32650719712a5543f677e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a507e188a0f32650719712a5543f677e2"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestResult_</b></td></tr>
+<tr class="separator:a507e188a0f32650719712a5543f677e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

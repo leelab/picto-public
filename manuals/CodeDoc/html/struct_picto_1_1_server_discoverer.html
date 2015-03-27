@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_picto_1_1_server_discoverer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::ServerDiscoverer Struct Reference</div>  </div>
@@ -114,7 +116,7 @@ Inheritance diagram for Picto::ServerDiscoverer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr class="memitem:afdbfa7e1d36d540892d1fae30505ca42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#afdbfa7e1d36d540892d1fae30505ca42">discover</a> (int timeout=5000)</td></tr>
+<tr class="memitem:afdbfa7e1d36d540892d1fae30505ca42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#afdbfa7e1d36d540892d1fae30505ca42">discover</a> (int <a class="el" href="struct_picto_1_1_server_discoverer.html#aa1a5dc481ed7865886b27d98dd21ca12">timeout</a>=5000)</td></tr>
 <tr class="memdesc:afdbfa7e1d36d540892d1fae30505ca42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begins the server disocver process.  <a href="#afdbfa7e1d36d540892d1fae30505ca42">More...</a><br /></td></tr>
 <tr class="separator:afdbfa7e1d36d540892d1fae30505ca42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -133,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a10fd33867ea3ef09055dd9f0d6cd2bd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10fd33867ea3ef09055dd9f0d6cd2bd3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ServerDiscoverer</b> (QObject *parent=0)</td></tr>
 <tr class="separator:a10fd33867ea3ef09055dd9f0d6cd2bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3835900b0377f135c09fdf5673c74a73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#a3835900b0377f135c09fdf5673c74a73">waitForDiscovered</a> (int timeout=30000)</td></tr>
+<tr class="memitem:a3835900b0377f135c09fdf5673c74a73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#a3835900b0377f135c09fdf5673c74a73">waitForDiscovered</a> (int <a class="el" href="struct_picto_1_1_server_discoverer.html#aa1a5dc481ed7865886b27d98dd21ca12">timeout</a>=30000)</td></tr>
 <tr class="memdesc:a3835900b0377f135c09fdf5673c74a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">If this object is not running within a Qt Event Loop, this function may be used to create an event loop internally and allow this server discoverer to operate.  <a href="#a3835900b0377f135c09fdf5673c74a73">More...</a><br /></td></tr>
 <tr class="separator:a3835900b0377f135c09fdf5673c74a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a014a51f2e39975b13b793d7d64699eda"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a014a51f2e39975b13b793d7d64699eda"></a>
@@ -144,6 +146,43 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#a855ffdc379615648f27fda19322d162b">getPort</a> ()</td></tr>
 <tr class="memdesc:a855ffdc379615648f27fda19322d162b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the port on which communication to the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> should occur, or zero otherwise. <br /></td></tr>
 <tr class="separator:a855ffdc379615648f27fda19322d162b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ad31df687fd240d9444987ed43bc6132c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#ad31df687fd240d9444987ed43bc6132c">processPendingDatagrams</a> ()</td></tr>
+<tr class="memdesc:ad31df687fd240d9444987ed43bc6132c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the udpSocket recieves a datagram.  <a href="#ad31df687fd240d9444987ed43bc6132c">More...</a><br /></td></tr>
+<tr class="separator:ad31df687fd240d9444987ed43bc6132c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1a5dc481ed7865886b27d98dd21ca12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1a5dc481ed7865886b27d98dd21ca12"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_server_discoverer.html#aa1a5dc481ed7865886b27d98dd21ca12">timeout</a> ()</td></tr>
+<tr class="memdesc:aa1a5dc481ed7865886b27d98dd21ca12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by a timeout timer if the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> isn't discovered within a set time of <a class="el" href="struct_picto_1_1_server_discoverer.html#afdbfa7e1d36d540892d1fae30505ca42" title="Begins the server disocver process. ">discover()</a> begin called. Emits <a class="el" href="struct_picto_1_1_server_discoverer.html#ab1d51863b7e5ae6592385212e71df9b2" title="Emitted when server discovery fails within the timeout entered in a call to discover(). ">discoverFailed()</a>. <br /></td></tr>
+<tr class="separator:aa1a5dc481ed7865886b27d98dd21ca12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a35d7eb94f82c1dbe0ecd1d332f552537"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35d7eb94f82c1dbe0ecd1d332f552537"></a>
+QUdpSocket&#160;</td><td class="memItemRight" valign="bottom"><b>udpSocket_</b></td></tr>
+<tr class="separator:a35d7eb94f82c1dbe0ecd1d332f552537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab16e549a07aa75e04bd1aba8bbeba1d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab16e549a07aa75e04bd1aba8bbeba1d9"></a>
+quint16&#160;</td><td class="memItemRight" valign="bottom"><b>port_</b></td></tr>
+<tr class="separator:ab16e549a07aa75e04bd1aba8bbeba1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7729f8617733a5e27c1a1e69df8a6117"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7729f8617733a5e27c1a1e69df8a6117"></a>
+QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>pictoServerAddress_</b></td></tr>
+<tr class="separator:a7729f8617733a5e27c1a1e69df8a6117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae14fae72712e78deef4b6af59d7af7dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae14fae72712e78deef4b6af59d7af7dd"></a>
+quint16&#160;</td><td class="memItemRight" valign="bottom"><b>pictoServerPort_</b></td></tr>
+<tr class="separator:ae14fae72712e78deef4b6af59d7af7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3086ce67d8e2ce5d640862693efedee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3086ce67d8e2ce5d640862693efedee"></a>
+QTimer&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutTimer_</b></td></tr>
+<tr class="separator:af3086ce67d8e2ce5d640862693efedee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67f800f6b8457013aa195eb6870a3bff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67f800f6b8457013aa195eb6870a3bff"></a>
+QEventLoop&#160;</td><td class="memItemRight" valign="bottom"><b>waitingEventLoop_</b></td></tr>
+<tr class="separator:a67f800f6b8457013aa195eb6870a3bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf721d4f12d5c482d3b84355ec714dde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf721d4f12d5c482d3b84355ec714dde"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>bFoundServer_</b></td></tr>
+<tr class="separator:acf721d4f12d5c482d3b84355ec714dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5812a37bdbbc7b55f7fe5e4d24b248"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c5812a37bdbbc7b55f7fe5e4d24b248"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>bRunning_</b></td></tr>
+<tr class="separator:a6c5812a37bdbbc7b55f7fe5e4d24b248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Used to find the Picto server instance on the local network. </p>
@@ -219,6 +258,34 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 
 <p>Emitted when a server has been discovered. </p>
 <p>pictoServerAddress is the server IP Address, pictoServerPort is the port on which communication should occur. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad31df687fd240d9444987ed43bc6132c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::ServerDiscoverer::processPendingDatagrams </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the udpSocket recieves a datagram. </p>
+<p>Reads the data. If the data is a server ip address/port report, the function extracts the relevant data and emits foundServer.S </p>
+
+<p>Definition at line <a class="el" href="_server_discoverer_8cpp_source.html#l00092">92</a> of file <a class="el" href="_server_discoverer_8cpp_source.html">ServerDiscoverer.cpp</a>.</p>
 
 </div>
 </div>

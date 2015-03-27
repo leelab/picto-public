@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_view_selection_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ViewSelectionWidget Class Reference</div>  </div>
@@ -145,6 +148,54 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a86a95ecf12a9da5e8421afcdd4f467fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86a95ecf12a9da5e8421afcdd4f467fe"></a>
 QVector&lt; <a class="el" href="class_data_view_widget.html">DataViewWidget</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataViewWidgets_</b></td></tr>
 <tr class="separator:a86a95ecf12a9da5e8421afcdd4f467fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a542c96510698b49410a84919427bca6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a542c96510698b49410a84919427bca6b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a542c96510698b49410a84919427bca6b">selectedPlotIndexChanged</a> (int selectedIndex)</td></tr>
+<tr class="memdesc:a542c96510698b49410a84919427bca6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback when a new Plot is selected. <br /></td></tr>
+<tr class="separator:a542c96510698b49410a84919427bca6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a3545e7320cabaa4b5186949f655f87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a3545e7320cabaa4b5186949f655f87"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a1a3545e7320cabaa4b5186949f655f87">selectedSizeIndexChanged</a> (int selectedIndex)</td></tr>
+<tr class="memdesc:a1a3545e7320cabaa4b5186949f655f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback when a new Plot Size is selected. <br /></td></tr>
+<tr class="separator:a1a3545e7320cabaa4b5186949f655f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9504b378336c4428cd54fcd809dda833"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9504b378336c4428cd54fcd809dda833"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a9504b378336c4428cd54fcd809dda833">checkClicked</a> (bool)</td></tr>
+<tr class="memdesc:a9504b378336c4428cd54fcd809dda833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback helper when a checkbox is clicked. <br /></td></tr>
+<tr class="separator:a9504b378336c4428cd54fcd809dda833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7dc9dac8aadb7ed82fec1269b6d388e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7dc9dac8aadb7ed82fec1269b6d388e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#ad7dc9dac8aadb7ed82fec1269b6d388e">isWidgetPosValid</a> (<a class="el" href="class_data_view_widget.html">DataViewWidget</a> *pWidget, int testX, int testY)</td></tr>
+<tr class="memdesc:ad7dc9dac8aadb7ed82fec1269b6d388e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs through widgets and checks to see if the new widget size is valid. <br /></td></tr>
+<tr class="separator:ad7dc9dac8aadb7ed82fec1269b6d388e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2a670832194a168adf227bb955b64114"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a670832194a168adf227bb955b64114"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a2a670832194a168adf227bb955b64114">updateSizeAndPositionOptions</a> ()</td></tr>
+<tr class="memdesc:a2a670832194a168adf227bb955b64114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs through widgets and updates the Size menu with the current option, as well as position checkboxes. <br /></td></tr>
+<tr class="separator:a2a670832194a168adf227bb955b64114"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261fc17c745a5b8fa168dbe7a0290c7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a261fc17c745a5b8fa168dbe7a0290c7a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a261fc17c745a5b8fa168dbe7a0290c7a">checkboxChanged</a> (bool bNewValue, int x, int y)</td></tr>
+<tr class="memdesc:a261fc17c745a5b8fa168dbe7a0290c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback when a checkbox is clicked. This updates the associated values about the position in the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a>, and the signal emitted removes and re-adds the widget to the connected <a class="el" href="class_data_view_layout.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewLayout</a>. Finally, the current statuses of the Checkboxes and ComboBoxes are reset to their current values. <br /></td></tr>
+<tr class="separator:a261fc17c745a5b8fa168dbe7a0290c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a44c0efa8b874570550ae0b702d4d2da0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44c0efa8b874570550ae0b702d4d2da0"></a>
+QGridLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>selectionLayout_</b></td></tr>
+<tr class="separator:a44c0efa8b874570550ae0b702d4d2da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76996a06377b1cc782733df72e80ff37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76996a06377b1cc782733df72e80ff37"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>plotSelection_</b></td></tr>
+<tr class="separator:a76996a06377b1cc782733df72e80ff37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac34f280e29f96a212cff07fa149bcf51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac34f280e29f96a212cff07fa149bcf51"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>sizeSelection_</b></td></tr>
+<tr class="separator:ac34f280e29f96a212cff07fa149bcf51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa16837fbb444804343e16872b9af5488"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa16837fbb444804343e16872b9af5488"></a>
+QCheckBox *&#160;</td><td class="memItemRight" valign="bottom"><b>positionCheckBoxes_</b> [VIEWGRIDWIDTH][VIEWGRIDHEIGHT]</td></tr>
+<tr class="separator:aa16837fbb444804343e16872b9af5488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12b0d5ac43203c4e78b413bc8e13254"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af12b0d5ac43203c4e78b413bc8e13254"></a>
+QMap&lt; QObject *, QSharedPointer&lt; <a class="el" href="struct_widget_coords.html">WidgetCoords</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>coordsMap</b></td></tr>
+<tr class="separator:af12b0d5ac43203c4e78b413bc8e13254"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget to contain objects meant to be displayed in the Experiment <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. </p>

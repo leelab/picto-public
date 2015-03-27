@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_audio_file_parameter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AudioFileParameter Class Reference</div>  </div>
@@ -488,6 +491,40 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a5c5ef53ea33e2d397b328fd0d2258cf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c5ef53ea33e2d397b328fd0d2258cf4"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_audio_file_parameter.html#a5c5ef53ea33e2d397b328fd0d2258cf4">getSoundsDir</a> ()</td></tr>
+<tr class="memdesc:a5c5ef53ea33e2d397b328fd0d2258cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a path to the directory where temporary audio files should go. <br /></td></tr>
+<tr class="separator:a5c5ef53ea33e2d397b328fd0d2258cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5e4a57271172027dd55635f98ddac9e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_audio_file_parameter.html#ac5e4a57271172027dd55635f98ddac9e">initTempOutputDir</a> ()</td></tr>
+<tr class="memdesc:ac5e4a57271172027dd55635f98ddac9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty ExpAudioFiles directory in the runpath once per executable run, clearing out any previous contents if there were any.  <a href="#ac5e4a57271172027dd55635f98ddac9e">More...</a><br /></td></tr>
+<tr class="separator:ac5e4a57271172027dd55635f98ddac9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d2bacca9bbffdbb9663ec64221086c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_audio_file_parameter.html#a19d2bacca9bbffdbb9663ec64221086c">removeFilesThenDirectories</a> (QDir container)</td></tr>
+<tr class="memdesc:a19d2bacca9bbffdbb9663ec64221086c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes everything in the input directory and all of its sub directories.  <a href="#a19d2bacca9bbffdbb9663ec64221086c">More...</a><br /></td></tr>
+<tr class="separator:a19d2bacca9bbffdbb9663ec64221086c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a08c000f03ee7d6f3d8aa9e49ca88dc3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08c000f03ee7d6f3d8aa9e49ca88dc3b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>wasReset_</b></td></tr>
+<tr class="separator:a08c000f03ee7d6f3d8aa9e49ca88dc3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e5d1c722c014729af8dd910780e93a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56e5d1c722c014729af8dd910780e93a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>physicalFilePath_</b></td></tr>
+<tr class="separator:a56e5d1c722c014729af8dd910780e93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae219785231d1ac7cf3bfadb484b36f4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae219785231d1ac7cf3bfadb484b36f4f"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_preloaded_sound.html">PreloadedSound</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sound_</b></td></tr>
+<tr class="separator:ae219785231d1ac7cf3bfadb484b36f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a87adf5307a4666e05dcafec5a984d98c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87adf5307a4666e05dcafec5a984d98c"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><b>outputDir_</b></td></tr>
+<tr class="separator:a87adf5307a4666e05dcafec5a984d98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaef93d23e4423683fc4ad3f6001c4ee0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaef93d23e4423683fc4ad3f6001c4ee0"></a>
+static QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lockFile_</b></td></tr>
+<tr class="separator:aaef93d23e4423683fc4ad3f6001c4ee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
@@ -553,7 +590,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div><div class="memdoc">
 
 <p>Creates a new <a class="el" href="class_picto_1_1_audio_file_parameter.html" title="An Audio File parameter. ">AudioFileParameter</a>. </p>
-<p>Calls initTempOutputDir() in the process to assure that a directory is available for temporary audio files. </p>
+<p>Calls <a class="el" href="class_picto_1_1_audio_file_parameter.html#ac5e4a57271172027dd55635f98ddac9e" title="Creates an empty ExpAudioFiles directory in the runpath once per executable run, clearing out any pre...">initTempOutputDir()</a> in the process to assure that a directory is available for temporary audio files. </p>
 
 <p>Definition at line <a class="el" href="_audio_file_parameter_8cpp_source.html#l00016">16</a> of file <a class="el" href="_audio_file_parameter_8cpp_source.html">AudioFileParameter.cpp</a>.</p>
 
@@ -669,6 +706,34 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 </div>
 </div>
+<a class="anchor" id="ac5e4a57271172027dd55635f98ddac9e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AudioFileParameter::initTempOutputDir </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an empty ExpAudioFiles directory in the runpath once per executable run, clearing out any previous contents if there were any. </p>
+<p>We want to make sure that even if multiple Picto applications are open at the same time, no one will remove the data that we are currently using. We also want to erase the data if we are just opening for the first time and no one else is using the data in the ExpAudioFiles folder. For this reason, we attempt to remove all files at the top level of the ExpAudioFiles directory, then if successful, remove all other contained directories as well. We then create a top level file in the temporary directory and leave it open until the application closes. If another workstation is open, we won't succeed in removing its open file so we wont delete the ExpAudioFiles directory contents, otherwise, we will. </p>
+
+<p>Definition at line <a class="el" href="_audio_file_parameter_8cpp_source.html#l00129">129</a> of file <a class="el" href="_audio_file_parameter_8cpp_source.html">AudioFileParameter.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ad4e30ad3080b19a5dc73a38ff460ef95"></a>
 <div class="memitem">
 <div class="memproto">
@@ -696,6 +761,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reimplemented from <a class="el" href="class_picto_1_1_file_parameter.html#a0c5b14270f5486397d2bc0d71b64bcd4">Picto::FileParameter</a>.</p>
 
 <p>Definition at line <a class="el" href="_audio_file_parameter_8cpp_source.html#l00053">53</a> of file <a class="el" href="_audio_file_parameter_8cpp_source.html">AudioFileParameter.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a19d2bacca9bbffdbb9663ec64221086c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AudioFileParameter::removeFilesThenDirectories </td>
+          <td>(</td>
+          <td class="paramtype">QDir&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes everything in the input directory and all of its sub directories. </p>
+<p>Stops at any level where a file cannot be removed. </p>
+
+<p>Definition at line <a class="el" href="_audio_file_parameter_8cpp_source.html#l00157">157</a> of file <a class="el" href="_audio_file_parameter_8cpp_source.html">AudioFileParameter.cpp</a>.</p>
 
 </div>
 </div>

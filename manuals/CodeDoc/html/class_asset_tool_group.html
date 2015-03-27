@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_asset_tool_group-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AssetToolGroup Class Reference</div>  </div>
@@ -109,6 +111,11 @@ Inheritance diagram for AssetToolGroup:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_asset_tool_group_1_1_elem_info.html">ElemInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a17d06fef61e3be02d9c9125f24bc72d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a17d06fef61e3be02d9c9125f24bc72d1">AssetToolGroup</a> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QStringList displayedUIGroups, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset=QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;(), QWidget *parent=0)</td></tr>
@@ -163,6 +170,24 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tool_group.html#abe47ad522a7f0ca0d5e222fade47f77a">getButtonPixmap</a> (int buttonId)</td></tr>
 <tr class="memdesc:abe47ad522a7f0ca0d5e222fade47f77a inherit pro_methods_class_tool_group"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a QPixmap of the icon used on the button with the input buttonId. <br /></td></tr>
 <tr class="separator:abe47ad522a7f0ca0d5e222fade47f77a inherit pro_methods_class_tool_group"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a416d88b6018d35285fb43780ce7a4bf8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a416d88b6018d35285fb43780ce7a4bf8">isDisplayedGroup</a> (QString UIGroup)</td></tr>
+<tr class="memdesc:a416d88b6018d35285fb43780ce7a4bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if Assets with the input UIGroup name should be displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>.  <a href="#a416d88b6018d35285fb43780ce7a4bf8">More...</a><br /></td></tr>
+<tr class="separator:a416d88b6018d35285fb43780ce7a4bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a30c029d75a72bebfff77d65b590335c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30c029d75a72bebfff77d65b590335c3"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>asset_</b></td></tr>
+<tr class="separator:a30c029d75a72bebfff77d65b590335c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadfd4bccde9893349ba7155a36001028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadfd4bccde9893349ba7155a36001028"></a>
+QHash&lt; QString, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>uIGroupMap_</b></td></tr>
+<tr class="separator:aadfd4bccde9893349ba7155a36001028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c54647847d49949ec6fc8ba76802372"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c54647847d49949ec6fc8ba76802372"></a>
+QVector&lt; <a class="el" href="struct_asset_tool_group_1_1_elem_info.html">ElemInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elemInfo_</b></td></tr>
+<tr class="separator:a4c54647847d49949ec6fc8ba76802372"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> with buttons representing Asset objects that can be added to the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> as children of the current Window Asset. </p>
@@ -242,6 +267,35 @@ QPixmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Reimplemented from <a class="el" href="class_tool_group.html#ab340659ee03a519aa249bda3592255a6">ToolGroup</a>.</p>
 
 <p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00099">99</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a416d88b6018d35285fb43780ce7a4bf8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AssetToolGroup::isDisplayedGroup </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>UIGroup</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if Assets with the input UIGroup name should be displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_asset_tool_group.html#a17d06fef61e3be02d9c9125f24bc72d1" title="Constructs a new AssetToolGroup for a Designer with the input editorState and where the current Windo...">AssetToolGroup::AssetToolGroup()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00114">114</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
 
 </div>
 </div>

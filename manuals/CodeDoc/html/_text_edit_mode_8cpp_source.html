@@ -124,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        currText_ = textAtInit_;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    currTextChar_ = 0;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    drawDisplay();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">drawDisplay</a>();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_text_edit_mode.html#a9994ab201fb29cc3ac383b3bbea25ec7">   52</a></span>&#160;<a class="code" href="namespace_panel_info.html#adb8b98e092c15e831aa524d39701d565">PanelInfo::DisplayModeType</a> <a class="code" href="class_text_edit_mode.html#a9994ab201fb29cc3ac383b3bbea25ec7">TextEditMode::handleUserInput</a>(<a class="code" href="namespace_panel_info.html#aeeb3b627166cd15c3898f93a1a499c65">PanelInfo::InputType</a> type)</div>
@@ -194,11 +194,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <a class="code" href="class_display_mode.html#a8aa3f4ab2efbcb2ff6988aa7befe4af0">drawMessage</a>(2000,<span class="stringliteral">&quot;Name not updated,&quot;</span>,<span class="stringliteral">&quot;try again&quot;</span>);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7">myModeType</a>();</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    drawDisplay();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">drawDisplay</a>();</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7">myModeType</a>();</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keywordtype">void</span> TextEditMode::drawDisplay()</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">  125</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">TextEditMode::drawDisplay</a>()</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;{</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    QString gap = QString(19-(valName_.size()+maxChars_),<span class="charliteral">&#39; &#39;</span>);</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    QString cursorLine = QString(currTextChar_+valName_.size()+1+gap.size(),<span class="charliteral">&#39; &#39;</span>)+<span class="stringliteral">&#39;\xA&#39;</span>;</div>
@@ -212,6 +212,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_display_mode_html_a7f084ba9fa63656644ae736abed8902c"><div class="ttname"><a href="class_display_mode.html#a7f084ba9fa63656644ae736abed8902c">DisplayMode::drawText</a></div><div class="ttdeci">void drawText(QString line1, QString line2)</div><div class="ttdef"><b>Definition:</b> <a href="displaymode_8cpp_source.html#l00051">displaymode.cpp:51</a></div></div>
 <div class="ttc" id="class_text_edit_mode_html_a3230fa49040fb5e79fadafad94f035f7"><div class="ttname"><a href="class_text_edit_mode.html#a3230fa49040fb5e79fadafad94f035f7">TextEditMode::getEditableText</a></div><div class="ttdeci">virtual QString getEditableText()=0</div></div>
 <div class="ttc" id="class_display_mode_html_a1e7318ccee20933fbe6e1193aa0a19e7"><div class="ttname"><a href="class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7">DisplayMode::myModeType</a></div><div class="ttdeci">virtual PanelInfo::DisplayModeType myModeType()=0</div></div>
+<div class="ttc" id="class_text_edit_mode_html_a7f8f2d3db994372a3cb69d660ca85aec"><div class="ttname"><a href="class_text_edit_mode.html#a7f8f2d3db994372a3cb69d660ca85aec">TextEditMode::drawDisplay</a></div><div class="ttdeci">void drawDisplay()</div><div class="ttdef"><b>Definition:</b> <a href="_text_edit_mode_8cpp_source.html#l00125">TextEditMode.cpp:125</a></div></div>
 <div class="ttc" id="class_text_edit_mode_html_abad4ebd912fec7f1e592a2d4596064c0"><div class="ttname"><a href="class_text_edit_mode.html#abad4ebd912fec7f1e592a2d4596064c0">TextEditMode::initMode</a></div><div class="ttdeci">virtual void initMode()</div><div class="ttdef"><b>Definition:</b> <a href="_text_edit_mode_8cpp_source.html#l00031">TextEditMode.cpp:31</a></div></div>
 <div class="ttc" id="class_text_edit_mode_html_a9994ab201fb29cc3ac383b3bbea25ec7"><div class="ttname"><a href="class_text_edit_mode.html#a9994ab201fb29cc3ac383b3bbea25ec7">TextEditMode::handleUserInput</a></div><div class="ttdeci">virtual PanelInfo::DisplayModeType handleUserInput(PanelInfo::InputType type)</div><div class="ttdef"><b>Definition:</b> <a href="_text_edit_mode_8cpp_source.html#l00052">TextEditMode.cpp:52</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

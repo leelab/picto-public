@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_progress_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ProgressWidget Class Reference</div>  </div>
@@ -167,6 +170,59 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a2f86455dd880a393fcca48af01a4787e">jumpToEnd</a> ()</td></tr>
 <tr class="memdesc:a2f86455dd880a393fcca48af01a4787e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jumps the slider progress value to the end of the progress bar. <br /></td></tr>
 <tr class="separator:a2f86455dd880a393fcca48af01a4787e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a87637dbcf3d02245208233e5c35f5a9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87637dbcf3d02245208233e5c35f5a9e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a87637dbcf3d02245208233e5c35f5a9e">sliderPressed</a> ()</td></tr>
+<tr class="memdesc:a87637dbcf3d02245208233e5c35f5a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the user presses down on the slider. Causes a <a class="el" href="class_progress_widget.html#a032ab06d4fe2ef40c91b562d1063e183" title="Emitted when the user presses or releases the slider. mouseDown indicates if a press or release is ha...">userAction()</a> signal to be emitted with "true" input. <br /></td></tr>
+<tr class="separator:a87637dbcf3d02245208233e5c35f5a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a2ff36a7c5967c5c1c773f50be3344"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a14a2ff36a7c5967c5c1c773f50be3344">sliderReleased</a> ()</td></tr>
+<tr class="memdesc:a14a2ff36a7c5967c5c1c773f50be3344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the user releases the slider. Causes a <a class="el" href="class_progress_widget.html#a032ab06d4fe2ef40c91b562d1063e183" title="Emitted when the user presses or releases the slider. mouseDown indicates if a press or release is ha...">userAction()</a> signal to be emitted with "false" input along with a <a class="el" href="class_progress_widget.html#ae040b1c6fa7e8eae6c7b3732ac99c7d0" title="Emitted when the user uses the slider to request that the system using the slider move to a new &quot;prog...">valueRequested()</a> signal with the current slider progress value.  <a href="#a14a2ff36a7c5967c5c1c773f50be3344">More...</a><br /></td></tr>
+<tr class="separator:a14a2ff36a7c5967c5c1c773f50be3344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4fb7679ec73c67aab0ff1d4e424d0c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4fb7679ec73c67aab0ff1d4e424d0c9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#ac4fb7679ec73c67aab0ff1d4e424d0c9">sliderValueChanged</a> (int value)</td></tr>
+<tr class="memdesc:ac4fb7679ec73c67aab0ff1d4e424d0c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the slider values changes. Updates the QLCDNumber with the latest progress value. <br /></td></tr>
+<tr class="separator:ac4fb7679ec73c67aab0ff1d4e424d0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a19bf62d78ed319dd4cd869e9c8b7d8ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a19bf62d78ed319dd4cd869e9c8b7d8ba">verifyHighlightIndex</a> (int index)</td></tr>
+<tr class="memdesc:a19bf62d78ed319dd4cd869e9c8b7d8ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes sure that the highlights_ Hash has an entry at the input index.  <a href="#a19bf62d78ed319dd4cd869e9c8b7d8ba">More...</a><br /></td></tr>
+<tr class="separator:a19bf62d78ed319dd4cd869e9c8b7d8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a140f78568705e16396c8fb8841e9eb05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a140f78568705e16396c8fb8841e9eb05">updateHighlights</a> (bool forceUpdate=false)</td></tr>
+<tr class="memdesc:a140f78568705e16396c8fb8841e9eb05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Redraws all highlight bars in the highlights_ hash.  <a href="#a140f78568705e16396c8fb8841e9eb05">More...</a><br /></td></tr>
+<tr class="separator:a140f78568705e16396c8fb8841e9eb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f7de4008c1db6216d72ddb6496308a5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a7f7de4008c1db6216d72ddb6496308a5">progressToSlider</a> (double progress)</td></tr>
+<tr class="memdesc:a7f7de4008c1db6216d72ddb6496308a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the input value from "progress" units to "tick" units.  <a href="#a7f7de4008c1db6216d72ddb6496308a5">More...</a><br /></td></tr>
+<tr class="separator:a7f7de4008c1db6216d72ddb6496308a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33c29c4343e62032e483a490db1e5e99"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_progress_widget.html#a33c29c4343e62032e483a490db1e5e99">sliderToProgress</a> (int sliderVal)</td></tr>
+<tr class="memdesc:a33c29c4343e62032e483a490db1e5e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the input value from "slider" units to "progres" units.  <a href="#a33c29c4343e62032e483a490db1e5e99">More...</a><br /></td></tr>
+<tr class="separator:a33c29c4343e62032e483a490db1e5e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a44c5ff9476a078d342ae26b36c1fe7d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44c5ff9476a078d342ae26b36c1fe7d0"></a>
+QSlider *&#160;</td><td class="memItemRight" valign="bottom"><b>progSlider_</b></td></tr>
+<tr class="separator:a44c5ff9476a078d342ae26b36c1fe7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6c77530e9ea83c25623dcecbe140f0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6c77530e9ea83c25623dcecbe140f0c"></a>
+QLCDNumber *&#160;</td><td class="memItemRight" valign="bottom"><b>currProgress_</b></td></tr>
+<tr class="separator:ad6c77530e9ea83c25623dcecbe140f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec275435c089d8bd4ef7ad70cfd728a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec275435c089d8bd4ef7ad70cfd728a7"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>maxProgress_</b></td></tr>
+<tr class="separator:aec275435c089d8bd4ef7ad70cfd728a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8bc495fc68f2bb52fa42e72a0a5f80b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8bc495fc68f2bb52fa42e72a0a5f80b"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerUnitProg_</b></td></tr>
+<tr class="separator:ac8bc495fc68f2bb52fa42e72a0a5f80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a19f31bdd8e906642a5a2902c056386"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a19f31bdd8e906642a5a2902c056386"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>max_</b></td></tr>
+<tr class="separator:a3a19f31bdd8e906642a5a2902c056386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4636bb0c6693a1801563f3e20d36f4e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4636bb0c6693a1801563f3e20d36f4e3"></a>
+QHash&lt; int, <a class="el" href="class_highlight_data.html">HighlightData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>highlights_</b></td></tr>
+<tr class="separator:a4636bb0c6693a1801563f3e20d36f4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a5492e85b1060826b1e6e3d7d7af08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65a5492e85b1060826b1e6e3d7d7af08"></a>
+QTime&#160;</td><td class="memItemRight" valign="bottom"><b>frameTimer_</b></td></tr>
+<tr class="separator:a65a5492e85b1060826b1e6e3d7d7af08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Widget that represents some kind of progress along with a slider that can be moved to request changes in the current progress position (like the youtube time bar). </p>
@@ -176,6 +232,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Definition at line <a class="el" href="_progress_widget_8h_source.html#l00028">28</a> of file <a class="el" href="_progress_widget_8h_source.html">ProgressWidget.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a7f7de4008c1db6216d72ddb6496308a5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ProgressWidget::progressToSlider </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>progress</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the input value from "progress" units to "tick" units. </p>
+<p>Since we want to be able to place the slider at non integer points along the progress bar, we use a TICKSPERSEC define to multiply progress, max and min values into units that the Progress bar can understand. </p>
+
+<p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00317">317</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aea4461f0b45753da8eee91645813786a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -356,6 +441,121 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 
 <p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00165">165</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a14a2ff36a7c5967c5c1c773f50be3344"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProgressWidget::sliderReleased </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever the user releases the slider. Causes a <a class="el" href="class_progress_widget.html#a032ab06d4fe2ef40c91b562d1063e183" title="Emitted when the user presses or releases the slider. mouseDown indicates if a press or release is ha...">userAction()</a> signal to be emitted with "false" input along with a <a class="el" href="class_progress_widget.html#ae040b1c6fa7e8eae6c7b3732ac99c7d0" title="Emitted when the user uses the slider to request that the system using the slider move to a new &quot;prog...">valueRequested()</a> signal with the current slider progress value. </p>
+<p>This is how moving the slider signifies that ouside world that the user wants to move to a different progress position. </p>
+
+<p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00346">346</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a33c29c4343e62032e483a490db1e5e99"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ProgressWidget::sliderToProgress </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sliderVal</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the input value from "slider" units to "progres" units. </p>
+<p>Since we want to be able to place the slider at non integer points along the progress bar, we use a TICKSPERSEC define to multiply progress, max and min values into units that the Progress bar can understand. </p>
+
+<p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00327">327</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a140f78568705e16396c8fb8841e9eb05"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProgressWidget::updateHighlights </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>forceUpdate</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Redraws all highlight bars in the highlights_ hash. </p>
+<p>To conserve processor time, this function only operates once per REFRESHINTERVALMS unless forceUpdate is set to true. When forceUpdate is true this function always draws the highlight. </p>
+
+<p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00236">236</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a19bf62d78ed319dd4cd869e9c8b7d8ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProgressWidget::verifyHighlightIndex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Makes sure that the highlights_ Hash has an entry at the input index. </p>
+<p>It adds an entry if there isn't one there. </p><dl class="section note"><dt>Note</dt><dd>This seems like a kind of roundabout way to do something simple. It might be worth looking into this. </dd></dl>
+
+<p>Definition at line <a class="el" href="_progress_widget_8cpp_source.html#l00223">223</a> of file <a class="el" href="_progress_widget_8cpp_source.html">ProgressWidget.cpp</a>.</p>
 
 </div>
 </div>

@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_property_editor_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PropertyEditorFactory Class Reference</div>  </div>
@@ -135,6 +137,27 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:af068c58e375e5541762d73f379b657d0"><td class="memItemLeft" align="right" valign="top">virtual QWidget *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_editor_factory.html#af068c58e375e5541762d73f379b657d0">createEditor</a> (QtVariantPropertyManager *manager, QtProperty *property, QWidget *parent)</td></tr>
 <tr class="memdesc:af068c58e375e5541762d73f379b657d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an editor widget for the input QtProperty that was created by the input manager.  <a href="#af068c58e375e5541762d73f379b657d0">More...</a><br /></td></tr>
 <tr class="separator:af068c58e375e5541762d73f379b657d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a0fb6258457bc86e2fe2d263f724e14c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_editor_factory.html#a0fb6258457bc86e2fe2d263f724e14c2">qtPropValueChanged</a> (QtProperty *property, const QVariant &amp;value)</td></tr>
+<tr class="memdesc:a0fb6258457bc86e2fe2d263f724e14c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever a QtProperty value changes. Looks up the Property represented by this QtProperty and emits propertyEdited with that Property and the value to which is should be changed.  <a href="#a0fb6258457bc86e2fe2d263f724e14c2">More...</a><br /></td></tr>
+<tr class="separator:a0fb6258457bc86e2fe2d263f724e14c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a32aa1e325ae7e14e6e3efeed105c4247"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32aa1e325ae7e14e6e3efeed105c4247"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>nextProp_</b></td></tr>
+<tr class="separator:a32aa1e325ae7e14e6e3efeed105c4247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b8e147f7595904c9e783a7d43d02efb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b8e147f7595904c9e783a7d43d02efb"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:a9b8e147f7595904c9e783a7d43d02efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a3e71a2facbf73b92e375ffa2b7859d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a3e71a2facbf73b92e375ffa2b7859d"></a>
+QHash&lt; QtProperty *, QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>qtpropToPropMap_</b></td></tr>
+<tr class="separator:a8a3e71a2facbf73b92e375ffa2b7859d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ada44ce120647d64212ab8dffe16a06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ada44ce120647d64212ab8dffe16a06"></a>
+QHash&lt; QtVariantPropertyManager *, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>trackedPropManagers_</b></td></tr>
+<tr class="separator:a8ada44ce120647d64212ab8dffe16a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extends the QtVariantEditorFactory to create extra widgets needed by the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> and track the relationship between those widgets, their underlying QtProperties and the Property objects that they represent. </p>
@@ -170,7 +193,7 @@ Protected Member Functions</h2></td></tr>
 <p>Constructs a new <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a>. </p>
 <p>The <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> is needed in the constructor of searchable widgets as well as in order to detect whether there is an active analysis so that non-analysis Properties can be set as read-only. </p>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00023">23</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00022">22</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -216,7 +239,7 @@ Protected Member Functions</h2></td></tr>
 <p>Creates an editor widget for the input QtProperty that was created by the input manager. </p>
 <p>This function extends the QtVariantEditorFactory::createEditor() function to generate some specific widgets needed for Picto, configure generated widgets for the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> mode, and store which Picto Property objects are related to which QtProperty objects. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">setNextProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00056">56</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00055">55</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -257,6 +280,45 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0fb6258457bc86e2fe2d263f724e14c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PropertyEditorFactory::qtPropValueChanged </td>
+          <td>(</td>
+          <td class="paramtype">QtProperty *&#160;</td>
+          <td class="paramname"><em>property</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever a QtProperty value changes. Looks up the Property represented by this QtProperty and emits propertyEdited with that Property and the value to which is should be changed. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">setNextProperty()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00152">152</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ad20c4ac65214aebae5d340042b32231e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +336,7 @@ Protected Member Functions</h2></td></tr>
 <p>Sets the next Property who's QtProperties will be requested in create editor. </p>
 <p>This should be called just before callind a QtPropertyBrowser's addProperty function. It tells this object which Property the next QtProperty is associated with, allowing the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> to look up that Property when QtProperty values are edited by widgets so that the Property can be included in the <a class="el" href="class_property_editor_factory.html#af08e17ed7bfc43dee7cbce5ed9e00e7f" title="Emitted when the prop Property&#39;s value was edited. val is the value which should now be set to it...">propertyEdited()</a> signal. </p>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00036">36</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00035">35</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>

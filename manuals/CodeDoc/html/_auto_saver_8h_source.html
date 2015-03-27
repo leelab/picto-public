@@ -141,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QSharedPointer&lt;QFile&gt; lockFile_;    <span class="comment">//File that is kept open while the application is active to prevent the directory from being deleted.</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QSharedPointer&lt;QFile&gt; designFile_;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QTimer saveTimer_;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">static</span> QWeakPointer&lt;AutoSaver&gt; singleton_;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">   63</a></span>&#160;    <span class="keyword">static</span> QWeakPointer&lt;AutoSaver&gt; <a class="code" href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">singleton_</a>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">private</span> slots:</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> saveDesignToFile();</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> deleteRestorableDesignFile(QString filePath);</div>
@@ -153,6 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
+<div class="ttc" id="class_picto_1_1_auto_saver_html_a587765d50aec742f9ab70b86d64c69e5"><div class="ttname"><a href="class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5">Picto::AutoSaver::singleton_</a></div><div class="ttdeci">static QWeakPointer&lt; AutoSaver &gt; singleton_</div><div class="ttdoc">We never need more than one AutoSaver, but we do need it to use signals and slots, so we implement it as a singleton. </div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8h_source.html#l00063">AutoSaver.h:63</a></div></div>
 <div class="ttc" id="class_picto_1_1_auto_saver_html"><div class="ttname"><a href="class_picto_1_1_auto_saver.html">Picto::AutoSaver</a></div><div class="ttdoc">Handles automatically saving the current Picto Design at a defined interval and restoring previously ...</div><div class="ttdef"><b>Definition:</b> <a href="_auto_saver_8h_source.html#l00029">AutoSaver.h:29</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

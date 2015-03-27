@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_playback_controller_data-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PlaybackControllerData Class Reference</div>  </div>
@@ -210,6 +211,48 @@ QList&lt; QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class
 <a class="el" href="struct_playback_command.html">PlaybackCommand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_playback_controller_data.html#a29956a96a606909177487993b8d03b86">getNextCommand</a> ()</td></tr>
 <tr class="memdesc:a29956a96a606909177487993b8d03b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns and removes the first command in the command queue. <br /></td></tr>
 <tr class="separator:a29956a96a606909177487993b8d03b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae33228ae53d27faba701e590717778a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae33228ae53d27faba701e590717778a0"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex_</b></td></tr>
+<tr class="separator:ae33228ae53d27faba701e590717778a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ac3001ae2fc2082bd74773276f3ec2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0ac3001ae2fc2082bd74773276f3ec2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSetup_</b></td></tr>
+<tr class="separator:ac0ac3001ae2fc2082bd74773276f3ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238a8f1947a7019e501f7678868d557b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a238a8f1947a7019e501f7678868d557b"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currTime_</b></td></tr>
+<tr class="separator:a238a8f1947a7019e501f7678868d557b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a974319839f92165aae641f381c65c573"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a974319839f92165aae641f381c65c573"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runSpeed_</b></td></tr>
+<tr class="separator:a974319839f92165aae641f381c65c573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad18b397951a4cd8320a4aa794bc14031"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad18b397951a4cd8320a4aa794bc14031"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>runLength_</b></td></tr>
+<tr class="separator:ad18b397951a4cd8320a4aa794bc14031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a8e81c0f98c7640cd86fdafe6823060"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a8e81c0f98c7640cd86fdafe6823060"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>filePath_</b></td></tr>
+<tr class="separator:a9a8e81c0f98c7640cd86fdafe6823060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf99a8a5453b344a293dd954dd08fec6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf99a8a5453b344a293dd954dd08fec6"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>nextFilePath_</b></td></tr>
+<tr class="separator:abf99a8a5453b344a293dd954dd08fec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b7b1bca2284c6aa4743ddd3e53e0424"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b7b1bca2284c6aa4743ddd3e53e0424"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>lfpEnabled_</b></td></tr>
+<tr class="separator:a7b7b1bca2284c6aa4743ddd3e53e0424"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d96012b66034f9cc67ff9155b4b5dff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d96012b66034f9cc67ff9155b4b5dff"></a>
+QList&lt; QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>enabledAnalyses_</b></td></tr>
+<tr class="separator:a5d96012b66034f9cc67ff9155b4b5dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6192581c504f618dbafb51e2d7cdb09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6192581c504f618dbafb51e2d7cdb09"></a>
+QList&lt; QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>enabledImportedAnalyses_</b></td></tr>
+<tr class="separator:af6192581c504f618dbafb51e2d7cdb09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a285ec8b12264146cb9012f50bd616ab7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a285ec8b12264146cb9012f50bd616ab7"></a>
+<a class="el" href="class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
+<tr class="separator:a285ec8b12264146cb9012f50bd616ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf56d9a7df3155b60f18a2c8cf711af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cf56d9a7df3155b60f18a2c8cf711af"></a>
+<a class="el" href="class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nextStatus_</b></td></tr>
+<tr class="separator:a4cf56d9a7df3155b60f18a2c8cf711af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab309ca55d10ba4c7899d63ec691f01d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab309ca55d10ba4c7899d63ec691f01d"></a>
+QVector&lt; <a class="el" href="struct_playback_command.html">PlaybackCommand</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cmds_</b></td></tr>
+<tr class="separator:aab309ca55d10ba4c7899d63ec691f01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class holds data for the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Since this class ends up being called by both the GUI and playback threads, functions use mutexes and are thread safe. </p>

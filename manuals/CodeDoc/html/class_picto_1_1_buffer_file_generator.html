@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_buffer_file_generator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::BufferFileGenerator Class Reference</div>  </div>
@@ -108,6 +110,28 @@ Static Public Member Functions</h2></td></tr>
 static QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_buffer_file_generator.html#afa04c82713737e28dc38e0d6d28445d1">createTempFile</a> (QString subDirName, QString fileType)</td></tr>
 <tr class="memdesc:afa04c82713737e28dc38e0d6d28445d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a temporary file in the subDirName sub-directory of the "TemporaryFiles" directory in the Picto run path and returns a shared pointer to the file. <br /></td></tr>
 <tr class="separator:afa04c82713737e28dc38e0d6d28445d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a84f475e6e23c897d83773b488b0379b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84f475e6e23c897d83773b488b0379b3"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_buffer_file_generator.html#a84f475e6e23c897d83773b488b0379b3">createSubDirectory</a> (QString subDirName)</td></tr>
+<tr class="memdesc:a84f475e6e23c897d83773b488b0379b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a subdirectory called subDirName within the statically generated temporary directory ("TemporaryFiles") and returns its absolute path. <br /></td></tr>
+<tr class="separator:a84f475e6e23c897d83773b488b0379b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ad093ade390437ef99d8aada3ccd7a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_buffer_file_generator.html#aa7ad093ade390437ef99d8aada3ccd7a">initTempOutputDir</a> ()</td></tr>
+<tr class="memdesc:aa7ad093ade390437ef99d8aada3ccd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty temporary directory ("TemporaryFiles") in the runpath once per executable run, clearing out any previous contents if there were any.  <a href="#aa7ad093ade390437ef99d8aada3ccd7a">More...</a><br /></td></tr>
+<tr class="separator:aa7ad093ade390437ef99d8aada3ccd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af54ca05b0febd4013ed7a089c2662057"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_buffer_file_generator.html#af54ca05b0febd4013ed7a089c2662057">removeFilesThenDirectories</a> (QDir container)</td></tr>
+<tr class="memdesc:af54ca05b0febd4013ed7a089c2662057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes everything in the input directory and all of its sub directories.  <a href="#af54ca05b0febd4013ed7a089c2662057">More...</a><br /></td></tr>
+<tr class="separator:af54ca05b0febd4013ed7a089c2662057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a4ed30a522b24f7bed310884d76768d6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ed30a522b24f7bed310884d76768d6e"></a>
+static QString&#160;</td><td class="memItemRight" valign="bottom"><b>outputDir_</b></td></tr>
+<tr class="separator:a4ed30a522b24f7bed310884d76768d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae19c1f39e136d56b8c40948de605ef6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae19c1f39e136d56b8c40948de605ef6f"></a>
+static QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lockFile_</b></td></tr>
+<tr class="separator:ae19c1f39e136d56b8c40948de605ef6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Creates temporary files in a temporary directory that is cleared everytime a new Pictoworkstation is opened so long as no other workstations were already open at the time. </p>
@@ -116,7 +140,65 @@ static QSharedPointer&lt; QFile &gt;&#160;</td><td class="memItemRight" valign="
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_buffer_file_generator_8h_source.html#l00029">29</a> of file <a class="el" href="_buffer_file_generator_8h_source.html">BufferFileGenerator.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa7ad093ade390437ef99d8aada3ccd7a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BufferFileGenerator::initTempOutputDir </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an empty temporary directory ("TemporaryFiles") in the runpath once per executable run, clearing out any previous contents if there were any. </p>
+<p>We want to make sure that even if multiple Picto applications are open at the same time, no one will remove the data that we are currently using. We also want to erase the data if we are just opening for the first time and no one else is using the data in the temporary folder. For this reason, we attempt to remove all files at the top level of the temporary directory, then if successful, remove all other contained directories as well. We then create a top level file in the temporary directory and leave it open until the application closes. If another workstation is open, we won't succeed in removing its open file so we wont delete the temporary directory contents, otherwise, we will. </p>
+
+<p>Definition at line <a class="el" href="_buffer_file_generator_8cpp_source.html#l00053">53</a> of file <a class="el" href="_buffer_file_generator_8cpp_source.html">BufferFileGenerator.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af54ca05b0febd4013ed7a089c2662057"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BufferFileGenerator::removeFilesThenDirectories </td>
+          <td>(</td>
+          <td class="paramtype">QDir&#160;</td>
+          <td class="paramname"><em>container</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes everything in the input directory and all of its sub directories. </p>
+<p>Stops at any level where a file cannot be removed. </p>
+
+<p>Definition at line <a class="el" href="_buffer_file_generator_8cpp_source.html#l00085">85</a> of file <a class="el" href="_buffer_file_generator_8cpp_source.html">BufferFileGenerator.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/iodevices/<a class="el" href="_buffer_file_generator_8h_source.html">BufferFileGenerator.h</a></li>
 <li>source/common/iodevices/<a class="el" href="_buffer_file_generator_8cpp_source.html">BufferFileGenerator.cpp</a></li>
 </ul>

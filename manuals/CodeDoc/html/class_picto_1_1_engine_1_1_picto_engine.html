@@ -94,6 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_engine_1_1_picto_engine-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::Engine::PictoEngine Class Reference</div>  </div>
@@ -353,6 +356,143 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab388a122f147a8b48b495190af170f64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab388a122f147a8b48b495190af170f64">flushRequest</a> (int channel)</td></tr>
 <tr class="memdesc:ab388a122f147a8b48b495190af170f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts flushing on the input channel or stops a flush that is in progress on that channel.  <a href="#ab388a122f147a8b48b495190af170f64">More...</a><br /></td></tr>
 <tr class="separator:ab388a122f147a8b48b495190af170f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a8e4f29366b2d6fc9156ed221b6586599"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e4f29366b2d6fc9156ed221b6586599"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a8e4f29366b2d6fc9156ed221b6586599">addChangedPropertyValue</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *changedProp)</td></tr>
+<tr class="memdesc:a8e4f29366b2d6fc9156ed221b6586599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Informs this engine of a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> whose value changed so that it can be included in the <a class="el" href="class_picto_1_1_property_data_unit_package.html" title="Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame...">PropertyDataUnitPackage</a> returned from <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab55955373ab32442382f678ea35166c6" title="Retrieves the latest package of changed properties. ">getChangedPropertyPackage()</a>. <br /></td></tr>
+<tr class="separator:a8e4f29366b2d6fc9156ed221b6586599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab977c50a4a4e8e4a7b174049d9485875"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab977c50a4a4e8e4a7b174049d9485875"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab977c50a4a4e8e4a7b174049d9485875">addChangedPropertyInitValue</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *changedProp)</td></tr>
+<tr class="memdesc:ab977c50a4a4e8e4a7b174049d9485875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Informs this engine of a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> whose init value changed so that it can be included in the <a class="el" href="class_picto_1_1_property_data_unit_package.html" title="Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame...">PropertyDataUnitPackage</a> returned from <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab55955373ab32442382f678ea35166c6" title="Retrieves the latest package of changed properties. ">getChangedPropertyPackage()</a>. <br /></td></tr>
+<tr class="separator:ab977c50a4a4e8e4a7b174049d9485875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86726506030d363f3e49e7f726197e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab86726506030d363f3e49e7f726197e8">firstPhosphorOperations</a> (double frameTime)</td></tr>
+<tr class="memdesc:ab86726506030d363f3e49e7f726197e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs various operations that need to occur once per frame as soon as possible after the first phosphor is rendered to the display.  <a href="#ab86726506030d363f3e49e7f726197e8">More...</a><br /></td></tr>
+<tr class="separator:ab86726506030d363f3e49e7f726197e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a56fd651acc78bbee6812caf48ad56848"><td class="memItemLeft" align="right" valign="top">QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a56fd651acc78bbee6812caf48ad56848">getIpAddress</a> ()</td></tr>
+<tr class="memdesc:a56fd651acc78bbee6812caf48ad56848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns this machines current IP Address.  <a href="#a56fd651acc78bbee6812caf48ad56848">More...</a><br /></td></tr>
+<tr class="separator:a56fd651acc78bbee6812caf48ad56848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad1f197a1eccb934f992a384fbbf8493e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1f197a1eccb934f992a384fbbf8493e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>bExclusiveMode_</b></td></tr>
+<tr class="separator:ad1f197a1eccb934f992a384fbbf8493e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58829b1582f4dded4580b00d3dfaf5a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58829b1582f4dded4580b00d3dfaf5a0"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_event_code_generator.html">EventCodeGenerator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>eventCodeGenerator_</b></td></tr>
+<tr class="separator:a58829b1582f4dded4580b00d3dfaf5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6ba864e5318435edb1ab5fa8080ff8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c6ba864e5318435edb1ab5fa8080ff8"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_channel.html">SignalChannel</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalChannels_</b></td></tr>
+<tr class="separator:a0c6ba864e5318435edb1ab5fa8080ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40e09cd63b0db8462a352f5ad40d5c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af40e09cd63b0db8462a352f5ad40d5c0"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="struct_picto_1_1_rendering_target.html">RenderingTarget</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>renderingTargets_</b></td></tr>
+<tr class="separator:af40e09cd63b0db8462a352f5ad40d5c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a443b7d7858d626e49021f166cb6520fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a443b7d7858d626e49021f166cb6520fc"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_control_panel_interface.html">ControlPanelInterface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>controlPanelIfs_</b></td></tr>
+<tr class="separator:a443b7d7858d626e49021f166cb6520fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a501613d349151c5032a59d802221c1d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a501613d349151c5032a59d802221c1d6"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_controller.html">RewardController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardController_</b></td></tr>
+<tr class="separator:a501613d349151c5032a59d802221c1d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07b37238fd676e382e91836677768b99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07b37238fd676e382e91836677768b99"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_output_signal_controller.html">OutputSignalController</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outSigControllers_</b></td></tr>
+<tr class="separator:a07b37238fd676e382e91836677768b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed937607c1e1840333d4d433e3dafb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ed937607c1e1840333d4d433e3dafb0"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit_package.html">PropertyDataUnitPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>propPackage_</b></td></tr>
+<tr class="separator:a9ed937607c1e1840333d4d433e3dafb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b3f3d450e97356dac17515071e00609"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b3f3d450e97356dac17515071e00609"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_data_unit_package.html">StateDataUnitPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateDataPackage_</b></td></tr>
+<tr class="separator:a9b3f3d450e97356dac17515071e00609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5dc1256f6c3887cb039957e6f6acfef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5dc1256f6c3887cb039957e6f6acfef"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_command_channel.html">CommandChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataCommandChannel_</b></td></tr>
+<tr class="separator:aa5dc1256f6c3887cb039957e6f6acfef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051df94b21c51baa5a98ce52c0488f5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a051df94b21c51baa5a98ce52c0488f5e"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_command_channel.html">CommandChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>updateCommandChannel_</b></td></tr>
+<tr class="separator:a051df94b21c51baa5a98ce52c0488f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a3744b30c2bc40565deb096beb2d2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21a3744b30c2bc40565deb096beb2d2d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_command_channel.html">CommandChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fpCommandChannel_</b></td></tr>
+<tr class="separator:a21a3744b30c2bc40565deb096beb2d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04ade401fc905ea7a8a359dad57eec53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04ade401fc905ea7a8a359dad57eec53"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_command_channel.html">CommandChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fpEventChannel_</b></td></tr>
+<tr class="separator:a04ade401fc905ea7a8a359dad57eec53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95229fe753118d33e15e6ee491771d0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95229fe753118d33e15e6ee491771d0f"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_table.html">PropertyTable</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>propTable_</b></td></tr>
+<tr class="separator:a95229fe753118d33e15e6ee491771d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af96b5af3dfdfbbbdf06b2f04e989ae8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af96b5af3dfdfbbbdf06b2f04e989ae8a"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_data_unit.html">RewardDataUnit</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deliveredRewards_</b></td></tr>
+<tr class="separator:af96b5af3dfdfbbbdf06b2f04e989ae8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef5c1688c5dcce5311ed7d027c3fae14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef5c1688c5dcce5311ed7d027c3fae14"></a>
+QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardDurations_</b></td></tr>
+<tr class="separator:aef5c1688c5dcce5311ed7d027c3fae14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9f66a33dda7f633a56eb7091824107a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9f66a33dda7f633a56eb7091824107a"></a>
+QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flushDurations_</b></td></tr>
+<tr class="separator:ab9f66a33dda7f633a56eb7091824107a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f3ffa75c8b9ba91188ea6698ea3ce2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f3ffa75c8b9ba91188ea6698ea3ce2f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunStarting_</b></td></tr>
+<tr class="separator:a7f3ffa75c8b9ba91188ea6698ea3ce2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad346666f3fb9454511e085d013a65703"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad346666f3fb9454511e085d013a65703"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunEnding_</b></td></tr>
+<tr class="separator:ad346666f3fb9454511e085d013a65703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d895a4afe7e3c802910d44a5b10e847"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d895a4afe7e3c802910d44a5b10e847"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunName_</b></td></tr>
+<tr class="separator:a9d895a4afe7e3c802910d44a5b10e847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a287aa41ec2561fde014cfd668dedb174"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a287aa41ec2561fde014cfd668dedb174"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_run_data_unit.html">TaskRunDataUnit</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunUnit_</b></td></tr>
+<tr class="separator:a287aa41ec2561fde014cfd668dedb174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a85a20e09a706aff2fe3c6a51a0f490"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a85a20e09a706aff2fe3c6a51a0f490"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designConfig_</b></td></tr>
+<tr class="separator:a8a85a20e09a706aff2fe3c6a51a0f490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e9b92345c7101b90d58975e80f8579c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e9b92345c7101b90d58975e80f8579c"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>rewardListMutex_</b></td></tr>
+<tr class="separator:a5e9b92345c7101b90d58975e80f8579c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf5af57a1e3f51970cee0061c7e753ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf5af57a1e3f51970cee0061c7e753ce"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>rewardMutex_</b></td></tr>
+<tr class="separator:abf5af57a1e3f51970cee0061c7e753ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfa161d07c6f77343b0643c2c88146f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dfa161d07c6f77343b0643c2c88146f"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>sessionId_</b></td></tr>
+<tr class="separator:a3dfa161d07c6f77343b0643c2c88146f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa3339cb92ab9d084192c1534e3eece"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fa3339cb92ab9d084192c1534e3eece"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>name_</b></td></tr>
+<tr class="separator:a3fa3339cb92ab9d084192c1534e3eece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da563dd12c4225dc3480f794a462826"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9da563dd12c4225dc3480f794a462826"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_controller_1_1_frame_timer_factory.html">Controller::FrameTimerFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frameTimerFactory_</b></td></tr>
+<tr class="separator:a9da563dd12c4225dc3480f794a462826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a308e1a110e58352216f37d7f9540bcd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a308e1a110e58352216f37d7f9540bcd0"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_frame_reader.html">LiveFrameReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frameReader_</b></td></tr>
+<tr class="separator:a308e1a110e58352216f37d7f9540bcd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ccc1ea79b7cd77d510a03029c9bde7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ccc1ea79b7cd77d510a03029c9bde7c"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_lfp_reader.html">LiveLfpReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lfpReader_</b></td></tr>
+<tr class="separator:a6ccc1ea79b7cd77d510a03029c9bde7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5088e0395233bd06db884e7ff02c3944"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5088e0395233bd06db884e7ff02c3944"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_reward_reader.html">LiveRewardReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardReader_</b></td></tr>
+<tr class="separator:a5088e0395233bd06db884e7ff02c3944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74aec83c198874916ca609bb0403a406"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74aec83c198874916ca609bb0403a406"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_spike_reader.html">LiveSpikeReader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikeReader_</b></td></tr>
+<tr class="separator:a74aec83c198874916ca609bb0403a406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12c58f2c093bcfb48e36f3949a38b3e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12c58f2c093bcfb48e36f3949a38b3e0"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_live_signal_reader.html">LiveSignalReader</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalReaders_</b></td></tr>
+<tr class="separator:a12c58f2c093bcfb48e36f3949a38b3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1780861107aa634e319d3a3635792a09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1780861107aa634e319d3a3635792a09"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>engineCommand_</b></td></tr>
+<tr class="separator:a1780861107aa634e319d3a3635792a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe30cb0c8dc627111dc5c6c49a5d20d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe30cb0c8dc627111dc5c6c49a5d20d4"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_updater.html">StateUpdater</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stateUpdater_</b></td></tr>
+<tr class="separator:afe30cb0c8dc627111dc5c6c49a5d20d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff6fecf62bf544604d5f88101a0ce2cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff6fecf62bf544604d5f88101a0ce2cc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>slave_</b></td></tr>
+<tr class="separator:aff6fecf62bf544604d5f88101a0ce2cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab25b8ac96b7845f91742439325d24aec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab25b8ac96b7845f91742439325d24aec"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>userIsOperator_</b></td></tr>
+<tr class="separator:ab25b8ac96b7845f91742439325d24aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a021c0c16164ef6e26d0e5b79e1fdb000"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a021c0c16164ef6e26d0e5b79e1fdb000"></a>
+qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>lastFrameId_</b></td></tr>
+<tr class="separator:a021c0c16164ef6e26d0e5b79e1fdb000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaca19157265e10d9f0ae68861d34552"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abaca19157265e10d9f0ae68861d34552"></a>
+QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b></td></tr>
+<tr class="separator:abaca19157265e10d9f0ae68861d34552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Runs a Picto <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>. </p>
@@ -554,6 +694,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="ab86726506030d363f3e49e7f726197e8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::Engine::PictoEngine::firstPhosphorOperations </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>frameTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs various operations that need to occur once per frame as soon as possible after the first phosphor is rendered to the display. </p>
+<p>This is called when the <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> detects that the first phosphor was rendered. It first updates OutputSignalControllers to implement any changes to output voltage signals, it then starts/stops any rewards that need to be updated, next it updates all data on input signal channels (ie. reads in latest data from buffers, aligns input hardware timing with Picto timing), afterward ControlPanelInterfaces respond to incoming commands from ControlPanels and <a class="el" href="class_picto_1_1_signal_value_parameter.html" title="A Parameter that can be used to capture the latest values of an input signal. ">SignalValueParameter</a> objects are updated with the latest values of their referenced SignalChannels. </p>
+
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00885">885</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab388a122f147a8b48b495190af170f64"></a>
 <div class="memitem">
 <div class="memproto">
@@ -739,6 +908,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>When this function is called, stored signal data is cleared such that each <a class="el" href="class_picto_1_1_behavioral_data_unit_package.html" title="Stores behavioral data (data from a SignalChannel) as a list BehavioralDataUnits (ie. x,y readings) ">BehavioralDataUnitPackage</a> list can only be retrieved once and includes data regarding signal values since the last time the function was called. </p>
 
 <p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00424">424</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a56fd651acc78bbee6812caf48ad56848"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QHostAddress Picto::Engine::PictoEngine::getIpAddress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns this machines current IP Address. </p>
+<dl class="section note"><dt>Note</dt><dd>The method used for detecting the IP Address is that we use the first IPv4 address that isn't localhost and is on an interface that is up and running. This has worked correctly so far, but there could possibly be some issues with strange networking setups. </dd></dl>
+
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00843">843</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>

@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_associate_element-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::AssociateElement Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -172,6 +173,12 @@ virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset
 <tr class="memitem:a27017fa6d089ea68493f899d748e8b27"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a27017fa6d089ea68493f899d748e8b27">updateLinkPath</a> (QString oldPrefix, QString newPrefix)=0</td></tr>
 <tr class="memdesc:a27017fa6d089ea68493f899d748e8b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the section at the beginning of the linked path which is input as oldPrefix to the input newPrefix value.  <a href="#a27017fa6d089ea68493f899d748e8b27">More...</a><br /></td></tr>
 <tr class="separator:a27017fa6d089ea68493f899d748e8b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5a38b64ff66a7fa19e87b4c95fbec2fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a38b64ff66a7fa19e87b4c95fbec2fa"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>AssociateRootId_</b></td></tr>
+<tr class="separator:a5a38b64ff66a7fa19e87b4c95fbec2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AssociateElements are the child elements of an <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>. They have the capability to link to a DesignElement to provide extra non-vital information about that element. </p>

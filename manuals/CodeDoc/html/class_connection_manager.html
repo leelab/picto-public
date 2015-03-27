@@ -88,6 +88,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_connection_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ConnectionManager Class Reference</div>  </div>
@@ -171,6 +175,53 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4061f5b6a3cb842f3ecce80d776db0d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_connection_manager.html">ConnectionManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#aa4061f5b6a3cb842f3ecce80d776db0d">Instance</a> ()</td></tr>
 <tr class="memdesc:aa4061f5b6a3cb842f3ecce80d776db0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_connection_manager.html" title="Keeps track of all active Components (Director/Proxy) as well as all active and recently timed out Se...">ConnectionManager</a> instance.  <a href="#aa4061f5b6a3cb842f3ecce80d776db0d">More...</a><br /></td></tr>
 <tr class="separator:aa4061f5b6a3cb842f3ecce80d776db0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ad2dcd7dee419120383c227e27769d0ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#ad2dcd7dee419120383c227e27769d0ac">checkForTimeouts</a> ()</td></tr>
+<tr class="memdesc:ad2dcd7dee419120383c227e27769d0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for timed out connections and flushes cached session data to disk.  <a href="#ad2dcd7dee419120383c227e27769d0ac">More...</a><br /></td></tr>
+<tr class="separator:ad2dcd7dee419120383c227e27769d0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a68db2f9138942ef16d50ebd753188410"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a68db2f9138942ef16d50ebd753188410">ConnectionManager</a> ()</td></tr>
+<tr class="memdesc:a68db2f9138942ef16d50ebd753188410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private constructor.  <a href="#a68db2f9138942ef16d50ebd753188410">More...</a><br /></td></tr>
+<tr class="separator:a68db2f9138942ef16d50ebd753188410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d5b01d3fd4cc2909cbee0ce164726e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d5b01d3fd4cc2909cbee0ce164726e0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b> (<a class="el" href="class_connection_manager.html">ConnectionManager</a> const &amp;)</td></tr>
+<tr class="separator:a1d5b01d3fd4cc2909cbee0ce164726e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e96a5bee50169252a6590909e9be84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_connection_manager.html">ConnectionManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a7e96a5bee50169252a6590909e9be84e">operator=</a> (<a class="el" href="class_connection_manager.html">ConnectionManager</a> const &amp;)</td></tr>
+<tr class="memdesc:a7e96a5bee50169252a6590909e9be84e"><td class="mdescLeft">&#160;</td><td class="mdescRight">empty private copy constructor  <a href="#a7e96a5bee50169252a6590909e9be84e">More...</a><br /></td></tr>
+<tr class="separator:a7e96a5bee50169252a6590909e9be84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ced72d69ba7869ccd4cc6cdb7192139"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a4ced72d69ba7869ccd4cc6cdb7192139">checkForDroppedSessionTimeouts</a> ()</td></tr>
+<tr class="memdesc:a4ced72d69ba7869ccd4cc6cdb7192139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for sessions that were dropped and timed out a long time ago and removes them from the <a class="el" href="class_server_config.html" title="ServerConfig handles the configuration of a PictoServer. ">ServerConfig</a> object.  <a href="#a4ced72d69ba7869ccd4cc6cdb7192139">More...</a><br /></td></tr>
+<tr class="separator:a4ced72d69ba7869ccd4cc6cdb7192139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a020e94af6ebbacc025ad483f425e80d7"><td class="memItemLeft" align="right" valign="top">QMutex *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a020e94af6ebbacc025ad483f425e80d7">mutex_</a></td></tr>
+<tr class="separator:a020e94af6ebbacc025ad483f425e80d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a747a0b9f030eec9390a4e30efa47058e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a747a0b9f030eec9390a4e30efa47058e"></a>
+QMap&lt; QUuid, QSharedPointer&lt; <a class="el" href="class_component_info.html">ComponentInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a747a0b9f030eec9390a4e30efa47058e">components_</a></td></tr>
+<tr class="memdesc:a747a0b9f030eec9390a4e30efa47058e"><td class="mdescLeft">&#160;</td><td class="mdescRight">QUuid = component's unique user Id delivered in its messages. <br /></td></tr>
+<tr class="separator:a747a0b9f030eec9390a4e30efa47058e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c0aef7bb504889dfa32b595111fc4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18c0aef7bb504889dfa32b595111fc4a"></a>
+QMap&lt; QUuid, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>openSessions_</b></td></tr>
+<tr class="separator:a18c0aef7bb504889dfa32b595111fc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c08218aa6054d303a9b9132a07c3b9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c08218aa6054d303a9b9132a07c3b9b"></a>
+QMap&lt; QUuid, QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#a1c08218aa6054d303a9b9132a07c3b9b">pendingSessions_</a></td></tr>
+<tr class="memdesc:a1c08218aa6054d303a9b9132a07c3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">First QUuid is the directors ID, second is the Session ID. <br /></td></tr>
+<tr class="separator:a1c08218aa6054d303a9b9132a07c3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a507f2086a8b21126d65d9de33d3b4aee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a507f2086a8b21126d65d9de33d3b4aee"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutTimer_</b></td></tr>
+<tr class="separator:a507f2086a8b21126d65d9de33d3b4aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:ace292afdeb91489451efcf3405c839c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace292afdeb91489451efcf3405c839c9"></a>
+static <a class="el" href="class_connection_manager.html">ConnectionManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection_manager.html#ace292afdeb91489451efcf3405c839c9">conMan_</a> = 0</td></tr>
+<tr class="memdesc:ace292afdeb91489451efcf3405c839c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The single allowed instance of a <a class="el" href="class_connection_manager.html" title="Keeps track of all active Components (Director/Proxy) as well as all active and recently timed out Se...">ConnectionManager</a> object. <br /></td></tr>
+<tr class="separator:ace292afdeb91489451efcf3405c839c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Keeps track of all active Components (Director/Proxy) as well as all active and recently timed out Sessions. The Components used with each Session, active or timed out, are tracked as well. </p>
@@ -179,7 +230,93 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_connection_manager_8h_source.html#l00030">30</a> of file <a class="el" href="_connection_manager_8h_source.html">ConnectionManager.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a68db2f9138942ef16d50ebd753188410"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ConnectionManager::ConnectionManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Private constructor. </p>
+<p>Starts a timeout timer that is used to flush cached data to disk and check to see if any components have stopped talking to the server. </p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8cpp_source.html#l00024">24</a> of file <a class="el" href="_connection_manager_8cpp_source.html">ConnectionManager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4ced72d69ba7869ccd4cc6cdb7192139"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConnectionManager::checkForDroppedSessionTimeouts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks for sessions that were dropped and timed out a long time ago and removes them from the <a class="el" href="class_server_config.html" title="ServerConfig handles the configuration of a PictoServer. ">ServerConfig</a> object. </p>
+<p>The maximum time that a dropped session sticks around before being removed is set in DROPPED_SESSION_TIMEOUT_DAYS. </p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8cpp_source.html#l00562">562</a> of file <a class="el" href="_connection_manager_8cpp_source.html">ConnectionManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad2dcd7dee419120383c227e27769d0ac"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConnectionManager::checkForTimeouts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks for timed out connections and flushes cached session data to disk. </p>
+<p>The timeout timer calls this function on a fixed interval. Whenever it is called, first check for session timeouts. This is done by calling the clearActivity function which clears the activity bool and returns its value. If there has been no activity since the last time we checked, check if any components are still active in this session (ie. Still providing data). If they are, the session instance should be removed from our list and kept in the opensessions list in case we just lost a connection with one of the components and it is going to try to reconnect. If all components are no longer active, we should end the session.</p>
+<p>If there has been activity on the session, we should set all of that sessions components active, since we don't want any of them timing out if there are any that haven't timed out. This is also where we initiate a flush of cached data to disk. The actual <a class="el" href="class_session_info.html#af4106254bbe6282aae6e79e3b92ece2b" title="Dumps the RAM cached data into the file based Session database. ">SessionInfo::flushCache()</a> is performed in a separate thread though so as to not block this function. </p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8cpp_source.html#l00075">75</a> of file <a class="el" href="_connection_manager_8cpp_source.html">ConnectionManager.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aa0e821de2a8b6578a121ba64e999b7e5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -456,6 +593,35 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7e96a5bee50169252a6590909e9be84e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_connection_manager.html">ConnectionManager</a>&amp; ConnectionManager::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_connection_manager.html">ConnectionManager</a> const &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>empty private copy constructor </p>
+<p>empty private assignment operator </p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8h_source.html#l00069">69</a> of file <a class="el" href="_connection_manager_8h_source.html">ConnectionManager.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aab7005e98b0721aa376e3ad37e96bd7f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -571,6 +737,30 @@ Static Public Member Functions</h2></td></tr>
 <p>Everytime the COMPONENTUPDATE command is received by the server, this function gets called. The function checks to see if the component instance referenced is in our list, and if not adds it. If the instance already exists, the function makes any needed changes. This function also calls setActivity() for the component to indicate that communication with that component is active. </p><dl class="section note"><dt>Note</dt><dd>The component's Uuid is being used as a primary key here. </dd></dl>
 
 <p>Definition at line <a class="el" href="_connection_manager_8cpp_source.html#l00143">143</a> of file <a class="el" href="_connection_manager_8cpp_source.html">ConnectionManager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a020e94af6ebbacc025ad483f425e80d7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QMutex* ConnectionManager::mutex_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mutex - We are using a single mutex to protect access to everything (I tried using multiple mutexes earlier and managed to deadlock the server, so even though this is slightly less efficient, it's a lot cleaner.) </p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8h_source.html#l00079">79</a> of file <a class="el" href="_connection_manager_8h_source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div>

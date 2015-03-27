@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_diagram_item_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DiagramItemFactory Class Reference</div>  </div>
@@ -118,6 +121,35 @@ static QIcon&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a734298bc1d8a79757c6ee7418d961f73"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item_factory.html#a734298bc1d8a79757c6ee7418d961f73">addIconDefinition</a> (QString assetType, QString fileName, float width, float height)</td></tr>
 <tr class="memdesc:a734298bc1d8a79757c6ee7418d961f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <a class="el" href="struct_icon_def.html">IconDef</a> using the input parameters and adds it to the iconDefs_ lookup table under the input assetType.  <a href="#a734298bc1d8a79757c6ee7418d961f73">More...</a><br /></td></tr>
 <tr class="separator:a734298bc1d8a79757c6ee7418d961f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:aea2080d4d02c2e8825c87be3af063f03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_icon_def.html">IconDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item_factory.html#aea2080d4d02c2e8825c87be3af063f03">getIconDef</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
+<tr class="memdesc:aea2080d4d02c2e8825c87be3af063f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="struct_icon_def.html">IconDef</a> that should be used for the input Asset.  <a href="#aea2080d4d02c2e8825c87be3af063f03">More...</a><br /></td></tr>
+<tr class="separator:aea2080d4d02c2e8825c87be3af063f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae72884b706c673d528445346c840da0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae72884b706c673d528445346c840da0e"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:ae72884b706c673d528445346c840da0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a677daa0ad6fefce0243bcc4f45d31c8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a677daa0ad6fefce0243bcc4f45d31c8c"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>contextMenu_</b></td></tr>
+<tr class="separator:a677daa0ad6fefce0243bcc4f45d31c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a51b86edcbd1bbcb6b393746b756840"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a51b86edcbd1bbcb6b393746b756840"></a>
+QGraphicsScene *&#160;</td><td class="memItemRight" valign="bottom"><b>scene_</b></td></tr>
+<tr class="separator:a6a51b86edcbd1bbcb6b393746b756840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a0ace54baac6a8416b1c8196df2ec4678"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ace54baac6a8416b1c8196df2ec4678"></a>
+static QMap&lt; QString, <a class="el" href="struct_icon_def.html">IconDef</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item_factory.html#a0ace54baac6a8416b1c8196df2ec4678">iconDefs_</a></td></tr>
+<tr class="memdesc:a0ace54baac6a8416b1c8196df2ec4678"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lookup table of <a class="el" href="struct_icon_def.html">IconDef</a> structs indexed by the UITemplate name to which they belong. <br /></td></tr>
+<tr class="separator:a0ace54baac6a8416b1c8196df2ec4678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676bb7e5ff8981cdab42d5efcb81c786"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a676bb7e5ff8981cdab42d5efcb81c786"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item_factory.html#a676bb7e5ff8981cdab42d5efcb81c786">mapInitialized_</a> = false</td></tr>
+<tr class="memdesc:a676bb7e5ff8981cdab42d5efcb81c786"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag indicating whether the icondDefs_ lookup table has been initialized yet. <br /></td></tr>
+<tr class="separator:a676bb7e5ff8981cdab42d5efcb81c786"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles creation of DiagramItems for Design Assets in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
@@ -212,6 +244,35 @@ static QIcon&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <dl class="section note"><dt>Note</dt><dd>There is some inconsistent naming here for historical reasons that should be fixed. AssetType is really just the UITemplate name that is returned from UIEnabled::getUITemplate() and is sometimes named correctly and sometimes named assetType. This should probably be fixed. </dd></dl>
 
 <p>Definition at line <a class="el" href="_diagram_item_factory_8cpp_source.html#l00192">192</a> of file <a class="el" href="_diagram_item_factory_8cpp_source.html">DiagramItemFactory.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea2080d4d02c2e8825c87be3af063f03"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_icon_def.html">IconDef</a> DiagramItemFactory::getIconDef </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the <a class="el" href="struct_icon_def.html">IconDef</a> that should be used for the input Asset. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_item_factory.html#a734298bc1d8a79757c6ee7418d961f73" title="Creates an IconDef using the input parameters and adds it to the iconDefs_ lookup table under the inp...">addIconDefinition()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_diagram_item_factory_8cpp_source.html#l00200">200</a> of file <a class="el" href="_diagram_item_factory_8cpp_source.html">DiagramItemFactory.cpp</a>.</p>
 
 </div>
 </div>

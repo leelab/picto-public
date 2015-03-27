@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_asset_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -251,6 +253,34 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#afe6a5812a322d49ea7da56bfccdc98dc">getEditorState</a> ()</td></tr>
 <tr class="memdesc:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> object that is being used with this <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. <br /></td></tr>
 <tr class="separator:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a6e6b6eda09d048a146c05c9d2ae43d3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e6b6eda09d048a146c05c9d2ae43d3a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_item.html#a6e6b6eda09d048a146c05c9d2ae43d3a">searchRequested</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
+<tr class="memdesc:a6e6b6eda09d048a146c05c9d2ae43d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a search has been requested to highlight the search string in the <a class="el" href="class_asset_item.html" title="A DiagramItem used to display DataStores.... it should probably have been called DataStoreItem. ">AssetItem</a>'s name and/or outline the <a class="el" href="class_asset_item.html" title="A DiagramItem used to display DataStores.... it should probably have been called DataStoreItem. ">AssetItem</a> if the searchRequest is found at a level underneath this asset. <br /></td></tr>
+<tr class="separator:a6e6b6eda09d048a146c05c9d2ae43d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afae72368e9dd9c0ecf303870393ccb55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afae72368e9dd9c0ecf303870393ccb55"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>asset_</b></td></tr>
+<tr class="separator:afae72368e9dd9c0ecf303870393ccb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefcc704b1aca048d8388d03c07345884"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aefcc704b1aca048d8388d03c07345884"></a>
+QGraphicsSvgItem *&#160;</td><td class="memItemRight" valign="bottom"><b>lastSvgIcon_</b></td></tr>
+<tr class="separator:aefcc704b1aca048d8388d03c07345884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef975626176ace39451efe400e24cc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acef975626176ace39451efe400e24cc5"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>svgFileName_</b></td></tr>
+<tr class="separator:acef975626176ace39451efe400e24cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addb83c2f6d8b8c670eb334971b7d0e7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addb83c2f6d8b8c670eb334971b7d0e7e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>posChanged_</b></td></tr>
+<tr class="separator:addb83c2f6d8b8c670eb334971b7d0e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b7df990423c7008c2afb01341b459b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b7df990423c7008c2afb01341b459b8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>posInitialized_</b></td></tr>
+<tr class="separator:a6b7df990423c7008c2afb01341b459b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0af35d36342f92196db5715aec0934"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada0af35d36342f92196db5715aec0934"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>keepAspectRatio_</b></td></tr>
+<tr class="separator:ada0af35d36342f92196db5715aec0934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

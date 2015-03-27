@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_session_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::SessionState Class Reference</div>  </div>
@@ -222,6 +225,69 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_spike_state.html">SpikeSt
 <tr class="memitem:a90001c8208d8f7e7b8b5b373641a7326"><td class="memItemLeft" align="right" valign="top">QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_state.html">DataState</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_state.html#a90001c8208d8f7e7b8b5b373641a7326">getStatesIndexedByTime</a> ()</td></tr>
 <tr class="memdesc:a90001c8208d8f7e7b8b5b373641a7326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> objects included in this <a class="el" href="class_picto_1_1_session_state.html" title="This is pretty much a convenience class for grouping together DataState objects for playback and Anal...">SessionState</a> that are only indexed according to their timestamp.  <a href="#a90001c8208d8f7e7b8b5b373641a7326">More...</a><br /></td></tr>
 <tr class="separator:a90001c8208d8f7e7b8b5b373641a7326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:ad90f8acee573229f408cf14ea55432be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_state.html#ad90f8acee573229f408cf14ea55432be">lfpLoadingUpdated</a> (int percent)</td></tr>
+<tr class="memdesc:ad90f8acee573229f408cf14ea55432be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_lfp_state.html" title="Implements the DataState and LfpReader classes to load a Picto Session database, extract the lfp data...">LfpState</a> updates its load percentage. Calls <a class="el" href="class_picto_1_1_session_state.html#a085519aad3dc2da12e763c43cddd0996" title="Call this when something significant happens in the load process to update the total load precentage ...">updatePercentLoaded()</a> internally to update the Playback system of the load status with the <a class="el" href="class_picto_1_1_session_state.html#a46343f31e2c22668f4f781ce6f2f6679" title="During the session load process (started when setSessionData() is called), this signal provides the c...">percentLoaded()</a> signal.  <a href="#ad90f8acee573229f408cf14ea55432be">More...</a><br /></td></tr>
+<tr class="separator:ad90f8acee573229f408cf14ea55432be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a085519aad3dc2da12e763c43cddd0996"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_session_state.html#a085519aad3dc2da12e763c43cddd0996">updatePercentLoaded</a> ()</td></tr>
+<tr class="memdesc:a085519aad3dc2da12e763c43cddd0996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this when something significant happens in the load process to update the total load precentage and report it over the <a class="el" href="class_picto_1_1_session_state.html#a46343f31e2c22668f4f781ce6f2f6679" title="During the session load process (started when setSessionData() is called), this signal provides the c...">percentLoaded()</a> signal.  <a href="#a085519aad3dc2da12e763c43cddd0996">More...</a><br /></td></tr>
+<tr class="separator:a085519aad3dc2da12e763c43cddd0996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5a2fcf6ed4c4fb02498d1ce38ac4e7ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a2fcf6ed4c4fb02498d1ce38ac4e7ad"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_state.html">PropertyState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>propState_</b></td></tr>
+<tr class="separator:a5a2fcf6ed4c4fb02498d1ce38ac4e7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c83688d40d28f78437ef9fbc1d991e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c83688d40d28f78437ef9fbc1d991e0"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_state.html">PropertyState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>initPropState_</b></td></tr>
+<tr class="separator:a8c83688d40d28f78437ef9fbc1d991e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4380bc8725e8e51f8fb6c35c7f1ee08f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4380bc8725e8e51f8fb6c35c7f1ee08f"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition_state.html">TransitionState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transState_</b></td></tr>
+<tr class="separator:a4380bc8725e8e51f8fb6c35c7f1ee08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43268cba26a1157e10b14897b5f8b5b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43268cba26a1157e10b14897b5f8b5b6"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_frame_state.html">FrameState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frameState_</b></td></tr>
+<tr class="separator:a43268cba26a1157e10b14897b5f8b5b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52079a5cdd50aa636237b69ee2af3db5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52079a5cdd50aa636237b69ee2af3db5"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_state.html">RewardState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardState_</b></td></tr>
+<tr class="separator:a52079a5cdd50aa636237b69ee2af3db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ecee3b49cfa73d91b0338a42c1f952"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66ecee3b49cfa73d91b0338a42c1f952"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_run_notes_state.html">RunNotesState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>runNotesState_</b></td></tr>
+<tr class="separator:a66ecee3b49cfa73d91b0338a42c1f952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc5c154f010d955891b3b27f7da5115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abbc5c154f010d955891b3b27f7da5115"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_state.html">SignalState</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalLookup_</b></td></tr>
+<tr class="separator:abbc5c154f010d955891b3b27f7da5115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec492664c46dcab2acea90242c9b399"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abec492664c46dcab2acea90242c9b399"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_spike_state.html">SpikeState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikeState_</b></td></tr>
+<tr class="separator:abec492664c46dcab2acea90242c9b399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88b4e460d9bc35affe67bc80bacff1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac88b4e460d9bc35affe67bc80bacff1d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_lfp_state.html">LfpState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lfpState_</b></td></tr>
+<tr class="separator:ac88b4e460d9bc35affe67bc80bacff1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0522d6c709592eeb2174fad2d65ca451"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0522d6c709592eeb2174fad2d65ca451"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_state.html">DataState</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>statesWithIds_</b></td></tr>
+<tr class="separator:a0522d6c709592eeb2174fad2d65ca451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab974fa2deca37cb489b3c8318861fcdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab974fa2deca37cb489b3c8318861fcdf"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_state.html">DataState</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>statesWithTimes_</b></td></tr>
+<tr class="separator:ab974fa2deca37cb489b3c8318861fcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4898359754da330ee9ba95945e9d27e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4898359754da330ee9ba95945e9d27e2"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currRunStart_</b></td></tr>
+<tr class="separator:a4898359754da330ee9ba95945e9d27e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeee88fe066fec648cbdbca613f113d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeeee88fe066fec648cbdbca613f113d2"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currRunEnd_</b></td></tr>
+<tr class="separator:aeeee88fe066fec648cbdbca613f113d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb1a980266872ad766c17a48170291d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb1a980266872ad766c17a48170291d7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>loadedStates_</b></td></tr>
+<tr class="separator:abb1a980266872ad766c17a48170291d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a658b20279e9cb2d8cdc8990f0b9c72ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a658b20279e9cb2d8cdc8990f0b9c72ca"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>totalSubStates_</b></td></tr>
+<tr class="separator:a658b20279e9cb2d8cdc8990f0b9c72ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e6e863b32d178b00bbcb0edbf98a5d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e6e863b32d178b00bbcb0edbf98a5d6"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lfpPercent_</b></td></tr>
+<tr class="separator:a8e6e863b32d178b00bbcb0edbf98a5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is pretty much a convenience class for grouping together <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> objects for playback and <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> purposes. </p>
@@ -543,6 +609,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_spike_state.html">SpikeSt
 <p>Disabling LFP data when it isn't needed translates into savings in RAM and loadtime. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_session_state.html#adbb4217793c27b4adcf2163d9bfa8a88" title="Enables/disables tracking of LFP data. ">enableLfp()</a>, <a class="el" href="class_picto_1_1_lfp_state.html#a2f6a5af85e42ac0cddc7bd1e91542dab" title="Enables/Disables this LfpState to make memory / load time savings possible when lfp data is not neede...">LfpState::setEnabled()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_session_state_8cpp_source.html#l00150">150</a> of file <a class="el" href="_session_state_8cpp_source.html">SessionState.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad90f8acee573229f408cf14ea55432be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionState::lfpLoadingUpdated </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>percent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the <a class="el" href="class_picto_1_1_lfp_state.html" title="Implements the DataState and LfpReader classes to load a Picto Session database, extract the lfp data...">LfpState</a> updates its load percentage. Calls <a class="el" href="class_picto_1_1_session_state.html#a085519aad3dc2da12e763c43cddd0996" title="Call this when something significant happens in the load process to update the total load precentage ...">updatePercentLoaded()</a> internally to update the Playback system of the load status with the <a class="el" href="class_picto_1_1_session_state.html#a46343f31e2c22668f4f781ce6f2f6679" title="During the session load process (started when setSessionData() is called), this signal provides the c...">percentLoaded()</a> signal. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_session_state.html#a085519aad3dc2da12e763c43cddd0996" title="Call this when something significant happens in the load process to update the total load precentage ...">updatePercentLoaded()</a>, <a class="el" href="class_picto_1_1_lfp_state.html#a2e4399f6f5db7a593014352b9c9fa4cb" title="Emitted to signify the percentage of LFP data that has been loaded so far in the loadData() function...">LfpState::lfpLoadProgress()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_session_state_8cpp_source.html#l00323">323</a> of file <a class="el" href="_session_state_8cpp_source.html">SessionState.cpp</a>.</p>
 
 </div>
 </div>
@@ -868,6 +963,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_spike_state.html">SpikeSt
 
 <p>Emitted whenever a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> traversal is passed over as part of playback. </p>
 <p>The transId is the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> Id of the <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> that was traversed. </p>
+
+</div>
+</div>
+<a class="anchor" id="a085519aad3dc2da12e763c43cddd0996"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SessionState::updatePercentLoaded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Call this when something significant happens in the load process to update the total load precentage and report it over the <a class="el" href="class_picto_1_1_session_state.html#a46343f31e2c22668f4f781ce6f2f6679" title="During the session load process (started when setSessionData() is called), this signal provides the c...">percentLoaded()</a> signal. </p>
+<dl class="section note"><dt>Note</dt><dd>This function simply looks at the number of <a class="el" href="class_picto_1_1_data_state.html" title="An interface defining many common aspects of classes that extract the various data states from a Pict...">DataState</a> objects that have fully loaded their data and compares that to the total number of DataStates. The one exception to this is the <a class="el" href="class_picto_1_1_lfp_state.html" title="Implements the DataState and LfpReader classes to load a Picto Session database, extract the lfp data...">LfpState</a>. Since the <a class="el" href="class_picto_1_1_lfp_state.html" title="Implements the DataState and LfpReader classes to load a Picto Session database, extract the lfp data...">LfpState</a> takes the longest to load, it exposes an lfpLoadProgress() signal that provides a more fine grained picture of its load process. That signal is used with <a class="el" href="class_picto_1_1_session_state.html#ad90f8acee573229f408cf14ea55432be" title="Called when the LfpState updates its load percentage. Calls updatePercentLoaded() internally to updat...">lfpLoadingUpdated()</a> which calls this function for a fine grained load update. This is useful so that the load process doesn't appear to freeze when it reaches the <a class="el" href="class_picto_1_1_lfp_state.html" title="Implements the DataState and LfpReader classes to load a Picto Session database, extract the lfp data...">LfpState</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_session_state.html#ad90f8acee573229f408cf14ea55432be" title="Called when the LfpState updates its load percentage. Calls updatePercentLoaded() internally to updat...">lfpLoadingUpdated()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_session_state_8cpp_source.html#l00303">303</a> of file <a class="el" href="_session_state_8cpp_source.html">SessionState.cpp</a>.</p>
 
 </div>
 </div>

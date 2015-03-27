@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_property_group_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PropertyGroupWidget Class Reference</div>  </div>
@@ -124,6 +125,21 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_group_widget.html#aed6f878c4651bf02b1f66a354a9e8ed0">clear</a> ()</td></tr>
 <tr class="memdesc:aed6f878c4651bf02b1f66a354a9e8ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all contents of this widget, so that all Property widget groups will dissappear and calling <a class="el" href="class_property_group_widget.html#a831d648fc9f9493ff0257de54b6c3353" title="Adds the input list of Properties to this widget for display under the input title. ">addProperties()</a> again will result in starting a new Properties widget group. <br /></td></tr>
 <tr class="separator:aed6f878c4651bf02b1f66a354a9e8ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae48374540b9b0288cec7de4892c4100f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae48374540b9b0288cec7de4892c4100f"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:ae48374540b9b0288cec7de4892c4100f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5c3f7c0fac513fb11e567c84536448"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a5c3f7c0fac513fb11e567c84536448"></a>
+QVBoxLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>layout_</b></td></tr>
+<tr class="separator:a6a5c3f7c0fac513fb11e567c84536448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca9cacf113fef0bae6567d0e7566843"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ca9cacf113fef0bae6567d0e7566843"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>mainWidget_</b></td></tr>
+<tr class="separator:a7ca9cacf113fef0bae6567d0e7566843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8719693fd85f90c67dfce599d02acaf2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8719693fd85f90c67dfce599d02acaf2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>trackInitVals_</b></td></tr>
+<tr class="separator:a8719693fd85f90c67dfce599d02acaf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This Widget creates groups of Properties widgets. It groups together widgets for setting/getting values of a Properties and labels each group with a title. </p>

@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_number_edit_mode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">NumberEditMode Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -140,6 +142,44 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_mode.html#a8aa3f4ab2efbcb2ff6988aa7befe4af0">drawMessage</a> (int durationSecs, QString line1, QString line2)</td></tr>
 <tr class="memdesc:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a brief temporary message to the display.  <a href="#a8aa3f4ab2efbcb2ff6988aa7befe4af0">More...</a><br /></td></tr>
 <tr class="separator:a8aa3f4ab2efbcb2ff6988aa7befe4af0 inherit pro_methods_class_display_mode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a24bd8926bcbb28dc79dd6c60775bcbdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_number_edit_mode.html#a24bd8926bcbb28dc79dd6c60775bcbdb">drawDisplay</a> ()</td></tr>
+<tr class="separator:a24bd8926bcbb28dc79dd6c60775bcbdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a07ab5341be901b5096e3ee79a92407cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07ab5341be901b5096e3ee79a92407cb"></a>
+QSharedPointer&lt; <a class="el" href="class_director_interface.html">DirectorInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorIf_</b></td></tr>
+<tr class="separator:a07ab5341be901b5096e3ee79a92407cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a701a7465ea8c3aa29c8820b5560687"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a701a7465ea8c3aa29c8820b5560687"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currNum_</b></td></tr>
+<tr class="separator:a5a701a7465ea8c3aa29c8820b5560687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad301ef39ed6e3b46e0e1146d314ac1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ad301ef39ed6e3b46e0e1146d314ac1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxDigits_</b></td></tr>
+<tr class="separator:a6ad301ef39ed6e3b46e0e1146d314ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7189dab1c231efa3da84bbf12fb66e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7189dab1c231efa3da84bbf12fb66e0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxValue_</b></td></tr>
+<tr class="separator:af7189dab1c231efa3da84bbf12fb66e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12ecb36cd4f94e4fe638b3bf942f42f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab12ecb36cd4f94e4fe638b3bf942f42f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>minValue_</b></td></tr>
+<tr class="separator:ab12ecb36cd4f94e4fe638b3bf942f42f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca2298b0224d625efc3b117e65f6595c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca2298b0224d625efc3b117e65f6595c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fastInc_</b></td></tr>
+<tr class="separator:aca2298b0224d625efc3b117e65f6595c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b4a7466abd3bde40530addc936d17e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7b4a7466abd3bde40530addc936d17e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>slowInc_</b></td></tr>
+<tr class="separator:ae7b4a7466abd3bde40530addc936d17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51be56a0b7fde5aea9391b6853265cf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51be56a0b7fde5aea9391b6853265cf8"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numAtInit_</b></td></tr>
+<tr class="separator:a51be56a0b7fde5aea9391b6853265cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefb6f08a20103cddbb01575e0334e76a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aefb6f08a20103cddbb01575e0334e76a"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>valName_</b></td></tr>
+<tr class="separator:aefb6f08a20103cddbb01575e0334e76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71d22e66d77601979f5ac5c8335e4522"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71d22e66d77601979f5ac5c8335e4522"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>unitStr_</b></td></tr>
+<tr class="separator:a71d22e66d77601979f5ac5c8335e4522"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -215,6 +255,32 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a24bd8926bcbb28dc79dd6c60775bcbdb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NumberEditMode::drawDisplay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Draws the current display including data name, data value and units. </p>
+
+<p>Definition at line <a class="el" href="_number_edit_mode_8cpp_source.html#l00095">95</a> of file <a class="el" href="_number_edit_mode_8cpp_source.html">NumberEditMode.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aef7d72cea8b4200456358d71ce2c8d34"></a>
 <div class="memitem">
 <div class="memproto">

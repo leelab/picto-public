@@ -89,6 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_replay_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ReplayViewer Class Reference</div>  </div>
@@ -109,6 +113,11 @@ Inheritance diagram for ReplayViewer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a21fb4a93700c1728e7b3b43143fa83c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21fb4a93700c1728e7b3b43143fa83c9"></a>
@@ -175,6 +184,244 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called just before the application quits and is used to take-down anything that needs to be taken down before a quit. In particular, if there is some long running thread going on in the background, this function makes sure to end it. <br /></td></tr>
 <tr class="separator:a36fd548283a09aeec9a56819287bf782 inherit pub_methods_class_viewer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:aa13d48df507c70581661c0f0cef7d484"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa13d48df507c70581661c0f0cef7d484"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Status</b> { <b>Ending</b>, 
+<b>Stopped</b>, 
+<b>Running</b>, 
+<b>Paused</b>
+ }</td></tr>
+<tr class="separator:aa13d48df507c70581661c0f0cef7d484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a8f5859194e708cc7fc8d17e64061a73d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a8f5859194e708cc7fc8d17e64061a73d">playbackStatusChanged</a> (int status)</td></tr>
+<tr class="memdesc:a8f5859194e708cc7fc8d17e64061a73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the PlaybakController's State changes. status is the new State.  <a href="#a8f5859194e708cc7fc8d17e64061a73d">More...</a><br /></td></tr>
+<tr class="separator:a8f5859194e708cc7fc8d17e64061a73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabc4f54d6184576f17f99df81b6cd013"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabc4f54d6184576f17f99df81b6cd013"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013">loadSession</a> ()</td></tr>
+<tr class="memdesc:aabc4f54d6184576f17f99df81b6cd013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggred when the user presses the load session button. Opens a File dialog, gets the user's selected Sessions, updates all the UI for new Session info, and then tells the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to preload the Session files (<a class="el" href="class_playback_controller.html#aa7f76f6b48b02d77af10fdfadce8ca39" title="Generates a new PlaybackCommand directing the PlaybackController to preload all of the files with pat...">PlaybackController::preLoadSessions()</a>). <br /></td></tr>
+<tr class="separator:aabc4f54d6184576f17f99df81b6cd013"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62df61cab1e6d08d077f46249178b16d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a62df61cab1e6d08d077f46249178b16d">updateTime</a> (double time)</td></tr>
+<tr class="memdesc:a62df61cab1e6d08d077f46249178b16d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when playback time changes in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Updates the position of the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> slider accordingly.  <a href="#a62df61cab1e6d08d077f46249178b16d">More...</a><br /></td></tr>
+<tr class="separator:a62df61cab1e6d08d077f46249178b16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8872c657fe62144d19d6f5e1b5d6be0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a8872c657fe62144d19d6f5e1b5d6be0f">runSelectionChanged</a> ()</td></tr>
+<tr class="memdesc:a8872c657fe62144d19d6f5e1b5d6be0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the selected Runs change in the RunSelectorWidget. Updates the Run queue for batch playback/analysis along with other parts of the UI.  <a href="#a8872c657fe62144d19d6f5e1b5d6be0f">More...</a><br /></td></tr>
+<tr class="separator:a8872c657fe62144d19d6f5e1b5d6be0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd0fae0a613a4375c0c665ab377966b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd0fae0a613a4375c0c665ab377966b5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#abd0fae0a613a4375c0c665ab377966b5">analysisWidgetChanged</a> ()</td></tr>
+<tr class="memdesc:abd0fae0a613a4375c0c665ab377966b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the AnalysisSelectorWidget selection changes. Enables/disables the "run to end" button depending on whether any Analyses are selected. <br /></td></tr>
+<tr class="separator:abd0fae0a613a4375c0c665ab377966b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad86dfce2cfd1ea27b02b3f245787ff4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ad86dfce2cfd1ea27b02b3f245787ff4d">setUserType</a> (int index)</td></tr>
+<tr class="memdesc:ad86dfce2cfd1ea27b02b3f245787ff4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly.  <a href="#ad86dfce2cfd1ea27b02b3f245787ff4d">More...</a><br /></td></tr>
+<tr class="separator:ad86dfce2cfd1ea27b02b3f245787ff4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa582fc93acb37e4515c9bd61b873f223"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa582fc93acb37e4515c9bd61b873f223"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#aa582fc93acb37e4515c9bd61b873f223">setLFPRequirements</a> (int index)</td></tr>
+<tr class="memdesc:aa582fc93acb37e4515c9bd61b873f223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the LFP enable dropdown value changes. Changes whether or not LFP data will be loaded during playback for the purpose of runtime optimization. <br /></td></tr>
+<tr class="separator:aa582fc93acb37e4515c9bd61b873f223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bd696be7747dbded47d43adeee21483"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bd696be7747dbded47d43adeee21483"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a2bd696be7747dbded47d43adeee21483">percentLoaded</a> (double percent)</td></tr>
+<tr class="memdesc:a2bd696be7747dbded47d43adeee21483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> reports a load progress change. Updates the load progress bar. <br /></td></tr>
+<tr class="separator:a2bd696be7747dbded47d43adeee21483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8644f4476b0a556d47a0a6e70019e557"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a8644f4476b0a556d47a0a6e70019e557">jumpRequested</a> (double time)</td></tr>
+<tr class="memdesc:a8644f4476b0a556d47a0a6e70019e557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> reports a jump time being requested. Determines whether the jump is up or down for the purpose of handling slider updating (see <a class="el" href="class_replay_viewer.html#a62df61cab1e6d08d077f46249178b16d" title="Called when playback time changes in the PlaybackController. Updates the position of the ProgressWidg...">updateTime()</a>) and tells the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to enact the jump (<a class="el" href="class_playback_controller.html#a5c751dc9c22b95f6f601380f503f8f9c" title="Generates a new PlaybackCommand directing the PlaybackController to jump the playback time to the inp...">PlaybackController::jumpToTime()</a>).  <a href="#a8644f4476b0a556d47a0a6e70019e557">More...</a><br /></td></tr>
+<tr class="separator:a8644f4476b0a556d47a0a6e70019e557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4aa60a216e96a2154f3de0b8e82708"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c4aa60a216e96a2154f3de0b8e82708"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a6c4aa60a216e96a2154f3de0b8e82708">userChoosingJump</a> (bool starting)</td></tr>
+<tr class="memdesc:a6c4aa60a216e96a2154f3de0b8e82708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> reports a user starting or ending a jump choice. Pauses playback when a jump starts and resumes it when it ends (unless playback was already paused before the jump). <br /></td></tr>
+<tr class="separator:a6c4aa60a216e96a2154f3de0b8e82708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf4ed50993c4be3be4dba10e7d19ce87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#adf4ed50993c4be3be4dba10e7d19ce87">toggleRecording</a> ()</td></tr>
+<tr class="memdesc:adf4ed50993c4be3be4dba10e7d19ce87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the user toggles the record button.  <a href="#adf4ed50993c4be3be4dba10e7d19ce87">More...</a><br /></td></tr>
+<tr class="separator:adf4ed50993c4be3be4dba10e7d19ce87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2a20dc4171fca797c2be350b8f5ed9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2a20dc4171fca797c2be350b8f5ed9e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ac2a20dc4171fca797c2be350b8f5ed9e">restartRecording</a> ()</td></tr>
+<tr class="memdesc:ac2a20dc4171fca797c2be350b8f5ed9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the restart recording button is pressed. Enacts the request. <br /></td></tr>
+<tr class="separator:ac2a20dc4171fca797c2be350b8f5ed9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8914742189a8f05e44f516ff1575db84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8914742189a8f05e44f516ff1575db84"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a8914742189a8f05e44f516ff1575db84">saveRecording</a> ()</td></tr>
+<tr class="memdesc:a8914742189a8f05e44f516ff1575db84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the save recording button is pressed. Shows a dialog box allowing the user to choose a save file path, saves the file at that path or shows a warning dialog if it doesn't work. <br /></td></tr>
+<tr class="separator:a8914742189a8f05e44f516ff1575db84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c102906facbb6a5f508cf2f5e35b1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6c102906facbb6a5f508cf2f5e35b1b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ae6c102906facbb6a5f508cf2f5e35b1b">setRecordTime</a> (double time)</td></tr>
+<tr class="memdesc:ae6c102906facbb6a5f508cf2f5e35b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the record time in the toolbar label to the latest value. Also deals with UI changes as a function of whether the record time is positive or not. <br /></td></tr>
+<tr class="separator:ae6c102906facbb6a5f508cf2f5e35b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77cfc28f92d4a089ae3bebace08f440f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77cfc28f92d4a089ae3bebace08f440f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a77cfc28f92d4a089ae3bebace08f440f">designRootChanged</a> ()</td></tr>
+<tr class="memdesc:a77cfc28f92d4a089ae3bebace08f440f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>'s DesignRoot changes. Handles hooking its <a class="el" href="class_replay_viewer.html#abcb95faae0b049b2573e7364570be1d7" title="Called when the run with the input runId starts. Calls OutputWidgetHolder::newRunStarted(). ">runStarted()</a> signal back up to our own. <br /></td></tr>
+<tr class="separator:a77cfc28f92d4a089ae3bebace08f440f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a848dcbb19f066ceb95e6dd15442b42bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a848dcbb19f066ceb95e6dd15442b42bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a848dcbb19f066ceb95e6dd15442b42bc">preloadError</a> (QString errorStr)</td></tr>
+<tr class="memdesc:a848dcbb19f066ceb95e6dd15442b42bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a preloadError occurs in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Presents the input errorStr message in an error message box. <br /></td></tr>
+<tr class="separator:a848dcbb19f066ceb95e6dd15442b42bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcb95faae0b049b2573e7364570be1d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcb95faae0b049b2573e7364570be1d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#abcb95faae0b049b2573e7364570be1d7">runStarted</a> (QUuid runId)</td></tr>
+<tr class="memdesc:abcb95faae0b049b2573e7364570be1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the run with the input runId starts. Calls <a class="el" href="class_output_widget_holder.html#a7d166ee59d83794a973e188d426a5143" title="Called when a new run is started with the input run Id. ">OutputWidgetHolder::newRunStarted()</a>. <br /></td></tr>
+<tr class="separator:abcb95faae0b049b2573e7364570be1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed86ed6cf73f93b15cdc15b68fe57d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ed86ed6cf73f93b15cdc15b68fe57d0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a6ed86ed6cf73f93b15cdc15b68fe57d0">finishedPlayback</a> ()</td></tr>
+<tr class="memdesc:a6ed86ed6cf73f93b15cdc15b68fe57d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when playback of the current Run finishes. Saves Analysis Output automatically if set to do so, updates the displayed run status in the RunSelectorWidget and starts the next Run if Run playbacks are batched. <br /></td></tr>
+<tr class="separator:a6ed86ed6cf73f93b15cdc15b68fe57d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90eafe1d6a884ed5ac424827f279b192"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90eafe1d6a884ed5ac424827f279b192"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a90eafe1d6a884ed5ac424827f279b192">loadError</a> (QString errorMsg)</td></tr>
+<tr class="memdesc:a90eafe1d6a884ed5ac424827f279b192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a loadError occurs in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Presents the input errorStr message in an error message box, updates the Run status in the RunSelectorWidget, and starts playback of the next Run if Runs are batched. <br /></td></tr>
+<tr class="separator:a90eafe1d6a884ed5ac424827f279b192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8f30c3662c5c04302eeb0ec73052b91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8f30c3662c5c04302eeb0ec73052b91"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#aa8f30c3662c5c04302eeb0ec73052b91">sessionPreloaded</a> (<a class="el" href="struct_preloaded_session_data.html">PreloadedSessionData</a> sessionData)</td></tr>
+<tr class="memdesc:aa8f30c3662c5c04302eeb0ec73052b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> successfully preloads a Session file. Adds the preloaded data to the RunSelectorWidget and AnalysisSelectorWidget. <br /></td></tr>
+<tr class="separator:aa8f30c3662c5c04302eeb0ec73052b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ae36890c6f662108df5834908b0beb342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ae36890c6f662108df5834908b0beb342">setupUi</a> ()</td></tr>
+<tr class="memdesc:ae36890c6f662108df5834908b0beb342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the user interface portions of the GUI.  <a href="#ae36890c6f662108df5834908b0beb342">More...</a><br /></td></tr>
+<tr class="separator:ae36890c6f662108df5834908b0beb342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd325f0c063d0136ec7e63b2be997509"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd325f0c063d0136ec7e63b2be997509"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#afd325f0c063d0136ec7e63b2be997509">updateRecordingTarget</a> ()</td></tr>
+<tr class="memdesc:afd325f0c063d0136ec7e63b2be997509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the Recording Visual Target Host to record or not depending on the current run and record mode states. <br /></td></tr>
+<tr class="separator:afd325f0c063d0136ec7e63b2be997509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f43d89ffb1a4e0c29e947d996c93a36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f43d89ffb1a4e0c29e947d996c93a36"></a>
+QList&lt; QUuid &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a3f43d89ffb1a4e0c29e947d996c93a36">getSelectedLocalAnalyses</a> ()</td></tr>
+<tr class="memdesc:a3f43d89ffb1a4e0c29e947d996c93a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Uuids of all selected Analyses that are included in the loaded Session file's design. <br /></td></tr>
+<tr class="separator:a3f43d89ffb1a4e0c29e947d996c93a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e3ea51bdda8f273c4886d76d4723b21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e3ea51bdda8f273c4886d76d4723b21"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a0e3ea51bdda8f273c4886d76d4723b21">getAnalysesToImport</a> ()</td></tr>
+<tr class="memdesc:a0e3ea51bdda8f273c4886d76d4723b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the exported designs of all selected Analyses that should be imported into the Session file's design. <br /></td></tr>
+<tr class="separator:a0e3ea51bdda8f273c4886d76d4723b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad97f655356fcd454c0dfd19bcac3a89a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#ad97f655356fcd454c0dfd19bcac3a89a">popRunQueueFront</a> ()</td></tr>
+<tr class="memdesc:ad97f655356fcd454c0dfd19bcac3a89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the first Run in the Run queue that we are iterating through (to analyze all selected Runs).  <a href="#ad97f655356fcd454c0dfd19bcac3a89a">More...</a><br /></td></tr>
+<tr class="separator:ad97f655356fcd454c0dfd19bcac3a89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde0061cf1fade4846336051ea5c58f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde0061cf1fade4846336051ea5c58f9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#abde0061cf1fade4846336051ea5c58f9">setRunQueue</a> (QList&lt; <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> &gt; newRunQueue)</td></tr>
+<tr class="memdesc:abde0061cf1fade4846336051ea5c58f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the stored Run queue (used to playback/analyze batched Runs one after another) to the input value. <br /></td></tr>
+<tr class="separator:abde0061cf1fade4846336051ea5c58f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a846a43183c12031f1d6cd85651e13f6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a846a43183c12031f1d6cd85651e13f6c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>activateSelectedAnalyses</b> ()</td></tr>
+<tr class="separator:a846a43183c12031f1d6cd85651e13f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72a5cac99cfb40acff47d245c911c53f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72a5cac99cfb40acff47d245c911c53f"></a>
+QList&lt; <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#a72a5cac99cfb40acff47d245c911c53f">getSelectedPlayRunInfo</a> ()</td></tr>
+<tr class="memdesc:a72a5cac99cfb40acff47d245c911c53f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> structs including information about all of the currently select Runs (from the RunSelectorWidget). <br /></td></tr>
+<tr class="separator:a72a5cac99cfb40acff47d245c911c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7c4d9e4d2403fac549a522fe9c0b892b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c4d9e4d2403fac549a522fe9c0b892b"></a>
+QSharedPointer&lt; <a class="el" href="class_playback_controller.html">PlaybackController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>playbackController_</b></td></tr>
+<tr class="separator:a7c4d9e4d2403fac549a522fe9c0b892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70282b723abd90894030627965616f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af70282b723abd90894030627965616f5"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_rendering_target.html">Picto::RenderingTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>renderingTarget_</b></td></tr>
+<tr class="separator:af70282b723abd90894030627965616f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72da38a02d53c575eec11b79f72b3f61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72da38a02d53c575eec11b79f72b3f61"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_pixmap_visual_target.html">Picto::PixmapVisualTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pixmapVisualTarget_</b></td></tr>
+<tr class="separator:a72da38a02d53c575eec11b79f72b3f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a975a64d9f8637c7ae707762657464f8b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a975a64d9f8637c7ae707762657464f8b"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:a975a64d9f8637c7ae707762657464f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a683b74bb7299180d7c9c966fb300d05d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a683b74bb7299180d7c9c966fb300d05d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
+<tr class="separator:a683b74bb7299180d7c9c966fb300d05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a094732eb33a7a0b09ed444cffa1c5a39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a094732eb33a7a0b09ed444cffa1c5a39"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_playback_state_updater.html">PlaybackStateUpdater</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>playbackUpdater_</b></td></tr>
+<tr class="separator:a094732eb33a7a0b09ed444cffa1c5a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a099899273e61917b32646abde9d4ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a099899273e61917b32646abde9d4ae"></a>
+QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_virtual_output_signal_controller.html">Picto::VirtualOutputSignalController</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outSigControllers_</b></td></tr>
+<tr class="separator:a3a099899273e61917b32646abde9d4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd74950d9e7680c87a15a4845f203e74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd74950d9e7680c87a15a4845f203e74"></a>
+<a class="el" href="class_picto_1_1_recording_visual_target_host.html">RecordingVisualTargetHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>visualTargetHost_</b></td></tr>
+<tr class="separator:abd74950d9e7680c87a15a4845f203e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab33428f0a3d576df1d8a741670aa87c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab33428f0a3d576df1d8a741670aa87c4"></a>
+QVector&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputSignalsWidgets_</b></td></tr>
+<tr class="separator:ab33428f0a3d576df1d8a741670aa87c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af750bc3b416373a6cc81ee3288368414"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af750bc3b416373a6cc81ee3288368414"></a>
+QList&lt; <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>runQueue_</b></td></tr>
+<tr class="separator:af750bc3b416373a6cc81ee3288368414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a718c19c8f64e6ae17bf0b91fb43adf35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a718c19c8f64e6ae17bf0b91fb43adf35"></a>
+<a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>latestRun_</b></td></tr>
+<tr class="separator:a718c19c8f64e6ae17bf0b91fb43adf35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3dbdc1e693bed6f9a26554a645a783"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee3dbdc1e693bed6f9a26554a645a783"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>loadSessionAction_</b></td></tr>
+<tr class="separator:aee3dbdc1e693bed6f9a26554a645a783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ea41730a5e66cfc537dab362c8ef9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6ea41730a5e66cfc537dab362c8ef9e"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>playAction_</b></td></tr>
+<tr class="separator:ac6ea41730a5e66cfc537dab362c8ef9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d470f387b5b06fab989c6ccf909664"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14d470f387b5b06fab989c6ccf909664"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>runToEndAction_</b></td></tr>
+<tr class="separator:a14d470f387b5b06fab989c6ccf909664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c7f0304555a871390216e9de4d89a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34c7f0304555a871390216e9de4d89a5"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>pauseAction_</b></td></tr>
+<tr class="separator:a34c7f0304555a871390216e9de4d89a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d185cfad5f687485e7f7cf9e677c1f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d185cfad5f687485e7f7cf9e677c1f4"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>stopAction_</b></td></tr>
+<tr class="separator:a5d185cfad5f687485e7f7cf9e677c1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dbc3134ddaf3dcf03901adc5dba2e9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8dbc3134ddaf3dcf03901adc5dba2e9d"></a>
+<a class="el" href="class_speed_widget.html">SpeedWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>speed_</b></td></tr>
+<tr class="separator:a8dbc3134ddaf3dcf03901adc5dba2e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa488f28930041140635bf699c8ec0f0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa488f28930041140635bf699c8ec0f0a"></a>
+<a class="el" href="class_progress_widget.html">ProgressWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>progress_</b></td></tr>
+<tr class="separator:aa488f28930041140635bf699c8ec0f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a287b9563cc0db2bc634b8f444395e45e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a287b9563cc0db2bc634b8f444395e45e"></a>
+QProgressBar *&#160;</td><td class="memItemRight" valign="bottom"><b>loadProgress_</b></td></tr>
+<tr class="separator:a287b9563cc0db2bc634b8f444395e45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9768c0b5926a1ea732d459a4461e012"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9768c0b5926a1ea732d459a4461e012"></a>
+<a class="el" href="class_picto_1_1_run_selector_widget.html">RunSelectorWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>runs_</b></td></tr>
+<tr class="separator:af9768c0b5926a1ea732d459a4461e012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21537587354844198091a1e1cd4e930e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21537587354844198091a1e1cd4e930e"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>userType_</b></td></tr>
+<tr class="separator:a21537587354844198091a1e1cd4e930e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80d827e761fbb7569b6258ee996d6a60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80d827e761fbb7569b6258ee996d6a60"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>lfpRequirements_</b></td></tr>
+<tr class="separator:a80d827e761fbb7569b6258ee996d6a60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0111bde0c76e6b82a7c04a1e4579e50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0111bde0c76e6b82a7c04a1e4579e50"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>toggleRecord_</b></td></tr>
+<tr class="separator:ab0111bde0c76e6b82a7c04a1e4579e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de8356a9a3e3589dace3272ad826816"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2de8356a9a3e3589dace3272ad826816"></a>
+QLCDNumber *&#160;</td><td class="memItemRight" valign="bottom"><b>recordTime_</b></td></tr>
+<tr class="separator:a2de8356a9a3e3589dace3272ad826816"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8369608bbdb21b1a5cdff1a5a46436fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8369608bbdb21b1a5cdff1a5a46436fd"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>restartRecord_</b></td></tr>
+<tr class="separator:a8369608bbdb21b1a5cdff1a5a46436fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a506f27b70f0c8fb9af5b69e15e44766b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a506f27b70f0c8fb9af5b69e15e44766b"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>saveRecording_</b></td></tr>
+<tr class="separator:a506f27b70f0c8fb9af5b69e15e44766b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af300ab83a44a5fcee4a5000015fa17d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af300ab83a44a5fcee4a5000015fa17d1"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>testToolbar_</b></td></tr>
+<tr class="separator:af300ab83a44a5fcee4a5000015fa17d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74a5858e37abb3b103eebfa9a00bd62b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74a5858e37abb3b103eebfa9a00bd62b"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>recordToolbar_</b></td></tr>
+<tr class="separator:a74a5858e37abb3b103eebfa9a00bd62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f6fc5eebed4f239cfac326168e8c2d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f6fc5eebed4f239cfac326168e8c2d3"></a>
+<a class="el" href="class_picto_1_1_analysis_selector_widget.html">Picto::AnalysisSelectorWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>analysisSelector_</b></td></tr>
+<tr class="separator:a0f6fc5eebed4f239cfac326168e8c2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a104a80d6c021e015e85dbd98d288e3c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a104a80d6c021e015e85dbd98d288e3c1"></a>
+<a class="el" href="class_output_widget_holder.html">OutputWidgetHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>outputWidgetHolder_</b></td></tr>
+<tr class="separator:a104a80d6c021e015e85dbd98d288e3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae042830ec73789366283ca1ec35b79c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae042830ec73789366283ca1ec35b79c7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>pausedFromJump_</b></td></tr>
+<tr class="separator:ae042830ec73789366283ca1ec35b79c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f66c4d54fa94dede3beef90d8caf698"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f66c4d54fa94dede3beef90d8caf698"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>jumpDownRequested_</b></td></tr>
+<tr class="separator:a2f66c4d54fa94dede3beef90d8caf698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ff53ce1705b42f45809f9a03406ec1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31ff53ce1705b42f45809f9a03406ec1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>recordModeOn_</b></td></tr>
+<tr class="separator:a31ff53ce1705b42f45809f9a03406ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05a917ffe6bb9037d5db6603965efbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af05a917ffe6bb9037d5db6603965efbe"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>calledPlayNotPause_</b></td></tr>
+<tr class="separator:af05a917ffe6bb9037d5db6603965efbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51a089a67d477cc6d40106063f76f0de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51a089a67d477cc6d40106063f76f0de"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>needsAutoSave_</b></td></tr>
+<tr class="separator:a51a089a67d477cc6d40106063f76f0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96295aa8a7e355fa247a983a41c2379"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad96295aa8a7e355fa247a983a41c2379"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>useRunToEnd_</b></td></tr>
+<tr class="separator:ad96295aa8a7e355fa247a983a41c2379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae87fd8be05a197ba86f5e7a80fb516e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae87fd8be05a197ba86f5e7a80fb516e8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>startingRun_</b></td></tr>
+<tr class="separator:ae87fd8be05a197ba86f5e7a80fb516e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4228626ee0ec029f7f68d0baec5b0f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4228626ee0ec029f7f68d0baec5b0f5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>latestStatus_</b></td></tr>
+<tr class="separator:ae4228626ee0ec029f7f68d0baec5b0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b102d2bc5c428d936643ec0526480b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b102d2bc5c428d936643ec0526480b5"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastStatus_</b></td></tr>
+<tr class="separator:a7b102d2bc5c428d936643ec0526480b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_viewer"><td colspan="2" onclick="javascript:toggleInherit('signals_class_viewer')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_viewer.html">Viewer</a></td></tr>
@@ -195,6 +442,35 @@ end" button when running a Session run. When they do this, a message box will gi
 
 <p>Definition at line <a class="el" href="_replay_viewer_8h_source.html#l00049">49</a> of file <a class="el" href="_replay_viewer_8h_source.html">ReplayViewer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a8644f4476b0a556d47a0a6e70019e557"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::jumpRequested </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> reports a jump time being requested. Determines whether the jump is up or down for the purpose of handling slider updating (see <a class="el" href="class_replay_viewer.html#a62df61cab1e6d08d077f46249178b16d" title="Called when playback time changes in the PlaybackController. Updates the position of the ProgressWidg...">updateTime()</a>) and tells the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to enact the jump (<a class="el" href="class_playback_controller.html#a5c751dc9c22b95f6f601380f503f8f9c" title="Generates a new PlaybackCommand directing the PlaybackController to jump the playback time to the inp...">PlaybackController::jumpToTime()</a>). </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_replay_viewer.html#a6c4aa60a216e96a2154f3de0b8e82708" title="Called when the ProgressWidget reports a user starting or ending a jump choice. Pauses playback when ...">userChoosingJump()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00867">867</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aee00cc55dfe6374abefa1ce0d1f55cf1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -220,6 +496,64 @@ end" button when running a Session run. When they do this, a message box will gi
 <p>If the function causes a Run to start, and that Run's Session has not yet been loaded, this will cause the Session to load and then the "start by pausing" will be enacted. </p>
 
 <p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00466">466</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f5859194e708cc7fc8d17e64061a73d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::playbackStatusChanged </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever the PlaybakController's State changes. status is the new State. </p>
+<p>This function updates the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> UI to reflect the current <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state. We update the UI as a result of <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state changes rather than updating it when actions are triggered in the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> because the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> state machine runs in a separate thread, so there may be some lag between when a <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> action is triggered (ie. Play) and when the action actually takes affect (ie. <a class="el" href="class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90aaf128c5cf5b65d84d7263557dc32b5db" title="In this state, the session file is being played back. ">PlaybackControllerData::Running</a> state). </p><dl class="section note"><dt>Note</dt><dd>Since thie object is set as running in the UI thread, signals from the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> thread don't actually take affect until the UI thread's event loop runs. That is how this how this function can be triggered by changes that occur in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> thread without being in the thread itself. </dd></dl>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00519">519</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad97f655356fcd454c0dfd19bcac3a89a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ReplayViewer::popRunQueueFront </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes the first Run in the Run queue that we are iterating through (to analyze all selected Runs). </p>
+<p>If we end up emptying the Run queue and some of the Runs could not be properly analyzed, we ask the user if they would like to re-analyze the failed Runs. Otherwise we just tell the user that all Runs have been succesfully analyzed.</p>
+<p>Returns false if the runQueue ended up being emptied and reinitialized to contain all selected Runs. Whenever we finish the runQueue, if we don't change the selection to the runs that failed, we always reinitialize the runQueue to contain all selected runs so that the user can just push play to start Analysis again. </p>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00320">320</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,6 +585,34 @@ end" button when running a Session run. When they do this, a message box will gi
 
 </div>
 </div>
+<a class="anchor" id="a8872c657fe62144d19d6f5e1b5d6be0f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::runSelectionChanged </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever the selected Runs change in the RunSelectorWidget. Updates the Run queue for batch playback/analysis along with other parts of the UI. </p>
+<p>If the change causes Runs to be selected from more than one Session, local Analyses are disabled. For multiple Sessions, only imported Analyses are allowed. Other UI channges need to be made as well depending on things like whether the first run in the queue has changed, etc. </p>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00744">744</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aa77ca895cb377625c43df1667d92179f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -276,6 +638,121 @@ end" button when running a Session run. When they do this, a message box will gi
 <p>This is meant to be used when only Analysis is needed, and it is not important to be able to watch the Session on screen. When this function is called and Analysis objects are active, this function asks if the user would like to automatically save Analysis outputs when each Run is complete. This is important because otherwise in batch analysis each new Run Analysis would overwrite previous Analysis outputs and the user would only be able to save Analysis output of the last Run in the batch. </p>
 
 <p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00406">406</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae36890c6f662108df5834908b0beb342"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::setupUi </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up the user interface portions of the GUI. </p>
+<p>play/pause/stop actions and toolbar</p>
+<p>playall </p>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00081">81</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad86dfce2cfd1ea27b02b3f245787ff4d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::setUserType </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly. </p>
+<dl class="section note"><dt>Note</dt><dd>The active user, Operator or Subject, determines which graphics are shown in the display depending on each graphics OperatorView/SubjectView Properties. </dd></dl>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00824">824</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adf4ed50993c4be3be4dba10e7d19ce87"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::toggleRecording </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the user toggles the record button. </p>
+<p>Handles changes to the Icon, and the recording state. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_replay_viewer.html#afd325f0c063d0136ec7e63b2be997509" title="Updates the Recording Visual Target Host to record or not depending on the current run and record mod...">updateRecordingTarget()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00903">903</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a62df61cab1e6d08d077f46249178b16d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReplayViewer::updateTime </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when playback time changes in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. Updates the position of the <a class="el" href="class_progress_widget.html" title="A Widget that represents some kind of progress along with a slider that can be moved to request chang...">ProgressWidget</a> slider accordingly. </p>
+<p>This function includes a bunch of logic that deals with cases where the slider was used to change something in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a>. For example, if the slider was used to tell the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> to fast forward to a time 100 seconds after its current position, we shouldn't move the slider back as soon as that command starts taking affect, instead, while the fast forward is taking affect, the slider remains stationary, only restarting once the fastforward reaches its time. Similar logic is in place if the slider is moved to a position below the current <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> time, in which case playback restarts from zero and fast forwards to the new slider time. </p>
+
+<p>Definition at line <a class="el" href="_replay_viewer_8cpp_source.html#l00713">713</a> of file <a class="el" href="_replay_viewer_8cpp_source.html">ReplayViewer.cpp</a>.</p>
 
 </div>
 </div>

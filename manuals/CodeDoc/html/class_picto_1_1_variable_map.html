@@ -94,6 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_variable_map-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::VariableMap Class Reference</div>  </div>
@@ -512,6 +515,39 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a5f1b65490e75a843ea7fba1fe1ce481a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable_map.html#a5f1b65490e75a843ea7fba1fe1ce481a">propValueChanged</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *, QVariant)</td></tr>
+<tr class="memdesc:a5f1b65490e75a843ea7fba1fe1ce481a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes and internally calls the <a class="el" href="class_picto_1_1_variable_map.html#a3ea8a8eb3e6e2962d5b070e28d36f16c" title="Copies the current value of the &quot;Value&quot; Property to the underlying QVariantMap to make sure it has va...">copyValuePropToMap()</a> function so that the underlying QVariantMap used for efficient "get" operations will contain correct data.  <a href="#a5f1b65490e75a843ea7fba1fe1ce481a">More...</a><br /></td></tr>
+<tr class="separator:a5f1b65490e75a843ea7fba1fe1ce481a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a04965bdb3667852fa43f5a56cf20ea3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04965bdb3667852fa43f5a56cf20ea3e"></a>
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable_map.html#a04965bdb3667852fa43f5a56cf20ea3e">getValue</a> (QVariant key)</td></tr>
+<tr class="memdesc:a04965bdb3667852fa43f5a56cf20ea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value under the input key as a variant. <br /></td></tr>
+<tr class="separator:a04965bdb3667852fa43f5a56cf20ea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b671ec297ca37efc5fcca194e4914c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b671ec297ca37efc5fcca194e4914c2"></a>
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable_map.html#a5b671ec297ca37efc5fcca194e4914c2">takeAt</a> (QVariant key)</td></tr>
+<tr class="memdesc:a5b671ec297ca37efc5fcca194e4914c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value under the input key as a variant and removes it from the map. <br /></td></tr>
+<tr class="separator:a5b671ec297ca37efc5fcca194e4914c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a087b74c5b1705165028a8ed2a0fe76e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a087b74c5b1705165028a8ed2a0fe76e7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable_map.html#a087b74c5b1705165028a8ed2a0fe76e7">copyMapToValueProp</a> ()</td></tr>
+<tr class="memdesc:a087b74c5b1705165028a8ed2a0fe76e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the current value of the underlying QVariantMap to the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> so that it will be sent over the network and recorded. <br /></td></tr>
+<tr class="separator:a087b74c5b1705165028a8ed2a0fe76e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea8a8eb3e6e2962d5b070e28d36f16c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_variable_map.html#a3ea8a8eb3e6e2962d5b070e28d36f16c">copyValuePropToMap</a> ()</td></tr>
+<tr class="memdesc:a3ea8a8eb3e6e2962d5b070e28d36f16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the current value of the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> to the underlying QVariantMap to make sure it has valid data.  <a href="#a3ea8a8eb3e6e2962d5b070e28d36f16c">More...</a><br /></td></tr>
+<tr class="separator:a3ea8a8eb3e6e2962d5b070e28d36f16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a073c8ec1a9645cdff4edbe42be210ee9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a073c8ec1a9645cdff4edbe42be210ee9"></a>
+QVariantMap&#160;</td><td class="memItemRight" valign="bottom"><b>map_</b></td></tr>
+<tr class="separator:a073c8ec1a9645cdff4edbe42be210ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1467b252d0fc3ca1df68d877838ce20d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1467b252d0fc3ca1df68d877838ce20d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>settingValueProp_</b></td></tr>
+<tr class="separator:a1467b252d0fc3ca1df68d877838ce20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
@@ -579,6 +615,34 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3ea8a8eb3e6e2962d5b070e28d36f16c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::VariableMap::copyValuePropToMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copies the current value of the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> to the underlying QVariantMap to make sure it has valid data. </p>
+<p>The <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value gets updated on a slave when a object in the master <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s value changes. It also gets reset when its parent first enters scope. We use an underlying QVariantMap to keep "get" operations efficient, so we need to make sure to call this function whenever the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes to keep the QVariantMap data valid. </p>
+
+<p>Definition at line <a class="el" href="_variable_map_8cpp_source.html#l00122">122</a> of file <a class="el" href="_variable_map_8cpp_source.html">VariableMap.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a56de651ffd82d88346309a4bfee6bd85"></a>
 <div class="memitem">
 <div class="memproto">
@@ -685,6 +749,45 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reimplemented from <a class="el" href="class_picto_1_1_variable.html#a447e12ef138cdd99ae9ba870ed3b5174">Picto::Variable</a>.</p>
 
 <p>Definition at line <a class="el" href="_variable_map_8cpp_source.html#l00076">76</a> of file <a class="el" href="_variable_map_8cpp_source.html">VariableMap.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f1b65490e75a843ea7fba1fe1ce481a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::VariableMap::propValueChanged </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_picto_1_1_property.html">Property</a> *&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVariant&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the "Value" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes and internally calls the <a class="el" href="class_picto_1_1_variable_map.html#a3ea8a8eb3e6e2962d5b070e28d36f16c" title="Copies the current value of the &quot;Value&quot; Property to the underlying QVariantMap to make sure it has va...">copyValuePropToMap()</a> function so that the underlying QVariantMap used for efficient "get" operations will contain correct data. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_variable_map.html#a3ea8a8eb3e6e2962d5b070e28d36f16c" title="Copies the current value of the &quot;Value&quot; Property to the underlying QVariantMap to make sure it has va...">copyValuePropToMap()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_variable_map_8cpp_source.html#l00131">131</a> of file <a class="el" href="_variable_map_8cpp_source.html">VariableMap.cpp</a>.</p>
 
 </div>
 </div>

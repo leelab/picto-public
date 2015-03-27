@@ -91,6 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_timed_message_box-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::TimedMessageBox Class Reference</div>  </div>
@@ -123,6 +124,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_timed_message_box.html#a88b63a62c261a24d302b0583e794e7d4">timerEvent</a> (QTimerEvent *event)</td></tr>
 <tr class="memdesc:a88b63a62c261a24d302b0583e794e7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements QMessageBox::timerEvent() to update the Widget's ProgressBar and close the widget once the timeout set in the constructor has been reached. <br /></td></tr>
 <tr class="separator:a88b63a62c261a24d302b0583e794e7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1ace7338377a1340a40688be94508855"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ace7338377a1340a40688be94508855"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout_</b></td></tr>
+<tr class="separator:a1ace7338377a1340a40688be94508855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91de4a478a0c0a07f1f88d72af5ac72b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91de4a478a0c0a07f1f88d72af5ac72b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>autoClose_</b></td></tr>
+<tr class="separator:a91de4a478a0c0a07f1f88d72af5ac72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462af6d1137b6d2463d1357a9a766fd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a462af6d1137b6d2463d1357a9a766fd6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currentTime_</b></td></tr>
+<tr class="separator:a462af6d1137b6d2463d1357a9a766fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f695a890e520a2e6a37c86905d60d05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f695a890e520a2e6a37c86905d60d05"></a>
+QProgressDialog *&#160;</td><td class="memItemRight" valign="bottom"><b>progBar_</b></td></tr>
+<tr class="separator:a7f695a890e520a2e6a37c86905d60d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is a message box that closes itself after a preset number of seconds. </p>

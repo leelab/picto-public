@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_toolbox-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Toolbox Class Reference</div>  </div>
@@ -118,6 +120,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7402c6a6bbae6967d79b3a3502f00942"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_toolbox.html#a7402c6a6bbae6967d79b3a3502f00942">Toolbox</a> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QWidget *parent=0)</td></tr>
 <tr class="memdesc:a7402c6a6bbae6967d79b3a3502f00942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>.  <a href="#a7402c6a6bbae6967d79b3a3502f00942">More...</a><br /></td></tr>
 <tr class="separator:a7402c6a6bbae6967d79b3a3502f00942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2b83dd6880a2c48aee5209fa0e3f09a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_toolbox.html#a2b83dd6880a2c48aee5209fa0e3f09a1">addToolGroup</a> (QStringList tagFilters, QString groupName, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; windowAsset)</td></tr>
+<tr class="memdesc:a2b83dd6880a2c48aee5209fa0e3f09a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> according to the input specifications and adds it to this <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>.  <a href="#a2b83dd6880a2c48aee5209fa0e3f09a1">More...</a><br /></td></tr>
+<tr class="separator:a2b83dd6880a2c48aee5209fa0e3f09a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aae27c2f70791582474f69008c0ac1829"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae27c2f70791582474f69008c0ac1829"></a>
+QList&lt; <a class="el" href="class_asset_tool_group.html">AssetToolGroup</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>toolGroups_</b></td></tr>
+<tr class="separator:aae27c2f70791582474f69008c0ac1829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa97645a44b87f2b9569d17b6a2c717d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa97645a44b87f2b9569d17b6a2c717d8"></a>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+<tr class="separator:aa97645a44b87f2b9569d17b6a2c717d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> widget containing groups of buttons that have some affect on activity in the designer. </p>
@@ -159,6 +176,51 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a2b83dd6880a2c48aee5209fa0e3f09a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Toolbox::addToolGroup </td>
+          <td>(</td>
+          <td class="paramtype">QStringList&#160;</td>
+          <td class="paramname"><em>tagFilters</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>groupName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
+          <td class="paramname"><em>windowAsset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> according to the input specifications and adds it to this <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
+<p>Currently we are only using <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> objects. tagFilters and windowAsset are passed into the <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> constructor. groupName is added as a label to a maximizable/minimizable bar that is used to display/hide each <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p>
+
+<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00090">90</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a444228bc72b75db264783bb43062d328"></a>
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +244,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Updates the contents of the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> so that they will be appropriate for editing the input asset. </p>
-<p>This function pretty much just chooses which kind of <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> objects will need to be added based on the design mode (Analysis or Experimental). It adds the ToolGroups using addToolGroup(). </p>
+<p>This function pretty much just chooses which kind of <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> objects will need to be added based on the design mode (Analysis or Experimental). It adds the ToolGroups using <a class="el" href="class_toolbox.html#a2b83dd6880a2c48aee5209fa0e3f09a1" title="Creates a ToolGroup according to the input specifications and adds it to this Toolbox. ">addToolGroup()</a>. </p>
 
 <p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00034">34</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
 

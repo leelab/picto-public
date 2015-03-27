@@ -89,6 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_menu-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Menu Class Reference</div>  </div>
@@ -146,6 +149,40 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu.html#aebc90f39203524becf5ad750269d5d82">initMenu</a> ()</td></tr>
 <tr class="memdesc:aebc90f39203524becf5ad750269d5d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes this object by creating all <a class="el" href="class_display_mode.html" title="A display mode that defines the results of user interactions and controls the front panel LCD when it...">DisplayMode</a> objects, turning on the LCD backlight and setting the active mode to <a class="el" href="class_status_mode.html" title="A DisplayMode that allows the user to monitor the current status of the Front Panel application...">StatusMode</a>. <br /></td></tr>
 <tr class="separator:aebc90f39203524becf5ad750269d5d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:aee30eb0acf3840999bdb5fb6e1eca47a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu.html#aee30eb0acf3840999bdb5fb6e1eca47a">returnToStatus</a> ()</td></tr>
+<tr class="memdesc:aee30eb0acf3840999bdb5fb6e1eca47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current <a class="el" href="class_display_mode.html" title="A display mode that defines the results of user interactions and controls the front panel LCD when it...">DisplayMode</a> to the <a class="el" href="class_status_mode.html" title="A DisplayMode that allows the user to monitor the current status of the Front Panel application...">StatusMode</a>.  <a href="#aee30eb0acf3840999bdb5fb6e1eca47a">More...</a><br /></td></tr>
+<tr class="separator:aee30eb0acf3840999bdb5fb6e1eca47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a03fbcaad30032b6b034571b001ae759a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03fbcaad30032b6b034571b001ae759a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu.html#a03fbcaad30032b6b034571b001ae759a">loadMenus</a> ()</td></tr>
+<tr class="memdesc:a03fbcaad30032b6b034571b001ae759a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and sets up all of the <a class="el" href="class_display_mode.html" title="A display mode that defines the results of user interactions and controls the front panel LCD when it...">DisplayMode</a> objects that the user can use in this panel. <br /></td></tr>
+<tr class="separator:a03fbcaad30032b6b034571b001ae759a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a9c65d6ce6614102be3723684b50a8d66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c65d6ce6614102be3723684b50a8d66"></a>
+<a class="el" href="class_front_panel_info.html">FrontPanelInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>panelInfo</b></td></tr>
+<tr class="separator:a9c65d6ce6614102be3723684b50a8d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae14665939f89a0ceab6934869b7f2c45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae14665939f89a0ceab6934869b7f2c45"></a>
+QSharedPointer&lt; <a class="el" href="class_director_interface.html">DirectorInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorIf_</b></td></tr>
+<tr class="separator:ae14665939f89a0ceab6934869b7f2c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c56281502ef25eca84f40dedef03bbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c56281502ef25eca84f40dedef03bbe"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>activityTimer</b></td></tr>
+<tr class="separator:a7c56281502ef25eca84f40dedef03bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73edabdef3020c1a0a07418c1fbf421c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73edabdef3020c1a0a07418c1fbf421c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>wasConnected_</b></td></tr>
+<tr class="separator:a73edabdef3020c1a0a07418c1fbf421c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad504b84a8fc93b8116fae6dd627df77a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad504b84a8fc93b8116fae6dd627df77a"></a>
+QMap&lt; <a class="el" href="namespace_panel_info.html#adb8b98e092c15e831aa524d39701d565">PanelInfo::DisplayModeType</a>, QSharedPointer&lt; <a class="el" href="class_display_mode.html">DisplayMode</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>panelModes_</b></td></tr>
+<tr class="separator:ad504b84a8fc93b8116fae6dd627df77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bc61150b783aee1749c3702f18e14cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bc61150b783aee1749c3702f18e14cf"></a>
+QSharedPointer&lt; <a class="el" href="class_display_mode.html">DisplayMode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currMode_</b></td></tr>
+<tr class="separator:a5bc61150b783aee1749c3702f18e14cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The top level object for the front panel that creates all operable DisplayModes and connects them to the <a class="el" href="class_phidgets.html" title="Provides an interface to the Phidgets devices used by the FrontPanel Application. ...">Phidgets</a> interface. </p>
@@ -176,6 +213,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aee30eb0acf3840999bdb5fb6e1eca47a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Menu::returnToStatus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the current <a class="el" href="class_display_mode.html" title="A display mode that defines the results of user interactions and controls the front panel LCD when it...">DisplayMode</a> to the <a class="el" href="class_status_mode.html" title="A DisplayMode that allows the user to monitor the current status of the Front Panel application...">StatusMode</a>. </p>
+<p>This function is called after no user interaction occurs for a set period of time to return the LCD display output to its default <a class="el" href="class_status_mode.html" title="A DisplayMode that allows the user to monitor the current status of the Front Panel application...">StatusMode</a> state. </p>
+
+<p>Definition at line <a class="el" href="menu_8cpp_source.html#l00125">125</a> of file <a class="el" href="menu_8cpp_source.html">menu.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3a8a0e8b13f44978f239e280d78b38bd"></a>
 <div class="memitem">
 <div class="memproto">

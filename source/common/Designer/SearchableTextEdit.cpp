@@ -52,8 +52,10 @@ void SearchableTextEdit::search(SearchRequest searchRequest, QColor highlightCol
 	setTextCursor(startingPos);
 }
 
-/*! \brief This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.
- *	\details The code that turns a QTextEdit into a QLineEdit is from http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
+/*! \brief This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed
+ *	with singleLine.
+ *	\details The code that turns a QTextEdit into a QLineEdit is from
+ *	http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
  */
 QSize SearchableTextEdit::sizeHint() const
 {

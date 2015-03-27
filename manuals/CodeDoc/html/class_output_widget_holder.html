@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_output_widget_holder-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">OutputWidgetHolder Class Reference</div>  </div>
@@ -128,6 +131,44 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_widget_holder.html#a5acb3b0139b50fe625bc3e9b840d4357">saveOutput</a> ()</td></tr>
 <tr class="memdesc:a5acb3b0139b50fe625bc3e9b840d4357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses OutputWidgetContainer::saveOutputTo() to save the AnalysisOutputWidget data to disk using the parameters defined in <a class="el" href="class_output_widget_holder.html#ae0b0835bce19b376efe42802ecd70d3d" title="Sets the parameters that will be used when saving the underlying AnalysisOutputWidget data to file...">setSaveParameters()</a>. <br /></td></tr>
 <tr class="separator:a5acb3b0139b50fe625bc3e9b840d4357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a1b95d29c04c83789be223302d0efcb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_widget_holder.html#a1b95d29c04c83789be223302d0efcb84">saveOutputFromDialog</a> ()</td></tr>
+<tr class="memdesc:a1b95d29c04c83789be223302d0efcb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the save button is pressed to retrieve save parameters from a <a class="el" href="class_save_output_dialog.html" title="A dialog for saving analysis output. ">SaveOutputDialog</a> amd save all AnalysisOutputWidget data for this Experiment to disk.  <a href="#a1b95d29c04c83789be223302d0efcb84">More...</a><br /></td></tr>
+<tr class="separator:a1b95d29c04c83789be223302d0efcb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae61f1aa30e9365ed5e280de2965e71a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae61f1aa30e9365ed5e280de2965e71a1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_widget_holder.html#ae61f1aa30e9365ed5e280de2965e71a1">enableSaveButton</a> ()</td></tr>
+<tr class="memdesc:ae61f1aa30e9365ed5e280de2965e71a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when OutputWidgetContainer::detectedSaveable() is emitted. Enables this widget's save button so that AnalysisOutputWidget data can be saved to disk. <br /></td></tr>
+<tr class="separator:ae61f1aa30e9365ed5e280de2965e71a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a834c1914528810f9ce666584a88fdac9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a834c1914528810f9ce666584a88fdac9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_output_widget_holder.html#a834c1914528810f9ce666584a88fdac9">resetLayout</a> ()</td></tr>
+<tr class="memdesc:a834c1914528810f9ce666584a88fdac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears this widget's layout, removing the OutputWidgetContainer. This is used whenever a new Run starts so that the widget can display that AnalysisOutputWidget object of the new Run. <br /></td></tr>
+<tr class="separator:a834c1914528810f9ce666584a88fdac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af23ae26e1456817ff0d64573dcabf017"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af23ae26e1456817ff0d64573dcabf017"></a>
+<a class="el" href="class_picto_1_1_analysis_output_widget_container.html">Picto::AnalysisOutputWidgetContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>containerWidget_</b></td></tr>
+<tr class="separator:af23ae26e1456817ff0d64573dcabf017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94170a06aa0fc94f5249d256e7101a53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94170a06aa0fc94f5249d256e7101a53"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>saveButton_</b></td></tr>
+<tr class="separator:a94170a06aa0fc94f5249d256e7101a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae235099e375e39d3e9a1b81a30f3d98e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae235099e375e39d3e9a1b81a30f3d98e"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>latestRunId_</b></td></tr>
+<tr class="separator:ae235099e375e39d3e9a1b81a30f3d98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb4212ee511772d410c5778c0be6bc1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb4212ee511772d410c5778c0be6bc1a"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>updateTimer_</b></td></tr>
+<tr class="separator:acb4212ee511772d410c5778c0be6bc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19c181c45ba8191a22d6b5b7937183c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19c181c45ba8191a22d6b5b7937183c0"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>saveToPath_</b></td></tr>
+<tr class="separator:a19c181c45ba8191a22d6b5b7937183c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2595dcc19b64c50a56ac3d67eb49dec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2595dcc19b64c50a56ac3d67eb49dec"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>separateSubDirs_</b></td></tr>
+<tr class="separator:ae2595dcc19b64c50a56ac3d67eb49dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget that displays an OutputWidgetContainer with its contained AnalysisOutputWidget objects and provides functionality for saving the AnalysisOutputWidgets' data to disk. </p>
@@ -154,6 +195,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Resets the Widget to display the Analysis Output for the new Run. </p>
 
 <p>Definition at line <a class="el" href="_output_widget_holder_8cpp_source.html#l00030">30</a> of file <a class="el" href="_output_widget_holder_8cpp_source.html">OutputWidgetHolder.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1b95d29c04c83789be223302d0efcb84"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OutputWidgetHolder::saveOutputFromDialog </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the save button is pressed to retrieve save parameters from a <a class="el" href="class_save_output_dialog.html" title="A dialog for saving analysis output. ">SaveOutputDialog</a> amd save all AnalysisOutputWidget data for this Experiment to disk. </p>
+<p>Uses <a class="el" href="class_output_widget_holder.html#ae0b0835bce19b376efe42802ecd70d3d" title="Sets the parameters that will be used when saving the underlying AnalysisOutputWidget data to file...">setSaveParameters()</a> and <a class="el" href="class_output_widget_holder.html#a5acb3b0139b50fe625bc3e9b840d4357" title="Uses OutputWidgetContainer::saveOutputTo() to save the AnalysisOutputWidget data to disk using the pa...">saveOutput()</a> functions. </p>
+
+<p>Definition at line <a class="el" href="_output_widget_holder_8cpp_source.html#l00109">109</a> of file <a class="el" href="_output_widget_holder_8cpp_source.html">OutputWidgetHolder.cpp</a>.</p>
 
 </div>
 </div>

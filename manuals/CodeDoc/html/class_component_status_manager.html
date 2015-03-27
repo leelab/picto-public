@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_component_status_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ComponentStatusManager Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -171,6 +173,33 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>doFrequentUpd
 <tr class="memitem:aad4af3be8431d94994bdd47488b4349f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad4af3be8431d94994bdd47488b4349f"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>doServerUpdate</b> ()=0</td></tr>
 <tr class="separator:aad4af3be8431d94994bdd47488b4349f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7400377a66b2a2940ece6ca7664db18f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7400377a66b2a2940ece6ca7664db18f"></a>
+ComponentStatus&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
+<tr class="separator:a7400377a66b2a2940ece6ca7664db18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e65c64fbbe3c8eaec357cb18a49677f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e65c64fbbe3c8eaec357cb18a49677f"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>lastUpdateTime_</b></td></tr>
+<tr class="separator:a1e65c64fbbe3c8eaec357cb18a49677f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472732bc0b4201f17be0daefa27e6c4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a472732bc0b4201f17be0daefa27e6c4c"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>lastFreqUpdateTime_</b></td></tr>
+<tr class="separator:a472732bc0b4201f17be0daefa27e6c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afce35051911e8ab6cffea7091a383142"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afce35051911e8ab6cffea7091a383142"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>sessionID_</b></td></tr>
+<tr class="separator:afce35051911e8ab6cffea7091a383142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a171bfc1e7c24f9828cf4595295443c96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a171bfc1e7c24f9828cf4595295443c96"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>forceExit_</b></td></tr>
+<tr class="separator:a171bfc1e7c24f9828cf4595295443c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a3c5d8def3330ef4e82f80cd2ec618b2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c5d8def3330ef4e82f80cd2ec618b2d"></a>
+static QMap&lt; QString, ComponentStatus &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>statusTransitionDictionary_</b></td></tr>
+<tr class="separator:a3c5d8def3330ef4e82f80cd2ec618b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a4ca6248cab596ab9073615e44455c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a4ca6248cab596ab9073615e44455c2"></a>
+static QMap&lt; ComponentStatus, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>statusNameDictionary_</b></td></tr>
+<tr class="separator:a8a4ca6248cab596ab9073615e44455c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles overall status operations for a <a class="el" href="class_component_interface.html" title="A base class for high level components that take orders from the Picto server and provide it with ses...">ComponentInterface</a> object. </p>

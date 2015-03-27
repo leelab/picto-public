@@ -46,8 +46,7 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 
 	//Add the newly created browser to a layout
 	QVBoxLayout* browserLayout = new QVBoxLayout();
-	browserLayout->addWidget(propList,1);
-	//browserLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);//This makes sure resizing of internal widgets is handled correctly
+	browserLayout->addWidget(propList);
 	browserLayout->setContentsMargins(QMargins(0,0,0,0));
 	
 	//Create a box to contain the browser, titled with the input title
@@ -57,7 +56,6 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 	
 	//Add the browser box to the end of the mainWidget layout
 	layout_->addWidget(browserBox);
-	layout_->addStretch(10000);
 	mainWidget_->setLayout(layout_);
 
 	//Add properties to the props list

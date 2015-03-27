@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-slots">Protected Slots</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_state_machine_element_container-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -447,7 +449,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 Protected Slots</h2></td></tr>
 <tr class="memitem:a6831e26dace63b48ba80480958a225d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6831e26dace63b48ba80480958a225d0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element_container.html#a6831e26dace63b48ba80480958a225d0">addChildToElementLists</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
-<tr class="memdesc:a6831e26dace63b48ba80480958a225d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the case where a child is added to this element after <a class="el" href="class_picto_1_1_state_machine_element_container.html#a5c4e35f0ef8d92e8518d86741211abc9" title="This function is called in fromXml() after successful deserialization and is used to initialize the A...">postDeserialize()</a>. In that case, depending on the child's type, we may need to add it using either addElement() or <a class="el" href="class_picto_1_1_state_machine_element_container.html#aec29a8d0b550c4491073faae5114c61e" title="Adds the input ElementContainer to this one&#39;s list of child ElementContainers and uses the child&#39;s ad...">addChildElementContainer()</a>. We handle that here. <br /></td></tr>
+<tr class="memdesc:a6831e26dace63b48ba80480958a225d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles the case where a child is added to this element after <a class="el" href="class_picto_1_1_state_machine_element_container.html#a5c4e35f0ef8d92e8518d86741211abc9" title="This function is called in fromXml() after successful deserialization and is used to initialize the A...">postDeserialize()</a>. In that case, depending on the child's type, we may need to add it using either <a class="el" href="class_picto_1_1_state_machine_element_container.html#a657a22b0d4e0fed5f9e5f4d1d51f895a" title="Adds a new Element to this object&#39;s in-scope Elements list as well as those of its child ElementConta...">addElement()</a> or <a class="el" href="class_picto_1_1_state_machine_element_container.html#aec29a8d0b550c4491073faae5114c61e" title="Adds the input ElementContainer to this one&#39;s list of child ElementContainers and uses the child&#39;s ad...">addChildElementContainer()</a>. We handle that here. <br /></td></tr>
 <tr class="separator:a6831e26dace63b48ba80480958a225d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -573,6 +575,22 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">addErrorToList</a> (QString errorMsg)</td></tr>
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a657a22b0d4e0fed5f9e5f4d1d51f895a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a657a22b0d4e0fed5f9e5f4d1d51f895a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element_container.html#a657a22b0d4e0fed5f9e5f4d1d51f895a">addElement</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_container_element.html">ContainerElement</a> &gt; element)</td></tr>
+<tr class="memdesc:a657a22b0d4e0fed5f9e5f4d1d51f895a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new Element to this object's in-scope Elements list as well as those of its child ElementContainers. <br /></td></tr>
+<tr class="separator:a657a22b0d4e0fed5f9e5f4d1d51f895a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a492df7235a32d190dcae69c6023de8a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a492df7235a32d190dcae69c6023de8a7"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_container_element.html">ContainerElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elements_</b></td></tr>
+<tr class="separator:a492df7235a32d190dcae69c6023de8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f93a0ba6693bd3f3a933d04e8e540b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f93a0ba6693bd3f3a933d04e8e540b8"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_machine_element_container.html">StateMachineElementContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elementContainers_</b></td></tr>
+<tr class="separator:a8f93a0ba6693bd3f3a933d04e8e540b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

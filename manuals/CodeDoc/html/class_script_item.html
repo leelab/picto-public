@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_script_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ScriptItem Class Reference</div>  </div>
@@ -212,6 +214,35 @@ QRectF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_item.html#afe6a5812a322d49ea7da56bfccdc98dc">getEditorState</a> ()</td></tr>
 <tr class="memdesc:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> object that is being used with this <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a>. <br /></td></tr>
 <tr class="separator:afe6a5812a322d49ea7da56bfccdc98dc inherit pro_methods_class_diagram_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a2213aa955f46fdcd86951da5cfb24f03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2213aa955f46fdcd86951da5cfb24f03"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item.html#a2213aa955f46fdcd86951da5cfb24f03">scriptPropEdited</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *changedProp, QVariant newValue)</td></tr>
+<tr class="memdesc:a2213aa955f46fdcd86951da5cfb24f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the script Property represented by this <a class="el" href="class_script_item.html" title="A small box placed on arrow sources and destinations that represents a non-empty script. ">ScriptItem</a> is edited to update its script contents tooltip and search highlighting. <br /></td></tr>
+<tr class="separator:a2213aa955f46fdcd86951da5cfb24f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a0c216bc16d0e4fbfce2e4f31c5020"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0a0c216bc16d0e4fbfce2e4f31c5020"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_item.html#ab0a0c216bc16d0e4fbfce2e4f31c5020">searchRequested</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
+<tr class="memdesc:ab0a0c216bc16d0e4fbfce2e4f31c5020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a search is requested to highlight the <a class="el" href="class_script_item.html" title="A small box placed on arrow sources and destinations that represents a non-empty script. ">ScriptItem</a> if its script contents match the search. <br /></td></tr>
+<tr class="separator:ab0a0c216bc16d0e4fbfce2e4f31c5020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac37812a181982e6829c6f14b628b5add"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac37812a181982e6829c6f14b628b5add"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptProperty_</b></td></tr>
+<tr class="separator:ac37812a181982e6829c6f14b628b5add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d7c1937ff7f3537c23c2c9e83563e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d7c1937ff7f3537c23c2c9e83563e8"></a>
+<a class="el" href="class_picto_1_1_script_syntax_highlighter.html">ScriptSyntaxHighlighter</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>scriptSyntaxHighlighter_</b></td></tr>
+<tr class="separator:af6d7c1937ff7f3537c23c2c9e83563e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf40da2b2e6f06ea308d55bd2838746b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf40da2b2e6f06ea308d55bd2838746b"></a>
+QTextEdit&#160;</td><td class="memItemRight" valign="bottom"><b>scriptTextEdit_</b></td></tr>
+<tr class="separator:aaf40da2b2e6f06ea308d55bd2838746b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa215000d5bc2611d579fda101fce0db2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa215000d5bc2611d579fda101fce0db2"></a>
+QColor&#160;</td><td class="memItemRight" valign="bottom"><b>baseColor_</b></td></tr>
+<tr class="separator:aa215000d5bc2611d579fda101fce0db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43cabc5a19c36afc211624075aca7088"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43cabc5a19c36afc211624075aca7088"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestText_</b></td></tr>
+<tr class="separator:a43cabc5a19c36afc211624075aca7088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

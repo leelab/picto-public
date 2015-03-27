@@ -120,7 +120,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">if</span>(maxArrowSourceWidth_ &gt; <a class="code" href="class_diagram_item.html#a6af79d17111d5a579a5d42002712411f">getRect</a>().width())</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="class_diagram_item.html#a4ece373a865d039b186625777074543e">setWidth</a>(maxArrowSourceWidth_);</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    arrowSources_.push_back(newArrowSource);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    updateArrowPortDimensions();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">updateArrowPortDimensions</a>();</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_wireable_item.html#ae5c0b483177a4671cc68182e34fab228">   41</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_wireable_item.html#ae5c0b483177a4671cc68182e34fab228">WireableItem::enableArrowDest</a>()</div>
@@ -130,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    arrowDest_ = <span class="keyword">new</span> <a class="code" href="class_arrow_destination_item.html">ArrowDestinationItem</a>(<a class="code" href="class_diagram_item.html#afe6a5812a322d49ea7da56bfccdc98dc">getEditorState</a>(),<span class="keyword">this</span>,<a class="code" href="class_asset_item.html#a186efcf7b26bc95a175bb69010774efe">getAsset</a>());</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    arrowDest_-&gt;setZValue(zValue()+1);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    arrowDest_-&gt;<a class="code" href="class_diagram_item.html#a4ece373a865d039b186625777074543e">setWidth</a>(10);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    updateArrowPortDimensions();    </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">updateArrowPortDimensions</a>();    </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_wireable_item.html#a17301f066713f101a8b857db9b8a16af">   53</a></span>&#160;QList&lt;DiagramItem*&gt; <a class="code" href="class_wireable_item.html#a17301f066713f101a8b857db9b8a16af">WireableItem::getArrowSources</a>()</div>
@@ -148,10 +148,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(rect.width() &lt; maxArrowSourceWidth_)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        rect.setWidth(maxArrowSourceWidth_);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="class_experiment_item.html#a34547eb218632c45e929e6e35b44dd3a">ExperimentItem::setRect</a>(rect);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    updateArrowPortDimensions();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">updateArrowPortDimensions</a>();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">void</span> WireableItem::updateArrowPortDimensions()</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">   75</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">WireableItem::updateArrowPortDimensions</a>()</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">float</span> width = <a class="code" href="class_diagram_item.html#a6fd0d6eb96d51a51845c4b066e8eaa54">getWidth</a>();</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QPointF lastSourceOffset = QPointF(0,0);</div>
@@ -173,6 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        arrowDest_-&gt;<a class="code" href="class_diagram_item.html#a72bf07606aa85cb0b546f936643f8cdd">setHeight</a>(height);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="ttc" id="class_wireable_item_html_acc8e2ae0869e7923884eb1dd92304690"><div class="ttname"><a href="class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690">WireableItem::updateArrowPortDimensions</a></div><div class="ttdeci">void updateArrowPortDimensions()</div><div class="ttdoc">Updates the dimensions of all of the attached ArrowPortItem objects according to this WireableItem&#39;s ...</div><div class="ttdef"><b>Definition:</b> <a href="_wireable_item_8cpp_source.html#l00075">WireableItem.cpp:75</a></div></div>
 <div class="ttc" id="class_arrow_destination_item_html"><div class="ttname"><a href="class_arrow_destination_item.html">ArrowDestinationItem</a></div><div class="ttdoc">An ArrowPortItem to which Arrow heads attach. </div><div class="ttdef"><b>Definition:</b> <a href="_arrow_destination_item_8h_source.html#l00019">ArrowDestinationItem.h:19</a></div></div>
 <div class="ttc" id="class_wireable_item_html_a9eb97131f850caa212ca6e67e6bcd5ed"><div class="ttname"><a href="class_wireable_item.html#a9eb97131f850caa212ca6e67e6bcd5ed">WireableItem::WireableItem</a></div><div class="ttdeci">WireableItem(QSharedPointer&lt; EditorState &gt; editorState, QMenu *contextMenu, QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Constructs a new WireableItem. By default no attached start bar is included. </div><div class="ttdef"><b>Definition:</b> <a href="_wireable_item_8cpp_source.html#l00010">WireableItem.cpp:10</a></div></div>
 <div class="ttc" id="class_asset_item_html_a186efcf7b26bc95a175bb69010774efe"><div class="ttname"><a href="class_asset_item.html#a186efcf7b26bc95a175bb69010774efe">AssetItem::getAsset</a></div><div class="ttdeci">QSharedPointer&lt; Asset &gt; getAsset()</div><div class="ttdoc">Returns the Asset that this DiagramItem represents. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_item_8h_source.html#l00023">AssetItem.h:23</a></div></div>

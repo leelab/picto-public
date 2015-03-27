@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_visual_target_host-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::VisualTargetHost Class Reference</div>  </div>
@@ -143,6 +145,18 @@ Protected Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target_host.html#ac7259d491789462b787cfad331b4bcef">mousePressEvent</a> (QMouseEvent *event)</td></tr>
 <tr class="memdesc:ac7259d491789462b787cfad331b4bcef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits a clickDetected signal whenever someone clicks on this window. <br /></td></tr>
 <tr class="separator:ac7259d491789462b787cfad331b4bcef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a5139912cf7a6b6c47fc6b3421fb3c35f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_visual_target_host.html#a5139912cf7a6b6c47fc6b3421fb3c35f">presented</a> (double frameTime)</td></tr>
+<tr class="memdesc:a5139912cf7a6b6c47fc6b3421fb3c35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this <a class="el" href="class_picto_1_1_visual_target_host.html" title="A Widget that contains a Visual Target. ">VisualTargetHost</a> to be repainted.  <a href="#a5139912cf7a6b6c47fc6b3421fb3c35f">More...</a><br /></td></tr>
+<tr class="separator:a5139912cf7a6b6c47fc6b3421fb3c35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a3c6c61774058f25b6b365025296ac49a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c6c61774058f25b6b365025296ac49a"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_visual_target.html">VisualTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>target_</b></td></tr>
+<tr class="separator:a3c6c61774058f25b6b365025296ac49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Widget that contains a Visual Target. </p>
@@ -183,6 +197,35 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>Reimplemented in <a class="el" href="class_picto_1_1_recording_visual_target_host.html#ac636397e7740a51ad0ef9ffc3a899333">Picto::RecordingVisualTargetHost</a>.</p>
 
 <p>Definition at line <a class="el" href="_visual_target_host_8cpp_source.html#l00038">38</a> of file <a class="el" href="_visual_target_host_8cpp_source.html">VisualTargetHost.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5139912cf7a6b6c47fc6b3421fb3c35f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::VisualTargetHost::presented </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>frameTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Causes this <a class="el" href="class_picto_1_1_visual_target_host.html" title="A Widget that contains a Visual Target. ">VisualTargetHost</a> to be repainted. </p>
+<p>Whenever the underlying <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> is repainted, this object needs to be repainted too. With the regular QWidget hierarchy, this would happen automatically, but here we are faking that hierarchy so we do it manually. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_visual_target_host.html#adee5a34fd8bd737e71f17d47ff97d3fd" title="Paints the underlying VisualTarget objects frame onto this object. ">paintEvent</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_visual_target_host_8cpp_source.html#l00070">70</a> of file <a class="el" href="_visual_target_host_8cpp_source.html">VisualTargetHost.cpp</a>.</p>
 
 </div>
 </div>

@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_picto_1_1_data_unit-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::DataUnit Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -192,6 +195,27 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="memdesc:a6c5644865540a1e1e8951895c836b5cf inherit pub_static_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the static list of errors_ to prepare for a new <a class="el" href="class_picto_1_1_serializable.html#acbaf02a158b3440a16bc1a84ebaa4481" title="Loads this object from a descriptive xmlText XML QString. ">fromXml()</a> call. <br /></td></tr>
 <tr class="separator:a6c5644865540a1e1e8951895c836b5cf inherit pub_static_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:ac677b54987a129e94d3325b6dcc32788"><td class="memItemLeft" align="right" valign="top">static qulonglong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_unit.html#ac677b54987a129e94d3325b6dcc32788">generateDataID</a> ()</td></tr>
+<tr class="memdesc:ac677b54987a129e94d3325b6dcc32788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates and returns a new data ID that is unique an ascending from one <a class="el" href="class_picto_1_1_data_unit.html#ae7b3fbd32259595a1c4e0a28c5564aba" title="Resets the data ID Generator such that the next generated data id will start at 1 again...">resetDataIDGenerator()</a> call to the next.  <a href="#ac677b54987a129e94d3325b6dcc32788">More...</a><br /></td></tr>
+<tr class="separator:ac677b54987a129e94d3325b6dcc32788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a67a37f3bbe1b1ec8480edb56066c4af3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67a37f3bbe1b1ec8480edb56066c4af3"></a>
+qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>dataID_</b></td></tr>
+<tr class="separator:a67a37f3bbe1b1ec8480edb56066c4af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1366bc561fd2607fddde2204da34edc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1366bc561fd2607fddde2204da34edc5"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>myTagName_</b></td></tr>
+<tr class="separator:a1366bc561fd2607fddde2204da34edc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a0864ba12cb91a10bfd995ac605e0533a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0864ba12cb91a10bfd995ac605e0533a"></a>
+static qulonglong&#160;</td><td class="memItemRight" valign="bottom"><b>lastDataID_</b> = 0</td></tr>
+<tr class="separator:a0864ba12cb91a10bfd995ac605e0533a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_serializable"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_serializable')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_serializable.html">Picto::Serializable</a></td></tr>
@@ -254,6 +278,34 @@ Additional Inherited Members</h2></td></tr>
 <p>Typically the XML of the input QXmlStreamReader will have been created using <a class="el" href="class_picto_1_1_data_unit.html#a72923bddebee1127470ef9e8face7d3a" title="Saves this object to descriptive XML text using the input QXmlStringWriter. ">serializeAsXml()</a> </p>
 
 <p>Implemented in <a class="el" href="class_picto_1_1_input_data_unit_package.html#aa6d154e9ca364bcadcfe228370941382">Picto::InputDataUnitPackage</a>, <a class="el" href="class_picto_1_1_behavioral_data_unit_package.html#ad072de1e2e515ffb022b1803370ed435">Picto::BehavioralDataUnitPackage</a>, <a class="el" href="class_picto_1_1_alignment_info.html#a587ee5f5271f33fa9bdd2fe74214a99c">Picto::AlignmentInfo</a>, <a class="el" href="class_picto_1_1_signal_channel_info.html#a30225d1614c6545bfa1c2bafbca7b7ca">Picto::SignalChannelInfo</a>, <a class="el" href="class_picto_1_1_state_data_unit.html#aaf856b26ed8bf9e8e499eabbd4a510d9">Picto::StateDataUnit</a>, <a class="el" href="class_picto_1_1_state_data_unit_package.html#ab1dfa63f518b4a629b289b4ee66f2be5">Picto::StateDataUnitPackage</a>, <a class="el" href="class_picto_1_1_l_f_p_data_unit_package.html#afd1d375a397894919fa7d60a60109628">Picto::LFPDataUnitPackage</a>, <a class="el" href="class_picto_1_1_reward_data_unit.html#ae59dc04996da87d9dad2757c41dd62b3">Picto::RewardDataUnit</a>, <a class="el" href="class_picto_1_1_frame_data_unit_package.html#a654266fc2f47cca32f67a46ab73565be">Picto::FrameDataUnitPackage</a>, <a class="el" href="class_picto_1_1_data_source_info.html#a764f00f8890dfc4c57e5c91c8071c8a5">Picto::DataSourceInfo</a>, <a class="el" href="class_picto_1_1_property_data_unit_package.html#a87508d1a33e09bc508a34f0b7912aade">Picto::PropertyDataUnitPackage</a>, <a class="el" href="class_picto_1_1_property_data_unit.html#a9fdfa4591dac16beb4120afb010db5e5">Picto::PropertyDataUnit</a>, <a class="el" href="class_picto_1_1_session_data_package.html#ad21415e53fb12b6e1eb5b32e24403587">Picto::SessionDataPackage</a>, <a class="el" href="class_picto_1_1_frame_data_unit.html#a9a2f1a37974e6a63cb8a3bdd312de05c">Picto::FrameDataUnit</a>, <a class="el" href="class_picto_1_1_task_run_data_unit.html#ae0f5008e26014c7a7ed0ee7dbdeebd93">Picto::TaskRunDataUnit</a>, <a class="el" href="class_picto_1_1_behavioral_data_unit.html#abe47e94377bc930caa4526617a3fe408">Picto::BehavioralDataUnit</a>, <a class="el" href="class_picto_1_1_neural_data_unit.html#a20e8df33e76f6f64d71a53b328c8011d">Picto::NeuralDataUnit</a>, <a class="el" href="class_picto_1_1_alignment_data_unit.html#a2607f81109d13dbc3706a0845f6449b4">Picto::AlignmentDataUnit</a>, <a class="el" href="class_picto_1_1_input_data_unit.html#a583e8f7d7c2ecd341fb9bed2401a520d">Picto::InputDataUnit</a>, <a class="el" href="class_picto_1_1_reward_unit.html#a8fec043d14d53c6feb5032624bb15bd3">Picto::RewardUnit</a>, and <a class="el" href="class_picto_1_1_director_data.html#abe56f09b0d67a9ddc42c0cad9178e2b2">Picto::DirectorData</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac677b54987a129e94d3325b6dcc32788"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">qulonglong Picto::DataUnit::generateDataID </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates and returns a new data ID that is unique an ascending from one <a class="el" href="class_picto_1_1_data_unit.html#ae7b3fbd32259595a1c4e0a28c5564aba" title="Resets the data ID Generator such that the next generated data id will start at 1 again...">resetDataIDGenerator()</a> call to the next. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_data_unit.html" title="A base class for all Picto data types that need to be individually identifiable and communicatable ov...">DataUnit</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_data_unit_8cpp_source.html#l00074">74</a> of file <a class="el" href="_data_unit_8cpp_source.html">DataUnit.cpp</a>.</p>
 
 </div>
 </div>

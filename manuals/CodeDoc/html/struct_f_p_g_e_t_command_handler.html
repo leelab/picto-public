@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_f_p_g_e_t_command_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">FPGETCommandHandler Struct Reference</div>  </div>
@@ -135,6 +137,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memitem:a3a091ffe3ec0ab19bbc44e9042aa481f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a091ffe3ec0ab19bbc44e9042aa481f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setStatus</b> (QString status)</td></tr>
 <tr class="separator:a3a091ffe3ec0ab19bbc44e9042aa481f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a80acc61ee2b0757264890e7dda0a42cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80acc61ee2b0757264890e7dda0a42cd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_p_g_e_t_command_handler.html#a80acc61ee2b0757264890e7dda0a42cd">getRewardDuration</a> (int controller)</td></tr>
+<tr class="memdesc:a80acc61ee2b0757264890e7dda0a42cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the reward duration that was set using <a class="el" href="struct_f_p_g_e_t_command_handler.html#a0bbaa02b29e405b6d5d33cc77bed3536" title="Use this function to tell this object what the current reward duration is so that it can be correctly...">setRewardDuration()</a>. <br /></td></tr>
+<tr class="separator:a80acc61ee2b0757264890e7dda0a42cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d564c43e8f1b9a465ed9cf0cf12e70e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d564c43e8f1b9a465ed9cf0cf12e70e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_f_p_g_e_t_command_handler.html#a2d564c43e8f1b9a465ed9cf0cf12e70e">getFlushDuration</a> (int controller)</td></tr>
+<tr class="memdesc:a2d564c43e8f1b9a465ed9cf0cf12e70e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the flush duration that was set using <a class="el" href="struct_f_p_g_e_t_command_handler.html#a3a618bf41f585a8a6f2f2df69916be4a" title="Use this function to tell this object what the current flush duration is so that it can be correctly ...">setFlushDuration()</a>. <br /></td></tr>
+<tr class="separator:a2d564c43e8f1b9a465ed9cf0cf12e70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad5a290f9b4097275955dca56fcb28272"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a290f9b4097275955dca56fcb28272"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>ip_</b></td></tr>
+<tr class="separator:ad5a290f9b4097275955dca56fcb28272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65e8c485ba5684bc5a7e8e23559ea3a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65e8c485ba5684bc5a7e8e23559ea3a0"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>name_</b></td></tr>
+<tr class="separator:a65e8c485ba5684bc5a7e8e23559ea3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa701c984ccfc3442def579484f4be35c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa701c984ccfc3442def579484f4be35c"></a>
+QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardDurs_</b></td></tr>
+<tr class="separator:aa701c984ccfc3442def579484f4be35c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad278029c7f4cd062b360f32a435b7f39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad278029c7f4cd062b360f32a435b7f39"></a>
+QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>flushDurs_</b></td></tr>
+<tr class="separator:ad278029c7f4cd062b360f32a435b7f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17ea34189df7b0edb632b0d76f5b7459"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17ea34189df7b0edb632b0d76f5b7459"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
+<tr class="separator:a17ea34189df7b0edb632b0d76f5b7459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="struct_picto_1_1_protocol_command_handler.html" title="A base class from which all command handlers are derived. These command handlers define responses to ...">Picto::ProtocolCommandHandler</a> that Handles FPGET commands received by the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> from the EmbeddedFrontPanel. </p>

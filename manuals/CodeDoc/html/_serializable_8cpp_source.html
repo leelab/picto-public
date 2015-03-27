@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;QStringList Serializable::errors_;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;QStringList <a class="code" href="class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51">Serializable::errors_</a>;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Serializable::Serializable()</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
@@ -106,9 +106,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    QString errorString;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;errors_.length(); i++)</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51">errors_</a>.length(); i++)</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        errorString += errors_[i] + <span class="stringliteral">&quot;&lt;br/&gt;&quot;</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        errorString += <a class="code" href="class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51">errors_</a>[i] + <span class="stringliteral">&quot;&lt;br/&gt;&quot;</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">return</span> errorString;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
@@ -133,11 +133,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">Serializable::addErrorToList</a>(QString errorMsg)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    errors_.append(errorMsg);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51">errors_</a>.append(errorMsg);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_serializable_html_a96d216d572c87de0e7b2ba4ae1c6ea17"><div class="ttname"><a href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">Picto::Serializable::addErrorToList</a></div><div class="ttdeci">void addErrorToList(QString errorMsg)</div><div class="ttdoc">Adds an error message to the static list of errors. </div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00058">Serializable.cpp:58</a></div></div>
 <div class="ttc" id="class_picto_1_1_serializable_html_a2715cc957dfee3198e54643f546eba26"><div class="ttname"><a href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">Picto::Serializable::toXml</a></div><div class="ttdeci">QString toXml()</div><div class="ttdoc">Converts this Serializable to an XML based QString that can be saved, transferred over the network...</div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00034">Serializable.cpp:34</a></div></div>
 <div class="ttc" id="class_picto_1_1_serializable_html_acbaf02a158b3440a16bc1a84ebaa4481"><div class="ttname"><a href="class_picto_1_1_serializable.html#acbaf02a158b3440a16bc1a84ebaa4481">Picto::Serializable::fromXml</a></div><div class="ttdeci">bool fromXml(QString xmlText)</div><div class="ttdoc">Loads this object from a descriptive xmlText XML QString. </div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00045">Serializable.cpp:45</a></div></div>
+<div class="ttc" id="class_picto_1_1_serializable_html_a30c25fbf611c36b3337eb98481916c51"><div class="ttname"><a href="class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51">Picto::Serializable::errors_</a></div><div class="ttdeci">static QStringList errors_</div><div class="ttdoc">A static list of error strings describing deserialization errors. </div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8h_source.html#l00044">Serializable.h:44</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 <div class="ttc" id="class_picto_1_1_serializable_html_a9b14c771646820d10e082d351cd4cf50"><div class="ttname"><a href="class_picto_1_1_serializable.html#a9b14c771646820d10e082d351cd4cf50">Picto::Serializable::getErrors</a></div><div class="ttdeci">static QString getErrors()</div><div class="ttdoc">Returns the latest deserialization errors that were reported from any deserialization event...</div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00022">Serializable.cpp:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

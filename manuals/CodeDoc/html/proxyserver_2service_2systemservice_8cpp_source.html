@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;systemservice.h&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;SystemService::workThread * SystemService::serviceWorkThread = NULL;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<a class="code" href="class_system_service_1_1work_thread.html">SystemService::workThread</a> * <a class="code" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">SystemService::serviceWorkThread</a> = NULL;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;SystemService::SystemService(</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keyword">const</span> QString &amp; _service_name,</div>
@@ -676,8 +676,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="comment">//serviceMainThread(0);</span></div>
 <div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;    <span class="comment">// now start the service for real</span></div>
 <div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;    <span class="comment">//( new workThread( serviceMainThread, s_this ) )-&gt;start();</span></div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    serviceWorkThread = <span class="keyword">new</span> workThread(serviceMainThread, s_this);</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;    serviceWorkThread-&gt;start();</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    <a class="code" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">serviceWorkThread</a> = <span class="keyword">new</span> workThread(serviceMainThread, s_this);</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;    <a class="code" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">serviceWorkThread</a>-&gt;start();</div>
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;}</div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;</div>
@@ -696,8 +696,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;            <span class="comment">// Post a quit message to the main service thread</span></div>
 <div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;            <span class="keywordflow">if</span>( s_serviceThread )</div>
 <div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;            {</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;                serviceWorkThread-&gt;exit();</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;                <span class="keyword">delete</span> serviceWorkThread;</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;                <a class="code" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">serviceWorkThread</a>-&gt;exit();</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;                <span class="keyword">delete</span> <a class="code" href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">serviceWorkThread</a>;</div>
 <div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;            }</div>
 <div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;</div>
@@ -761,8 +761,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;</div>
 <div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;</div>
+<div class="ttc" id="class_system_service_1_1work_thread_html"><div class="ttname"><a href="class_system_service_1_1work_thread.html">SystemService::workThread</a></div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00081">systemservice.h:81</a></div></div>
 <div class="ttc" id="config_2main_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="config_2main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdoc">The main method for the PictoConfig application. </div><div class="ttdef"><b>Definition:</b> <a href="config_2main_8cpp_source.html#l00027">main.cpp:27</a></div></div>
 <div class="ttc" id="class_system_service_html"><div class="ttname"><a href="class_system_service.html">SystemService</a></div><div class="ttdoc">This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. </div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00022">systemservice.h:22</a></div></div>
+<div class="ttc" id="class_system_service_html_a8d129c09fa92d836a49082585ae36d2d"><div class="ttname"><a href="class_system_service.html#a8d129c09fa92d836a49082585ae36d2d">SystemService::serviceWorkThread</a></div><div class="ttdeci">static workThread * serviceWorkThread</div><div class="ttdef"><b>Definition:</b> <a href="proxyserver_2service_2systemservice_8h_source.html#l00100">systemservice.h:100</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

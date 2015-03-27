@@ -91,6 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_picto_1_1_associate_root_host-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -128,6 +130,18 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_associate_root.html">Asso
 <tr class="memitem:a856a87a22cfbd947f9fbf9d433338982"><td class="memItemLeft" align="right" valign="top">virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root_host.html#a856a87a22cfbd947f9fbf9d433338982">getNameProperty</a> ()=0</td></tr>
 <tr class="memdesc:a856a87a22cfbd947f9fbf9d433338982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> containing this object's name.  <a href="#a856a87a22cfbd947f9fbf9d433338982">More...</a><br /></td></tr>
 <tr class="separator:a856a87a22cfbd947f9fbf9d433338982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a1b8a719a8669ae2443d0ccec2fadfda7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">setAssociateRoot</a> (QString type, QSharedPointer&lt; <a class="el" href="class_picto_1_1_associate_root.html">AssociateRoot</a> &gt; assocRoot)</td></tr>
+<tr class="memdesc:a1b8a719a8669ae2443d0ccec2fadfda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to this <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> lookup table under the input type name.  <a href="#a1b8a719a8669ae2443d0ccec2fadfda7">More...</a><br /></td></tr>
+<tr class="separator:a1b8a719a8669ae2443d0ccec2fadfda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a464d95b45b7d62d3d31689360ad6bece"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a464d95b45b7d62d3d31689360ad6bece"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_associate_root.html">AssociateRoot</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>associateRootHash_</b></td></tr>
+<tr class="separator:a464d95b45b7d62d3d31689360ad6bece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -231,6 +245,45 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>AssociateRoot</b></t
 
 <p>Returns a pointer to the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> containing this object's name. </p>
 <p>This is useful in case an <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> wants to be updated whenever this object's name changes. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1b8a719a8669ae2443d0ccec2fadfda7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::AssociateRootHost::setAssociateRoot </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_associate_root.html">AssociateRoot</a> &gt;&#160;</td>
+          <td class="paramname"><em>assocRoot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds the input <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to this <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> lookup table under the input type name. </p>
+<dl class="section note"><dt>Note</dt><dd>This function's implementation only allows a single <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> for each input type. This seems to be a bug. It makes sense that each <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> would only have one linked <a class="el" href="class_picto_1_1_u_i_data.html" title="The container of all UI information for a particular AssociateRootHost (Experiment or Analysis)...">UIData</a> <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> for example; however, an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> can have multiple <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> AssociateRoots attached to it and running simultaneously. THis has not caused problems yet since this function only adds the <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to an associateRootHash_ and that hash appears to only be used for accessing attached <a class="el" href="class_picto_1_1_u_i_data.html" title="The container of all UI information for a particular AssociateRootHost (Experiment or Analysis)...">UIData</a>. We should probably spend some more time verifying this issue though and fixing it. </dd></dl>
+
+<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00112">112</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
 
 </div>
 </div>

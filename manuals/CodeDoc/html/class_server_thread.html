@@ -88,6 +88,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_server_thread-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ServerThread Class Reference</div>  </div>
@@ -127,6 +131,72 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#add169bf62322681e6e124d0452579dee">run</a> ()</td></tr>
 <tr class="memdesc:add169bf62322681e6e124d0452579dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the main method of the <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a>. It sets up the <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a>'s variables, Signal/Slot connections and event timing, then calls QThread::exec() to start the thread's event loop. This continues until the thread ends at which point its socket is disconnected from its host. <br /></td></tr>
 <tr class="separator:add169bf62322681e6e124d0452579dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a09df1a4faeb43567cd2ad210dc69640a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09df1a4faeb43567cd2ad210dc69640a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#a09df1a4faeb43567cd2ad210dc69640a">readClient</a> ()</td></tr>
+<tr class="memdesc:a09df1a4faeb43567cd2ad210dc69640a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever new data arrives on the QTcpSocket. Reads the data in, uses it to build the ProtocolCommand objects that were sent on the other end of the Socket, processes them with <a class="el" href="class_server_thread.html#a30466777c41c0abc1001a8b197dc7a30" title="Processes the input ProtocolCommand using the correct Protocol object extracted from the ServerProtoc...">processCommand()</a> and delivers the responses generated in that function back to the other end of the socket. <br /></td></tr>
+<tr class="separator:a09df1a4faeb43567cd2ad210dc69640a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab49dda5108124831ff335eca6157dd05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab49dda5108124831ff335eca6157dd05"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#ab49dda5108124831ff335eca6157dd05">handleDroppedClient</a> ()</td></tr>
+<tr class="memdesc:ab49dda5108124831ff335eca6157dd05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the QTcpSocket is disconnected. Causes this <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> to exit(). <br /></td></tr>
+<tr class="separator:ab49dda5108124831ff335eca6157dd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ef6b6907a486517d9e73b9e210efe8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6ef6b6907a486517d9e73b9e210efe8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#ac6ef6b6907a486517d9e73b9e210efe8">handleTimeout</a> ()</td></tr>
+<tr class="memdesc:ac6ef6b6907a486517d9e73b9e210efe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when nothing happens on the QTcpSocket for timeoutInterval_ (10) seconds. Causes this <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> to exit(). <br /></td></tr>
+<tr class="separator:ac6ef6b6907a486517d9e73b9e210efe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdeff5710c62023a8f39afb9c04b2da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdeff5710c62023a8f39afb9c04b2da"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#afcdeff5710c62023a8f39afb9c04b2da">handleError</a> (QAbstractSocket::SocketError socketError)</td></tr>
+<tr class="memdesc:afcdeff5710c62023a8f39afb9c04b2da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when an error occurs on the QTcpSocket. Currently, doesn't do anything about it. <br /></td></tr>
+<tr class="separator:afcdeff5710c62023a8f39afb9c04b2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a745d9962f11f8a6b214ab5fc7fd2fb49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#a745d9962f11f8a6b214ab5fc7fd2fb49">receiveContent</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt; command)</td></tr>
+<tr class="memdesc:a745d9962f11f8a6b214ab5fc7fd2fb49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calling this causes all data from the QTcpSocket that belongs in the input command's content field to be read into it.  <a href="#a745d9962f11f8a6b214ab5fc7fd2fb49">More...</a><br /></td></tr>
+<tr class="separator:a745d9962f11f8a6b214ab5fc7fd2fb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30466777c41c0abc1001a8b197dc7a30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30466777c41c0abc1001a8b197dc7a30"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#a30466777c41c0abc1001a8b197dc7a30">processCommand</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt; _command)</td></tr>
+<tr class="memdesc:a30466777c41c0abc1001a8b197dc7a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the input ProtocolCommand using the correct Protocol object extracted from the <a class="el" href="struct_server_protocols.html" title="A simple container object used to store all fo the Protocol objects used by the Server. ">ServerProtocols</a> object. An appropriate ProtocolResponse is returned. <br /></td></tr>
+<tr class="separator:a30466777c41c0abc1001a8b197dc7a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b886d2e30ec71e889c4b417a2a55e79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b886d2e30ec71e889c4b417a2a55e79"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_server_thread.html#a1b886d2e30ec71e889c4b417a2a55e79">deliverResponse</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt; response)</td></tr>
+<tr class="memdesc:a1b886d2e30ec71e889c4b417a2a55e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the input ProtocolResponse out over the QTcpSocket. <br /></td></tr>
+<tr class="separator:a1b886d2e30ec71e889c4b417a2a55e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a90639d8992171b94f5626cd973442a57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90639d8992171b94f5626cd973442a57"></a>
+qintptr&#160;</td><td class="memItemRight" valign="bottom"><b>socketDescriptor_</b></td></tr>
+<tr class="separator:a90639d8992171b94f5626cd973442a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1099aa7877270fe7bc2ba6ed27e17b93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1099aa7877270fe7bc2ba6ed27e17b93"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>pendingCommand_</b></td></tr>
+<tr class="separator:a1099aa7877270fe7bc2ba6ed27e17b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad934cf135ffe965c9a96f347c89fcca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad934cf135ffe965c9a96f347c89fcca"></a>
+QTcpSocket *&#160;</td><td class="memItemRight" valign="bottom"><b>tcpSocket_</b></td></tr>
+<tr class="separator:aad934cf135ffe965c9a96f347c89fcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bfd7d97e8893bf1413b5ff06a2193f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bfd7d97e8893bf1413b5ff06a2193f1"></a>
+QSharedPointer&lt; <a class="el" href="struct_server_protocols.html">ServerProtocols</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>protocols_</b></td></tr>
+<tr class="separator:a2bfd7d97e8893bf1413b5ff06a2193f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81c18826284f8075f6c676eb8f56969"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad81c18826284f8075f6c676eb8f56969"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>peerAddress_</b></td></tr>
+<tr class="separator:ad81c18826284f8075f6c676eb8f56969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f745e358e04d76f3c0e6c9a18651e61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f745e358e04d76f3c0e6c9a18651e61"></a>
+QStringList *&#160;</td><td class="memItemRight" valign="bottom"><b>closedUnconfirmedCommandIDs_</b></td></tr>
+<tr class="separator:a2f745e358e04d76f3c0e6c9a18651e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1500d6725551f1fe606c5789c677d1b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1500d6725551f1fe606c5789c677d1b7"></a>
+QStringList *&#160;</td><td class="memItemRight" valign="bottom"><b>unconfirmedCommandIDs_</b></td></tr>
+<tr class="separator:a1500d6725551f1fe606c5789c677d1b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6ee83e4e906f3f9b8cb6a1f2a669a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c6ee83e4e906f3f9b8cb6a1f2a669a0"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>timer_</b></td></tr>
+<tr class="separator:a8c6ee83e4e906f3f9b8cb6a1f2a669a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a1714bc193a93d7c24d4bea3754872868"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1714bc193a93d7c24d4bea3754872868"></a>
+static const int&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutInterval_</b> = 10000</td></tr>
+<tr class="separator:a1714bc193a93d7c24d4bea3754872868"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A thread used to handle TCP connections. </p>
@@ -168,13 +238,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Constructs a <a class="el" href="class_server_thread.html" title="A thread used to handle TCP connections. ">ServerThread</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">socketDescriptor_</td><td>This is used with QTcpSocket::setSocketDescriptor() to allow this socket to handle a new connection that came into the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>'s Server::incomingConnection() function. </td></tr>
+    <tr><td class="paramname">socketDescriptor_</td><td>This is used with QTcpSocket::setSocketDescriptor() to allow this socket to handle a new connection that came into the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>'s <a class="el" href="class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62" title="Called when a new connection comes in. Creates a ServerThread to handle the incoming connection...">Server::incomingConnection()</a> function. </td></tr>
     <tr><td class="paramname">protocols</td><td>A <a class="el" href="struct_server_protocols.html" title="A simple container object used to store all fo the Protocol objects used by the Server. ">ServerProtocols</a> object that includes a list of Protocol object that will handle incoming messages. </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Definition at line <a class="el" href="serverthread_8cpp_source.html#l00016">16</a> of file <a class="el" href="serverthread_8cpp_source.html">serverthread.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a745d9962f11f8a6b214ab5fc7fd2fb49"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ServerThread::receiveContent </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt;&#160;</td>
+          <td class="paramname"><em>command</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calling this causes all data from the QTcpSocket that belongs in the input command's content field to be read into it. </p>
+<dl class="section note"><dt>Note</dt><dd>This function blocks until all the content arrives. </dd></dl>
+
+<p>Definition at line <a class="el" href="serverthread_8cpp_source.html#l00074">74</a> of file <a class="el" href="serverthread_8cpp_source.html">serverthread.cpp</a>.</p>
 
 </div>
 </div>

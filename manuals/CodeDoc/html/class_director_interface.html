@@ -87,6 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_director_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DirectorInterface Class Reference</div>  </div>
@@ -151,6 +154,47 @@ Public Member Functions</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director_interface.html#a66be82803781f998f822e1e151e2fb4a">isConnected</a> ()</td></tr>
 <tr class="memdesc:a66be82803781f998f822e1e151e2fb4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> application is connected to this Front Panel application, false otherwise. <br /></td></tr>
 <tr class="separator:a66be82803781f998f822e1e151e2fb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a6c96e539b8d7dd8b40e46454cd1d4022"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022">updateLocalRewards</a> ()</td></tr>
+<tr class="memdesc:a6c96e539b8d7dd8b40e46454cd1d4022"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called periodically by the reward timer to update the state of the local rewards and flushes.  <a href="#a6c96e539b8d7dd8b40e46454cd1d4022">More...</a><br /></td></tr>
+<tr class="separator:a6c96e539b8d7dd8b40e46454cd1d4022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a5f13f01bccd3606cb96e93614166ba9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director_interface.html#a5f13f01bccd3606cb96e93614166ba9a">sendCommandGetResponse</a> (<a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> command, QString *reply)</td></tr>
+<tr class="separator:a5f13f01bccd3606cb96e93614166ba9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac857ed830db6a8acf69f9537d818dd83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac857ed830db6a8acf69f9537d818dd83"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_front_panel_reward_controller.html">FrontPanelRewardController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardController_</b></td></tr>
+<tr class="separator:ac857ed830db6a8acf69f9537d818dd83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af93737d7588d2ffc2bd63953e1485088"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af93737d7588d2ffc2bd63953e1485088"></a>
+<a class="el" href="class_front_panel_info.html">FrontPanelInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>panelInfo</b></td></tr>
+<tr class="separator:af93737d7588d2ffc2bd63953e1485088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4b7479432a277da4b3e03489a1c5e1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4b7479432a277da4b3e03489a1c5e1e"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>connectionTimer</b></td></tr>
+<tr class="separator:aa4b7479432a277da4b3e03489a1c5e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b6492495ff5c6eb2c6b433e97d1adaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b6492495ff5c6eb2c6b433e97d1adaa"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastIp_</b></td></tr>
+<tr class="separator:a5b6492495ff5c6eb2c6b433e97d1adaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a953bf1203824a1a2b932074b424f2e43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a953bf1203824a1a2b932074b424f2e43"></a>
+<a class="el" href="_director_interface_8h.html#add118e59eefaadc163fc7f91ddadd7a4">DirectorStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastStatus_</b></td></tr>
+<tr class="separator:a953bf1203824a1a2b932074b424f2e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15dbd0f969c36930dbb1634786f4e0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad15dbd0f969c36930dbb1634786f4e0e"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>rewardDurs_</b></td></tr>
+<tr class="separator:ad15dbd0f969c36930dbb1634786f4e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad444d21760ee4bad2b1edd5c63da7f96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad444d21760ee4bad2b1edd5c63da7f96"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>flushDurs_</b></td></tr>
+<tr class="separator:ad444d21760ee4bad2b1edd5c63da7f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20fc733331ab7e14898c706baba64612"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20fc733331ab7e14898c706baba64612"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lastCommandId_</b></td></tr>
+<tr class="separator:a20fc733331ab7e14898c706baba64612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a904e6b4a22d1db533a530f8fff57f2dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a904e6b4a22d1db533a530f8fff57f2dc"></a>
+QSharedPointer&lt; QTimer &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewardTimer_</b></td></tr>
+<tr class="separator:a904e6b4a22d1db533a530f8fff57f2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface that encapsulates socket communicate to the director from the Front Panel Application. </p>
@@ -196,7 +240,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Starts a flush or stops it if one is already in progress on the input controller. </p>
-<p>If a flush is already in progress for the input controller, it is stopped, otherwise a message is sent to the director application to begin a flush according to the currently set flush duration. Note that flushes can still occur even if the director is not running. In this case flushes are simply handled locally within this application. This is important in case the pictobox is being used with some third party application (ie. Legacy Orion software) and not the Picto <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. This function returns false only if the input controller number or the currently set flush duration were invalid, otherwise it always successfully flushes whether or not the director application is reachable. </p><dl class="section see"><dt>See also</dt><dd>updateLocalRewards() </dd></dl>
+<p>If a flush is already in progress for the input controller, it is stopped, otherwise a message is sent to the director application to begin a flush according to the currently set flush duration. Note that flushes can still occur even if the director is not running. In this case flushes are simply handled locally within this application. This is important in case the pictobox is being used with some third party application (ie. Legacy Orion software) and not the Picto <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. This function returns false only if the input controller number or the currently set flush duration were invalid, otherwise it always successfully flushes whether or not the director application is reachable. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022" title="This function is called periodically by the reward timer to update the state of the local rewards and...">updateLocalRewards()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_director_interface_8cpp_source.html#l00271">271</a> of file <a class="el" href="_director_interface_8cpp_source.html">DirectorInterface.cpp</a>.</p>
 
@@ -325,6 +369,43 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a5f13f01bccd3606cb96e93614166ba9a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DirectorInterface::sendCommandGetResponse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a>&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString *&#160;</td>
+          <td class="paramname"><em>reply</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sends the input command to the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> application and returns the response in the string pointed to by reply if the function returns true. The <a class="el" href="class_director_interface.html" title="An interface that encapsulates socket communicate to the director from the Front Panel Application...">DirectorInterface</a> connects the Front Panel application to the director over a socket. After sending a command over this socket, it waits RESPONSEDELAYMS for a reply. If that reply is received in time, it puts it into the reply string and returns true. If the connection fails or the director returns an error message, the function returns false. </p>
+
+<p>Definition at line <a class="el" href="_director_interface_8cpp_source.html#l00367">367</a> of file <a class="el" href="_director_interface_8cpp_source.html">DirectorInterface.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac38c9e1b84eaddc5210ecb347db5df32"></a>
 <div class="memitem">
 <div class="memproto">
@@ -444,9 +525,37 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Starts a reward on the input controller. </p>
-<p>This function sends a message to the director application to begin a reward according to the currently set reward duration on the input controller. Note that rewards can still occur even if the director is not running. In this case rewards are simply handled locally within this application. This is important in case the pictobox is being used with some third party application (ie. Legacy Orion software) and not the Picto <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. This function returns false only if the input controller number or the currently set reward duration were invalid, otherwise it always successfully starts a reward whether or not the director application is reachable. </p><dl class="section see"><dt>See also</dt><dd>updateLocalRewards() </dd></dl>
+<p>This function sends a message to the director application to begin a reward according to the currently set reward duration on the input controller. Note that rewards can still occur even if the director is not running. In this case rewards are simply handled locally within this application. This is important in case the pictobox is being used with some third party application (ie. Legacy Orion software) and not the Picto <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. This function returns false only if the input controller number or the currently set reward duration were invalid, otherwise it always successfully starts a reward whether or not the director application is reachable. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_director_interface.html#a6c96e539b8d7dd8b40e46454cd1d4022" title="This function is called periodically by the reward timer to update the state of the local rewards and...">updateLocalRewards()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_director_interface_8cpp_source.html#l00323">323</a> of file <a class="el" href="_director_interface_8cpp_source.html">DirectorInterface.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6c96e539b8d7dd8b40e46454cd1d4022"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DirectorInterface::updateLocalRewards </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is called periodically by the reward timer to update the state of the local rewards and flushes. </p>
+<p>The reward timer that calls this function is started whenever a local reward or flush begins it calls this function every 16ms. This function starts by telling the reward controller to handle any pending rewards. This has the effect of stopping rewards that are done and starting new ones that are waiting. If there are no more pending rewards, and the latest rewards and flushes are all finished the function stops the rewardTimer_ until the next local reward or flush is started. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_director_interface.html#a9ded2d133f5911f909ac3e4a0029dd68" title="Starts a flush or stops it if one is already in progress on the input controller. ...">flush()</a>, <a class="el" href="class_director_interface.html#a82b07bf6375ff90d71663a0373a86765" title="Starts a reward on the input controller. ">startReward()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_director_interface_8cpp_source.html#l00406">406</a> of file <a class="el" href="_director_interface_8cpp_source.html">DirectorInterface.cpp</a>.</p>
 
 </div>
 </div>

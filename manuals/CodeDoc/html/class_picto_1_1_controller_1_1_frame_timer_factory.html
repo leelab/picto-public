@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_controller_1_1_frame_timer_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::Controller::FrameTimerFactory Class Reference</div>  </div>
@@ -129,6 +130,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a7d968874245a85c6ac89c27f034a8a06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d968874245a85c6ac89c27f034a8a06"></a>
 QVector&lt; QWeakPointer&lt; <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html">FrameResolutionTimer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>timerList_</b></td></tr>
 <tr class="separator:a7d968874245a85c6ac89c27f034a8a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af26b937ba034fa0781fd7fdc836d1a71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af26b937ba034fa0781fd7fdc836d1a71"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_controller_1_1_frame_tracker.html">FrameTracker</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frameTracker_</b></td></tr>
+<tr class="separator:af26b937ba034fa0781fd7fdc836d1a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Factory object used to create <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html" title="A timer object that returns times in single frame increments. ">FrameResolutionTimer</a> object while maintaing a single <a class="el" href="struct_picto_1_1_controller_1_1_frame_tracker.html" title="Stores frame timing information for use by FrameResolutionTimer objects. The FrameTracker object used...">FrameTracker</a> object to keep them update with the latest frame times. </p>

@@ -7,6 +7,7 @@ var searchData=
   ['behavioraldataunitpackage',['BehavioralDataUnitPackage',['../class_picto_1_1_behavioral_data_unit_package.html',1,'Picto']]],
   ['binarydataoutput',['BinaryDataOutput',['../class_picto_1_1_binary_data_output.html',1,'Picto']]],
   ['binarydataoutput',['BinaryDataOutput',['../class_picto_1_1_binary_data_output.html#a85df0673a421e535373b56fde27f33db',1,'Picto::BinaryDataOutput']]],
+  ['bindscriptablestoscriptengine',['bindScriptablesToScriptEngine',['../class_picto_1_1_scriptable_container.html#a385c09a891f18eede04e3a5ce3a8f34c',1,'Picto::ScriptableContainer']]],
   ['bindtoscriptengine',['bindToScriptEngine',['../class_picto_1_1_scriptable.html#adce0998e15121e926dc77624a40a436e',1,'Picto::Scriptable::bindToScriptEngine()'],['../class_picto_1_1_script_function.html#a057f97a5333812ee5ff269b5cb86f403',1,'Picto::ScriptFunction::bindToScriptEngine()']]],
   ['blankwindow',['BlankWindow',['../class_blank_window.html',1,'']]],
   ['blue',['blue',['../class_picto_1_1_color_parameter.html#a66635f542475b50f054ebb341a7d15ab',1,'Picto::ColorParameter::blue()'],['../struct_picto_1_1_visual_element.html#a440a16c6901f1fef5502658fadf009b7',1,'Picto::VisualElement::blue()']]],
@@ -16,7 +17,11 @@ var searchData=
   ['boxgraphic',['BoxGraphic',['../class_picto_1_1_box_graphic.html#a4ba531fde3b68da1ca69c6832b781974',1,'Picto::BoxGraphic']]],
   ['boxgraphic',['BoxGraphic',['../class_picto_1_1_box_graphic.html',1,'Picto']]],
   ['bufferfilegenerator',['BufferFileGenerator',['../class_picto_1_1_buffer_file_generator.html',1,'Picto']]],
+  ['buildcolorlist',['buildColorList',['../class_picto_1_1_randomly_filled_grid_graphic.html#aeeebe7657a08aa841bfbac4912e2b82e',1,'Picto::RandomlyFilledGridGraphic']]],
+  ['builddesignfilename',['buildDesignFileName',['../class_picto_1_1_auto_saver.html#ac64be0aa0911489d3d9912853e80f5d7',1,'Picto::AutoSaver']]],
   ['buildevent',['buildEvent',['../class_simple_l_f_p_source.html#a5ec1d12fd33fae9419f06b3b59cbcd6d',1,'SimpleLFPSource::buildEvent()'],['../class_simple_mark_source.html#a233577f961e2911124ae959809698b2a',1,'SimpleMarkSource::buildEvent()'],['../class_simple_spike_source.html#a42730994330acdf1d66e3b232d86f276',1,'SimpleSpikeSource::buildEvent()']]],
   ['buildtableindeces',['buildTableIndeces',['../class_stored_session_data.html#ab187a23f5736693963806ea948fb5abf',1,'StoredSessionData']]],
-  ['buttonclicked',['buttonClicked',['../class_phidgets.html#a53cfa8a8488c9ca56aa10cb1049400ce',1,'Phidgets']]]
+  ['button_5f',['button_',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html#ad6e93cf57cfae6a48c6475008744015d',1,'Picto::RunSelectorWidget::RunInfo']]],
+  ['buttonclicked',['buttonClicked',['../class_picto_1_1_run_selector_widget.html#a06ca70f99e4335408ac8111cdc1f1c68',1,'Picto::RunSelectorWidget::buttonClicked()'],['../class_phidgets.html#a53cfa8a8488c9ca56aa10cb1049400ce',1,'Phidgets::buttonClicked()']]],
+  ['buttongroupclicked',['buttonGroupClicked',['../class_tool_group.html#a542edd6618a823fd7c7f905d1e5f7d34',1,'ToolGroup']]]
 ];

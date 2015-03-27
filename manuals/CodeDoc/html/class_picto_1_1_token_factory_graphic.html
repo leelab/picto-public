@@ -96,6 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_token_factory_graphic-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::TokenFactoryGraphic Class Reference</div>  </div>
@@ -899,6 +901,56 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 <tr class="memdesc:a45c3042c969717eb2ab60373369c7de7 inherit properties_struct_picto_1_1_visual_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the this <a class="el" href="struct_picto_1_1_visual_element.html" title="A base class for all elements that represent graphics to be drawn onto the the display&#39;s Scene...">VisualElement</a>'s color in the #rrbbgg format (ex. #FF2255).  <a href="#a45c3042c969717eb2ab60373369c7de7">More...</a><br /></td></tr>
 <tr class="separator:a45c3042c969717eb2ab60373369c7de7 inherit properties_struct_picto_1_1_visual_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a07e63363e6153213381014e4ceb0c6b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07e63363e6153213381014e4ceb0c6b6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_factory_graphic.html#a07e63363e6153213381014e4ceb0c6b6">updateListSizes</a> ()</td></tr>
+<tr class="memdesc:a07e63363e6153213381014e4ceb0c6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the sizes of the lists stored in this object's <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values when necessary (ie. number of tokens changes). <br /></td></tr>
+<tr class="separator:a07e63363e6153213381014e4ceb0c6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a006204ba4fd88d66861ef077f296af72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a006204ba4fd88d66861ef077f296af72"></a>
+QRect&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_token_factory_graphic.html#a006204ba4fd88d66861ef077f296af72">getImageDims</a> ()</td></tr>
+<tr class="memdesc:a006204ba4fd88d66861ef077f296af72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the minimum QImage size necessary to contain all of this <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a>'s tokens without clipping any of them and returns it in a QRect. <br /></td></tr>
+<tr class="separator:a006204ba4fd88d66861ef077f296af72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad107bd2e337cce56cbb1bc08286a5b4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad107bd2e337cce56cbb1bc08286a5b4d"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><b>posOffset_</b></td></tr>
+<tr class="separator:ad107bd2e337cce56cbb1bc08286a5b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c62eef9b888a570f2ee23558094a7d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c62eef9b888a570f2ee23558094a7d0"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>shapeList_</b></td></tr>
+<tr class="separator:a7c62eef9b888a570f2ee23558094a7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d3710e3d3904e9fb92082b26f23e741"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d3710e3d3904e9fb92082b26f23e741"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sizeDelta_</b></td></tr>
+<tr class="separator:a2d3710e3d3904e9fb92082b26f23e741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af222b841303bd59b944ba10f59056d3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af222b841303bd59b944ba10f59056d3b"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>colorDelta_</b></td></tr>
+<tr class="separator:af222b841303bd59b944ba10f59056d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04613468402c62ef3d604286d777d45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab04613468402c62ef3d604286d777d45"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>shapeDelta_</b></td></tr>
+<tr class="separator:ab04613468402c62ef3d604286d777d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d84df3db4bb6e5ecd304eab90b6f2c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d84df3db4bb6e5ecd304eab90b6f2c7"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outlineDelta_</b></td></tr>
+<tr class="separator:a6d84df3db4bb6e5ecd304eab90b6f2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff28f561fc4a748545b0e923a1d178f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ff28f561fc4a748545b0e923a1d178f"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outlineWidthDelta_</b></td></tr>
+<tr class="separator:a9ff28f561fc4a748545b0e923a1d178f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a403b06ba7e35753f487ad00fd31cb007"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a403b06ba7e35753f487ad00fd31cb007"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>xDelta_</b></td></tr>
+<tr class="separator:a403b06ba7e35753f487ad00fd31cb007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba21161e0dd14ee997b6194479ab27a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba21161e0dd14ee997b6194479ab27a2"></a>
+QHash&lt; int, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>yDelta_</b></td></tr>
+<tr class="separator:aba21161e0dd14ee997b6194479ab27a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afed9c084cfbece18651db94598ab1085"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afed9c084cfbece18651db94598ab1085"></a>
+QVector&lt; QHash&lt; int, QString &gt; * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deltaHashs_</b></td></tr>
+<tr class="separator:afed9c084cfbece18651db94598ab1085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c0d20ec9d68402198a9902faa962ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06c0d20ec9d68402198a9902faa962ba"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>defaults_</b></td></tr>
+<tr class="separator:a06c0d20ec9d68402198a9902faa962ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c285ba2502965512b54628f480dc1c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72c285ba2502965512b54628f480dc1c"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>listNames_</b></td></tr>
+<tr class="separator:a72c285ba2502965512b54628f480dc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
@@ -963,7 +1015,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <div class="textblock"><p>Displays any number of small token shapes. The token shapes are configurable to create all sorts of useful symbols for points, rewards, quantities or lots of other things. </p>
 <p>A Token Factory is a very general class that can be used for clustering lots of graphics to work together. Individual tokens might represent quantites or reward, points, timeouts or many other things.</p>
 <p>TokenFactoryGraphics are highly configurable to handle just about any token situation you might want to use. The number of tokens can be set. Individual token colors and sizes can be set. Individual tokens can be set to display only their outline. Tokens can have their individual shapes changed and Token positions can be set as well, both globally or with respect to the overall <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a> position. This class is very similar to the <a class="el" href="class_picto_1_1_token_tray_graphic.html" title="Displays a series of small token shapes laid out equidistantly along a larger tray shape...">TokenTrayGraphic</a>. In fact, the <a class="el" href="class_picto_1_1_token_tray_graphic.html" title="Displays a series of small token shapes laid out equidistantly along a larger tray shape...">TokenTrayGraphic</a> should really have been written as a special case of this class. It might be a good idea to reimplement the <a class="el" href="class_picto_1_1_token_tray_graphic.html" title="Displays a series of small token shapes laid out equidistantly along a larger tray shape...">TokenTrayGraphic</a> that way at some point. One snag that you might come across though in doing this kind of reimplementation is that in the <a class="el" href="class_picto_1_1_token_tray_graphic.html" title="Displays a series of small token shapes laid out equidistantly along a larger tray shape...">TokenTrayGraphic</a> token property lists, "-1" is used to indicate that a default value should be used for a particular token. In this class, "_" is used to avoid problems with x and y positions of -1.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike in the case of most other VisualElements, the size of the <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a> is not set by the designer. The size of the QImage required to display all of the tokens is calculated during <a class="el" href="class_picto_1_1_token_factory_graphic.html#a4fa4be68f44043f26605bc6b65c14519" title="Draws the image represented by this VisualElement onto the image_ object based on its current Propert...">draw()</a> by getImageDims() to make sure that all tokens appear without being clipped. This also means that a <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a> with a high layer and tokens that are spread out very far could cover other graphics. We may want to think of a clean way to deal with this at some point. In the meantime, TokenFactoryGraphics should be set to have a low layer so that other things will be in front of them. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Unlike in the case of most other VisualElements, the size of the <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a> is not set by the designer. The size of the QImage required to display all of the tokens is calculated during <a class="el" href="class_picto_1_1_token_factory_graphic.html#a4fa4be68f44043f26605bc6b65c14519" title="Draws the image represented by this VisualElement onto the image_ object based on its current Propert...">draw()</a> by <a class="el" href="class_picto_1_1_token_factory_graphic.html#a006204ba4fd88d66861ef077f296af72" title="Calculates the minimum QImage size necessary to contain all of this TokenFactoryGraphic&#39;s tokens with...">getImageDims()</a> to make sure that all tokens appear without being clipped. This also means that a <a class="el" href="class_picto_1_1_token_factory_graphic.html" title="Displays any number of small token shapes. The token shapes are configurable to create all sorts of u...">TokenFactoryGraphic</a> with a high layer and tokens that are spread out very far could cover other graphics. We may want to think of a clean way to deal with this at some point. In the meantime, TokenFactoryGraphics should be set to have a low layer so that other things will be in front of them. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 

@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_task_run_viewer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TaskRunViewer Class Reference</div>  </div>
@@ -138,6 +141,102 @@ QIcon&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a8a659aa6a4e4af0ff6e329a4be38dfdf">clear</a> ()</td></tr>
 <tr class="memdesc:a8a659aa6a4e4af0ff6e329a4be38dfdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all data out of the Task <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> display. <br /></td></tr>
 <tr class="separator:a8a659aa6a4e4af0ff6e329a4be38dfdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a11d24e312bc8e9d27e30300451cb2f97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11d24e312bc8e9d27e30300451cb2f97"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a11d24e312bc8e9d27e30300451cb2f97">actTriggered</a> ()</td></tr>
+<tr class="memdesc:a11d24e312bc8e9d27e30300451cb2f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the button at the bottom of the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> is pressed. If the state is currently read only, editing is enabled (<a class="el" href="class_task_run_viewer.html#a2460cd46d2c2e4e028f3e66736441720" title="Sets the TaskRunViewer state to editing. Notes and name will no longer be read only. The save button will appear and the button at the bottom of the widget will show &quot;Apply&quot; instead of &quot;Modify&quot;. ">setStateToEditing()</a>). If the state is currently edit mode, the new values are set to the selected run, and the state returns to read only *updateCurrentRunFromFields() and <a class="el" href="class_task_run_viewer.html#a0ef647924b7d22063a0f99c1bda584a6" title="Sets the TaskRunViewer state to read only. Notes and name will be set as read only. The save button will dissappear and the button at the bottom of the widget will show &quot;Modify&quot; instead of &quot;Apply&quot;. ">setStateToReadOnly()</a>) <br /></td></tr>
+<tr class="separator:a11d24e312bc8e9d27e30300451cb2f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee08e6f0c84fb7fba52092a9cc670fdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#aee08e6f0c84fb7fba52092a9cc670fdb">cancelTriggered</a> ()</td></tr>
+<tr class="memdesc:aee08e6f0c84fb7fba52092a9cc670fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the cancel button is triggered. Returns the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> state from edit to read only without updating the run values from the widget fields.  <a href="#aee08e6f0c84fb7fba52092a9cc670fdb">More...</a><br /></td></tr>
+<tr class="separator:aee08e6f0c84fb7fba52092a9cc670fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9065676b9ebdfacb1cabcc653d420391"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9065676b9ebdfacb1cabcc653d420391"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a9065676b9ebdfacb1cabcc653d420391">availableRunsIndexChanged</a> (int index)</td></tr>
+<tr class="memdesc:a9065676b9ebdfacb1cabcc653d420391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the Task Runs dropdown index changes. Calls <a class="el" href="class_task_run_viewer.html#ac6e4bb10e1926c2263eb8b06e5ffe426" title="Updates the TaskRunViewer fields (name, notes, saved) according to the latest data about the currentl...">updateFieldsFromCurrentRun()</a> to update the widget fields according to the selected run. <br /></td></tr>
+<tr class="separator:a9065676b9ebdfacb1cabcc653d420391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affed9dbb8268df5b92b4ae9a5f12beed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affed9dbb8268df5b92b4ae9a5f12beed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#affed9dbb8268df5b92b4ae9a5f12beed">saveToggled</a> (bool checked)</td></tr>
+<tr class="memdesc:affed9dbb8268df5b92b4ae9a5f12beed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when save button icon is toggled. Updates the icon on the button to reflect the current saved/unsaved state. <br /></td></tr>
+<tr class="separator:affed9dbb8268df5b92b4ae9a5f12beed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a15b51891764dcbd4eaf5f5b40bdc3c25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15b51891764dcbd4eaf5f5b40bdc3c25"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_run_data_unit.html">Picto::TaskRunDataUnit</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a15b51891764dcbd4eaf5f5b40bdc3c25">getSelectedRun</a> ()</td></tr>
+<tr class="memdesc:a15b51891764dcbd4eaf5f5b40bdc3c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a TaskRunDataUnit representing the run that is currently selected in the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a>. <br /></td></tr>
+<tr class="separator:a15b51891764dcbd4eaf5f5b40bdc3c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba4835dd74839179b6cd29654d0c9cd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba4835dd74839179b6cd29654d0c9cd6"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_run_data_unit.html">Picto::TaskRunDataUnit</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#aba4835dd74839179b6cd29654d0c9cd6">getLatestRun</a> ()</td></tr>
+<tr class="memdesc:aba4835dd74839179b6cd29654d0c9cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a TaskRunDataUnit representing the latest run. <br /></td></tr>
+<tr class="separator:aba4835dd74839179b6cd29654d0c9cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e9ff0f60bbdfeebea4659196d964f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4e9ff0f60bbdfeebea4659196d964f3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#ab4e9ff0f60bbdfeebea4659196d964f3">selectedRunIsActive</a> ()</td></tr>
+<tr class="memdesc:ab4e9ff0f60bbdfeebea4659196d964f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the run that is selected in the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> is currently active (ie. running). <br /></td></tr>
+<tr class="separator:ab4e9ff0f60bbdfeebea4659196d964f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7d3d044c210a3dad0993f72da4a5fe4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7d3d044c210a3dad0993f72da4a5fe4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#af7d3d044c210a3dad0993f72da4a5fe4">updateComboBox</a> ()</td></tr>
+<tr class="memdesc:af7d3d044c210a3dad0993f72da4a5fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the TaskRuns combobox to reflect the TaskRuns that have been added in <a class="el" href="class_task_run_viewer.html#ac2204abac526043c4262951ca1853838" title="Sets the current table of Task Runs to the input QMap of TaskRunDataUnit objects indexed by their Dat...">setTaskRunData()</a>. <br /></td></tr>
+<tr class="separator:af7d3d044c210a3dad0993f72da4a5fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e4bb10e1926c2263eb8b06e5ffe426"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6e4bb10e1926c2263eb8b06e5ffe426"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#ac6e4bb10e1926c2263eb8b06e5ffe426">updateFieldsFromCurrentRun</a> ()</td></tr>
+<tr class="memdesc:ac6e4bb10e1926c2263eb8b06e5ffe426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> fields (name, notes, saved) according to the latest data about the currently selected run. <br /></td></tr>
+<tr class="separator:ac6e4bb10e1926c2263eb8b06e5ffe426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4392997fda5dd4a1f6827fbc05c7ed5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4392997fda5dd4a1f6827fbc05c7ed5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#af4392997fda5dd4a1f6827fbc05c7ed5">updateCurrentRunFromFields</a> ()</td></tr>
+<tr class="memdesc:af4392997fda5dd4a1f6827fbc05c7ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the stored data about the currently selected run according to the values that have been set in the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> fields, then emits <a class="el" href="class_task_run_viewer.html#a22b9bd020d482ef8bd1dce2c17e32332" title="Emitted when the widget is used to change values in the Run with the input runId. When this is emitte...">taskRunDataChanged()</a> with the current run's DataID to tell the outside world that the data should also be updated on the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. <br /></td></tr>
+<tr class="separator:af4392997fda5dd4a1f6827fbc05c7ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21f3a0a1c5a500819de3be22a06ea1c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21f3a0a1c5a500819de3be22a06ea1c1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a21f3a0a1c5a500819de3be22a06ea1c1">updateSaveButtonIcon</a> ()</td></tr>
+<tr class="memdesc:a21f3a0a1c5a500819de3be22a06ea1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the SaveButton icon according to the current Run's saved value. <br /></td></tr>
+<tr class="separator:a21f3a0a1c5a500819de3be22a06ea1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2460cd46d2c2e4e028f3e66736441720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2460cd46d2c2e4e028f3e66736441720"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a2460cd46d2c2e4e028f3e66736441720">setStateToEditing</a> ()</td></tr>
+<tr class="memdesc:a2460cd46d2c2e4e028f3e66736441720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> state to editing. Notes and name will no longer be read only. The save button will appear and the button at the bottom of the widget will show "Apply" instead of "Modify". <br /></td></tr>
+<tr class="separator:a2460cd46d2c2e4e028f3e66736441720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ef647924b7d22063a0f99c1bda584a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ef647924b7d22063a0f99c1bda584a6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_run_viewer.html#a0ef647924b7d22063a0f99c1bda584a6">setStateToReadOnly</a> ()</td></tr>
+<tr class="memdesc:a0ef647924b7d22063a0f99c1bda584a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> state to read only. Notes and name will be set as read only. The save button will dissappear and the button at the bottom of the widget will show "Modify" instead of "Apply". <br /></td></tr>
+<tr class="separator:a0ef647924b7d22063a0f99c1bda584a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aab9b3d982907658529ef97224620bc32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab9b3d982907658529ef97224620bc32"></a>
+QVBoxLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>mainLayout_</b></td></tr>
+<tr class="separator:aab9b3d982907658529ef97224620bc32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b888e77405851da6fa4258da2204157"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b888e77405851da6fa4258da2204157"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>availableRuns_</b></td></tr>
+<tr class="separator:a5b888e77405851da6fa4258da2204157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab3270660b553f01a6b360790af11732"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab3270660b553f01a6b360790af11732"></a>
+QLineEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>runName_</b></td></tr>
+<tr class="separator:aab3270660b553f01a6b360790af11732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad3f8594f7e195e6d922826fc54a984"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ad3f8594f7e195e6d922826fc54a984"></a>
+QTextEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>runNotes_</b></td></tr>
+<tr class="separator:a5ad3f8594f7e195e6d922826fc54a984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa29085818549755c13ff77e7ae6635b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa29085818549755c13ff77e7ae6635b"></a>
+QToolButton *&#160;</td><td class="memItemRight" valign="bottom"><b>runSaved_</b></td></tr>
+<tr class="separator:aaa29085818549755c13ff77e7ae6635b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abba68c3d34614ffa8fe1047407895164"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abba68c3d34614ffa8fe1047407895164"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>cancelButton_</b></td></tr>
+<tr class="separator:abba68c3d34614ffa8fe1047407895164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af412d77b2c6dcbc7f0944e9e2e38b1bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af412d77b2c6dcbc7f0944e9e2e38b1bd"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>actButton_</b></td></tr>
+<tr class="separator:af412d77b2c6dcbc7f0944e9e2e38b1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bc23d47cf80f5ce38f0716caed33b6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bc23d47cf80f5ce38f0716caed33b6b"></a>
+QHBoxLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>buttonLayout_</b></td></tr>
+<tr class="separator:a5bc23d47cf80f5ce38f0716caed33b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2544d04b6b5627c90acd1c617c1ade46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2544d04b6b5627c90acd1c617c1ade46"></a>
+QMap&lt; qulonglong, QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_run_data_unit.html">Picto::TaskRunDataUnit</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currTaskRuns_</b></td></tr>
+<tr class="separator:a2544d04b6b5627c90acd1c617c1ade46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb2df0706454ac4387c993a3af77a48f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb2df0706454ac4387c993a3af77a48f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>editing_</b></td></tr>
+<tr class="separator:afb2df0706454ac4387c993a3af77a48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed03e16bfb47d66c4ab431b2fd7658da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed03e16bfb47d66c4ab431b2fd7658da"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>latestIsRunning_</b></td></tr>
+<tr class="separator:aed03e16bfb47d66c4ab431b2fd7658da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3eca46af8e7663e69bae84c5994210e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3eca46af8e7663e69bae84c5994210e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>editingEnabled_</b></td></tr>
+<tr class="separator:af3eca46af8e7663e69bae84c5994210e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A viewer that displays data about the Task Runs from the current session and allows the operator to edit them. </p>
@@ -146,6 +245,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Definition at line <a class="el" href="_task_run_viewer_8h_source.html#l00024">24</a> of file <a class="el" href="_task_run_viewer_8h_source.html">TaskRunViewer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aee08e6f0c84fb7fba52092a9cc670fdb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TaskRunViewer::cancelTriggered </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the cancel button is triggered. Returns the <a class="el" href="class_task_run_viewer.html" title="A viewer that displays data about the Task Runs from the current session and allows the operator to e...">TaskRunViewer</a> state from edit to read only without updating the run values from the widget fields. </p>
+<p>Internally, this just callss <a class="el" href="class_task_run_viewer.html#a0ef647924b7d22063a0f99c1bda584a6" title="Sets the TaskRunViewer state to read only. Notes and name will be set as read only. The save button will dissappear and the button at the bottom of the widget will show &quot;Modify&quot; instead of &quot;Apply&quot;. ">setStateToReadOnly()</a>. </p>
+
+<p>Definition at line <a class="el" href="_task_run_viewer_8cpp_source.html#l00331">331</a> of file <a class="el" href="_task_run_viewer_8cpp_source.html">TaskRunViewer.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab359424cacdb5fc4498340f18ea19b5f"></a>
 <div class="memitem">
 <div class="memproto">

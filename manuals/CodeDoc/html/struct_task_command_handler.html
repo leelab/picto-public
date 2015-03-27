@@ -87,6 +87,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_task_command_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TaskCommandHandler Struct Reference</div>  </div>
@@ -116,6 +118,52 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 <tr class="memitem:ae173f70c2915c168a3b0b0e8a76c1d3a"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#ae173f70c2915c168a3b0b0e8a76c1d3a">processCommand</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_command.html">Picto::ProtocolCommand</a> &gt;)</td></tr>
 <tr class="memdesc:ae173f70c2915c168a3b0b0e8a76c1d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles TASK commands.  <a href="#ae173f70c2915c168a3b0b0e8a76c1d3a">More...</a><br /></td></tr>
 <tr class="separator:ae173f70c2915c168a3b0b0e8a76c1d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a801df48e282aecb00d1fc1693fdbef9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a801df48e282aecb00d1fc1693fdbef9d"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#a801df48e282aecb00d1fc1693fdbef9d">start</a> (QString taskname, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:a801df48e282aecb00d1fc1693fdbef9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a START directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to start the task with the input task name. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:a801df48e282aecb00d1fc1693fdbef9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d37028acdbf716b214a1f63a7442813"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d37028acdbf716b214a1f63a7442813"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#a8d37028acdbf716b214a1f63a7442813">stop</a> (QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:a8d37028acdbf716b214a1f63a7442813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a STOP directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to stop running the current task. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:a8d37028acdbf716b214a1f63a7442813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88c78550bd2892559e5498707c6ca39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa88c78550bd2892559e5498707c6ca39"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#aa88c78550bd2892559e5498707c6ca39">pause</a> (QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:aa88c78550bd2892559e5498707c6ca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a PAUSE directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to pause the currently running task. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:aa88c78550bd2892559e5498707c6ca39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1743ab1a4b620d8ed12be04cd0cff56f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1743ab1a4b620d8ed12be04cd0cff56f"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#a1743ab1a4b620d8ed12be04cd0cff56f">resume</a> (QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:a1743ab1a4b620d8ed12be04cd0cff56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a RESUME directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to resume running the task that is currently paused. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:a1743ab1a4b620d8ed12be04cd0cff56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca52d5b0a76427f2fd41d6fed1e7de99"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#aca52d5b0a76427f2fd41d6fed1e7de99">reward</a> (int channel, QString details, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:aca52d5b0a76427f2fd41d6fed1e7de99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a REWARD directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to provide a reward on the input channel with the input details.  <a href="#aca52d5b0a76427f2fd41d6fed1e7de99">More...</a><br /></td></tr>
+<tr class="separator:aca52d5b0a76427f2fd41d6fed1e7de99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeed44319239ea38f26e08f7b0900645"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaeed44319239ea38f26e08f7b0900645"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#aaeed44319239ea38f26e08f7b0900645">parameter</a> (QString paramId, QString details, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:aaeed44319239ea38f26e08f7b0900645"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a PARAMETER directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it update the initValue of the Property with the input AssetId (called paramid) to the value input in the details field. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:aaeed44319239ea38f26e08f7b0900645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee0b937eabe41c058066c30c18471ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adee0b937eabe41c058066c30c18471ed"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#adee0b937eabe41c058066c30c18471ed">click</a> (QString details, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:adee0b937eabe41c058066c30c18471ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a CLICK directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to inform it of an operator click in the workstation at the coordinates input as details in the format (x,y ie. "100,300"). Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:adee0b937eabe41c058066c30c18471ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb54c749fb130aabc66fa1851f52fe60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb54c749fb130aabc66fa1851f52fe60"></a>
+QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_task_command_handler.html#adb54c749fb130aabc66fa1851f52fe60">updateServerData</a> (QString data, QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt; sessInfo)</td></tr>
+<tr class="memdesc:adb54c749fb130aabc66fa1851f52fe60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a TaskRunDataUnit from the serial XML code input as "data". Uses <a class="el" href="class_session_info.html#adb462c89e0224fdf982d4f2502501bc5" title="Modifies an existing TaskRunDataUnit database entry. This is used by the Workstation to change the Ru...">SessionInfo::modifyTaskRunData()</a> to change the contents of the stored Task Run data with the same DataId to match that of the input. This is useful to update the Task Run name, notes, or saved value. Returns an appropraite ProtocolResponse. <br /></td></tr>
+<tr class="separator:adb54c749fb130aabc66fa1851f52fe60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ad1e42caf9ca0a78693e2767b47aece09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1e42caf9ca0a78693e2767b47aece09"></a>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>sessionId_</b></td></tr>
+<tr class="separator:ad1e42caf9ca0a78693e2767b47aece09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af48d6a8f2c36261ac70c1a8c61bab5c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af48d6a8f2c36261ac70c1a8c61bab5c7"></a>
+<a class="el" href="class_connection_manager.html">ConnectionManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>conMgr_</b></td></tr>
+<tr class="separator:af48d6a8f2c36261ac70c1a8c61bab5c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ce1700dc1ef5f6aef2e642956971c72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ce1700dc1ef5f6aef2e642956971c72"></a>
+QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sessInfo_</b></td></tr>
+<tr class="separator:a5ce1700dc1ef5f6aef2e642956971c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles TASK commands. </p>
@@ -163,6 +211,51 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 <p>Implements <a class="el" href="struct_picto_1_1_protocol_command_handler.html#aeeaa16fe40f10fd55996d74e16e29cad">Picto::ProtocolCommandHandler</a>.</p>
 
 <p>Definition at line <a class="el" href="_task_command_handler_8cpp_source.html#l00035">35</a> of file <a class="el" href="_task_command_handler_8cpp_source.html">TaskCommandHandler.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca52d5b0a76427f2fd41d6fed1e7de99"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol_response.html">Picto::ProtocolResponse</a> &gt; TaskCommandHandler::reward </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>details</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_session_info.html">SessionInfo</a> &gt;&#160;</td>
+          <td class="paramname"><em>sessInfo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a REWARD directive for the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to cause it to provide a reward on the input channel with the input details. </p>
+<p>The details input may be an empty string, if not it includes a new default reward value for the input channel. That value is included in the REWARD directive. Returns an appropraite ProtocolResponse. </p>
+
+<p>Definition at line <a class="el" href="_task_command_handler_8cpp_source.html#l00238">238</a> of file <a class="el" href="_task_command_handler_8cpp_source.html">TaskCommandHandler.cpp</a>.</p>
 
 </div>
 </div>

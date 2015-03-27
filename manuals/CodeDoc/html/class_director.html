@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_director-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Director Class Reference</div>  </div>
@@ -146,6 +148,84 @@ virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director.html#afcbff5563cfc3e8577d8fb83023f543d">closeDevice</a> ()</td></tr>
 <tr class="memdesc:afcbff5563cfc3e8577d8fb83023f543d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="class_component_interface.html#ab4433362fe7d1e5c09dc556e7105f775" title="Deinitialize any devices and objects used by the component. ">ComponentInterface::closeDevice()</a> to close all visible <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">Picto::VisualTarget</a> objects. <br /></td></tr>
 <tr class="separator:afcbff5563cfc3e8577d8fb83023f543d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:aa10b0fa8e9aaee967722d43ed1c64334"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa10b0fa8e9aaee967722d43ed1c64334"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director.html#aa10b0fa8e9aaee967722d43ed1c64334">changeName</a> (QString <a class="el" href="class_director.html#a757af6de79d8409b98d3d29db654ebf1">name</a>)</td></tr>
+<tr class="memdesc:aa10b0fa8e9aaee967722d43ed1c64334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the name of this <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a> to the input value. <br /></td></tr>
+<tr class="separator:aa10b0fa8e9aaee967722d43ed1c64334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ca79673611830fe8ac727dcd2c791a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1ca79673611830fe8ac727dcd2c791a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director.html#ae1ca79673611830fe8ac727dcd2c791a">changeRewardDuration</a> (int controller, int duration)</td></tr>
+<tr class="memdesc:ae1ca79673611830fe8ac727dcd2c791a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the default reward duration (milliseconds) on the input reward controller. <br /></td></tr>
+<tr class="separator:ae1ca79673611830fe8ac727dcd2c791a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee1509c02b13de23f59acabae15f1be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adee1509c02b13de23f59acabae15f1be"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_director.html#adee1509c02b13de23f59acabae15f1be">changeFlushDuration</a> (int controller, int duration)</td></tr>
+<tr class="memdesc:adee1509c02b13de23f59acabae15f1be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the default flush duration (milliseconds) on the input reward controller. <br /></td></tr>
+<tr class="separator:adee1509c02b13de23f59acabae15f1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a77166297d171a2042cb5d9067f38140e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77166297d171a2042cb5d9067f38140e"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>name_</b></td></tr>
+<tr class="separator:a77166297d171a2042cb5d9067f38140e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d7b5900dbe02fdd2abb3ac36c91d29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1d7b5900dbe02fdd2abb3ac36c91d29"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
+<tr class="separator:aa1d7b5900dbe02fdd2abb3ac36c91d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b903684fc8e49f3b10a65dfcb00a78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02b903684fc8e49f3b10a65dfcb00a78"></a>
+QSharedPointer&lt; <a class="el" href="class_f_p_interface.html">FPInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fpInterface_</b></td></tr>
+<tr class="separator:a02b903684fc8e49f3b10a65dfcb00a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f577561bb355af657726e45b17dd8bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f577561bb355af657726e45b17dd8bd"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_director_data.html">Picto::DirectorData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>directorData_</b></td></tr>
+<tr class="separator:a9f577561bb355af657726e45b17dd8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fea1cf5c2c7b9992b1fe3d99b86fdc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fea1cf5c2c7b9992b1fe3d99b86fdc1"></a>
+QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><b>configDb_</b></td></tr>
+<tr class="separator:a2fea1cf5c2c7b9992b1fe3d99b86fdc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e830811ffe657d397104d246a68f7ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e830811ffe657d397104d246a68f7ff"></a>
+<a class="el" href="class_hardware_setup.html#a47f2dfba54bc1a8d0bbd64d885d638e6">HardwareSetup::SignalChannelType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sigChannel_</b></td></tr>
+<tr class="separator:a8e830811ffe657d397104d246a68f7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49815a33aef06e7bd118a715f338c5ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49815a33aef06e7bd118a715f338c5ec"></a>
+<a class="el" href="class_hardware_setup.html#a69c004a7774626593182bda8c88c1005">HardwareSetup::VisualTargetType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>visualTarget_</b></td></tr>
+<tr class="separator:a49815a33aef06e7bd118a715f338c5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818ffa0e4a7c202a2cad5f7c5590eba2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a818ffa0e4a7c202a2cad5f7c5590eba2"></a>
+<a class="el" href="class_hardware_setup.html#adca8a1e846871351eea56002364cd9bf">HardwareSetup::RewardControllerType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rewardController_</b></td></tr>
+<tr class="separator:a818ffa0e4a7c202a2cad5f7c5590eba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adae4f27c99fc472d7e0f5bfb28d7f0ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adae4f27c99fc472d7e0f5bfb28d7f0ff"></a>
+<a class="el" href="class_hardware_setup.html#a7bf652582f22ceef095add24e855625b">HardwareSetup::OutputSignalControllerType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>outSigController_</b></td></tr>
+<tr class="separator:adae4f27c99fc472d7e0f5bfb28d7f0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17139ca6d8c5d060cecbbec5cd7abd98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17139ca6d8c5d060cecbbec5cd7abd98"></a>
+<a class="el" href="class_hardware_setup.html#a5577404a1cb597cc0d78bc56c9acac00">HardwareSetup::EventCodeGeneratorType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>eventCodeGenerator_</b></td></tr>
+<tr class="separator:a17139ca6d8c5d060cecbbec5cd7abd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe3d591726b79da9067fc9b063e9a9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fe3d591726b79da9067fc9b063e9a9f"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>rewardDurs_</b></td></tr>
+<tr class="separator:a2fe3d591726b79da9067fc9b063e9a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02234d48600fc946b201911bad8d8f47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02234d48600fc946b201911bad8d8f47"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>flushDurs_</b></td></tr>
+<tr class="separator:a02234d48600fc946b201911bad8d8f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c159d26f4d8a2295f10cd064baeb57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2c159d26f4d8a2295f10cd064baeb57"></a>
+QSharedPointer&lt; QProcess &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frontPanelProcess_</b></td></tr>
+<tr class="separator:ab2c159d26f4d8a2295f10cd064baeb57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a713821caee9b32b8ad2ef02791c4cc74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a713821caee9b32b8ad2ef02791c4cc74"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>xChannel_</b></td></tr>
+<tr class="separator:a713821caee9b32b8ad2ef02791c4cc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5ed88cf63fd16e0268315bb7e1949d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e5ed88cf63fd16e0268315bb7e1949d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>yChannel_</b></td></tr>
+<tr class="separator:a2e5ed88cf63fd16e0268315bb7e1949d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10bfd18c226865463fcc57c78896840c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10bfd18c226865463fcc57c78896840c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>xDiamChannel_</b></td></tr>
+<tr class="separator:a10bfd18c226865463fcc57c78896840c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac01a4bca0c346552d4ecfa250999a782"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac01a4bca0c346552d4ecfa250999a782"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>yDiamChannel_</b></td></tr>
+<tr class="separator:ac01a4bca0c346552d4ecfa250999a782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b3447454d5846d68c622e39d1df2b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95b3447454d5846d68c622e39d1df2b0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>posSampPer_</b></td></tr>
+<tr class="separator:a95b3447454d5846d68c622e39d1df2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a504ba158ec786917d6b6860ebefdd655"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a504ba158ec786917d6b6860ebefdd655"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>diamSampPer_</b></td></tr>
+<tr class="separator:a504ba158ec786917d6b6860ebefdd655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8f4b45e229e2d7dc76c08a8d78a08d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8f4b45e229e2d7dc76c08a8d78a08d2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>useFrontPanel_</b></td></tr>
+<tr class="separator:ab8f4b45e229e2d7dc76c08a8d78a08d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

@@ -93,6 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_input_port-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::InputPort Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -170,6 +172,49 @@ QVector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class
 QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a09aff384b2a6d499f824a1cbb9f7746a">channelBuffers_</a></td></tr>
 <tr class="memdesc:a09aff384b2a6d499f824a1cbb9f7746a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A hash of data buffers indexed by channel number to be filled by the child class. <br /></td></tr>
 <tr class="separator:a09aff384b2a6d499f824a1cbb9f7746a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adca1b75ce2e4918d6325451b23cf2541"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#adca1b75ce2e4918d6325451b23cf2541">start</a> ()</td></tr>
+<tr class="memdesc:adca1b75ce2e4918d6325451b23cf2541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the DAQ collecting data.  <a href="#adca1b75ce2e4918d6325451b23cf2541">More...</a><br /></td></tr>
+<tr class="separator:adca1b75ce2e4918d6325451b23cf2541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a9e056370043a71e4080f39bbc3f150ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e056370043a71e4080f39bbc3f150ec"></a>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sampResMap_</b></td></tr>
+<tr class="separator:a9e056370043a71e4080f39bbc3f150ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a018e100737a3ff84db00e568456b6f42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a018e100737a3ff84db00e568456b6f42"></a>
+QHash&lt; int, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>latestFrameOffsetTimes_</b></td></tr>
+<tr class="separator:a018e100737a3ff84db00e568456b6f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af41380c1b3dda1474f010d8295bfe09b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af41380c1b3dda1474f010d8295bfe09b"></a>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sampsPerReadMap_</b></td></tr>
+<tr class="separator:af41380c1b3dda1474f010d8295bfe09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d8ca8c443c7c2ae12b97bff252cc4c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d8ca8c443c7c2ae12b97bff252cc4c9"></a>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>channelPhaseMap_</b></td></tr>
+<tr class="separator:a7d8ca8c443c7c2ae12b97bff252cc4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62015fe27445184f80ce1a8ba2544ad9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62015fe27445184f80ce1a8ba2544ad9"></a>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>polledDataMap_</b></td></tr>
+<tr class="separator:a62015fe27445184f80ce1a8ba2544ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd4102969f9644b2c609782970e32990"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd4102969f9644b2c609782970e32990"></a>
+QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#afd4102969f9644b2c609782970e32990">channelLeftOvers</a></td></tr>
+<tr class="memdesc:afd4102969f9644b2c609782970e32990"><td class="mdescLeft">&#160;</td><td class="mdescRight">A hash of data buffers indexed by channel number with data that will be used on the next <a class="el" href="class_picto_1_1_input_port.html#aa0230b63e579442362a33b7aa0a6b3a1" title="Calls the empty updateDataBuffer() function to load data from the DAQ into channelBuffers_, then aligns timestamps in case of an imperfect DAQ clock. ">updateDataBuffer(double)</a> call. <br /></td></tr>
+<tr class="separator:afd4102969f9644b2c609782970e32990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dc85c94cb5927fc32187a41c99443a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0dc85c94cb5927fc32187a41c99443a5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunning_</b></td></tr>
+<tr class="separator:a0dc85c94cb5927fc32187a41c99443a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa00118360b4fb10697a86c828d555f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa00118360b4fb10697a86c828d555f4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>sampsCollected_</b></td></tr>
+<tr class="separator:aaa00118360b4fb10697a86c828d555f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4ce9042fc6d730fd5ff7d98b8e89c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d4ce9042fc6d730fd5ff7d98b8e89c5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>needsUpdate_</b></td></tr>
+<tr class="separator:a6d4ce9042fc6d730fd5ff7d98b8e89c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b2781f98f87353df574dce2406b6333"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b2781f98f87353df574dce2406b6333"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>lastSyncTimestamp_</b></td></tr>
+<tr class="separator:a4b2781f98f87353df574dce2406b6333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfbf414c63792c971ed3e9fb9f730902"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfbf414c63792c971ed3e9fb9f730902"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr>
+<tr class="separator:adfbf414c63792c971ed3e9fb9f730902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Used to collect data from a single port that may handle multiple signals. </p>
@@ -247,6 +292,35 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 <dl class="section note"><dt>Note</dt><dd>A side effect of this function is that it clears out the data buffer for the input channelNum. </dd></dl>
 
 <p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00246">246</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adca1b75ce2e4918d6325451b23cf2541"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool InputPort::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Starts the DAQ collecting data. </p>
+<p>This should be called as close to the point at which the data will actually be collected as possible. Otherwise, data will pile up in the buffer. Also note that calling this clears out any existing data in the channel.</p>
+<p>This function is called by <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> </p>
+
+<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00080">80</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
 </div>
 </div>

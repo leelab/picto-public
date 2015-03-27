@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_server_protocols-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ServerProtocols Struct Reference</div>  </div>
@@ -108,6 +109,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol.html">Picto::Protocol</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_server_protocols.html#a0c125b0927a253fdde9ac08d4074a20e">getProtocol</a> (QString protocolName)</td></tr>
 <tr class="memdesc:a0c125b0927a253fdde9ac08d4074a20e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Protocol of the input type (protocolName). <br /></td></tr>
 <tr class="separator:a0c125b0927a253fdde9ac08d4074a20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5989577345b57058fbd88023cd8320a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5989577345b57058fbd88023cd8320a7"></a>
+std::map&lt; QString, QSharedPointer&lt; <a class="el" href="struct_picto_1_1_protocol.html">Picto::Protocol</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>protocols</b></td></tr>
+<tr class="separator:a5989577345b57058fbd88023cd8320a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple container object used to store all fo the Protocol objects used by the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. </p>

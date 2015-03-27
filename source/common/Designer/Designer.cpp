@@ -82,8 +82,11 @@ Designer::Designer(QWidget *parent) :
 	notesWidget_ = new ElementNotesWidget(editorState_);
 	rightSideWidget->addWidget(propertyEditor_);
 	rightSideWidget->addWidget(notesWidget_);
-	rightSideWidget->setStretchFactor(0,7);
-	rightSideWidget->setStretchFactor(1,3);
+
+	QList<int> rightSideSizes;
+	rightSideSizes << 500 << 100;
+	rightSideWidget->setSizes(rightSideSizes);
+
 	splitter->addWidget(rightSideWidget);
 	splitter->setStretchFactor(1,10);
 

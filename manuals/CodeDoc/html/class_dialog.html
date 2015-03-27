@@ -88,6 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_dialog-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Dialog Class Reference</div>  </div>
@@ -126,6 +128,68 @@ Public Attributes</h2></td></tr>
 QLineEdit *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#adfdff8046ab5a78512915d76d897f49e">serverLine</a></td></tr>
 <tr class="memdesc:adfdff8046ab5a78512915d76d897f49e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The QLineEdit where the user can enter the TDT server name. <br /></td></tr>
 <tr class="separator:adfdff8046ab5a78512915d76d897f49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a7928dd6a4b684391a930164a0272ab90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7928dd6a4b684391a930164a0272ab90"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#a7928dd6a4b684391a930164a0272ab90">doInstall</a> ()</td></tr>
+<tr class="memdesc:a7928dd6a4b684391a930164a0272ab90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Installs the <a class="el" href="class_system_service.html" title="This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. ">SystemService</a> to the OS using SystemService::install(). Shows an error message box if installation fails. <br /></td></tr>
+<tr class="separator:a7928dd6a4b684391a930164a0272ab90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e47c0b42613b5d9cffb4607d54dc063"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e47c0b42613b5d9cffb4607d54dc063"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#a1e47c0b42613b5d9cffb4607d54dc063">doRemove</a> ()</td></tr>
+<tr class="memdesc:a1e47c0b42613b5d9cffb4607d54dc063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the <a class="el" href="class_system_service.html" title="This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. ">SystemService</a> from the OS using SystemService::remove(). Shows an error message box if removal fails. <br /></td></tr>
+<tr class="separator:a1e47c0b42613b5d9cffb4607d54dc063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfd8d3ea4b271c7a683929ef726bd7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dfd8d3ea4b271c7a683929ef726bd7d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#a3dfd8d3ea4b271c7a683929ef726bd7d">doStart</a> ()</td></tr>
+<tr class="memdesc:a3dfd8d3ea4b271c7a683929ef726bd7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the <a class="el" href="class_system_service.html" title="This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. ">SystemService</a> using SystemService::start(). Shows an error message box if the service cannot start. <br /></td></tr>
+<tr class="separator:a3dfd8d3ea4b271c7a683929ef726bd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe988c75851cd2fb9afbe31403d0e4ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe988c75851cd2fb9afbe31403d0e4ae"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#abe988c75851cd2fb9afbe31403d0e4ae">doStop</a> ()</td></tr>
+<tr class="memdesc:abe988c75851cd2fb9afbe31403d0e4ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the <a class="el" href="class_system_service.html" title="This file is derived from system_service.h which is part of the iTALC project (http://italc.sourceforge.net) by Tobias Doerffel. It lets us run the server as a System service. It should probably be replaced with the QtService class at some point. For that reason, and since we didn&#39;t write almost any of it, we&#39;re not going to provide detailed documentation. ">SystemService</a> using SystemService::stop(). Shows an error message box if the service cannot stop. <br /></td></tr>
+<tr class="separator:abe988c75851cd2fb9afbe31403d0e4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7928dd6a4b684391a930164a0272ab90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7928dd6a4b684391a930164a0272ab90"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>doInstall</b> ()</td></tr>
+<tr class="separator:a7928dd6a4b684391a930164a0272ab90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e47c0b42613b5d9cffb4607d54dc063"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e47c0b42613b5d9cffb4607d54dc063"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>doRemove</b> ()</td></tr>
+<tr class="separator:a1e47c0b42613b5d9cffb4607d54dc063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfd8d3ea4b271c7a683929ef726bd7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dfd8d3ea4b271c7a683929ef726bd7d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>doStart</b> ()</td></tr>
+<tr class="separator:a3dfd8d3ea4b271c7a683929ef726bd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe988c75851cd2fb9afbe31403d0e4ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe988c75851cd2fb9afbe31403d0e4ae"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>doStop</b> ()</td></tr>
+<tr class="separator:abe988c75851cd2fb9afbe31403d0e4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec5cd13ada69b56e284abad1f2a48599"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec5cd13ada69b56e284abad1f2a48599"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dialog.html#aec5cd13ada69b56e284abad1f2a48599">systemNumberChanged</a> (int num)</td></tr>
+<tr class="memdesc:aec5cd13ada69b56e284abad1f2a48599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the user changes the system number using the spinbox. Updates the system number using Picto::portNums::setSystemNumber(). <br /></td></tr>
+<tr class="separator:aec5cd13ada69b56e284abad1f2a48599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afd9a1e71571c92c3b641b727e41da1e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd9a1e71571c92c3b641b727e41da1e6"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>okButton</b></td></tr>
+<tr class="separator:afd9a1e71571c92c3b641b727e41da1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95d321b951a925caf8c892551dc01ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad95d321b951a925caf8c892551dc01ed"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>infoLabel</b></td></tr>
+<tr class="separator:ad95d321b951a925caf8c892551dc01ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3437901fbad144f324708216ca66879"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3437901fbad144f324708216ca66879"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>installButton</b></td></tr>
+<tr class="separator:ac3437901fbad144f324708216ca66879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbde3ba8ac4af09babce8a1e4c08d050"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbde3ba8ac4af09babce8a1e4c08d050"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>removeButton</b></td></tr>
+<tr class="separator:afbde3ba8ac4af09babce8a1e4c08d050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a477dbe9c27751cbc07bf2de834ec446c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a477dbe9c27751cbc07bf2de834ec446c"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>startButton</b></td></tr>
+<tr class="separator:a477dbe9c27751cbc07bf2de834ec446c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a399d8e19098f0db9df8589b5100186e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a399d8e19098f0db9df8589b5100186e3"></a>
+QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>stopButton</b></td></tr>
+<tr class="separator:a399d8e19098f0db9df8589b5100186e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63a399ac1684dc5f1d466f9e2d1fcbfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63a399ac1684dc5f1d466f9e2d1fcbfb"></a>
+<a class="el" href="class_system_service.html">SystemService</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>targetService</b></td></tr>
+<tr class="separator:a63a399ac1684dc5f1d466f9e2d1fcbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa53ebc5e803040b3b5b954785b01f81c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa53ebc5e803040b3b5b954785b01f81c"></a>
+QSpinBox *&#160;</td><td class="memItemRight" valign="bottom"><b>systemNumberBox</b></td></tr>
+<tr class="separator:aa53ebc5e803040b3b5b954785b01f81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_dialog.html" title="A Dialog used by the TDTProxyPlugin. ">Dialog</a> used by the TDTProxyPlugin. </p>

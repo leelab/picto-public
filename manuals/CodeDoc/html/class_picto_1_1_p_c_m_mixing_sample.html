@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_p_c_m_mixing_sample-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PCMMixingSample Class Reference</div>  </div>
@@ -150,6 +152,32 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a6973973ba9ff7d6b72ee47a558df9d55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_c_m_mixing_sample.html#a6973973ba9ff7d6b72ee47a558df9d55">update</a> ()</td></tr>
 <tr class="memdesc:a6973973ba9ff7d6b72ee47a558df9d55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the effects of the commands scheduled in <a class="el" href="class_picto_1_1_p_c_m_mixing_sample.html#a01bdf31cdb69f75d073ec7f74116d978" title="Schedules a the underlying sound to start at a time to be implemented according to the run model of t...">scheduleStart()</a>, <a class="el" href="class_picto_1_1_p_c_m_mixing_sample.html#a5bbf61241bcd000a280bac4fb0970a5e" title="Schedules a the underlying sound to stop at a time to be implemented according to the run model of th...">scheduleStop()</a> and <a class="el" href="class_picto_1_1_p_c_m_mixing_sample.html#a1876bd598742dbe7c47b5cb56758333d" title="Schedules a volume change to the underlying sound to be implemented according to the run model of the...">scheduleVolumeChange()</a>.  <a href="#a6973973ba9ff7d6b72ee47a558df9d55">More...</a><br /></td></tr>
 <tr class="separator:a6973973ba9ff7d6b72ee47a558df9d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a5a33f58ba723304cc09a771544c756ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a33f58ba723304cc09a771544c756ba"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>command</b> { <b>NONE</b>, 
+<b>SHOULD_START</b>, 
+<b>SHOULD_STOP</b>
+ }</td></tr>
+<tr class="separator:a5a33f58ba723304cc09a771544c756ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a62eec0e3ef5d3e2cff9382a5a01178aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62eec0e3ef5d3e2cff9382a5a01178aa"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_preloaded_sound.html">PreloadedSound</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lastSound_</b></td></tr>
+<tr class="separator:a62eec0e3ef5d3e2cff9382a5a01178aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fcb4ce07e7e4cfa03504e0fe198e6fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fcb4ce07e7e4cfa03504e0fe198e6fd"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_preloaded_sound.html">PreloadedSound</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sound_</b></td></tr>
+<tr class="separator:a7fcb4ce07e7e4cfa03504e0fe198e6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3b79171870a0deb540cde36863497a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3b79171870a0deb540cde36863497a0"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>volume_</b></td></tr>
+<tr class="separator:ab3b79171870a0deb540cde36863497a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7065a2f852b4f1cc42121ccf945b3db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7065a2f852b4f1cc42121ccf945b3db"></a>
+command&#160;</td><td class="memItemRight" valign="bottom"><b>command_</b></td></tr>
+<tr class="separator:ad7065a2f852b4f1cc42121ccf945b3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cc666e97cbec06786917bc08e1db6cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cc666e97cbec06786917bc08e1db6cc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>playing_</b></td></tr>
+<tr class="separator:a3cc666e97cbec06786917bc08e1db6cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple pulse code modulation type of mixing sample. </p>

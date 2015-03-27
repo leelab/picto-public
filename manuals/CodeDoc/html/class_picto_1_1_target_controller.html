@@ -95,6 +95,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_target_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::TargetController Class Reference</div>  </div>
@@ -644,6 +647,58 @@ Properties</h2></td></tr>
 <tr class="memdesc:a2ebc5e6938143b689fea1375e4dbac60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/Gets the current value of 'ReacquisitionAllowed'.  <a href="#a2ebc5e6938143b689fea1375e4dbac60">More...</a><br /></td></tr>
 <tr class="separator:a2ebc5e6938143b689fea1375e4dbac60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a91e346d2a1d88167fd89fd13de8d06b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_target_controller.html#a91e346d2a1d88167fd89fd13de8d06b3">controlTargetNameEdited</a> ()</td></tr>
+<tr class="memdesc:a91e346d2a1d88167fd89fd13de8d06b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reattaches to the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> by calling <a class="el" href="class_picto_1_1_target_controller.html#ac08fbeabffadf7986a02bd422ad03cbc" title="Reconnects this object to its attached controlTarget_. ">scriptableContainerWasReinitialized()</a>  <a href="#a91e346d2a1d88167fd89fd13de8d06b3">More...</a><br /></td></tr>
+<tr class="separator:a91e346d2a1d88167fd89fd13de8d06b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aed2cf472ece2c025c9fa5f230166b4b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_target_controller.html#aed2cf472ece2c025c9fa5f230166b4b9">isDonePrivate</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:aed2cf472ece2c025c9fa5f230166b4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a> has found a result, false if it is still looking.  <a href="#aed2cf472ece2c025c9fa5f230166b4b9">More...</a><br /></td></tr>
+<tr class="separator:aed2cf472ece2c025c9fa5f230166b4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a756937c65b69e7fe8e994e25e7df68be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a756937c65b69e7fe8e994e25e7df68be"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_target_controller.html#a756937c65b69e7fe8e994e25e7df68be">insideTarget</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
+<tr class="memdesc:a756937c65b69e7fe8e994e25e7df68be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the signalChannel coordinates are within the attached <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> bounds. <br /></td></tr>
+<tr class="separator:a756937c65b69e7fe8e994e25e7df68be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a38b221115ba765efc95b01d0c3c1322f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38b221115ba765efc95b01d0c3c1322f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>targetAcquired_</b></td></tr>
+<tr class="separator:a38b221115ba765efc95b01d0c3c1322f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7750bcaaf7b0c81b70ab5eac36049eb7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7750bcaaf7b0c81b70ab5eac36049eb7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>initialAcquisitionOccurred_</b></td></tr>
+<tr class="separator:a7750bcaaf7b0c81b70ab5eac36049eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a5ec0542bc85c814cb7d6fecd33ee3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91a5ec0542bc85c814cb7d6fecd33ee3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>waitingForReacquisition_</b></td></tr>
+<tr class="separator:a91a5ec0542bc85c814cb7d6fecd33ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa514d49f952288ce95491087acb2aeac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa514d49f952288ce95491087acb2aeac"></a>
+QWeakPointer&lt; <a class="el" href="class_picto_1_1_control_target.html">ControlTarget</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>controlTarget_</b></td></tr>
+<tr class="separator:aa514d49f952288ce95491087acb2aeac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b95063ada032ce3e2698dbc80fb1dbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b95063ada032ce3e2698dbc80fb1dbf"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>frameCtr_</b></td></tr>
+<tr class="separator:a1b95063ada032ce3e2698dbc80fb1dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49401037a9fe15cb8358fc6dd7a5d01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af49401037a9fe15cb8358fc6dd7a5d01"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html">Controller::FrameResolutionTimer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>cumulativeTimer_</b></td></tr>
+<tr class="separator:af49401037a9fe15cb8358fc6dd7a5d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdd4dfe7d5fe8ac1393cfe381f5e870b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdd4dfe7d5fe8ac1393cfe381f5e870b"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html">Controller::FrameResolutionTimer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>acquisitionTimer_</b></td></tr>
+<tr class="separator:acdd4dfe7d5fe8ac1393cfe381f5e870b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a588bd7fecdd2fbe364fbb4608cc18ba2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a588bd7fecdd2fbe364fbb4608cc18ba2"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_controller_1_1_frame_resolution_timer.html">Controller::FrameResolutionTimer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>reacquisitionTimer_</b></td></tr>
+<tr class="separator:a588bd7fecdd2fbe364fbb4608cc18ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a001c268e07a720bd2875fca7d6618018"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a001c268e07a720bd2875fca7d6618018"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>unitList_</b></td></tr>
+<tr class="separator:a001c268e07a720bd2875fca7d6618018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a698f625aec2b2b0193420b2d253ec4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a698f625aec2b2b0193420b2d253ec4"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>result_</b></td></tr>
+<tr class="separator:a2a698f625aec2b2b0193420b2d253ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa337b72df3cc1277eddd422ae824c4df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa337b72df3cc1277eddd422ae824c4df"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_channel.html">SignalChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signal_</b></td></tr>
+<tr class="separator:aa337b72df3cc1277eddd422ae824c4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
@@ -734,6 +789,34 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ac660682acd7da329220cc7c4d7a9d825">Picto::ControlElement</a>.</p>
 
 <p>Definition at line <a class="el" href="_target_controller_8cpp_source.html#l00116">116</a> of file <a class="el" href="_target_controller_8cpp_source.html">TargetController.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a91e346d2a1d88167fd89fd13de8d06b3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::TargetController::controlTargetNameEdited </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reattaches to the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> by calling <a class="el" href="class_picto_1_1_target_controller.html#ac08fbeabffadf7986a02bd422ad03cbc" title="Reconnects this object to its attached controlTarget_. ">scriptableContainerWasReinitialized()</a> </p>
+<p>This function is called whenever the designer changes the value in the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> field. When that value changes, it indicates that we need to update the attached <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> which is why we must reattach. </p>
+
+<p>Definition at line <a class="el" href="_target_controller_8cpp_source.html#l00405">405</a> of file <a class="el" href="_target_controller_8cpp_source.html">TargetController.cpp</a>.</p>
 
 </div>
 </div>
@@ -962,6 +1045,35 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_target_controller.html#aea2309b5882ce95be4712e93d1b3db23" title="Sets/Gets the current value of the &#39;TotalTime&#39; that the user has in order to correctly fixate before ...">totalTime</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="_target_controller_8h_source.html#l00099">99</a> of file <a class="el" href="_target_controller_8h_source.html">TargetController.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aed2cf472ece2c025c9fa5f230166b4b9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Picto::TargetController::isDonePrivate </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt;&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the <a class="el" href="class_picto_1_1_target_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">TargetController</a> has found a result, false if it is still looking. </p>
+<p>This contains the meat of the logic that you would expect to find in the <a class="el" href="class_picto_1_1_target_controller.html#af4af003d976912a0869f95a603c803e8" title="isDone will return true if the ControlElement&#39;s logic determines that some condition has been met...">isDone()</a> function. In the case of this class, this logic needed to be used in multiple places so it was a good idea to move it into its own separate function. </p>
+
+<p>Definition at line <a class="el" href="_target_controller_8cpp_source.html#l00207">207</a> of file <a class="el" href="_target_controller_8cpp_source.html">TargetController.cpp</a>.</p>
 
 </div>
 </div>

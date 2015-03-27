@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_file_parameter-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::FileParameter Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -458,6 +461,31 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an error message to the static list of errors.  <a href="#a96d216d572c87de0e7b2ba4ae1c6ea17">More...</a><br /></td></tr>
 <tr class="separator:a96d216d572c87de0e7b2ba4ae1c6ea17 inherit pro_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a52b3be4e496597dad983dbb86eedca30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_parameter.html#a52b3be4e496597dad983dbb86eedca30">filePathChanged</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *, QVariant)</td></tr>
+<tr class="memdesc:a52b3be4e496597dad983dbb86eedca30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the data in the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> from file contents when the file path in the "FileName" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes.  <a href="#a52b3be4e496597dad983dbb86eedca30">More...</a><br /></td></tr>
+<tr class="separator:a52b3be4e496597dad983dbb86eedca30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40c5c43644e8e4f3802757aac6ddd1f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40c5c43644e8e4f3802757aac6ddd1f7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_parameter.html#a40c5c43644e8e4f3802757aac6ddd1f7">fileDataChanged</a> (<a class="el" href="class_picto_1_1_property.html">Property</a> *, QVariant)</td></tr>
+<tr class="memdesc:a40c5c43644e8e4f3802757aac6ddd1f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes. Calls loadDataFromProperty() so that child classes will know about the change too. <br /></td></tr>
+<tr class="separator:a40c5c43644e8e4f3802757aac6ddd1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adf6dd91d7411e80f71f4e9112675aad2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_file_parameter.html#adf6dd91d7411e80f71f4e9112675aad2">loadDataFromPropery</a> ()</td></tr>
+<tr class="memdesc:adf6dd91d7411e80f71f4e9112675aad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores a QByteArray with file data based on the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a>.  <a href="#adf6dd91d7411e80f71f4e9112675aad2">More...</a><br /></td></tr>
+<tr class="separator:adf6dd91d7411e80f71f4e9112675aad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a73a4abd8e185b4fb87bb2973158eb6e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73a4abd8e185b4fb87bb2973158eb6e5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>updatingFile_</b></td></tr>
+<tr class="separator:a73a4abd8e185b4fb87bb2973158eb6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f937ad8b0eed3305f8f00adc95c41b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f937ad8b0eed3305f8f00adc95c41b3"></a>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>fileData_</b></td></tr>
+<tr class="separator:a6f937ad8b0eed3305f8f00adc95c41b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
@@ -572,6 +600,45 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 </div>
 </div>
+<a class="anchor" id="a52b3be4e496597dad983dbb86eedca30"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FileParameter::filePathChanged </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_picto_1_1_property.html">Property</a> *&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVariant&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the data in the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> from file contents when the file path in the "FileName" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes. </p>
+<p>Called when the "FileName" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes. </p>
+
+<p>Definition at line <a class="el" href="_file_parameter_8cpp_source.html#l00077">77</a> of file <a class="el" href="_file_parameter_8cpp_source.html">FileParameter.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4f53c44dc540d01757ef457525a50557"></a>
 <div class="memitem">
 <div class="memproto">
@@ -621,6 +688,34 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>If no file was set to this <a class="el" href="class_picto_1_1_file_parameter.html" title="A base class for File Parameters that store File contents. ">FileParameter</a>, the returned QByteArray will be empty. </p>
 
 <p>Definition at line <a class="el" href="_file_parameter_8cpp_source.html#l00030">30</a> of file <a class="el" href="_file_parameter_8cpp_source.html">FileParameter.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adf6dd91d7411e80f71f4e9112675aad2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::FileParameter::loadDataFromPropery </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores a QByteArray with file data based on the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a>. </p>
+<p>We can't just used the "Data" <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> directly since it contains binary data in Base64 (ie. converted into ASCII text that is useable in an XML file). We need to convert it back to true Binary before storing it in our QByteArray and using it. </p>
+
+<p>Definition at line <a class="el" href="_file_parameter_8cpp_source.html#l00065">65</a> of file <a class="el" href="_file_parameter_8cpp_source.html">FileParameter.cpp</a>.</p>
 
 </div>
 </div>

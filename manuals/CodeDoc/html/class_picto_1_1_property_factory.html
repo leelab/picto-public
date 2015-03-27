@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_property_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::PropertyFactory Class Reference</div>  </div>
@@ -182,6 +183,24 @@ Protected Member Functions</h2></td></tr>
 virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_factory.html#af3fc9ef345c1021dc8c12801c8ea0271">generateNewAsset</a> ()</td></tr>
 <tr class="memdesc:af3fc9ef345c1021dc8c12801c8ea0271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="class_picto_1_1_asset_factory.html#a14e947ad4b201432c1cf59e1211fc47a" title="Generates a new Asset using the creation function pointer and returns a shared pointer to it...">AssetFactory::generateNewAsset()</a> to create a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> in the <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a> of the correct type/value/etc according to the values passed into the constructor. <br /></td></tr>
 <tr class="separator:af3fc9ef345c1021dc8c12801c8ea0271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a52c3b4b016fd6ebbb4a5aa834be73627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52c3b4b016fd6ebbb4a5aa834be73627"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">PropertyContainer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>propContainer_</b></td></tr>
+<tr class="separator:a52c3b4b016fd6ebbb4a5aa834be73627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7c94469fdd89bd4c9bf4ff100c577ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7c94469fdd89bd4c9bf4ff100c577ad"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>propertyType_</b></td></tr>
+<tr class="separator:ac7c94469fdd89bd4c9bf4ff100c577ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acec9083000d741da49d4861fb89ca74b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acec9083000d741da49d4861fb89ca74b"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>propIdentifier_</b></td></tr>
+<tr class="separator:acec9083000d741da49d4861fb89ca74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20043e83d5b2ea9d1f1db97ca3318cb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20043e83d5b2ea9d1f1db97ca3318cb2"></a>
+QMap&lt; QString, QVariant &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attributeMap_</b></td></tr>
+<tr class="separator:a20043e83d5b2ea9d1f1db97ca3318cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad593ddcacbcbcd00dcb495968783813f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad593ddcacbcbcd00dcb495968783813f"></a>
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><b>defaultValue_</b></td></tr>
+<tr class="separator:ad593ddcacbcbcd00dcb495968783813f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

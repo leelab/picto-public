@@ -92,6 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_multiplatform_sound-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::MultiplatformSound Class Reference</div>  </div>
@@ -152,6 +154,31 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae242a5728bce44d1ac6bfcac2b958f81 inherit pub_static_methods_class_picto_1_1_preloaded_sound"><td class="memItemLeft" align="right" valign="top">static QSharedPointer&lt; <a class="el" href="class_picto_1_1_preloaded_sound.html">PreloadedSound</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_preloaded_sound.html#ae242a5728bce44d1ac6bfcac2b958f81">createSound</a> (QString path)</td></tr>
 <tr class="memdesc:ae242a5728bce44d1ac6bfcac2b958f81 inherit pub_static_methods_class_picto_1_1_preloaded_sound"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates and returns a pointer to a <a class="el" href="class_picto_1_1_preloaded_sound.html" title="Objects of this class implement a sound that can be set to play, stop, etc. ">PreloadedSound</a> object containing the sound located at the input path on disk.  <a href="#ae242a5728bce44d1ac6bfcac2b958f81">More...</a><br /></td></tr>
 <tr class="separator:ae242a5728bce44d1ac6bfcac2b958f81 inherit pub_static_methods_class_picto_1_1_preloaded_sound"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adb20dcbef6305c9680aa64da4dad2012"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_multiplatform_sound.html#adb20dcbef6305c9680aa64da4dad2012">isFileSupported</a> (QString path)</td></tr>
+<tr class="memdesc:adb20dcbef6305c9680aa64da4dad2012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the file at the input path is supported by this <a class="el" href="class_picto_1_1_preloaded_sound.html" title="Objects of this class implement a sound that can be set to play, stop, etc. ">PreloadedSound</a>.  <a href="#adb20dcbef6305c9680aa64da4dad2012">More...</a><br /></td></tr>
+<tr class="separator:adb20dcbef6305c9680aa64da4dad2012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d5d0eb78db8b8aa42ec7dfbb9b87ff0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d5d0eb78db8b8aa42ec7dfbb9b87ff0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_multiplatform_sound.html#a8d5d0eb78db8b8aa42ec7dfbb9b87ff0">MultiplatformSound</a> (QString path)</td></tr>
+<tr class="memdesc:a8d5d0eb78db8b8aa42ec7dfbb9b87ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="class_picto_1_1_multiplatform_sound.html" title="A simple PreloadedSound object that can be used over multiple platforms based on Qt&#39;s QSound object...">MultiplatformSound</a> object to play the audio file at the input path. <br /></td></tr>
+<tr class="separator:a8d5d0eb78db8b8aa42ec7dfbb9b87ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0672639396b74bf91ad4daf1e916a054"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0672639396b74bf91ad4daf1e916a054"></a>
+QSharedPointer&lt; QSound &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sound_</b></td></tr>
+<tr class="separator:a0672639396b74bf91ad4daf1e916a054"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26c2021de5404d0c15c9f76bbbd8cdd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26c2021de5404d0c15c9f76bbbd8cdd6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>soundStarted_</b></td></tr>
+<tr class="separator:a26c2021de5404d0c15c9f76bbbd8cdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f561ff9c70e9abbf9347f35a6c94265"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f561ff9c70e9abbf9347f35a6c94265"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>errorMsg_</b></td></tr>
+<tr class="separator:a8f561ff9c70e9abbf9347f35a6c94265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a7b71e770334376f1bd94a843c6773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5a7b71e770334376f1bd94a843c6773"></a>
+QAudioDecoder&#160;</td><td class="memItemRight" valign="bottom"><b>audioDecoder_</b></td></tr>
+<tr class="separator:ae5a7b71e770334376f1bd94a843c6773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple <a class="el" href="class_picto_1_1_preloaded_sound.html" title="Objects of this class implement a sound that can be set to play, stop, etc. ">PreloadedSound</a> object that can be used over multiple platforms based on Qt's QSound object. </p>
@@ -217,6 +244,35 @@ Static Public Member Functions</h2></td></tr>
 <p>Implements <a class="el" href="class_picto_1_1_preloaded_sound.html#a4681726539ed0e4f493860d487ef3f59">Picto::PreloadedSound</a>.</p>
 
 <p>Definition at line <a class="el" href="_multi_platform_sound_8cpp_source.html#l00059">59</a> of file <a class="el" href="_multi_platform_sound_8cpp_source.html">MultiPlatformSound.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adb20dcbef6305c9680aa64da4dad2012"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Picto::MultiplatformSound::isFileSupported </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the file at the input path is supported by this <a class="el" href="class_picto_1_1_preloaded_sound.html" title="Objects of this class implement a sound that can be set to play, stop, etc. ">PreloadedSound</a>. </p>
+<p>This function uses code from the Qt Multimedia Spectrum app's wavFile.cpp Largely a result of referencing exiting code and trial-and-error. </p>
+
+<p>Definition at line <a class="el" href="_multi_platform_sound_8cpp_source.html#l00123">123</a> of file <a class="el" href="_multi_platform_sound_8cpp_source.html">MultiPlatformSound.cpp</a>.</p>
 
 </div>
 </div>

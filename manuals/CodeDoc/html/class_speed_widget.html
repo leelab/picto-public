@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_speed_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SpeedWidget Class Reference</div>  </div>
@@ -119,6 +122,41 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a50ed695331801ed0495d25c2b2692589"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_speed_widget.html#a50ed695331801ed0495d25c2b2692589">SpeedWidget</a> (int maxSpeed, double minSpeed, double resolution, double defaultSpeed, QWidget *parent=0)</td></tr>
 <tr class="memdesc:a50ed695331801ed0495d25c2b2692589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_speed_widget.html" title="A Widget used with the ReplayViewer to set the current playback speed. ">SpeedWidget</a>.  <a href="#a50ed695331801ed0495d25c2b2692589">More...</a><br /></td></tr>
 <tr class="separator:a50ed695331801ed0495d25c2b2692589"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a349c3526381b3893444b002e2d725ff0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a349c3526381b3893444b002e2d725ff0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_speed_widget.html#a349c3526381b3893444b002e2d725ff0">sliderMoved</a> (int newVal)</td></tr>
+<tr class="memdesc:a349c3526381b3893444b002e2d725ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the slider moves with its new value as an input. Causes the speed indicator field to be updated. <br /></td></tr>
+<tr class="separator:a349c3526381b3893444b002e2d725ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d92923da8b355b4c70863f1e1354117"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d92923da8b355b4c70863f1e1354117"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_speed_widget.html#a6d92923da8b355b4c70863f1e1354117">spinboxUpdated</a> ()</td></tr>
+<tr class="memdesc:a6d92923da8b355b4c70863f1e1354117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the speed indicator value changes. Causes the slider position to be updated and emits a <a class="el" href="class_speed_widget.html#aca71c36579c3df141932d069316726fc" title="Emitted when the user changes the speed value. speed parameter is the new speed value. ">speedChanged()</a> event. <br /></td></tr>
+<tr class="separator:a6d92923da8b355b4c70863f1e1354117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:add0505fafd6e05947b1faa1a8afc9653"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_speed_widget.html#add0505fafd6e05947b1faa1a8afc9653">sliderValToSpeed</a> (int sliderVal)</td></tr>
+<tr class="memdesc:add0505fafd6e05947b1faa1a8afc9653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from slider units to speed units.  <a href="#add0505fafd6e05947b1faa1a8afc9653">More...</a><br /></td></tr>
+<tr class="separator:add0505fafd6e05947b1faa1a8afc9653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc8e4c36cc9d42ec8a7aef175f38a46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_speed_widget.html#a0cc8e4c36cc9d42ec8a7aef175f38a46">speedToSliderVal</a> (double speed)</td></tr>
+<tr class="memdesc:a0cc8e4c36cc9d42ec8a7aef175f38a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from speed units to slider units.  <a href="#a0cc8e4c36cc9d42ec8a7aef175f38a46">More...</a><br /></td></tr>
+<tr class="separator:a0cc8e4c36cc9d42ec8a7aef175f38a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa481cbb589259501751f576e152e402d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa481cbb589259501751f576e152e402d"></a>
+QSlider *&#160;</td><td class="memItemRight" valign="bottom"><b>speedSlider_</b></td></tr>
+<tr class="separator:aa481cbb589259501751f576e152e402d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774b130873380b7330c00f54a01143e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a774b130873380b7330c00f54a01143e8"></a>
+QDoubleSpinBox *&#160;</td><td class="memItemRight" valign="bottom"><b>speedIndicator_</b></td></tr>
+<tr class="separator:a774b130873380b7330c00f54a01143e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ba6d2aafd2dad27a27888f6b245888"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99ba6d2aafd2dad27a27888f6b245888"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerResBelow1_</b></td></tr>
+<tr class="separator:a99ba6d2aafd2dad27a27888f6b245888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a53ca9d8e58e078cc5f1ec69284f0ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a53ca9d8e58e078cc5f1ec69284f0ad"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>resolution_</b></td></tr>
+<tr class="separator:a4a53ca9d8e58e078cc5f1ec69284f0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A Widget used with the <a class="el" href="class_replay_viewer.html" title="Defines the UI for the ReplayViewer. ">ReplayViewer</a> to set the current playback speed. </p>
@@ -182,6 +220,65 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="_speed_widget_8cpp_source.html#l00016">16</a> of file <a class="el" href="_speed_widget_8cpp_source.html">SpeedWidget.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="add0505fafd6e05947b1faa1a8afc9653"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double SpeedWidget::sliderValToSpeed </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sliderVal</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts from slider units to speed units. </p>
+<p>The slider operates in integer units, but this widget needs to return floating point units, so we perform a conversion whenever moving between the two. </p>
+
+<p>Definition at line <a class="el" href="_speed_widget_8cpp_source.html#l00062">62</a> of file <a class="el" href="_speed_widget_8cpp_source.html">SpeedWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0cc8e4c36cc9d42ec8a7aef175f38a46"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SpeedWidget::speedToSliderVal </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts from speed units to slider units. </p>
+<p>The slider operates in integer units, but this widget needs to return floating point units, so we perform a conversion whenever moving between the two. </p>
+
+<p>Definition at line <a class="el" href="_speed_widget_8cpp_source.html#l00073">73</a> of file <a class="el" href="_speed_widget_8cpp_source.html">SpeedWidget.cpp</a>.</p>
 
 </div>
 </div>
