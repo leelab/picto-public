@@ -88,6 +88,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_main_window-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">MainWindow Class Reference</div>  </div>
@@ -120,6 +124,180 @@ Protected Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a4e20a4a065fbb0e4d3532a45a0a91425">closeEvent</a> (QCloseEvent *event)</td></tr>
 <tr class="memdesc:a4e20a4a065fbb0e4d3532a45a0a91425"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_main_window.html" title="The main window for the Workstation app. ">MainWindow</a> is told to close. Calls aboutToQuit() on all of the viewers. If nothing objects, the latest settings are written to disk and the close can proceed. <br /></td></tr>
 <tr class="separator:a4e20a4a065fbb0e4d3532a45a0a91425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a3f189480a7a953b244843427f0ce1067"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f189480a7a953b244843427f0ce1067"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>MaxRecentFiles</b> = 5
+ }</td></tr>
+<tr class="separator:a3f189480a7a953b244843427f0ce1067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a55c5e907c761e8714ab008113afc8a87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87">newExperiment</a> ()</td></tr>
+<tr class="memdesc:a55c5e907c761e8714ab008113afc8a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the newExperimentAction_ is triggered. If nothing objects to closing the current Design, a default Design is loaded (<a class="el" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696" title="Loads the DesignRoot from the XML or .sqlite file at the input filename path. ">loadFile()</a> with the EyeCalibration.xml Design).  <a href="#a55c5e907c761e8714ab008113afc8a87">More...</a><br /></td></tr>
+<tr class="separator:a55c5e907c761e8714ab008113afc8a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90c8e95c73065a927c0d46a5ee3cda74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74">openExperiment</a> ()</td></tr>
+<tr class="memdesc:a90c8e95c73065a927c0d46a5ee3cda74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the openExperimentAction_ is triggered. If nothing objects to closing the current Design, a QFileDialog allows the user to choose a Design file and (if valid) that file is loaded.  <a href="#a90c8e95c73065a927c0d46a5ee3cda74">More...</a><br /></td></tr>
+<tr class="separator:a90c8e95c73065a927c0d46a5ee3cda74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a291c661bab41fb661b2a0e7b58cc7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a6a291c661bab41fb661b2a0e7b58cc7e">openRecentExperiment</a> ()</td></tr>
+<tr class="memdesc:a6a291c661bab41fb661b2a0e7b58cc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when one of the recentExperimentActions_ is triggered. If nothing objects to closing the current Design, the file referenced from the RecentExperimentAction that called this function is loaded. If that fails, <a class="el" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87" title="Called when the newExperimentAction_ is triggered. If nothing objects to closing the current Design...">newExperiment()</a> is called to load the default Design.  <a href="#a6a291c661bab41fb661b2a0e7b58cc7e">More...</a><br /></td></tr>
+<tr class="separator:a6a291c661bab41fb661b2a0e7b58cc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a253882925cf9b494645848b58519fbeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a253882925cf9b494645848b58519fbeb">openDesign</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt; designRoot)</td></tr>
+<tr class="memdesc:a253882925cf9b494645848b58519fbeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called when the <a class="el" href="class_state_edit_viewer.html" title="The StateEditViewer is a container for the Designer widget which is a development environment for cre...">StateEditViewer</a> requests that the input DesignRoot be loaded. If nothing objects to closing the current Design, the input DesignRoot is loaded.  <a href="#a253882925cf9b494645848b58519fbeb">More...</a><br /></td></tr>
+<tr class="separator:a253882925cf9b494645848b58519fbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f9981fc89ba371bdd26fdf626ebe4b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6">saveExperiment</a> ()</td></tr>
+<tr class="memdesc:a2f9981fc89ba371bdd26fdf626ebe4b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to save the Design to file. Redirects to <a class="el" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea" title="Saves the current DesignRoot to the input file. ">saveFile()</a> with the current file name in the default case, or <a class="el" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605" title="Called to save the Design to a new file. Allows the user to select a file in a QFileDialog. The file data is written to the selected file using saveFile() with that new filename. ">saveAsExperiment()</a> in the case where there is no file defined yet where the data should go.  <a href="#a2f9981fc89ba371bdd26fdf626ebe4b6">More...</a><br /></td></tr>
+<tr class="separator:a2f9981fc89ba371bdd26fdf626ebe4b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5c6a176a8dfb06f0dc8c88979d9605"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605">saveAsExperiment</a> ()</td></tr>
+<tr class="memdesc:a5f5c6a176a8dfb06f0dc8c88979d9605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to save the Design to a new file. Allows the user to select a file in a QFileDialog. The file data is written to the selected file using <a class="el" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea" title="Saves the current DesignRoot to the input file. ">saveFile()</a> with that new filename.  <a href="#a5f5c6a176a8dfb06f0dc8c88979d9605">More...</a><br /></td></tr>
+<tr class="separator:a5f5c6a176a8dfb06f0dc8c88979d9605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aa060076be05d3c231cd4df0fc74932"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9aa060076be05d3c231cd4df0fc74932"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932">changeMode</a> ()</td></tr>
+<tr class="memdesc:a9aa060076be05d3c231cd4df0fc74932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when one of the <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> actions is triggered. Redirects to <a class="el" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932" title="Called when one of the Viewer actions is triggered. Redirects to changeMode() with a pointer to the V...">changeMode()</a> with a pointer to the <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> that we should switch to. <br /></td></tr>
+<tr class="separator:a9aa060076be05d3c231cd4df0fc74932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17a62d145bff3497618b59595edef26c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17a62d145bff3497618b59595edef26c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c">startMode</a> ()</td></tr>
+<tr class="memdesc:a17a62d145bff3497618b59595edef26c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> and calls its <a class="el" href="class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e" title="Called just before displaying the viewer. Handles any setup that needs to occur before the viewer tak...">Viewer::init()</a> function. <br /></td></tr>
+<tr class="separator:a17a62d145bff3497618b59595edef26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade759e6c30539d7b534cb49e790509a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade759e6c30539d7b534cb49e790509a5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#ade759e6c30539d7b534cb49e790509a5">changeSystemNumber</a> ()</td></tr>
+<tr class="memdesc:ade759e6c30539d7b534cb49e790509a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the setSystemNumberAction_ is triggered. Allows the user to set the new system number and then uses Picto::portNums::setSystemNumber() to enact the change and restart the Workstation. <br /></td></tr>
+<tr class="separator:ade759e6c30539d7b534cb49e790509a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b845b94cf4047b2b558f902355f057d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b845b94cf4047b2b558f902355f057d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a4b845b94cf4047b2b558f902355f057d">aboutPicto</a> ()</td></tr>
+<tr class="memdesc:a4b845b94cf4047b2b558f902355f057d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the aboutPictoAction_ is triggered. Displays a QMessageBox containing the latest release notes and general information about the Picto application. <br /></td></tr>
+<tr class="separator:a4b845b94cf4047b2b558f902355f057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adb3eed8aaa959b413fb72a252eb0934a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#adb3eed8aaa959b413fb72a252eb0934a">changeMode</a> (<a class="el" href="class_viewer.html">Viewer</a> *nextViewer)</td></tr>
+<tr class="memdesc:adb3eed8aaa959b413fb72a252eb0934a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates a change in focus to the input <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. If there is no current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>, <a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c" title="Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...">startMode()</a> is used. If there is a current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>, its deinit() function is called and <a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c" title="Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...">startMode()</a> will be called whien its deinitComplete() signal is triggered.  <a href="#adb3eed8aaa959b413fb72a252eb0934a">More...</a><br /></td></tr>
+<tr class="separator:adb3eed8aaa959b413fb72a252eb0934a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62cd8712fb41a754298f6f60eead2cb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62cd8712fb41a754298f6f60eead2cb0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a62cd8712fb41a754298f6f60eead2cb0">createActions</a> ()</td></tr>
+<tr class="memdesc:a62cd8712fb41a754298f6f60eead2cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all of the actions used by the <a class="el" href="class_main_window.html" title="The main window for the Workstation app. ">MainWindow</a>. <br /></td></tr>
+<tr class="separator:a62cd8712fb41a754298f6f60eead2cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4907b0251d305659e403c62921ef331"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4907b0251d305659e403c62921ef331"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#aa4907b0251d305659e403c62921ef331">createMenus</a> ()</td></tr>
+<tr class="memdesc:aa4907b0251d305659e403c62921ef331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all of the menus used by the <a class="el" href="class_main_window.html" title="The main window for the Workstation app. ">MainWindow</a>. <br /></td></tr>
+<tr class="separator:aa4907b0251d305659e403c62921ef331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bb86fc5cd917093593fcf0b0009e018"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bb86fc5cd917093593fcf0b0009e018"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a2bb86fc5cd917093593fcf0b0009e018">createToolbars</a> ()</td></tr>
+<tr class="memdesc:a2bb86fc5cd917093593fcf0b0009e018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all of the toolbars used by the <a class="el" href="class_main_window.html" title="The main window for the Workstation app. ">MainWindow</a>. <br /></td></tr>
+<tr class="separator:a2bb86fc5cd917093593fcf0b0009e018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b1cf240536f4401fababfe6e6ad89f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a79b1cf240536f4401fababfe6e6ad89f">createViewers</a> ()</td></tr>
+<tr class="memdesc:a79b1cf240536f4401fababfe6e6ad89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all of the different viewers.  <a href="#a79b1cf240536f4401fababfe6e6ad89f">More...</a><br /></td></tr>
+<tr class="separator:a79b1cf240536f4401fababfe6e6ad89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06476208b8466211f3bb0fcae787052b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a06476208b8466211f3bb0fcae787052b">readSettings</a> ()</td></tr>
+<tr class="memdesc:a06476208b8466211f3bb0fcae787052b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads settings for the Workstation from disk.  <a href="#a06476208b8466211f3bb0fcae787052b">More...</a><br /></td></tr>
+<tr class="separator:a06476208b8466211f3bb0fcae787052b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49be45fc9b993fdc3afe55d4b6fa0650"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a49be45fc9b993fdc3afe55d4b6fa0650">writeSettings</a> ()</td></tr>
+<tr class="memdesc:a49be45fc9b993fdc3afe55d4b6fa0650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores settings from the Workstation to disk.  <a href="#a49be45fc9b993fdc3afe55d4b6fa0650">More...</a><br /></td></tr>
+<tr class="separator:a49be45fc9b993fdc3afe55d4b6fa0650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e6b98e681544f7790606a0dfe968696"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696">loadFile</a> (const QString filename)</td></tr>
+<tr class="memdesc:a5e6b98e681544f7790606a0dfe968696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the DesignRoot from the XML or .sqlite file at the input filename path.  <a href="#a5e6b98e681544f7790606a0dfe968696">More...</a><br /></td></tr>
+<tr class="separator:a5e6b98e681544f7790606a0dfe968696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cca36370fb5c44b63c0a1065c63a0ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea">saveFile</a> (const QString filename)</td></tr>
+<tr class="memdesc:a3cca36370fb5c44b63c0a1065c63a0ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the current DesignRoot to the input file.  <a href="#a3cca36370fb5c44b63c0a1065c63a0ea">More...</a><br /></td></tr>
+<tr class="separator:a3cca36370fb5c44b63c0a1065c63a0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa29287cd319fc301d4b49a07d13c0c3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa29287cd319fc301d4b49a07d13c0c3e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#aa29287cd319fc301d4b49a07d13c0c3e">okToContinue</a> ()</td></tr>
+<tr class="memdesc:aa29287cd319fc301d4b49a07d13c0c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if we have unsaved changes. If so, uses a QMessageBox to ask the user if the unsaved changes are important or not. If not, it is okay to continue and true is returned, if so, false is returned. <br /></td></tr>
+<tr class="separator:aa29287cd319fc301d4b49a07d13c0c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a873edcc181cd61bad99297dfb72c00be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#a873edcc181cd61bad99297dfb72c00be">setCurrentFile</a> (const QString &amp;filename)</td></tr>
+<tr class="memdesc:a873edcc181cd61bad99297dfb72c00be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called whenever the current file is changed. Updates various values accordingly.  <a href="#a873edcc181cd61bad99297dfb72c00be">More...</a><br /></td></tr>
+<tr class="separator:a873edcc181cd61bad99297dfb72c00be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affa76730fa370a3466b62a4caee721e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affa76730fa370a3466b62a4caee721e3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_window.html#affa76730fa370a3466b62a4caee721e3">updateRecentFileActions</a> ()</td></tr>
+<tr class="memdesc:affa76730fa370a3466b62a4caee721e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the recent files portion of the File menu according to the latest recentFiles_ list and a check as to which of those files actually exist in the file system. <br /></td></tr>
+<tr class="separator:affa76730fa370a3466b62a4caee721e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef691a55d8b38e7bf90aead957837e40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef691a55d8b38e7bf90aead957837e40"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>convertTextToPictoData</b> ()</td></tr>
+<tr class="separator:aef691a55d8b38e7bf90aead957837e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afedbe0cb345a9141413d025e9b3ba6e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afedbe0cb345a9141413d025e9b3ba6e1"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+<tr class="separator:afedbe0cb345a9141413d025e9b3ba6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb13e260ec25a86e9a1abf9f466ac277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb13e260ec25a86e9a1abf9f466ac277"></a>
+<a class="el" href="class_error_list.html">ErrorList</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>errorList_</b></td></tr>
+<tr class="separator:afb13e260ec25a86e9a1abf9f466ac277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a110710fe873fcf540c91fd0b7695e1ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a110710fe873fcf540c91fd0b7695e1ab"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>newExperimentAction_</b></td></tr>
+<tr class="separator:a110710fe873fcf540c91fd0b7695e1ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36c224621213a8edca6e0afd5fd82e60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36c224621213a8edca6e0afd5fd82e60"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>openExperimentAction_</b></td></tr>
+<tr class="separator:a36c224621213a8edca6e0afd5fd82e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4644b309883bdbdd4ce0943cdebe0ffa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4644b309883bdbdd4ce0943cdebe0ffa"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>saveExperimentAction_</b></td></tr>
+<tr class="separator:a4644b309883bdbdd4ce0943cdebe0ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9caa025efd05553c24140ae3b95bf040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9caa025efd05553c24140ae3b95bf040"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>saveAsExperimentAction_</b></td></tr>
+<tr class="separator:a9caa025efd05553c24140ae3b95bf040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4b77e7a64eb834d1b589dcd6608ae33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4b77e7a64eb834d1b589dcd6608ae33"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>recentExperimentsActions_</b> [MaxRecentFiles]</td></tr>
+<tr class="separator:aa4b77e7a64eb834d1b589dcd6608ae33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df0ee6fa7f03d5ad20747162e51d62b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5df0ee6fa7f03d5ad20747162e51d62b"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>seperatorAction_</b></td></tr>
+<tr class="separator:a5df0ee6fa7f03d5ad20747162e51d62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8240196ec94f63b76488d0500433ba18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8240196ec94f63b76488d0500433ba18"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>exitAction_</b></td></tr>
+<tr class="separator:a8240196ec94f63b76488d0500433ba18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5735445f428fefb0f37197df00df788c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5735445f428fefb0f37197df00df788c"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>checkSyntaxAction_</b></td></tr>
+<tr class="separator:a5735445f428fefb0f37197df00df788c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4540aa0179dd3bdbceeed484452ffd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a4540aa0179dd3bdbceeed484452ffd"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>initViewerAction_</b></td></tr>
+<tr class="separator:a9a4540aa0179dd3bdbceeed484452ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a172436c17cb33a5f1bf51645ce557644"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a172436c17cb33a5f1bf51645ce557644"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>setSystemNumberAction_</b></td></tr>
+<tr class="separator:a172436c17cb33a5f1bf51645ce557644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2105e637e5e626824ae54b982d82a35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2105e637e5e626824ae54b982d82a35"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>aboutPictoAction_</b></td></tr>
+<tr class="separator:af2105e637e5e626824ae54b982d82a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a0b5d390c4af2c51aae58623a7ffc22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a0b5d390c4af2c51aae58623a7ffc22"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>fileMenu_</b></td></tr>
+<tr class="separator:a3a0b5d390c4af2c51aae58623a7ffc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af698475f8de3968c56ea60d1aa24b0e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af698475f8de3968c56ea60d1aa24b0e9"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>modeMenu_</b></td></tr>
+<tr class="separator:af698475f8de3968c56ea60d1aa24b0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef279f9d49d44d37e1a85ab17a5521e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ef279f9d49d44d37e1a85ab17a5521e"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>systemMenu_</b></td></tr>
+<tr class="separator:a1ef279f9d49d44d37e1a85ab17a5521e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a577b576d966e307a777fdcf2408c4173"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a577b576d966e307a777fdcf2408c4173"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>experimentMenu_</b></td></tr>
+<tr class="separator:a577b576d966e307a777fdcf2408c4173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a721f06c00746e7898296270360af279b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a721f06c00746e7898296270360af279b"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>aboutMenu_</b></td></tr>
+<tr class="separator:a721f06c00746e7898296270360af279b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157f70d6c3119aaa67a4fb0de3061c91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a157f70d6c3119aaa67a4fb0de3061c91"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>fileToolbar_</b></td></tr>
+<tr class="separator:a157f70d6c3119aaa67a4fb0de3061c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24b80c7420773efaf21d03c88161b97e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24b80c7420773efaf21d03c88161b97e"></a>
+QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>viewerToolbar_</b></td></tr>
+<tr class="separator:a24b80c7420773efaf21d03c88161b97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae264231ad17656fbdd9e559a9c0bda7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae264231ad17656fbdd9e559a9c0bda7e"></a>
+<a class="el" href="class_viewer.html">Viewer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>currViewer_</b></td></tr>
+<tr class="separator:ae264231ad17656fbdd9e559a9c0bda7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92c9332d0755deafd574ab6facfd430"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae92c9332d0755deafd574ab6facfd430"></a>
+<a class="el" href="class_viewer.html">Viewer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>nextViewer_</b></td></tr>
+<tr class="separator:ae92c9332d0755deafd574ab6facfd430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52bc9a8e3137c820f71b0ea0e24cbde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa52bc9a8e3137c820f71b0ea0e24cbde"></a>
+QStackedWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>viewerStack_</b></td></tr>
+<tr class="separator:aa52bc9a8e3137c820f71b0ea0e24cbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc7e0a6e0bcb6b50534b741acb02356d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc7e0a6e0bcb6b50534b741acb02356d"></a>
+QList&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>viewerNames_</b></td></tr>
+<tr class="separator:abc7e0a6e0bcb6b50534b741acb02356d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5e02821d4e04cc6227ac351bde42f53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5e02821d4e04cc6227ac351bde42f53"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isModified_</b></td></tr>
+<tr class="separator:ad5e02821d4e04cc6227ac351bde42f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6437af3048752f2593cf136ac90b597b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6437af3048752f2593cf136ac90b597b"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><b>currFile_</b></td></tr>
+<tr class="separator:a6437af3048752f2593cf136ac90b597b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3568be38c1064ed8811cf3b94116f442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3568be38c1064ed8811cf3b94116f442"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>recentFiles_</b></td></tr>
+<tr class="separator:a3568be38c1064ed8811cf3b94116f442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main window for the Workstation app. </p>
@@ -134,7 +312,380 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="mainwindow_8h_source.html#l00042">42</a> of file <a class="el" href="mainwindow_8h_source.html">mainwindow.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="adb3eed8aaa959b413fb72a252eb0934a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::changeMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_viewer.html">Viewer</a> *&#160;</td>
+          <td class="paramname"><em>nextViewer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initiates a change in focus to the input <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. If there is no current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>, <a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c" title="Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...">startMode()</a> is used. If there is a current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>, its deinit() function is called and <a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c" title="Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...">startMode()</a> will be called whien its deinitComplete() signal is triggered. </p>
+<p>For more information on why we use the deinitComplete() signal indirection to trigger <a class="el" href="class_main_window.html#a17a62d145bff3497618b59595edef26c" title="Changes the current view mode to that of the nextViewer_. Sets the current DesignRoot to that Viewer ...">startMode()</a>, see <a class="el" href="class_viewer.html#aa8f10afad8094330d363080b275daaeb" title="This is emitted when the Viewer&#39;s deinitialization process is completed. ">Viewer::deinitComplete()</a>. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00407">407</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a79b1cf240536f4401fababfe6e6ad89f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::createViewers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates all of the different viewers. </p>
+<p>In order to save time, all of the different viewers are created at start-up. The <a class="el" href="class_state_edit_viewer.html" title="The StateEditViewer is a container for the Designer widget which is a development environment for cre...">StateEditViewer</a> is set as the current viewer.</p>
+<p>To keep all of the code in one place, this function handles all of the actions that are added to the viewer toolbar for selecting a different viewer as well as putting together the QStackedWidget that contains the different <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> widgets. </p><dl class="section note"><dt>Note</dt><dd>It would be nice if the system started at the same viewer that was being viewed before the last exit. We should implement that. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00176">176</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5e6b98e681544f7790606a0dfe968696"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MainWindow::loadFile </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the DesignRoot from the XML or .sqlite file at the input filename path. </p>
+<p>This attemps to deserialize the file contents into a DesignRoot. If deserialization fails, an error message is displayed and false is returned. If the deserialization is successful with warnings, those warnings are shown to the user. Then the new DesignRoot is sent into the background AutoSaver system for safety's sake in the case of a crash and the current filename is updated for the purpose of <a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6" title="Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...">saveExperiment()</a>. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00553">553</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a55c5e907c761e8714ab008113afc8a87"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::newExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the newExperimentAction_ is triggered. If nothing objects to closing the current Design, a default Design is loaded (<a class="el" href="class_main_window.html#a5e6b98e681544f7790606a0dfe968696" title="Loads the DesignRoot from the XML or .sqlite file at the input filename path. ">loadFile()</a> with the EyeCalibration.xml Design). </p>
+<dl class="section note"><dt>Note</dt><dd>The naming here is from when the design xml only included an Experiment (no Analysis or UI data). This name should probably be updated. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00283">283</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a253882925cf9b494645848b58519fbeb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::openDesign </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td>
+          <td class="paramname"><em>designRoot</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is called when the <a class="el" href="class_state_edit_viewer.html" title="The StateEditViewer is a container for the Designer widget which is a development environment for cre...">StateEditViewer</a> requests that the input DesignRoot be loaded. If nothing objects to closing the current Design, the input DesignRoot is loaded. </p>
+<p>Essentially, this is the same as <a class="el" href="class_main_window.html#a90c8e95c73065a927c0d46a5ee3cda74" title="Called when the openExperimentAction_ is triggered. If nothing objects to closing the current Design...">openExperiment()</a> except that it is opening a Design from RAM not a file, so it needs to take care of things differently and handle some of the complicating factors of this procedure. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00331">331</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a90c8e95c73065a927c0d46a5ee3cda74"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::openExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the openExperimentAction_ is triggered. If nothing objects to closing the current Design, a QFileDialog allows the user to choose a Design file and (if valid) that file is loaded. </p>
+<dl class="section note"><dt>Note</dt><dd>The naming here is from when the design xml only included an Experiment (no Analysis or UI data). This name should probably be updated. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00298">298</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6a291c661bab41fb661b2a0e7b58cc7e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::openRecentExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when one of the recentExperimentActions_ is triggered. If nothing objects to closing the current Design, the file referenced from the RecentExperimentAction that called this function is loaded. If that fails, <a class="el" href="class_main_window.html#a55c5e907c761e8714ab008113afc8a87" title="Called when the newExperimentAction_ is triggered. If nothing objects to closing the current Design...">newExperiment()</a> is called to load the default Design. </p>
+<dl class="section note"><dt>Note</dt><dd>The naming here is from when the design xml only included an Experiment (no Analysis or UI data). This name should probably be updated. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00315">315</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a06476208b8466211f3bb0fcae787052b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::readSettings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reads settings for the Workstation from disk. </p>
+<p>Settings for the Workstation app are stored on disk. The QSettings object does this for us in a platform independent manner. This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.</p>
+<p>Currently, the only settings are the recently opened files. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00741">741</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f5c6a176a8dfb06f0dc8c88979d9605"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MainWindow::saveAsExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called to save the Design to a new file. Allows the user to select a file in a QFileDialog. The file data is written to the selected file using <a class="el" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea" title="Saves the current DesignRoot to the input file. ">saveFile()</a> with that new filename. </p>
+<dl class="section note"><dt>Note</dt><dd>The naming here is from when the design xml only included an Experiment (no Analysis or UI data). This name should probably be updated. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00368">368</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f9981fc89ba371bdd26fdf626ebe4b6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MainWindow::saveExperiment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called to save the Design to file. Redirects to <a class="el" href="class_main_window.html#a3cca36370fb5c44b63c0a1065c63a0ea" title="Saves the current DesignRoot to the input file. ">saveFile()</a> with the current file name in the default case, or <a class="el" href="class_main_window.html#a5f5c6a176a8dfb06f0dc8c88979d9605" title="Called to save the Design to a new file. Allows the user to select a file in a QFileDialog. The file data is written to the selected file using saveFile() with that new filename. ">saveAsExperiment()</a> in the case where there is no file defined yet where the data should go. </p>
+<dl class="section note"><dt>Note</dt><dd>The naming here is from when the design xml only included an Experiment (no Analysis or UI data). This name should probably be updated. </dd></dl>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00355">355</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3cca36370fb5c44b63c0a1065c63a0ea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MainWindow::saveFile </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Saves the current DesignRoot to the input file. </p>
+<p>The DesignRoot's name is changed to match that of the input filename, <a class="el" href="class_viewer.html#ad2cf4211ec8bf80d953daab04b14038a" title="Called just before the DesignRoot is saved to file. Handles any actions that need to occur before tha...">Viewer::aboutToSave()</a> is called on the currentViewer, the DesignRoot is serialized using DesignRoot::getDesignRootText(), and that text is saved to the file. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00510">510</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a873edcc181cd61bad99297dfb72c00be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::setCurrentFile </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called whenever the current file is changed. Updates various values accordingly. </p>
+<p>The currFile_ string used to find the file to use in <a class="el" href="class_main_window.html#a2f9981fc89ba371bdd26fdf626ebe4b6" title="Called to save the Design to file. Redirects to saveFile() with the current file name in the default ...">saveExperiment()</a> is updated. The recent files list in the file dropdown is updated along with the window title. Then <a class="el" href="class_main_window.html#a9aa060076be05d3c231cd4df0fc74932" title="Called when one of the Viewer actions is triggered. Redirects to changeMode() with a pointer to the V...">changeMode()</a> is called with the current <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> in order to call <a class="el" href="class_viewer.html#a78e0e1af1e09f32032b95546a0c74d3e" title="Called just before displaying the viewer. Handles any setup that needs to occur before the viewer tak...">Viewer::init()</a> again. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00652">652</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a49be45fc9b993fdc3afe55d4b6fa0650"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::writeSettings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores settings from the Workstation to disk. </p>
+<p>Settings for the Workstation app are stored on disk. The QSettings object does this for us in a platform independent manner. This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.</p>
+<p>Currently, the only settings are the recently opened files. </p>
+
+<p>Definition at line <a class="el" href="mainwindow_8cpp_source.html#l00724">724</a> of file <a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/workstation/<a class="el" href="mainwindow_8h_source.html">mainwindow.h</a></li>
 <li>source/workstation/<a class="el" href="mainwindow_8cpp_source.html">mainwindow.cpp</a></li>
 </ul>
