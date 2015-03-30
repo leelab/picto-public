@@ -23,7 +23,7 @@ void ScriptTextEdit::focusOutEvent(QFocusEvent *e)
 	//any characters, when focusing out of a script text edit, if the box contains only
 	//white space, we just empty it of its contents such that the rest of Picto will
 	//know that it's empty.
-	if(toPlainText().trimmed().isEmpty())
+	if(!toPlainText().isEmpty() && toPlainText().trimmed().isEmpty())
 		setText("");
 	SearchableTextEdit::focusOutEvent(e);
 }

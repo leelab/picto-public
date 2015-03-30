@@ -30,9 +30,11 @@ public:
 signals:
    /*! \brief Emitted whenever the ScriptWidget's text is changed. text is the widget's new text*/
    void textEdited(const QString & text);
-   /*! \brief Emitted whenever the text edit looses focus.  This is a better signal than textEdited() to connect to when it comes to defining undo blocks so
-    *	that not every letter is considered for undoing.*/
+   /*! \brief Emitted whenever the text edit loses focus.  This is a better signal than textEdited() to connect to when it
+    *	comes to defining undo blocks so that not every letter is considered for undoing.*/
    void editingFinished();
+public slots:
+   void scriptLostFocus();
 private:
 	QToolButton* createButton();
 	QLayout *layout_;
@@ -43,6 +45,7 @@ private:
 	int lineStartTabs_;
 	bool inTextChangeDetected_;
 	bool singleLine_;
+	bool scriptChangedSinceSync_;
 private slots:
 	void textChangeDetected();
 	void searchRequested(SearchRequest searchRequest);

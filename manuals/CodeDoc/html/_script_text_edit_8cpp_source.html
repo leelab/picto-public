@@ -108,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="comment">//any characters, when focusing out of a script text edit, if the box contains only</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">//white space, we just empty it of its contents such that the rest of Picto will</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">//know that it&#39;s empty.</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">if</span>(toPlainText().trimmed().isEmpty())</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">if</span>(!toPlainText().isEmpty() &amp;&amp; toPlainText().trimmed().isEmpty())</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        setText(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_searchable_text_edit.html#a8622cfa9536e40d76cfb1fb84f7ffc7c">SearchableTextEdit::focusOutEvent</a>(e);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>

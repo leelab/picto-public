@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-slots">Private Slots</a> &#124;
@@ -110,6 +111,12 @@ Inheritance diagram for ScriptWidget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:aae0247316ac725a54d249c00db063313"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae0247316ac725a54d249c00db063313"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptLostFocus</b> ()</td></tr>
+<tr class="separator:aae0247316ac725a54d249c00db063313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a87b0b6c6b19655367ad8888d8198e353"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87b0b6c6b19655367ad8888d8198e353"></a>
@@ -118,7 +125,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a87b0b6c6b19655367ad8888d8198e353"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52ac6b09578b0423fefec508959c3c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab52ac6b09578b0423fefec508959c3c6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_widget.html#ab52ac6b09578b0423fefec508959c3c6">editingFinished</a> ()</td></tr>
-<tr class="memdesc:ab52ac6b09578b0423fefec508959c3c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the text edit looses focus. This is a better signal than <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> to connect to when it comes to defining undo blocks so that not every letter is considered for undoing. <br /></td></tr>
+<tr class="memdesc:ab52ac6b09578b0423fefec508959c3c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the text edit loses focus. This is a better signal than <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> to connect to when it comes to defining undo blocks so that not every letter is considered for undoing. <br /></td></tr>
 <tr class="separator:ab52ac6b09578b0423fefec508959c3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -176,6 +183,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>inTextChangeDetected_
 <tr class="memitem:abdddbff3fbed401d79d63116cd90beb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdddbff3fbed401d79d63116cd90beb5"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td></tr>
 <tr class="separator:abdddbff3fbed401d79d63116cd90beb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5a57d103e16ee673117e546903ad630"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a57d103e16ee673117e546903ad630"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>scriptChangedSinceSync_</b></td></tr>
+<tr class="separator:ad5a57d103e16ee673117e546903ad630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget for managing and presenting <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a> widgets as well as interfacing them with an underlying QtProperty. </p>
@@ -258,7 +268,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td><
 <p>Called when the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a>'s text changes. Updates the underlying QtProperty value accordinly and emits the <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> signal. </p>
 <p>Search is also updated in case the latest change led to a search string match appearing/disappearing. </p>
 
-<p>Definition at line <a class="el" href="_script_widget_8cpp_source.html#l00045">45</a> of file <a class="el" href="_script_widget_8cpp_source.html">ScriptWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_script_widget_8cpp_source.html#l00050">50</a> of file <a class="el" href="_script_widget_8cpp_source.html">ScriptWidget.cpp</a>.</p>
 
 </div>
 </div>
