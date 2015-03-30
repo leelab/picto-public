@@ -2,6 +2,7 @@
 #include "PropertyBrowser.h"
 #include "../../common/storage/datastore.h"
 #include "../parameter/AnalysisScriptHolder.h"
+#include "../property/Property.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -67,23 +68,29 @@ void PropertyBrowser::assetSelected(QSharedPointer<Asset> asset)
 	setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 }
 
-/*! \brief Called whenever a property handled by this PropertyBrowser's PropertyGroupWidget is edited to tell the EditorState to make the
- *	laset edit undoable.
+/*! \brief Called whenever a property handled by this PropertyBrowser's PropertyGroupWidget is edited to tell the
+ *	EditorState to make the laset edit undoable.
  */
 void PropertyBrowser::propertyEdited(QSharedPointer<Property> prop,QVariant val)
 {
-	editorState_->setLastActionUndoable();
+	//if (!scriptNamesLookup_.contains(prop->getName()))
+	if (prop->type() != QVariant::String)
+	{
+		editorState_->setLastActionUndoable();
+	}
 }
 
 /*! \brief Called when an ArrowPortItem is selected in the Designer to find the appropriate script Properties and add them
  *	 to the PropertyGroupWidget for display.
- *	\details The displayed script properties depend on whether the selected Arrow port was a Start bar or a result bar.  They also
- *	depend on whether there is an active analysis.
- *	\note If there is an active Analysis, this function also checks to see if the selected Asset contains an AnalysisScriptHolder,
- *	If it doesn't, it adds one to selected Asset so that it can show the Analysis Scripts and the user will be able to edit them.
- *	This is important.  It is somewhat counter intuitive that the PropertyBrowser would be responsible for creating AnalysisScriptHolders.
- *	There are many ways that we could have done this, and each has its merits.  This is the one that we chose, but it might be worth
- *	considering just automatically adding AnalysisScriptHolders to all StateMachineElement objects as soon as a new Analysis is created.
+ *	\details The displayed script properties depend on whether the selected Arrow port was a Start bar or a result bar.
+ *	They also depend on whether there is an active analysis.
+ *	\note If there is an active Analysis, this function also checks to see if the selected Asset contains an
+ *	AnalysisScriptHolder.  If it doesn't, it adds one to selected Asset so that it can show the Analysis Scripts and the
+ *	user will be able to edit them.
+ *	This is important.  It is somewhat counter intuitive that the PropertyBrowser would be responsible for creating
+ *	AnalysisScriptHolders.  There are many ways that we could have done this, and each has its merits.  This is the one
+ *	that we chose, but it might be worth considering just automatically adding AnalysisScriptHolders to all
+ *	StateMachineElement objects as soon as a new Analysis is created.
  */
 void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 {

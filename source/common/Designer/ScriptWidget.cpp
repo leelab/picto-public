@@ -16,7 +16,8 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	layout_(new QVBoxLayout()),
 	editorState_(editorState),
 	inTextChangeDetected_(false),
-	singleLine_(singleLine)
+	singleLine_(singleLine),
+	scriptChangedSinceSync_(false)
 {
 	connect(textEdit_,SIGNAL(focusOut()),this,SIGNAL(editingFinished()));
 	layout_->addWidget(textEdit_);
@@ -27,9 +28,13 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	//Set text value to widget.
 	connect(textEdit_, SIGNAL(textChanged()),this, SLOT(textChangeDetected()));
 	textEdit_->setText(text);
+	scriptChangedSinceSync_ = false;
 
 	//Set up search
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
+
+	//Set up StateMachine-level undo
+	connect(textEdit_, SIGNAL(focusOut()), this, SLOT(scriptLostFocus()));
 }
 
 /*! \brief Sets this ScriptWidget as readonly/editable depending on the bool readOnly input.*/
@@ -48,6 +53,7 @@ void ScriptWidget::textChangeDetected()
 	if(inTextChangeDetected_)
 		return;
 	inTextChangeDetected_ = true;
+	scriptChangedSinceSync_ = true;
 	//Set the new text value to the underlying QtProperty.
 	QString editedText = textEdit_->toPlainText();
 	manager_->setValue(property_,editedText);
@@ -81,4 +87,13 @@ QSize ScriptWidget::sizeHint() const
 	}
 
 	return QSize(QWidget::sizeHint().width(), QWIDGETSIZE_MAX);
+}
+
+void ScriptWidget::scriptLostFocus()
+{
+	if (scriptChangedSinceSync_)
+	{
+		editorState_->undoableActionPerformed();
+		scriptChangedSinceSync_ = false;
+	}
 }
