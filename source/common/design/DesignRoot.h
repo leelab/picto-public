@@ -2,7 +2,6 @@
 #define _DESIGNROOT_H_
 
 #include <QObject>
-#include <QTextDocument>
 #include "PictoData.h"
 
 namespace Picto{
@@ -84,7 +83,13 @@ signals:
 
 private:
 	QSharedPointer<PictoData> pictoData_;
-	QTextDocument designRootText_;
+	/*! \brief A stack holding previous iterations of the task, for handling undo.
+	*/
+	QVector<QString> designUndoStack_;
+	/*! \brief The current offset from the back of the undo stack.  Should be 0 until undo is used.
+	 */
+	QString lastSaveVersion_;
+	int undoStateOffset_;
 	QString designName;
 	bool compiled_;
 	DesignMessage lastError_;
