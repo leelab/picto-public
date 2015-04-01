@@ -99,49 +99,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;AssociateRoot.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../common.h&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#af167cc9406fdf39ff11a1feed769bad2">   12</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION       virtual QUuid getHostId(){return propertyContainer_-&gt;getPropertyValue(&quot;HostId&quot;).toUuid();}; \</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">                                                        virtual QSharedPointer&lt;Property&gt; getHostIdProperty(){return propertyContainer_-&gt;getProperty(&quot;HostId&quot;);};    \</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">                                                        virtual QSharedPointer&lt;Property&gt; getNameProperty(){return propertyContainer_-&gt;getProperty(&quot;Name&quot;);};    </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#a66c779135ec26650f7829025b1fdd50f">   28</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_INITIALIZATION  AddDefinableProperty(QVariant::Uuid,&quot;HostId&quot;,QVariant());   \</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">                                            hostIdBeingEdited_ = false;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#aff5c90a46d39d855b871c0ffd92f2d46">   35</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_POST_DESERIALIZE    if(getHostId() == QUuid())  \</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">                                                    changeHostId(); \</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">                                                propertyContainer_-&gt;getProperty(&quot;HostId&quot;)-&gt;setVisible(false);   \</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">                                                connect(this,SIGNAL(edited()),this,SLOT(changeHostId()));</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#af167cc9406fdf39ff11a1feed769bad2">   13</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_PUBLIC_IMPLEMENTATION \</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">    virtual QUuid getHostId(){return propertyContainer_-&gt;getPropertyValue(&quot;HostId&quot;).toUuid();};                 \</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">    virtual QSharedPointer&lt;Property&gt; getHostIdProperty(){return propertyContainer_-&gt;getProperty(&quot;HostId&quot;);};    \</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">    virtual QSharedPointer&lt;Property&gt; getNameProperty(){return propertyContainer_-&gt;getProperty(&quot;Name&quot;);};</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#a66c779135ec26650f7829025b1fdd50f">   37</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_INITIALIZATION  AddDefinableProperty(QVariant::Uuid,&quot;HostId&quot;,QVariant());   \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">                                            hostIdBeingEdited_ = false;</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AssociateRootHost</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;#else</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html">   81</a></span>&#160;class AssociateRootHost</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;#endif</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    AssociateRootHost();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> ~AssociateRootHost(){};</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">   89</a></span>&#160;    QSharedPointer&lt;AssociateRoot&gt; <a class="code" href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">getAssociateRoot</a>(QString type){<span class="keywordflow">if</span>(!associateRootHash_.contains(type))<span class="keywordflow">return</span> QSharedPointer&lt;AssociateRoot&gt;();<span class="keywordflow">return</span> associateRootHash_.value(type);};</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">virtual</span> QUuid getHostId() = 0;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Property&gt; getHostIdProperty() = 0;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Property&gt; getNameProperty() = 0;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    QHash&lt;QString,QSharedPointer&lt;AssociateRoot&gt;&gt; associateRootHash_;</div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">  112</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">setAssociateRoot</a>(QString type, QSharedPointer&lt;AssociateRoot&gt; assocRoot){associateRootHash_[type] = assocRoot;};</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_picto_1_1_associate_root.html">AssociateRoot</a>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;};</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="class_picto_1_1_associate_root_host_html_a1b8a719a8669ae2443d0ccec2fadfda7"><div class="ttname"><a href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">Picto::AssociateRootHost::setAssociateRoot</a></div><div class="ttdeci">void setAssociateRoot(QString type, QSharedPointer&lt; AssociateRoot &gt; assocRoot)</div><div class="ttdoc">Adds the input AssociateRoot to this AssociateRootHost&#39;s AssociateRoot lookup table under the input t...</div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_host_8h_source.html#l00112">AssociateRootHost.h:112</a></div></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="_associate_root_host_8h.html#aff5c90a46d39d855b871c0ffd92f2d46">   45</a></span>&#160;<span class="preprocessor">#define ASSOCIATE_ROOT_HOST_POST_DESERIALIZE    if(getHostId() == QUuid())  \</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">                                                    changeHostId(); \</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">                                                propertyContainer_-&gt;getProperty(&quot;HostId&quot;)-&gt;setVisible(false);   \</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">                                                connect(this,SIGNAL(edited()),this,SLOT(changeHostId()));</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AssociateRootHost</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;#else</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html">   95</a></span>&#160;class AssociateRootHost</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;#endif</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    AssociateRootHost();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">virtual</span> ~AssociateRootHost(){};</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">  104</a></span>&#160;    QSharedPointer&lt;AssociateRoot&gt; <a class="code" href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">getAssociateRoot</a>(QString type){<span class="keywordflow">if</span>(!associateRootHash_.contains(type))<span class="keywordflow">return</span> QSharedPointer&lt;AssociateRoot&gt;();<span class="keywordflow">return</span> associateRootHash_.value(type);};</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">virtual</span> QUuid getHostId() = 0;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Property&gt; getHostIdProperty() = 0;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Property&gt; getNameProperty() = 0;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    QHash&lt;QString,QSharedPointer&lt;AssociateRoot&gt;&gt; associateRootHash_;</div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">  130</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">setAssociateRoot</a>(QString type, QSharedPointer&lt;AssociateRoot&gt; assocRoot){associateRootHash_[type] = assocRoot;};</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_picto_1_1_associate_root.html">AssociateRoot</a>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;};</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_picto_1_1_associate_root_host_html_a1b8a719a8669ae2443d0ccec2fadfda7"><div class="ttname"><a href="class_picto_1_1_associate_root_host.html#a1b8a719a8669ae2443d0ccec2fadfda7">Picto::AssociateRootHost::setAssociateRoot</a></div><div class="ttdeci">void setAssociateRoot(QString type, QSharedPointer&lt; AssociateRoot &gt; assocRoot)</div><div class="ttdoc">Adds the input AssociateRoot to this AssociateRootHost&#39;s AssociateRoot lookup table under the input t...</div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_host_8h_source.html#l00130">AssociateRootHost.h:130</a></div></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_associate_root_host_html_a87a31a985271beca4baacb262749d80e"><div class="ttname"><a href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">Picto::AssociateRootHost::getAssociateRoot</a></div><div class="ttdeci">QSharedPointer&lt; AssociateRoot &gt; getAssociateRoot(QString type)</div><div class="ttdoc">Returns the AssociateRoot of the input type that is linked to this AssociateRootHost. </div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_host_8h_source.html#l00089">AssociateRootHost.h:89</a></div></div>
-<div class="ttc" id="class_picto_1_1_associate_root_html"><div class="ttname"><a href="class_picto_1_1_associate_root.html">Picto::AssociateRoot</a></div><div class="ttdoc">AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...</div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_8h_source.html#l00031">AssociateRoot.h:31</a></div></div>
+<div class="ttc" id="class_picto_1_1_associate_root_host_html_a87a31a985271beca4baacb262749d80e"><div class="ttname"><a href="class_picto_1_1_associate_root_host.html#a87a31a985271beca4baacb262749d80e">Picto::AssociateRootHost::getAssociateRoot</a></div><div class="ttdeci">QSharedPointer&lt; AssociateRoot &gt; getAssociateRoot(QString type)</div><div class="ttdoc">Returns the AssociateRoot of the input type that is linked to this AssociateRootHost. </div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_host_8h_source.html#l00104">AssociateRootHost.h:104</a></div></div>
+<div class="ttc" id="class_picto_1_1_associate_root_html"><div class="ttname"><a href="class_picto_1_1_associate_root.html">Picto::AssociateRoot</a></div><div class="ttdoc">AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...</div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_8h_source.html#l00034">AssociateRoot.h:34</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

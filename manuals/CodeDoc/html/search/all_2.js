@@ -23,7 +23,6 @@ var searchData=
   ['changesystemnumber',['changeSystemNumber',['../class_main_window.html#ade759e6c30539d7b534cb49e790509a5',1,'MainWindow']]],
   ['changeusertype',['ChangeUserType',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8eaf57269e1d9cd5a942965e968b2da03cf',1,'PlaybackCommand']]],
   ['channelbuffers_5f',['channelBuffers_',['../class_picto_1_1_input_port.html#a09aff384b2a6d499f824a1cbb9f7746a',1,'Picto::InputPort']]],
-  ['channelconnected',['channelConnected',['../class_picto_1_1_command_channel.html#a0107a2fd904237035b4337839bb907d4',1,'Picto::CommandChannel']]],
   ['channeldisconnected',['channelDisconnected',['../class_picto_1_1_command_channel.html#a257a279e6a6b8ddfe4a22339e348d865',1,'Picto::CommandChannel']]],
   ['channelleftovers',['channelLeftOvers',['../class_picto_1_1_input_port.html#afd4102969f9644b2c609782970e32990',1,'Picto::InputPort']]],
   ['channelnums_5f',['channelNums_',['../class_picto_1_1_input_port.html#af7fd054102d952d0c77724715be1b686',1,'Picto::InputPort']]],

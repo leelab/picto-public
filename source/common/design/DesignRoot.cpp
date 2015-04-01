@@ -1,5 +1,4 @@
 #include <QMessageBox>
-#include <QTextCursor>
 
 #include "DesignRoot.h"
 
@@ -12,9 +11,9 @@
 using namespace Picto;
 
 DesignRoot::DesignRoot()
+	: undoStateOffset_(0)
 {
-	connect(&designRootText_,SIGNAL(undoAvailable(bool)),this,SIGNAL(undoAvailable(bool)));
-	connect(&designRootText_,SIGNAL(redoAvailable(bool)),this,SIGNAL(redoAvailable(bool)));
+
 }
 /*! \brief Rebuilds the Experimental Design from a saved xml string.
  *	\details Returns true if the deserialization was successful, and false otherwise.  If false was returned,
@@ -68,10 +67,9 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		return resetDesignRoot(pictoData_->toXml());
 	}
 
-	//Has the effect of serializing the root object tree into designRootText_
-	setUndoPoint();	
-	designRootText_.clearUndoRedoStacks();
-	designRootText_.setModified(false);
+	//Has the effect of serializing the root object tree into undoStack
+	setUndoPoint();
+	setUnmodified();
 
 	emit refreshedFromXml();
 	return true;
@@ -146,21 +144,32 @@ void DesignRoot::setUndoPoint()
 	if(!pictoData_)
 		return;
 	QString newDesignRootText = pictoData_->toXml();
-	if(newDesignRootText != designRootText_.toPlainText())
+	if (designUndoStack_.empty() || newDesignRootText != designUndoStack_[undoStateOffset_])
 	{
-		try	//Sometimes with giant experiment designs this fails to allocate memory
+		while (undoStateOffset_ > 0)
 		{
-			QTextCursor cursor = QTextCursor(&designRootText_);
-			cursor.beginEditBlock();
-			cursor.select(QTextCursor::Document);
-			cursor.insertText(newDesignRootText);
-			cursor.endEditBlock();
+			undoStateOffset_--;
+			designUndoStack_.pop_front();
+		}
+
+		//Sometimes with giant experiment designs this fails to allocate memory
+		try	
+		{
+			designUndoStack_.push_front(newDesignRootText);
 		}
 		catch(...)
 		{
-			designRootText_.setPlainText(newDesignRootText);
+			//Retain at least the last 3 changes
+			while (designUndoStack_.size() > 3)
+			{
+				designUndoStack_.pop_back();
 		}
 	}
+
+		emit redoAvailable(hasRedo());
+		emit undoAvailable(hasUndo());
+		
+}
 }
 
 /*! \brief Returns a pointer to the asset that is set as the one open in the designer window or a null pointer if that
@@ -191,14 +200,14 @@ void DesignRoot::setOpenAsset(QSharedPointer<Asset> asset)
  */
 bool DesignRoot::hasUndo()
 {
-	return designRootText_.isUndoAvailable();
+	return designUndoStack_.size() - undoStateOffset_ > 1;
 }
 /*! \brief Returns true if there is an undo available.
  *	\sa setUndoPoint(), redo()
  */
 bool DesignRoot::hasRedo()
 {
-	return designRootText_.isRedoAvailable();
+	return undoStateOffset_ > 0;
 }
 /*! \brief Moves the state of the experiment back to what it was when setUndoPoint() was last called.
  *	\details As described in the setUndoPoint() comments, what we actually do here is undo the serialized design document,
@@ -210,8 +219,10 @@ void DesignRoot::undo()
 {
 	if(!hasUndo())
 		return;
-	designRootText_.undo();
+	undoStateOffset_++;
 	refreshFromXml();
+	emit redoAvailable(hasRedo());
+	emit undoAvailable(hasUndo());
 }
 /*! \brief Moves the state of the experiment forward to what it was just before the latest undo() was called.
  *	\details As described in the setUndoPoint() comments, what we actually do here is redo the serialized design document,
@@ -223,8 +234,10 @@ void DesignRoot::redo()
 {
 	if(!hasRedo())
 		return;
-	designRootText_.redo();
+	undoStateOffset_--;
 	refreshFromXml();
+	emit redoAvailable(hasRedo());
+	emit undoAvailable(hasUndo());
 }
 /*! \brief Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()).
  *	\details Since currently, deleting assets just sets a deleted flag which causes them to not be serialized
@@ -234,7 +247,7 @@ void DesignRoot::redo()
  */
 void DesignRoot::refreshFromXml()
 {
-	QString text = designRootText_.toPlainText();
+	QString text = designUndoStack_[undoStateOffset_];
 	//Deserialize Design from DesignRootText
 	QString errors = "";
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(text));
@@ -260,7 +273,12 @@ void DesignRoot::refreshFromXml()
  */
 bool DesignRoot::isModified()
 {
-	return designRootText_.isModified();
+	//It is important to return False if no design is loaded, because of how the Workstation boots up.
+	if (designUndoStack_.isEmpty())
+	{
+		return false;
+}
+	return lastSaveVersion_ != designUndoStack_[undoStateOffset_];
 }
 /*! \brief Sets the latest version of the design as unmodified
  *	\details Calling setUnmodified() has the result of removing all undo/redo points.
@@ -268,14 +286,20 @@ bool DesignRoot::isModified()
  */
 void DesignRoot::setUnmodified()
 {
-	designRootText_.setModified(false);
+	lastSaveVersion_ = designUndoStack_[undoStateOffset_];
+	/*
+	while (designUndoStack_.size() > 1)
+	{
+		designUndoStack_.pop_back();
+}
+	*/
 }
 /*! \brief Returns an xml serialized version of this experiment
 */
 QString DesignRoot::getDesignRootText()
 {
 	setUndoPoint();
-	return designRootText_.toPlainText();
+	return designUndoStack_[undoStateOffset_];
 }
 
 /*! \brief Returns true if the current Design succesfully compiles without errors (ie. has valid syntax).

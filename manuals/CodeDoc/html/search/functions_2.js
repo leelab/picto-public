@@ -12,7 +12,6 @@ var searchData=
   ['changenamemode',['ChangeNameMode',['../class_change_name_mode.html#a6f0d597d789143b2f30d09910aa480a4',1,'ChangeNameMode']]],
   ['changerewardduration',['changeRewardDuration',['../class_director.html#ae1ca79673611830fe8ac727dcd2c791a',1,'Director::changeRewardDuration()'],['../class_remote_viewer.html#a4fae21c74d52ca9ea6b791e85ecadb05',1,'RemoteViewer::changeRewardDuration()']]],
   ['changesystemnumber',['changeSystemNumber',['../class_main_window.html#ade759e6c30539d7b534cb49e790509a5',1,'MainWindow']]],
-  ['channelconnected',['channelConnected',['../class_picto_1_1_command_channel.html#a0107a2fd904237035b4337839bb907d4',1,'Picto::CommandChannel']]],
   ['channeldisconnected',['channelDisconnected',['../class_picto_1_1_command_channel.html#a257a279e6a6b8ddfe4a22339e348d865',1,'Picto::CommandChannel']]],
   ['checkboxchanged',['checkboxChanged',['../class_picto_1_1_analysis_selector_widget.html#a5c2ba782a88a2e66f1ca17c2b15fb191',1,'Picto::AnalysisSelectorWidget::checkboxChanged()'],['../class_picto_1_1_auto_save_dialog.html#a935fc6b64912b8f9457f90d629725222',1,'Picto::AutoSaveDialog::checkboxChanged()'],['../class_view_selection_widget.html#a261fc17c745a5b8fa168dbe7a0290c7a',1,'ViewSelectionWidget::checkboxChanged()']]],
   ['checkclicked',['checkClicked',['../class_view_selection_widget.html#a9504b378336c4428cd54fcd809dda833',1,'ViewSelectionWidget']]],

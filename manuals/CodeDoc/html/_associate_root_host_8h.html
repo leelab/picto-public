@@ -113,10 +113,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:af167cc9406fdf39ff11a1feed769bad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this into the public area of your AssociateRootHost (this is to avoid diamond multiple inheritance issues)  <a href="#af167cc9406fdf39ff11a1feed769bad2">More...</a><br /></td></tr>
 <tr class="separator:af167cc9406fdf39ff11a1feed769bad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c779135ec26650f7829025b1fdd50f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_associate_root_host_8h.html#a66c779135ec26650f7829025b1fdd50f">ASSOCIATE_ROOT_HOST_INITIALIZATION</a></td></tr>
-<tr class="memdesc:a66c779135ec26650f7829025b1fdd50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this into the constructor of your AssociateRootHost (this is to avoid diamond multiple inheritance issues)  <a href="#a66c779135ec26650f7829025b1fdd50f">More...</a><br /></td></tr>
+<tr class="memdesc:a66c779135ec26650f7829025b1fdd50f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Qt preprocess didn't like it when we put this in a #define and caused runtime errors, so you should just uncomment and copy the lines below.  <a href="#a66c779135ec26650f7829025b1fdd50f">More...</a><br /></td></tr>
 <tr class="separator:a66c779135ec26650f7829025b1fdd50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff5c90a46d39d855b871c0ffd92f2d46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_associate_root_host_8h.html#aff5c90a46d39d855b871c0ffd92f2d46">ASSOCIATE_ROOT_HOST_POST_DESERIALIZE</a></td></tr>
-<tr class="memdesc:aff5c90a46d39d855b871c0ffd92f2d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this at the end of the postDeserialize() function of your AssociateRootHost (this is to avoid diamond multiple inheritance issues)  <a href="#aff5c90a46d39d855b871c0ffd92f2d46">More...</a><br /></td></tr>
+<tr class="memdesc:aff5c90a46d39d855b871c0ffd92f2d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put this at the end of the postDeserialize() function of your AssociateRootHost. This is setup such that whenever this object is edited, its HostId is changed to signify that Associate Elements that aren't currently attached to it may no longer be valid.  <a href="#aff5c90a46d39d855b871c0ffd92f2d46">More...</a><br /></td></tr>
 <tr class="separator:aff5c90a46d39d855b871c0ffd92f2d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -132,11 +132,14 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">AddDefinableProperty(QVariant::Uuid,<span class="stringliteral">&quot;HostId&quot;</span>,QVariant());   \</div>
 <div class="line">                                            hostIdBeingEdited_ = <span class="keyword">false</span>;</div>
 </div><!-- fragment -->
-<p>Put this into the constructor of your AssociateRootHost (this is to avoid diamond multiple inheritance issues) </p>
-<p>Copy the lines of code below into the private area of your AssociateRootHost (this is to avoid diamond multiple inheritance issues) Note: The QT preprocess didn't like it when we put this in a #define and caused runtime errors, so you should just uncomment and copy the lines below.</p>
-<p>bool hostIdBeingEdited_; private slots: void changeHostId(){if(hostIdBeingEdited_) return;hostIdBeingEdited_ = true;propertyContainer_-&gt;setPropertyValue("HostId",QUuid::createUuid());hostIdBeingEdited_ = false;}; </p>
+<p>The Qt preprocess didn't like it when we put this in a #define and caused runtime errors, so you should just uncomment and copy the lines below. </p>
+<p>Copy the lines of code below into the private area of your AssociateRootHost </p><dl class="section note"><dt>Note</dt><dd>This is to avoid diamond multiple inheritance issues <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;bool hostIdBeingEdited_;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;private slots:</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;void changeHostId(){if(hostIdBeingEdited_) return;hostIdBeingEdited_ = true;propertyContainer_-&gt;setPropertyValue(&quot;HostId&quot;,QUuid::createUuid());hostIdBeingEdited_ = false;};</div>
+</div><!-- fragment --></dd></dl>
+<p>Put this into the constructor of your AssociateRootHost </p><dl class="section note"><dt>Note</dt><dd>This is to avoid diamond multiple inheritance issues </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00028">28</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00037">37</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
 
 </div>
 </div>
@@ -154,10 +157,10 @@ Macros</h2></td></tr>
 <div class="line">                                                propertyContainer_-&gt;getProperty(<span class="stringliteral">&quot;HostId&quot;</span>)-&gt;setVisible(<span class="keyword">false</span>);   \</div>
 <div class="line">                                                connect(<span class="keyword">this</span>,SIGNAL(edited()),<span class="keyword">this</span>,SLOT(changeHostId()));</div>
 </div><!-- fragment -->
-<p>Put this at the end of the postDeserialize() function of your AssociateRootHost (this is to avoid diamond multiple inheritance issues) </p>
-<dl class="section note"><dt>Note</dt><dd>This is setup such that whenever this object is edited, its HostId is changed to signify that Associate Elements that aren't currently attached to it may no longer be valid. </dd></dl>
+<p>Put this at the end of the postDeserialize() function of your AssociateRootHost. This is setup such that whenever this object is edited, its HostId is changed to signify that Associate Elements that aren't currently attached to it may no longer be valid. </p>
+<dl class="section note"><dt>Note</dt><dd>This is to avoid diamond multiple inheritance issues </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00035">35</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00045">45</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
 
 </div>
 </div>
@@ -170,13 +173,13 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">virtual</span> QUuid getHostId(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;HostId&quot;</span>).toUuid();}; \</div>
-<div class="line">                                                        virtual QSharedPointer&lt;Property&gt; getHostIdProperty(){<span class="keywordflow">return</span> propertyContainer_-&gt;getProperty(<span class="stringliteral">&quot;HostId&quot;</span>);};    \</div>
-<div class="line">                                                        virtual QSharedPointer&lt;Property&gt; getNameProperty(){<span class="keywordflow">return</span> propertyContainer_-&gt;getProperty(<span class="stringliteral">&quot;Name&quot;</span>);};</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">virtual</span> QUuid getHostId(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;HostId&quot;</span>).toUuid();};                 \</div>
+<div class="line">    virtual QSharedPointer&lt;Property&gt; getHostIdProperty(){<span class="keywordflow">return</span> propertyContainer_-&gt;getProperty(<span class="stringliteral">&quot;HostId&quot;</span>);};    \</div>
+<div class="line">    virtual QSharedPointer&lt;Property&gt; getNameProperty(){<span class="keywordflow">return</span> propertyContainer_-&gt;getProperty(<span class="stringliteral">&quot;Name&quot;</span>);};</div>
 </div><!-- fragment -->
 <p>Put this into the public area of your AssociateRootHost (this is to avoid diamond multiple inheritance issues) </p>
 
-<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00012">12</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_host_8h_source.html#l00013">13</a> of file <a class="el" href="_associate_root_host_8h_source.html">AssociateRootHost.h</a>.</p>
 
 </div>
 </div>

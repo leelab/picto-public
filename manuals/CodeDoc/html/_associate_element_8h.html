@@ -134,7 +134,7 @@ Macros</h2></td></tr>
 <p>Implements the AssociateElement class's pure virtual functions including:</p><ul>
 <li>getParentPath() - Returns the Path of the Design element to which this AssociateElement is linked (this is handled by a child AssociateHostLink).</li>
 <li>getParentId() - Returns the Asset ID of the Design element to which this AssociateElement is linked (this is handled by a child AssociateHostLink).</li>
-<li>linkToAsset(QSharedPointer&lt;Asset&gt; asset) - Updates and connects linked asset data fields for the input Asset (this is handled by a child AssociateHostLink)\</li>
+<li>linkToAsset(QSharedPointer&lt;Asset&gt; asset) - Updates and connects linked asset data fields for the input Asset (this is handled by a child AssociateHostLink)</li>
 <li>attachToLinkedAsset(bool tryLinkingById) - Attempts to attach this AssociateElement as an Associate Child to the current linked asset (set in linkToAsset()). If tryLinkingById is true, we first attempt to link by looking up the Asset ID in the AssociateRootHost to which our parent AssociateRoot is attached. If that doesn't work, or the input was false, we attempt to link by linked path. Returned value is an AssociateElement::AttachmentResult.</li>
 <li>getAssociateId() - Returns the Associate ID of this AssociateElement's parent AssociateRoot.</li>
 <li>getInfoString() - Returns a string with this AssociateElement's name, type and linked path.</li>
@@ -143,7 +143,7 @@ Macros</h2></td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>We don't just include this code in the AssociateElement because it would not complile unless the AssociateElement class inherited from DataStore, and this would lead to AssociateElement children having diamond inheritance patterns (ie. inheriting from two classes that both inherit from the same class) which leads to lots of problems. </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00039">39</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00040">40</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
 
 </div>
 </div>
@@ -160,7 +160,7 @@ Macros</h2></td></tr>
 <p>This #define should be copied to the end of the constructor of anything inheriting AssociateElement. </p>
 <p>Adds a required child HostLink to the AssociateElement to store information about the Design element to which the AssociateElement should be linked. </p><dl class="section note"><dt>Note</dt><dd>We don't just include this code in the AssociateElement itself because it would not complile unless the AssociateElement class inherited from DataStore, and this would lead to AssociateElement children having diamond inheritance patterns (ie. inheriting from two classes that both inherit from the same class) which leads to lots of problems. </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00100">100</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00101">101</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
 
 </div>
 </div>

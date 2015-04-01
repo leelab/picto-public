@@ -145,9 +145,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6cfd77559307223a8121a6a016b489c2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a6cfd77559307223a8121a6a016b489c2">runTask</a> (QString taskName)</td></tr>
 <tr class="memdesc:a6cfd77559307223a8121a6a016b489c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> with the input taskName starting with the initial transition in its top level <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>.  <a href="#a6cfd77559307223a8121a6a016b489c2">More...</a><br /></td></tr>
 <tr class="separator:a6cfd77559307223a8121a6a016b489c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e696d6c81bbd72e006185817e01c948"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a1e696d6c81bbd72e006185817e01c948">jumpToState</a> (QStringList path, QString state)</td></tr>
-<tr class="memdesc:a1e696d6c81bbd72e006185817e01c948"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function appears to no longer be used.  <a href="#a1e696d6c81bbd72e006185817e01c948">More...</a><br /></td></tr>
-<tr class="separator:a1e696d6c81bbd72e006185817e01c948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a094a9739d52a077a80a67b77f0579ba8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a094a9739d52a077a80a67b77f0579ba8"></a>
 QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a094a9739d52a077a80a67b77f0579ba8">getTaskNames</a> ()</td></tr>
 <tr class="memdesc:a094a9739d52a077a80a67b77f0579ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> names. <br /></td></tr>
@@ -689,12 +686,12 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <li>The calibration Properties need to be attached to an object that is always in scope and whose name never changes (it is always "Experiment") for the purpose of script access.</li>
 <li>The calibration Properties need to maintain their values regardless of which <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> is running and where control flow is in a <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, so their owner can never lose scope.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Unlike all other <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values in Picto, <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValues are linked to their runValues so that as soon as the operator changes a calibration value it changes the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> calibration and takes affect on the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s position signal. This is necessary since the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> never leaves scope. If these Properties funcitoned like all other Properties, changes to their initValues would never actually take affect. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Unlike all other <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values in Picto, <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValues are linked to their runValues so that as soon as the operator changes a calibration value it changes the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> calibration and takes effect on the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s position signal. This is necessary since the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> never leaves scope. If these Properties functioned like all other Properties, changes to their initValues would never actually take effect. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>, <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Engine::PictoEngine</a>, <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00054">54</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00051">51</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a09d1ee5d9b212a5101e4c422589555e7"></a>
 <div class="memitem">
@@ -760,7 +757,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Used to change this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s hostId whenever something about it or a descendant is edited. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00181">181</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00177">177</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -790,7 +787,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a5721f31da49f2e8df266e0a6c40317fe">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00122">122</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00118">118</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -820,7 +817,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#ab3e676a5138ce7f49ab924c98fe3d71e">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00117">117</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00113">113</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -851,7 +848,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00102">102</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00099">99</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -900,7 +897,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Gets the input signal's xGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00152">152</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00148">148</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -928,7 +925,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Gets the input signal's xOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for ...">xOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00136">136</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00132">132</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -956,7 +953,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's xySignalShear. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a46cb8ba580d801935254ab8c7d684c0b" title="Sets/gets the shear factor that will be used to shear x as a function of y. ">xySignalShear</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00168">168</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00164">164</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -984,7 +981,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Gets the input signal's yGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00160">160</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00156">156</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1012,7 +1009,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Gets the input signal's yOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for ...">yOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00144">144</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00140">140</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1042,39 +1039,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#aa9146adb2bb548fd5763be8d7a6f97d1">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00116">116</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1e696d6c81bbd72e006185817e01c948"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Picto::Experiment::jumpToState </td>
-          <td>(</td>
-          <td class="paramtype">QStringList&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>state</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This function appears to no longer be used. </p>
-<p>The function was once used when attaching the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> to a remote <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> that was already running to jump to the currently running state. Since then, we have created the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a>, <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> system that allows us to run "Slave" Experiments from within the Qt event loop based on information coming from the Master, and not only from within the blocking <a class="el" href="class_picto_1_1_experiment.html#a6cfd77559307223a8121a6a016b489c2" title="Runs the Task with the input taskName starting with the initial transition in its top level StateMach...">runTask()</a> function.</p>
-<p>This function should probably be removed. </p>
-
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00208">208</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00112">112</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1104,7 +1069,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a0654af2c08f9a6c967a21b57614950ba">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00223">223</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00198">198</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1177,7 +1142,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#a0fd1659233b0cf46ede8cbaa2c8034df">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00106">106</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00103">103</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1206,7 +1171,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's xGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#acd2fd30373eb8c9050be4de8541a1576" title="Sets/gets the gain by which the input signal value plus xOffset will be scaled for the xPosition...">xGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00148">148</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00144">144</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1235,7 +1200,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's xOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for ...">xOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00132">132</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00128">128</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1264,7 +1229,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's xySignalShear. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a46cb8ba580d801935254ab8c7d684c0b" title="Sets/gets the shear factor that will be used to shear x as a function of y. ">xySignalShear</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00164">164</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00160">160</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1258,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's yGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00156">156</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00152">152</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1322,7 +1287,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the input signal's yOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for ...">yOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00140">140</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00136">136</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1361,7 +1326,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Updates the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> calibration coefficients ( SignalChannel::setCalibrationCoefficients() and SignalChannel::setShear() ) based on the current calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values. </p>
 <p>This is called whenever the calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values change. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00302">302</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00277">277</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1388,7 +1353,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>The equation is</p><div class="fragment"><div class="line">xPos = screenWidth/2 + <a class="code" href="class_picto_1_1_experiment.html#acd2fd30373eb8c9050be4de8541a1576">xGain</a>(<a class="code" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750">xOffset</a>+xSignalValue) </div>
 </div><!-- fragment --><p>By using this equation, we are assured that when the xPos is in the center of the screen, changing xGain will not cause the current xPos to change. This way, to calibrate the position we can use xOffset to move the xPos to the center of the screen, then change xGain until xPos movements are accurate. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00071">71</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00068">68</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1414,7 +1379,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>The equation is</p><div class="fragment"><div class="line">xPos = screenWidth/2 + <a class="code" href="class_picto_1_1_experiment.html#acd2fd30373eb8c9050be4de8541a1576">xGain</a>(<a class="code" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750">xOffset</a>+xSignalValue) </div>
 </div><!-- fragment --><p>By using this equation, we are assured that when the xPos is in the center of the screen, changing xGain will not cause the current xPos to change. This way, to calibrate the position we can use xOffset to move the xPos to the center of the screen, then change xGain until xPos movements are accurate. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00064">64</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00061">61</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1440,7 +1405,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>The x value will be sheared as a function of y after applying regular linear scale factors such that the new value will be:</p><div class="fragment"><div class="line">xPos = scaledXPos + shearFactor*scaledYPos </div>
 </div><!-- fragment --><p> This is useful for cases where there is some non linearity in the x,y position values. Often, when position is accurate in the y=0 line, but not toward the top/bottom display boundaries, this value can be used to clean up the signal enough to make diagonal jumps relatively accurate </p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00085">85</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00082">82</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1466,7 +1431,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>The equation is</p><div class="fragment"><div class="line">yPos = screenHeight/2 + <a class="code" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9">yGain</a>(<a class="code" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f">yOffset</a>+ySignalValue) </div>
 </div><!-- fragment --><p>By using this equation, we are assured that when the yPos is in the center of the screen, changing yGain will not cause the current yPos to change. This way, to calibrate the position we can use yOffset to move the yPos to the center of the screen, then change yGain until yPos movements are accurate. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00078">78</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00075">75</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1492,7 +1457,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>The equation is</p><div class="fragment"><div class="line">yPos = screenHeight/2 + <a class="code" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9">yGain</a>(<a class="code" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f">yOffset</a>+ySignalValue) </div>
 </div><!-- fragment --><p>By using this equation, we are assured that when the yPos is in the center of the screen, changing yGain will not cause the current yPos to change. This way, to calibrate the position we can use yOffset to move the yPos to the center of the screen, then change yGain until yPos movements are accurate. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00064">64</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00061">61</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>

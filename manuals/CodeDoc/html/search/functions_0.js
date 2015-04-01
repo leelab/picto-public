@@ -1,7 +1,6 @@
 var searchData=
 [
   ['abortflush',['abortFlush',['../class_picto_1_1_reward_controller.html#a5a2d6ef0210c0699afb60bbcc3422f80',1,'Picto::RewardController']]],
-  ['about',['about',['../class_designer.html#ad1ed427c7882fc19efab4be37421c13b',1,'Designer']]],
   ['aboutelementbox',['AboutElementBox',['../class_about_element_box.html#a66223a4605fd718368485b35dc350d86',1,'AboutElementBox']]],
   ['aboutpicto',['aboutPicto',['../class_main_window.html#a4b845b94cf4047b2b558f902355f057d',1,'MainWindow']]],
   ['abouttoquit',['aboutToQuit',['../class_menu.html#a83b4027ae502520a6c94891eb2052d02',1,'Menu::aboutToQuit()'],['../class_remote_viewer.html#a9b071710568063f41739782198de227a',1,'RemoteViewer::aboutToQuit()'],['../class_playback_controller.html#a2ca7251a2b00c59cf2c55bc634380dc5',1,'PlaybackController::aboutToQuit()'],['../class_replay_viewer.html#a5c11ebdfdaee0a92eaca94de5c6b8dfe',1,'ReplayViewer::aboutToQuit()'],['../class_test_viewer.html#a44961fb27651b9cfaa7b3fa147832ca8',1,'TestViewer::aboutToQuit()'],['../class_viewer.html#a36fd548283a09aeec9a56819287bf782',1,'Viewer::aboutToQuit()']]],
@@ -111,7 +110,6 @@ var searchData=
   ['append',['append',['../class_picto_1_1_analysis_variable_list.html#a9e4b1bbbe55fe9d02808f8c8e597c4b7',1,'Picto::AnalysisVariableList::append()'],['../class_picto_1_1_variable_list.html#a2a0d0bc12e4365ffd450d0ec8b8594ae',1,'Picto::VariableList::append()']]],
   ['appenddata',['appendData',['../class_picto_1_1_l_f_p_data_unit_package.html#a6806b7e274bd7107566abeb5e9fc44a4',1,'Picto::LFPDataUnitPackage::appendData(const float *adPotentialReadings, int numVals)'],['../class_picto_1_1_l_f_p_data_unit_package.html#a89fbb9cfeae82635c46204b74a1b1cf1',1,'Picto::LFPDataUnitPackage::appendData(float adPotentialReading)']]],
   ['appenddeliveredrewards',['appendDeliveredRewards',['../class_picto_1_1_reward_controller.html#a0fdf778975117e1fd3c507bb2a71a33a',1,'Picto::RewardController']]],
-  ['applyiconopacity',['applyIconOpacity',['../class_experiment_item.html#a7977afe86a9f0d6d997ab96d80b374e1',1,'ExperimentItem']]],
   ['applyvoltages',['applyVoltages',['../class_picto_1_1_output_signal_controller.html#a8b320e17548cc1fa5d5b9c577aac2882',1,'Picto::OutputSignalController::applyVoltages()'],['../class_picto_1_1_virtual_output_signal_controller.html#a600d9422146df4d794cceebeacfcc3aa',1,'Picto::VirtualOutputSignalController::applyVoltages()'],['../class_picto_1_1_picto_box_x_p_output_signal_controller.html#a87d9847d8563598a0c5306aaac28040f',1,'Picto::PictoBoxXPOutputSignalController::applyVoltages()']]],
   ['arrow',['Arrow',['../class_arrow.html#a461ec1cd586e1a1ac0b9692a3a8dfb11',1,'Arrow']]],
   ['arrowportitem',['ArrowPortItem',['../class_arrow_port_item.html#ac0a2c8f2c3fa2a5d6017747330943bdb',1,'ArrowPortItem']]],

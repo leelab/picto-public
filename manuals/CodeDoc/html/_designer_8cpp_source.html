@@ -237,392 +237,368 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    editorState_-&gt;setZoom(newScale);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="class_designer.html#ad1ed427c7882fc19efab4be37421c13b">  163</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad1ed427c7882fc19efab4be37421c13b">Designer::about</a>()</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;{</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    QMessageBox::about(<span class="keyword">this</span>, tr(<span class="stringliteral">&quot;About State Machine Editor&quot;</span>),</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                       tr(<span class="stringliteral">&quot;The &lt;b&gt;State Machine Editor&lt;/b&gt; is used&quot;</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                          <span class="stringliteral">&quot;to design Picto experiments.&quot;</span>));</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;}</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">  176</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">Designer::loadScene</a>(<a class="code" href="class_diagram_scene.html">DiagramScene</a>* newScene)</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;{</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">if</span>(scene == newScene)</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">//Switch Scene</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    scene = newScene;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="comment">//Load new Scene</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    newScene-&gt;setSceneRect(QRectF(0, 0, 4000, 4000));</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">if</span>(view == NULL)</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        view = <span class="keyword">new</span> <a class="code" href="class_viewer_window.html">ViewerWindow</a>(editorState_,newScene);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    view-&gt;setScene(newScene);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="comment">//In this version of Qt it looks like connecting signals to slots more than</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="comment">//once does not have the effect of multiplying the number of times that the</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="comment">//slots are called.  In future versions this may occur though because future </span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">//versions support a Qt::UniqueConnection parameter.  We would just disconnect</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="comment">//old connections before connecting the new ones but this isn&#39;t working for </span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="comment">//some reason.</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="comment">//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; <span class="comment">//           this, SLOT(itemInserted(DiagramItem *)));</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment">//connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">//    this, SLOT(textInserted(QGraphicsTextItem *)));</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">resetExperiment</a>()),</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">resetExperiment</a>()));</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;}</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">  211</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">Designer::resetExperiment</a>()</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;{</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="comment">//Make sure the latest changes are included in the XML text.</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">insertEditBlock</a>();</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="comment">//Rebuild the design root from the latest XML text.</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    designRoot_-&gt;refreshFromXml();</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="comment">//Reset the editor to work with the new objects in the DesignRoot.</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a>();</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;}</div>
-<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">  225</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">Designer::insertEditBlock</a>()</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;{</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    designRoot_-&gt;setUndoPoint();</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
-<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">  235</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">Designer::performUndoAction</a>()</div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">  167</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">Designer::loadScene</a>(<a class="code" href="class_diagram_scene.html">DiagramScene</a>* newScene)</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">if</span>(scene == newScene)</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="comment">//Switch Scene</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    scene = newScene;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="comment">//Load new Scene</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    newScene-&gt;setSceneRect(QRectF(0, 0, 4000, 4000));</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">if</span>(view == NULL)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        view = <span class="keyword">new</span> <a class="code" href="class_viewer_window.html">ViewerWindow</a>(editorState_,newScene);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    view-&gt;setScene(newScene);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment">//In this version of Qt it looks like connecting signals to slots more than once does not have the effect of</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">//  multiplying the number of times that the slots are called.  In future versions this may occur though because</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="comment">//  future versions support a Qt::UniqueConnection parameter.  We would just disconnect old connections before</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="comment">//  connecting the new ones but this isn&#39;t working for some reason.</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="comment">//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),this,SLOT(itemInserted(DiagramItem *)));</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="comment">//connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),this,SLOT(textInserted(QGraphicsTextItem *)));</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">resetExperiment</a>()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">resetExperiment</a>()));</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">  199</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">Designer::resetExperiment</a>()</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;{</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">//Make sure the latest changes are included in the XML text.</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">insertEditBlock</a>();</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="comment">//Rebuild the design root from the latest XML text.</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    designRoot_-&gt;refreshFromXml();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="comment">//Reset the editor to work with the new objects in the DesignRoot.</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a>();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">  213</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">Designer::insertEditBlock</a>()</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;{</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    designRoot_-&gt;setUndoPoint();</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">  223</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">Designer::performUndoAction</a>()</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;{</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">if</span>(!designRoot_-&gt;hasUndo())</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    designRoot_-&gt;undo();</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a>();</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;}</div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="class_designer.html#a81538552ba4b84302354a882933917a4">  235</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a81538552ba4b84302354a882933917a4">Designer::performRedoAction</a>()</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;{</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">if</span>(!designRoot_-&gt;hasUndo())</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">if</span>(!designRoot_-&gt;hasRedo())</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    designRoot_-&gt;undo();</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    designRoot_-&gt;redo();</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a>();</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="class_designer.html#a81538552ba4b84302354a882933917a4">  247</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a81538552ba4b84302354a882933917a4">Designer::performRedoAction</a>()</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;{</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">if</span>(!designRoot_-&gt;hasRedo())</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    designRoot_-&gt;redo();</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">resetEditor</a>();</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">  260</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">Designer::setOpenAsset</a>(QSharedPointer&lt;Asset&gt; asset)</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">  250</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">Designer::setOpenAsset</a>(QSharedPointer&lt;Asset&gt; asset)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;{</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    Q_ASSERT(asset);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    designRoot_-&gt;setOpenAsset(asset);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">  260</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">Designer::selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;{</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    Q_ASSERT(asset);</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    designRoot_-&gt;setOpenAsset(asset);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">  269</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">Designer::selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <a class="code" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">updateEnabledActions</a>();</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;}</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">  269</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">Designer::selectedItemChanged</a>(QGraphicsItem*)</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;{</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <a class="code" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">updateEnabledActions</a>();</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">  277</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">Designer::selectedItemChanged</a>(QGraphicsItem*)</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;{</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">updateEnabledActions</a>();</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">  290</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">Designer::currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;{</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="comment">//When current analysis changes, reload the window</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    QSharedPointer&lt;Asset&gt; openAsset = designRoot_-&gt;getOpenAsset();</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span>(!openAsset)</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        openAsset = editorState_-&gt;getTopLevelAsset();</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    editorState_-&gt;setWindowAsset(openAsset,<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
-<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">  303</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">Designer::checkSyntax</a>()</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;{</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    QString errors;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    infoPane_-&gt;setTabEnabled(SYNTAXCHECK,<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    infoPane_-&gt;setCurrentIndex(SYNTAXCHECK);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    syntaxErrorBox_-&gt;<a class="code" href="class_syntax_error_box.html#ae92a8085d48e2a73d44dec2d870e3a71">checkSyntax</a>();</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;}</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">  313</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">Designer::createActions</a>()</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    undoAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                                tr(<span class="stringliteral">&quot;&amp;Undo&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    undoAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+Z&quot;</span>));</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    undoAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Undo last action&quot;</span>));</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    redoAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                                tr(<span class="stringliteral">&quot;&amp;Redo&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    redoAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+Y&quot;</span>));</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    redoAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Redo action&quot;</span>));</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    deleteAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/delete.png&quot;</span>),</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                               tr(<span class="stringliteral">&quot;&amp;Delete&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    deleteAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Delete&quot;</span>));</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    deleteAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Delete item from diagram&quot;</span>));</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    copyAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/copy.png&quot;</span>),</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                               tr(<span class="stringliteral">&quot;Copy&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    copyAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+C&quot;</span>));</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    copyAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Copy elements from your design&quot;</span>));</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    analysisExportAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/export_analysis.png&quot;</span>),</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                               tr(<span class="stringliteral">&quot;Export Analysis Elements&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    analysisExportAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Export analysis elements from an experimental asset&quot;</span>));</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    analysisImportAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/import_analysis.png&quot;</span>),</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                               tr(<span class="stringliteral">&quot;Import Analysis Elements&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    analysisImportAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Import analysis elements to an experimental asset&quot;</span>));</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    pasteAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/paste.png&quot;</span>),</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                                tr(<span class="stringliteral">&quot;Paste&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    pasteAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+V&quot;</span>));</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    pasteAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Paste copied elements&quot;</span>));</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    exitAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;E&amp;xit&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    exitAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+X&quot;</span>));</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    exitAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Quit Scenediagram example&quot;</span>));</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    aboutAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;A&amp;bout&quot;</span>), <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    aboutAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+B&quot;</span>));</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    searchBox = <span class="keyword">new</span> QLineEdit(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    searchBox-&gt;setPlaceholderText(tr(<span class="stringliteral">&quot;Enter Search String&quot;</span>));</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    connect(searchBox,SIGNAL(textChanged(QString)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">searchTextChanged</a>(QString)));</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    matchCase = <span class="keyword">new</span> QCheckBox(<span class="stringliteral">&quot;Match case&quot;</span>);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    connect(matchCase,SIGNAL(stateChanged(<span class="keywordtype">int</span>)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">matchCaseChanged</a>(<span class="keywordtype">int</span>)));</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    QVBoxLayout* searchLayout = <span class="keyword">new</span> QVBoxLayout();</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    searchLayout-&gt;addWidget(searchBox);</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    searchLayout-&gt;addWidget(matchCase);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    searchWidget = <span class="keyword">new</span> QFrame();</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    searchWidget-&gt;setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); </div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    searchWidget-&gt;setLayout(searchLayout);</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    analysisOption_ = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_analysis_option_widget.html">AnalysisOptionWidget</a>(editorState_);</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="comment">//analysisOption_-&gt;setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">//Turn on highlighting for elements with children that have scripts and analysis scripts.</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::ACTIVE_ANALYSES,SearchRequest::SCRIPT));</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    checkSyntaxAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Check XML syntax&quot;</span>),<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    checkSyntaxAction_-&gt;setShortcut(Qt::Key_F7);</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    checkSyntaxAction_-&gt;setToolTip(tr(<span class="stringliteral">&quot;Check the current experiment&#39;s XML code for syntax errors.&quot;</span>));</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    checkSyntaxAction_-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/checksyntax.png&quot;</span>));</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    connect(checkSyntaxAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">checkSyntax</a>()));</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
-<div class="line"><a name="l00383"></a><span class="lineno"><a class="line" href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">  383</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">Designer::connectActions</a>()</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;{</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    connect(undoAction, SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">performUndoAction</a>()));</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    connect(redoAction, SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#a81538552ba4b84302354a882933917a4">performRedoAction</a>()));</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    connect(editorState_.data(),SIGNAL(undoRequested()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">performUndoAction</a>()));</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    connect(copyAction, SIGNAL(triggered()),scene, SLOT(copySelectedItems()));</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    connect(analysisExportAction, SIGNAL(triggered()),scene, SLOT(analysisExportSelectedItem()));</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    connect(analysisImportAction, SIGNAL(triggered()),scene, SLOT(analysisImportSelectedItem()));</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    connect(pasteAction, SIGNAL(triggered()),scene, SLOT(pasteItems()));</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    connect(exitAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(close()));</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    connect(aboutAction, SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#ad1ed427c7882fc19efab4be37421c13b">about</a>()));</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    connect(editorState_.data(),SIGNAL(undoableActionPerformed()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">insertEditBlock</a>()));</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">setOpenAsset</a>(QSharedPointer&lt;Asset&gt;)));</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)));</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    connect(editorState_.data(),SIGNAL(itemSelected(QGraphicsItem*)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">selectedItemChanged</a>(QGraphicsItem*)));</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)));</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
+<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">  283</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">Designer::currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;{</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="comment">//When current analysis changes, reload the window</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    QSharedPointer&lt;Asset&gt; openAsset = designRoot_-&gt;getOpenAsset();</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">if</span>(!openAsset)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        openAsset = editorState_-&gt;getTopLevelAsset();</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    editorState_-&gt;setWindowAsset(openAsset,<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;}</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">  296</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">Designer::checkSyntax</a>()</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;{</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    QString errors;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    infoPane_-&gt;setTabEnabled(SYNTAXCHECK,<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    infoPane_-&gt;setCurrentIndex(SYNTAXCHECK);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    syntaxErrorBox_-&gt;<a class="code" href="class_syntax_error_box.html#ae92a8085d48e2a73d44dec2d870e3a71">checkSyntax</a>();</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;}</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">  306</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">Designer::createActions</a>()</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;{</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    undoAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;&quot;</span>),</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                                tr(<span class="stringliteral">&quot;&amp;Undo&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    undoAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+Z&quot;</span>));</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    undoAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Undo last action&quot;</span>));</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    redoAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;&quot;</span>),</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                                tr(<span class="stringliteral">&quot;&amp;Redo&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    redoAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+Y&quot;</span>));</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    redoAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Redo action&quot;</span>));</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    deleteAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/delete.png&quot;</span>),</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                               tr(<span class="stringliteral">&quot;&amp;Delete&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    deleteAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Delete&quot;</span>));</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    deleteAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Delete item from diagram&quot;</span>));</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    copyAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/copy.png&quot;</span>),</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                               tr(<span class="stringliteral">&quot;Copy&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    copyAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+C&quot;</span>));</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    copyAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Copy elements from your design&quot;</span>));</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    analysisExportAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/export_analysis.png&quot;</span>),</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                               tr(<span class="stringliteral">&quot;Export Analysis Elements&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    analysisExportAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Export analysis elements from an experimental asset&quot;</span>));</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    analysisImportAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/import_analysis.png&quot;</span>),</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                               tr(<span class="stringliteral">&quot;Import Analysis Elements&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    analysisImportAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Import analysis elements to an experimental asset&quot;</span>));</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    pasteAction = <span class="keyword">new</span> QAction(QIcon(<span class="stringliteral">&quot;:/icons/paste.png&quot;</span>),</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                                tr(<span class="stringliteral">&quot;Paste&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    pasteAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+V&quot;</span>));</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    pasteAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Paste copied elements&quot;</span>));</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    exitAction = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;E&amp;xit&quot;</span>), <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    exitAction-&gt;setShortcut(tr(<span class="stringliteral">&quot;Ctrl+X&quot;</span>));</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    exitAction-&gt;setStatusTip(tr(<span class="stringliteral">&quot;Quit Scenediagram example&quot;</span>));</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    searchBox = <span class="keyword">new</span> QLineEdit(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    searchBox-&gt;setPlaceholderText(tr(<span class="stringliteral">&quot;Enter Search String&quot;</span>));</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    connect(searchBox,SIGNAL(textChanged(QString)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">searchTextChanged</a>(QString)));</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    matchCase = <span class="keyword">new</span> QCheckBox(<span class="stringliteral">&quot;Match case&quot;</span>);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    connect(matchCase,SIGNAL(stateChanged(<span class="keywordtype">int</span>)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">matchCaseChanged</a>(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    QVBoxLayout* searchLayout = <span class="keyword">new</span> QVBoxLayout();</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    searchLayout-&gt;addWidget(searchBox);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    searchLayout-&gt;addWidget(matchCase);</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    searchWidget = <span class="keyword">new</span> QFrame();</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    searchWidget-&gt;setFrameStyle(QFrame::StyledPanel | QFrame::Sunken); </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    searchWidget-&gt;setLayout(searchLayout);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    analysisOption_ = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_analysis_option_widget.html">AnalysisOptionWidget</a>(editorState_);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="comment">//analysisOption_-&gt;setVisible(false);//REMOVE THIS LINE TO USE ANALYSIS</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="comment">//Turn on highlighting for elements with children that have scripts and analysis scripts.</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT));</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::ACTIVE_ANALYSES,SearchRequest::SCRIPT));</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    checkSyntaxAction_ = <span class="keyword">new</span> QAction(tr(<span class="stringliteral">&quot;&amp;Check XML syntax&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    checkSyntaxAction_-&gt;setShortcut(Qt::Key_F7);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    checkSyntaxAction_-&gt;setToolTip(tr(<span class="stringliteral">&quot;Check the current experiment&#39;s XML code for syntax errors.&quot;</span>));</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    checkSyntaxAction_-&gt;setIcon(QIcon(<span class="stringliteral">&quot;:/icons/checksyntax.png&quot;</span>));</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    connect(checkSyntaxAction_, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">checkSyntax</a>()));</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
+<div class="line"><a name="l00373"></a><span class="lineno"><a class="line" href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">  373</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">Designer::connectActions</a>()</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;{</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    connect(undoAction, SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">performUndoAction</a>()));</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    connect(redoAction, SIGNAL(triggered()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#a81538552ba4b84302354a882933917a4">performRedoAction</a>()));</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    connect(editorState_.data(),SIGNAL(undoRequested()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ab98b0f012253a516d6deb316f9584014">performUndoAction</a>()));</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    connect(deleteAction, SIGNAL(triggered()),scene, SLOT(deleteSelectedItems()));</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    connect(copyAction, SIGNAL(triggered()),scene, SLOT(copySelectedItems()));</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    connect(analysisExportAction, SIGNAL(triggered()),scene, SLOT(analysisExportSelectedItem()));</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    connect(analysisImportAction, SIGNAL(triggered()),scene, SLOT(analysisImportSelectedItem()));</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    connect(pasteAction, SIGNAL(triggered()),scene, SLOT(pasteItems()));</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    connect(exitAction, SIGNAL(triggered()), <span class="keyword">this</span>, SLOT(close()));</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    connect(editorState_.data(),SIGNAL(undoableActionPerformed()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">insertEditBlock</a>()));</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">setOpenAsset</a>(QSharedPointer&lt;Asset&gt;)));</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)));</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    connect(editorState_.data(),SIGNAL(itemSelected(QGraphicsItem*)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">selectedItemChanged</a>(QGraphicsItem*)));</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">currentAnalysisChanged</a>(QSharedPointer&lt;Analysis&gt;)));</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
+<div class="line"><a name="l00394"></a><span class="lineno"><a class="line" href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">  394</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">Designer::createMenus</a>()</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;{</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    itemMenu = <span class="keyword">new</span> QMenu(tr(<span class="stringliteral">&quot;&amp;Item&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    itemMenu-&gt;addAction(deleteAction);</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    itemMenu-&gt;addAction(copyAction);</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    itemMenu-&gt;addAction(pasteAction);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    itemMenu-&gt;addAction(analysisExportAction);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    itemMenu-&gt;addAction(analysisImportAction);</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
-<div class="line"><a name="l00405"></a><span class="lineno"><a class="line" href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">  405</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">Designer::createMenus</a>()</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;{</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="comment">//fileMenu = menuBar()-&gt;addMenu(tr(&quot;&amp;File&quot;));</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="comment">//fileMenu-&gt;addAction(exitAction);</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="comment">//itemMenu = menuBar()-&gt;addMenu(tr(&quot;&amp;Item&quot;));</span></div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    itemMenu = <span class="keyword">new</span> QMenu(tr(<span class="stringliteral">&quot;&amp;Item&quot;</span>),<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    itemMenu-&gt;addAction(deleteAction);</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    itemMenu-&gt;addAction(copyAction);</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    itemMenu-&gt;addAction(pasteAction);</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    itemMenu-&gt;addAction(analysisExportAction);</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    itemMenu-&gt;addAction(analysisImportAction);</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    sceneMenu = <span class="keyword">new</span> QMenu(tr(<span class="stringliteral">&quot;Scene&quot;</span>),<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    sceneMenu-&gt;addAction(pasteAction);</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="comment">//aboutMenu = menuBar()-&gt;addMenu(tr(&quot;&amp;Help&quot;));</span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">//aboutMenu-&gt;addAction(aboutAction);</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;}</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
-<div class="line"><a name="l00428"></a><span class="lineno"><a class="line" href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">  428</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">Designer::createToolbars</a>()</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;{</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    editToolBar = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;Edit&quot;</span>));</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    editToolBar-&gt;addAction(deleteAction);</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    editToolBar-&gt;addAction(copyAction);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    editToolBar-&gt;addAction(pasteAction);</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    editToolBar-&gt;addAction(analysisExportAction);</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    editToolBar-&gt;addAction(analysisImportAction);</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    editToolBar-&gt;addAction(undoAction);</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    editToolBar-&gt;addAction(redoAction);</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    sceneScaleCombo = <span class="keyword">new</span> QComboBox;</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    QStringList scales;</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;    scales &lt;&lt; tr(<span class="stringliteral">&quot;50%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;75%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;100%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;125%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;150%&quot;</span>);</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    sceneScaleCombo-&gt;addItems(scales);</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    sceneScaleCombo-&gt;setCurrentIndex(2);</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    connect(sceneScaleCombo, SIGNAL(currentIndexChanged(<span class="keyword">const</span> QString &amp;)),</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;            <span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#a12273d87e366ea295bdf01ba844460a0">sceneScaleChanged</a>(<span class="keyword">const</span> QString &amp;)));</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    pointerToolbar = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;Pointer type&quot;</span>));</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    pointerToolbar-&gt;addWidget(sceneScaleCombo);</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    pointerToolbar-&gt;addSeparator();</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    pointerToolbar-&gt;addWidget(searchWidget);</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    pointerToolbar-&gt;addSeparator();</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    pointerToolbar-&gt;addAction(checkSyntaxAction_);</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    pointerToolbar-&gt;addWidget(analysisOption_);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;}</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;</div>
-<div class="line"><a name="l00465"></a><span class="lineno"><a class="line" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">  465</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">Designer::resetEditor</a>()</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;{</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    <span class="comment">//Reset the root of the experiment</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    editorState_-&gt;setTopLevelAsset(designRoot_-&gt;getExperiment());</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    <span class="comment">//Update the analysis list</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    analysisOption_-&gt;updateAnalysisList();</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;    <span class="comment">//Reset the window asset</span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    QSharedPointer&lt;Asset&gt; openAsset = designRoot_-&gt;getOpenAsset();</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    <span class="keywordflow">if</span>(!openAsset)</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        openAsset = editorState_-&gt;getTopLevelAsset();</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    editorState_-&gt;setWindowAsset(openAsset,<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;}</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
-<div class="line"><a name="l00486"></a><span class="lineno"><a class="line" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">  486</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">Designer::updateEnabledActions</a>()</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;{</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    QSharedPointer&lt;Asset&gt; asset = editorState_-&gt;getSelectedAsset();</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keywordflow">if</span>(editorState_-&gt;getCurrentAnalysis())</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    {   <span class="comment">//An Analysis is active</span></div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        analysisExportAction-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        analysisImportAction-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        <span class="keywordflow">if</span>(!asset)</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        {</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        }</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(dynamic_cast&lt;AssociateElement*&gt;(asset.data()))</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        {   <span class="comment">//The asset is an analysis element</span></div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;        }</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;        <span class="keywordflow">else</span>    <span class="comment">//The asset is an experiment element</span></div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;        {</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;            analysisExportAction-&gt;setEnabled(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::StateMachineElement&quot;</span>) || asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Task&quot;</span>));</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;            analysisImportAction-&gt;setEnabled((asset-&gt;inherits(<span class="stringliteral">&quot;Picto::StateMachineElement&quot;</span>) || asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Task&quot;</span>)) &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0add4709cbab9f7354c74f253f8e917d7c">Copier::ANALYSIS_IMPORT</a>));</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);     </div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;        }</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    }</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;    <span class="keywordflow">else</span>    <span class="comment">//No Analysis is active</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    {</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;        analysisExportAction-&gt;setVisible(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;        analysisImportAction-&gt;setVisible(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        <span class="keywordflow">if</span>(!asset)</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;        {</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;        }</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        {</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;            pasteAction-&gt;setEnabled((<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869">Copier::EXPERIMENT_PASTE</a>));        </div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;        }</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    sceneMenu = <span class="keyword">new</span> QMenu(tr(<span class="stringliteral">&quot;Scene&quot;</span>),<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    sceneMenu-&gt;addAction(pasteAction);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;}</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00410"></a><span class="lineno"><a class="line" href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">  410</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">Designer::createToolbars</a>()</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;{</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    editToolBar = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;Edit&quot;</span>));</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    editToolBar-&gt;addAction(deleteAction);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    editToolBar-&gt;addAction(copyAction);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    editToolBar-&gt;addAction(pasteAction);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    editToolBar-&gt;addAction(analysisExportAction);</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    editToolBar-&gt;addAction(analysisImportAction);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    editToolBar-&gt;addAction(undoAction);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    editToolBar-&gt;addAction(redoAction);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    sceneScaleCombo = <span class="keyword">new</span> QComboBox;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    QStringList scales;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    scales &lt;&lt; tr(<span class="stringliteral">&quot;50%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;75%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;100%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;125%&quot;</span>) &lt;&lt; tr(<span class="stringliteral">&quot;150%&quot;</span>);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    sceneScaleCombo-&gt;addItems(scales);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    sceneScaleCombo-&gt;setCurrentIndex(2);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    connect(sceneScaleCombo, SIGNAL(currentIndexChanged(<span class="keyword">const</span> QString &amp;)),</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;            <span class="keyword">this</span>, SLOT(<a class="code" href="class_designer.html#a12273d87e366ea295bdf01ba844460a0">sceneScaleChanged</a>(<span class="keyword">const</span> QString &amp;)));</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    pointerToolbar = <span class="keyword">new</span> QToolBar(tr(<span class="stringliteral">&quot;Pointer type&quot;</span>));</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    pointerToolbar-&gt;addWidget(sceneScaleCombo);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    pointerToolbar-&gt;addSeparator();</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    pointerToolbar-&gt;addWidget(searchWidget);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    pointerToolbar-&gt;addSeparator();</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    pointerToolbar-&gt;addAction(checkSyntaxAction_);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    pointerToolbar-&gt;addWidget(analysisOption_);</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;}</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;</div>
+<div class="line"><a name="l00447"></a><span class="lineno"><a class="line" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">  447</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">Designer::resetEditor</a>()</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;{</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="comment">//Reset the root of the experiment</span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    editorState_-&gt;setTopLevelAsset(designRoot_-&gt;getExperiment());</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    <span class="comment">//Update the analysis list</span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    analysisOption_-&gt;updateAnalysisList();</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="comment">//Reset the window asset</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    QSharedPointer&lt;Asset&gt; openAsset = designRoot_-&gt;getOpenAsset();</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    <span class="keywordflow">if</span>(!openAsset)</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        openAsset = editorState_-&gt;getTopLevelAsset();</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    editorState_-&gt;setWindowAsset(openAsset,<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;}</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
+<div class="line"><a name="l00468"></a><span class="lineno"><a class="line" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">  468</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">Designer::updateEnabledActions</a>()</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;{</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    QSharedPointer&lt;Asset&gt; asset = editorState_-&gt;getSelectedAsset();</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    <span class="keywordflow">if</span>(editorState_-&gt;getCurrentAnalysis())</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    {   <span class="comment">//An Analysis is active</span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        analysisExportAction-&gt;setVisible(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;        analysisImportAction-&gt;setVisible(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;        <span class="keywordflow">if</span>(!asset)</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        {</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        }</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(dynamic_cast&lt;AssociateElement*&gt;(asset.data()))</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;        {   <span class="comment">//The asset is an analysis element</span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        }</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keywordflow">else</span>    <span class="comment">//The asset is an experiment element</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        {</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;            analysisExportAction-&gt;setEnabled(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::StateMachineElement&quot;</span>) || asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Task&quot;</span>));</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;            analysisImportAction-&gt;setEnabled((asset-&gt;inherits(<span class="stringliteral">&quot;Picto::StateMachineElement&quot;</span>) || asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Task&quot;</span>)) &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0add4709cbab9f7354c74f253f8e917d7c">Copier::ANALYSIS_IMPORT</a>));</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);     </div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        }</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;    }</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;    <span class="keywordflow">else</span>    <span class="comment">//No Analysis is active</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    {</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        analysisExportAction-&gt;setVisible(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        analysisImportAction-&gt;setVisible(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keywordflow">if</span>(!asset)</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;        {</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;            pasteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;        }</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;        {</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;            deleteAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;            copyAction-&gt;setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;            analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;            analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;            pasteAction-&gt;setEnabled((<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869">Copier::EXPERIMENT_PASTE</a>));        </div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;        }</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    }</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    <span class="comment">//If the window is the selected asset, copy should be disabled, </span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;    <span class="comment">//paste depends on whether we&#39;re in analysis mode</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <span class="keywordflow">if</span>(asset &amp;&amp; (asset == editorState_-&gt;getWindowAsset()))</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    {</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        <span class="keywordtype">bool</span> pasteEnabled = (editorState_-&gt;getCurrentAnalysis().isNull() &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869">Copier::EXPERIMENT_PASTE</a>))</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;            || (!editorState_-&gt;getCurrentAnalysis().isNull() &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a09f4fba45a06a62a6f37a3c937109c7d">Copier::ANALYSIS_PASTE</a>));</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        pasteAction-&gt;setEnabled(pasteEnabled);</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;    }</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    <span class="comment">//If the window is the selected asset, and the selected item isn&#39;t a transition delete should be disabled</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    <span class="keywordflow">if</span>  (   asset &amp;&amp; (editorState_-&gt;getSelectedAsset() == editorState_-&gt;getWindowAsset()) </div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        &amp;&amp; (dynamic_cast&lt;Arrow*&gt;(editorState_-&gt;getSelectedItem()) == NULL)</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        )</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    {</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;        deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    }</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;    <span class="comment">//If the window is the selected asset, copy should be disabled, </span></div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    <span class="comment">//paste depends on whether we&#39;re in analysis mode</span></div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="keywordflow">if</span>(asset &amp;&amp; (asset == editorState_-&gt;getWindowAsset()))</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;    {</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        copyAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        analysisExportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        analysisImportAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;        <span class="keywordtype">bool</span> pasteEnabled = (editorState_-&gt;getCurrentAnalysis().isNull() &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869">Copier::EXPERIMENT_PASTE</a>))</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            || (!editorState_-&gt;getCurrentAnalysis().isNull() &amp;&amp; (<a class="code" href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a>() == <a class="code" href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a09f4fba45a06a62a6f37a3c937109c7d">Copier::ANALYSIS_PASTE</a>));</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        pasteAction-&gt;setEnabled(pasteEnabled);</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;    }</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    <span class="comment">//If the window is the selected asset, and the selected item isn&#39;t a transition delete should be disabled</span></div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    <span class="keywordflow">if</span>  (   asset &amp;&amp; (editorState_-&gt;getSelectedAsset() == editorState_-&gt;getWindowAsset()) </div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;        &amp;&amp; (dynamic_cast&lt;Arrow*&gt;(editorState_-&gt;getSelectedItem()) == NULL)</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        )</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;    {</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;        deleteAction-&gt;setEnabled(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    }</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;}</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;</div>
-<div class="line"><a name="l00561"></a><span class="lineno"><a class="line" href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">  561</a></span>&#160;<span class="keywordtype">void</span>  <a class="code" href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">Designer::undoAvailable</a>(<span class="keywordtype">bool</span> available)</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;{</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;    undoAction-&gt;setEnabled(available);</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;}</div>
-<div class="line"><a name="l00566"></a><span class="lineno"><a class="line" href="class_designer.html#afd37002df13cc765000349295a634dd3">  566</a></span>&#160;<span class="keywordtype">void</span>  <a class="code" href="class_designer.html#afd37002df13cc765000349295a634dd3">Designer::redoAvailable</a>(<span class="keywordtype">bool</span> available)</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;{</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;    redoAction-&gt;setEnabled(available);</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;}</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;</div>
+<div class="line"><a name="l00543"></a><span class="lineno"><a class="line" href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">  543</a></span>&#160;<span class="keywordtype">void</span>  <a class="code" href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">Designer::undoAvailable</a>(<span class="keywordtype">bool</span> available)</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;{</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;    undoAction-&gt;setEnabled(available);</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;}</div>
+<div class="line"><a name="l00548"></a><span class="lineno"><a class="line" href="class_designer.html#afd37002df13cc765000349295a634dd3">  548</a></span>&#160;<span class="keywordtype">void</span>  <a class="code" href="class_designer.html#afd37002df13cc765000349295a634dd3">Designer::redoAvailable</a>(<span class="keywordtype">bool</span> available)</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;{</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;    redoAction-&gt;setEnabled(available);</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;}</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;</div>
+<div class="line"><a name="l00557"></a><span class="lineno"><a class="line" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">  557</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">Designer::searchTextChanged</a>(<span class="keyword">const</span> QString&amp; text)</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;{</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::EXPERIMENT,SearchRequest::STRING,<span class="keyword">true</span>,text,matchCase-&gt;isChecked()));</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING,<span class="keyword">true</span>,text,matchCase-&gt;isChecked()));</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;}</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;</div>
+<div class="line"><a name="l00565"></a><span class="lineno"><a class="line" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">  565</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">Designer::matchCaseChanged</a>(<span class="keywordtype">int</span>)</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;{</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    <span class="keywordflow">if</span>(!searchBox-&gt;text().isEmpty())</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;        <a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">searchTextChanged</a>(searchBox-&gt;text());</div>
 <div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;}</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;</div>
-<div class="line"><a name="l00575"></a><span class="lineno"><a class="line" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">  575</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">Designer::searchTextChanged</a>(<span class="keyword">const</span> QString&amp; text)</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;{</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::EXPERIMENT,SearchRequest::STRING,<span class="keyword">true</span>,text,matchCase-&gt;isChecked()));</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    editorState_-&gt;requestSearch(<a class="code" href="struct_search_request.html">SearchRequest</a>(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING,<span class="keyword">true</span>,text,matchCase-&gt;isChecked()));</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;}</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;</div>
-<div class="line"><a name="l00582"></a><span class="lineno"><a class="line" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">  582</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">Designer::matchCaseChanged</a>(<span class="keywordtype">int</span>)</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;{</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    <span class="keywordflow">if</span>(!searchBox-&gt;text().isEmpty())</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;        <a class="code" href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">searchTextChanged</a>(searchBox-&gt;text());</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;}</div>
-<div class="ttc" id="class_designer_html_afd37002df13cc765000349295a634dd3"><div class="ttname"><a href="class_designer.html#afd37002df13cc765000349295a634dd3">Designer::redoAvailable</a></div><div class="ttdeci">void redoAvailable(bool available)</div><div class="ttdoc">Called when a redo is first available to enable the Designer&#39;s redo action. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00566">Designer.cpp:566</a></div></div>
+<div class="ttc" id="class_designer_html_afd37002df13cc765000349295a634dd3"><div class="ttname"><a href="class_designer.html#afd37002df13cc765000349295a634dd3">Designer::redoAvailable</a></div><div class="ttdeci">void redoAvailable(bool available)</div><div class="ttdoc">Called when a redo is first available to enable the Designer&#39;s redo action. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00548">Designer.cpp:548</a></div></div>
 <div class="ttc" id="class_syntax_error_box_html_ae28581de605e6916f103c7ded7cba7cc"><div class="ttname"><a href="class_syntax_error_box.html#ae28581de605e6916f103c7ded7cba7cc">SyntaxErrorBox::setDesignRoot</a></div><div class="ttdeci">void setDesignRoot(QSharedPointer&lt; DesignRoot &gt; designRoot)</div><div class="ttdoc">Sets the current DesignRoot of the Picto Design to this widget so that it can be used to check syntax...</div><div class="ttdef"><b>Definition:</b> <a href="_syntax_error_box_8cpp_source.html#l00026">SyntaxErrorBox.cpp:26</a></div></div>
 <div class="ttc" id="class_copier_html_a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869"><div class="ttname"><a href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a2f196ec5d25c7b273fd9e024b091f869">Copier::EXPERIMENT_PASTE</a></div><div class="ttdoc">Exported String is made up of experimental assets that can be pasted into an experiment. </div><div class="ttdef"><b>Definition:</b> <a href="_copier_8h_source.html#l00033">Copier.h:33</a></div></div>
-<div class="ttc" id="class_designer_html_ad1ed427c7882fc19efab4be37421c13b"><div class="ttname"><a href="class_designer.html#ad1ed427c7882fc19efab4be37421c13b">Designer::about</a></div><div class="ttdeci">void about()</div><div class="ttdoc">No longer used. This used to present simple information about the StateMachineEditor, like... it exists. It was unnecessary. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00163">Designer.cpp:163</a></div></div>
 <div class="ttc" id="class_picto_1_1_analysis_option_widget_html"><div class="ttname"><a href="class_picto_1_1_analysis_option_widget.html">Picto::AnalysisOptionWidget</a></div><div class="ttdoc">A drop down menu for selecting Analyses for the Designer. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_option_widget_8h_source.html#l00029">AnalysisOptionWidget.h:29</a></div></div>
-<div class="ttc" id="class_designer_html_ae4d4fb46ee86ed57711f7ffd3d8a7d88"><div class="ttname"><a href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">Designer::currentAnalysisChanged</a></div><div class="ttdeci">void currentAnalysisChanged(QSharedPointer&lt; Analysis &gt; analysis)</div><div class="ttdoc">Called when the current Analysis changes to reload the window asset. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00290">Designer.cpp:290</a></div></div>
-<div class="ttc" id="class_designer_html_aa403b97c0d4aead5dc7216024f877abb"><div class="ttname"><a href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">Designer::undoAvailable</a></div><div class="ttdeci">void undoAvailable(bool available)</div><div class="ttdoc">Called when an undo is first available to enable the Designer&#39;s undo action. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00561">Designer.cpp:561</a></div></div>
+<div class="ttc" id="class_designer_html_ae4d4fb46ee86ed57711f7ffd3d8a7d88"><div class="ttname"><a href="class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88">Designer::currentAnalysisChanged</a></div><div class="ttdeci">void currentAnalysisChanged(QSharedPointer&lt; Analysis &gt; analysis)</div><div class="ttdoc">Called when the current Analysis changes to reload the window asset. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00283">Designer.cpp:283</a></div></div>
+<div class="ttc" id="class_designer_html_aa403b97c0d4aead5dc7216024f877abb"><div class="ttname"><a href="class_designer.html#aa403b97c0d4aead5dc7216024f877abb">Designer::undoAvailable</a></div><div class="ttdeci">void undoAvailable(bool available)</div><div class="ttdoc">Called when an undo is first available to enable the Designer&#39;s undo action. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00543">Designer.cpp:543</a></div></div>
 <div class="ttc" id="class_toolbox_html"><div class="ttname"><a href="class_toolbox.html">Toolbox</a></div><div class="ttdoc">A Toolbox widget containing groups of buttons that have some affect on activity in the designer...</div><div class="ttdef"><b>Definition:</b> <a href="_tool_box_8h_source.html#l00032">ToolBox.h:32</a></div></div>
-<div class="ttc" id="class_designer_html_a2f74c1265458425a581bc9ad305cf4c1"><div class="ttname"><a href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">Designer::connectActions</a></div><div class="ttdeci">void connectActions()</div><div class="ttdoc">Connects actions created in createActions() to the functionality that should occur when they are trig...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00383">Designer.cpp:383</a></div></div>
+<div class="ttc" id="class_designer_html_a2f74c1265458425a581bc9ad305cf4c1"><div class="ttname"><a href="class_designer.html#a2f74c1265458425a581bc9ad305cf4c1">Designer::connectActions</a></div><div class="ttdeci">void connectActions()</div><div class="ttdoc">Connects actions created in createActions() to the functionality that should occur when they are trig...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00373">Designer.cpp:373</a></div></div>
 <div class="ttc" id="class_element_notes_widget_html"><div class="ttname"><a href="class_element_notes_widget.html">ElementNotesWidget</a></div><div class="ttdoc">A widget used to enter notes that are saved with elements of the design. This is how comments are ent...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8h_source.html#l00019">ElementNotesWidget.h:19</a></div></div>
 <div class="ttc" id="class_copier_html_a92fab45e23367d949b36497b5ee7dc0c"><div class="ttname"><a href="class_copier.html#a92fab45e23367d949b36497b5ee7dc0c">Copier::availablePasteType</a></div><div class="ttdeci">static int availablePasteType()</div><div class="ttdoc">Returns the type of command that can be performed with the clipboard text. </div><div class="ttdef"><b>Definition:</b> <a href="_copier_8cpp_source.html#l00126">Copier.cpp:126</a></div></div>
-<div class="ttc" id="class_designer_html_a7bb1ee2787b4a6c8081480fe09e481af"><div class="ttname"><a href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">Designer::setOpenAsset</a></div><div class="ttdeci">void setOpenAsset(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Tells the DesignRoot which asset is currently open in the Designer so that this information can be sa...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00260">Designer.cpp:260</a></div></div>
-<div class="ttc" id="class_designer_html_ad08f5c94fd044431b93303b2801715b9"><div class="ttname"><a href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">Designer::createActions</a></div><div class="ttdeci">void createActions()</div><div class="ttdoc">Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00313">Designer.cpp:313</a></div></div>
+<div class="ttc" id="class_designer_html_a7bb1ee2787b4a6c8081480fe09e481af"><div class="ttname"><a href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af">Designer::setOpenAsset</a></div><div class="ttdeci">void setOpenAsset(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Tells the DesignRoot which asset is currently open in the Designer so that this information can be sa...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00250">Designer.cpp:250</a></div></div>
+<div class="ttc" id="class_designer_html_ad08f5c94fd044431b93303b2801715b9"><div class="ttname"><a href="class_designer.html#ad08f5c94fd044431b93303b2801715b9">Designer::createActions</a></div><div class="ttdeci">void createActions()</div><div class="ttdoc">Creats actions used in various parts of the Designer (ie. Toolbar, ContextMenu, etc). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00306">Designer.cpp:306</a></div></div>
 <div class="ttc" id="class_viewer_window_html"><div class="ttname"><a href="class_viewer_window.html">ViewerWindow</a></div><div class="ttdoc">The ViewerWindow is the widget that displays the DiagramScene. </div><div class="ttdef"><b>Definition:</b> <a href="_viewer_window_8h_source.html#l00019">ViewerWindow.h:19</a></div></div>
 <div class="ttc" id="class_copier_html_a6bbbcb9f46198d2d909e72251dbc7fd0add4709cbab9f7354c74f253f8e917d7c"><div class="ttname"><a href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0add4709cbab9f7354c74f253f8e917d7c">Copier::ANALYSIS_IMPORT</a></div><div class="ttdoc">Exported String is made up of analysis assets from multiple levels of the design tree that can be imp...</div><div class="ttdef"><b>Definition:</b> <a href="_copier_8h_source.html#l00035">Copier.h:35</a></div></div>
-<div class="ttc" id="class_designer_html_a8df4966f0713a6e45d6b5fa3c3dffff0"><div class="ttname"><a href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">Designer::selectedAssetChanged</a></div><div class="ttdeci">void selectedAssetChanged(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Called when the selected Asset in the Designer canvas changes to update the actions available in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00269">Designer.cpp:269</a></div></div>
-<div class="ttc" id="class_designer_html_ad1f33d36da192385cec3dfdb24f187c8"><div class="ttname"><a href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">Designer::createToolbars</a></div><div class="ttdeci">void createToolbars()</div><div class="ttdoc">Creates the Designer&#39;s Toolbars using actions created in createActions() as well as other widgets cre...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00428">Designer.cpp:428</a></div></div>
+<div class="ttc" id="class_designer_html_a8df4966f0713a6e45d6b5fa3c3dffff0"><div class="ttname"><a href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">Designer::selectedAssetChanged</a></div><div class="ttdeci">void selectedAssetChanged(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Called when the selected Asset in the Designer canvas changes to update the actions available in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00260">Designer.cpp:260</a></div></div>
+<div class="ttc" id="class_designer_html_ad1f33d36da192385cec3dfdb24f187c8"><div class="ttname"><a href="class_designer.html#ad1f33d36da192385cec3dfdb24f187c8">Designer::createToolbars</a></div><div class="ttdeci">void createToolbars()</div><div class="ttdoc">Creates the Designer&#39;s Toolbars using actions created in createActions() as well as other widgets cre...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00410">Designer.cpp:410</a></div></div>
 <div class="ttc" id="class_asset_info_box_html"><div class="ttname"><a href="class_asset_info_box.html">AssetInfoBox</a></div><div class="ttdoc">Provides data about scipts that are in scope for the currently selected Asset in the Designer...</div><div class="ttdef"><b>Definition:</b> <a href="_asset_info_box_8h_source.html#l00016">AssetInfoBox.h:16</a></div></div>
 <div class="ttc" id="class_copier_html_a6bbbcb9f46198d2d909e72251dbc7fd0a09f4fba45a06a62a6f37a3c937109c7d"><div class="ttname"><a href="class_copier.html#a6bbbcb9f46198d2d909e72251dbc7fd0a09f4fba45a06a62a6f37a3c937109c7d">Copier::ANALYSIS_PASTE</a></div><div class="ttdoc">Exported String is made up of analysis assets on a single level in the design tree that can be pasted...</div><div class="ttdef"><b>Definition:</b> <a href="_copier_8h_source.html#l00034">Copier.h:34</a></div></div>
 <div class="ttc" id="class_property_browser_html"><div class="ttname"><a href="class_property_browser.html">PropertyBrowser</a></div><div class="ttdoc">This Widget contains all property widgets for setting/getting Property values of the currently select...</div><div class="ttdef"><b>Definition:</b> <a href="_property_browser_8h_source.html#l00024">PropertyBrowser.h:24</a></div></div>
-<div class="ttc" id="class_designer_html_a7e2f40ef01fc309032a9c0cd9ef68026"><div class="ttname"><a href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">Designer::resetExperiment</a></div><div class="ttdeci">void resetExperiment()</div><div class="ttdoc">Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00211">Designer.cpp:211</a></div></div>
+<div class="ttc" id="class_designer_html_a7e2f40ef01fc309032a9c0cd9ef68026"><div class="ttname"><a href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026">Designer::resetExperiment</a></div><div class="ttdeci">void resetExperiment()</div><div class="ttdoc">Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00199">Designer.cpp:199</a></div></div>
 <div class="ttc" id="class_designer_html_a75f663af7babbf620ddf571f53371b50"><div class="ttname"><a href="class_designer.html#a75f663af7babbf620ddf571f53371b50">Designer::activate</a></div><div class="ttdeci">void activate(bool enable)</div><div class="ttdoc">Use this function instead of setEnabled() to enable/disable the Designer. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00142">Designer.cpp:142</a></div></div>
 <div class="ttc" id="class_syntax_error_box_html"><div class="ttname"><a href="class_syntax_error_box.html">SyntaxErrorBox</a></div><div class="ttdoc">A Syntax Error widget used to display the output of the Picto Design Validation (ie. compilation) process. </div><div class="ttdef"><b>Definition:</b> <a href="_syntax_error_box_8h_source.html#l00018">SyntaxErrorBox.h:18</a></div></div>
 <div class="ttc" id="class_editor_state_html"><div class="ttname"><a href="class_editor_state.html">EditorState</a></div><div class="ttdoc">The EditorState stores the current state of the Designer and provides multiple signals that widgets t...</div><div class="ttdef"><b>Definition:</b> <a href="_editor_state_8h_source.html#l00027">EditorState.h:27</a></div></div>
-<div class="ttc" id="class_designer_html_af2f2fd596ee880e69a7c04106eb553f2"><div class="ttname"><a href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">Designer::matchCaseChanged</a></div><div class="ttdeci">void matchCaseChanged(int state)</div><div class="ttdoc">Called when the matchCase checkbox changes to update the active search using searchTextChanged(). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00582">Designer.cpp:582</a></div></div>
+<div class="ttc" id="class_designer_html_af2f2fd596ee880e69a7c04106eb553f2"><div class="ttname"><a href="class_designer.html#af2f2fd596ee880e69a7c04106eb553f2">Designer::matchCaseChanged</a></div><div class="ttdeci">void matchCaseChanged(int state)</div><div class="ttdoc">Called when the matchCase checkbox changes to update the active search using searchTextChanged(). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00565">Designer.cpp:565</a></div></div>
 <div class="ttc" id="struct_search_request_html"><div class="ttname"><a href="struct_search_request.html">SearchRequest</a></div><div class="ttdoc">Defines a request for a search. </div><div class="ttdef"><b>Definition:</b> <a href="_search_request_8h_source.html#l00013">SearchRequest.h:13</a></div></div>
-<div class="ttc" id="class_designer_html_a6d428d8f99e670ea4d76f2da80791ce1"><div class="ttname"><a href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">Designer::updateEnabledActions</a></div><div class="ttdeci">void updateEnabledActions()</div><div class="ttdoc">Updates the Designer actions that are enabled based on the currently Designer context. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00486">Designer.cpp:486</a></div></div>
-<div class="ttc" id="class_designer_html_ac25bc4154a4a4b4b344047d0fa021e1b"><div class="ttname"><a href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">Designer::loadScene</a></div><div class="ttdeci">void loadScene(DiagramScene *newScene)</div><div class="ttdoc">This is an initialization function that loads the input scene as the current Designer Scene...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00176">Designer.cpp:176</a></div></div>
-<div class="ttc" id="class_designer_html_a50b32ea1609d95d1b70e5e854be7d5ab"><div class="ttname"><a href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">Designer::selectedItemChanged</a></div><div class="ttdeci">void selectedItemChanged(QGraphicsItem *item)</div><div class="ttdoc">Called when the selected Graphics Item in the Designer canvas changes to update the actions available...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00277">Designer.cpp:277</a></div></div>
+<div class="ttc" id="class_designer_html_a6d428d8f99e670ea4d76f2da80791ce1"><div class="ttname"><a href="class_designer.html#a6d428d8f99e670ea4d76f2da80791ce1">Designer::updateEnabledActions</a></div><div class="ttdeci">void updateEnabledActions()</div><div class="ttdoc">Updates the Designer actions that are enabled based on the currently Designer context. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00468">Designer.cpp:468</a></div></div>
+<div class="ttc" id="class_designer_html_ac25bc4154a4a4b4b344047d0fa021e1b"><div class="ttname"><a href="class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b">Designer::loadScene</a></div><div class="ttdeci">void loadScene(DiagramScene *newScene)</div><div class="ttdoc">This is an initialization function that loads the input scene as the current Designer Scene...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00167">Designer.cpp:167</a></div></div>
+<div class="ttc" id="class_designer_html_a50b32ea1609d95d1b70e5e854be7d5ab"><div class="ttname"><a href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab">Designer::selectedItemChanged</a></div><div class="ttdeci">void selectedItemChanged(QGraphicsItem *item)</div><div class="ttdoc">Called when the selected Graphics Item in the Designer canvas changes to update the actions available...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00269">Designer.cpp:269</a></div></div>
 <div class="ttc" id="class_about_element_box_html"><div class="ttname"><a href="class_about_element_box.html">AboutElementBox</a></div><div class="ttdoc">A searchable read-only text box that provides information about Picto Asset functionality. </div><div class="ttdef"><b>Definition:</b> <a href="_about_element_box_8h_source.html#l00018">AboutElementBox.h:18</a></div></div>
-<div class="ttc" id="class_designer_html_ab98b0f012253a516d6deb316f9584014"><div class="ttname"><a href="class_designer.html#ab98b0f012253a516d6deb316f9584014">Designer::performUndoAction</a></div><div class="ttdeci">void performUndoAction()</div><div class="ttdoc">Undoes the last significant action in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00235">Designer.cpp:235</a></div></div>
+<div class="ttc" id="class_designer_html_ab98b0f012253a516d6deb316f9584014"><div class="ttname"><a href="class_designer.html#ab98b0f012253a516d6deb316f9584014">Designer::performUndoAction</a></div><div class="ttdeci">void performUndoAction()</div><div class="ttdoc">Undoes the last significant action in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00223">Designer.cpp:223</a></div></div>
 <div class="ttc" id="class_syntax_error_box_html_ae92a8085d48e2a73d44dec2d870e3a71"><div class="ttname"><a href="class_syntax_error_box.html#ae92a8085d48e2a73d44dec2d870e3a71">SyntaxErrorBox::checkSyntax</a></div><div class="ttdeci">void checkSyntax()</div><div class="ttdoc">Checks the syntax of the Picto Design rooted at the DesignRoot input in setDesignRoot(). Outputs results in this Widgets textual display. </div><div class="ttdef"><b>Definition:</b> <a href="_syntax_error_box_8cpp_source.html#l00035">SyntaxErrorBox.cpp:35</a></div></div>
-<div class="ttc" id="class_designer_html_af47621c844ac5d0c13e716c38ace367c"><div class="ttname"><a href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">Designer::createMenus</a></div><div class="ttdeci">void createMenus()</div><div class="ttdoc">Creates context menus using actions created in createActions(). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00405">Designer.cpp:405</a></div></div>
-<div class="ttc" id="class_designer_html_ad67bfe0ade9532d93690e8b8f3093f1e"><div class="ttname"><a href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">Designer::resetEditor</a></div><div class="ttdeci">bool resetEditor()</div><div class="ttdoc">Resets the Designer based on the current DesignRoot. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00465">Designer.cpp:465</a></div></div>
-<div class="ttc" id="class_designer_html_a81538552ba4b84302354a882933917a4"><div class="ttname"><a href="class_designer.html#a81538552ba4b84302354a882933917a4">Designer::performRedoAction</a></div><div class="ttdeci">void performRedoAction()</div><div class="ttdoc">Redoes a previously undone significant action in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00247">Designer.cpp:247</a></div></div>
+<div class="ttc" id="class_designer_html_af47621c844ac5d0c13e716c38ace367c"><div class="ttname"><a href="class_designer.html#af47621c844ac5d0c13e716c38ace367c">Designer::createMenus</a></div><div class="ttdeci">void createMenus()</div><div class="ttdoc">Creates context menus using actions created in createActions(). </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00394">Designer.cpp:394</a></div></div>
+<div class="ttc" id="class_designer_html_ad67bfe0ade9532d93690e8b8f3093f1e"><div class="ttname"><a href="class_designer.html#ad67bfe0ade9532d93690e8b8f3093f1e">Designer::resetEditor</a></div><div class="ttdeci">bool resetEditor()</div><div class="ttdoc">Resets the Designer based on the current DesignRoot. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00447">Designer.cpp:447</a></div></div>
+<div class="ttc" id="class_designer_html_a81538552ba4b84302354a882933917a4"><div class="ttname"><a href="class_designer.html#a81538552ba4b84302354a882933917a4">Designer::performRedoAction</a></div><div class="ttdeci">void performRedoAction()</div><div class="ttdoc">Redoes a previously undone significant action in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00235">Designer.cpp:235</a></div></div>
 <div class="ttc" id="class_level_up_button_html"><div class="ttname"><a href="class_level_up_button.html">LevelUpButton</a></div><div class="ttdoc">A simple button widget containing an up arrow that turns red if the current Window Asset&#39;s ancestors ...</div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00015">LevelUpButton.h:15</a></div></div>
-<div class="ttc" id="class_designer_html_a88ecce6e764ca0283cb0541b0b2833e6"><div class="ttname"><a href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">Designer::searchTextChanged</a></div><div class="ttdeci">void searchTextChanged(const QString &amp;text)</div><div class="ttdoc">Called when text in the search box changes to initiate a search for the input string. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00575">Designer.cpp:575</a></div></div>
+<div class="ttc" id="class_designer_html_a88ecce6e764ca0283cb0541b0b2833e6"><div class="ttname"><a href="class_designer.html#a88ecce6e764ca0283cb0541b0b2833e6">Designer::searchTextChanged</a></div><div class="ttdeci">void searchTextChanged(const QString &amp;text)</div><div class="ttdoc">Called when text in the search box changes to initiate a search for the input string. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00557">Designer.cpp:557</a></div></div>
 <div class="ttc" id="class_designer_html_a88737acaeeaf7223fdd2f928df93ba8d"><div class="ttname"><a href="class_designer.html#a88737acaeeaf7223fdd2f928df93ba8d">Designer::loadDesign</a></div><div class="ttdeci">void loadDesign(QSharedPointer&lt; DesignRoot &gt; designRoot)</div><div class="ttdoc">Called before displaying the Designer on screen to set the DesignRoot on which it will operate...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00108">Designer.cpp:108</a></div></div>
-<div class="ttc" id="class_designer_html_ad161cdae08ac31d145d2db8eab21ed0c"><div class="ttname"><a href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">Designer::checkSyntax</a></div><div class="ttdeci">void checkSyntax()</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00303">Designer.cpp:303</a></div></div>
+<div class="ttc" id="class_designer_html_ad161cdae08ac31d145d2db8eab21ed0c"><div class="ttname"><a href="class_designer.html#ad161cdae08ac31d145d2db8eab21ed0c">Designer::checkSyntax</a></div><div class="ttdeci">void checkSyntax()</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00296">Designer.cpp:296</a></div></div>
 <div class="ttc" id="class_designer_html_a4fe366907b33810289ff6dbfec92bb6b"><div class="ttname"><a href="class_designer.html#a4fe366907b33810289ff6dbfec92bb6b">Designer::Designer</a></div><div class="ttdeci">Designer(QWidget *parent=0)</div><div class="ttdoc">Constructs a new Designer widget with the input parent. </div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00027">Designer.cpp:27</a></div></div>
-<div class="ttc" id="class_designer_html_ae9a6d5e594e6a4b4a9e55f9b5ad67db0"><div class="ttname"><a href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">Designer::insertEditBlock</a></div><div class="ttdeci">void insertEditBlock()</div><div class="ttdoc">Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00225">Designer.cpp:225</a></div></div>
+<div class="ttc" id="class_designer_html_ae9a6d5e594e6a4b4a9e55f9b5ad67db0"><div class="ttname"><a href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0">Designer::insertEditBlock</a></div><div class="ttdeci">void insertEditBlock()</div><div class="ttdoc">Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00213">Designer.cpp:213</a></div></div>
 <div class="ttc" id="class_designer_html_a12273d87e366ea295bdf01ba844460a0"><div class="ttname"><a href="class_designer.html#a12273d87e366ea295bdf01ba844460a0">Designer::sceneScaleChanged</a></div><div class="ttdeci">void sceneScaleChanged(const QString &amp;scale)</div><div class="ttdoc">Called when the zoom combo box is updated to change the zoom level of the designer canvas...</div><div class="ttdef"><b>Definition:</b> <a href="_designer_8cpp_source.html#l00155">Designer.cpp:155</a></div></div>
 <div class="ttc" id="class_diagram_scene_html"><div class="ttname"><a href="class_diagram_scene.html">DiagramScene</a></div><div class="ttdoc">The QGraphicsScene shown in the Designer&#39;s central widget to display the children of the current elem...</div><div class="ttdef"><b>Definition:</b> <a href="diagramscene_8h_source.html#l00034">diagramscene.h:34</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

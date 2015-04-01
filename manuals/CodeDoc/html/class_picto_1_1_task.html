@@ -128,9 +128,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab5ae1c377b52b5338fb3d82e0ce3bcbe"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task.html#ab5ae1c377b52b5338fb3d82e0ce3bcbe">run</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Engine::PictoEngine</a> &gt; engine)</td></tr>
 <tr class="memdesc:ab5ae1c377b52b5338fb3d82e0ce3bcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs this <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>'s execution logic within the framework of the input PictoEngine.  <a href="#ab5ae1c377b52b5338fb3d82e0ce3bcbe">More...</a><br /></td></tr>
 <tr class="separator:ab5ae1c377b52b5338fb3d82e0ce3bcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a145629630f680070d2e130f00905c59f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task.html#a145629630f680070d2e130f00905c59f">jumpToState</a> (QStringList path, QString state)</td></tr>
-<tr class="memdesc:a145629630f680070d2e130f00905c59f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function appears to no longer be used (ie. The functions that call it are never called themselves).  <a href="#a145629630f680070d2e130f00905c59f">More...</a><br /></td></tr>
-<tr class="separator:a145629630f680070d2e130f00905c59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad82385f0878e842d564207eca4f0a48c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task.html#ad82385f0878e842d564207eca4f0a48c">hasEditableDescendants</a> ()</td></tr>
 <tr class="memdesc:ad82385f0878e842d564207eca4f0a48c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this object can or does have child objects that are editable.  <a href="#ad82385f0878e842d564207eca4f0a48c">More...</a><br /></td></tr>
 <tr class="separator:ad82385f0878e842d564207eca4f0a48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -602,7 +599,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_task_8h_source.html#l00034">34</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
+<p>Definition at line <a class="el" href="_task_8h_source.html#l00030">30</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa0da741a30dd188617708d7d65986259"></a>
 <div class="memitem">
@@ -651,7 +648,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a5721f31da49f2e8df266e0a6c40317fe">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_task_8h_source.html#l00056">56</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
+<p>Definition at line <a class="el" href="_task_8h_source.html#l00051">51</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
 
 </div>
 </div>
@@ -681,7 +678,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#ab3e676a5138ce7f49ab924c98fe3d71e">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_task_8h_source.html#l00048">48</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
+<p>Definition at line <a class="el" href="_task_8h_source.html#l00043">43</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
 
 </div>
 </div>
@@ -711,39 +708,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#aa9146adb2bb548fd5763be8d7a6f97d1">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_task_8h_source.html#l00046">46</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a145629630f680070d2e130f00905c59f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Picto::Task::jumpToState </td>
-          <td>(</td>
-          <td class="paramtype">QStringList&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>state</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This function appears to no longer be used (ie. The functions that call it are never called themselves). </p>
-<p>The function was once used when attaching to a remote <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> that was already running in order to jump to the currently running <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a>. Since then, we have created the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a>, <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> system that allows us to run "Slave" Experiments from within the Qt event loop based on information coming from the Master, and not only from within the blocking runTask() function.</p>
-<p>This function should probably be removed. </p>
-
-<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00081">81</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_8h_source.html#l00041">41</a> of file <a class="el" href="_task_8h_source.html">Task.h</a>.</p>
 
 </div>
 </div>
@@ -764,7 +729,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Runs this <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>'s execution logic within the framework of the input PictoEngine. </p>
 <p>Since the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> only ever contains a single <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, this function just takes care of initializing the new <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> run, running the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, and sending any final data to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> (if necessary). </p><dl class="section note"><dt>Note</dt><dd>Currently, this function blocks the Qt Event Loop execution until it finishes except in the case where the PictoEngine is running in slave mode, in which case the event loop is processed at various times from within this engine (which is not a very clean way to do things). In the future this function should be rewritten to run a single frame at a time from within an event loop. See <a class="el" href="class_picto_1_1_command_channel.html#aafe619791fb542563544ecf50628238b" title="This is a REALLY IMPORTANT function that reads ProtocolResponse objects coming in from the server...">CommandChannel::processResponses()</a> for more details. </dd></dl>
 
-<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00039">39</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00037">37</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
 
 </div>
 </div>
@@ -801,9 +766,9 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </div><div class="memdoc">
 
 <p>Sends the final <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a> <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> to the server. </p>
-<p>When a task completes, the final <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> never gets sent to the server. by the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, so we send it here. We also create a fake final frame whose frameId can be used to stamp all of the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes, etc that occured after the last frame that was actually presented. </p>
+<p>When a task completes, the final <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> never gets sent to the server by the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>, so we send it here. We also create a fake final frame whose frameId can be used to stamp all of the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes, etc that occured after the last frame that was actually presented. </p>
 
-<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00179">179</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00151">151</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
 
 </div>
 </div>
@@ -840,7 +805,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 </ul>
 </dd></dl>
 
-<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00136">136</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00110">110</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
 
 </div>
 </div>
@@ -861,7 +826,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Sets the index of this <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> within its container. </p>
 <p>This is useful since the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>'s index is used to define an "initial transition" that is sent to the server during run time to indicate that this <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> is the one that was run. The idea here was that it is necessary to create a "fake" transition, since execution only really begins at the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> level, so it is somewhat illogical to store a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> in the design above the top level of the <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>. This can certainly be reconsidered at some point and changed, so long as reverse design compatibility is maintained somehow. </p>
 
-<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00104">104</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_task_8cpp_source.html#l00076">76</a> of file <a class="el" href="_task_8cpp_source.html">Task.cpp</a>.</p>
 
 </div>
 </div>

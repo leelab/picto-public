@@ -51,6 +51,7 @@ var searchData=
   ['designroot',['DesignRoot',['../class_picto_1_1_design_root.html',1,'Picto']]],
   ['designrootchanged',['designRootChanged',['../class_playback_controller.html#a606e3c1cabad21cb0a0e61f1650804be',1,'PlaybackController::designRootChanged()'],['../class_replay_viewer.html#a77cfc28f92d4a089ae3bebace08f440f',1,'ReplayViewer::designRootChanged()']]],
   ['designsyntaxversion',['DESIGNSYNTAXVERSION',['../common_8h.html#a05f01e3f5379db8d062cd5d73b330b71',1,'common.h']]],
+  ['designundostack_5f',['designUndoStack_',['../class_picto_1_1_design_root.html#aa8bc3678e73bc753c5b23efb5afe9e2f',1,'Picto::DesignRoot']]],
   ['detectedsaveable',['detectedSaveable',['../class_picto_1_1_analysis_output_widget_container.html#aa6f1046005005642cb58fcbac0554194',1,'Picto::AnalysisOutputWidgetContainer']]],
   ['device',['device',['../class_plexon_plugin.html#aacfab4eb54f0d0bf0690cde1286bf6f4',1,'PlexonPlugin::device()'],['../class_tdt_plugin.html#aa88fcee8761632906f9a83c1f2a249ca',1,'TdtPlugin::device()'],['../class_virtual_device_plugin.html#af2f2429707d982e219789a9ded6049e1',1,'VirtualDevicePlugin::device()'],['../class_neural_data_acq_interface.html#a45d5b4ca74321f8dcb42fb9b1cbbb5af',1,'NeuralDataAcqInterface::device()']]],
   ['device_5fname',['DEVICE_NAME',['../_legacy_system_x_p_analog_input_port_8cpp.html#a5f5a2c9450ebc584b4fe743c6b1a280b',1,'DEVICE_NAME():&#160;LegacySystemXPAnalogInputPort.cpp'],['../_picto_box_x_p_analog_input_port_8cpp.html#a5f5a2c9450ebc584b4fe743c6b1a280b',1,'DEVICE_NAME():&#160;PictoBoxXPAnalogInputPort.cpp']]],
