@@ -10,8 +10,6 @@ AssetItem(editorState,contextMenu,asset)
 
 void ExperimentItem::setRect(QRectF rect)
 {
-	applyIconOpacity();
-
 	QLinearGradient grad(QPointF(0,-20),QPointF(0,20));
 	float stopPoint = (getIconRect().top()-getRect().top())/getRect().height();
 	QColor startColor("darkslategrey");
@@ -55,26 +53,4 @@ void ExperimentItem::currentAnalysisChanged(QSharedPointer<Analysis> currAnalysi
 	{
 		setHighlightColor(SearchRequest::getGroupTypeIndex(SearchRequest::EXPERIMENT,SearchRequest::SCRIPT),QColor(0,0,255,100));
 	}
-	applyIconOpacity();
-}
-
-/*! \brief This function doesn't do anything and should probably be removed.
-*/
-void ExperimentItem::applyIconOpacity()
-{
-	////Make sure the opacity effect is installed on the svg icon
-	//QGraphicsItem* svgItem = getSvgItem();
-	//if(svgItem && (svgItem->graphicsEffect() != opacityEffect_))
-	//{
-	//	svgItem->setGraphicsEffect(opacityEffect_);
-	//}
-	////Apply the icon opacity
-	//if(editorState_->getCurrentAnalysis().isNull())
-	//{
-	//	opacityEffect_->setOpacity(1);
-	//}
-	//else
-	//{
-	//	opacityEffect_->setOpacity(100.0/255.0);
-	//}
 }

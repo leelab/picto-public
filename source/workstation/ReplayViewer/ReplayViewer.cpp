@@ -512,7 +512,7 @@ QList<ReplayViewer::PlayRunInfo> ReplayViewer::getSelectedPlayRunInfo()
  *	triggered (ie. Play) and when the action actually takes affect (ie. PlaybackControllerData::Running
  *	state).
  *	\note Since thie object is set as running in the UI thread, signals from the PlaybackController 
- *	thread don't actually take affect until the UI thread's event loop runs.  That is how this how
+ *	thread don't actually take effect until the UI thread's event loop runs.  That is how this how
  *	this function can be triggered by changes that occur in the PlaybackController thread without
  *	being in the thread itself.
  */

@@ -195,31 +195,6 @@ bool Experiment::runTask(QString taskName)
 	//return false;
 }
 
-
-/*! \brief This function appears to no longer be used.
- *	\details The function was once used when attaching the Experiment to a remote Experiment
- *	that was already running to jump to the currently running state.  Since then, we have created 
- *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
- *	within the Qt event loop based on information coming from the Master, and not only from within 
- *	the blocking runTask() function.
- *	
- *	This function should probably be removed.
- */
-bool Experiment::jumpToState(QStringList path, QString state)
-{
-	QString taskName = path.takeFirst();
-	foreach(QSharedPointer<Task> task, tasks_)
-	{
-		if(task->getName() == taskName ||
-		   task->getName().simplified().remove(' ') == taskName)
-		{	
-			task->jumpToState(path,state);
-			return true;
-		}
-	}
-	return false;
-}
-
 void Experiment::postDeserialize()
 {
 	signalCoeffInitialized_ = false;

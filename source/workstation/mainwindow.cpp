@@ -164,12 +164,12 @@ void MainWindow::createToolbars()
 
 /*!	\brief Creates all of the different viewers.
  *
- *	\details In order to save time, all of the different viewers are created at start-up.
- *	The StateEditViewer is set as the current viewer.
+ *	\details In order to save time, all of the different viewers are created at start-up.  The StateEditViewer is set
+ *	as the current viewer.
  *
- *  To keep all of the code in one place, this function handles all of the actions 
- *	that are added to the viewer toolbar for selecting a different viewer as well as putting together the
- *	QStackedWidget that contains the different Viewer widgets.
+ *  To keep all of the code in one place, this function handles all of the actions that are added to the viewer
+ *	toolbar for selecting a different viewer as well as putting together the QStackedWidget that contains the
+ *	different Viewer widgets.
  *	\note It would be nice if the system started at the same viewer that was being viewed before the last exit.
  *	We should implement that.
  */
@@ -244,8 +244,8 @@ void MainWindow::createViewers()
  *			SLOTS
  *
  *****************************************************/
-/*! \brief Called when the MainWindow is told to close.  Calls aboutToQuit() on all of the viewers.  If nothing objects, the latest
- *	settings are written to disk and the close can proceed.
+/*! \brief Called when the MainWindow is told to close.  Calls aboutToQuit() on all of the viewers.  If nothing objects,
+ *	the latest settings are written to disk and the close can proceed.
  */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
@@ -275,10 +275,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 }
 
-/*! \brief Called when the newExperimentAction_ is triggered.  If nothing objects to closing the current Design, a default
- *	Design is loaded (loadFile() with the EyeCalibration.xml Design).
- *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
- *	probably be updated.
+/*! \brief Called when the newExperimentAction_ is triggered.  If nothing objects to closing the current Design, a
+ *	default Design is loaded (loadFile() with the EyeCalibration.xml Design).
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name
+ *	should probably be updated.
  */
 void MainWindow::newExperiment()
 {
@@ -290,10 +290,10 @@ void MainWindow::newExperiment()
 
 }
 
-/*! \brief Called when the openExperimentAction_ is triggered.  If nothing objects to closing the current Design, a QFileDialog allows
- *	the user to choose a Design file and (if valid) that file is loaded.
- *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
- *	probably be updated.
+/*! \brief Called when the openExperimentAction_ is triggered.  If nothing objects to closing the current Design, a
+ *	QFileDialog allows the user to choose a Design file and (if valid) that file is loaded.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name
+ *	should probably be updated.
  */
 void MainWindow::openExperiment()
 {
@@ -306,11 +306,11 @@ void MainWindow::openExperiment()
 	}
 }
 
-/*! \brief Called when one of the recentExperimentActions_ is triggered.  If nothing objects to closing the current Design, the file
- *	referenced from the RecentExperimentAction that called this function is loaded.  If that fails, newExperiment() is called to load
- *	the default Design.
- *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
- *	probably be updated.
+/*! \brief Called when one of the recentExperimentActions_ is triggered.  If nothing objects to closing the current
+ *	Design, the file referenced from the RecentExperimentAction that called this function is loaded.  If that fails,
+ *	newExperiment() is called to load the default Design.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name
+ *	should probably be updated.
  */
 void MainWindow::openRecentExperiment()
 {
@@ -323,10 +323,10 @@ void MainWindow::openRecentExperiment()
 	}
 }
 
-/*! \brief This is called when the StateEditViewer requests that the input DesignRoot be loaded.  If nothing objects to closing the current Design,
- *	the input DesignRoot is loaded.
- *	\details Essentially, this is the same as openExperiment() except that it is opening a Design from RAM not a file, so it needs to take care of
- *	things differently and handle some of the complicating factors of this procedure.
+/*! \brief This is called when the StateEditViewer requests that the input DesignRoot be loaded.  If nothing objects to
+ *	closing the current Design, the input DesignRoot is loaded.
+ *	\details Essentially, this is the same as openExperiment() except that it is opening a Design from RAM not a file,
+ *	so it needs to take care of things differently and handle some of the complicating factors of this procedure.
  */
 void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
 {
@@ -347,10 +347,10 @@ void MainWindow::openDesign(QSharedPointer<DesignRoot> designRoot)
 }
 
 
-/*! \brief Called to save the Design to file.  Redirects to saveFile() with the current file name in the default case, or saveAsExperiment() in the case
- *	where there is no file defined yet where the data should go.
- *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
- *	probably be updated.
+/*! \brief Called to save the Design to file.  Redirects to saveFile() with the current file name in the default case,
+ *	or saveAsExperiment() in the case where there is no file defined yet where the data should go.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name
+ *	should probably be updated.
  */
 bool MainWindow::saveExperiment()
 {
@@ -360,10 +360,10 @@ bool MainWindow::saveExperiment()
 		return saveFile(currFile_);
 }
 
-/*! \brief Called to save the Design to a new file.  Allows the user to select a file in a QFileDialog.  The file data is written to
- *	the selected file using saveFile() with that new filename.
- *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name should
- *	probably be updated.
+/*! \brief Called to save the Design to a new file.  Allows the user to select a file in a QFileDialog.  The file data
+ *	is written to the selected file using saveFile() with that new filename.
+ *	\note The naming here is from when the design xml only included an Experiment (no Analysis or UI data).  This name
+ *	should probably be updated.
  */
 bool MainWindow::saveAsExperiment()
 {
@@ -400,9 +400,11 @@ void MainWindow::changeMode()
 	changeMode(qobject_cast<Viewer*>(viewerStack_->currentWidget()));
 }
 
-/*! \brief Initiates a change in focus to the input Viewer.  If there is no current Viewer, startMode() is used.  If there is a current Viewer, its
- *	deinit() function is called and startMode() will be called whien its deinitComplete() signal is triggered.
- *	\details For more information on why we use the deinitComplete() signal indirection to trigger startMode(), see Viewer::deinitComplete().
+/*! \brief Initiates a change in focus to the input Viewer.  If there is no current Viewer, startMode() is used.
+ *	If there is a current Viewer, its deinit() function is called and startMode() will be called whien its
+ *	deinitComplete() signal is triggered.
+ *	\details For more information on why we use the deinitComplete() signal indirection to trigger startMode(),
+ *	see Viewer::deinitComplete().
  */
 void MainWindow::changeMode(Viewer* nextViewer)
 {
@@ -418,8 +420,9 @@ void MainWindow::changeMode(Viewer* nextViewer)
 		startMode();	//Start the next viewer
 }
 
-/*! \brief Changes the current view mode to that of the nextViewer_.  Sets the current DesignRoot to that Viewer and calls its Viewer::init() function.
-*/
+/*! \brief Changes the current view mode to that of the nextViewer_.  Sets the current DesignRoot to that Viewer and
+ *	calls its Viewer::init() function.
+ */
 void MainWindow::startMode()
 {
 	if(currViewer_ || !nextViewer_)
@@ -431,8 +434,8 @@ void MainWindow::startMode()
 	nextViewer_ = NULL;
 }
 
-/*! \brief Called when the setSystemNumberAction_ is triggered.  Allows the user to set the new system number and then uses Picto::portNums::setSystemNumber() to
- *	enact the change and restart the Workstation.
+/*! \brief Called when the setSystemNumberAction_ is triggered.  Allows the user to set the new system number and then
+ *	uses Picto::portNums::setSystemNumber() to enact the change and restart the Workstation.
  */
 void MainWindow::changeSystemNumber()
 {
@@ -449,19 +452,17 @@ void MainWindow::changeSystemNumber()
 	Picto::portNums->setSystemNumber(QCoreApplication::applicationFilePath(),QCoreApplication::arguments(),newSystemNum,true);
 }
 
-/*! \brief Called when the aboutPictoAction_ is triggered.  Displays a QMessageBox containing the latest release notes and general
- *	information about the Picto application.
+/*! \brief Called when the aboutPictoAction_ is triggered.  Displays a QMessageBox containing the latest release notes
+ *	and general information about the Picto application.
  */
 void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("Fixed bug that caused in session parameter value changes to be overridden by default values.");
+	releaseNoteList.append("First pass implementation of user-generated plot support.");
 	
-	releaseNoteList.append("Fixed bug that caused property fields to be intermittently greyed out and read-only.");
-	releaseNoteList.append("Overhaul of playback/analysis system to support batch analysis.");
-	releaseNoteList.append("Added 'disable lfp' capability to speed up session playback/analysis when lfp data is not necessary.");
-	releaseNoteList.append("Added auto-save system for restoring a recent unsaved version of a design file in the event of a crash.");
+	releaseNoteList.append("Added scaling to the task viewer.");
+	releaseNoteList.append("Added support for cusomizeable views in Remote Viewer, Test Viewer, and Replay Viewer.");
 
 	//Format release notes:
 	QString releaseNotes;
@@ -483,8 +484,8 @@ void MainWindow::aboutPicto()
  *			FILE HANDLING
  *
  *****************************************************/
-/*! \brief Checks to see if we have unsaved changes.  If so, uses a QMessageBox to ask the user if the unsaved changes are important or not.  If not, it is okay
- *	to continue and true is returned, if so, false is returned.
+/*! \brief Checks to see if we have unsaved changes.  If so, uses a QMessageBox to ask the user if the unsaved changes
+ *	are important or not.  If not, it is okay to continue and true is returned, if so, false is returned.
  */
 bool MainWindow::okToContinue()
 {
@@ -504,8 +505,9 @@ bool MainWindow::okToContinue()
 
 
 /*! \brief Saves the current DesignRoot to the input file.
- *	\details The DesignRoot's name is changed to match that of the input filename, Viewer::aboutToSave() is called on the currentViewer, 
- *	the DesignRoot is serialized using DesignRoot::getDesignRootText(), and that text is saved to the file.
+ *	\details The DesignRoot's name is changed to match that of the input filename, Viewer::aboutToSave() is called
+ *	on the currentViewer, the DesignRoot is serialized using DesignRoot::getDesignRootText(), and that text is saved
+ *	to the file.
  */
 bool MainWindow::saveFile(const QString filename)
 {
@@ -526,8 +528,7 @@ bool MainWindow::saveFile(const QString filename)
 
 	if(!success)
 	{
-		QMessageBox::critical(this,Picto::Names->workstationAppName, 
-			"Experiment failed to save");
+		QMessageBox::critical(this,Picto::Names->workstationAppName, "Experiment failed to save");
 		return false;
 	}
 	else
@@ -546,9 +547,10 @@ bool MainWindow::saveFile(const QString filename)
 }
 
 /*! \brief Loads the DesignRoot from the XML or .sqlite file at the input filename path.  
- *	\details This attemps to deserialize the file contents into a DesignRoot.  If deserialization fails, an error message is displayed and false is returned.
- *	If the deserialization is successful with warnings, those warnings are shown to the user.  Then the new DesignRoot is sent into the background AutoSaver 
- *	system for safety's sake in the case of a crash and the current filename is updated for the purpose of saveExperiment().
+ *	\details This attemps to deserialize the file contents into a DesignRoot.  If deserialization fails, an error
+ *	message is displayed and false is returned. If the deserialization is successful with warnings, those warnings
+ *	are shown to the user.  Then the new DesignRoot is sent into the background AutoSaver system for safety's sake
+ *	in the case of a crash and the current filename is updated for the purpose of saveExperiment().
  */
 bool MainWindow::loadFile(const QString filename)
 {
@@ -645,9 +647,9 @@ bool MainWindow::loadFile(const QString filename)
 }
 
 /*! \brief Called whenever the current file is changed.  Updates various values accordingly.
- *	\details The currFile_ string used to find the file to use in saveExperiment() is updated.  The recent files list in the file dropdown is updated along with the
- *	window title.  Then changeMode() is called with the current Viewer in order to call Viewer::init() again.
- *	
+ *	\details The currFile_ string used to find the file to use in saveExperiment() is updated.  The recent files list
+ *	in the file dropdown is updated along with the window title.  Then changeMode() is called with the current Viewer
+ *	in order to call Viewer::init() again.
  */
 void MainWindow::setCurrentFile(const QString &filename)
 {
@@ -671,8 +673,8 @@ void MainWindow::setCurrentFile(const QString &filename)
 		initViewerAction_->trigger();
 }
 
-/*! \brief Updates the recent files portion of the File menu according to the latest recentFiles_ list and a check as to which of those files actually exist
- *	in the file system.
+/*! \brief Updates the recent files portion of the File menu according to the latest recentFiles_ list and a check as
+ *	to which of those files actually exist in the file system.
  */
 void MainWindow::updateRecentFileActions()
 {
@@ -709,15 +711,13 @@ void MainWindow::updateRecentFileActions()
 
 /*****************************************************
  *
- *			PERSISTANT SETTINGS
+ *			PERSISTENT SETTINGS
  *
  *****************************************************/
 /*! \brief Stores settings from the Workstation to disk.
  *
- *	\details Settings for the Workstation app are stored on disk.
- *	The QSettings object does this for us in a platform independent
- *	manner.  This uses the registry in Windows, XML preference files
- *	in OSX, and ini files in Unix.
+ *	\details Settings for the Workstation app are stored on disk.  The QSettings object does this for us in a
+ *	platform independent manner.  This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.
  *
  *	Currently, the only settings are the recently opened files.
  */
@@ -731,10 +731,8 @@ void MainWindow::writeSettings()
 
 /*! \brief Reads settings for the Workstation from disk.
  *
- *	\details Settings for the Workstation app are stored on disk.
- *	The QSettings object does this for us in a platform independent
- *	manner.  This uses the registry in Windows, XML preference files
- *	in OSX, and ini files in Unix.
+ *	\details Settings for the Workstation app are stored on disk.  The QSettings object does this for us in a
+ *	platform independent manner.  This uses the registry in Windows, XML preference files in OSX, and ini files in Unix.
  *
  *	Currently, the only settings are the recently opened files.
  */

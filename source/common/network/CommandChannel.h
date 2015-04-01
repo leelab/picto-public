@@ -134,8 +134,6 @@ signals:
 	void connectAttemptFailed();
 	/*! \brief Emitted whenever the connection to the server is disconnected, whether by intention or not.*/
 	void channelDisconnected();
-	/*! \brief This signal is currently never emitted and should probably be removed.*/
-	void channelConnected();
 
 private slots:
 	void disconnectHandler();

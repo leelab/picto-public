@@ -6,11 +6,8 @@
 #include "../statemachine/UIEnabled.h"
 #include "../property/PropertyContainer.h"
 #include "../statemachine/StateMachine.h"
-//#include "../statemachine/StageResult.h"
-//#include "../experimentalsystem/ExperimentalSystem.h"
 #include "../engine/PictoEngine.h"
 
-//#include <QUuid>
 #include <QList>
 
 namespace Picto {
@@ -18,11 +15,10 @@ namespace Picto {
 /*!	\brief A Task contains the top level StateMachine that defines the logic for researching an
  *	experimental question.
  *
- *	A Task can define anything from a MemorySaccade exercise, to a system for checking the
- *	calibration of a reward supply system.  An Experiment usually contains multiple Tasks with each
- *	Task containing only one StateMachine.  The period from the time a Task starts until it finishes
- *	is called a Task Run, or simply a Run.  The Task class defines all the setup/take down logic
- *	for the Task Run and starts the underlying StateMachine that handles its actual experimental
+ *	A Task can define anything from a MemorySaccade exercise, to a system for checking the calibration of a reward supply
+ *	system.  An Experiment usually contains multiple Tasks with each Task containing only one StateMachine.  The period
+ *	from the time a Task starts until it finishes is called a Task Run, or simply a Run.  The Task class defines all
+ *	the setup/take down logic for the Task Run and starts the underlying StateMachine that handles its actual experimental
  *	control logic.
  *
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
@@ -42,7 +38,6 @@ public:
 	static QSharedPointer<Task> Create();
 
 	QString run(QSharedPointer<Engine::PictoEngine> engine);
-	bool jumpToState(QStringList path, QString state);
 	virtual bool hasEditableDescendants(){return true;};
 	virtual QString getUITemplate(){return "Task";};
 	virtual QString friendlyTypeName(){return "Task";};

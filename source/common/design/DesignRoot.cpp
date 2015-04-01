@@ -1,10 +1,13 @@
 #include <QMessageBox>
 #include <QTextCursor>
+
 #include "DesignRoot.h"
+
 #include "../statemachine/UIData.h"
 #include "../parameter/AssociateRootHost.h"
 #include "../parameter/AssociateRoot.h"
 #include "../storage/OldVersionAsset.h"
+
 #include "../memleakdetect.h"
 using namespace Picto;
 
@@ -64,8 +67,9 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 		//Move to the upgraded version
 		return resetDesignRoot(pictoData_->toXml());
 	}
-	
-	setUndoPoint();	//Has the effect of serializing the root object tree into designRootText_
+
+	//Has the effect of serializing the root object tree into designRootText_
+	setUndoPoint();	
 	designRootText_.clearUndoRedoStacks();
 	designRootText_.setModified(false);
 
@@ -159,7 +163,9 @@ void DesignRoot::setUndoPoint()
 	}
 }
 
-/*! \brief Returns a pointer to the asset that is set as the one open in the designer window or a null pointer if that asset couldn't be found.*/
+/*! \brief Returns a pointer to the asset that is set as the one open in the designer window or a null pointer if that
+ *	asset couldn't be found.
+ */
 QSharedPointer<Asset> DesignRoot::getOpenAsset()
 {
 	QSharedPointer<Asset> experiment = getExperiment();
@@ -195,9 +201,9 @@ bool DesignRoot::hasRedo()
 	return designRootText_.isRedoAvailable();
 }
 /*! \brief Moves the state of the experiment back to what it was when setUndoPoint() was last called.
- *	\details As described in the setUndoPoint() comments, what we actually do here is undo the serialized
- *	design document, then refresh the entire experiment from the XML design code.  Its inefficient.  It
- *	should be improved.  But it works, and it fit our schedule.
+ *	\details As described in the setUndoPoint() comments, what we actually do here is undo the serialized design document,
+ *	then refresh the entire experiment from the XML design code.  It's inefficient.  It should be improved.  But it works,
+ *	and it fit our schedule.
  *	\sa setUndoPoint(), hasUndo()
  */
 void DesignRoot::undo()
@@ -208,9 +214,9 @@ void DesignRoot::undo()
 	refreshFromXml();
 }
 /*! \brief Moves the state of the experiment forward to what it was just before the latest undo() was called.
- *	\details As described in the setUndoPoint() comments, what we actually do here is redo the serialized
- *	design document, then refresh the entire experiment from the XML design code.  Its inefficient.  It
- *	should be improved.  But it works, and it fit our schedule.
+ *	\details As described in the setUndoPoint() comments, what we actually do here is redo the serialized design document,
+ *	then refresh the entire experiment from the XML design code.  It's inefficient.  It should be improved.  But it works,
+ *	and it fit our schedule.
  *	\sa setUndoPoint(), hasRedo()
  */
 void DesignRoot::redo()
@@ -257,8 +263,7 @@ bool DesignRoot::isModified()
 	return designRootText_.isModified();
 }
 /*! \brief Sets the latest version of the design as unmodified
- *	\details Calling setUnmodified() has the result of removing all
- *	undo/redo points.
+ *	\details Calling setUnmodified() has the result of removing all undo/redo points.
  *	\sa setUndoPoint(), undo()
  */
 void DesignRoot::setUnmodified()

@@ -15,8 +15,6 @@
 
 #include "../common.h"
 #include "../compositor/RenderingTarget.h"
-//#include "../task/Task.h"
-//#include "../experiment/Experiment.h"
 #include "../network/CommandChannel.h"
 #include "../protocol/ProtocolCommand.h"
 #include "GenericInput.h"
@@ -48,15 +46,17 @@ namespace Picto {
 
 /*! \brief Runs a Picto Experiment.
  *
- *	As implied by the name, the PictoEngine runs the Experiment.  It actually does far too much for one class and should probably be split into a number 
- *	of smaller classes with one high level class that manages interactions between the smaller classes.  In its current incarnation, however, the PictoEngine's most
- *	important function is taking an Experiment object and executing its contained StateMachines by rendering to one or more RenderingTarget derived 
- *	objects.  It also handles the other pieces of experiment execution, such as reward delivery, alignment event delivery, output voltage signal production, input
- *	signal handling, interfacing with control panel applications (ie. Picto front panel), etc.  The PictoEngine can be assigned a CommandChannel with which to 
- *	communicate all changes in experimental state to a PictoServer.  It can be run in master or slave mode, where the master engine drives the experiment according 
- *	to user input and the slave engine drives the experiment using data from an external master retrieved from the PictoServer.  The engine can also be run in 
- *	operator or subject mode, which defines visibility of experimental graphics (graphics can be set visible for the experiment operator (tester), subject (testee) 
- *	or both).
+ *	As implied by the name, the PictoEngine runs the Experiment.  It actually does far too much for one class and should
+ *	probably be split into a number of smaller classes with one high level class that manages interactions between the
+ *	smaller classes.  In its current incarnation, however, the PictoEngine's most important function is taking an
+ *	Experiment object and executing its contained StateMachines by rendering to one or more RenderingTarget derived
+ *	objects.  It also handles the other pieces of experiment execution, such as reward delivery, alignment event
+ *	delivery, output voltage signal production, input signal handling, interfacing with control panel applications
+ *	(ie. Picto front panel), etc.  The PictoEngine can be assigned a CommandChannel with which to communicate all changes
+ *	in experimental state to a PictoServer.  It can be run in master or slave mode, where the master engine drives the
+ *	experiment according to user input and the slave engine drives the experiment using data from an external master
+ *	retrieved from the PictoServer.  The engine can also be run in operator or subject mode, which defines visibility
+ *	of experimental graphics (graphics can be set visible for the experiment operator (tester), subject (testee) or both).
  *	
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -75,19 +75,19 @@ public:
 	/*! \brief Sets this PictoEngine to run the Experiment in Exclusive mode.
 	 *	\details Exclusive mode indicates that the running experiment wants as much timing control as possible, as such
 	 *	control is never passed back to the Qt event loop.
-	 *	\note Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() && !operatorIsUser().
-	 *	Also, since computers have sped up significantly since this was designed, we should really explore rewriting the Engine and 
-	 *	StateMachineElements such that a Picto Experiment can be run as part of an event loop.  Doing this would vastly decrease
-	 *	a great deal of comlexity in Picto.
+	 *	\note Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() &&
+	 *	!operatorIsUser().  Also, since computers have sped up significantly since this was designed, we should really
+	 *	explore rewriting the Engine and StateMachineElements such that a Picto Experiment can be run as part of an
+	 *	event loop.  Doing this would vastly decrease a great deal of comlexity in Picto.
 	 */
 	void setExclusiveMode(bool mode) { bExclusiveMode_ = mode; };
 	/*! \brief Returns true if this PictoEngine is running in Exclusive mode, false otherwise.
 	 *	\details Exclusive mode indicates that the running experiment wants as much timing control as possible, as such
 	 *	control is never passed back to the Qt event loop.
-	 *	\note Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() && !operatorIsUser().
-	 *	Also, since computers have sped up significantly since this was designed, we should really explore rewriting the Engine and 
-	 *	StateMachineElements such that a Picto Experiment can be run as part of an event loop.  Doing this would vastly decrease
-	 *	a great deal of comlexity in Picto.
+	 *	\note Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() &&
+	 *	!operatorIsUser().  Also, since computers have sped up significantly since this was designed, we should really
+	 *	explore rewriting the Engine and StateMachineElements such that a Picto Experiment can be run as part of an event
+	 *	loop.  Doing this would vastly decrease a great deal of comlexity in Picto.
 	 */
 	bool getExclusiveMode() { return bExclusiveMode_; };
 
@@ -105,13 +105,15 @@ public:
 	void markTaskRunStart(QString name);
 	void markTaskRunStop();
 
-	/*! \brief Sets the event code generator that should be used to send alignment codes to a neural data acquisition system for timing alignment purposes.
-	 *	\details Picto aligns timestamps from the behavioral and neural systems by sending numerical codes over a physical line from the behavioral system
-	 *	to the neural system.  The behavioral system marks when the signal was sent, and the neural system marks when it was recieved.  Using this data, the
-	 *	server can align the clocks of the two systems.  Depending on the underlying hardware of the computer running Picto, different alignment Code Generators
-	 *	will need to be used.  This function tells the PictoEngine which one to use.
-	 *	\note For historical reasons, what we now refer to as an Alignment code generator is still referred to as an event code generator throughout most of 
-	 *	Picto.  This will likely lead to some confusion and should be fixed.
+	/*! \brief Sets the event code generator that should be used to send alignment codes to a neural data acquisition
+	 *	system for timing alignment purposes.
+	 *	\details Picto aligns timestamps from the behavioral and neural systems by sending numerical codes over a
+	 *	physical line from the behavioral system to the neural system.  The behavioral system marks when the signal
+	 *	was sent, and the neural system marks when it was recieved.  Using this data, the server can align the clocks
+	 *	of the two systems.  Depending on the underlying hardware of the computer running Picto, different alignment
+	 *	Code Generators will need to be used.  This function tells the PictoEngine which one to use.
+	 *	\note For historical reasons, what we now refer to as an Alignment code generator is still referred to as an
+	 *	event code generator throughout most of Picto.  This will likely lead to some confusion and should be fixed.
 	 */
 	void setEventCodeGenerator(QSharedPointer<EventCodeGenerator> eventCodeGenerator) { eventCodeGenerator_ = eventCodeGenerator; };
 	double generateEvent(unsigned int eventCode);
@@ -127,16 +129,15 @@ public:
 
 	/*! \brief Sets the OutputSignalController that will be used to change voltage signals output from the experiment.
 	 *	\details Depending on the hardware underlying the computer running a Picto experiment, or whether we are running
-	 *	a real experiment or a test, different code will be needed to change output voltages.  The OutputSignalController abstracts those
-	 *	implementation details such that the Engine need only worry about interfacing with it.
+	 *	a real experiment or a test, different code will be needed to change output voltages.  The OutputSignalController
+	 *	abstracts those implementation details such that the Engine need only worry about interfacing with it.
 	 */
 	void setOutputSignalController(QString port, QSharedPointer<OutputSignalController> outSigController) { if(!outSigController)return; outSigControllers_[port] = outSigController; };
 	void setOutputSignalValue(QString port, int pinId, QVariant value);
 	void enableOutputSignal(QString port, int pinId, bool enable);
 
 	QSharedPointer<PropertyDataUnitPackage> getChangedPropertyPackage();
-	//QSharedPointer<PropertyDataUnitPackage> getChangedInitPropertyPackage();
-	//void updatePropertiesFromServer();
+
 	/*! \brief Clears all of the latest changes stored in this engine's PropertyDataUnitPackage.
 	 *	\sa getChangedPropertyPackage()
 	 */
@@ -150,10 +151,9 @@ public:
 
 	void reportNewFrame(double frameTime,int runningStateId);
 	void setLastFrame(qulonglong frameId);
-	/*! \brief Returns the frame ID of the latest frame presented.*/
+	/*! \brief Returns the frame ID of the latest frame presented.
+	 */
 	qulonglong getLastFrameId(){return lastFrameId_;};
-
-	bool updateCurrentStateFromServer();
 
 	bool setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel);
 	QSharedPointer<CommandChannel> getDataCommandChannel();
@@ -166,7 +166,8 @@ public:
 	void sendAllPropertyValuesToServer();
 
 	void setSessionId(QUuid sessionId);
-	/*! \brief Returns the Session ID of the currently loaded session.*/
+	/*! \brief Returns the Session ID of the currently loaded session.
+	 */
 	QUuid getSessionId() { return sessionId_; };
 
 	/*! \brief Returns the name of the system on which this PictoEngine's experiment is running.
@@ -185,46 +186,47 @@ public:
 	 */
 	bool operatorIsUser(){return userIsOperator_;};
 	/*! \brief Tells the PictoEngine if it should be running in slave mode.
-	 *	\details In slave mode, experimental scripts don't run, all property updates and control flow details are handled by 
-	 *	reading in the latest state from a master.  In a live experiment, the Pictobox is the master, it sends data to the Picto Server,
-	 *	the Remote Viewer on the workstation is the slave and it gathers the latest State data by polling the Picto Server for the 
-	 *	data sent in by the Pictobox.
+	 *	\details In slave mode, experimental scripts don't run, all property updates and control flow details are handled
+	 *	by reading in the latest state from a master.  In a live experiment, the Pictobox is the master, it sends data to
+	 *	the Picto Server, the Remote Viewer on the workstation is the slave and it gathers the latest State data by
+	 *	polling the Picto Server for the data sent in by the Pictobox.
 	 */
 	void setSlaveMode(bool mode) { slave_ = mode; };
-	/*! \brief Returns true if this engine is running in slave mode, false if its running in master mode.*/
+	/*! \brief Returns true if this engine is running in slave mode, false if its running in master mode.
+	 */
 	bool slaveMode() { return slave_; }
 	/*! \brief Sets the Controller::FrameTimerFactory for this experiment.
 	 *	\details Since frame timers in the same experiment all need to be updated each time a new frame comes in, we use a 
 	 *	FrameTimerFactory foreach experiment that is responsible for creating the FrameTimers.  This allows us to set the 
-	 *	FrameTImers up such that they get their frame timing data from a single place, and we only need to update one object
-	 *	when a new frame time comes in.
+	 *	FrameTImers up such that they get their frame timing data from a single place, and we only need to update one
+	 *	object when a new frame time comes in.
 	 */
 	void setFrameTimerFactory(QSharedPointer<Controller::FrameTimerFactory> frameTimerFactory){frameTimerFactory_ = frameTimerFactory;};
 
 	//Setup Data Readers
 	//When running in test mode, data has to be added to data readers as it comes in for the purposes of Analysis
-	/*! \brief Sets a LiveFrameReader to this PictoEngine so that it can be updated during the course of the experiment and used
-	 *	for live analysis.
+	/*! \brief Sets a LiveFrameReader to this PictoEngine so that it can be updated during the course of the experiment
+	 *	and used for live analysis.
 	 *	\details This is useful for testing experimental/analysis designs.
 	 */
 	void setFrameReader(QSharedPointer<LiveFrameReader> frameReader){frameReader_ = frameReader;};
-	/*! \brief Sets a LiveLfpReader to this PictoEngine so that it can be updated during the course of the experiment and used
-	 *	for live analysis.
+	/*! \brief Sets a LiveLfpReader to this PictoEngine so that it can be updated during the course of the experiment
+	 *	and used for live analysis.
 	 *	\details This is useful for testing experimental/analysis designs.
 	 */
 	void setLfpReader(QSharedPointer<LiveLfpReader> lfpReader){lfpReader_ = lfpReader;};
-	/*! \brief Sets a LiveRewardReader to this PictoEngine so that it can be updated during the course of the experiment and used
-	 *	for live analysis.
+	/*! \brief Sets a LiveRewardReader to this PictoEngine so that it can be updated during the course of the experiment
+	 *	and used for live analysis.
 	 *	\details This is useful for testing experimental/analysis designs.
 	 */
 	void setRewardReader(QSharedPointer<LiveRewardReader> rewardReader){rewardReader_ = rewardReader;};
-	/*! \brief Sets a LiveSpikeReader to this PictoEngine so that it can be updated during the course of the experiment and used
-	 *	for live analysis.
+	/*! \brief Sets a LiveSpikeReader to this PictoEngine so that it can be updated during the course of the experiment
+	 *	and used for live analysis.
 	 *	\details This is useful for testing experimental/analysis designs.
 	 */
 	void setSpikeReader(QSharedPointer<LiveSpikeReader> spikeReader){spikeReader_ = spikeReader;};
-	/*! \brief Sets a LiveSignalReader to this PictoEngine with the input name so that it can be updated during the course of the experiment and used
-	 *	for live analysis.
+	/*! \brief Sets a LiveSignalReader to this PictoEngine with the input name so that it can be updated during the
+	 *	course of the experiment and used for live analysis.
 	 *	\details This is useful for testing experimental/analysis designs.
 	 */
 	void setSignalReader(QString name, QSharedPointer<LiveSignalReader> signalReader){signalReaders_[name.toLower()] = signalReader;};
@@ -251,9 +253,11 @@ public:
 	int getEngineCommand();
 public slots:
 	void stop();
-	/*! \brief Changes the engine command to PlayEngine so that a execution will begin/resume.*/
+	/*! \brief Changes the engine command to PlayEngine so that a execution will begin/resume.
+	 */
 	void play() { engineCommand_ = PlayEngine;};
-	/*! \brief Changes the engine command to PauseEngine so that execution will pause when it next reaches a pause point.*/
+	/*! \brief Changes the engine command to PauseEngine so that execution will pause when it next reaches a pause point.
+	 */
 	void pause(){ engineCommand_ = PauseEngine;};
 	void setName(QString name);
 	void setRewardDuration(int controller, int duration);
@@ -267,22 +271,21 @@ signals:
 	 *	We probably should have done this in a cleaner way... so you can think about that when you have time.
 	 */
 	void pauseRequested();
-	/*! \brief Presumably this was going to be emitted when the first phosphor appeared on the experimental display.  In practice, it is 
-	 *	not being emitted and nothing seems to use it.
+
+	/*! \brief Emitted when the reward duration changes on the input controller to the input duration in milliseconds.
 	 */
-	void firstPhosphorOccured();
-	/*! \brief Emitted when the reward duration changes on the input controller to the input duration in milliseconds.*/
 	void rewardDurationChanged(int controller, int duration);
-	/*! \brief Emitted when the flush duration changes on the input controller to the input duration in seconds.*/
+	/*! \brief Emitted when the flush duration changes on the input controller to the input duration in seconds.
+	 */
 	void flushDurationChanged(int controller, int duration);
-	/*! \brief Emitted when setName() is called on the PictoEngine.*/
+	/*! \brief Emitted when setName() is called on the PictoEngine.
+	 */
 	void nameChanged(QString name);
-	/*! \brief This does not appear to ever be emitted or used.  It should probably just be deleted.*/
-	void slaveTimeChanged(double time);
+
 	/*! \brief Emitted when the test subject presses the escape key.
-	 *	\details This is useful for situations when we want a subject to be able to escape out of an experiment.  In particular, in the Directory
-	 *	where the application runs in full screen mode and automatically grabs focus, we need an escape signal to be able to close the application
-	 *	for maintenance purposes.
+	 *	\details This is useful for situations when we want a subject to be able to escape out of an experiment.
+	 *	In particular, in the Directory where the application runs in full screen mode and automatically grabs focus,
+	 *	we need an escape signal to be able to close the application for maintenance purposes.
 	 */
 	void escapePressed();
 private:

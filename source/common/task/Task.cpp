@@ -14,28 +14,26 @@ namespace Picto {
  */
 Task::Task() 
 {
-		taskNumber_ = 0;
-		AddDefinableObjectFactory("StateMachine",
+	taskNumber_ = 0;
+	AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 }
 
-/*! \brief Creates a new Task object and returns a shared Asset pointer to it.*/
+/*! \brief Creates a new Task object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Task> Task::Create()
 {
 	return QSharedPointer<Task>(new Task());
 }
 
 /*! \brief Runs this Task's execution logic within the framework of the input PictoEngine.
- *	\details Since the Task only ever contains a single StateMachine, this function just
- *	takes care of initializing the new Task run, running the
- *	StateMachine, and sending any final data to the Server (if necessary).  
- *	\note Currently, this function blocks the Qt Event Loop execution until it finishes
- *	except in the case where the PictoEngine is running in slave mode, in which case
- *	the event loop is processed at various times from within this engine (which is not
- *	a very clean way to do things).  In the future this function should be rewritten to 
- *	run a single frame at a time from within an event loop.  See CommandChannel::processResponses() 
- *	for more details.
-*/
+ *	\details Since the Task only ever contains a single StateMachine, this function just takes care of initializing the
+ *	new Task run, running the StateMachine, and sending any final data to the Server (if necessary).  
+ *	\note Currently, this function blocks the Qt Event Loop execution until it finishes except in the case where the
+ *	PictoEngine is running in slave mode, in which case the event loop is processed at various times from within this
+ *	engine (which is not a very clean way to do things).  In the future this function should be rewritten to run a
+ *	single frame at a time from within an event loop.  See CommandChannel::processResponses() for more details.
+ */
 QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	QString result = "";
@@ -59,8 +57,7 @@ QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 			result = stateMachine_->run(engine);
 
 			//After the task has finished running, we need to report the final result.
-			//This can't be done within the state machine, because the state machine
-			//has no idea if it's the top level.
+			//  This can't be done within the state machine, because the state machine has no idea if it's the top level.
 			sendFinalStateDataToServer(result, engine);
 			result = "";
 		}
@@ -69,37 +66,12 @@ QString Task::run(QSharedPointer<Engine::PictoEngine> engine)
 	}
 }
 
-/*! \brief This function appears to no longer be used (ie. The functions that call it are never called themselves).
- *	\details The function was once used when attaching to a remote Experiment
- *	that was already running in order to jump to the currently running State.  Since then, we have created 
- *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
- *	within the Qt event loop based on information coming from the Master, and not only from within 
- *	the blocking runTask() function.
- *	
- *	This function should probably be removed.
- */
-bool Task::jumpToState(QStringList path, QString state)
-{
-	//If there's nothing left in the path, it means that we haven't started 
-	//running the task yet, so we don't need to do any jumping
-	if(path.isEmpty())
-		return true;
-
-	//The first name in the path should be the name of our state machine
-	if(path.takeFirst() != stateMachine_->getName())
-		return false;
-
-	return stateMachine_->jumpToState(path,state);
-}
-
 /*! \brief Sets the index of this Task within its container.
- *	\details This is useful since the Task's index is used to define
- *	an "initial transition" that is sent to the server during run
- *	time to indicate that this Task is the one that was run.  The idea here was that it is necessary to
- *	create a "fake" transition, since execution only really begins at the Task level, 
- *	so it is somewhat illogical to store a Transition in the design above the top level of the StateMachine.
- *	This can certainly be reconsidered at some point and changed, so long as reverse design compatibility is 
- *	maintained somehow.
+ *	\details This is useful since the Task's index is used to define an "initial transition" that is sent to the server
+ *	during run time to indicate that this Task is the one that was run.  The idea here was that it is necessary to
+ *	create a "fake" transition, since execution only really begins at the Task level, so it is somewhat illogical to
+ *	store a Transition in the design above the top level of the StateMachine.  This can certainly be reconsidered at
+ *	some point and changed, so long as reverse design compatibility is maintained somehow.
  */
 void Task::setTaskNumber(int num)
 {
@@ -108,9 +80,11 @@ void Task::setTaskNumber(int num)
 	initTransition_->setAssetId(-taskNumber_);
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
-	designConfig_->addManagedAsset(initTransition_);	//This adds the transition to the designConfig list so that it will be recognized
-													//By the server and remote workstations.  In the future we can consider adding transitions
-													//into initial states which wpuld make all of this unnecessary.
+	//This adds the transition to the designConfig list so that it will be recognized by the server and remote
+	//  workstations.  In the future we can consider adding transitions into initial states which wpuld make all of
+	//  this unnecessary.
+	designConfig_->addManagedAsset(initTransition_);	
+	
 	designConfig_->fixDuplicatedAssetIds();
 }
 
@@ -139,8 +113,7 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 	QSharedPointer<CommandChannel> dataChannel = engine->getDataCommandChannel();
 	if(dataChannel.isNull())
 	{
-		//If there's no data channel, this is a Test run.  Restart the FrameResolutionTimer
-		//every time.
+		//If there's no data channel, this is a Test run.  Restart the FrameResolutionTimer every time.
 		QDateTime dateTime = QDateTime::currentDateTime();
 		QString taskRunName = getName()+"_"+dateTime.toString("yyyy_MM_dd__hh_mm_ss");	
 		engine->markTaskRunStart(taskRunName);
@@ -171,9 +144,8 @@ void Task::sendInitialStateDataToServer(QSharedPointer<Engine::PictoEngine> engi
 
 /*! \brief Sends the final StateMachine Transition to the server
  *
- *	When a task completes, the final Transition never gets sent to the server.
- *	by the StateMachine, so we send it here.  We also create a fake final frame
- *	whose frameId can be used to stamp all of the Property changes, etc that occured
+ *	When a task completes, the final Transition never gets sent to the server by the StateMachine, so we send it here.
+ *	We also create a fake final frame whose frameId can be used to stamp all of the Property changes, etc that occured
  *	after the last frame that was actually presented.
  */
 void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::PictoEngine> engine)
@@ -207,7 +179,8 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	engine->reportNewFrame(frameTime,getAssetId());
 }
 
-/*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do anything in Task objects.
+/*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do
+ *	anything in Task objects.
  */
 void Task::postDeserialize()
 {

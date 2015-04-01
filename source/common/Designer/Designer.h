@@ -43,32 +43,33 @@ QT_END_NAMESPACE
 
 /*! \brief A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analyses.
  *	\details This is the top level widget of the Picto Graphical State Machine IDE for creating Picto designs.  
- *	The Designer includes a central canvas where StateMachineElements, Variables, Stimuli, AnalysisElements, etc can be dragged and dropped and 
- *	linked together with "Arrow" transitions.
+ *	The Designer includes a central canvas where StateMachineElements, Variables, Stimuli, AnalysisElements, etc can be
+ *	dragged and dropped and linked together with "Arrow" transitions.
  *
  *	On the right hand side is a PropertyBrowser that displays the properties defining the currently selected Asset.  
  *
- *	On the left hand side is a contextually aware Toolbox that provides drag-and-drop tools for creating all elements that are 
- *	addable in the current designer context.
+ *	On the left hand side is a contextually aware Toolbox that provides drag-and-drop tools for creating all elements that
+ *	are addable in the current designer context.
  *
- *	Underneath the Picto canvas is an information box including tabs to display the results of the latest compilation, information
- *	about the currently selected element in the canvas or toolbox, and contextual scripting information listing all of the script
- *	properties and functions available from the currently selected element.
+ *	Underneath the Picto canvas is an information box including tabs to display the results of the latest compilation,
+ *	information about the currently selected element in the canvas or toolbox, and contextual scripting information
+ *	listing all of the script properties and functions available from the currently selected element.
  *
- *	Underneath the PropertyBrowser is an ElementNotesWidget that displays any notes that the user added describing the currently
- *	selected experimental element (these note also appear in the element's tooltip).  
+ *	Underneath the PropertyBrowser is an ElementNotesWidget that displays any notes that the user added describing the
+ *	currently selected experimental element (these note also appear in the element's tooltip).  
  *
- *	A Toolbar appears at the top of the screen providing copy/paste, undo/redo, search and compilation functionality.  Analyses can also 
- *	be created/selected from this Toolbar and whether or not an Analysis is selected changes the Designer context as to whether 
- *	Experimental elements are editable or not along with whether Experimental or Analysis elements appear in the left hand ToolBox.
+ *	A Toolbar appears at the top of the screen providing copy/paste, undo/redo, search and compilation functionality.
+ *	Analyses can also be created/selected from this Toolbar and whether or not an Analysis is selected changes the
+ *	Designer context as to whether Experimental elements are editable or not along with whether Experimental or Analysis
+ *	elements appear in the left hand ToolBox.
  *
  *	Context menus are also provided for all elements that contain simple operations like copy/paste.
  *
- *	In the designer, the mouse is contextually aware.  When hovering over an elements body, clicking the mouse selects the element.  When
- *	hovering over a result bar, clicking the mouse starts creating a transition, etc.
+ *	In the designer, the mouse is contextually aware.  When hovering over an elements body, clicking the mouse selects
+ *	the element.  When hovering over a result bar, clicking the mouse starts creating a transition, etc.
  *	
- *	In essence, the designer is a GUI for interacting with the DesignRoot loaded in loadDesign.  A design could be created entirely in a text
- *	editor, but the UI makes things astronomically easier.
+ *	In essence, the designer is a GUI for interacting with the DesignRoot loaded in loadDesign.  A design could be
+ *	created entirely in a text editor, but the UI makes things astronomically easier.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -89,7 +90,6 @@ public:
 
 private slots:
     void sceneScaleChanged(const QString &scale);
-    void about();
 	void loadScene(DiagramScene* newScene);
 	void resetExperiment();
 	void insertEditBlock();
@@ -123,7 +123,6 @@ private:
 	QAction *analysisExportAction;
 	QAction *analysisImportAction;
 	QAction *pasteAction;
-    QAction *aboutAction;
 	QLineEdit *searchBox;
 	QCheckBox *matchCase;
 	QFrame* searchWidget;
@@ -138,7 +137,6 @@ private:
     QMenu *fileMenu;
     QMenu *itemMenu;
 	QMenu *sceneMenu;
-    QMenu *aboutMenu;
 
     QToolBar *editToolBar;
     QToolBar *pointerToolbar;
@@ -164,8 +162,8 @@ private:
 	QTabWidget *infoPane_;
 
 private slots:
-	void  undoAvailable(bool available);
-	void  redoAvailable(bool available);
+	void undoAvailable(bool available);
+	void redoAvailable(bool available);
 	void searchTextChanged(const QString& text);
 	void matchCaseChanged(int state);
 

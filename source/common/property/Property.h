@@ -15,32 +15,26 @@ namespace Picto {
 class PropertyContainer;
 /*!	\brief Describes the property of a DataStore.
  *
- *	All DataStore's in Picto must be entirely defined by Properties.  They store all of 
- *	the relevant data to completely reproduce the DataStore given its type.  By conforming to
- *	this design principle we can store a Design file by serializing only its tree structure
- *	and Property values and we can save an Experimental Session's complete experimental state by saving all changes
- *	to its Property values.  
+ *	All DataStore's in Picto must be entirely defined by Properties.  They store all of the relevant data to completely
+ *	reproduce the DataStore given its type.  By conforming to this design principle we can store a Design file by
+ *	serializing only its tree structure and Property values and we can save an Experimental Session's complete
+ *	experimental state by saving all changes to its Property values.  
  *
- *	An example of typical Properties would be a circle's color, radius, location, visibility, etc.  
- *	Each Property contains a name, a variant value and may include attributes (eg. allowable
- *	names for an enum property).  Properties may be deserialized from a Picto
- *  XML design file using deserializeFromXml().  Their values may also be converted to
- *	and from string form using valToUserString() and valFromUserString().  Underlying
- *  each Property are 3 values.  The saveValue, the initValue and the runValue.  
- *	Properties also run in two modes, run mode and design mode.  In design mode, 
- *	all calls to setValue() write to all three values and calls to value() return
- *	the saveValue.  In run mode, calls to setValue() set the runValue and calls to
- *	value() return the runValue.  The initValue may also be set by using setInitValue()
- *	and returned from initValue().  By separating these three values in this way, we
- *  can act on the same Property while designing and running an experiment.  Changes to values during
- *	an experimental run leave the underlying savable design untouched.  Init values
- *  are also important to keep the Picto run model intact.  An Operator can change initValues
- *	during an experimental run, but they are only set to the underlying runValues on
- *	entering a level in the StateMachine where they are accessible (when their parent enters scope).  
- *	In some unusual cases (ie. The experiment properties of xOffset, yOffset, etc), run Properties should
- *	be settable by the Operator even while the StateMachine is at a level where they are 
- *	already in scope.  For these cases, use enbleInitRunValueSync() which causes 
- *	these values to be copied to one another every time they are written.
+ *	An example of typical Properties would be a circle's color, radius, location, visibility, etc.  Each Property contains
+ *	a name, a variant value and may include attributes (eg. allowable names for an enum property).  Properties may be
+ *	deserialized from a Picto XML design file using deserializeFromXml().  Their values may also be converted to and
+ *	from string form using valToUserString() and valFromUserString().  Underlying each Property are 3 values.
+ *	The saveValue, the initValue and the runValue.  Properties also run in two modes, run mode and design mode.
+ *	In design mode, all calls to setValue() write to all three values and calls to value() return the saveValue.
+ *	In run mode, calls to setValue() set the runValue and calls to value() return the runValue.
+ *	The initValue may also be set by using setInitValue() and returned from initValue().  By separating these three values
+ *	in this way, we can act on the same Property while designing and running an experiment.  Changes to values during
+ *	an experimental run leave the underlying savable design untouched.  Init values are also important to keep the Picto
+ *	run model intact.  An Operator can change initValues during an experimental run, but they are only set to the
+ *	underlying runValues on entering a level in the StateMachine where they are accessible (when their parent enters scope).
+ *	In some unusual cases (ie. The experiment properties of xOffset, yOffset, etc), run Properties should be settable by
+ *	the Operator even while the StateMachine is at a level where they are already in scope.  For these cases, use
+ *	enbleInitRunValueSync() which causes these values to be copied to one another every time they are written.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -92,15 +86,17 @@ public:
 	 */
 	bool isVisible(){return visible_;};
 
-	/*! \brief Sets whether this Property will be editable in GUI property editors or read-only.  Default is true (editable).
+	/*! \brief Sets whether this Property will be editable in GUI property editors or read-only.  Default is
+	 *	true (editable).
 	 */
 	void setGuiEditable(bool guiEditable){guiEditable_ = guiEditable;};
-	/*! \brief Gets whether this Property will be editable in GUI property editors or read-only.  Default is true (editable).
+	/*! \brief Gets whether this Property will be editable in GUI property editors or read-only.  Default is
+	 *	true (editable).
 	 */
 	bool isGuiEditable(){return guiEditable_;};
 	
-	/*! \brief Set this to true if this Property is the child of an AssociateElement.  This is used with read-only monitoring
-	 *	for checking whether non-experimental scripts attempt to write to experimental Properties at runtime.
+	/*! \brief Set this to true if this Property is the child of an AssociateElement.  This is used with read-only
+	 *	monitoring for checking whether non-experimental scripts attempt to write to experimental Properties at runtime.
 	 */
 	void setAssociateProperty(bool isAssociate){associateProperty_ = isAssociate;};
 
@@ -137,31 +133,31 @@ public:
 	 *		- A Picto element should call startMonitoringForValueChange() just before running the read-only script.  
 	 *		- After the script code is complete, the element should call valueWasChanged().
 	 *		- If valueWasChanged() returned true, the element should throw a scripting runtime error.
-	 *		- The first value to have been changed since startMonitoringForValueChange() was called is available from changedValueName().
-	 *			This can be used to provide more detail in the scripting error message.
+	 *		- The first value to have been changed since startMonitoringForValueChange() was called is available from
+	 *			changedValueName().  This can be used to provide more detail in the scripting error message.
 	 */
 	static void startMonitoringForValueChange(){valueWasChanged_ = false;};
-	/*! \brief Functions like startMonitoringForValueChange() except that this function is used to make sure that Analysis Scripts
-	 *	change only Analysis and not Experimental Property values.
-	 *	\details The functions that are used in this case are startMonitoringForExperimentalValueChange(), experimentalValueWasChanged() and
-	 *	changedExperimentalValueName().
-	 *	The procedure is the same as for startMonitoringForValueChange().
+	/*! \brief Functions like startMonitoringForValueChange() except that this function is used to make sure that Analysis
+	 *	Scripts change only Analysis and not Experimental Property values.
+	 *	\details The functions that are used in this case are startMonitoringForExperimentalValueChange(),
+	 *	experimentalValueWasChanged() and changedExperimentalValueName().  The procedure is the same as for
+	 *	startMonitoringForValueChange().
 	 */
 	static void startMonitoringForExperimentalValueChange(){expValueWasChanged_ = false;};
 	/*! \brief Returns true if a Property value was changed since the last call to startMonitoringForValueChange().
 	 *	See startMonitoringForValueChange() for more detail.
 	 */
 	static bool valueWasChanged(){return valueWasChanged_;};
-	/*! \brief Returns true if an Experimental Property value was changed since the last call to startMonitoringForExperimentalValueChange().
-	 *	See startMonitoringForExperimentalValueChange() for more detail.
+	/*! \brief Returns true if an Experimental Property value was changed since the last call to
+	 *	startMonitoringForExperimentalValueChange().  See startMonitoringForExperimentalValueChange() for more detail.
 	 */
 	static bool experimentalValueWasChanged(){return expValueWasChanged_;};
-	/*! \brief Returns the name of the first Property to have its value changed since the last call to startMonitoringForValueChange().
-	 *	See startMonitoringForValueChange() for more detail.
+	/*! \brief Returns the name of the first Property to have its value changed since the last call to
+	 *	startMonitoringForValueChange().  See startMonitoringForValueChange() for more detail.
 	 */
 	static QString changedValueName(){return changedValueName_;};
-	/*! \brief Returns the name of the first Experimental Property to have its value changed since the last call to startMonitoringForExperimentalValueChange().
-	 *	See startMonitoringForExperimentalValueChange() for more detail.
+	/*! \brief Returns the name of the first Experimental Property to have its value changed since the last call to
+	 *	startMonitoringForExperimentalValueChange().  See startMonitoringForExperimentalValueChange() for more detail.
 	 */
 	static QString changedExperimentalValueName(){return changedExpValueName_;};
 
@@ -202,10 +198,11 @@ private:
 	int index_;
 	bool syncInitAndRunVals_;
 	bool runMode_;
-	bool unsavedValsInitialized_;
 	QString tagName_;
 	QString tagText_;
-	QString typeVal_; // In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	//In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but
+	//  need to write out would be in the tag.
+	QString typeVal_; 
 	bool scriptEditable_;
 	bool runtimeEnabled_;
 	int assetId_;

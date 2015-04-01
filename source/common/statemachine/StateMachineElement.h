@@ -61,10 +61,11 @@ public:
 	 */
 	virtual QString run(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	/*! \brief This function comes from back before we were using the SlaveExperimentDriver.  
-	 *	\details Since the SlaveExperimentDriver handles changing of Property values and transitioning control flow based on what happened in the Master 
-	 *	experiment, and slaveRenderFrame() handles the rendering component, the slaveRun() function itself is pretty much obsolete at this point.
-	 *	It should probably be removed, but since some classes use it to perform various minor operations, we will need to assure that they are moved
-	 *	to more appropriate functions first.
+	 *	\details Since the SlaveExperimentDriver handles changing of Property values and transitioning control flow based
+	 *	on what happened in the Master experiment, and slaveRenderFrame() handles the rendering component, the slaveRun()
+	 *	function itself is pretty much obsolete at this point.  It should probably be removed, but since some classes use
+	 *	it to perform various minor operations, we will need to assure that they are moved to more appropriate functions
+	 *	first.
 	 */
 	virtual QString slaveRun(QSharedPointer<Engine::PictoEngine> engine) = 0;
 	virtual QString slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine);

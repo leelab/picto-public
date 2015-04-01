@@ -24,16 +24,16 @@ PictoData::PictoData()
 void PictoData::postDeserialize()
 {
 	//If this PictoData has any StateMachineEditorData child assets, this object should be set as edited.
-	//ideally, the ObsoleteAsset child would just set itself deleted and that would
-	//propogate its edited state to here, the ObsoleteAsset can't though because 
-	//the latest it can do that is in postDeserialize, and this PictoData has its
-	//edited flag set back to false after that point.  This should be fixed at some point.
+	//  ideally, the ObsoleteAsset child would just set itself deleted and that would
+	//  propogate its edited state to here, the ObsoleteAsset can't though because 
+	//  the latest it can do that is in postDeserialize, and this PictoData has its
+	//  edited flag set back to false after that point.  This should be fixed at some point.
 	QList<QSharedPointer<Asset>> tagChildren = getGeneratedChildren("StateMachineEditorData");
 	if(tagChildren.size())
 		emit edited();
 
 	//Add all associate roots to their hosts (this has the affect of adding all analyses to their tasks and all
-	//UIData to their experiments and analyses.
+	//  UIData to their experiments and analyses.
 	QList<QSharedPointer<Asset>> allAssociateRoots = getGeneratedChildren("Analysis");
 	allAssociateRoots.append(getGeneratedChildren("UIData"));
 	QSharedPointer<Asset> linkAsset;
@@ -50,12 +50,12 @@ void PictoData::postDeserialize()
 		associateRoot.staticCast<AssociateRoot>()->LinkToAsset(linkAsset,feedback);
 	}
 
-	//Now that the entire tree is set up, and the saved associate roots are attached to their linked elements based on saved asset ids, 
-	//make sure that all assets have unique IDs and the DesignConfig object is tracking them.  This way, if an assetId needs to be changed
-	//for some reason, the changed id will propegate to any linked associates, and resulting hostId changes will propogate to linked AssociateRoots
-	//as well.
-	//Since Associates to AssociateHost linking does not use the design config, it is okay that we disallowIdDuplication after connecting
-	//Associates.
+	//Now that the entire tree is set up, and the saved associate roots are attached to their linked elements based on
+	//  saved asset ids, make sure that all assets have unique IDs and the DesignConfig object is tracking them.  This way,
+	//  if an assetId needs to be changed for some reason, the changed id will propegate to any linked associates, and
+	//  resulting hostId changes will propogate to linked AssociateRoots as well.
+	//Since Associates to AssociateHost linking does not use the design config, it is okay that we disallowIdDuplication
+	//  after connecting Associates.
 	designConfig_->disallowIdDuplication();
 
 	//Now call inherited postDeserialize which will actually call fixDuplicatedAssetIds on the designConfig
@@ -63,8 +63,9 @@ void PictoData::postDeserialize()
 
 	QList<QSharedPointer<Asset>> assocRootHosts = getGeneratedChildren("Experiment");
 	assocRootHosts.append(getGeneratedChildren("Analysis"));
+
 	////Since we haven't totally gotten rid of AnalysisContainers quite yet, we need to make sure
-	////they have UIData attached so that nothing breaks
+	////  they have UIData attached so that nothing breaks
 	//assocRootHosts.append(getGeneratedChildren("AnalysisContainer"));
 	AssociateRootHost* assocRootHost;
 	foreach(QSharedPointer<Asset> associateRootHostAsset,assocRootHosts)
@@ -83,8 +84,8 @@ void PictoData::postDeserialize()
 	}
 
 	//We handle version upgrading after attaching AssociateRoots so that those Associate roots
-	//can be modified, if necessary, as part of the upgrade process and so that changes to their
-	//hosts will not cause them to get disconnected (hostId change will propegate to associateRoot).
+	//  can be modified, if necessary, as part of the upgrade process and so that changes to their
+	//  hosts will not cause them to get disconnected (hostId change will propegate to associateRoot).
 	QString syntaxVer = propertyContainer_->getPropertyValue("SyntaxVersion").toString();
 	if(syntaxVer != DESIGNSYNTAXVERSION)
 	{
@@ -96,10 +97,9 @@ void PictoData::postDeserialize()
 }
 
 /*! \brief Constructs a shared pointer to a new PictoData object and returns it.
- *	\details Whereas in all other node of the Picto design tree, the parent sets
- *	the childs DesignConfig pointer to be the same as its own, since we are at 
- *	the top of the tree, we create the DesignConfig object here and set it to our
- *	own pointer.
+ *	\details Whereas in all other node of the Picto design tree, the parent sets the childs DesignConfig pointer to be the
+ *	same as its own, since we are at the top of the tree, we create the DesignConfig object here and set it to our own
+ *	pointer.
  */
 QSharedPointer<Asset> PictoData::Create()
 {

@@ -28,9 +28,6 @@ protected:
 	virtual void setRect(QRectF rect);
 	virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 	void currentAnalysisChanged(QSharedPointer<Analysis> currAnalysis);
-private:
-	void applyIconOpacity();
-	//QGraphicsOpacityEffect* opacityEffect_;
 };
 
 

@@ -22,10 +22,10 @@ size_(16)
 		Q_ASSERT(positionChannel_->getSubchannels().contains("x"));
 		Q_ASSERT(positionChannel_->getSubchannels().contains("y"));
 	}
-	propertyContainer_->addProperty(QVariant::String,"Name","");	//This object doesn't need a name, clear it.
+	//This object doesn't need a name, clear it.
+	propertyContainer_->addProperty(QVariant::String, "Name", "");
 	propertyContainer_->setContainerName(type);
 	initializePropertiesToDefaults();
-	propertyContainer_->setPropertyValue("Position",QPoint(0,0));	//Hmm... There already is a Position Property.  This line should probably be removed.
 	setScalable(false);
 
 	draw();

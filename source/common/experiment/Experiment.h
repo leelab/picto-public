@@ -19,30 +19,27 @@
 
 namespace Picto {
 
-/*!	\brief The Experiment object contains the complete definition of an Experiment for running
- *	in the Director, TestViewer, RemoteViewer or ReplayViewer.
+/*!	\brief The Experiment object contains the complete definition of an Experiment for running in the Director,
+ *	TestViewer, RemoteViewer or ReplayViewer.
  *	
- *	This is the top level object in the Experiment tree.  Its parent is the PictoData
- *	object which holds Analysis objects and UIData objects as well.  Each
- *	PictoData object must contain one and only one Experiment, and this Experiment holds all of the
- *	Task objects that may be run during a session.  Experiment objects also hold a pointer to
- *	an Engine::PictoEngine object which "runs" the experiment, interfacing it with the various 
- *	hardware being used in a particular session and with the network infrastructure that sends Experiment
- *	data to the PictoServer.
+ *	This is the top level object in the Experiment tree.  Its parent is the PictoData object which holds Analysis objects
+ *	and UIData objects as well.  Each PictoData object must contain one and only one Experiment, and this Experiment
+ *	holds all of the Task objects that may be run during a session.  Experiment objects also hold a pointer to an
+ *	Engine::PictoEngine object which "runs" the experiment, interfacing it with the various hardware being used in a
+ *	particular session and with the network infrastructure that sends Experiment data to the PictoServer.
  *
- *	The Experiment is an AssociateRootHost so that UIData and Analysis objects can attach to
- *	it and be informed when something about the Experiment changes.  It also contains all of
- *	the Properties needed for position SignalChannel calibration for two reasons:
- *		- The calibration Properties need to be attached to an object that is always in scope and
- *	whose name never changes (it is always "Experiment") for the purpose of script access.  
- *		- The calibration Properties need to maintain their values regardless of which Task is 
- *	running and where control flow is in a Task StateMachine, so their owner can never lose scope.
+ *	The Experiment is an AssociateRootHost so that UIData and Analysis objects can attach to it and be informed when
+ *	something about the Experiment changes.  It also contains all of the Properties needed for position SignalChannel
+ *	calibration for two reasons:
+ *		- The calibration Properties need to be attached to an object that is always in scope and whose name never
+ *	changes (it is always "Experiment") for the purpose of script access.  
+ *		- The calibration Properties need to maintain their values regardless of which Task is running and where control
+ *	flow is in a Task StateMachine, so their owner can never lose scope.
  *
- *	\note Unlike all other Property values in Picto, Experiment calibration Property initValues 
- *	are linked to their runValues so that as soon as the operator changes a calibration value it
- *	changes the SignalChannel calibration and takes affect on the Experiment's position signal.
- *	This is necessary since the Experiment never leaves scope.  If these Properties funcitoned
- *	like all other Properties, changes to their initValues would never actually take affect.
+ *	\note Unlike all other Property values in Picto, Experiment calibration Property initValues are linked to their
+ *	runValues so that as soon as the operator changes a calibration value it changes the SignalChannel calibration and
+ *	takes effect on the Experiment's position signal.  This is necessary since the Experiment never leaves scope.  If
+ *	these Properties functioned like all other Properties, changes to their initValues would never actually take effect.
  *	\sa SignalChannel, Engine::PictoEngine, Task
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -108,7 +105,6 @@ public:
 	QSharedPointer<Engine::PictoEngine> getEngine();
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName);
-	bool jumpToState(QStringList path, QString state);
 
 	QStringList getTaskNames();
 	QSharedPointer<Task> getTaskByName(QString taskName);

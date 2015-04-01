@@ -63,55 +63,6 @@ QSharedPointer<Asset> StateMachine::Create()
 	return QSharedPointer<Asset>(new StateMachine());
 }
 
-/*! \brief This function appears to no longer be used (ie. The functions that call it are never called themselves).
- *	\details The function was once used when attaching to a remote Experiment
- *	that was already running in order to jump to the currently running part of the StateMachine.  Since then, we have created 
- *	the StateUpdater, SlaveExperimentDriver system that allows us to run "Slave" Experiments from 
- *	within the Qt event loop based on information coming from the Master, and not only from within 
- *	the blocking runTask() function.
- *	
- *	This function should probably be removed.
- */
-bool StateMachine::jumpToState(QStringList path, QString state)
-{
-	if(!path.isEmpty())
-	{
-		QString nextMachine = path.takeFirst();
-		if(elements_.contains(nextMachine))
-		{
-			QSharedPointer<StateMachineElement> childElement_ = elements_[nextMachine].staticCast<StateMachineElement>();
-			if(!childElement_.dynamicCast<StateMachine>()->jumpToState(path,state))
-				return false;
-			currElement_ = childElement_;
-
-		}
-		else
-		{
-			Q_ASSERT_X(false,"StateMachine::jumpToState","Path entered into jumpToState was invalid");
-			return false;
-		}
-	}
-	else
-	{
-		if(elements_.contains(state))
-		{
-			currElement_ = elements_[state].staticCast<StateMachineElement>();
-		}
-		else if(results_.contains(state))
-		{
-			Q_ASSERT(false);
-			dontRunElement_ = true;
-		}
-		else
-		{
-			Q_ASSERT_X(false,"StateMachine::jumpToState","Path entered into jumpToState was invalid");
-			return false;
-		}
-	}
-	ignoreInitialElement_ = true;
-	return true;
-}
-
 void StateMachine::upgradeVersion(QString deserializedVersion)
 {
 	MachineContainer::upgradeVersion(deserializedVersion);
@@ -174,11 +125,14 @@ void StateMachine::upgradeVersion(QString deserializedVersion)
  *		- Verify that Scripting has been initialized
  *		- Run EntryScript
  *		- Transition to the initial StateMachineElement
- *		- One by one, call StateMachineElement::run() on the current StateMachineElement.  When it returns, get its Result, find the Transition that transitions
- *			from that result, transition to its destination, set that as the current StateMachineElement and loop again.
- *		- When control transitions to a Result, run the Result's EntryScript, then run this StateMachine's ExitScript and exit the function.
+ *		- One by one, call StateMachineElement::run() on the current StateMachineElement.  When it returns, get its
+ *			Result, find the Transition that transitions from that result, transition to its destination, set that as
+ *			the current StateMachineElement and loop again.
+ *		- When control transitions to a Result, run the Result's EntryScript, then run this StateMachine's ExitScript
+ *			and exit the function.
  *		- Return the name of the result that caused the StateMachine to exit.
- *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after the Entry and Exit Scripts.
+ *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after
+ *	the Entry and Exit Scripts.
 */
 QString StateMachine::runPrivate(QSharedPointer<Engine::PictoEngine> engine, bool)
 {

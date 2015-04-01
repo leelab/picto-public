@@ -35,7 +35,8 @@ PictoEngine::PictoEngine() :
 	setSessionId(QUuid());
 }
 
-/*! \brief Returns a list of RenderingTargets to which the running Experiment is rendered.*/
+/*! \brief Returns a list of RenderingTargets to which the running Experiment is rendered.
+ */
 QList<QSharedPointer<RenderingTarget> > PictoEngine::getRenderingTargets()
 {
 	return renderingTargets_;
@@ -49,7 +50,8 @@ QList<QSharedPointer<ControlPanelInterface> > PictoEngine::getControlPanels()
 	return controlPanelIfs_;
 }
 
-/*! \brief Adds a RenderingTarget to which Experiments should be rendered.*/
+/*! \brief Adds a RenderingTarget to which Experiments should be rendered.
+ */
 void PictoEngine::addRenderingTarget(QSharedPointer<RenderingTarget> target)
 {	
 	renderingTargets_.append(target);
@@ -85,16 +87,16 @@ void PictoEngine::addControlPanel(QSharedPointer<ControlPanelInterface> controlP
 }
 
 /*! \brief Returns the SignalChannel that was added to this PictoEngine with the input name.
-*/
+ */
 QSharedPointer<SignalChannel> PictoEngine::getSignalChannel(QString name)
 {
 	return signalChannels_.value(name.toLower(), QSharedPointer<SignalChannel>());
 }
 
 /*! \brief Adds a SignalChannel to this PictoEngine so that it will be accessible to experimental elements.
- *	\details For example, when the State gets the current eye position, it gets it from the "position" signal stored int the
- *	engine.
-*/
+ *	\details For example, when the State gets the current eye position, it gets it from the "position" signal stored in
+ *	the engine.
+ */
 void PictoEngine::addSignalChannel(QSharedPointer<SignalChannel> channel)
 {
 	signalChannels_.insert(channel->getName().toLower(), channel);
@@ -124,7 +126,8 @@ void PictoEngine::stopAllSignalChannels()
 	}
 }
 
-/*! \brief Empties all of the latest data out of all SignalChannels that have been added to this PictoEngine.*/
+/*! \brief Empties all of the latest data out of all SignalChannels that have been added to this PictoEngine.
+ */
 void PictoEngine::emptySignalChannels()
 {
 	foreach(QSharedPointer<SignalChannel> channel, signalChannels_)
@@ -138,7 +141,7 @@ void PictoEngine::emptySignalChannels()
 }
 
 /*! \brief Marks when a task with the input name starts.  Initializes various objects and data fields for the new run.
-*/
+ */
 void PictoEngine::markTaskRunStart(QString name)
 {
 	//If there's not data channel, this is a test run.  Treat every run as if its in its own world
@@ -169,8 +172,9 @@ void PictoEngine::markTaskRunStart(QString name)
 	}
 }
 
-/*! \brief Marks when a task with the input name stops.  Deinitializes various objects and data fields for the end of the run.
-*/
+/*! \brief Marks when a task with the input name stops.  Deinitializes various objects and data fields for the end of the
+ *	run.
+ */
 void PictoEngine::markTaskRunStop()
 {
 	taskRunEnding_ = true;
@@ -307,7 +311,8 @@ void PictoEngine::enableOutputSignal(QString port, int pinId,bool enable)
 	outSigControllers_[port]->enablePin(enable,pinId);
 }
 
-/*! \brief Informs this engine of a Property whose value changed so that it can be included in the PropertyDataUnitPackage returned from getChangedPropertyPackage().
+/*! \brief Informs this engine of a Property whose value changed so that it can be included in the PropertyDataUnitPackage
+ *	returned from getChangedPropertyPackage().
  */
 void PictoEngine::addChangedPropertyValue(Property* changedProp)
 {
@@ -320,7 +325,8 @@ void PictoEngine::addChangedPropertyValue(Property* changedProp)
 	//If the changedProp has no parent, its a UI parameter.  Set the path as such.
 	propPackage_->addData(changedProp->getAssetId(),false,changedProp->valToUserString());
 }
-/*! \brief Informs this engine of a Property whose init value changed so that it can be included in the PropertyDataUnitPackage returned from getChangedPropertyPackage().
+/*! \brief Informs this engine of a Property whose init value changed so that it can be included in the
+ *	PropertyDataUnitPackage returned from getChangedPropertyPackage().
  */
 void PictoEngine::addChangedPropertyInitValue(Property* changedProp)
 {
@@ -335,8 +341,9 @@ void PictoEngine::addChangedPropertyInitValue(Property* changedProp)
 }
 
 /*! \brief Retrieves the latest package of changed properties.
- *	\details When this function is called, the stored PropertyDataUnitPackage pointer is cleared such that each PropertyDataUnitPackage can
- *	only be retrieved once and includes data regarding Properties whose values changed since the last time the function was called.
+ *	\details When this function is called, the stored PropertyDataUnitPackage pointer is cleared such that each
+ *	PropertyDataUnitPackage can only be retrieved once and includes data regarding Properties whose values changed
+ *	since the last time the function was called.
  */
 QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
 {
@@ -353,8 +360,8 @@ QSharedPointer<PropertyDataUnitPackage> PictoEngine::getChangedPropertyPackage()
 	return returnVal;
 }
 
-/*! \brief Adds the input Transition to a stored. StateDataUnitPackage.  This package is transfered to the Server as part of reportNewFrame() 
- *	to record the control flow history of the running experiment.
+/*! \brief Adds the input Transition to a stored. StateDataUnitPackage.  This package is transfered to the Server as part
+ *	of reportNewFrame() to record the control flow history of the running experiment.
  */
 void PictoEngine::addStateTransitionForServer(QSharedPointer<Transition> stateTrans)
 {
@@ -364,8 +371,9 @@ void PictoEngine::addStateTransitionForServer(QSharedPointer<Transition> stateTr
 }
 
 /*! \brief Retrieves the latest StateDataUnitPackage of control flow history.
- *	\details When this function is called, the stored StateDataUnitPackage pointer is cleared such that each StateDataUnitPackage can
- *	only be retrieved once and includes data regarding transitions since the last time the function was called.
+ *	\details When this function is called, the stored StateDataUnitPackage pointer is cleared such that each
+ *	StateDataUnitPackage can only be retrieved once and includes data regarding transitions since the last time the
+ *	function was called.
  */
 QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
 {
@@ -385,7 +393,6 @@ QSharedPointer<StateDataUnitPackage> PictoEngine::getStateDataPackage()
  *	\details When this function is called, stored signal data is cleared such that each BehavioralDataUnitPackage list can
  *	only be retrieved once and includes data regarding signal values since the last time the function was called.
  */
-
 QList<QSharedPointer<BehavioralDataUnitPackage>> PictoEngine::getBehavioralDataPackages()
 {
 	//Note that the call to getDataPackage() clears out any existing values,
@@ -420,7 +427,6 @@ QList<QSharedPointer<BehavioralDataUnitPackage>> PictoEngine::getBehavioralDataP
 *	\details When this function is called, stored signal data is cleared such that each BehavioralDataUnitPackage list can
 *	only be retrieved once and includes data regarding signal values since the last time the function was called.
 */
-
 QList<QSharedPointer<InputDataUnitPackage>> PictoEngine::getInputDataPackages()
 {
 	//Note that the call to getDataPackage() clears out any existing values,
@@ -442,11 +448,10 @@ QList<QSharedPointer<InputDataUnitPackage>> PictoEngine::getInputDataPackages()
 
 /*! \brief Sends the latest behavioral data to the server aligned with this frame time
  *
- *	We update the server with all important data whenever a new frame is reported.  This includes 
- *	the time at which the most recent frame was drawn, as well as all the input
- *	coordinates from the subject and all changed properties and transition history.  This data is important
- *	so we send it as a registered command, which means that we will get confirmation
- *	when it's written to disk, and store it for resending if a confirmation isn't received in a set window.  
+ *	We update the server with all important data whenever a new frame is reported.  This includes the time at which the
+ *	most recent frame was drawn, as well as all the input coordinates from the subject and all changed properties and
+ *	transition history.  This data is important so we send it as a registered command, which means that we will get
+ *	confirmation when it's written to disk, and store it for resending if a confirmation isn't received in a set window.  
  *	It also means we don't have to wait around for a response before continuing experimental execution.
  */
 void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
@@ -454,11 +459,9 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 	//Create a new frame data store
 	FrameDataUnitPackage frameData;
 
-	//Behavioral data occured during the course of the
-	//previous frame and so its offsettime value is with respect to the 
-	//first phosphor time of the previous frame.  The frame is stamped
-	//when we call getBehavioralDataPackages, so we need to call it before
-	//we call setLastFrame with the new frame id.
+	//Behavioral data occured during the course of the previous frame and so its offsettime value is with respect to the 
+	//  first phosphor time of the previous frame.  The frame is stamped when we call getBehavioralDataPackages, so we
+	//  need to call it before we call setLastFrame with the new frame id.
 	QList<QSharedPointer<BehavioralDataUnitPackage>> behavPackList = getBehavioralDataPackages();
 	QList<QSharedPointer<InputDataUnitPackage>> inputPackList = getInputDataPackages();
 
@@ -593,14 +596,14 @@ void PictoEngine::reportNewFrame(double frameTime,int runningStateId)
 
 	dataChannel->processResponses(0);
 	//The line below is very fast if the connection isn't broken and takes up to 5 ms reconnecting if it is.
-	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the
-	//next frame.
+	//This shouldn't be a problem since there should be some time to spare in the state's run loop before the next frame.
 	dataChannel->assureConnection(5);
 
 
 }
 
-/*! \brief Sets the id of the latest frame to be rendered.*/
+/*! \brief Sets the id of the latest frame to be rendered.
+ */
 void PictoEngine::setLastFrame(qulonglong frameId)
 {
 	lastFrameId_ = frameId;
@@ -611,16 +614,9 @@ void PictoEngine::setLastFrame(qulonglong frameId)
 	}
 }
 
-/*! \brief Calls updateState of the stateUpdater_ object; however, nothing seems to be using this function so it should probably be removed.
-*/
-bool PictoEngine::updateCurrentStateFromServer()
-{
-	if(!stateUpdater_)
-		return false;
-	return stateUpdater_->updateState();
-}
-
-/*! Sets the CommandChannel used to send data to the Picto Server.  Returns true if the channel's status is connected, false otherwise.*/
+/*! Sets the CommandChannel used to send data to the Picto Server.  Returns true if the channel's status is connected,
+ *	false otherwise.
+ */
 bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandChannel)
 {
 	if(commandChannel.isNull())
@@ -633,14 +629,15 @@ bool PictoEngine::setDataCommandChannel(QSharedPointer<CommandChannel> commandCh
 	else
 		return true;
 }
-/*! Returns the CommandChannel used to send data to the Picto Server.*/
+/*! Returns the CommandChannel used to send data to the Picto Server.
+ */
 QSharedPointer<CommandChannel> PictoEngine::getDataCommandChannel()
 {
 	return dataCommandChannel_;
 }
 
-/*! \brief Sets a PropertyTable to this Picto Engine for the purpose of tracking changed values and initvalues and sending them to
- *	the Picto Server.
+/*! \brief Sets a PropertyTable to this Picto Engine for the purpose of tracking changed values and initvalues and
+ *	sending them to the Picto Server.
  */
 void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
 {
@@ -658,8 +655,8 @@ void PictoEngine::setPropertyTable(QSharedPointer<PropertyTable> propTable)
 	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
 }
 
-/*! \brief Uses the PropertyTable set in setPropertyTable() to send the current values of all Properties in the experiment to the
- *	Picto Server.
+/*! \brief Uses the PropertyTable set in setPropertyTable() to send the current values of all Properties in the experiment
+ *	to the Picto Server.
  */
 void PictoEngine::sendAllPropertyValuesToServer()
 {
@@ -667,8 +664,8 @@ void PictoEngine::sendAllPropertyValuesToServer()
 	propTable_->reportChangeInAllProperties();
 }
 
-/*! \brief Sets the session ID of the current session to this experiment.  If Command Channels have been
- *	added to this engine, the sessionId will be copied to them as well.
+/*! \brief Sets the session ID of the current session to this experiment.  If Command Channels have been added to this
+ *	engine, the sessionId will be copied to them as well.
  */
 void PictoEngine::setSessionId(QUuid sessionId)
 {
@@ -678,24 +675,6 @@ void PictoEngine::setSessionId(QUuid sessionId)
 	if(!updateCommandChannel_.isNull())
 		updateCommandChannel_->setSessionId(sessionId_);
 }
-
-//void PictoEngine::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
-//{
-//	if(designConfig_ == designConfig)
-//		return;
-//	designConfig_ = designConfig;
-//	if(propTable_)
-//	{
-//		disconnect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-//		disconnect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-//	}
-//	propTable_.clear();
-//	if(designConfig_.isNull())
-//		return;
-//	propTable_ = QSharedPointer<PropertyTable>(new PropertyTable(getDesignConfig()));
-//	connect(propTable_.data(),SIGNAL(propertyValueChanged(Property*)),this,SLOT(addChangedPropertyValue(Property*)));
-//	connect(propTable_.data(),SIGNAL(propertyInitValueChanged(Property*)),this,SLOT(addChangedPropertyInitValue(Property*)));
-//}
 
 /*! \brief Changes the engine command to StopEngine so that a execution will end.
  *	\details Internally, calls stopAllSignalChannels()
@@ -722,8 +701,7 @@ void PictoEngine::setName(QString name)
 }
 
 /*! \brief Changes the reward duration for the input controller to the input duration (in ms).
- *	\details Also takes care of informing the ControlPanelInterface objects of the change and
- *	emits rewardDurationChanged().
+ *	\details Also takes care of informing the ControlPanelInterface objects of change and emits rewardDurationChanged().
  */
 void PictoEngine::setRewardDuration(int controller, int duration)
 {
@@ -738,8 +716,7 @@ void PictoEngine::setRewardDuration(int controller, int duration)
 }
 
 /*! \brief Changes the flush duration for the input controller to the input duration (in seconds).
- *	\details Also takes care of informing the ControlPanelInterface objects of the change and
- *	emits flushDurationChanged().
+ *	\details Also takes care of informing the ControlPanelInterface objects of the change and emits flushDurationChanged().
  */
 void PictoEngine::setFlushDuration(int controller, int duration)
 {
@@ -837,8 +814,8 @@ void PictoEngine::flushRequest(int channel)
 
 /*! \brief Returns this machines current IP Address.
  *	\note The method used for detecting the IP Address is that we use the first IPv4 address that isn't localhost 
- *	and is on an interface that is up and running.  This has worked correctly so far, but there could possibly be some issues 
- *	with strange networking setups.
+ *	and is on an interface that is up and running.  This has worked correctly so far, but there could possibly be some
+ *	issues with strange networking setups.
  */
 QHostAddress PictoEngine::getIpAddress()
 {
@@ -875,12 +852,13 @@ int PictoEngine::getEngineCommand()
 	return engineCommand_;
 }
 
-/*! \brief Performs various operations that need to occur once per frame as soon as possible after the first phosphor is rendered to the display.
- *	\details This is called when the VisualTarget detects that the first phosphor was rendered.  It first updates OutputSignalControllers to 
- *	implement any changes to output voltage signals, it then starts/stops any rewards that need to be updated, next it updates all data on input 
- *	signal channels (ie. reads in latest data from buffers, aligns input hardware timing with Picto timing), afterward ControlPanelInterfaces 
- *	respond to incoming commands from ControlPanels and SignalValueParameter objects are updated with the latest values of their referenced
- *	SignalChannels.
+/*! \brief Performs various operations that need to occur once per frame as soon as possible after the first phosphor is
+ *	rendered to the display.
+ *	\details This is called when the VisualTarget detects that the first phosphor was rendered.  It first updates
+ *	OutputSignalControllers to implement any changes to output voltage signals, it then starts/stops any rewards that
+ *	need to be updated, next it updates all data on input signal channels (ie. reads in latest data from buffers, aligns
+ *	input hardware timing with Picto timing), afterward ControlPanelInterfaces respond to incoming commands from
+ *	ControlPanels and SignalValueParameter objects are updated with the latest values of their referenced SignalChannels.
  */
 void PictoEngine::firstPhosphorOperations(double frameTime)
 {
@@ -889,9 +867,9 @@ void PictoEngine::firstPhosphorOperations(double frameTime)
 		sigCont->updateValues();
 	}
 
-	//Below, we enable the reward controller's reward list if there is a reward reader, but if not, then we only enable it if
-	//this is the director.  This is so that in the case of the director rewards can get sent to the server and in the case
-	//of Testing analysis code (rewardReader).  Triggered rewards can get read by the analysis code.
+	//Below, we enable the reward controller's reward list if there is a reward reader, but if not, then we only enable
+	//  it if this is the director.  This is so that in the case of the director rewards can get sent to the server and
+	//  in the case of Testing analysis code (rewardReader).  Triggered rewards can get read by the analysis code.
 	if(!rewardController_.isNull())
 		rewardController_->triggerRewards(rewardReader_ || !(dataCommandChannel_.isNull() || sessionId_.isNull() || slave_));
 

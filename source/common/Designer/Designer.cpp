@@ -21,8 +21,8 @@
 const int InsertTextButton = 10;
 
 /*! \brief Constructs a new Designer widget with the input parent.
- *	\details This function initializes the UI and all variables.  It also creates the EditorState object used throughout the designer
- *	to maintain the current state and allow different components to communicate with one another.
+ *	\details This function initializes the UI and all variables.  It also creates the EditorState object used throughout
+ *	the designer to maintain the current state and allow different components to communicate with one another.
  */
 Designer::Designer(QWidget *parent) :
 	QWidget(parent),
@@ -158,20 +158,11 @@ void Designer::sceneScaleChanged(const QString &scale)
 	editorState_->setZoom(newScale);
 }
 
-/*! \brief No longer used.  This used to present simple information about the StateMachineEditor, like... it exists.  It was unnecessary.
- */
-void Designer::about()
-{
-    QMessageBox::about(this, tr("About State Machine Editor"),
-                       tr("The <b>State Machine Editor</b> is used"
-                          "to design Picto experiments."));
-}
-
 /*! \brief This is an initialization function that loads the input scene as the current Designer Scene.
- *	\details Originally, the designer used to function differently with lots of different scenes being 
- *	loaded back and forth depengin on which Element was the Window Asset.  Now we only use a single
- *	scene that updates itself depending on th Window Asset.  This functions contents could probably
- *	just be moved into a larger intialization function at some point.
+ *	\details Originally, the designer used to function differently with lots of different scenes being loaded back and
+ *	forth depending on which Element was the Window Asset.  Now we only use a single scene that updates itself depending
+ *	on the Window Asset.  This functions contents could probably just be moved into a larger intialization function at
+ *	some point.
  */
 void Designer::loadScene(DiagramScene* newScene)
 {
@@ -186,27 +177,24 @@ void Designer::loadScene(DiagramScene* newScene)
 	if(view == NULL)
 		view = new ViewerWindow(editorState_,newScene);
 	view->setScene(newScene);
-	//In this version of Qt it looks like connecting signals to slots more than
-	//once does not have the effect of multiplying the number of times that the
-	//slots are called.  In future versions this may occur though because future 
-	//versions support a Qt::UniqueConnection parameter.  We would just disconnect
-	//old connections before connecting the new ones but this isn't working for 
-	//some reason.
-	//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),
- //           this, SLOT(itemInserted(DiagramItem *)));
-    //connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),
-    //    this, SLOT(textInserted(QGraphicsTextItem *)));
-	connect(editorState_.data(),SIGNAL(resetExperiment()),
-		this,SLOT(resetExperiment()));
+	//In this version of Qt it looks like connecting signals to slots more than once does not have the effect of
+	//  multiplying the number of times that the slots are called.  In future versions this may occur though because
+	//  future versions support a Qt::UniqueConnection parameter.  We would just disconnect old connections before
+	//  connecting the new ones but this isn't working for some reason.
+	//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),this,SLOT(itemInserted(DiagramItem *)));
+    //connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),this,SLOT(textInserted(QGraphicsTextItem *)));
+	connect(editorState_.data(),SIGNAL(resetExperiment()),this,SLOT(resetExperiment()));
 }
 
-/*! \brief Resets the associated DesignRoot from its XML code and then resets the Designer to function with the newly reset object.
- *	\details This is useful because some operations currently require rebuildling the design from text.  For example, currently
- *	deleting an element in Picto just sets a deleted flag on that element that tells it not to serialize itself out.  This helps
- *	with maintaining the general serialized XML structure through changes to the design, but in order to actually make the
- *	element disappear in the Designer we need to then rebuild the whole design from its XML text.  Obviously that is extremely inefficient
- *	but this is the kind of tradeoff that sometimes sped up the Picto development schedule at the expense of runtime efficiency.  If you 
- *	have time, please rework the system such that we won't need to use inefficient functions like this one.
+/*! \brief Resets the associated DesignRoot from its XML code and then resets the Designer to function with the newly
+ *	reset object.
+ *	\details This is useful because some operations currently require rebuildling the design from text.  For example,
+ *	currently deleting an element in Picto just sets a deleted flag on that element that tells it not to serialize itself
+ *	out.  This helps with maintaining the general serialized XML structure through changes to the design, but in order to
+ *	actually make the element disappear in the Designer we need to then rebuild the whole design from its XML text.
+ *	Obviously that is extremely inefficient but this is the kind of tradeoff that sometimes sped up the Picto development
+ *	schedule at the expense of runtime efficiency.  If you have time, please rework the system such that we won't need to
+ *	use inefficient functions like this one.
  */
 void Designer::resetExperiment()
 {
@@ -252,10 +240,12 @@ void Designer::performRedoAction()
 	resetEditor();
 }
 
-/*! \brief Tells the DesignRoot which asset is currently open in the Designer so that this information can be saved out with the Design.
- *	\details Along with the other UI specific information like Elements' canvas positions, we save the currently opened asset in the 
- *	Design file.  This allows the Designer to open Designs to the last Window Asset that was open when they were saved.  It also helps
- *	in Undo/Redo by moving us to the spot where we were before the last edit block occured (for undo) or after the next redo block occured (for redo).
+/*! \brief Tells the DesignRoot which asset is currently open in the Designer so that this information can be saved out
+ *	with the Design.
+ *	\details Along with the other UI specific information like Elements' canvas positions, we save the currently opened
+ *	asset in the Design file.  This allows the Designer to open Designs to the last Window Asset that was open when they
+ *	were saved.  It also helps in Undo/Redo by moving us to the spot where we were before the last edit block occured
+ *	(for undo) or after the next redo block occured (for redo).
  */
 void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 {
@@ -263,17 +253,19 @@ void Designer::setOpenAsset(QSharedPointer<Asset> asset)
 	designRoot_->setOpenAsset(asset);
 }
 
-/*! \brief Called when the selected Asset in the Designer canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.
+/*! \brief Called when the selected Asset in the Designer canvas changes to update the actions available in the
+ *	Toolbar/ContextMenu accordingly.
  *	\note This would appear to be redundant with selectedItemChanged(), it might be worth looking into.
-*/
+ */
 void Designer::selectedAssetChanged(QSharedPointer<Asset>)
 {
 	updateEnabledActions();
 }
 
-/*! \brief Called when the selected Graphics Item in the Designer canvas changes to update the actions available in the Toolbar/ContextMenu accordingly.
+/*! \brief Called when the selected Graphics Item in the Designer canvas changes to update the actions available in the
+ *	Toolbar/ContextMenu accordingly.
  *	\note This would appear to be redundant with selectedAssetChanged(), it might be worth looking into.
-*/
+ */
 void Designer::selectedItemChanged(QGraphicsItem*)
 {
 	updateEnabledActions();
@@ -285,7 +277,8 @@ void Designer::selectedItemChanged(QGraphicsItem*)
  *	elements need to be grayed out.  This assures that the editorState redraws its window properly now that it knows
  *	about the currently selected analysis.
  *	\note This appears to just be helping the EditorState do its job.  Probably this functionality should be moved out of
- *	this class and just happen automatically inside the EditorState when it emits the EditorState::currentAnalysisChanged() signal.
+ *	this class and just happen automatically inside the EditorState when it emits the EditorState::currentAnalysisChanged()
+  *	signal.
  */
 void Designer::currentAnalysisChanged(QSharedPointer<Analysis>)
 {
@@ -349,9 +342,6 @@ void Designer::createActions()
     exitAction->setShortcut(tr("Ctrl+X"));
     exitAction->setStatusTip(tr("Quit Scenediagram example"));
 
-    aboutAction = new QAction(tr("A&bout"), this);
-    aboutAction->setShortcut(tr("Ctrl+B"));
-
 	searchBox = new QLineEdit("");
 	searchBox->setPlaceholderText(tr("Enter Search String"));
 	connect(searchBox,SIGNAL(textChanged(QString)),this,SLOT(searchTextChanged(QString)));
@@ -392,7 +382,6 @@ void Designer::connectActions()
 	connect(analysisImportAction, SIGNAL(triggered()),scene, SLOT(analysisImportSelectedItem()));
 	connect(pasteAction, SIGNAL(triggered()),scene, SLOT(pasteItems()));
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(aboutAction, SIGNAL(triggered()),this, SLOT(about()));
 	connect(editorState_.data(),SIGNAL(undoableActionPerformed()),this,SLOT(insertEditBlock()));
 	connect(editorState_.data(),SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),this,SLOT(setOpenAsset(QSharedPointer<Asset>)));
 	connect(editorState_.data(),SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),this,SLOT(selectedAssetChanged(QSharedPointer<Asset>)));
@@ -404,10 +393,6 @@ void Designer::connectActions()
 */
 void Designer::createMenus()
 {
-    //fileMenu = menuBar()->addMenu(tr("&File"));
-    //fileMenu->addAction(exitAction);
-
-    //itemMenu = menuBar()->addMenu(tr("&Item"));
 	itemMenu = new QMenu(tr("&Item"),this);
     itemMenu->addAction(deleteAction);
 	itemMenu->addAction(copyAction);
@@ -417,9 +402,6 @@ void Designer::createMenus()
 
 	sceneMenu = new QMenu(tr("Scene"),this);
 	sceneMenu->addAction(pasteAction);
-
-    //aboutMenu = menuBar()->addMenu(tr("&Help"));
-    //aboutMenu->addAction(aboutAction);
 }
 
 /*! \brief Creates the Designer's Toolbars using actions created in createActions() as well as other widgets
@@ -569,8 +551,8 @@ void  Designer::redoAvailable(bool available)
 }
 
 /*! \brief Called when text in the search box changes to initiate a search for the input string.
- *	\details Whenever the text in the searchbox is updated, a search is initiated within the Experimental and Active Analysis
- *	assets.
+ *	\details Whenever the text in the searchbox is updated, a search is initiated within the Experimental and Active
+ *	Analysis assets.
  */
 void Designer::searchTextChanged(const QString& text)
 {
@@ -578,7 +560,8 @@ void Designer::searchTextChanged(const QString& text)
 	editorState_->requestSearch(SearchRequest(SearchRequest::ACTIVE_ANALYSES,SearchRequest::STRING,true,text,matchCase->isChecked()));
 }
 
-/*! \brief Called when the matchCase checkbox changes to update the active search using searchTextChanged().*/
+/*! \brief Called when the matchCase checkbox changes to update the active search using searchTextChanged().
+ */
 void Designer::matchCaseChanged(int)
 {
 	if(!searchBox->text().isEmpty())

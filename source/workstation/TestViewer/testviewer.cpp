@@ -474,9 +474,8 @@ void TestViewer::stopped()
 	}
 }
 
-/*! \brief This is called when the selected Task in the task combobox changes.  It updates the run time
- *	enabled Properties in the PropetyFrame for that Task and sets that Task as the active Task in the 
- *	TestPlaybackController.
+/*! \brief This is called when the selected Task in the task combobox changes.  It updates the run time enabled Properties
+ *	in the PropetyFrame for that Task and sets that Task as the active Task in the TestPlaybackController.
  */
 void TestViewer::taskListIndexChanged(int)
 {
@@ -491,20 +490,18 @@ void TestViewer::taskListIndexChanged(int)
 	testController_->setTask(taskListBox_->currentText());
 }
 
-/*! \brief This is called when the operator clicks somewhere in the display window.  It informs the
- *	OperatorClickParameter that a click was detected (OperatorClickParameter::addClick()).  This is
- *	important in order to be able to test experiments that use the OperatorClickParameter, like the
- *	Calibration Task.
+/*! \brief This is called when the operator clicks somewhere in the display window.  It informs the OperatorClickParameter
+ *	that a click was detected (OperatorClickParameter::addClick()).  This is important in order to be able to test
+ *	experiments that use the OperatorClickParameter, like the Calibration Task.
  */
 void TestViewer::operatorClickDetected(QPoint pos)
 {
 	OperatorClickParameter::addClick(pos);
 }
 
-/*! \brief Called when the User Type dropdown value changes.  Changes the user type in the 
- *	PlaybackController accordingly.
- *	\note The active user, Operator or Subject, determines which graphics are shown in the 
- *	display depending on each graphics OperatorView/SubjectView Properties.
+/*! \brief Called when the User Type dropdown value changes.  Changes the user type in the PlaybackController accordingly.
+ *	\note The active user, Operator or Subject, determines which graphics are shown in the display depending on each
+ *	graphics OperatorView/SubjectView Properties.
  */
 void TestViewer::setUserType(int index)
 {

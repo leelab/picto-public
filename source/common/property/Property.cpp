@@ -71,11 +71,12 @@ void Property::setName(QString name)
 }
 
 /*! \brief Returns this Property's initValue.
- *	\details A Property's initValue is an initial condition for the Property.  The Property's runValue, which is the one that actually
- *	takes effect during an experiment, is set to the Property's initValue every time the Property's parent enters scope.  This value
- *	is used during Experimental runs for Experiment Operator's to be able to change experimental parameters during the run.  Since the
- *	changes that the Operator makes only take effect when the Property's parent first enters scope, the Operator need not worry that
- *	depending on the current run state some invalid logic condition will be created changing a Property value.
+ *	\details A Property's initValue is an initial condition for the Property.  The Property's runValue, which is the one
+ *	that actually takes effect during an experiment, is set to the Property's initValue every time the Property's parent
+ *	enters scope.  This value is used during Experimental runs for Experiment Operator's to be able to change experimental
+ *	parameters during the run.  Since the changes that the Operator makes only take effect when the Property's parent first
+ *	enters scope, the Operator need not worry that depending on the current run state some invalid logic condition will be
+ *	created changing a Property value.
  */
 QVariant Property::initValue()
 {
@@ -83,14 +84,16 @@ QVariant Property::initValue()
 }
 
 /*! \brief Returns the Property's current value as a function of the current run mode.
- *	\details When run mode is enabled, the returned value is the runValue, the effective value of the Property throughout an experimental run.
- *	If run mode is disabled, the returned value is the saveValue.  This is the value that is actually saved to disk when a Picto Design is 
- *	saved.  It is important to differentiate between saveValue and runValue so that the same Design can be used in the StateMachineEditor and
- *	in the TestViewer.  If we only had a runValue, then tests run in the Picto TestViewer would affect the Design file that is saved to disk.
+ *	\details When run mode is enabled, the returned value is the runValue, the effective value of the Property throughout
+ *	an experimental run.  If run mode is disabled, the returned value is the saveValue.  This is the value that is actually
+ *	saved to disk when a Picto Design is saved.  It is important to differentiate between saveValue and runValue so that
+ *	the same Design can be used in the StateMachineEditor and in the TestViewer.  If we only had a runValue, then tests
+ *	run in the Picto TestViewer would affect the Design file that is saved to disk.
  *	By separating these two types of values, we can be sure that testing a design won't affect its saved file.
- *	\note We can't use initValues as saveValues because then changes that a test Operator makes to Property initValues would also affect the
- *	saved file.  By seperating out the saveValue though, since every time a Design is deserialized from xml the saveValues are the ones that are set to the 
- *	initValue and runValue fields, we are sure that the initial conditions of a Design before it is run will always be according to the design's saveValues.  
+ *	\note We can't use initValues as saveValues because then changes that a test Operator makes to Property initValues
+ *	would also affect the saved file.  By seperating out the saveValue though, since every time a Design is deserialized
+ *	from xml the saveValues are the ones that are set to the initValue and runValue fields, we are sure that the initial
+ *	conditions of a Design before it is run will always be according to the design's saveValues.  
  */
 QVariant Property::value()
 {
@@ -111,10 +114,10 @@ void Property::enableRunMode(bool enable)
 	runMode_ = enable;
 }
 
-/*! \brief When InitRunValueSync is enabled, changing a Property's initValue immediately updates its runValue as well, with no need to wait for the Property parent
- *	to re-enter scope.
- *	\details This is useful for Properties like the Position signal calibration values.  They need to take affect right away.  We can't wait for some parent
- *	object to come back into scope.
+/*! \brief When InitRunValueSync is enabled, changing a Property's initValue immediately updates its runValue as well,
+ *	with no need to wait for the Property parent to re-enter scope.
+ *	\details This is useful for Properties like the Position signal calibration values.  They need to take effect
+ *	right away.  We can't wait for some parent object to come back into scope.
  *
  *	By default, InitRunValueSync is disabled.
  */
@@ -124,8 +127,9 @@ void Property::enableInitRunValueSync(bool enable)
 }
 
 /*! \brief Sets the input _attributeName to the input _attributeValue.
- *	\details Some Property types require attributes.  The EnumProperty for example needs a list of possible enum values so that
- *	it can translate between an enum value name and an associate integer.  This function is used to set up that type of mapping.
+ *	\details Some Property types require attributes.  The EnumProperty for example needs a list of possible enum values so
+ *	that it can translate between an enum value name and an associate integer.  This function is used to set up that
+ *	type of mapping.
  */
 void Property::setAttribute(QString _attributeName, QVariant _attributeValue)
 {
@@ -144,13 +148,17 @@ QVariant Property::attributeValue(QString _attributeName) const
 }
 
 /*! \brief Implements Asset::serializeAsXml() to serializes this Property into the input QXmlStreamWriter.
- *	\details A Property is saved to XML as follows \code <[TagName] name='someName' type='someType' id=[some number]>[some value]</[TagName]> \endcode
- *	All Properties use the "name" field.  The "type" field may or may not be used.  The "id" field is used for every Property with an
- *	AssetId, which should actually be every Property that there is.  The id field is saved out as a serializationAttribute set in the
- *	setSerializationAttributeValue() function though.  In theory, every attribute set with this function would be serialized out, but in practice
- *	we are only using setSerializationAttributeValue() for the serialization id.  It might be worth while cleaning this up at some point.
+ *	\details A Property is saved to XML as follows
+ *	\code <[TagName] name='someName' type='someType' id=[some number]>[some value]</[TagName]> \endcode
+ *	All Properties use the "name" field.
+ *	The "type" field may or may not be used.
+ *	The "id" field is used for every Property with an AssetId, which should actually be every Property that there is.
+ *	The id field is saved out as a serializationAttribute set in the setSerializationAttributeValue() function though.
+ *	In theory, every attribute set with this function would be serialized out, but in practice we are only using
+ *	setSerializationAttributeValue() for the serialization id.  It might be worth while cleaning this up at some point.
  *
- *	The actual Property value is stored between the opening and closing xml tags according to its string value as returned from variantToString().
+ *	The actual Property value is stored between the opening and closing xml tags according to its string value as returned
+ *	from variantToString().
  *	\sa deserializeFromXml()
  */
 bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
@@ -173,7 +181,8 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeStartElement(tagName_);
 	if(getName() != tagName_)
 		xmlStreamWriter->writeAttribute("name",getName());
-	// In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	//In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to
+	//  write out would be in the tag.
 	if(typeVal_ != "")
 		xmlStreamWriter->writeAttribute("type",typeVal_);
 	//UpdateSerializationAttributesFromValue();
@@ -187,14 +196,14 @@ bool Property::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
-/*! \brief Implements Asset::deserializeFromXml() to deserialize this Property from the Xml stored in the input QXmlStreamReader.
- *	\details This function reads in XML code as output from serializeAsXml() and uses it to initialize this
- *	Property.
+/*! \brief Implements Asset::deserializeFromXml() to deserialize this Property from the Xml stored in the input
+*	QXmlStreamReader.
+ *	\details This function reads in XML code as output from serializeAsXml() and uses it to initialize this Property.
  *
  *	\note There is some code here that deals with loading Properties from an obsolete XML format.  In the past
- *	some Property types stored their values in XML attributes instead of between the opening and closing tags.  To deal with these
- *	cases, we deserialize all unexpected attributes into an "unexpectedAttributeMap" and then input that map into
- *	the attributeMapToVariantValue() function which can be implemented in child classes to retrieve the value from 
+ *	some Property types stored their values in XML attributes instead of between the opening and closing tags.  To deal
+ *	with these cases, we deserialize all unexpected attributes into an "unexpectedAttributeMap" and then input that map
+ *	into the attributeMapToVariantValue() function which can be implemented in child classes to retrieve the value from 
  *	those attributes.  When the Property is saved again, it will automatically be upgraded to the current Picto syntax.
  */
 bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -218,7 +227,8 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	else
 		setName(tagName_);
 
-	// In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to write out would be in the tag.
+	//In cases where a Asset Factory used a type attribute to choose between types, a type that we don't use but need to
+	//  write out would be in the tag.
 	if(xmlStreamReader->attributes().hasAttribute("type"))
 	{
 		typeVal_ = xmlStreamReader->attributes().value("type").toString();
@@ -335,16 +345,18 @@ bool Property::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRead
 	return true;
 }
 
-/*! \brief This is the string that is sent over the network when an initValue is changed and its value needs to be sent to a running session.
+/*! \brief This is the string that is sent over the network when an initValue is changed and its value needs to be
+ *	sent to a running session.
  *	\sa initValFromUserString()
-*/
+ */
 QString Property::initValToUserString()
 {
 	return variantToString(initValue());
 }
+
 /*! \brief Updates the current initValue from a string that was output from initValToUserString().
  *	\sa initValToUserString()
-*/
+ */
 void Property::initValFromUserString(QString userString)
 {
 	QString error = "";
@@ -359,9 +371,10 @@ QString Property::valToUserString()
 	return variantToString(value());
 }
 
-/*! \brief Updates the current variant runValue from a user readable string in the format serialized out from valToUserString().
+/*! \brief Updates the current variant runValue from a user readable string in the format serialized out from
+ *	valToUserString().
  *	\sa valToUserString()
-*/
+ */
 void Property::valFromUserString(QString userString)
 {
 	QString error = "";
@@ -378,9 +391,9 @@ int Property::getAssetId()
 
 /*! \brief Sets this Property's AssetId.
  *	\details It is set into the Property's id attribute.
- *	\note This function causes assetIdEdited() to be emitted.  It also emits edited() if the Property's value has been previously edited.
- *	If the Property's value has not been previously edited, it is a default Property value and changing an AssetId is not a change that should
- *	cause this Property to need to be serialized out.
+ *	\note This function causes assetIdEdited() to be emitted.  It also emits edited() if the Property's value has been
+ *	previously edited.  If the Property's value has not been previously edited, it is a default Property value and
+ *	changing an AssetId is not a change that should cause this Property to need to be serialized out.
  */
 void Property::setAssetId(int id)
 {
@@ -396,8 +409,8 @@ void Property::setAssetId(int id)
 	emit assetIdEdited();
 }
 
-/*! \brief Sets the value of the initValue to the input _value.  If enableInitRunValueSync() was used to enable init->runValue syncing,
- *	the runValue is set as well.
+/*! \brief Sets the value of the initValue to the input _value.  If enableInitRunValueSync() was used to enable
+ *	init->runValue syncing, the runValue is set as well.
  */
 void Property::setInitValue(QVariant _value)
 {
@@ -409,7 +422,8 @@ void Property::setInitValue(QVariant _value)
 	}
 }
 
-/*! \brief Sets the input value to the appropriate saveValue, initValue and/or runValue according to the current runMode and InitRunValueSync state.
+/*! \brief Sets the input value to the appropriate saveValue, initValue and/or runValue according to the current runMode
+ *	and InitRunValueSync state.
  *	\details See value() and enableInitRunValueSync() for more details.
  */
 void Property::setValue(QVariant _value)
@@ -441,8 +455,8 @@ QString Property::variantToString(QVariant value) const
 
 /*! \brief Converts the input QString value to a QVariant value for various purposes throughout this Property.
  *	\details This function is meant to be overridden by child classes to convert the input value to a QVariant
- *	according to the child class's own special criteria.  By default it simply creates a QVariant with it's QString constructor 
- *	and returns that QVariant.
+ *	according to the child class's own special criteria.  By default it simply creates a QVariant with its QString
+ *	constructor and returns that QVariant.
  *	\sa variantToString()
  */
 QVariant Property::stringToVariant(QString string, QString& error) const
@@ -452,10 +466,10 @@ QVariant Property::stringToVariant(QString string, QString& error) const
 }
 
 /*! \brief This is used to upgrade obsolete syntax that stored Property value data inside an xml tag's attribute fields
- *	during serialization.  A map of those attributes is input, and the function should be overriden by child classes to return the appropriate
- *	QVariant on the basis of that map.
- *	\details The error input reference ins filled with an error message if there is some problem with converting the input attribute map to
- *	a QVariant.
+ *	during serialization.  A map of those attributes is input, and the function should be overriden by child classes to
+ *	return the appropriate QVariant on the basis of that map.
+ *	\details The error input reference ins filled with an error message if there is some problem with converting the
+ *	input attribute map to a QVariant.
  */
 QVariant Property::attributeMapToVariantValue(QMap<QString,QVariant> attrMap, QString& error) const
 {
@@ -471,26 +485,25 @@ QVariant Property::saveValuePrivate()
 }
 
 /*! \brief Sets the current saveValue to the input.  If this causes it to change, the edited() signal is emitted.
-*/
+ */
 void Property::setSaveValuePrivate(QVariant _value)
 {
 	if(saveValue_ != _value)
 	{
 		saveValue_ = _value;
-		unsavedValsInitialized_ = false;	//We don't appear to be using this anywhere, it should probably be removed.
 		emit edited();
 	}
 }
 
 /*! \brief Returns the current initValue.
-*/
+ */
 QVariant Property::initValuePrivate()
 {
 	return initValue_;
 }
 
 /*! \brief Sets the current initValue to the input.  If this causes it to change, the initValueChanged() signal is emitted.
-*/
+ */
 void Property::setInitValuePrivate(QVariant _value)
 {
 	if(initValue_ != _value)
@@ -501,7 +514,7 @@ void Property::setInitValuePrivate(QVariant _value)
 }
 
 /*! \brief Returns the current runValue.
-*/
+ */
 QVariant Property::runValuePrivate()
 {
 	return runValue_;
@@ -512,9 +525,9 @@ QVariant Property::runValuePrivate()
  *	for checking if an experimental script that is meant to be read only attempted to change a Property value, or for
  *	checking if an Analysis Script attempted to change an Experimental Property value.  In both of these cases, if 
  *	this type of change takes place it can be used to trigger a runtime error.
- *	\sa startMonitoringForValueChange(), startMonitoringForExperimentalValueChange(), valueWasChanged(), experimentalValueWasChanged(), 
- *	\sa changedValueName(), changedExperimentalValueName()
-*/
+ *	\sa startMonitoringForValueChange(), startMonitoringForExperimentalValueChange(), valueWasChanged()
+ *	\sa experimentalValueWasChanged(), changedValueName(), changedExperimentalValueName()
+ */
 void Property::setRunValuePrivate(QVariant _value)
 {
 	if(runValue_ != _value)
