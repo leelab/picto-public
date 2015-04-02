@@ -430,9 +430,6 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunName_</b></
 <tr class="memitem:a287aa41ec2561fde014cfd668dedb174"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a287aa41ec2561fde014cfd668dedb174"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_run_data_unit.html">TaskRunDataUnit</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunUnit_</b></td></tr>
 <tr class="separator:a287aa41ec2561fde014cfd668dedb174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a85a20e09a706aff2fe3c6a51a0f490"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a85a20e09a706aff2fe3c6a51a0f490"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designConfig_</b></td></tr>
-<tr class="separator:a8a85a20e09a706aff2fe3c6a51a0f490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e9b92345c7101b90d58975e80f8579c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e9b92345c7101b90d58975e80f8579c"></a>
 QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>rewardListMutex_</b></td></tr>
 <tr class="separator:a5e9b92345c7101b90d58975e80f8579c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -488,7 +485,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00067">67</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00066">66</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="aa78bf87cbc1731636a87e4d160b16743"></a>
 <div class="memitem">
@@ -516,7 +513,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00240">240</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00239">239</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +584,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Clears all of the latest changes stored in this engine's <a class="el" href="class_picto_1_1_property_data_unit_package.html" title="Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame...">PropertyDataUnitPackage</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ab55955373ab32442382f678ea35166c6" title="Retrieves the latest package of changed properties. ">getChangedPropertyPackage()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00144">144</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00143">143</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -615,7 +612,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Removes all <a class="el" href="class_picto_1_1_live_signal_reader.html" title="Implements the SignalReader class for a live test experiment. ">LiveSignalReader</a> readers that were previously added to this Engine. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a8bddd8ddee505f60222e2bed974f032b" title="Sets a LiveSignalReader to this PictoEngine with the input name so that it can be updated during the ...">setSignalReader()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00236">236</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00235">235</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -875,7 +872,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns true if this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> is running in Exclusive mode, false otherwise. </p>
 <p>Exclusive mode indicates that the running experiment wants as much timing control as possible, as such control is never passed back to the Qt event loop. </p><dl class="section note"><dt>Note</dt><dd>Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() &amp;&amp; !operatorIsUser(). Also, since computers have sped up significantly since this was designed, we should really explore rewriting the Engine and StateMachineElements such that a Picto <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> can be run as part of an event loop. Doing this would vastly decrease a great deal of comlexity in Picto. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00092">92</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00091">91</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -893,7 +890,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 </div><div class="memdoc">
 
 <p>Retrieves the latest BehavioralDataUnitPackages for each <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
-<p>When this function is called, stored signal data is cleared such that each <a class="el" href="class_picto_1_1_behavioral_data_unit_package.html" title="Stores behavioral data (data from a SignalChannel) as a list BehavioralDataUnits (ie. x,y readings) ">BehavioralDataUnitPackage</a> list can only be retrieved once and includes data regarding signal values since the last time the function was called. </p>
+<p>When this function is called, stored signal data is cleared such that each <a class="el" href="class_picto_1_1_input_data_unit_package.html" title="Stores input data (data from a SignalChannel) as a list of InputDataUnits (ie. x,y readings) ...">InputDataUnitPackage</a> list can only be retrieved once and includes data regarding signal values since the last time the function was called. </p>
 
 <p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00430">430</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
@@ -951,7 +948,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns the name of the system on which this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a>'s experiment is running. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a0e83fe6c9e2769d97d3d7a5fffcbec5b" title="Sets the name of the system on which this PictoEngine&#39;s experiment is running. ">setName()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00176">176</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00175">175</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -979,7 +976,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns this engine's <a class="el" href="class_picto_1_1_property_table.html" title="A collection of all of an Experiment&#39;s Properties used mainly for interfacing their values with the P...">PropertyTable</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ac37ea79f55d34b89e4fa12ef68140f48" title="Sets a PropertyTable to this Picto Engine for the purpose of tracking changed values and initvalues a...">setPropertyTable()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00165">165</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00164">164</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1082,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns a boolean indicating if the operator is the experiment user or not. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a86841564a318281424ddc911b0bae1ea" title="Tells the PictoEngine if the current experiment user is the operator (ie. Tester). ">setOperatorAsUser()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00187">187</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00186">186</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1170,7 +1167,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Used by experimental elements to programatically request that a pause be triggered. </p>
 <dl class="section note"><dt>Note</dt><dd>If experimental elements simply called <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a1a8c8314c6b31b6b5cad1dff6cf32802" title="Changes the engine command to PauseEngine so that execution will pause when it next reaches a pause p...">pause()</a> the experiment management classes (ie. <a class="el" href="class_component_status_manager.html" title="Handles overall status operations for a ComponentInterface object. ">ComponentStatusManager</a>) wouldn't have any way to know that the experiment is paused and the different elements of the system would not be properly synchronized. For this reason, experimental elements simply call <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a16a57e8c44cff2eca5a50752b3c2b2e0" title="Used by experimental elements to programatically request that a pause be triggered. ">requestPause()</a> and outside elements can then connect to the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ae1ce1dd892f6c79d5e32d5d2397f6d7e" title="Emitted when an experimental element wants the task to pause. ">pauseRequested()</a> signal so that they can call <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a1a8c8314c6b31b6b5cad1dff6cf32802" title="Changes the engine command to PauseEngine so that execution will pause when it next reaches a pause p...">pause()</a> themselves. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00252">252</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00251">251</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1218,7 +1215,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the event code generator that should be used to send alignment codes to a neural data acquisition system for timing alignment purposes. </p>
 <p>Picto aligns timestamps from the behavioral and neural systems by sending numerical codes over a physical line from the behavioral system to the neural system. The behavioral system marks when the signal was sent, and the neural system marks when it was recieved. Using this data, the server can align the clocks of the two systems. Depending on the underlying hardware of the computer running Picto, different alignment Code Generators will need to be used. This function tells the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> which one to use. </p><dl class="section note"><dt>Note</dt><dd>For historical reasons, what we now refer to as an Alignment code generator is still referred to as an event code generator throughout most of Picto. This will likely lead to some confusion and should be fixed. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00118">118</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00117">117</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1247,7 +1244,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> to run the <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> in Exclusive mode. </p>
 <p>Exclusive mode indicates that the running experiment wants as much timing control as possible, as such control is never passed back to the Qt event loop. </p><dl class="section note"><dt>Note</dt><dd>Instead of using a separate exclusiveMode flag here, we should consider using !slaveMode() &amp;&amp; !operatorIsUser(). Also, since computers have sped up significantly since this was designed, we should really explore rewriting the Engine and StateMachineElements such that a Picto <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> can be run as part of an event loop. Doing this would vastly decrease a great deal of comlexity in Picto. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00083">83</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00082">82</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1307,7 +1304,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets a <a class="el" href="class_picto_1_1_live_frame_reader.html" title="Implements the FrameReader class for a live test experiment. ">LiveFrameReader</a> to this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> so that it can be updated during the course of the experiment and used for live analysis. </p>
 <p>This is useful for testing experimental/analysis designs. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00212">212</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00211">211</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1336,7 +1333,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the <a class="el" href="class_picto_1_1_controller_1_1_frame_timer_factory.html" title="A Factory object used to create FrameResolutionTimer object while maintaing a single FrameTracker obj...">Controller::FrameTimerFactory</a> for this experiment. </p>
 <p>Since frame timers in the same experiment all need to be updated each time a new frame comes in, we use a FrameTimerFactory foreach experiment that is responsible for creating the FrameTimers. This allows us to set the FrameTImers up such that they get their frame timing data from a single place, and we only need to update one object when a new frame time comes in. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00204">204</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00203">203</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1365,7 +1362,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets a <a class="el" href="class_picto_1_1_live_lfp_reader.html" title="Implements the LfpReader class for a live test experiment. ">LiveLfpReader</a> to this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> so that it can be updated during the course of the experiment and used for live analysis. </p>
 <p>This is useful for testing experimental/analysis designs. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00217">217</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00216">216</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1415,7 +1412,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Tells the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> if the current experiment user is the operator (ie. Tester). </p>
 <p>If false is entered, the current experiment user is the subject (ie. Testee). The experiment user is set as the Operator in the <a class="el" href="class_remote_viewer.html" title="This allows Operators to view and control a remotely running Experimental Session. ">RemoteViewer</a> or if desired in the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>. Typically, the operator sees more detail about an experiment that is not shown to the test subject. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00183">183</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00182">182</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1454,7 +1451,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the <a class="el" href="class_picto_1_1_output_signal_controller.html" title="This is the base class for Output Voltage value controllers. It is used to set voltage values to phys...">OutputSignalController</a> that will be used to change voltage signals output from the experiment. </p>
 <p>Depending on the hardware underlying the computer running a Picto experiment, or whether we are running a real experiment or a test, different code will be needed to change output voltages. The <a class="el" href="class_picto_1_1_output_signal_controller.html" title="This is the base class for Output Voltage value controllers. It is used to set voltage values to phys...">OutputSignalController</a> abstracts those implementation details such that the Engine need only worry about interfacing with it. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00135">135</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00134">134</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1520,7 +1517,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the RewardConroller that will be used to supply rewards during this experiment. </p>
 <p>Depending on the hardware underlying the computer running a Picto experiment, or whether we are running a real experiment or a test, different code will be needed to supply rewards. The <a class="el" href="class_picto_1_1_reward_controller.html" title="This is the base class for classes that provide rewards to the subject of a Picto experiment...">RewardController</a> abstracts those implementation details such that the Engine need only worry about interfacing with it. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00126">126</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00125">125</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1580,7 +1577,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets a <a class="el" href="class_picto_1_1_live_reward_reader.html" title="Implements the RewardReader class for a live test experiment. ">LiveRewardReader</a> to this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> so that it can be updated during the course of the experiment and used for live analysis. </p>
 <p>This is useful for testing experimental/analysis designs. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00222">222</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00221">221</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1619,7 +1616,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets a <a class="el" href="class_picto_1_1_live_signal_reader.html" title="Implements the SignalReader class for a live test experiment. ">LiveSignalReader</a> to this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> with the input name so that it can be updated during the course of the experiment and used for live analysis. </p>
 <p>This is useful for testing experimental/analysis designs. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00232">232</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00231">231</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1648,7 +1645,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Tells the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> if it should be running in slave mode. </p>
 <p>In slave mode, experimental scripts don't run, all property updates and control flow details are handled by reading in the latest state from a master. In a live experiment, the Pictobox is the master, it sends data to the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>, the Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> on the workstation is the slave and it gathers the latest <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> data by polling the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> for the data sent in by the Pictobox. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00194">194</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00193">193</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>
@@ -1677,7 +1674,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets a <a class="el" href="class_picto_1_1_live_spike_reader.html" title="Implements the SpikeReader class for a live test experiment. ">LiveSpikeReader</a> to this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a> so that it can be updated during the course of the experiment and used for live analysis. </p>
 <p>This is useful for testing experimental/analysis designs. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00227">227</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8h_source.html#l00226">226</a> of file <a class="el" href="_picto_engine_8h_source.html">PictoEngine.h</a>.</p>
 
 </div>
 </div>

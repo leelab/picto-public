@@ -81,7 +81,7 @@ void Task::setTaskNumber(int num)
 	initTransition_->setSelfPtr(initTransition_);
 	initTransition_->setParentAsset(selfPtr());
 	//This adds the transition to the designConfig list so that it will be recognized by the server and remote
-	//  workstations.  In the future we can consider adding transitions into initial states which wpuld make all of
+	//  workstations.  In the future we can consider adding transitions into initial states which would make all of
 	//  this unnecessary.
 	designConfig_->addManagedAsset(initTransition_);	
 	

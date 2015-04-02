@@ -373,7 +373,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </li>
 </ul>
 
-<p>Definition at line <a class="el" href="_design_config_8h_source.html#l00041">41</a> of file <a class="el" href="_design_config_8h_source.html">DesignConfig.h</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8h_source.html#l00048">48</a> of file <a class="el" href="_design_config_8h_source.html">DesignConfig.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a19dcd01857819f4dfb4d739044670e2d"></a>
 <div class="memitem">
@@ -400,7 +400,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Adds an Error to the underlying <a class="el" href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie...">Serializable</a> class. </p>
 <p>Just redirects the input to <a class="el" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17" title="Adds an error message to the static list of errors. ">Serializable::addErrorToList()</a> after adding a new line constant. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00277">277</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00280">280</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -420,7 +420,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>After this function is called, calls to <a class="el" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0" title="Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...">fixDuplicatedAssetIds()</a> will correct any duplicate AssetIds in Assets that are included in this <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>. </p>
 <p>Until this function is called, calling <a class="el" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0" title="Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...">fixDuplicatedAssetIds()</a> does nothing and duplicated AssetIds are allowed. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00286">286</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00290">290</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -440,7 +440,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Calling this function changes AssetIds of Assets that are used in more than one included <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>; however, it only does this after <a class="el" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da" title="After this function is called, calls to fixDuplicatedAssetIds() will correct any duplicate AssetIds i...">disallowIdDuplication()</a> is called. </p>
 <p>We wait for <a class="el" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da" title="After this function is called, calls to fixDuplicatedAssetIds() will correct any duplicate AssetIds i...">disallowIdDuplication()</a> to be called for multiple reasons, the most important of which is avoiding an n^2 ( or at least n (log n)) complexity algorithm where all Assets are checked for a duplicate <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> Id every time a new one is called. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00334">334</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00339">339</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -460,7 +460,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns a list of all active AnalysisIds in this <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>. </p>
 <p>In a running experiment, all Analyses with Ids that are returned here will be executed. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991" title="Sets the AnalysisIds (AssociateIds of Analyses) that should be considered active (running) in Assets ...">setActiveAnalysisIds()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00392">392</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00402">402</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -480,7 +480,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_frame_reader.html" title="An base class for classes that can provide Frame data over input time ranges. ">FrameReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00464">464</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00476">476</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,7 +500,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns the Run Id of the latest run. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03" title="Called when a new Task run is started. Emits the runStarted() signal to inform the outside world that...">markRunStart()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00429">429</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00441">441</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +520,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns the Run name of the latest run. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03" title="Called when a new Task run is started. Emits the runStarted() signal to inform the outside world that...">markRunStart()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00437">437</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00449">449</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -540,7 +540,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_lfp_reader.html" title="An base class for classes that can provide Local Field Potential data over input time ranges...">LfpReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00511">511</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00524">524</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -568,7 +568,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns a new AssetId that was not yet used by any <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> included in this object. </p>
 <dl class="section note"><dt>Note</dt><dd>This naming is historical and should probably be changed to getNewAssetId(). </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00294">294</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00298">298</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -588,7 +588,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_reward_reader.html" title="An base class for classes that can provide Reward data over input time ranges. ">RewardReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00520">520</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00533">533</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -606,9 +606,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> that they should use for this experiment. </p>
-<p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. The <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> is not quite like the other data reader classes because it doesn't represent a quantity that changes over time, but it still needs to be set once and available from multiple parts of an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>, so this is sstill a good place to put it. </p>
+<p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. The <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> is not quite like the other data reader classes because it doesn't represent a quantity that changes over time, but it still needs to be set once and available from multiple parts of an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>, so this is still a good place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00531">531</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00545">545</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -629,7 +629,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_signal_reader.html" title="An base class for classes that can provide Input Signal data over input time ranges (ie...">SignalReader</a> that they should use for this experiment for the input signal name (ie. "Position"). </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00565">565</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00581">581</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -649,7 +649,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function gets the <a class="el" href="class_picto_1_1_spike_reader.html" title="An base class for classes that can provide Spike data over input time ranges. ">SpikeReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00540">540</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00554">554</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +670,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns true if the <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> with the input analysisId is active. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2" title="Returns a list of all active AnalysisIds in this DesignConfig. ">getActiveAnalysisIds()</a>, <a class="el" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991" title="Sets the AnalysisIds (AssociateIds of Analyses) that should be considered active (running) in Assets ...">setActiveAnalysisIds()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00400">400</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00410">410</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -690,7 +690,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Called when the latest <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> run ends. Emits the runEnded() signal to inform the outside world that the run is ending. </p>
 <dl class="section note"><dt>Note</dt><dd>One place where this is used is <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a>. This tells the <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> to flush any data that is has been caching because no more is going to come in and we're done. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00421">421</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00433">433</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -711,7 +711,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Called when a new <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> run is started. Emits the runStarted() signal to inform the outside world that the run is staring. </p>
 <p>This function also generates a unique RunId to be used to reference the new Run. </p><dl class="section note"><dt>Note</dt><dd>One place where this is used is <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a>. File names depend on the name of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Run. This tells <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> objects to start a new Output file/plot/etc and name it according to the latestRunName_. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00410">410</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00421">421</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -732,7 +732,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_frame_reader.html" title="An base class for classes that can provide Frame data over input time ranges. ">FrameReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00455">455</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00467">467</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -753,7 +753,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_lfp_reader.html" title="An base class for classes that can provide Local Field Potential data over input time ranges...">LfpReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00473">473</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00485">485</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -774,7 +774,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_reward_reader.html" title="An base class for classes that can provide Reward data over input time ranges. ">RewardReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00482">482</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00494">494</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -793,9 +793,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> that they should use for this experiment. </p>
-<p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. The <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> is not quite like the other data reader classes because it doesn't represent a quantity that changes over time, but it still needs to be set once and available from multiple parts of an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>, so this is sstill a good place to put it. </p>
+<p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. The <a class="el" href="class_picto_1_1_run_notes_reader.html" title="An base class for classes that can provide Run Notes data. ">RunNotesReader</a> is not quite like the other data reader classes because it doesn't represent a quantity that changes over time, but it still needs to be set once and available from multiple parts of an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>, so this is still a good place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00493">493</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00506">506</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -826,7 +826,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_signal_reader.html" title="An base class for classes that can provide Input Signal data over input time ranges (ie...">SignalReader</a> for the input Signal name (ie. "Position") that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00549">549</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00564">564</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>
@@ -847,7 +847,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Various <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> elements need access to various data reader classes so that they can poll data over set timespans. This function sets the <a class="el" href="class_picto_1_1_spike_reader.html" title="An base class for classes that can provide Spike data over input time ranges. ">SpikeReader</a> that they should use for this experiment. </p>
 <p>Since All Assets in an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> have access to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a>, this is the place to put it. </p>
 
-<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00502">502</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_config_8cpp_source.html#l00515">515</a> of file <a class="el" href="_design_config_8cpp_source.html">DesignConfig.cpp</a>.</p>
 
 </div>
 </div>

@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
@@ -113,6 +114,13 @@ Inheritance diagram for Picto::RemoteStateUpdater:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a747e9dc216e0ea820c60d3b00560580a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a747e9dc216e0ea820c60d3b00560580a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a747e9dc216e0ea820c60d3b00560580a">updateCurrUnitTime</a> (QString time)</td></tr>
+<tr class="memdesc:a747e9dc216e0ea820c60d3b00560580a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the lastTimeStateDataRequested_ if it's passed a more recent time. <br /></td></tr>
+<tr class="separator:a747e9dc216e0ea820c60d3b00560580a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a42d155b768af1abb903eebd4bd84139a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a42d155b768af1abb903eebd4bd84139a">startingRun</a> (QString taskName, QString runName)</td></tr>
@@ -226,13 +234,16 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a248926c47744844f4e033f46983a82cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a248926c47744844f4e033f46983a82cc"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataRequested_</b></td></tr>
 <tr class="separator:a248926c47744844f4e033f46983a82cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0adbd0a7f9dedd9b030d790bea43c4f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0adbd0a7f9dedd9b030d790bea43c4f7"></a>
+QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_remote_state_x_m_l_handler.html">RemoteStateXMLHandler</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>xmlHandlers_</b></td></tr>
+<tr class="separator:a0adbd0a7f9dedd9b030d790bea43c4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> that gathers Session events from the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> in real time. </p>
 <p>This <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> is used in the Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> to keep the local slave <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> in sync with the master <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> running on the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. It is used in the <a class="el" href="class_remote_viewer.html" title="This allows Operators to view and control a remotely running Experimental Session. ">RemoteViewer</a>'s <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> which doesn't care about the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> implementation. The result is that we can use the same system that we use for Experimental playaback for viewing live Experiments. The only difference is that we don't currently support <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> of live Experiments. This is partially due to the fact that no future data is available at any given time. It is for this reason that we are returning empty pointers from all of the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> get?Reader() functions. </p><dl class="section author"><dt>Author</dt><dd>Trevor, Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_remote_state_updater_8h_source.html#l00024">24</a> of file <a class="el" href="_remote_state_updater_8h_source.html">RemoteStateUpdater.h</a>.</p>
+<p>Definition at line <a class="el" href="_remote_state_updater_8h_source.html#l00026">26</a> of file <a class="el" href="_remote_state_updater_8h_source.html">RemoteStateUpdater.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a349658dd465ee16e00d5d68ad245aae1"></a>
 <div class="memitem">
@@ -256,7 +267,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataR
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00018">18</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00013">13</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -303,7 +314,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataR
 <p>Initializes this object for a new Session. </p>
 <p>This means setting the last data requested time back to zero. </p>
 
-<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00028">28</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00030">30</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -456,7 +467,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataR
 
 <p>Implements <a class="el" href="class_picto_1_1_state_updater.html#a7554cc46eafbee58fb566edd93d5410e">Picto::StateUpdater</a>.</p>
 
-<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00043">43</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00041">41</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
 
 </div>
 </div>

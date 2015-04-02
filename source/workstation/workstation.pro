@@ -33,6 +33,8 @@ SOURCES += $$(PICTO_TREE)/source/workstation/testviewer/TestPlaybackController.c
 
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateUpdater.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateXMLHandler.h
+SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/RemoteStateXMLHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.h
 SOURCES += $$(PICTO_TREE)/source/workstation/remoteviewer/remoteviewer.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/remoteviewer/neuralDataViewer.h

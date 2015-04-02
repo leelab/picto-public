@@ -424,7 +424,7 @@ QList<QSharedPointer<BehavioralDataUnitPackage>> PictoEngine::getBehavioralDataP
 }
 
 /*! \brief Retrieves the latest BehavioralDataUnitPackages for each SignalChannel.
-*	\details When this function is called, stored signal data is cleared such that each BehavioralDataUnitPackage list can
+*	\details When this function is called, stored signal data is cleared such that each InputDataUnitPackage list can
 *	only be retrieved once and includes data regarding signal values since the last time the function was called.
 */
 QList<QSharedPointer<InputDataUnitPackage>> PictoEngine::getInputDataPackages()

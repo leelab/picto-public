@@ -30,7 +30,6 @@
 #include "../storage/StateDataUnit.h"
 #include "../storage/RewardDataUnit.h"
 #include "../storage/TaskRunDataUnit.h"
-#include "../storage/DesignConfig.h"
 #include "StateUpdater.h"
 #include "propertytable.h"
 #include "ControlPanelInterface.h"
@@ -312,7 +311,6 @@ private:
 	bool taskRunEnding_;
 	QString taskRunName_;
 	QSharedPointer<TaskRunDataUnit> taskRunUnit_;
-	QSharedPointer<DesignConfig> designConfig_;
 	QMutex rewardListMutex_;
 	QMutex rewardMutex_;
 

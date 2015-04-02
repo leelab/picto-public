@@ -37,10 +37,11 @@ public:
 	virtual ~SlaveExperimentDriver(){};
 signals:
 	/*! \brief Emitted when the currently running task changes.  currTask is the name of the new Task.
-	*	\details This can happen suddently sometimes even when it doesn't make sense in the StateMachine control flow.  For example, A RemoteViewer might lose its
-	*	network connection briefly and then get it back after a different RemoteViewer changed the running task.  Since the RemoteViewer only ever polls the 
-	*	current experimental state and not the entire history, it might find that a new task was started even though it never heard that the previous Tasks run
-	*	ended.
+	*	\details This can happen suddently sometimes even when it doesn't make sense in the StateMachine control flow.
+	*	For example, A RemoteViewer might lose its network connection briefly and then get it back after a different
+	*	RemoteViewer changed the running task.  Since the RemoteViewer only ever polls the current experimental state and
+	*	not the entire history, it might find that a new task was started even though it never heard that the previous
+	*	Tasks run ended.
 	*/
 	void taskChanged(QString currTask);
 private:

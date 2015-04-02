@@ -18,7 +18,9 @@ void PropertyDataUnitPackage::addData(int index, bool initValue, QString value)
 	data_.append(newPoint);
 }
 
-/*! \brief Sets the FrameId of the next frame to be presented after the all of the Property value changes in this package occured.*/
+/*! \brief Sets the FrameId of the next frame to be presented after the all of the Property value changes in this package
+ *	occured.
+ */
 void PropertyDataUnitPackage::setActionFrame(qulonglong frameId)
 {
 	for(QList<QSharedPointer<PropertyDataUnit>>::iterator it = data_.begin();it != data_.end();it++)
@@ -41,7 +43,9 @@ bool PropertyDataUnitPackage::serializeAsXml(QSharedPointer<QXmlStreamWriter> xm
 
 	return true;
 }
-//! Converts XML into a PropertyDataUnitPackage object.  Note that this deletes any existing data.
+
+/*! \brief Converts XML into a PropertyDataUnitPackage object.  Note that this deletes any existing data.
+ */
 bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	emptyData();

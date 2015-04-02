@@ -212,7 +212,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a2283015aabe988bbf0b261a5c40bc731"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2283015aabe988bbf0b261a5c40bc731"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_protocol_response.html#a2283015aabe988bbf0b261a5c40bc731">encodeContent</a> ()</td></tr>
-<tr class="memdesc:a2283015aabe988bbf0b261a5c40bc731"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class used to support zip/unzip of message content. When that was supporte, this function zipped the response content. <br /></td></tr>
+<tr class="memdesc:a2283015aabe988bbf0b261a5c40bc731"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class used to support zip/unzip of message content. When that was supported, this function zipped the response content. <br /></td></tr>
 <tr class="separator:a2283015aabe988bbf0b261a5c40bc731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacdaee25ec63becbae6f4e030880ed57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacdaee25ec63becbae6f4e030880ed57"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_protocol_response.html#aacdaee25ec63becbae6f4e030880ed57">decodeContent</a> ()</td></tr>
@@ -357,7 +357,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Gets the type of multipart response that this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> constitutes. </p>
 <dl class="section note"><dt>Note</dt><dd>We are not currently using Multipart responses in Picto. They may be useful though at some point, so we have kept this code here. </dd></dl>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00387">387</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00393">393</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -377,7 +377,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Gets the string that is used to separate the content of this multipart response. </p>
 <p>This string defines the split point in multipart messages and should not appear in any other part of the content. </p><dl class="section note"><dt>Note</dt><dd>We are not currently using Multipart responses in Picto. They may be useful though at some point, so we have kept this code here. </dd></dl>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00155">155</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00156">156</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -437,7 +437,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Returns the type of this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a>. </p>
 <p>The returned value is a ProtocolResponseType::ProtocolResponseType </p>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00163">163</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00164">164</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -469,10 +469,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>The timeoutMs parameter is used to determine how long we should wait for incoming data on the socket. The default is 0. </p><dl class="section note"><dt>Note</dt><dd>Although we no longer use multi-part responses, since the code is still here we have maintained the documentation that was written about them with respect to this function below:</dd></dl>
 <p><a class="el" href="struct_picto_1_1_protocol_response.html#ace13e43b1f086e84cf6f9d782fe1ce70" title="Reads an incoming ProtocolResponse from the input socket and returns the number of content bytes that...">read()</a> faces some interesting challenges, since it may not be easy to tell what an incoming response actually is. For example, if an incoming response is part of a multi-part response, the response will start with a boundary string, but if we haven't set the boundary string for the response, we won't know what to do with it. So, the following rules should be followed when reading:</p><ol type="1">
 <li>If you know anything about the incoming response, tell the object (ie if it's part of a multi-part response, set the multi-part response type)</li>
-<li>You can't assume that write will create an exact copy of the response that was sent. For example, the original response may have had the shouldTerminateConnection value set, but there is no way for us to tell if this was the case on the receiving end. The safest way to use a response that you have just read is to look at the fields directly </li>
+<li>You can't assume that write will create an exact copy of the response that was sent. For example, the original response may have had the shouldTerminateConnection value set, but there is no way for us to tell if this was the case on the receiving end. The safest way to use a response that you have just read is to look at the fields directly. </li>
 </ol>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00462">462</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00465">465</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -493,7 +493,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Sets this response's content to the input byte array and updates the "Content-Length" field. </p>
 <p>When zipping was supported, this function would also zip the content. </p>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00295">295</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00299">299</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -514,7 +514,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Sets the type of multipart response that this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> constitutes. </p>
 <dl class="section note"><dt>Note</dt><dd>We are not currently using Multipart responses in Picto. They may be useful though at some point, so we have kept this code here. </dd></dl>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00358">358</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00362">362</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -580,7 +580,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>The Picto server tells its client whenever data from a "registered command" that was received has been written to disk. Whenever a ProtocolReseponse is sent, the command id of the command to which it is responding is added to a list. The <a class="el" href="namespace_picto_1_1_registered_response_type.html" title="The registration type of the current Picto response. ">RegisteredResponseType</a> on a <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> is used to piggyback information about whether the data from the commands with command-ids in that list has been written to disk. When that has happened that list of command-ids is attached to the <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> to tell the client which data was written to disk.</p>
 <p>This function is used to add that "piggybacked" information to this protocol response. </p>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00371">371</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00377">377</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -601,7 +601,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Sets whether this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> should stream. </p>
 <dl class="section note"><dt>Note</dt><dd>We are not currently using <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> streaming in any part of Picto that is actually being used. It may be useful though at some point, so we have kept this code here. </dd></dl>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00336">336</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00340">340</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>
@@ -621,7 +621,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>timeout</b></td></tr>
 <p>Gets whether this <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> should stream. </p>
 <dl class="section note"><dt>Note</dt><dd>We are not currently using <a class="el" href="struct_picto_1_1_protocol_response.html" title="A response, issued as the result of a command. ">ProtocolResponse</a> streaming in any part of Picto that is actually being used. It may be useful though at some point, so we have kept this code here. </dd></dl>
 
-<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00349">349</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_protocol_response_8cpp_source.html#l00353">353</a> of file <a class="el" href="_protocol_response_8cpp_source.html">ProtocolResponse.cpp</a>.</p>
 
 </div>
 </div>

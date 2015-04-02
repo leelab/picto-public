@@ -55,6 +55,7 @@ var searchData=
   ['startsessioncommandhandler',['StartsessionCommandHandler',['../struct_startsession_command_handler.html',1,'']]],
   ['state',['State',['../class_picto_1_1_state.html',1,'Picto']]],
   ['statedataunit',['StateDataUnit',['../class_picto_1_1_state_data_unit.html',1,'Picto']]],
+  ['statedataunithandler',['StateDataUnitHandler',['../class_picto_1_1_state_data_unit_handler.html',1,'Picto']]],
   ['statedataunitpackage',['StateDataUnitPackage',['../class_picto_1_1_state_data_unit_package.html',1,'Picto']]],
   ['stateeditviewer',['StateEditViewer',['../class_state_edit_viewer.html',1,'']]],
   ['statemachine',['StateMachine',['../class_picto_1_1_state_machine.html',1,'Picto']]],

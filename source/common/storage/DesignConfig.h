@@ -13,25 +13,32 @@
 #include "../controlelements/FrameTimerFactory.h"
 namespace Picto {
 class Asset;
-/*! \brief Stores data about an Asset including its AssetId and Path in the Design.*/
+/*! \brief Stores data about an Asset including its AssetId and Path in the Design.
+ */
 struct AssetInfo{int id;QString path;};
-/*! \brief Stores data about a Property including its AssetId, name, and its Parent Asset's AssetId.*/
+/*! \brief Stores data about a Property including its AssetId, name, and its Parent Asset's AssetId.
+ */
 struct PropInfo{int id; QString name; int parent;};
-/*! \brief Stores data about a Transition including its AssetId, its Parent Asset's AssetId, its source, sourceResult and Destination names.*/
+/*! \brief Stores data about a Transition including its AssetId, its Parent Asset's AssetId, its source, sourceResult and
+ *	Destination names.
+ */
 struct TransInfo{int id; QString name; int parent; QString source;QString result;QString dest;};
 
-/*! \brief There are many operations and data elements that need to be associated with a design as a whole, accessable by all elements of the design
- *	and with access to all elements of a design.  Objects of the DesignConfig class handle these types of operations and store this type of data.
+/*! \brief There are many operations and data elements that need to be associated with a design as a whole, accessable by
+ *	all elements of the design and with access to all elements of a design.  Objects of the DesignConfig class handle
+ *	these types of operations and store this type of data.
  *	
  *	\details Some of the types of operations that require access to/from all design Assets are: 
  *	- Making sure that all AssetIds are unique
  *	- Implementing Asset lookup based on its AssetId
  *	- Activating particular Analyses
  *	- Creating lists of all design Asset information for use in building up a SQL session file.
- *	- Storing objects for accessing data from input sources to be used by Experimental and Analysis components of the State Machine.
- *	These and other general design configuration issues are handled by this class.  Every Picto Asset holds a pointer to the DesignConfig of the
- *	design to which it is attached and adds itself to the DesignConfig object (which holds a weak pointer to it to avoid circular shared pointer issues).
- *	The DesignConfig of a particular Experiment or overall PictoData root object can be accessed using its Asset::getDesignConfig() function.
+ *	- Storing objects for accessing data from input sources to be used by Experimental and Analysis components of the
+ *		State Machine.
+ *	These and other general design configuration issues are handled by this class.  Every Picto Asset holds a pointer to
+ *	the DesignConfig of the design to which it is attached and adds itself to the DesignConfig object (which holds a weak
+ *	pointer to it to avoid circular shared pointer issues).  The DesignConfig of a particular Experiment or overall
+ *	PictoData root object can be accessed using its Asset::getDesignConfig() function.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -55,14 +62,20 @@ public:
 	void addManagedAsset(QSharedPointer<Asset> asset);
 	void fixDuplicatedAssetIds();
 	QSharedPointer<Asset> getAsset(int id);
-	/*! \brief Returns a list (of weak pointers to) all Properties that were added to this DesignConfig.*/
+	/*! \brief Returns a list (of weak pointers to) all Properties that were added to this DesignConfig.
+	 */
 	QList<QWeakPointer<Asset>> getProperties(){return managedProperties_;};
 	QList<QWeakPointer<Asset>> getAssets();
-	/*! \brief Returns a list (of weak pointers to) all Transitions that were added to this DesignConfig.*/
+	/*! \brief Returns a list (of weak pointers to) all Transitions that were added to this DesignConfig.
+	 */
 	QList<QWeakPointer<Asset>> getTransitions(){return managedTransitions_;};
-	/*! \brief Sets the syntax version in which the design that is currently associated with this DesignConfig was serialized.*/
+	/*! \brief Sets the syntax version in which the design that is currently associated with this DesignConfig was
+	 *	serialized.
+	 */
 	void setDeserializedVersion(QString version){deserializedVersion_ = version;};
-	/*! \brief Returns the syntax version in which the design that is currently associated with this DesignConfig was serialized.*/
+	/*! \brief Returns the syntax version in which the design that is currently associated with this DesignConfig was
+	 *	serialized.
+	 */
 	QString getDeserializedVersion(){return deserializedVersion_;};
 	void setActiveAnalysisIds(QList<QUuid> analysisList);
 	QList<QUuid> getActiveAnalysisIds();

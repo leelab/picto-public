@@ -93,10 +93,10 @@ QString ProtocolResponse::generateHeadersString()
 	return headers;
 }
 
-/*! \brief In the case of a multipart response, after the initial headers are sent, 
- *	we would send this header with the next piece of content.
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+/*! \brief In the case of a multipart response, after the initial headers are sent, we would send this header with the
+ *	next piece of content.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 QString ProtocolResponse::getMultiPartHeaders()
 {
@@ -114,8 +114,8 @@ QString ProtocolResponse::getMultiPartHeaders()
 }
 
 /*! \brief For a multipart response, this function sets the type of data being sent (ie. "image/jpeg").
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 void ProtocolResponse::setMultiPartContentType(QString multiPartContentTypeString)
 {
@@ -123,8 +123,8 @@ void ProtocolResponse::setMultiPartContentType(QString multiPartContentTypeStrin
 }
 
 /*! \brief For a multipart response, this function gets the type of data that being sent (ie. "image/jpeg").
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 QString ProtocolResponse::getMultiPartContentType()
 {
@@ -132,15 +132,15 @@ QString ProtocolResponse::getMultiPartContentType()
 }
 
 /*! \brief Sets the string that is used to separate the content of this multipart response.  
- *	\details This string defines the split point in multipart messages and should not appear in any other part of the content.
- *	It should also be pointed out that this does not affect the Content-Type field.  So, if for example
- *	you were starting to build a mutlipart response, and this was the first piece of it, you would use the following functions:
+ *	\details This string defines the split point in multipart messages and should not appear in any other part of the
+ *	content.  It should also be pointed out that this does not affect the Content-Type field.  So, if for example you
+ *	were starting to build a mutlipart response, and this was the first piece of it, you would use the following functions:
  *	\code
 		response->setContentType("multipart/x-mixed-replace; boundary=--pictoboundary");
 		response->setMultiPartBoundary("--pictoboundary");
 	\endcode
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 void ProtocolResponse::setMultiPartBoundary(QString multiPartBoundaryString)
 {
@@ -148,9 +148,10 @@ void ProtocolResponse::setMultiPartBoundary(QString multiPartBoundaryString)
 }
 
 /*! \brief Gets the string that is used to separate the content of this multipart response.  
- *	\details This string defines the split point in multipart messages and should not appear in any other part of the content.
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\details This string defines the split point in multipart messages and should not appear in any other part of the
+ *	content.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 QString ProtocolResponse::getMultiPartBoundary()
 {
@@ -178,23 +179,24 @@ QByteArray ProtocolResponse::getContent()
 	return encodedContent;
 }
 
-/*! \brief This function does not appear to be used and should probably be removed in my opinion.  On the other hand, its documentation used to be:
- *	"Yes, this is identical to getContent, but it makes things a bit clearer."
+/*! \brief This function does not appear to be used and should probably be removed in my opinion.  On the other hand, its
+ *	documentation used to be: "Yes, this is identical to getContent, but it makes things a bit clearer."
  */
 QByteArray ProtocolResponse::getEncodedContent()
 {
 	return encodedContent;
 }
 
-/*! \brief This class used to support zip/unzip of message content, but that support was removed.  This function used to return the
- *	unizipped content of this ProtocolResponse.  Now it is really just the same as getContent().
+/*! \brief This class used to support zip/unzip of message content, but that support was removed.  This function used to
+ *	return the unizipped content of this ProtocolResponse.  Now it is really just the same as getContent().
  */
 QByteArray ProtocolResponse::getDecodedContent()
 {
 	return content;
 }
 
-/*! \brief This class used to support zip/unzip of message content.  When that was supporte, this function zipped the response content.
+/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function zipped the
+ *	response content.
  */
 void ProtocolResponse::encodeContent()
 {
@@ -228,7 +230,8 @@ void ProtocolResponse::encodeContent()
 	//}
 }
 
-/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function unzipped the response content.
+/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function unzipped the
+ *	response content.
  */
 void ProtocolResponse::decodeContent()
 {
@@ -260,15 +263,16 @@ void ProtocolResponse::decodeContent()
 }
 
 /*! \brief Sets the type of the contents in this response. (ie. "text/html; charset=\"utf-8\"").
-*/
+ */
 void ProtocolResponse::setContentType(QString contentTypeString)
 {
 	//contentType = contentTypeString;
 	fields["Content-Type"]=contentTypeString;
 }
 
-/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function took a content encoding type (ie. ContentEncodingType::gzip),
- *  set that type to appropriate fields (ie. ContentEncodingType::gzip), and performed the encoding if content was not empty.
+/*! \brief This class used to support zip/unzip of message content.  When that was supported, this function took a content
+ *	encoding type (ie. ContentEncodingType::gzip), set that type to appropriate fields (ie. ContentEncodingType::gzip),
+ *	and performed the encoding if content was not empty.
  */
 void ProtocolResponse::setContentEncoding(ContentEncodingType::ContentEncodingType contentEncoding)
 {
@@ -352,37 +356,39 @@ bool ProtocolResponse::shouldStream()
 }
 
 /*! \brief Sets the type of multipart response that this ProtocolResponse constitutes.
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 void ProtocolResponse::setMultiPart(MultiPartResponseType::MultiPartResponseType multiPartState)
 {
 	multiPartResponseState = multiPartState;
 }
 
-/*! \brief RegisteredResponseTypes are used as part of the command-id confirmation system.  This function sets the RegisteredResponseType of this response.
- *	\details The Picto server tells its client whenever data from a "registered command" that was received has been written to disk.  Whenever a ProtocolReseponse
- *	is sent, the command id of the command to which it is responding is added to a list.  The RegisteredResponseType on a ProtocolResponse is used to 
- *	piggyback information about whether the data from the commands with command-ids in that list has been written to disk.  When that has happened that list
- *	of command-ids is attached to the ProtocolResponse to tell the client which data was written to disk.
+/*! \brief RegisteredResponseTypes are used as part of the command-id confirmation system.  This function sets the
+ *	RegisteredResponseType of this response.
+ *	\details The Picto server tells its client whenever data from a "registered command" that was received has been
+ *	written to disk.  Whenever a ProtocolReseponse is sent, the command id of the command to which it is responding is
+ *	added to a list.  The RegisteredResponseType on a ProtocolResponse is used to piggyback information about whether the
+ *	data from the commands with command-ids in that list has been written to disk.  When that has happened that list of
+ *	command-ids is attached to the ProtocolResponse to tell the client which data was written to disk.
  *
  *	This function is used to add that "piggybacked" information to this protocol response.
-*/
+ */
 void ProtocolResponse::setRegisteredType(RegisteredResponseType::RegisteredResponseType type)
 {
 	registeredType_ = type;
 }
 
 /*! \brief Returns the RegisteredResponseType of this ProtocolResponse.  See setRegisteredType() for more detail.
-*/
+ */
 RegisteredResponseType::RegisteredResponseType ProtocolResponse::getRegisteredType()
 {
 	return registeredType_;
 }
 
 /*! \brief Gets the type of multipart response that this ProtocolResponse constitutes.
- *	\note We are not currently using Multipart responses in Picto.  They may be useful
- *	though at some point, so we have kept this code here.
+ *	\note We are not currently using Multipart responses in Picto.  They may be useful though at some point, so we have
+ *	kept this code here.
  */
 MultiPartResponseType::MultiPartResponseType ProtocolResponse::getMultiPart()
 {
@@ -390,7 +396,7 @@ MultiPartResponseType::MultiPartResponseType ProtocolResponse::getMultiPart()
 }
 
 /*! \brief Gets the value of the input field.  If the field is not found, an empty string is returned.
-*/
+ */
 QString ProtocolResponse::getFieldValue(QString field)
 {
 	QString fieldValue;
@@ -399,7 +405,7 @@ QString ProtocolResponse::getFieldValue(QString field)
 }
 
 /*! \brief Writes this ProtocolResponse to the passed in socket.  Returns the total number of bytes written.
-*/
+ */
 int ProtocolResponse::write(QAbstractSocket *socket)
 {
 	QByteArray response;
@@ -445,19 +451,16 @@ int ProtocolResponse::write(QAbstractSocket *socket)
  *	\note Although we no longer use multi-part responses, since the code is still here we have maintained the documentation
  *	that was written about them with respect to this function below:
  *
- *	read() faces some interesting challenges, since it may not be easy to tell what
- *	an incoming response actually is.  For example, if an incoming response is part of
- *	a multi-part response, the response will start with a boundary string, but if we
- *	haven't set the boundary string for the response, we won't know what to 
- *	do with it.  So, the following rules should be followed when reading:
- *		1. If you know anything about the incoming response, tell the object (ie
- *		   if it's part of a multi-part response, set the multi-part response type)
- *		2. You can't assume that write will create an exact copy of the response
- *		   that was sent.  For example, the original response may have had the 
- *		   shouldTerminateConnection value set, but there is no way for us to tell if
- *		   this was the case on the receiving end.
- *	The safest way to use a response that you have just read is to look at the fields 
- *	directly
+ *	read() faces some interesting challenges, since it may not be easy to tell what an incoming response actually is.
+ *	For example, if an incoming response is part of a multi-part response, the response will start with a boundary
+ *	string, but if we haven't set the boundary string for the response, we won't know what to do with it.  So, the
+ *	following rules should be followed when reading:
+ *		1. If you know anything about the incoming response, tell the object (ie if it's part of a multi-part response,
+ *			set the multi-part response type)
+ *		2. You can't assume that write will create an exact copy of the response that was sent.  For example, the original
+ *			response may have had the shouldTerminateConnection value set, but there is no way for us to tell if this was
+ *			the case on the receiving end.
+ *	The safest way to use a response that you have just read is to look at the fields directly.
  */
 int ProtocolResponse::read(QAbstractSocket *socket, int timeoutMs)
 {

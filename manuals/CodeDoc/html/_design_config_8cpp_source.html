@@ -103,520 +103,520 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">reset</a>();</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;}</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">   14</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">DesignConfig::reset</a>()</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    assetsById_.clear();</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    managedElements_.clear();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    managedProperties_.clear();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    managedTransitions_.clear();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    elemInfo_.clear();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    propInfo_.clear();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    transInfo_.clear();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    assetHash_.clear();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    unsortedIdAssets_.clear();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    lastUsedId_ = 0;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    allowIdDuplication_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    analysisHash_.clear();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    frameTimerFactory_ = QSharedPointer&lt;Controller::FrameTimerFactory&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_controller_1_1_frame_timer_factory.html">Controller::FrameTimerFactory</a>());</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aea99cb30f6004cf320a6a578a826379d">   32</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">DesignConfig::toXml</a>(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    QSharedPointer&lt;Asset&gt; sAsset;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    QSharedPointer&lt;Transition&gt; sTAsset;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;DesignConfig&quot;</span>);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Properties&quot;</span>);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedProperties_)</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        sAsset = wAsset;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Prop&quot;</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sAsset-&gt;getAssetId()));</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;n&quot;</span>,sAsset-&gt;getName());</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            sAsset-&gt;getParentAsset()?QString::number(sAsset-&gt;getParentAsset()-&gt;getAssetId()):0);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Transitions&quot;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedTransitions_)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        sAsset = wAsset.toStrongRef();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        sTAsset = sAsset.staticCast&lt;<a class="code" href="class_picto_1_1_transition.html">Transition</a>&gt;();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Tran&quot;</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sTAsset-&gt;getAssetId()));</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;n&quot;</span>,sTAsset-&gt;getName());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            sTAsset-&gt;getParentAsset()?QString::number(sTAsset-&gt;getParentAsset()-&gt;getAssetId()):0);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;s&quot;</span>,sTAsset-&gt;getSource());</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;r&quot;</span>,sTAsset-&gt;getSourceResult());</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;d&quot;</span>,sTAsset-&gt;getDestination());</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Elements&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedElements_)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        sAsset = wAsset;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Elem&quot;</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sAsset-&gt;getAssetId()));</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,sAsset-&gt;getPath());</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">   87</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">DesignConfig::fromXml</a>(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader)</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;{</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//Do some basic error checking</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement() || xmlStreamReader-&gt;name() != <span class="stringliteral">&quot;DesignConfig&quot;</span>)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Incorrect tag, expected &lt;DesignConfig&gt;&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the DesignConfig starting tag</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;DesignConfig&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        QString name = xmlStreamReader-&gt;name().toString();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Properties&quot;</span>)</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the DesignConfig starting tag</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Properties&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <a class="code" href="struct_picto_1_1_prop_info.html">PropInfo</a> propInf;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                {</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                    propInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing i (index) attribute&quot;</span>);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;n&quot;</span>))</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                    propInf.name = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;n&quot;</span>).toString();</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing n (name) attribute&quot;</span>);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;                }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                    propInf.parent = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString().toInt();</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;                }</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing p (parent) attribute&quot;</span>);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                }</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                propInfo_.append(propInf);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        }</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Transitions&quot;</span>)</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the Transitions starting tag</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Transitions&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                {</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                <a class="code" href="struct_picto_1_1_trans_info.html">TransInfo</a> transInf;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                {</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                    transInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing i (index) attribute&quot;</span>);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                }</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;n&quot;</span>))</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                {</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                    transInf.name = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;n&quot;</span>).toString();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                }</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing n (name) attribute&quot;</span>);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                }</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                </div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                    transInf.parent = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString().toInt();</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                }</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;                {</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing p (parent) attribute&quot;</span>);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                }</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;s&quot;</span>))</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                {</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                    transInf.source = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;s&quot;</span>).toString();</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing s (source) attribute&quot;</span>);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                }</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;r&quot;</span>))</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                    transInf.result = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;r&quot;</span>).toString();</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                }</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing r (source result) attribute&quot;</span>);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;d&quot;</span>))</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                {</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                    transInf.dest = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;d&quot;</span>).toString();</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                {</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing d (destination) attribute&quot;</span>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                }</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                transInfo_.append(transInf);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            }</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Elements&quot;</span>)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the Elements starting tag</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Elements&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                <a class="code" href="struct_picto_1_1_asset_info.html">AssetInfo</a> elemInf;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                    elemInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Element missing i (index) attribute&quot;</span>);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                    elemInf.path = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString();</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                }</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                {</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Element missing p (path) attribute&quot;</span>);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                }</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                elemInfo_.append(elemInf);</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        {</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Invalid Tag: &quot;</span> + name.toLatin1());</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        xmlStreamReader-&gt;readNext();</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">  277</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">DesignConfig::addError</a>(QString errorMessage)</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;{</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">addErrorToList</a>(errorMessage + <span class="stringliteral">&quot;\n&quot;</span>);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
-<div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">  286</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">DesignConfig::disallowIdDuplication</a>()</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;{</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    allowIdDuplication_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;}</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
-<div class="line"><a name="l00294"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">  294</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">DesignConfig::getNewDataId</a>()</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;{</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    ++lastUsedId_;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="comment">//Increment the id until you find an unused one</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="keywordflow">while</span>(assetsById_.contains(lastUsedId_))</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    {</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        lastUsedId_++;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    }</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordflow">return</span> lastUsedId_;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">  308</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">DesignConfig::addManagedAsset</a>(QSharedPointer&lt;Asset&gt; asset)</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    QWeakPointer&lt;Asset&gt; wAsset(asset);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">if</span>(assetHash_.contains(asset.data()))</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    assetHash_[asset.data()] = wAsset;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keywordflow">if</span>(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Transition&quot;</span>))</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        managedTransitions_.append(wAsset);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    }</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Property&quot;</span>))</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">   15</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">DesignConfig::reset</a>()</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    assetsById_.clear();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    managedElements_.clear();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    managedProperties_.clear();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    managedTransitions_.clear();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    elemInfo_.clear();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    propInfo_.clear();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    transInfo_.clear();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    assetHash_.clear();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    unsortedIdAssets_.clear();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    lastUsedId_ = 0;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    allowIdDuplication_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    analysisHash_.clear();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    frameTimerFactory_ = QSharedPointer&lt;Controller::FrameTimerFactory&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_controller_1_1_frame_timer_factory.html">Controller::FrameTimerFactory</a>());</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aea99cb30f6004cf320a6a578a826379d">   34</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">DesignConfig::toXml</a>(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    QSharedPointer&lt;Asset&gt; sAsset;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    QSharedPointer&lt;Transition&gt; sTAsset;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;DesignConfig&quot;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Properties&quot;</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedProperties_)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        sAsset = wAsset;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Prop&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sAsset-&gt;getAssetId()));</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;n&quot;</span>,sAsset-&gt;getName());</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            sAsset-&gt;getParentAsset()?QString::number(sAsset-&gt;getParentAsset()-&gt;getAssetId()):0);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Transitions&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedTransitions_)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        sAsset = wAsset.toStrongRef();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        sTAsset = sAsset.staticCast&lt;<a class="code" href="class_picto_1_1_transition.html">Transition</a>&gt;();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Tran&quot;</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sTAsset-&gt;getAssetId()));</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;n&quot;</span>,sTAsset-&gt;getName());</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            sTAsset-&gt;getParentAsset()?QString::number(sTAsset-&gt;getParentAsset()-&gt;getAssetId()):0);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;s&quot;</span>,sTAsset-&gt;getSource());</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;r&quot;</span>,sTAsset-&gt;getSourceResult());</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;d&quot;</span>,sTAsset-&gt;getDestination());</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Elements&quot;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">foreach</span>(QWeakPointer&lt;Asset&gt; wAsset,managedElements_)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        sAsset = wAsset;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span>(!sAsset)<span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        xmlStreamWriter-&gt;writeStartElement(<span class="stringliteral">&quot;Elem&quot;</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;i&quot;</span>,QString::number(sAsset-&gt;getAssetId()));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        xmlStreamWriter-&gt;writeAttribute(<span class="stringliteral">&quot;p&quot;</span>,sAsset-&gt;getPath());</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    xmlStreamWriter-&gt;writeEndElement();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">   90</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">DesignConfig::fromXml</a>(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//Do some basic error checking</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement() || xmlStreamReader-&gt;name() != <span class="stringliteral">&quot;DesignConfig&quot;</span>)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Incorrect tag, expected &lt;DesignConfig&gt;&quot;</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the DesignConfig starting tag</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;DesignConfig&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        QString name = xmlStreamReader-&gt;name().toString();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Properties&quot;</span>)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the DesignConfig starting tag</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Properties&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                <a class="code" href="struct_picto_1_1_prop_info.html">PropInfo</a> propInf;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                    propInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing i (index) attribute&quot;</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;n&quot;</span>))</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                    propInf.name = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;n&quot;</span>).toString();</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;                {</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing n (name) attribute&quot;</span>);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                }</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                    propInf.parent = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString().toInt();</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Property missing p (parent) attribute&quot;</span>);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                propInfo_.append(propInf);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Transitions&quot;</span>)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the Transitions starting tag</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Transitions&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                }</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                <a class="code" href="struct_picto_1_1_trans_info.html">TransInfo</a> transInf;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                    transInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing i (index) attribute&quot;</span>);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                }</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;n&quot;</span>))</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                    transInf.name = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;n&quot;</span>).toString();</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing n (name) attribute&quot;</span>);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;                    transInf.parent = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString().toInt();</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing p (parent) attribute&quot;</span>);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;s&quot;</span>))</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                {</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                    transInf.source = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;s&quot;</span>).toString();</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                }</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing s (source) attribute&quot;</span>);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;r&quot;</span>))</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                    transInf.result = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;r&quot;</span>).toString();</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                {</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing r (source result) attribute&quot;</span>);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                }</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;d&quot;</span>))</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                    transInf.dest = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;d&quot;</span>).toString();</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                {</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Transition missing d (destination) attribute&quot;</span>);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                transInfo_.append(transInf);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;            }</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        }</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(name == <span class="stringliteral">&quot;Elements&quot;</span>)</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        {</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            xmlStreamReader-&gt;readNext();    <span class="comment">//Move past the Elements starting tag</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <span class="keywordflow">while</span>(!(xmlStreamReader-&gt;isEndElement() &amp;&amp; xmlStreamReader-&gt;name().toString() == <span class="stringliteral">&quot;Elements&quot;</span>) &amp;&amp; !xmlStreamReader-&gt;atEnd())</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            {</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                <span class="keywordflow">if</span>(!xmlStreamReader-&gt;isStartElement())</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                {</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                    <span class="comment">//Do nothing unless we&#39;re at a start element</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;                    xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                }</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                <a class="code" href="struct_picto_1_1_asset_info.html">AssetInfo</a> elemInf;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;i&quot;</span>))</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                {</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                    elemInf.id = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;i&quot;</span>).toString().toInt();</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Element missing i (index) attribute&quot;</span>);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                }</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                <span class="keywordflow">if</span>(xmlStreamReader-&gt;attributes().hasAttribute(<span class="stringliteral">&quot;p&quot;</span>))</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                    elemInf.path = xmlStreamReader-&gt;attributes().value(<span class="stringliteral">&quot;p&quot;</span>).toString();</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                }</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                    <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Element missing p (path) attribute&quot;</span>);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                elemInfo_.append(elemInf);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            }</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        }</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">addError</a>(<span class="stringliteral">&quot;Invalid Tag: &quot;</span> + name.toLatin1());</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        xmlStreamReader-&gt;readNext();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    }</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">  280</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">DesignConfig::addError</a>(QString errorMessage)</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;{</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <a class="code" href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">addErrorToList</a>(errorMessage + <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;}</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">  290</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">DesignConfig::disallowIdDuplication</a>()</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;{</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    allowIdDuplication_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;}</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">  298</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">DesignConfig::getNewDataId</a>()</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;{</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    ++lastUsedId_;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="comment">//Increment the id until you find an unused one</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordflow">while</span>(assetsById_.contains(lastUsedId_))</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    {</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        lastUsedId_++;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    }</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keywordflow">return</span> lastUsedId_;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;}</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
+<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">  312</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">DesignConfig::addManagedAsset</a>(QSharedPointer&lt;Asset&gt; asset)</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    QWeakPointer&lt;Asset&gt; wAsset(asset);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">if</span>(assetHash_.contains(asset.data()))</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    assetHash_[asset.data()] = wAsset;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">if</span>(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Transition&quot;</span>))</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    {</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        managedProperties_.append(wAsset);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        managedTransitions_.append(wAsset);</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    }</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(asset-&gt;inherits(<span class="stringliteral">&quot;Picto::Property&quot;</span>))</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    {</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        managedElements_.append(wAsset);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        managedProperties_.append(wAsset);</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    }</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    unsortedIdAssets_.append(wAsset);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;}</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">  334</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">DesignConfig::fixDuplicatedAssetIds</a>()</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;{</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">if</span>(allowIdDuplication_)</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    QSharedPointer&lt;Asset&gt; sAsset;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordtype">int</span> id;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    QList&lt;QSharedPointer&lt;Asset&gt;&gt; fixList;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keywordflow">while</span>(unsortedIdAssets_.size())</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    {</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        QWeakPointer&lt;Asset&gt; wAsset = unsortedIdAssets_.takeFirst();</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        sAsset = QSharedPointer&lt;Asset&gt;(wAsset);</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        <span class="keywordflow">if</span>(!sAsset)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            <span class="keywordflow">continue</span>;   <span class="comment">//This asset was already deleted</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keywordtype">id</span> = sAsset-&gt;getAssetId();</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keywordflow">if</span>(<span class="keywordtype">id</span> == 0 || assetsById_.contains(<span class="keywordtype">id</span>))</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;            fixList.append(sAsset);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        }</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        assetsById_[id] = wAsset;       <span class="comment">//Add the asset to the id map with its id.</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    }</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordflow">while</span>(fixList.size())</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    {</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        sAsset = fixList.takeFirst();</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keywordtype">id</span> = <a class="code" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">getNewDataId</a>();        <span class="comment">//Get a new asset id and set it to the asset.</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        sAsset-&gt;setAssetId(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        assetsById_[id] = QWeakPointer&lt;Asset&gt;(sAsset);      <span class="comment">//Add the asset to the id map with its id.</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    }</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;}</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
-<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">  366</a></span>&#160;QSharedPointer&lt;Asset&gt; <a class="code" href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">DesignConfig::getAsset</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;{</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    QSharedPointer&lt;Asset&gt; returnVal;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordflow">if</span>(assetsById_.contains(<span class="keywordtype">id</span>))</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        returnVal = assetsById_[<span class="keywordtype">id</span>];</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;}</div>
-<div class="line"><a name="l00374"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">  374</a></span>&#160;QList&lt;QWeakPointer&lt;Asset&gt;&gt; <a class="code" href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">DesignConfig::getAssets</a>()</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;{</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">return</span> assetsById_.values();</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
-<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">  379</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">DesignConfig::setActiveAnalysisIds</a>(QList&lt;QUuid&gt; analysisList)</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;{</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    analysisHash_.clear();</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordflow">foreach</span>(QUuid uuid,analysisList)</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        analysisHash_[uuid] = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    }</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    emit activeAnalysisIdsChanged();</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;}</div>
-<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">  392</a></span>&#160;QList&lt;QUuid&gt; <a class="code" href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">DesignConfig::getActiveAnalysisIds</a>()</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;{</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordflow">return</span> analysisHash_.keys();</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;}</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
-<div class="line"><a name="l00400"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">  400</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">DesignConfig::isAnalysisActive</a>(QUuid analysisId)</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;{</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <span class="keywordflow">return</span> analysisHash_.contains(analysisId);</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;}</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;</div>
-<div class="line"><a name="l00410"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">  410</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">DesignConfig::markRunStart</a>(QString runName)</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        managedElements_.append(wAsset);</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    }</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    unsortedIdAssets_.append(wAsset);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">  339</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">DesignConfig::fixDuplicatedAssetIds</a>()</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;{</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordflow">if</span>(allowIdDuplication_)</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    QSharedPointer&lt;Asset&gt; sAsset;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">int</span> id;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    QList&lt;QSharedPointer&lt;Asset&gt;&gt; fixList;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keywordflow">while</span>(unsortedIdAssets_.size())</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    {</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        QWeakPointer&lt;Asset&gt; wAsset = unsortedIdAssets_.takeFirst();</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        sAsset = QSharedPointer&lt;Asset&gt;(wAsset);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keywordflow">if</span>(!sAsset)</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="keywordflow">continue</span>;   <span class="comment">//This asset was already deleted</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordtype">id</span> = sAsset-&gt;getAssetId();</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <span class="keywordflow">if</span>(<span class="keywordtype">id</span> == 0 || assetsById_.contains(<span class="keywordtype">id</span>))</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        {</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;            fixList.append(sAsset);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        }</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        assetsById_[id] = wAsset;       <span class="comment">//Add the asset to the id map with its id.</span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    }</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordflow">while</span>(fixList.size())</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    {</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        sAsset = fixList.takeFirst();</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        <span class="keywordtype">id</span> = <a class="code" href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">getNewDataId</a>();        <span class="comment">//Get a new asset id and set it to the asset.</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        sAsset-&gt;setAssetId(<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        assetsById_[id] = QWeakPointer&lt;Asset&gt;(sAsset);      <span class="comment">//Add the asset to the id map with its id.</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    }</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
+<div class="line"><a name="l00372"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">  372</a></span>&#160;QSharedPointer&lt;Asset&gt; <a class="code" href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">DesignConfig::getAsset</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;{</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    QSharedPointer&lt;Asset&gt; returnVal;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keywordflow">if</span>(assetsById_.contains(<span class="keywordtype">id</span>))</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        returnVal = assetsById_[<span class="keywordtype">id</span>];</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
+<div class="line"><a name="l00382"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">  382</a></span>&#160;QList&lt;QWeakPointer&lt;Asset&gt;&gt; <a class="code" href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">DesignConfig::getAssets</a>()</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;{</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keywordflow">return</span> assetsById_.values();</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;}</div>
+<div class="line"><a name="l00389"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">  389</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">DesignConfig::setActiveAnalysisIds</a>(QList&lt;QUuid&gt; analysisList)</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;{</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    analysisHash_.clear();</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">foreach</span>(QUuid uuid,analysisList)</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    {</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        analysisHash_[uuid] = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    }</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    emit activeAnalysisIdsChanged();</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;}</div>
+<div class="line"><a name="l00402"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">  402</a></span>&#160;QList&lt;QUuid&gt; <a class="code" href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">DesignConfig::getActiveAnalysisIds</a>()</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;{</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <span class="keywordflow">return</span> analysisHash_.keys();</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;}</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00410"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">  410</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">DesignConfig::isAnalysisActive</a>(QUuid analysisId)</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;{</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    latestRunId_ = QUuid::createUuid();</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    latestRunName_ = runName;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    emit runStarted(latestRunId_);</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;}</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;</div>
-<div class="line"><a name="l00421"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">  421</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">DesignConfig::markRunEnd</a>()</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="keywordflow">return</span> analysisHash_.contains(analysisId);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;}</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">  421</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">DesignConfig::markRunStart</a>(QString runName)</div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;{</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    emit runEnded();</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;}</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;</div>
-<div class="line"><a name="l00429"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">  429</a></span>&#160;QUuid <a class="code" href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">DesignConfig::getLatestRunId</a>()</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;{</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <span class="keywordflow">return</span> latestRunId_;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;}</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
-<div class="line"><a name="l00437"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">  437</a></span>&#160;QString <a class="code" href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">DesignConfig::getLatestRunName</a>()</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;{</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    <span class="keywordflow">return</span> latestRunName_;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;}</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;</div>
-<div class="line"><a name="l00446"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">  446</a></span>&#160;QSharedPointer&lt;Controller::FrameTimerFactory&gt; <a class="code" href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">DesignConfig::getFrameTimerFactory</a>()</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;{</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    <span class="keywordflow">return</span> frameTimerFactory_;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;}</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;</div>
-<div class="line"><a name="l00455"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">  455</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">DesignConfig::setFrameReader</a>(QSharedPointer&lt;FrameReader&gt; frameReader)</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;{</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    frameReader_ = frameReader;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;}</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
-<div class="line"><a name="l00464"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">  464</a></span>&#160;QSharedPointer&lt;FrameReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">DesignConfig::getFrameReader</a>()</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;{</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="keywordflow">return</span> frameReader_;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;}</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
-<div class="line"><a name="l00473"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">  473</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">DesignConfig::setLfpReader</a>(QSharedPointer&lt;LfpReader&gt; lfpReader)</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;{</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    lfpReader_ = lfpReader;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;}</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;</div>
-<div class="line"><a name="l00482"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">  482</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">DesignConfig::setRewardReader</a>(QSharedPointer&lt;RewardReader&gt; rewardReader)</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;{</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    rewardReader_ = rewardReader;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;}</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
-<div class="line"><a name="l00493"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">  493</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">DesignConfig::setRunNotesReader</a>(QSharedPointer&lt;RunNotesReader&gt; runNotesReader)</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;{</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    runNotesReader_ = runNotesReader;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;}</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
-<div class="line"><a name="l00502"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">  502</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">DesignConfig::setSpikeReader</a>(QSharedPointer&lt;SpikeReader&gt; spikeReader)</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;{</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    spikeReader_ = spikeReader;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;}</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;</div>
-<div class="line"><a name="l00511"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">  511</a></span>&#160;QSharedPointer&lt;LfpReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">DesignConfig::getLfpReader</a>()</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;{</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;    <span class="keywordflow">return</span> lfpReader_;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;}</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;</div>
-<div class="line"><a name="l00520"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">  520</a></span>&#160;QSharedPointer&lt;RewardReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">DesignConfig::getRewardReader</a>()</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;{</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    <span class="keywordflow">return</span> rewardReader_;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;}</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;</div>
-<div class="line"><a name="l00531"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">  531</a></span>&#160;QSharedPointer&lt;RunNotesReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">DesignConfig::getRunNotesReader</a>()</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;{</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;    <span class="keywordflow">return</span> runNotesReader_;</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;}</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;</div>
-<div class="line"><a name="l00540"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">  540</a></span>&#160;QSharedPointer&lt;SpikeReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">DesignConfig::getSpikeReader</a>()</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;{</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="keywordflow">return</span> spikeReader_;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;}</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;</div>
-<div class="line"><a name="l00549"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">  549</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">DesignConfig::setSignalReader</a>(QString name, QSharedPointer&lt;SignalReader&gt; signalReader)</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;{</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    signalReaders_[name.toLower()] = signalReader;</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;}</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;</div>
-<div class="line"><a name="l00556"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">  556</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">DesignConfig::clearSignalReaders</a>()</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;{</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    signalReaders_.clear();</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;}</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;</div>
-<div class="line"><a name="l00565"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">  565</a></span>&#160;QSharedPointer&lt;SignalReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">DesignConfig::getSignalReader</a>(QString name)</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;{</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    <span class="keywordflow">if</span>(!signalReaders_.contains(name.toLower()))</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;SignalReader&gt;();</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;    <span class="keywordflow">return</span> signalReaders_[name.toLower()];</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;}</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;</div>
-<div class="line"><a name="l00573"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">  573</a></span>&#160;QList&lt;AssetInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">DesignConfig::getElementInfo</a>()</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;{</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;    <span class="keywordflow">if</span>(!elemInfo_.size())</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    <span class="keywordflow">return</span> elemInfo_;</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;}</div>
-<div class="line"><a name="l00580"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">  580</a></span>&#160;QList&lt;PropInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">DesignConfig::getPropertyInfo</a>()</div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;{</div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;    <span class="keywordflow">if</span>(!propInfo_.size())</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    <span class="keywordflow">return</span> propInfo_;</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;}</div>
-<div class="line"><a name="l00587"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">  587</a></span>&#160;QList&lt;TransInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">DesignConfig::getTransitionInfo</a>()</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;{</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;    <span class="keywordflow">if</span>(!transInfo_.size())</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;    <span class="keywordflow">return</span> transInfo_;</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;}</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    latestRunId_ = QUuid::createUuid();</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    latestRunName_ = runName;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    emit runStarted(latestRunId_);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;}</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
+<div class="line"><a name="l00433"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">  433</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">DesignConfig::markRunEnd</a>()</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;{</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    emit runEnded();</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;}</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;</div>
+<div class="line"><a name="l00441"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">  441</a></span>&#160;QUuid <a class="code" href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">DesignConfig::getLatestRunId</a>()</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;{</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keywordflow">return</span> latestRunId_;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;}</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;</div>
+<div class="line"><a name="l00449"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">  449</a></span>&#160;QString <a class="code" href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">DesignConfig::getLatestRunName</a>()</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;{</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    <span class="keywordflow">return</span> latestRunName_;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;}</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
+<div class="line"><a name="l00458"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">  458</a></span>&#160;QSharedPointer&lt;Controller::FrameTimerFactory&gt; <a class="code" href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">DesignConfig::getFrameTimerFactory</a>()</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;{</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keywordflow">return</span> frameTimerFactory_;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;}</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
+<div class="line"><a name="l00467"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">  467</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">DesignConfig::setFrameReader</a>(QSharedPointer&lt;FrameReader&gt; frameReader)</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;{</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    frameReader_ = frameReader;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;}</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
+<div class="line"><a name="l00476"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">  476</a></span>&#160;QSharedPointer&lt;FrameReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">DesignConfig::getFrameReader</a>()</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;{</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="keywordflow">return</span> frameReader_;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;}</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
+<div class="line"><a name="l00485"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">  485</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">DesignConfig::setLfpReader</a>(QSharedPointer&lt;LfpReader&gt; lfpReader)</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;{</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    lfpReader_ = lfpReader;</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;}</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
+<div class="line"><a name="l00494"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">  494</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">DesignConfig::setRewardReader</a>(QSharedPointer&lt;RewardReader&gt; rewardReader)</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;{</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    rewardReader_ = rewardReader;</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;}</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;</div>
+<div class="line"><a name="l00506"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">  506</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">DesignConfig::setRunNotesReader</a>(QSharedPointer&lt;RunNotesReader&gt; runNotesReader)</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;{</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    runNotesReader_ = runNotesReader;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;}</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
+<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">  515</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">DesignConfig::setSpikeReader</a>(QSharedPointer&lt;SpikeReader&gt; spikeReader)</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;{</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    spikeReader_ = spikeReader;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;}</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;</div>
+<div class="line"><a name="l00524"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">  524</a></span>&#160;QSharedPointer&lt;LfpReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">DesignConfig::getLfpReader</a>()</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;{</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    <span class="keywordflow">return</span> lfpReader_;</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;}</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;</div>
+<div class="line"><a name="l00533"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">  533</a></span>&#160;QSharedPointer&lt;RewardReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">DesignConfig::getRewardReader</a>()</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;{</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;    <span class="keywordflow">return</span> rewardReader_;</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;}</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;</div>
+<div class="line"><a name="l00545"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">  545</a></span>&#160;QSharedPointer&lt;RunNotesReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">DesignConfig::getRunNotesReader</a>()</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;{</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;    <span class="keywordflow">return</span> runNotesReader_;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;}</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;</div>
+<div class="line"><a name="l00554"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">  554</a></span>&#160;QSharedPointer&lt;SpikeReader&gt; <a class="code" href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">DesignConfig::getSpikeReader</a>()</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;{</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;    <span class="keywordflow">return</span> spikeReader_;</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;}</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;</div>
+<div class="line"><a name="l00564"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">  564</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">DesignConfig::setSignalReader</a>(QString name, QSharedPointer&lt;SignalReader&gt; signalReader)</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;{</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;    signalReaders_[name.toLower()] = signalReader;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;}</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;</div>
+<div class="line"><a name="l00571"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">  571</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">DesignConfig::clearSignalReaders</a>()</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;{</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    signalReaders_.clear();</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;}</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;</div>
+<div class="line"><a name="l00581"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">  581</a></span>&#160;QSharedPointer&lt;SignalReader&gt; <a class="code" href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">DesignConfig::getSignalReader</a>(QString name)</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;{</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;    <span class="keywordflow">if</span>(!signalReaders_.contains(name.toLower()))</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;SignalReader&gt;();</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    <span class="keywordflow">return</span> signalReaders_[name.toLower()];</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;}</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;</div>
+<div class="line"><a name="l00591"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">  591</a></span>&#160;QList&lt;AssetInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">DesignConfig::getElementInfo</a>()</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;{</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;    <span class="keywordflow">if</span>(!elemInfo_.size())</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;    <span class="keywordflow">return</span> elemInfo_;</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;}</div>
+<div class="line"><a name="l00599"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">  599</a></span>&#160;QList&lt;PropInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">DesignConfig::getPropertyInfo</a>()</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;{</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    <span class="keywordflow">if</span>(!propInfo_.size())</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;    <span class="keywordflow">return</span> propInfo_;</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;}</div>
+<div class="line"><a name="l00607"></a><span class="lineno"><a class="line" href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">  607</a></span>&#160;QList&lt;TransInfo&gt; <a class="code" href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">DesignConfig::getTransitionInfo</a>()</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;    <span class="keywordflow">if</span>(!transInfo_.size())</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;        <a class="code" href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">fromXml</a>(<a class="code" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a>());</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;    <span class="keywordflow">return</span> transInfo_;</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_serializable_html_a96d216d572c87de0e7b2ba4ae1c6ea17"><div class="ttname"><a href="class_picto_1_1_serializable.html#a96d216d572c87de0e7b2ba4ae1c6ea17">Picto::Serializable::addErrorToList</a></div><div class="ttdeci">void addErrorToList(QString errorMsg)</div><div class="ttdoc">Adds an error message to the static list of errors. </div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00058">Serializable.cpp:58</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a65c9b3854491c6b7af8f39ac88b4847d"><div class="ttname"><a href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">Picto::DesignConfig::isAnalysisActive</a></div><div class="ttdeci">bool isAnalysisActive(QUuid analysisId)</div><div class="ttdoc">Returns true if the Analysis with the input analysisId is active. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00400">DesignConfig.cpp:400</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a19dcd01857819f4dfb4d739044670e2d"><div class="ttname"><a href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">Picto::DesignConfig::addError</a></div><div class="ttdeci">void addError(QString errorMessage)</div><div class="ttdoc">Adds an Error to the underlying Serializable class. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00277">DesignConfig.cpp:277</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_acfbabcdbf2f43d0628e813595b324d0a"><div class="ttname"><a href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">Picto::DesignConfig::getFrameTimerFactory</a></div><div class="ttdeci">QSharedPointer&lt; Controller::FrameTimerFactory &gt; getFrameTimerFactory()</div><div class="ttdoc">A FrameTimerFactory is used to create FrameTimers with correct single frame resolution for the curren...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00446">DesignConfig.cpp:446</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aed67c0f8b4d5a43e0efdc28ed6f817fa"><div class="ttname"><a href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">Picto::DesignConfig::getLatestRunName</a></div><div class="ttdeci">QString getLatestRunName()</div><div class="ttdoc">Returns the Run name of the latest run. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00437">DesignConfig.cpp:437</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_adaa57c362553b48a8e849d346ac55e1a"><div class="ttname"><a href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">Picto::DesignConfig::getLfpReader</a></div><div class="ttdeci">QSharedPointer&lt; LfpReader &gt; getLfpReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00511">DesignConfig.cpp:511</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aae77d7b39d65dfd4d7c949414ea9953d"><div class="ttname"><a href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">Picto::DesignConfig::setRunNotesReader</a></div><div class="ttdeci">void setRunNotesReader(QSharedPointer&lt; RunNotesReader &gt; runNotesReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00493">DesignConfig.cpp:493</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_af336fdc849e93815000ac6648dccb93e"><div class="ttname"><a href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">Picto::DesignConfig::getAsset</a></div><div class="ttdeci">QSharedPointer&lt; Asset &gt; getAsset(int id)</div><div class="ttdoc">Returns the Asset with the input AssetId or an empty pointer if no such Asset can be found...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00366">DesignConfig.cpp:366</a></div></div>
-<div class="ttc" id="struct_picto_1_1_prop_info_html"><div class="ttname"><a href="struct_picto_1_1_prop_info.html">Picto::PropInfo</a></div><div class="ttdoc">Stores data about a Property including its AssetId, name, and its Parent Asset&#39;s AssetId. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00019">DesignConfig.h:19</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aa6c7eb2eaefa7e433dbd683f67003834"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">Picto::DesignConfig::getElementInfo</a></div><div class="ttdeci">QList&lt; AssetInfo &gt; getElementInfo()</div><div class="ttdoc">Returns a list of AssetInfo data on all Non-Property, Non-Transition Assets that were added to this D...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00573">DesignConfig.cpp:573</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_ae31cdf8cd7bfd29cb9810dd6b9b737e6"><div class="ttname"><a href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">Picto::DesignConfig::getPropertyInfo</a></div><div class="ttdeci">QList&lt; PropInfo &gt; getPropertyInfo()</div><div class="ttdoc">Returns a list of PropInfo data on all Property Assets that were added to this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00580">DesignConfig.cpp:580</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aa0a107bae8dbf3373dc4f07bd955e50f"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">Picto::DesignConfig::getLatestRunId</a></div><div class="ttdeci">QUuid getLatestRunId()</div><div class="ttdoc">Returns the Run Id of the latest run. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00429">DesignConfig.cpp:429</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_af5588269acd266b8680e18f5235e63ac"><div class="ttname"><a href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">Picto::DesignConfig::getAssets</a></div><div class="ttdeci">QList&lt; QWeakPointer&lt; Asset &gt; &gt; getAssets()</div><div class="ttdoc">Returns a list (of weak pointers to) all non-Transition, non-Property Assets that were added to this ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00374">DesignConfig.cpp:374</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a1968415b652a74383a7dbe796186bf7e"><div class="ttname"><a href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">Picto::DesignConfig::setFrameReader</a></div><div class="ttdeci">void setFrameReader(QSharedPointer&lt; FrameReader &gt; frameReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00455">DesignConfig.cpp:455</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_ab57e0738b97e4358ab09530cd6815fc0"><div class="ttname"><a href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">Picto::DesignConfig::fixDuplicatedAssetIds</a></div><div class="ttdeci">void fixDuplicatedAssetIds()</div><div class="ttdoc">Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00334">DesignConfig.cpp:334</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a0107c84cfb5d53469b871eabd0429991"><div class="ttname"><a href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">Picto::DesignConfig::setActiveAnalysisIds</a></div><div class="ttdeci">void setActiveAnalysisIds(QList&lt; QUuid &gt; analysisList)</div><div class="ttdoc">Sets the AnalysisIds (AssociateIds of Analyses) that should be considered active (running) in Assets ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00379">DesignConfig.cpp:379</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a65c9b3854491c6b7af8f39ac88b4847d"><div class="ttname"><a href="class_picto_1_1_design_config.html#a65c9b3854491c6b7af8f39ac88b4847d">Picto::DesignConfig::isAnalysisActive</a></div><div class="ttdeci">bool isAnalysisActive(QUuid analysisId)</div><div class="ttdoc">Returns true if the Analysis with the input analysisId is active. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00410">DesignConfig.cpp:410</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a19dcd01857819f4dfb4d739044670e2d"><div class="ttname"><a href="class_picto_1_1_design_config.html#a19dcd01857819f4dfb4d739044670e2d">Picto::DesignConfig::addError</a></div><div class="ttdeci">void addError(QString errorMessage)</div><div class="ttdoc">Adds an Error to the underlying Serializable class. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00280">DesignConfig.cpp:280</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_acfbabcdbf2f43d0628e813595b324d0a"><div class="ttname"><a href="class_picto_1_1_design_config.html#acfbabcdbf2f43d0628e813595b324d0a">Picto::DesignConfig::getFrameTimerFactory</a></div><div class="ttdeci">QSharedPointer&lt; Controller::FrameTimerFactory &gt; getFrameTimerFactory()</div><div class="ttdoc">A FrameTimerFactory is used to create FrameTimers with correct single frame resolution for the curren...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00458">DesignConfig.cpp:458</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aed67c0f8b4d5a43e0efdc28ed6f817fa"><div class="ttname"><a href="class_picto_1_1_design_config.html#aed67c0f8b4d5a43e0efdc28ed6f817fa">Picto::DesignConfig::getLatestRunName</a></div><div class="ttdeci">QString getLatestRunName()</div><div class="ttdoc">Returns the Run name of the latest run. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00449">DesignConfig.cpp:449</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_adaa57c362553b48a8e849d346ac55e1a"><div class="ttname"><a href="class_picto_1_1_design_config.html#adaa57c362553b48a8e849d346ac55e1a">Picto::DesignConfig::getLfpReader</a></div><div class="ttdeci">QSharedPointer&lt; LfpReader &gt; getLfpReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00524">DesignConfig.cpp:524</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aae77d7b39d65dfd4d7c949414ea9953d"><div class="ttname"><a href="class_picto_1_1_design_config.html#aae77d7b39d65dfd4d7c949414ea9953d">Picto::DesignConfig::setRunNotesReader</a></div><div class="ttdeci">void setRunNotesReader(QSharedPointer&lt; RunNotesReader &gt; runNotesReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00506">DesignConfig.cpp:506</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_af336fdc849e93815000ac6648dccb93e"><div class="ttname"><a href="class_picto_1_1_design_config.html#af336fdc849e93815000ac6648dccb93e">Picto::DesignConfig::getAsset</a></div><div class="ttdeci">QSharedPointer&lt; Asset &gt; getAsset(int id)</div><div class="ttdoc">Returns the Asset with the input AssetId or an empty pointer if no such Asset can be found...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00372">DesignConfig.cpp:372</a></div></div>
+<div class="ttc" id="struct_picto_1_1_prop_info_html"><div class="ttname"><a href="struct_picto_1_1_prop_info.html">Picto::PropInfo</a></div><div class="ttdoc">Stores data about a Property including its AssetId, name, and its Parent Asset&#39;s AssetId. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00021">DesignConfig.h:21</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aa6c7eb2eaefa7e433dbd683f67003834"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa6c7eb2eaefa7e433dbd683f67003834">Picto::DesignConfig::getElementInfo</a></div><div class="ttdeci">QList&lt; AssetInfo &gt; getElementInfo()</div><div class="ttdoc">Returns a list of AssetInfo data on all Non-Property, Non-Transition Assets that were added to this D...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00591">DesignConfig.cpp:591</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_ae31cdf8cd7bfd29cb9810dd6b9b737e6"><div class="ttname"><a href="class_picto_1_1_design_config.html#ae31cdf8cd7bfd29cb9810dd6b9b737e6">Picto::DesignConfig::getPropertyInfo</a></div><div class="ttdeci">QList&lt; PropInfo &gt; getPropertyInfo()</div><div class="ttdoc">Returns a list of PropInfo data on all Property Assets that were added to this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00599">DesignConfig.cpp:599</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aa0a107bae8dbf3373dc4f07bd955e50f"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa0a107bae8dbf3373dc4f07bd955e50f">Picto::DesignConfig::getLatestRunId</a></div><div class="ttdeci">QUuid getLatestRunId()</div><div class="ttdoc">Returns the Run Id of the latest run. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00441">DesignConfig.cpp:441</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_af5588269acd266b8680e18f5235e63ac"><div class="ttname"><a href="class_picto_1_1_design_config.html#af5588269acd266b8680e18f5235e63ac">Picto::DesignConfig::getAssets</a></div><div class="ttdeci">QList&lt; QWeakPointer&lt; Asset &gt; &gt; getAssets()</div><div class="ttdoc">Returns a list (of weak pointers to) all non-Transition, non-Property Assets that were added to this ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00382">DesignConfig.cpp:382</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a1968415b652a74383a7dbe796186bf7e"><div class="ttname"><a href="class_picto_1_1_design_config.html#a1968415b652a74383a7dbe796186bf7e">Picto::DesignConfig::setFrameReader</a></div><div class="ttdeci">void setFrameReader(QSharedPointer&lt; FrameReader &gt; frameReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00467">DesignConfig.cpp:467</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_ab57e0738b97e4358ab09530cd6815fc0"><div class="ttname"><a href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0">Picto::DesignConfig::fixDuplicatedAssetIds</a></div><div class="ttdeci">void fixDuplicatedAssetIds()</div><div class="ttdoc">Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00339">DesignConfig.cpp:339</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a0107c84cfb5d53469b871eabd0429991"><div class="ttname"><a href="class_picto_1_1_design_config.html#a0107c84cfb5d53469b871eabd0429991">Picto::DesignConfig::setActiveAnalysisIds</a></div><div class="ttdeci">void setActiveAnalysisIds(QList&lt; QUuid &gt; analysisList)</div><div class="ttdoc">Sets the AnalysisIds (AssociateIds of Analyses) that should be considered active (running) in Assets ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00389">DesignConfig.cpp:389</a></div></div>
 <div class="ttc" id="class_picto_1_1_serializable_html_a2715cc957dfee3198e54643f546eba26"><div class="ttname"><a href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">Picto::Serializable::toXml</a></div><div class="ttdeci">QString toXml()</div><div class="ttdoc">Converts this Serializable to an XML based QString that can be saved, transferred over the network...</div><div class="ttdef"><b>Definition:</b> <a href="_serializable_8cpp_source.html#l00034">Serializable.cpp:34</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a1dadb1b0f753339585f5a4959b913fac"><div class="ttname"><a href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">Picto::DesignConfig::markRunEnd</a></div><div class="ttdeci">void markRunEnd()</div><div class="ttdoc">Called when the latest Task run ends. Emits the runEnded() signal to inform the outside world that th...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00421">DesignConfig.cpp:421</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_adcb3d8af7b88041a3116fcd36d99ecba"><div class="ttname"><a href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">Picto::DesignConfig::getFrameReader</a></div><div class="ttdeci">QSharedPointer&lt; FrameReader &gt; getFrameReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00464">DesignConfig.cpp:464</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_adbbef0cf54aed619659f7690924fea27"><div class="ttname"><a href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">Picto::DesignConfig::getSpikeReader</a></div><div class="ttdeci">QSharedPointer&lt; SpikeReader &gt; getSpikeReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00540">DesignConfig.cpp:540</a></div></div>
-<div class="ttc" id="struct_picto_1_1_asset_info_html"><div class="ttname"><a href="struct_picto_1_1_asset_info.html">Picto::AssetInfo</a></div><div class="ttdoc">Stores data about an Asset including its AssetId and Path in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00017">DesignConfig.h:17</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a0f4bedf67fa6c051dc10a7190e55ed66"><div class="ttname"><a href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">Picto::DesignConfig::getSignalReader</a></div><div class="ttdeci">QSharedPointer&lt; SignalReader &gt; getSignalReader(QString name)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00565">DesignConfig.cpp:565</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a3583860f876fe8bbfff59942f2b1ad83"><div class="ttname"><a href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">Picto::DesignConfig::addManagedAsset</a></div><div class="ttdeci">void addManagedAsset(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Adds the input Asset to this DesignConfig so that it can include it in its list of all Assets in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00308">DesignConfig.cpp:308</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a49706444d1f1c9e0e3d82edc376dad28"><div class="ttname"><a href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">Picto::DesignConfig::clearSignalReaders</a></div><div class="ttdeci">void clearSignalReaders()</div><div class="ttdoc">Removes all SignalReader objects that were included in this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00556">DesignConfig.cpp:556</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a1dadb1b0f753339585f5a4959b913fac"><div class="ttname"><a href="class_picto_1_1_design_config.html#a1dadb1b0f753339585f5a4959b913fac">Picto::DesignConfig::markRunEnd</a></div><div class="ttdeci">void markRunEnd()</div><div class="ttdoc">Called when the latest Task run ends. Emits the runEnded() signal to inform the outside world that th...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00433">DesignConfig.cpp:433</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_adcb3d8af7b88041a3116fcd36d99ecba"><div class="ttname"><a href="class_picto_1_1_design_config.html#adcb3d8af7b88041a3116fcd36d99ecba">Picto::DesignConfig::getFrameReader</a></div><div class="ttdeci">QSharedPointer&lt; FrameReader &gt; getFrameReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00476">DesignConfig.cpp:476</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_adbbef0cf54aed619659f7690924fea27"><div class="ttname"><a href="class_picto_1_1_design_config.html#adbbef0cf54aed619659f7690924fea27">Picto::DesignConfig::getSpikeReader</a></div><div class="ttdeci">QSharedPointer&lt; SpikeReader &gt; getSpikeReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00554">DesignConfig.cpp:554</a></div></div>
+<div class="ttc" id="struct_picto_1_1_asset_info_html"><div class="ttname"><a href="struct_picto_1_1_asset_info.html">Picto::AssetInfo</a></div><div class="ttdoc">Stores data about an Asset including its AssetId and Path in the Design. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00018">DesignConfig.h:18</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a0f4bedf67fa6c051dc10a7190e55ed66"><div class="ttname"><a href="class_picto_1_1_design_config.html#a0f4bedf67fa6c051dc10a7190e55ed66">Picto::DesignConfig::getSignalReader</a></div><div class="ttdeci">QSharedPointer&lt; SignalReader &gt; getSignalReader(QString name)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00581">DesignConfig.cpp:581</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a3583860f876fe8bbfff59942f2b1ad83"><div class="ttname"><a href="class_picto_1_1_design_config.html#a3583860f876fe8bbfff59942f2b1ad83">Picto::DesignConfig::addManagedAsset</a></div><div class="ttdeci">void addManagedAsset(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Adds the input Asset to this DesignConfig so that it can include it in its list of all Assets in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00312">DesignConfig.cpp:312</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a49706444d1f1c9e0e3d82edc376dad28"><div class="ttname"><a href="class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28">Picto::DesignConfig::clearSignalReaders</a></div><div class="ttdeci">void clearSignalReaders()</div><div class="ttdoc">Removes all SignalReader objects that were included in this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00571">DesignConfig.cpp:571</a></div></div>
 <div class="ttc" id="class_picto_1_1_controller_1_1_frame_timer_factory_html"><div class="ttname"><a href="class_picto_1_1_controller_1_1_frame_timer_factory.html">Picto::Controller::FrameTimerFactory</a></div><div class="ttdoc">A Factory object used to create FrameResolutionTimer object while maintaing a single FrameTracker obj...</div><div class="ttdef"><b>Definition:</b> <a href="_frame_timer_factory_8h_source.html#l00032">FrameTimerFactory.h:32</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a68b34648e8f8b9980b8463ca6c68ddf9"><div class="ttname"><a href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">Picto::DesignConfig::getRewardReader</a></div><div class="ttdeci">QSharedPointer&lt; RewardReader &gt; getRewardReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00520">DesignConfig.cpp:520</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a68b34648e8f8b9980b8463ca6c68ddf9"><div class="ttname"><a href="class_picto_1_1_design_config.html#a68b34648e8f8b9980b8463ca6c68ddf9">Picto::DesignConfig::getRewardReader</a></div><div class="ttdeci">QSharedPointer&lt; RewardReader &gt; getRewardReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00533">DesignConfig.cpp:533</a></div></div>
 <div class="ttc" id="class_picto_1_1_transition_html"><div class="ttname"><a href="class_picto_1_1_transition.html">Picto::Transition</a></div><div class="ttdoc">A transition between two StateMachineElements. </div><div class="ttdef"><b>Definition:</b> <a href="transition_8h_source.html#l00028">transition.h:28</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e"><div class="ttname"><a href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">Picto::DesignConfig::setRewardReader</a></div><div class="ttdeci">void setRewardReader(QSharedPointer&lt; RewardReader &gt; rewardReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00482">DesignConfig.cpp:482</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a4a00a01101228bf27842fe4e40e30c66"><div class="ttname"><a href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">Picto::DesignConfig::setSpikeReader</a></div><div class="ttdeci">void setSpikeReader(QSharedPointer&lt; SpikeReader &gt; spikeReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00502">DesignConfig.cpp:502</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_ae70b1320a758c21dd330184ba6dfab38"><div class="ttname"><a href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">Picto::DesignConfig::setSignalReader</a></div><div class="ttdeci">void setSignalReader(QString name, QSharedPointer&lt; SignalReader &gt; signalReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00549">DesignConfig.cpp:549</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_acb63659543f4e34d235330727bb002f1"><div class="ttname"><a href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">Picto::DesignConfig::setLfpReader</a></div><div class="ttdeci">void setLfpReader(QSharedPointer&lt; LfpReader &gt; lfpReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00473">DesignConfig.cpp:473</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_adb44d351d33d3c21e62268812abf9a03"><div class="ttname"><a href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">Picto::DesignConfig::markRunStart</a></div><div class="ttdeci">void markRunStart(QString runName)</div><div class="ttdoc">Called when a new Task run is started. Emits the runStarted() signal to inform the outside world that...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00410">DesignConfig.cpp:410</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a86faf6a6691d4c02874022f6296a5baf"><div class="ttname"><a href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">Picto::DesignConfig::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Clears out all of this object&#39;s saved data. Returning it to its initial state. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00014">DesignConfig.cpp:14</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aa974bbd3d6288f50264f6a3c932743da"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">Picto::DesignConfig::disallowIdDuplication</a></div><div class="ttdeci">void disallowIdDuplication()</div><div class="ttdoc">After this function is called, calls to fixDuplicatedAssetIds() will correct any duplicate AssetIds i...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00286">DesignConfig.cpp:286</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_aee932e628f49c3210bb97334f73f78be"><div class="ttname"><a href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">Picto::DesignConfig::getTransitionInfo</a></div><div class="ttdeci">QList&lt; TransInfo &gt; getTransitionInfo()</div><div class="ttdoc">Returns a list of all TransInfo data on Transition Assets that were added to this DesignConfig...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00587">DesignConfig.cpp:587</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a4f5534007f087af97c70b425c3fc1111"><div class="ttname"><a href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">Picto::DesignConfig::getRunNotesReader</a></div><div class="ttdeci">QSharedPointer&lt; RunNotesReader &gt; getRunNotesReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00531">DesignConfig.cpp:531</a></div></div>
-<div class="ttc" id="struct_picto_1_1_trans_info_html"><div class="ttname"><a href="struct_picto_1_1_trans_info.html">Picto::TransInfo</a></div><div class="ttdoc">Stores data about a Transition including its AssetId, its Parent Asset&#39;s AssetId, its source...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00021">DesignConfig.h:21</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_ad25cd87f54e11ebc780f871f41c17392"><div class="ttname"><a href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">Picto::DesignConfig::fromXml</a></div><div class="ttdeci">bool fromXml(QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</div><div class="ttdoc">Deserializes this DesignConfig&#39;s Property, Transition and Design Element contents from XML...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00087">DesignConfig.cpp:87</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_a8cda9610664d84d478bb049ba9f61fa8"><div class="ttname"><a href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">Picto::DesignConfig::getNewDataId</a></div><div class="ttdeci">int getNewDataId()</div><div class="ttdoc">Returns a new AssetId that was not yet used by any Asset included in this object. ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00294">DesignConfig.cpp:294</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e"><div class="ttname"><a href="class_picto_1_1_design_config.html#acd8d9a6bc5cbb7272b3b6f7c1b4e3e2e">Picto::DesignConfig::setRewardReader</a></div><div class="ttdeci">void setRewardReader(QSharedPointer&lt; RewardReader &gt; rewardReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00494">DesignConfig.cpp:494</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a4a00a01101228bf27842fe4e40e30c66"><div class="ttname"><a href="class_picto_1_1_design_config.html#a4a00a01101228bf27842fe4e40e30c66">Picto::DesignConfig::setSpikeReader</a></div><div class="ttdeci">void setSpikeReader(QSharedPointer&lt; SpikeReader &gt; spikeReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00515">DesignConfig.cpp:515</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_ae70b1320a758c21dd330184ba6dfab38"><div class="ttname"><a href="class_picto_1_1_design_config.html#ae70b1320a758c21dd330184ba6dfab38">Picto::DesignConfig::setSignalReader</a></div><div class="ttdeci">void setSignalReader(QString name, QSharedPointer&lt; SignalReader &gt; signalReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00564">DesignConfig.cpp:564</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_acb63659543f4e34d235330727bb002f1"><div class="ttname"><a href="class_picto_1_1_design_config.html#acb63659543f4e34d235330727bb002f1">Picto::DesignConfig::setLfpReader</a></div><div class="ttdeci">void setLfpReader(QSharedPointer&lt; LfpReader &gt; lfpReader)</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00485">DesignConfig.cpp:485</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_adb44d351d33d3c21e62268812abf9a03"><div class="ttname"><a href="class_picto_1_1_design_config.html#adb44d351d33d3c21e62268812abf9a03">Picto::DesignConfig::markRunStart</a></div><div class="ttdeci">void markRunStart(QString runName)</div><div class="ttdoc">Called when a new Task run is started. Emits the runStarted() signal to inform the outside world that...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00421">DesignConfig.cpp:421</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a86faf6a6691d4c02874022f6296a5baf"><div class="ttname"><a href="class_picto_1_1_design_config.html#a86faf6a6691d4c02874022f6296a5baf">Picto::DesignConfig::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Clears out all of this object&#39;s saved data. Returning it to its initial state. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00015">DesignConfig.cpp:15</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aa974bbd3d6288f50264f6a3c932743da"><div class="ttname"><a href="class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da">Picto::DesignConfig::disallowIdDuplication</a></div><div class="ttdeci">void disallowIdDuplication()</div><div class="ttdoc">After this function is called, calls to fixDuplicatedAssetIds() will correct any duplicate AssetIds i...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00290">DesignConfig.cpp:290</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_aee932e628f49c3210bb97334f73f78be"><div class="ttname"><a href="class_picto_1_1_design_config.html#aee932e628f49c3210bb97334f73f78be">Picto::DesignConfig::getTransitionInfo</a></div><div class="ttdeci">QList&lt; TransInfo &gt; getTransitionInfo()</div><div class="ttdoc">Returns a list of all TransInfo data on Transition Assets that were added to this DesignConfig...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00607">DesignConfig.cpp:607</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a4f5534007f087af97c70b425c3fc1111"><div class="ttname"><a href="class_picto_1_1_design_config.html#a4f5534007f087af97c70b425c3fc1111">Picto::DesignConfig::getRunNotesReader</a></div><div class="ttdeci">QSharedPointer&lt; RunNotesReader &gt; getRunNotesReader()</div><div class="ttdoc">Various Analysis elements need access to various data reader classes so that they can poll data over ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00545">DesignConfig.cpp:545</a></div></div>
+<div class="ttc" id="struct_picto_1_1_trans_info_html"><div class="ttname"><a href="struct_picto_1_1_trans_info.html">Picto::TransInfo</a></div><div class="ttdoc">Stores data about a Transition including its AssetId, its Parent Asset&#39;s AssetId, its source...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8h_source.html#l00025">DesignConfig.h:25</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_ad25cd87f54e11ebc780f871f41c17392"><div class="ttname"><a href="class_picto_1_1_design_config.html#ad25cd87f54e11ebc780f871f41c17392">Picto::DesignConfig::fromXml</a></div><div class="ttdeci">bool fromXml(QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</div><div class="ttdoc">Deserializes this DesignConfig&#39;s Property, Transition and Design Element contents from XML...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00090">DesignConfig.cpp:90</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_a8cda9610664d84d478bb049ba9f61fa8"><div class="ttname"><a href="class_picto_1_1_design_config.html#a8cda9610664d84d478bb049ba9f61fa8">Picto::DesignConfig::getNewDataId</a></div><div class="ttdeci">int getNewDataId()</div><div class="ttdoc">Returns a new AssetId that was not yet used by any Asset included in this object. ...</div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00298">DesignConfig.cpp:298</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_design_config_html_ab29d63f3031f10aaf6d492fcbbf7ffc2"><div class="ttname"><a href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">Picto::DesignConfig::getActiveAnalysisIds</a></div><div class="ttdeci">QList&lt; QUuid &gt; getActiveAnalysisIds()</div><div class="ttdoc">Returns a list of all active AnalysisIds in this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00392">DesignConfig.cpp:392</a></div></div>
+<div class="ttc" id="class_picto_1_1_design_config_html_ab29d63f3031f10aaf6d492fcbbf7ffc2"><div class="ttname"><a href="class_picto_1_1_design_config.html#ab29d63f3031f10aaf6d492fcbbf7ffc2">Picto::DesignConfig::getActiveAnalysisIds</a></div><div class="ttdeci">QList&lt; QUuid &gt; getActiveAnalysisIds()</div><div class="ttdoc">Returns a list of all active AnalysisIds in this DesignConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_design_config_8cpp_source.html#l00402">DesignConfig.cpp:402</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

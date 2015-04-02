@@ -27,11 +27,14 @@ public:
 	PropertyDataUnitPackage();
 	void addData(int index, bool initValue, QString value);
 	void setActionFrame(qulonglong frameId);
-	/*! \brief Removes all PropertyDataUnits from this package.*/
+	/*! \brief Removes all PropertyDataUnits from this package.
+	 */
 	void emptyData() { data_.clear(); };
-	/*! \brief Returns the number of PropertyDataUnits in this package.*/
+	/*! \brief Returns the number of PropertyDataUnits in this package.
+	 */
 	int length() { return data_.length(); }
-	/*! \brief Returns the first PropertyDataUnit in this package and removes it from the list.*/
+	/*! \brief Returns the first PropertyDataUnit in this package and removes it from the list.
+	 */
 	QSharedPointer<PropertyDataUnit> takeFirstDataPoint() { return data_.takeFirst(); };
 
 	//Data store functions

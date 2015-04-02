@@ -9,6 +9,8 @@
 
 namespace Picto {
 
+class RemoteStateXMLHandler;
+
 /*! \brief A StateUpdater that gathers Session events from the Picto Server in real time.
  *
  *	\details This StateUpdater is used in the Remote Viewer to keep the local slave Experiment in sync with the
@@ -80,10 +82,14 @@ signals:
 	 *	have been emitted and before framePresented() is emitted.
 	 */
 	void signalChanged(QString name,QStringList subChanNames,QVector<float> vals);
-
+public slots:
+	/*! \brief Updates the lastTimeStateDataRequested_ if it's passed a more recent time.
+	 */
+	void updateCurrUnitTime(QString time);
 private:
 	CommandChannel *serverChan_;
 	QString lastTimeStateDataRequested_;
+	QMap<QString, QSharedPointer<RemoteStateXMLHandler>> xmlHandlers_;
 };
 
 

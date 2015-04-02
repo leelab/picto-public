@@ -281,7 +281,6 @@ bool DesignRoot::isModified()
 	return lastSaveVersion_ != designUndoStack_[undoStateOffset_];
 }
 /*! \brief Sets the latest version of the design as unmodified
- *	\details Calling setUnmodified() has the result of removing all undo/redo points.
  *	\sa setUndoPoint(), undo()
  */
 void DesignRoot::setUnmodified()

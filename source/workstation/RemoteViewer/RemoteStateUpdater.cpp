@@ -1,25 +1,27 @@
 #include <QCoreApplication>
 
 #include "RemoteStateUpdater.h"
-#include "../../common/storage/BehavioralDataUnitPackage.h"
-#include "../../common/storage/InputDataUnitPackage.h"
-#include "../../common/storage/RewardDataUnit.h"
-#include "../../common/storage/PropertyDataUnit.h"
-#include "../../common/storage/FrameDataUnit.h"
-#include "../../common/storage/StateDataUnit.h"
+#include "RemoteStateXMLHandler.h"
+
 #include "../../common/memleakdetect.h"
 
 using namespace Picto;
 
 /*! \brief Constructs a new RemoteStateUpdater object.
- *	@param serverChan The CommandChannel on which this object will
- *		request the latest data from the Server.
+ *	@param serverChan The CommandChannel on which this object will request the latest data from the Server.
  */
 RemoteStateUpdater::RemoteStateUpdater(CommandChannel *serverChan)
 : serverChan_(serverChan)
 {
 	Q_ASSERT(serverChan_);
 	initForNewSession();
+
+	xmlHandlers_[PropertyDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new PropertyDataUnitHandler(this));
+	xmlHandlers_[BehavioralDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new BehavioralDataUnitHandler(this));
+	xmlHandlers_[InputDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new InputDataUnitHandler(this));
+	xmlHandlers_[StateDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new StateDataUnitHandler(this));
+	xmlHandlers_[FrameDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new FrameDataUnitHandler(this));
+	xmlHandlers_[RewardDataUnitHandler::getDataPackageName()] = QSharedPointer<RemoteStateXMLHandler>(new RewardDataUnitHandler(this));
 }
 
 /*! \brief Initializes this object for a new Session.
@@ -30,15 +32,11 @@ void RemoteStateUpdater::initForNewSession()
 	lastTimeStateDataRequested_ = "0.0";
 }
 
-/*! \brief Requests all new Session data from the Picto Server and emits
- *	the appropriate signals accordingly.
- *	\details This function keeps track of the latest time for which data has
- *	arrived from the Server then requests all data from the Server that 
- *	occured after that time.  The function goes through the returned data
- *	and emits the appropriate StateUpdater signals for each type of new
- *	data that arrives.  This function should be called at least once per
- *	frame in order to be sure that the most up to date data is always 
- *	coming into the Workstation.
+/*! \brief Requests all new Session data from the Picto Server and emits the appropriate signals accordingly.
+ *	\details This function keeps track of the latest time for which data has arrived from the Server then requests all
+ *	data from the Server that occured after that time.  The function goes through the returned data and emits the
+ *	appropriate StateUpdater signals for each type of new data that arrives.  This function should be called at least
+ *	once per frame in order to be sure that the most up to date data is always coming into the Workstation.
  */
 bool RemoteStateUpdater::updateState()
 {
@@ -74,14 +72,6 @@ bool RemoteStateUpdater::updateState()
 	QByteArray xmlFragment = response->getContent();
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
-
-	PropertyDataUnit propUnit;
-	BehavioralDataUnitPackage behavUnitPack;
-	InputDataUnitPackage inputUnitPack;
-	StateDataUnit stateUnit;
-	FrameDataUnit frameUnit;
-	RewardDataUnit rewardUnit;
-
 	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
 
 	if(xmlReader->atEnd())
@@ -90,61 +80,25 @@ bool RemoteStateUpdater::updateState()
 	xmlReader->readNext();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
-		QString currUnitTime = "-1.0";
-		if(xmlReader->name() == "PDU")
+		QString name = xmlReader->name().toString();
+		if (xmlHandlers_.contains(name))
 		{
-			propUnit.fromXml(xmlReader);
-			if(propUnit.initValue_)
-			{
-				emit propertyInitValueChanged(propUnit.index_,propUnit.value_);
-			}
-			else
-				emit propertyValueChanged(propUnit.index_,propUnit.value_);
+			xmlHandlers_[name]->handle(xmlReader);
 		}
-		else if(xmlReader->name() == "BDUP")
+		else
 		{
-			behavUnitPack.fromXml(xmlReader);
-			QVector<float> data(2);
-			QSharedPointer<BehavioralDataUnit> unit = behavUnitPack.takeLastDataPoint();
-			data[0] = unit->x;
-			data[1] = unit->y;
-			emit signalChanged(behavUnitPack.getChannel()
-								,behavUnitPack.getDescriptor().split(",",QString::SkipEmptyParts)
-								,data);
+			qDebug() << "Unknown Data Packet of Name: " << name;
 		}
-		else if (xmlReader->name() == "IDUP")
-		{
-			inputUnitPack.fromXml(xmlReader);
-			QVector<float> data(8);
-			QSharedPointer<InputDataUnit> unit = inputUnitPack.takeLastDataPoint();
-			for (int i = 0; i < 8; i++)
-			{
-				data[i] = unit->input[i];
-			}
-			emit signalChanged(inputUnitPack.getChannel()
-				, inputUnitPack.getDescriptor().split(",", QString::SkipEmptyParts)
-				, data);
-		}
-		else if(xmlReader->name() == "SDU")
-		{
-			stateUnit.fromXml(xmlReader);
-			emit transitionActivated(stateUnit.getTransitionID());
-		}
-		else if(xmlReader->name() == "FDU")
-		{
-			frameUnit.fromXml(xmlReader);
-			currUnitTime = frameUnit.time;		//Both frame and rewards (while pause or stopped) can cause state update
-			emit framePresented(frameUnit.time.toDouble());
-		}
-		else if(xmlReader->name() == "RDU")
-		{
-			rewardUnit.fromXml(xmlReader);
-			currUnitTime = rewardUnit.getTime();	//Both frame and rewards (while pause or stopped) can cause state update
-			emit rewardSupplied(rewardUnit.getTime().toDouble(),rewardUnit.getDuration(),rewardUnit.getChannel());
-		}
-		if(currUnitTime.toDouble() > lastTimeStateDataRequested_.toDouble())
-			lastTimeStateDataRequested_ = currUnitTime;
 		xmlReader->readNext();
 	}
+
 	return true;
+}
+
+void RemoteStateUpdater::updateCurrUnitTime(QString time)
+{
+	if (time.toDouble() > lastTimeStateDataRequested_.toDouble())
+	{
+		lastTimeStateDataRequested_ = time;
+	}
 }

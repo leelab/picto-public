@@ -12,8 +12,8 @@ namespace Picto {
 
 /*! \brief An interface class for objects that update the Picto State from some external source.
  *	\details The source might be a remotely running experiment or an old session file that is being replayed.
- *	Either way, the StateUpdater communicates by emitting signals indicating that various events occured, in the order that they occured.
- *	It also provides various data reader objects that can be used to gather lists of past data
+ *	Either way, the StateUpdater communicates by emitting signals indicating that various events occured, in the order
+ *	that they occured.  It also provides various data reader objects that can be used to gather lists of past data
  *	or future data (in the case of experiments that are being played back from a previously saved session).
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015

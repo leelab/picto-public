@@ -44,10 +44,10 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 }
 
 /*! \brief Renders the current frame by calling State::slaveRenderFrame().
- *	\details Note that in slave mode, the Picto Experiment is working with the Qt Event loop which
- *	is why we are calling slaveRenderFrame from an outside class.  In master experiment execution,
- *	the experiment is one giant loop of code that doesn't make use of the Qt Event loop.  In that case
- *	frame rendering is handled as part of running a State/PausePoint.
+ *	\details Note that in slave mode, the Picto Experiment is working with the Qt Event loop which is why we are calling
+ *	slaveRenderFrame from an outside class.  In master experiment execution, the experiment is one giant loop of code
+ *	that doesn't make use of the Qt Event loop.  In that case frame rendering is handled as part of running a
+ *	State/PausePoint.
  */
 void SlaveExperimentDriver::renderFrame()
 {
@@ -158,7 +158,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 
 /*! \brief Called when a new Run starts.  Handles various initializations that need to occur at the beginning of a new run.
  *	\details As part of this function, the taskChanged() signal is emitted.
-*/
+ */
 void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 {
 	experiment_->getDesignConfig()->getFrameTimerFactory()->resetAllTimers();
@@ -180,7 +180,7 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 }
 
 /*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
-*/
+ */
 void SlaveExperimentDriver::masterRunEnding()
 {
 	if(currTask_.isEmpty())
@@ -192,23 +192,26 @@ void SlaveExperimentDriver::masterRunEnding()
 	eventQueue_.reset();
 }
 
-/*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.*/
+/*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.
+ */
 void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
 	eventQueue_.addPropChange(propId,value);
 }
-/*! \brief Called when a Property initValue changes in the master.  Adds a corresponding event to the event queue.*/
+/*! \brief Called when a Property initValue changes in the master.  Adds a corresponding event to the event queue.
+ */
 void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
 {
 	eventQueue_.addInitPropChange(propId,value);
 }
-/*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.*/
+/*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.
+ */
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
 	eventQueue_.addTransActivation(transId);
 }
-/*! \brief Called when a frame is presented in the master.  Goes through event queue handling events one by one.  Updates FrameResolutionTimer objects,
- *	renders the frame and calls the current AnalysisFrameScript.
+/*! \brief Called when a frame is presented in the master.  Goes through event queue handling events one by one.  Updates
+ *	FrameResolutionTimer objects, renders the frame and calls the current AnalysisFrameScript.
  */
 void SlaveExperimentDriver::masterFramePresented(double time)
 {
@@ -241,7 +244,9 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 		currState->runAnalysisFrameScripts();
 	}
 }
-/*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine  to be supplied when the next frame is rendered.*/
+/*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine to be supplied
+ *	when the next frame is rendered.
+ */
 void SlaveExperimentDriver::masterRewardSupplied(double,int duration,int channel)
 {
 	experiment_->getEngine()->giveReward(channel,duration,duration);
@@ -261,9 +266,9 @@ void SlaveExperimentDriver::masterSignalChanged(QString name,QStringList subChan
 	}
 }
 /*! \brief Disables/Enables rendering of frames to the RenderingTarget.
- *	\details This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to actually see
- *	every frame on screen.  Even though the frames aren't rendered, however, all other logic operates exactly the same whether rendering
- *	is enabled or disabled.
+ *	\details This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to
+ *	actually see every frame on screen.  Even though the frames aren't rendered, however, all other logic operates
+ *	exactly the same whether rendering is enabled or disabled.
  */
 void SlaveExperimentDriver::disableRendering(bool disable)
 {

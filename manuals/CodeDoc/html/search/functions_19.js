@@ -17,6 +17,7 @@ var searchData=
   ['_7elegacysystemxpanaloginputport',['~LegacySystemXPAnalogInputPort',['../class_picto_1_1_legacy_system_x_p_analog_input_port.html#a316f1a839eefb91fbf6b4b346eeb6351',1,'Picto::LegacySystemXPAnalogInputPort']]],
   ['_7ephidgets',['~Phidgets',['../class_phidgets.html#a63632587e91cd54861763eccee1d154c',1,'Phidgets']]],
   ['_7epictoboxxprewardcontroller',['~PictoBoxXPRewardController',['../class_picto_1_1_picto_box_x_p_reward_controller.html#a4679cf9cf4f423d44e5142a5d639fb26',1,'Picto::PictoBoxXPRewardController']]],
+  ['_7eremotestatexmlhandler',['~RemoteStateXMLHandler',['../class_picto_1_1_remote_state_x_m_l_handler.html#a255c392604f1cc200c72e39680ab87b1',1,'Picto::RemoteStateXMLHandler']]],
   ['_7estoredsessiondata',['~StoredSessionData',['../class_stored_session_data.html#a71ce0fb4b14e50493e38515927205ac8',1,'StoredSessionData']]],
   ['_7eviewselectionwidget',['~ViewSelectionWidget',['../class_view_selection_widget.html#a9223d3a7ae8e74675849a98368f38bdb',1,'ViewSelectionWidget']]]
 ];

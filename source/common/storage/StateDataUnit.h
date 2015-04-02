@@ -36,7 +36,7 @@ public:
 	void setActionFrame(qulonglong frameId){actionFrame_ = frameId;};
 
 	/*! \brief Returns the Transition AssetId stored in this object.*/
-	int		getTransitionID(){return id_;};
+	int	getTransitionID(){return id_;};
 	/*! \brief Returns the DataId of the Frame that was presented following the Transition traversal
 	 *	contained in this object.*/
 	qulonglong getActionFrame(){return actionFrame_;};

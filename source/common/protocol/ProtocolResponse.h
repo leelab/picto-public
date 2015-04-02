@@ -38,7 +38,7 @@ namespace ContentEncodingType
 
 /*! \brief The type of a particular multipart ProtocolResponse.
  *	\note Multipart responses are not currently used in Picto even though they are supported here.
-*/
+ */
 namespace MultiPartResponseType
 {
 	typedef enum
@@ -48,13 +48,15 @@ namespace MultiPartResponseType
 }
 
 /*! \brief The registration type of the current Picto response.
- *	\details The Picto server tells its client whenever data from a "registered command" that was received has been written to disk.  Whenever a ProtocolResponse
- *	is sent, the command id of the command to which it is responding is added to a list.  The RegisteredResponseType on a ProtocolResponse is used to 
- *	piggyback information about whether the data from the commands with command-ids in that list has been written to disk.  When that has happened that list
+ *	\details The Picto server tells its client whenever data from a "registered command" that was received has been
+ *	written to disk.  Whenever a ProtocolResponse is sent, the command id of the command to which it is responding is
+ *	added to a list.  The RegisteredResponseType on a ProtocolResponse is used to piggyback information about whether
+ *	the data from the commands with command-ids in that list has been written to disk.  When that has happened that list
  *	of command-ids is attached to the ProtocolResponse to tell the client which data was written to disk.
- *	\note RegisteredResponseType on ProtocolResponses is complicated by the fact that commands/responses live in one thread while flushing to disk
- *	occurs in another thread.  That is the source of some of the complexity involved in correctly replying to registered commands.
-*/
+ *	\note RegisteredResponseType on ProtocolResponses is complicated by the fact that commands/responses live in one
+ *	thread while flushing to disk occurs in another thread.  That is the source of some of the complexity involved in
+ *	correctly replying to registered commands.
+ */
 namespace RegisteredResponseType
 {
 	typedef enum
@@ -71,11 +73,9 @@ namespace RegisteredResponseType
 
 /*!	\brief A response, issued as the result of a command
  *
- *	Protocol responses are the object that gets returned after a command 
- *	is received.  The response can simply be an empty 200:OK, in response to a 
- *	simple command, or it can be much more complex.  Although there is functionality
- *	in place for streaming responses, Picto doesn't currently use it.  Multipart responses
- *	are also supported but not used.
+ *	Protocol responses are the object that gets returned after a command is received.  The response can simply be an
+ *	empty 200:OK, in response to a simple command, or it can be much more complex.  Although there is functionality in
+ *	place for streaming responses, Picto doesn't currently use it.  Multipart responses are also supported but not used.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

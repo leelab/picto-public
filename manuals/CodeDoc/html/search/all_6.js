@@ -91,6 +91,7 @@ var searchData=
   ['getdataid',['getDataID',['../class_picto_1_1_data_unit.html#aa49e53f00131a2ad4a8029094176ff25',1,'Picto::DataUnit']]],
   ['getdataidoflastunit',['getDataIDOfLastUnit',['../class_picto_1_1_behavioral_data_unit_package.html#a30584418819b9470c03885c72ab0ea77',1,'Picto::BehavioralDataUnitPackage::getDataIDOfLastUnit()'],['../class_picto_1_1_input_data_unit_package.html#ac09e9cdc3d0e01de5edafcc6789ef896',1,'Picto::InputDataUnitPackage::getDataIDOfLastUnit()']]],
   ['getdatapackage',['getDataPackage',['../class_picto_1_1_doublet_signal_channel.html#aaa60300027305af76991cba0d2da37b3',1,'Picto::DoubletSignalChannel::getDataPackage()'],['../class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08',1,'Picto::GenericInput::getDataPackage()']]],
+  ['getdatapackagename',['getDataPackageName',['../class_picto_1_1_property_data_unit_handler.html#ab556ce9b53ee6e364c8ce2736d227e45',1,'Picto::PropertyDataUnitHandler::getDataPackageName()'],['../class_picto_1_1_behavioral_data_unit_handler.html#aac718071bb4913ad464cf02e5ca2c582',1,'Picto::BehavioralDataUnitHandler::getDataPackageName()'],['../class_picto_1_1_input_data_unit_handler.html#a9428326eccce3296dfcd13276ef97d6d',1,'Picto::InputDataUnitHandler::getDataPackageName()'],['../class_picto_1_1_state_data_unit_handler.html#a24ac2ed7575192a5532d5444fc718089',1,'Picto::StateDataUnitHandler::getDataPackageName()'],['../class_picto_1_1_frame_data_unit_handler.html#abfa236d65a3183948f23376e2a9cba0d',1,'Picto::FrameDataUnitHandler::getDataPackageName()'],['../class_picto_1_1_reward_data_unit_handler.html#a80fef58070c5b209331b4437e856371b',1,'Picto::RewardDataUnitHandler::getDataPackageName()']]],
   ['getdecodedcontent',['getDecodedContent',['../struct_picto_1_1_protocol_response.html#a3c1ec9136c91f050ee4498ee7f7d3841',1,'Picto::ProtocolResponse']]],
   ['getdefaultzoomrect',['getDefaultZoomRect',['../class_diagram_scene.html#ada3bc85f1770830b379ffc70d5aeb60d',1,'DiagramScene']]],
   ['getdefinedchildtags',['getDefinedChildTags',['../class_picto_1_1_data_store.html#a0f04316d9bbf1e07a737bd026556968e',1,'Picto::DataStore']]],
@@ -509,7 +510,7 @@ var searchData=
   ['giverewardrequest',['giveRewardRequest',['../class_control_panel_interface.html#aa31c026d69d3e7644c43f16ea25f82f2',1,'ControlPanelInterface']]],
   ['globals_2eh',['globals.h',['../globals_8h.html',1,'']]],
   ['green',['green',['../class_picto_1_1_color_parameter.html#a7cfab3390f7bee887cfa15e2e1cb82e6',1,'Picto::ColorParameter::green()'],['../struct_picto_1_1_visual_element.html#a1c795d02093276be88d7405bd4e42f64',1,'Picto::VisualElement::green()']]],
-  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html',1,'Picto']]],
   ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html#a27af6c6c51429ea1f9ecb326fef9adb6',1,'Picto::GridGraphic']]],
+  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html',1,'Picto']]],
   ['group',['group',['../struct_search_request.html#af1011ddf957c3617a37d47d08c171a9a',1,'SearchRequest']]]
 ];

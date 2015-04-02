@@ -19,5 +19,6 @@ var searchData=
   ['startframe_5f',['startFrame_',['../struct_picto_1_1_file_session_loader_1_1_run_data.html#ac2523539bffa43cf2ee22a5d6fe6ae08',1,'Picto::FileSessionLoader::RunData::startFrame_()'],['../class_picto_1_1_task_run_data_unit.html#a0ec6bd0bf2409e317caf57f32c6170b7',1,'Picto::TaskRunDataUnit::startFrame_()']]],
   ['starttime_5f',['startTime_',['../struct_picto_1_1_file_session_loader_1_1_run_data.html#af1e2fa8297c653cd42a95a63328bb079',1,'Picto::FileSessionLoader::RunData::startTime_()'],['../class_virtual_event_source.html#acf410036e06368adbcf1bfd0772c79bf',1,'VirtualEventSource::startTime_()']]],
   ['stateid_5f',['stateId_',['../class_picto_1_1_frame_data_unit.html#aed29a29a44838925c814797d3ea02316',1,'Picto::FrameDataUnit']]],
+  ['stateunit_5f',['stateUnit_',['../class_picto_1_1_state_data_unit_handler.html#ac794ca1b10df8a35aee0133478d25aac',1,'Picto::StateDataUnitHandler']]],
   ['statusmanager_5f',['statusManager_',['../class_component_interface.html#acbc401183b1e3ad78397944628bf8e74',1,'ComponentInterface']]]
 ];
