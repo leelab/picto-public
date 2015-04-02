@@ -114,7 +114,7 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	}
 	else if (static_cast<QtVariantProperty*>(property)->propertyType() == QVariant::String)
 	{
-		Q_ASSERT(editorState_);
+		//Q_ASSERT(editorState_);
 		resultWidget = new ScriptWidget(manager, property, editorState_, true, parent);
 	}
 	else
