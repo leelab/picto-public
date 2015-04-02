@@ -30,8 +30,11 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 	textEdit_->setText(text);
 	scriptChangedSinceSync_ = false;
 
-	//Set up search
-	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
+	if (!editorState_.isNull())
+	{
+		//Set up search
+		connect(editorState_.data(), SIGNAL(searchRequested(SearchRequest)), this, SLOT(searchRequested(SearchRequest)));
+	}
 
 	//Set up StateMachine-level undo
 	connect(textEdit_, SIGNAL(focusOut()), this, SLOT(scriptLostFocus()));
@@ -58,10 +61,13 @@ void ScriptWidget::textChangeDetected()
 	QString editedText = textEdit_->toPlainText();
 	manager_->setValue(property_,editedText);
 
-	//Redo search in case the new edit leads to a highlight change
-	foreach(SearchRequest searchRequest,editorState_->getSearchRequests())
+	if (!editorState_.isNull())
 	{
-		searchRequested(searchRequest);
+		//Redo search in case the new edit leads to a highlight change
+		foreach(SearchRequest searchRequest, editorState_->getSearchRequests())
+		{
+			searchRequested(searchRequest);
+		}
 	}
 
 	//Tell the world that the text was edited
@@ -91,7 +97,7 @@ QSize ScriptWidget::sizeHint() const
 
 void ScriptWidget::scriptLostFocus()
 {
-	if (scriptChangedSinceSync_)
+	if (scriptChangedSinceSync_ && !editorState_.isNull())
 	{
 		editorState_->undoableActionPerformed();
 		scriptChangedSinceSync_ = false;
