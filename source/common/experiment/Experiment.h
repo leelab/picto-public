@@ -1,4 +1,3 @@
-
 #ifndef _EXPERIMENT_H_
 #define _EXPERIMENT_H_
 
@@ -52,52 +51,55 @@ class Experiment : public ScriptableContainer, public AssociateRootHost
 #endif
 {
 	Q_OBJECT
-	/*! \brief Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for the xPosition.
+	/*! \brief Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for the
+	 *	xPosition.
 	 *	\details The equation is \code xPos = screenWidth/2 + xGain(xOffset+xSignalValue) \endcode 
-	 *	\details By using this equation, we are assured that when the xPos is in the center of the screen,
-	 *	changing xGain will not cause the current xPos to change.  This way, to calibrate the position we can use xOffset to move
-	 *	the xPos to the center of the screen, then change xGain until xPos movements are accurate.
+	 *	\details By using this equation, we are assured that when the xPos is in the center of the screen, changing xGain
+	 *	will not cause the current xPos to change.  This way, to calibrate the position we can use xOffset to move the
+	 *	xPos to the center of the screen, then change xGain until xPos movements are accurate.
 	 */
 	Q_PROPERTY(double xOffset READ getXOffset WRITE setXOffset);
-	/*! \brief Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for the yPosition.
+	/*! \brief Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for the
+	 *	yPosition.
 	 *	\details The equation is \code yPos = screenHeight/2 + yGain(yOffset+ySignalValue) \endcode 
-	 *	\details By using this equation, we are assured that when the yPos is in the center of the screen,
-	 *	changing yGain will not cause the current yPos to change.  This way, to calibrate the position we can use yOffset to move
-	 *	the yPos to the center of the screen, then change yGain until yPos movements are accurate.
+	 *	\details By using this equation, we are assured that when the yPos is in the center of the screen, changing yGain
+	 *	will not cause the current yPos to change.  This way, to calibrate the position we can use yOffset to move the
+	 *	yPos to the center of the screen, then change yGain until yPos movements are accurate.
 	 */
 	Q_PROPERTY(double yOffset READ getYOffset WRITE setYOffset);
 	/*! \brief Sets/gets the gain by which the input signal value plus xOffset will be scaled for the xPosition.
 	 *	\details The equation is \code xPos = screenWidth/2 + xGain(xOffset+xSignalValue) \endcode 
-	 *	\details By using this equation, we are assured that when the xPos is in the center of the screen,
-	 *	changing xGain will not cause the current xPos to change.  This way, to calibrate the position we can use xOffset to move
-	 *	the xPos to the center of the screen, then change xGain until xPos movements are accurate.
+	 *	\details By using this equation, we are assured that when the xPos is in the center of the screen, changing xGain
+	 *	will not cause the current xPos to change.  This way, to calibrate the position we can use xOffset to move the
+	 *	xPos to the center of the screen, then change xGain until xPos movements are accurate.
 	 */
 	Q_PROPERTY(double xGain READ getXGain WRITE setXGain);
 	/*! \brief Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition.
 	 *	\details The equation is \code yPos = screenHeight/2 + yGain(yOffset+ySignalValue) \endcode 
-	 *	\details By using this equation, we are assured that when the yPos is in the center of the screen,
-	 *	changing yGain will not cause the current yPos to change.  This way, to calibrate the position we can use yOffset to move
-	 *	the yPos to the center of the screen, then change yGain until yPos movements are accurate.
+	 *	\details By using this equation, we are assured that when the yPos is in the center of the screen, changing yGain
+	 *	will not cause the current yPos to change.  This way, to calibrate the position we can use yOffset to move the
+	 *	yPos to the center of the screen, then change yGain until yPos movements are accurate.
 	 */
 	Q_PROPERTY(double yGain READ getYGain WRITE setYGain);
 	/*! \brief Sets/gets the shear factor that will be used to shear x as a function of y.
-	 *	\details The x value will be sheared as a function of y after applying regular linear scale factors 
-	 *	such that the new value will be: \code xPos = scaledXPos + shearFactor*scaledYPos \endcode
-	 *	This is useful for cases where there is some non linearity in the x,y position values.  Often, when
-	 *	position is accurate in the y=0 line, but not toward the top/bottom display boundaries, this 
-	 *	value can be used to clean up the signal enough to make diagonal jumps relatively accurate
+	 *	\details The x value will be sheared as a function of y after applying regular linear scale factors such that the
+	 *	new value will be: \code xPos = scaledXPos + shearFactor*scaledYPos \endcode
+	 *	This is useful for cases where there is some non linearity in the x,y position values.  Often, when position is
+	 *	accurate in the y=0 line, but not toward the top/bottom display boundaries, this value can be used to clean up
+	 *	the signal enough to make diagonal jumps relatively accurate
 	 */
 	Q_PROPERTY(double xySignalShear READ getXYSignalShear WRITE setXYSignalShear);
 public:
 	static QSharedPointer<Experiment> Create();
 	virtual ~Experiment(){};
-	/*! \brief Overrides UIEnabled::getName() to return the name of this Experiment as "Experiment" for the purpose of scripting, regardless of the design file name or anything like
-	 *	that.
-	 *	\details This way, any javascript code that wants to change position offsets and gains
-	 *	can do so by using code like \code Experiment.xOffset = # \endcode.
+	/*! \brief Overrides UIEnabled::getName() to return the name of this Experiment as "Experiment" for the purpose of
+	 *	scripting, regardless of the design file name or anything like that.
+	 *	\details This way, any javascript code that wants to change position offsets and gains can do so by using code
+	 *	like \code Experiment.xOffset = # \endcode.
 	 */
 	virtual QString getName(){return "Experiment";};
-	/*! \brief Overrides UIEnabled::setName() to do nothing since the Experiment's name for scripting purposes is always "Experiment"
+	/*! \brief Overrides UIEnabled::setName() to do nothing since the Experiment's name for scripting purposes is always
+	 *	"Experiment"
 	 *	\sa getName()
 	 */
 	virtual void setName(QString newName){};

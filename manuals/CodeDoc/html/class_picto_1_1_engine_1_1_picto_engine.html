@@ -649,7 +649,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Enables/disables the signal on pinId of port. </p>
 <p>If disabled, the pin voltage goes to zero. Otherwise, it goes to whatever value was last set on <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a0afa6a09eeff345338d31f5bce636976" title="Sets the output signal value on pinid of port to value. ">setOutputSignalValue()</a> </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00307">307</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00306">306</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -704,7 +704,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Performs various operations that need to occur once per frame as soon as possible after the first phosphor is rendered to the display. </p>
 <p>This is called when the <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a> detects that the first phosphor was rendered. It first updates OutputSignalControllers to implement any changes to output voltage signals, it then starts/stops any rewards that need to be updated, next it updates all data on input signal channels (ie. reads in latest data from buffers, aligns input hardware timing with Picto timing), afterward ControlPanelInterfaces respond to incoming commands from ControlPanels and <a class="el" href="class_picto_1_1_signal_value_parameter.html" title="A Parameter that can be used to capture the latest values of an input signal. ">SignalValueParameter</a> objects are updated with the latest values of their referenced SignalChannels. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00863">863</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00862">862</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -725,7 +725,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Starts flushing on the input channel or stops a flush that is in progress on that channel. </p>
 <p>Flush duration is the latest set duration. Flush will continue for that duration, or until this function is called again. Whichever comes first. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#ac28b57e507c0e205573764e3eae4a8ac" title="Changes the flush duration for the input controller to the input duration (in seconds). ">setFlushDuration()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00748">748</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00747">747</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -746,7 +746,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sends an alignment code over the <a class="el" href="class_picto_1_1_event_code_generator.html" title="A base class for hardware specific classes that send event codes to Neural recording devices...">EventCodeGenerator</a> set in setEventCodeGenerator and returns the time in seconds before the function returned that the event code was triggered. </p>
 <p>The idea here is that in general, most EventCodeGenerators are going to need to hold a signal high for some number of microseconds before returning. In order to get an accurage timestamp, we will record the time when this function returns minus the value that it returns. We can't simply use the time at which the function is called because setup times may vary and are typically going to be harder to estimate. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a28e2fcc1ad7a6dccdda9581bf00198bc" title="Sets the event code generator that should be used to send alignment codes to a neural data acquisitio...">setEventCodeGenerator()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00206">206</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00204">204</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -766,7 +766,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Retrieves the latest BehavioralDataUnitPackages for each <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
 <p>When this function is called, stored signal data is cleared such that each <a class="el" href="class_picto_1_1_behavioral_data_unit_package.html" title="Stores behavioral data (data from a SignalChannel) as a list BehavioralDataUnits (ie. x,y readings) ">BehavioralDataUnitPackage</a> list can only be retrieved once and includes data regarding signal values since the last time the function was called. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00396">396</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00395">395</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -786,7 +786,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Retrieves the latest package of changed properties. </p>
 <p>When this function is called, the stored <a class="el" href="class_picto_1_1_property_data_unit_package.html" title="Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame...">PropertyDataUnitPackage</a> pointer is cleared such that each <a class="el" href="class_picto_1_1_property_data_unit_package.html" title="Stores a list of PropetyDataUnit objects representing all Property value changes for a single frame...">PropertyDataUnitPackage</a> can only be retrieved once and includes data regarding Properties whose values changed since the last time the function was called. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00348">348</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00347">347</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -824,7 +824,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 </div><div class="memdoc">
 <p>Returns the <a class="el" href="class_picto_1_1_command_channel.html" title="A channel for sending/receiving commands/responses over the network. ">CommandChannel</a> used to send data to the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00634">634</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00633">633</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -844,7 +844,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns the current engine command. </p>
 <p>Possiblities are: NoCommand, PlayEngine, StopEngine, PauseEngine </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00850">850</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00849">849</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -892,7 +892,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Retrieves the latest BehavioralDataUnitPackages for each <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
 <p>When this function is called, stored signal data is cleared such that each <a class="el" href="class_picto_1_1_input_data_unit_package.html" title="Stores input data (data from a SignalChannel) as a list of InputDataUnits (ie. x,y readings) ...">InputDataUnitPackage</a> list can only be retrieved once and includes data regarding signal values since the last time the function was called. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00430">430</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00429">429</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -920,7 +920,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Returns this machines current IP Address. </p>
 <dl class="section note"><dt>Note</dt><dd>The method used for detecting the IP Address is that we use the first IPv4 address that isn't localhost and is on an interface that is up and running. This has worked correctly so far, but there could possibly be some issues with strange networking setups. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00820">820</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00819">819</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -996,7 +996,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Retrieves the latest <a class="el" href="class_picto_1_1_state_data_unit_package.html" title="Stores a list of StateDataUnit objects representing StateMachine Transitions between one frame and th...">StateDataUnitPackage</a> of control flow history. </p>
 <p>When this function is called, the stored <a class="el" href="class_picto_1_1_state_data_unit_package.html" title="Stores a list of StateDataUnit objects representing StateMachine Transitions between one frame and th...">StateDataUnitPackage</a> pointer is cleared such that each <a class="el" href="class_picto_1_1_state_data_unit_package.html" title="Stores a list of StateDataUnit objects representing StateMachine Transitions between one frame and th...">StateDataUnitPackage</a> can only be retrieved once and includes data regarding transitions since the last time the function was called. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00378">378</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00377">377</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1033,7 +1033,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Issues a reward and sends notfication of such to the server. </p>
 <p>quantity is the number of ms to supply reward. minRewardPeriod is the time between start of one reward and start of the next. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00218">218</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00216">216</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1054,7 +1054,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Supplies a single reward on the input channel with the latest set reward duration. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a3a3557d928df88b0132a1f36fbfc78ce" title="Issues a reward and sends notfication of such to the server. ">giveReward(int,int,int)</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00736">736</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00735">735</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1139,7 +1139,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sends the latest behavioral data to the server aligned with this frame time. </p>
 <p>We update the server with all important data whenever a new frame is reported. This includes the time at which the most recent frame was drawn, as well as all the input coordinates from the subject and all changed properties and transition history. This data is important so we send it as a registered command, which means that we will get confirmation when it's written to disk, and store it for resending if a confirmation isn't received in a set window. It also means we don't have to wait around for a response before continuing experimental execution. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00457">457</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00456">456</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1186,7 +1186,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 </div><div class="memdoc">
 <p>Sets the <a class="el" href="class_picto_1_1_command_channel.html" title="A channel for sending/receiving commands/responses over the network. ">CommandChannel</a> used to send data to the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. Returns true if the channel's status is connected, false otherwise. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00620">620</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00619">619</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1275,7 +1275,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Changes the flush duration for the input controller to the input duration (in seconds). </p>
 <p>Also takes care of informing the <a class="el" href="class_control_panel_interface.html" title="The interface between the Picto Director and a Hardware Control panel. ">ControlPanelInterface</a> objects of the change and emits <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a7d62c085c399ce29e72657b0b5a65378" title="Emitted when the flush duration changes on the input controller to the input duration in seconds...">flushDurationChanged()</a>. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00721">721</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00720">720</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1383,7 +1383,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the name of the system on which this <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">PictoEngine</a>'s experiment is running. </p>
 <p>For example, in a real experiment, this would be the name of the PictoBox. </p><dl class="section note"><dt>Note</dt><dd>The name returned here is not the computer's network id. It is a simple string, stored inside Picto used to reference this instance of the Picto application. </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00693">693</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00692">692</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1488,7 +1488,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Sets the output signal value on pinid of port to value. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a85277be62e49ced7649e0ba8396e3b98" title="Sets the OutputSignalController that will be used to change voltage signals output from the experimen...">setOutputSignalController()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00297">297</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00296">296</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1548,7 +1548,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Changes the reward duration for the input controller to the input duration (in ms). </p>
 <p>Also takes care of informing the <a class="el" href="class_control_panel_interface.html" title="The interface between the Picto Director and a Hardware Control panel. ">ControlPanelInterface</a> objects of change and emits <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#abdf7ee9c2ba181f88e486d7c97c72836" title="Emitted when the reward duration changes on the input controller to the input duration in millisecond...">rewardDurationChanged()</a>. </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00706">706</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00705">705</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>
@@ -1722,7 +1722,7 @@ QHostAddress&#160;</td><td class="memItemRight" valign="bottom"><b>ipAddress_</b
 <p>Changes the engine command to StopEngine so that a execution will end. </p>
 <p>Internally, calls <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a801e4a9fbb82f80b13ead4c10967a962" title="Stops every signal channel in the engine. ">stopAllSignalChannels()</a> </p>
 
-<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00682">682</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_picto_engine_8cpp_source.html#l00681">681</a> of file <a class="el" href="_picto_engine_8cpp_source.html">PictoEngine.cpp</a>.</p>
 
 </div>
 </div>

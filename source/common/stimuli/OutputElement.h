@@ -17,11 +17,10 @@ namespace Picto {
 
 /*!	\brief A Base class for all Elements representing data that is output to the Experiment subject during frame rendering.
  *
- *	\details It is useful to be able to group together these types of elements such that they can be handled in similar ways.
- *	This way, any element that can define some kind of output to the Experiment subject can inherit OutputElementContainer and 
- *	all of its associated logic.
- *	Currently, VisualElement objects, AudioElement objects, and OutputSignal objects (for digital voltage output) are considered 
- *	OutputElements.  
+ *	\details It is useful to be able to group together these types of elements such that they can be handled in similar
+ *	ways.  This way, any element that can define some kind of output to the Experiment subject can inherit
+ *	OutputElementContainer and all of its associated logic.  Currently, VisualElement objects, AudioElement objects, and
+ *	OutputSignal objects (for digital voltage output) are considered OutputElements.  
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

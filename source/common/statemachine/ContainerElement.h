@@ -11,9 +11,9 @@ namespace Picto {
 
 /*!	\brief A Base class for all Elements representing data that is to be handled by a StateMachineElementContainer.
  *
- *	\details It is useful to be able to group together these types of elements such that they can be handled in similar ways.
- *	This way, any element that needs to be handled by an ElementContainer can inherit ContainerElement and all of its
- *	associated logic.
+ *	\details It is useful to be able to group together these types of elements such that they can be handled in similar
+ *	ways.  This way, any element that needs to be handled by an ElementContainer can inherit ContainerElement and all of
+ *	its associated logic.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

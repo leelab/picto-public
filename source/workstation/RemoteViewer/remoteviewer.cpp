@@ -1,5 +1,3 @@
-
-
 #include <QToolBar>
 #include <QAction>
 #include <QMessageBox>
@@ -52,13 +50,17 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-/*! \brief The Director/Proxy lists will be updated each time this many ms go by.*/
+/*! \brief The Director/Proxy lists will be updated each time this many ms go by.
+ */
 #define COMPONENT_UPDATE_PERIOD 1000 
-/*! \brief The Neural data will be updated each time this many ms go by.*/
+/*! \brief The Neural data will be updated each time this many ms go by.
+ */
 #define NEURAL_DATA_UPDATE_PERIOD 50 
-/*! \brief The TaskRunViewer will be updated each time this many ms go by.*/
+/*! \brief The TaskRunViewer will be updated each time this many ms go by.
+ */
 #define SESSION_DATA_UPDATE_PERIOD 1000
-/*! \brief Special status message will appear in the bottom left status bar for this many ms.*/
+/*! \brief Special status message will appear in the bottom left status bar for this many ms.
+ */
 #define SPECIAL_STATUS_PERIOD 1000
 /*! \brief An adaptive timeout for waiting for Server responses is used to account for changes in network activity.  This
  *	is the minimum timeout (ms) that is allowed for this system.
@@ -136,10 +138,9 @@ RemoteViewer::~RemoteViewer()
 {
 }
 /*! \brief The remote viewer is implemented as a state machine.  This is the main state machine run loop.
- *	\details Each time this function is called, it checks for state change triggers.  If they have occured, the
- *	state is changed, the enterState() function is called for the new state.  Every time updateState() is called,
- *	runState() is called for the state.  Then if a new state change trigger is detected after that, endState() is
- *	called for that state. 
+ *	\details Each time this function is called, it checks for state change triggers.  If they have occured, the state is
+ *	changed, the enterState() function is called for the new state.  Every time updateState() is called, runState() is
+ *	called for the state.  Then if a new state change trigger is detected after that, endState() is called for that state. 
  */
 void RemoteViewer::updateState()
 {
@@ -379,9 +380,9 @@ void RemoteViewer::runState()
 		}
 		if(remoteStatus == Running)
 			stateTrigger_ = SessionRunning;
-		//If the engine isn't running for some reason, or the director stopped, go to the stopped
-		//state.  In the case where the director is still running but our engine stopped, the stop
-		//state will just restart the engine and send us back here.
+		//If the engine isn't running for some reason, or the director stopped, go to the stopped state.  In the case
+		//	where the director is still running but our engine stopped, the stop state will just restart the engine and
+		//	send us back here.
 		if(remoteStatus == Stopped)
 			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
@@ -406,9 +407,9 @@ void RemoteViewer::runState()
 		}
 		if(remoteStatus == Paused)
 			stateTrigger_ = SessionPaused;
-		//If the engine isn't running for some reason, or the director stopped, go to the stopped
-		//state.  In the case where the director is still running but our engine stopped, the stop
-		//state will just restart the engine and send us back here.
+		//If the engine isn't running for some reason, or the director stopped, go to the stopped state.  In the case
+		//	where the director is still running but our engine stopped, the stop state will just restart the engine and
+		//	send us back here.
 		if(remoteStatus == Stopped)
 			stateTrigger_ = SessionStopped;
 		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
@@ -438,10 +439,9 @@ void RemoteViewer::runState()
 }
 
 /*! \brief The function is called when a state is ending and a new state will start on the next updateState() call.
- *	\details A state may have different ending actions depending on the trigger that it is ending
- *	with.  This function is called after that trigger has been determined.  
- *	\note Actions on the engine by this function (ie. stop)
- *	will always be completed before the next call to updateState().
+ *	\details A state may have different ending actions depending on the trigger that it is ending with.  This function is
+ *	called after that trigger has been determined.  
+ *	\note Actions on the engine by this function (ie. stop) will always be completed before the next call to updateState()
  */
 void RemoteViewer::endState()
 {
@@ -484,8 +484,7 @@ void RemoteViewer::endState()
 }
 
 /*! \brief This function is called once each time a new state is entered.
- *	\details The function is used to update the UI such that it logically reflects
- *	the actions available in the new state.
+ *	\details The function is used to update the UI such that it logically reflects the actions available in the new state.
  */
 void RemoteViewer::enterState()
 {
@@ -747,9 +746,9 @@ void RemoteViewer::enterState()
  */
 void RemoteViewer::init()
 {
-	//Sometimes while working on an experiment, if we change something and don't reopen the experiment
-	//the experimental run doesn't work right.  To prevent this, we are simply reseting the the experiment
-	//from xml whenever we open this viewer
+	//Sometimes while working on an experiment, if we change something and don't reopen the experiment the experimental
+	//	run doesn't work right.  To prevent this, we are simply reseting the the experiment from xml whenever we open
+	//	this viewer
 	bool res = myDesignRoot_->resetDesignRoot(designRoot_->getDesignRootText());
 	if(!res)
 	{
@@ -813,21 +812,20 @@ void RemoteViewer::deinit()
 }
 
 /*! \brief Called when the application is about to quit.  Takes care of closing this window's resources.
- *	\details If a Session is open and stopped, this triggers an endSession() request.  This also calls
- *	deinit() because otherwise the Experiment could continue running even though the GUI was closed and
- *	the process would stick around until we restarted the computer or closed it from the task manager.
+ *	\details If a Session is open and stopped, this triggers an endSession() request.  This also calls deinit() because
+ *	otherwise the Experiment could continue running even though the GUI was closed and the process would stick around
+ *	until we restarted the computer or closed it from the task manager.
  */
 bool RemoteViewer::aboutToQuit()
 {
-	//Its not so pretty to have to work outside the state machine like this, but if we're about to
-	//quit, we don't know what's going to be happening to the state machine before the process is released
-	//so we have to take care of possibly ending the current session here. :(
+	//Its not so pretty to have to work outside the state machine like this, but if we're about to quit, we don't know
+	//	what's going to be happening to the state machine before the process is released so we have to take care of
+	//	possibly ending the current session here.
 	if((currState_ == StoppedSession) && shouldEndSession())
 		endSession();
 
-	//Calling deinit is important because it stops the experiment.  Otherwise, the 
-	//experiment would keep on going even though the window was closed and this
-	//process would stick around in the task manager for eternity.
+	//Calling deinit is important because it stops the experiment.  Otherwise, the experiment would keep on going even
+	//	though the window was closed and this process would stick around in the task manager for eternity.
 	deinit();
 	return true;
 }
@@ -852,8 +850,7 @@ void RemoteViewer::setupEngine()
 	engine_->addRenderingTarget(renderingTarget_);
 
 	//Set up the visual target host
-	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
-	//gives us memory exceptions.
+	//This exists because QSharedPointer<QWidget> results in multiple delete call, which gives us memory exceptions.
 	visualTargetHost_ = new Picto::VisualTargetHost();
 	visualTargetHost_->setVisualTarget(pixmapVisualTarget_);
 	connect(visualTargetHost_,SIGNAL(clickDetected(QPoint)),this,SLOT(operatorClickDetected(QPoint)));
@@ -1003,11 +1000,7 @@ void RemoteViewer::setupUi()
 
 	//--------Run Info--------------
 	currentRunViewer_ = new TaskRunViewer();
-	connect(	currentRunViewer_,
-				SIGNAL(taskRunDataChanged(qulonglong)),
-				this,
-				SLOT(modifyRunDataUnit(qulonglong))
-			);
+	connect(currentRunViewer_, SIGNAL(taskRunDataChanged(qulonglong)), this, SLOT(modifyRunDataUnit(qulonglong)));
 
 	statusBar_ = new QLabel();
 
@@ -1029,6 +1022,7 @@ void RemoteViewer::setupUi()
 
 	DataViewLayout *dataViewLayout = new DataViewLayout();
 
+	//Set up a temporary test plot
 	OperatorPlot *pOpPlot = new OperatorPlot();
 	DataViewWidget *testPlot = new DataViewWidget("Test Gaussian Histo", pOpPlot->getWidget());
 	pOpPlot->setTitle("Test Gaussian Histo");
@@ -1048,6 +1042,7 @@ void RemoteViewer::setupUi()
 	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
 	viewSelectionWidget->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
 
+	//Set up a number of temporary test plots
 	for (int i = 0; i < 12; i++)
 	{
 		OperatorPlot *pOpPlot = new OperatorPlot();
@@ -1063,9 +1058,6 @@ void RemoteViewer::setupUi()
 		pOpPlot->draw();
 		viewSelectionWidget->registerView(testPlot);
 	}
-
-
-
 
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
@@ -1104,14 +1096,14 @@ void RemoteViewer::setupUi()
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addLayout(operationLayout);
-	//mainLayout->addStretch(1);
 	mainLayout->addWidget(statusBar_);
 	
 	setLayout(mainLayout);
 
 }
 
-/*! \brief Creates the CommandChannel objects that will be used to gather Session data and send commands to change the Session state.
+/*! \brief Creates the CommandChannel objects that will be used to gather Session data and send commands to change the
+ *	Session state.
  */
 void RemoteViewer::setupServerChannel()
 {
@@ -1203,11 +1195,11 @@ void RemoteViewer::LoadPropValsFromFile()
 		static_cast<PropertyFrame*>(propertyFrame_)->updatePropertiesFromFile(filename);
 }
 
-/*! \brief Called whenever an Experiment Parameter (runtime Property) from the left side bar is changed.  
- *	Sends a request to the server to change that value in the Experiment.
- *	\details In practice, what happens is the value is sent to the Director which loads it into the initValue
- *	of the corresponding Property.  When the Property's parent next re-enters scope, this InitValue is copied
- *	to the runtime value such that the value only goes into effect at a safe defined time.
+/*! \brief Called whenever an Experiment Parameter (runtime Property) from the left side bar is changed.  Sends a request
+ *	to the server to change that value in the Experiment.
+ *	\details In practice, what happens is the value is sent to the Director which loads it into the initValue of the
+ *	corresponding Property.  When the Property's parent next re-enters scope, this InitValue is copied to the runtime value
+ *	such that the value only goes into effect at a safe defined time.
  */
 void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 {
@@ -1244,9 +1236,9 @@ void RemoteViewer::zoomChanged(int zoom)
 
 /*! \brief Sets the status message to the passed in string.
  *	@param status The new status string to be displayed.
- *	@param highPriority If true, the input status will override the regular default status
- *		and be displayed for a short time after which the default status will be shown again.
- *		If false, the status will be set as the new default status.
+ *	@param highPriority If true, the input status will override the regular default status and be displayed for a short
+ *		time after which the default status will be shown again.  If false, the status will be set as the new default
+ *		status.
  */
 void RemoteViewer::setStatus(QString status, bool highPriority)
 {
@@ -1261,8 +1253,8 @@ void RemoteViewer::setStatus(QString status, bool highPriority)
 		defaultStatus_ = status;
 }
 
-/*! \brief Called once per updateState(), this displays statuses at the bottom of window, giving 
- *	special statuses precedence over defaults for a set length of time
+/*! \brief Called once per updateState(), this displays statuses at the bottom of window, giving special statuses
+ *	precedence over defaults for a set length of time
  */
 void RemoteViewer::updateStatus()
 {
@@ -1284,8 +1276,8 @@ void RemoteViewer::generateTaskList()
 
 /*! \brief updates the combo boxes containing Director and Proxy instances.
  *
- *	\details This function asks the Server for a current list of Director/Proxy instances, and 
- *	then adds new ones to the combo box and removes old ones, as needed.
+ *	\details This function asks the Server for a current list of Director/Proxy instances, and then adds new ones to the
+ *	combo box and removes old ones, as needed.
  */
 void RemoteViewer::updateComponentLists(bool immediate)
 {
@@ -1537,10 +1529,9 @@ RemoteViewer::ComponentStatus RemoteViewer::proxyStatus(QString id)
 
 /*! \brief Returns a list of Directors and their properties
  *
- *	\details This sends out a DIRECTORLIST command, and then parses the response into a 
- *	QList of ComponentInstances (really just a struct with a couple of strings).
- *	If something goes wrong, or no director instances are found, an empty
- *	list is returned.
+ *	\details This sends out a DIRECTORLIST command, and then parses the response into a QList of ComponentInstances
+ *	(really just a struct with a couple of strings).  If something goes wrong, or no director instances are found, an
+ *	empty list is returned.
  */  
 QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 {
@@ -1607,10 +1598,9 @@ QList<RemoteViewer::ComponentInstance> RemoteViewer::getDirectorList()
 
 /*! \brief Returns a list of Proxy components and their addresses.
  *
- *	\details This sends out a PROXYLIST command, and then parses the response into a 
- *	QList of ComponentInstances (really just a struct with a few strings).
- *	If something goes wrong, or no Proxy instances are found, an empty
- *	list is returned.
+ *	\details This sends out a PROXYLIST command, and then parses the response into a QList of ComponentInstances
+ *	(really just a struct with a few strings).  If something goes wrong, or no Proxy instances are found, an empty list
+ *	is returned.
  */  
 QList<RemoteViewer::ComponentInstance> RemoteViewer::getProxyList()
 {
@@ -1713,34 +1703,26 @@ void RemoteViewer::updateSessionDataPackage(bool immediate)
 
 /*! \brief Starts a new session
  *
- *	\details This starts a new session on the server.  The act of starting a session basically 
- *	ties together the various components involved (Director, and Proxy) and 
- *	starts a new Session database file on the Server.  Note that the Workstation instance isn't really 
- *	tied to the session.  This is intentional, and makes it easy to remotely view and
- *	control running sessions from multiple Workstations.  It also allows Experiments to continue even
- *	if no Workstations are watching it.
+ *	\details This starts a new session on the server.  The act of starting a session basically ties together the various
+ *	components involved (Director, and Proxy) and starts a new Session database file on the Server.  Note that the
+ *	Workstation instance isn't really tied to the session.  This is intentional, and makes it easy to remotely view and
+ *	control running sessions from multiple Workstations.  It also allows Experiments to continue even if no Workstations
+ *	are watching it.
  *
- *	\note Starting the session is really just a remote command and has no effect 
- *	on the local workstation.  If we want to actually watch the session, we'll then need 
- *	to join the session (joinSession()).
+ *	\note Starting the session is really just a remote command and has no effect on the local workstation.  If we want to
+ *	actually watch the session, we'll then need to join the session (joinSession()).
  *
- *	The order of function calls that would occur for a single user running an experiment
- *	will look like this:
+ *	The order of function calls that would occur for a single user running an experiment will look like this:
  *		startSession()
  *		joinSession()
  *		disjoinSession()
  *		endSession()
- *	If a user simply wants to observe a session that someone else started, it would
- *	look like this:
+ *	If a user simply wants to observe a session that someone else started, it would look like this:
  *		joinSession()
  *		disjoinSession()
  */
 bool RemoteViewer::startSession()
 {
-	////Check for a currently running session
-	//if(!sessionId_.isNull())
-	//	return true;
-
 #ifndef DEVELOPMENTBUILD
 	//Require a password to start a session
 	if(passwordEdit_->text().isEmpty())
@@ -1809,9 +1791,8 @@ bool RemoteViewer::startSession()
 
 /*! \brief Ends a currently running session
  *
- *	\details This is the opposite of startSession().  Again note that this function has no real
- *	effect on our local workstation instance.  See the comments on startSession() for
- *	a more detailed explanation.
+ *	\details This is the opposite of startSession().  Again note that this function has no real effect on our local
+ *	workstation instance.  See the comments on startSession() for a more detailed explanation.
  */
 bool RemoteViewer::endSession()
 {
@@ -1855,12 +1836,11 @@ bool RemoteViewer::endSession()
 
 /*! \brief Joins to a currently running session. In order to observe or control it.
  *
- *	\details Joining to a Session is the act of connecting this Workstation to an already 
- *	running Session.  This is what allows us to see the Session on the Workstation
- *	screen.
+ *	\details Joining to a Session is the act of connecting this Workstation to an already running Session.  This is what
+ *	allows us to see the Session on the Workstation screen.
  *
- *	\note We always keep the latest active Experiment in memory so that this function
- *	will go quickly if we rejoin to a Session that we were previously connected too.
+ *	\note We always keep the latest active Experiment in memory so that this function will go quickly if we rejoin to a
+ *	Session that we were previously connected too.
  */	
 bool RemoteViewer::joinSession()
 {
@@ -1923,15 +1903,14 @@ bool RemoteViewer::joinSession()
 
 	setStatus(tr("Existing session joined. Session ID: ")+ sessionId_.toString(),true);
 
-	//Send an isauthorized TASK command to figure out if we're authorized to send commands
-	//on this session.
+	//Send an isauthorized TASK command to figure out if we're authorized to send commands on this session.
 	if(sendTaskCommand("isauthorized"))
 		isAuthorized_ = true;
 	else
 		isAuthorized_ = false;
 
-	//Finally figure out what the status of the remote director is (stopped, running, or paused)
-	//and get our director running in that state.
+	//Finally figure out what the status of the remote director is (stopped, running, or paused) and get our director
+	//	running in that state.
 	ComponentStatus remoteStatus = directorStatus(directorID);
 	if(remoteStatus < Stopped)
 	{
@@ -1953,8 +1932,8 @@ void RemoteViewer::stopExperiment()
 
 /*! \brief Disjoins a currently running session
  *
- *	\details This is the opposite of the join function.  This detaches us from a running session 
- *	(but it doesn't actually end the session).
+ *	\details This is the opposite of the join function.  This detaches us from a running session (but it doesn't actually
+ *	end the session).
  */
 bool RemoteViewer::disjoinSession()
 {
@@ -1984,8 +1963,8 @@ bool RemoteViewer::shouldEndSession()
 }
 
 /*! \brief Takes care of sending an input cmd ProtocolCommand to the Server and returning the received response.
- *	\details If the response times out, this function returns an empty pointer.  If nonDefaultTimeoutMs is 
- *	not set, an adaptiveTimeout is used that is adjusted based on historical timeouts and reply times.
+ *	\details If the response times out, this function returns an empty pointer.  If nonDefaultTimeoutMs is not set, an
+ *	adaptiveTimeout is used that is adjusted based on historical timeouts and reply times.
  */
 QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QSharedPointer<Picto::ProtocolCommand> cmd, int nonDefaultTimeoutMs)
 {
@@ -2030,7 +2009,8 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 		{	//We got our response.  Break out of the loop
 			break;
 		}
-	//Keep looping until the responseDelay time has passed or we break out (after getting our response), whichever comes first.
+	//Keep looping until the responseDelay time has passed or we break out (after getting our response), whichever
+	//	comes first.
 	}while(timer.elapsed() < (*responseDelay));
 
 	//Get our response from the pendingResponses_ hash and remove it.
@@ -2059,8 +2039,8 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 		return QSharedPointer<Picto::ProtocolResponse>();
 	}
 
-	//If we're here, we got a response.  Update the adaptive timeout for this command type according to the time it took to 
-	//receive the reply.
+	//If we're here, we got a response.  Update the adaptive timeout for this command type according to the time it took
+	//  to receive the reply.
 	//qDebug(cmd->getMethod().toLatin1() + " command reply received.");
 	if(useAdaptiveTimeout)
 	{
@@ -2076,8 +2056,8 @@ QSharedPointer<Picto::ProtocolResponse> RemoteViewer::sendCommandGetReply(QShare
 }
 
 /*! Sends a Task command with the given target.  Returns true if execution was successful.
- *	\details TASK commands are responsible for most of the commands that change the Experimental
- *	state.  They handle things like play, stop, pause, resume, reward, etc.
+ *	\details TASK commands are responsible for most of the commands that change the Experimental state.  They handle
+ *	things like play, stop, pause, resume, reward, etc.
  */
 bool RemoteViewer::sendTaskCommand(QString target, QString msgContent)
 {
@@ -2137,9 +2117,9 @@ void RemoteViewer::taskListIndexChanged(int)
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }
 
-/*! \brief Assures that the Server channels are connected.  Returns false, sets the status accordingly and attempts to reconnect
- *	if the connection is lost.
- * \details This function is called for each runState() call.
+/*!	\brief Assures that the Server channels are connected.  Returns false, sets the status accordingly and attempts to
+ *	reconnect if the connection is lost.
+ *	\details This function is called for each runState() call.
  */
 bool RemoteViewer::assureChannelConnections()
 {
@@ -2172,10 +2152,9 @@ bool RemoteViewer::assureChannelConnections()
 	return !hadDisconnect;
 }
 
-/*! \brief Called when the running Task on the Director changes.  Updates the currently
- *	selected Task in the combobox accordingly (which results in updating the left hand PropertyFrame.
- *	\note This is necessary since another Workstation might be controlling the same Session that this
- *	one is connected to.
+/*!	\brief Called when the running Task on the Director changes.  Updates the currently selected Task in the combobox
+ *	accordingly (which results in updating the left hand PropertyFrame.
+ *	\note This is necessary since another Workstation might be controlling the same Session that this one is connected to.
  */
 void RemoteViewer::currTaskChanged(QString task)
 {

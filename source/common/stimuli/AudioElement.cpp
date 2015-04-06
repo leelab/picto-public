@@ -187,9 +187,8 @@ void AudioElement::updateFileObject(QString fileElementName)
 			return;
 		}
 	}
-	QScriptContext* ctx = context();
-	if(ctx)
-		ctx->throwError("Couldn't find file object: " + fileElementName);
+
+	qDebug() << "Couldn't find file object: " << fileElementName;
 }
 
 /*! \brief Performs the latest sound commands that were set with the play() or stop() functions.

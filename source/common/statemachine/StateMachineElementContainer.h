@@ -17,8 +17,8 @@ namespace Picto {
 
 /*! \brief A base class for elements containers.
  *
- *	\details This class manages the scoping issues for ContainerElements so that descendant classes can easily
- *	access all in-scope ContainerElements from a single list.
+ *	\details This class manages the scoping issues for ContainerElements so that descendant classes can easily access all
+ *	in-scope ContainerElements from a single list.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -32,7 +32,7 @@ class StateMachineElementContainer : public StateMachineElement
 public:
 
 	/*! \brief Creates a new ElementContainer.
-	*/
+	 */
 	StateMachineElementContainer() {};
 	virtual ~StateMachineElementContainer() {};
 

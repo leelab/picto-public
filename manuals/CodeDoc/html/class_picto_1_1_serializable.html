@@ -186,7 +186,7 @@ static QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <p>Everything element of the Picto design and of network transferrable <a class="el" href="class_picto_1_1_data_unit.html" title="A base class for all Picto data types that need to be individually identifiable and communicatable ov...">DataUnit</a> objects must be savable and loadable, so we put that functionality into this hierarchical root class. An interface to retrieve serialization errors is also provided. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_serializable_8h_source.html#l00021">21</a> of file <a class="el" href="_serializable_8h_source.html">Serializable.h</a>.</p>
+<p>Definition at line <a class="el" href="_serializable_8h_source.html#l00023">23</a> of file <a class="el" href="_serializable_8h_source.html">Serializable.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a96d216d572c87de0e7b2ba4ae1c6ea17"></a>
 <div class="memitem">
@@ -262,7 +262,7 @@ static QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <p>Returns the latest deserialization errors that were reported from any deserialization event. </p>
 <p>Since Deserialization of Picto designs is not something that happens simultaneously in multiple threads, we can just use a static function along with a static list of errors_ to track serialization errors. The procedure is to call <a class="el" href="class_picto_1_1_serializable.html#acbaf02a158b3440a16bc1a84ebaa4481" title="Loads this object from a descriptive xmlText XML QString. ">fromXml()</a> on the node that you want to deserialize then if that function returns false, indicating that deserialization falied, to call <a class="el" href="class_picto_1_1_serializable.html#a9b14c771646820d10e082d351cd4cf50" title="Returns the latest deserialization errors that were reported from any deserialization event...">getErrors()</a> to find out what the errors were and <a class="el" href="class_picto_1_1_serializable.html#a6c5644865540a1e1e8951895c836b5cf" title="Clears the static list of errors_ to prepare for a new fromXml() call. ">clearErrors()</a> to clear out the error report for next time. </p><dl class="section note"><dt>Note</dt><dd>In the typical scenario, <a class="el" href="class_picto_1_1_serializable.html#acbaf02a158b3440a16bc1a84ebaa4481" title="Loads this object from a descriptive xmlText XML QString. ">fromXml()</a> would be called with the entire Picto Design XML document, and <a class="el" href="class_picto_1_1_serializable.html#a9b14c771646820d10e082d351cd4cf50" title="Returns the latest deserialization errors that were reported from any deserialization event...">getErrors()</a> would only be used after the entire design had been loaded to report all of the deserialization errors at once. </dd></dl>
 
-<p>Definition at line <a class="el" href="_serializable_8cpp_source.html#l00022">22</a> of file <a class="el" href="_serializable_8cpp_source.html">Serializable.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_serializable_8cpp_source.html#l00021">21</a> of file <a class="el" href="_serializable_8cpp_source.html">Serializable.cpp</a>.</p>
 
 </div>
 </div>

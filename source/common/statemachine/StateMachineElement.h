@@ -20,24 +20,23 @@
 namespace Picto {
 
 class Result;
-//class Engine::PictoEngine;
 
 /*!	\brief A StateMachineElement is any element that can be part of the control flow in a StateMachine.
  *	
- *	StateMachineElements include things like States, Results, SwitchElements, and even StateMachines
- *	themselves.  Each StateMachineElement implements a run() function that executes its internal logic and
- *	is called whenever control flow transfers to it.  All StateMachineElements also have EntryScript and ExitScript
- *	Properties that define scripts that are called when the StateMachine is entered (when a Transition to it is triggered) 
- *	or exited (when control flow reaches one of its results).
+ *	StateMachineElements include things like States, Results, SwitchElements, and even StateMachines themselves.  Each
+ *	StateMachineElement implements a run() function that executes its internal logic and is called whenever control flow
+ *	transfers to it.  All StateMachineElements also have EntryScript and ExitScript Properties that define scripts that
+ *	are called when the StateMachine is entered (when a Transition to it is triggered) or exited (when control flow
+ *	reaches one of its results).
  *
- *	StateMachineElements are connected by Transitions objects with each Transition starting at a StateMachineElement's Result and 
- *	ending at another StateMachineElement.
+ *	StateMachineElements are connected by Transitions objects with each Transition starting at a StateMachineElement's
+ *	Result and ending at another StateMachineElement.
  *
- *	Scoping in StateMachineElements works as follows.  Scripts have access to all Scriptable elements that are direct children of
- *	their StateMachineElement parent or any of its ancestor StateMachineElement objects.  Attached AnalysisScripts have the same
- *	scoping except that they can also access attached Scriptable AnalysisElements (regular Scripts cannot access AnalysisElements).
- *	If two Scriptable elements have the same name and are both in scope, the scriptable with the longer path will be the one that
- *	is accessed by using its name.
+ *	Scoping in StateMachineElements works as follows.  Scripts have access to all Scriptable elements that are direct
+ *	children of their StateMachineElement parent or any of its ancestor StateMachineElement objects.  Attached
+ *	AnalysisScripts have the same scoping except that they can also access attached Scriptable AnalysisElements (regular
+ *	Scripts cannot access AnalysisElements).  If two Scriptable elements have the same name and are both in scope, the
+ *	scriptable with the longer path will be the one that is accessed by using its name.
  *
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015

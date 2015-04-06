@@ -2,7 +2,6 @@
 #include "../parameter/Analysis.h"
 #include "../statemachine/UIData.h"
 #include "../common/storage/ObsoleteAsset.h"
-//#include "../common/analysis/AnalysisContainer.h"
 #include "../task/Task.h"
 #include "../common/memleakdetect.h"
 using namespace Picto;
@@ -12,13 +11,18 @@ PictoData::PictoData()
 	//By default, a PictoData element's name is "Untitled" and "SyntaxVersion" is empty.
 	AddDefinableProperty("Name","Untitled");
 	AddDefinableProperty("SyntaxVersion","");
-	AddDefinableObjectFactory("Experiment",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Experiment::Create))));
-	AddDefinableObjectFactory("Analysis",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Analysis::Create))));
-	AddDefinableObjectFactory("UIData",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(UIData::Create))));
+	AddDefinableObjectFactory("Experiment",
+		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(Experiment::Create))));
+	AddDefinableObjectFactory("Analysis",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(Analysis::Create))));
+	AddDefinableObjectFactory("UIData",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(UIData::Create))));
 	
 	//Add Obsolete Asset Factories - These used to be part of the Picto tree but were deprecated and are now being removed
-	AddDefinableObjectFactory("AnalysisContainer",QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
-	AddDefinableObjectFactory("StateMachineEditorData",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("AnalysisContainer",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("StateMachineEditorData",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
 void PictoData::postDeserialize()
@@ -64,9 +68,6 @@ void PictoData::postDeserialize()
 	QList<QSharedPointer<Asset>> assocRootHosts = getGeneratedChildren("Experiment");
 	assocRootHosts.append(getGeneratedChildren("Analysis"));
 
-	////Since we haven't totally gotten rid of AnalysisContainers quite yet, we need to make sure
-	////  they have UIData attached so that nothing breaks
-	//assocRootHosts.append(getGeneratedChildren("AnalysisContainer"));
 	AssociateRootHost* assocRootHost;
 	foreach(QSharedPointer<Asset> associateRootHostAsset,assocRootHosts)
 	{

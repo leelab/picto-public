@@ -33,6 +33,7 @@ void PropertyDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 	}
 }
 
+
 BehavioralDataUnitHandler::BehavioralDataUnitHandler(RemoteStateUpdater *pParent)
 {
 	behavUnitPack_ = QSharedPointer<BehavioralDataUnitPackage>(new BehavioralDataUnitPackage());
@@ -100,7 +101,6 @@ void FrameDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 	emit updateCurrUnitTime(frameUnit_->time);
 	emit framePresented(frameUnit_->time.toDouble());
 }
-
 
 
 RewardDataUnitHandler::RewardDataUnitHandler(RemoteStateUpdater *pParent)

@@ -53,25 +53,43 @@ public:
 
 	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 
-	/*! \brief Returns the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Returns the background color that will be displayed when execution is paused (not currently used).
+	 */
 	QColor getColor(){return propertyContainer_->getPropertyValue("BackgroundColor").value<QColor>();};
-	/*! \brief Sets the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Sets the background color that will be displayed when execution is paused (not currently used).
+	 */
 	void setColor(QColor color){propertyContainer_->setPropertyValue("BackgroundColor",color);};
-	/*! \brief Returns the red component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Returns the red component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	int getRed() { return getColor().red(); };
-	/*! \brief Returns the green component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Returns the green component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	int getGreen() { return getColor().green(); };
-	/*! \brief Returns the blue component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Returns the blue component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	int getBlue() { return getColor().blue(); };
-	/*! \brief Returns the alpha component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Returns the alpha component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	int getAlpha() { return getColor().alpha(); };
-	/*! \brief Sets the red component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Sets the red component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	void setRed(int r){QColor val = getColor(); val.setRed(r);setColor(val);};
-	/*! \brief Sets the green component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Sets the green component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	void setGreen(int g){QColor val = getColor(); val.setGreen(g);setColor(val);};
-	/*! \brief Sets the blue component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Sets the blue component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	void setBlue(int b){QColor val = getColor(); val.setBlue(b);setColor(val);};
-	/*! \brief Sets the alpha component of the background color that will be displayed when execution is paused (not currently used).*/
+	/*! \brief Sets the alpha component of the background color that will be displayed when execution is paused
+	 *	(not currently used).
+	 */
 	void setAlpha(int a){QColor val = getColor(); val.setAlpha(a);setColor(val);};
 
 protected:

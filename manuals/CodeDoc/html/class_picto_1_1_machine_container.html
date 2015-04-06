@@ -112,18 +112,18 @@ Inheritance diagram for Picto::MachineContainer:</div>
  <div class="center">
   <img src="class_picto_1_1_machine_container.png" usemap="#Picto::MachineContainer_map" alt=""/>
   <map id="Picto::MachineContainer_map" name="Picto::MachineContainer_map">
-<area href="class_picto_1_1_output_element_container.html" title="A base class for elements that hold OutputElement objects. " alt="Picto::OutputElementContainer" shape="rect" coords="232,504,454,528"/>
-<area href="class_picto_1_1_state_machine_element_container.html" title="A base class for elements containers. " alt="Picto::StateMachineElementContainer" shape="rect" coords="232,448,454,472"/>
-<area href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. " alt="Picto::StateMachineElement" shape="rect" coords="232,392,454,416"/>
-<area href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. " alt="Picto::ResultContainer" shape="rect" coords="232,336,454,360"/>
-<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="232,280,454,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="232,224,454,248"/>
+<area href="class_picto_1_1_output_element_container.html" title="A base class for elements that hold OutputElement objects. " alt="Picto::OutputElementContainer" shape="rect" coords="116,504,338,528"/>
+<area href="class_picto_1_1_state_machine_element_container.html" title="A base class for elements containers. " alt="Picto::StateMachineElementContainer" shape="rect" coords="116,448,338,472"/>
+<area href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. " alt="Picto::StateMachineElement" shape="rect" coords="116,392,338,416"/>
+<area href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. " alt="Picto::ResultContainer" shape="rect" coords="116,336,338,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="116,280,338,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="116,224,338,248"/>
 <area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="116,168,338,192"/>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="116,112,338,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="116,56,338,80"/>
 <area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="232,0,454,24"/>
-<area href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding..." alt="Picto::State" shape="rect" coords="116,616,338,640"/>
-<area href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions..." alt="Picto::StateMachine" shape="rect" coords="348,616,570,640"/>
+<area href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding..." alt="Picto::State" shape="rect" coords="0,616,222,640"/>
+<area href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions..." alt="Picto::StateMachine" shape="rect" coords="232,616,454,640"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -601,7 +601,8 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">Asset
 QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_result_container.html">ResultContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elements_</b></td></tr>
 <tr class="separator:afe9ce7f50195f0bd65fe776f71b6ad03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a396a1b9e009a6482ef73971c36ca3582"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a396a1b9e009a6482ef73971c36ca3582"></a>
-QMultiMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transitions_</b></td></tr>
+QMultiMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_machine_container.html#a396a1b9e009a6482ef73971c36ca3582">transitions_</a></td></tr>
+<tr class="memdesc:a396a1b9e009a6482ef73971c36ca3582"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Map from Source to <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a>. <br /></td></tr>
 <tr class="separator:a396a1b9e009a6482ef73971c36ca3582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad1523c8eb419361bcb3a1fab4c48096"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad1523c8eb419361bcb3a1fab4c48096"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_transition.html">Transition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>initTransition_</b></td></tr>

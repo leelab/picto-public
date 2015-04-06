@@ -112,10 +112,10 @@ Inheritance diagram for Picto::OperatorPlot:</div>
  <div class="center">
   <img src="class_picto_1_1_operator_plot.png" usemap="#Picto::OperatorPlot_map" alt=""/>
   <map id="Picto::OperatorPlot_map" name="Picto::OperatorPlot_map">
-<area href="class_picto_1_1_data_view_element.html" title="A Base class for all Elements representing data that is output to the Observer while viewing an exper..." alt="Picto::DataViewElement" shape="rect" coords="168,392,326,416"/>
-<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="168,336,326,360"/>
-<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="168,280,326,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="168,224,326,248"/>
+<area href="class_picto_1_1_data_view_element.html" title="A Base class for all Elements representing data that is output to the Observer while viewing an exper..." alt="Picto::DataViewElement" shape="rect" coords="84,392,242,416"/>
+<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="84,336,242,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="84,280,242,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="84,224,242,248"/>
 <area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="84,168,242,192"/>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="84,112,242,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="84,56,242,80"/>
@@ -439,8 +439,9 @@ static const QString&#160;</td><td class="memItemRight" valign="bottom"><b>type<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8c6c18fbd8004388db081029ccf93fba"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">postDeserialize</a> ()</td></tr>
-<tr class="memdesc:a8c6c18fbd8004388db081029ccf93fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization.  <a href="#a8c6c18fbd8004388db081029ccf93fba">More...</a><br /></td></tr>
+<tr class="memitem:a8c6c18fbd8004388db081029ccf93fba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c6c18fbd8004388db081029ccf93fba"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">postDeserialize</a> ()</td></tr>
+<tr class="memdesc:a8c6c18fbd8004388db081029ccf93fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers plot with the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object, so the task can pass on the information to various UI elements, and intercept/handle scripting language commands. <br /></td></tr>
 <tr class="separator:a8c6c18fbd8004388db081029ccf93fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42ef70890e72a38b8b8c5f25861409c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42ef70890e72a38b8b8c5f25861409c9"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
@@ -659,36 +660,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Reimplemented from <a class="el" href="class_picto_1_1_data_view_element.html#a174bc0a6f0578f95e33c8de7d2ab2e70">Picto::DataViewElement</a>.</p>
 
 <p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00040">40</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8c6c18fbd8004388db081029ccf93fba"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::OperatorPlot::postDeserialize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This function is called in <a class="el" href="class_picto_1_1_asset.html#a8bed4da09ecb1c07ce0dab313a9aba67" title="Converts the XML code passed in inside a QXMLStreamReader into an Asset. ">fromXml()</a> after successful deserialization and is used to initialize the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> based on values that were loaded in during deserialization. </p>
-<p>In the case of the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> class, during postDeserialize we tell the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a> that if we have reached the stage of loading where <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> IDs must be unique, it should make sure that our <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID is different from all others in this design. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_config.html#ab57e0738b97e4358ab09530cd6815fc0" title="Calling this function changes AssetIds of Assets that are used in more than one included Asset; howev...">DesignConfig::fixDuplicatedAssetIds()</a> </dd></dl>
-
-<p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a0654af2c08f9a6c967a21b57614950ba">Picto::ScriptableContainer</a>.</p>
-
-<p>Definition at line <a class="el" href="_operator_plot_8cpp_source.html#l00069">69</a> of file <a class="el" href="_operator_plot_8cpp_source.html">OperatorPlot.cpp</a>.</p>
 
 </div>
 </div>

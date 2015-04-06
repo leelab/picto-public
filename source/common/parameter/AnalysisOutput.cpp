@@ -37,8 +37,8 @@ void AnalysisOutput::enteredScope()
  */
 void AnalysisOutput::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
-	//When the design config emits a runEnded event, we should call finishUp to
-	//finalize any output activities (ie. flush file contents, etc).
+	//When the design config emits a runEnded event, we should call finishUp to finalize any output activities
+	//	(ie. flush file contents, etc).
 	if(getDesignConfig())
 	{
 		disconnect(getDesignConfig().data(),SIGNAL(runEnded()),this,SLOT(runEnded()));
@@ -49,14 +49,13 @@ void AnalysisOutput::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 	connect(getDesignConfig().data(),SIGNAL(runStarted(QUuid)),this,SLOT(runStarted(QUuid)));
 }
 
-/*! \brief Returns an AnalysisOutputWidgetContainer containing all of the AnalysisOutputWidget objects
- *	associated with the run that has the input runId.
- *	\details The AnalysisOutput class tracks all AnalysisOutput objects that are created in order to be
- *	able to provide all AnalysisOutputWidgets for a given run. When this function is called, a new
- *	AnalysisOutputWidgetContainer is created and loaded.  Widgets are requested for all AnalysisOutput 
- *	objects for the input runId by calling loadWidget() and they are added to the AnalysisOutputWidgetContainer
- *	before it is returned.
- *	If no AnalysisOutput object are associated with the inputn runId, a Null pointer will be returned.
+/*! \brief Returns an AnalysisOutputWidgetContainer containing all of the AnalysisOutputWidget objects associated with the
+ *	run that has the input runId.
+ *	\details The AnalysisOutput class tracks all AnalysisOutput objects that are created in order to be able to provide
+ *	all AnalysisOutputWidgets for a given run. When this function is called, a new AnalysisOutputWidgetContainer is
+ *	created and loaded.  Widgets are requested for all AnalysisOutput objects for the input runId by calling loadWidget()
+ *	and they are added to the AnalysisOutputWidgetContainer before it is returned.  If no AnalysisOutput object are
+ *	associated with the input runId, a Null pointer will be returned.
  *	\note The class calling this function is responsible for deleting the returned AnalysisOutputWidgetContainer.
  */
 AnalysisOutputWidgetContainer* AnalysisOutput::getContainerWidget(QUuid runId)
@@ -76,16 +75,17 @@ AnalysisOutputWidgetContainer* AnalysisOutput::getContainerWidget(QUuid runId)
 		{
 			newContainer->addWidget(output.toStrongRef()->getWidgetIdentifier(),widget);
 			connect(output.data(),SIGNAL(widgetIsValid(QUuid)),newContainer,SLOT(widgetIsValid(QUuid)));
-			output.toStrongRef()->updateWidgetValidity();	//We put this both here and in enteredScope in case enteredScope was called before this was
-															//on any given AnalysisOutput object.
+			//We put this both here and in enteredScope in case enteredScope was called before this was on any given
+			//	AnalysisOutput object.
+			output.toStrongRef()->updateWidgetValidity();	
+															
 		}
 	}
 	return newContainer;
 }
 
-/*! \brief Each time updateWidgetValidity() is called, we check to see if the widget has entered scope since
- *	the latest run started and if it has a widget.  If both are true, we emit widgetIsValid() with the widgets
- *	identifier.
+/*! \brief Each time updateWidgetValidity() is called, we check to see if the widget has entered scope since the latest
+ *	run started and if it has a widget.  If both are true, we emit widgetIsValid() with the widgets identifier.
  */
  void AnalysisOutput::updateWidgetValidity()
 {
@@ -93,10 +93,9 @@ AnalysisOutputWidgetContainer* AnalysisOutput::getContainerWidget(QUuid runId)
 		emit widgetIsValid(widgetIdentifier_);
 }
 
- /*! \brief Returns a QUuid associated with the widget that displays this AnalysisOutput's contents.
-  *	\details If this AnalysisOutput doesn't have a widget for displaying its contents, this returns an
-  *	invalid QUuid.
-  */
+/*!	\brief Returns a QUuid associated with the widget that displays this AnalysisOutput's contents.
+ *	\details If this AnalysisOutput doesn't have a widget for displaying its contents, this returns an invalid QUuid.
+ */
 QUuid AnalysisOutput::getWidgetIdentifier()
 {
 	return widgetIdentifier_;
@@ -117,23 +116,23 @@ QString AnalysisOutput::getTempOutputDir()
 }
 
 /*! \brief Returns the name of the currently active run.
-*/
+ */
 QString AnalysisOutput::getRunName()
 {
 	return getDesignConfig()->getLatestRunName();
 }
 
 /*! \brief Returns the RunID ofht currently active run.
-*/
+ */
 QUuid AnalysisOutput::getCurrRunId()
 {
 	return getDesignConfig()->getLatestRunId();
 }
 
 /*! \brief Called when a new run starts to initialize this AnalysisOutput.  
-*	\details Checks if this object's parent Analysis is active, and if so adds
- *	this object to the class's static list of AnalysisOutputs for the input runId so that the object's
- *	associated widget can be included in the AnalysisOutputWidgetContainer returned from getContainerWidget().
+ *	\details Checks if this object's parent Analysis is active, and if so adds this object to the class's static list of
+ *	AnalysisOutputs for the input runId so that the object's associated widget can be included in the
+ *	AnalysisOutputWidgetContainer returned from getContainerWidget().
  *	\sa getContainerWidget(), AnalysisOutputWidgetContainer
  */
 void AnalysisOutput::runStarted(QUuid runId)
@@ -156,10 +155,10 @@ void AnalysisOutput::runEnded()
 }
 
 /*! \brief Calls createWidget to create a new Widget to display this AnalysisOutput's contents and returns it.
- *	\details If this AnalysisOutput has no associated widget, a NULL pointer is returned.  Also, when a widget
- *	is created, a unique ID is generated for the widget that can be accessed from getWidgetIdentifier().  This
- *	will allow the widget to be uniquely identifiable in an AnalysisOutputWidgetContainer since the widget
- *	identifier is used in AnalysisOutputWidgetContainer::addWidget() to add the widget.
+ *	\details If this AnalysisOutput has no associated widget, a NULL pointer is returned.  Also, when a widget is created,
+ *	a unique ID is generated for the widget that can be accessed from getWidgetIdentifier().  This will allow the widget
+ *	to be uniquely identifiable in an AnalysisOutputWidgetContainer since the widget identifier is used in
+ *	AnalysisOutputWidgetContainer::addWidget() to add the widget.
  *	\sa getContainerWidget()
  */
 AnalysisOutputWidget* AnalysisOutput::loadWidget()
@@ -170,27 +169,24 @@ AnalysisOutputWidget* AnalysisOutput::loadWidget()
 	widgetIdentifier_ = QUuid::createUuid();
 	return returnVal;
 }
-/*! \brief Creates an empty "analysisoutput" directory in the runpath once
- *	per executable run, clearing out any previous contents if there were any.
- *	\details This allows the analysisoutput directory to act as a temporary container
- *	for any analysis output files created by the Picto workstation.  If the data stored in
- *	the "analysisoutput" directory needs to be saved to a permanent location, this can be
- *	done by calling the AnalysisOutputWidget::saveOutputTo() function which will be 
- *	responsible for copying its associated data files from the "analysisoutput" directory to the 
- *	directory path input in that function.
+/*! \brief Creates an empty "analysisoutput" directory in the runpath once per executable run, clearing out any previous
+ *	contents if there were any.
+ *	\details This allows the analysisoutput directory to act as a temporary container for any analysis output files
+ *	created by the Picto workstation.  If the data stored in the "analysisoutput" directory needs to be saved to a
+ *	permanent location, this can be done by calling the AnalysisOutputWidget::saveOutputTo() function which will be
+ *	responsible for copying its associated data files from the "analysisoutput" directory to the directory path input in
+ *	that function.
  *	\sa AnalysisOutputWidget::saveOutputTo(), AnalysisOutputWidgetContainer::saveOutputTo()
  */
 void AnalysisOutput::initTempOutputDir()
 {
-	//We want to make sure that even if multiple Picto Workstations are open at the
-	//same time, no one will remove the data that we are currently using.  We also 
-	//want to erase the data if we are just opening for the first time and no one else
-	//is using the data in the temporary folder.  For this reason, we attempt to remove
-	//all files at the top level of the temporary directory, then if successful, remove
-	//all other contained directories as well.  We then create a top level file in the
-	//temporary directory and leave it open until the application closes.
-	//If another workstation is open, we won't succeed in removing its open file so we
-	//wont delete the temporary directory contents, otherwise, we will.
+	//We want to make sure that even if multiple Picto Workstations are open at the same time, no one will remove the data
+	//	that we are currently using.  We also want to erase the data if we are just opening for the first time and no one
+	//	else is using the data in the temporary folder.  For this reason, we attempt to remove all files at the top level
+	//	of the temporary directory, then if successful, remove all other contained directories as well.  We then create a
+	//	top level file in the temporary directory and leave it open until the application closes.  If another workstation
+	//	is open, we won't succeed in removing its open file so we won't delete the temporary directory contents, otherwise
+	//	we will.
 	if(!outputDir_.isEmpty())
 		return;
 	QDir dir(QCoreApplication::applicationDirPath()+"/../");
@@ -208,13 +204,10 @@ void AnalysisOutput::initTempOutputDir()
 
 }
 
-/*! \brief A convenience function that deletes all files within the input directory
- *	and then deletes the directory itself.
- *	\details If any files in the directory can't be removed, the function returns
- *	and nothing else is touched.
- *	\note This was created since, at the time of its writing, Qt had no single function
- *	for performing a directory deletion.  The latest version of Qt should have this
- *	function, so we may want to replace this with the Qt version.
+/*! \brief A convenience function that deletes all files within the input directory and then deletes the directory itself.
+ *	\details If any files in the directory can't be removed, the function returns and nothing else is touched.
+ *	\note This was created since, at the time of its writing, Qt had no single function for performing a directory
+ *	deletion.  The latest version of Qt should have this function, so we may want to replace this with the Qt version.
  */
 void AnalysisOutput::removeFilesThenDirectories(QDir container)
 {

@@ -10,12 +10,12 @@ namespace Picto {
 /*!	\brief A base class for everything that can contain transitions and other elements.
  *
  *	\details This class should be refactored.  It appears the way it does mainly for historical reasons, but
- *	essentially what it does is manage transitions and objects in the StateMachine that are not StateMachineElements
- *	or OutputElements.  There should probably be one class that handles Transitions, and one or more that handles Variables,
+ *	essentially what it does is manage transitions and objects in the StateMachine that are not StateMachineElements or
+ *	OutputElements.  There should probably be one class that handles Transitions, and one or more that handles Variables,
  *  Parameters, etc.
  *	
- *	As it stands however, this is a fairly important class that handles a lot of the code necessary for elements that contain
- *	"machines" that includes some form of state transfer.  Currently these include StateMachine and State.
+ *	As it stands however, this is a fairly important class that handles a lot of the code necessary for elements that
+ *	contain "machines" that includes some form of state transfer.  Currently these include StateMachine and State.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -43,7 +43,8 @@ protected:
 	QSharedPointer<AssetFactory> variableFactory_;
 	QSharedPointer<AssetFactory> parameterFactory_;
 	QMap<QString, QSharedPointer<ResultContainer> > elements_;
-	QMultiMap<QString, QSharedPointer<Transition> > transitions_; //<source, transition>
+	//!	A Map from Source to Transition
+	QMultiMap<QString, QSharedPointer<Transition> > transitions_; 
 	QSharedPointer<Transition> initTransition_;
 
 private:

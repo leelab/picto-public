@@ -23,8 +23,8 @@
 namespace Picto {
 
 /*! \brief Constructs a new State object.
- *	\details Initializes the State's Scene object, adds a 'FrameScript" Property and AssetFactories for the various ControlElements
- *	that can be added to the State.
+ *	\details Initializes the State's Scene object, adds a 'FrameScript" Property and AssetFactories for the various
+ *	ControlElements that can be added to the State.
  */
 State::State() :
 	MachineContainer("Transition","ControlElement"),
@@ -69,11 +69,11 @@ void State::enableRunMode(bool enable)
 /*! \brief Runs this State's execution logic within the framework of the input PictoEngine.
  *	\details This function more or less performs the following run procedure:
  *		- Run EntryScript
- *		- Go through all ControlElements and check to see if any are done.  If they are, run the ControlResult script, transition to their attached result, run its script,
- *			run the State's ExitScript and return.
+ *		- Go through all ControlElements and check to see if any are done.  If they are, run the ControlResult script,
+ *			transition to their attached result, run its script, run the State's ExitScript and return.
  *		- If ControlElements aren't done, run the FrameScript, render the Scene and loop back to checking ControlElements.
- *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after the Entry and Exit Scripts.  The
- *	AnalysisFrameScript is run after the Scene is rendered.
+ *	When an Analysis is active during the live experiment (in the TestViewer), AnalysisScripts are run before and after the
+ *	Entry and Exit Scripts.  The AnalysisFrameScript is run after the Scene is rendered.
  *	
  *	The name of the result that ended the State execution is returned from the function as a string.
 */
@@ -150,15 +150,17 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 		} 
 		else if(isDone)
 		{
-			engine->addStateTransitionForServer(resultTrans);	//Added in Picto Version 1.0.12.  Before this transitions within a state weren't being recorded in the session file.		
-			Q_ASSERT(results_.contains(result));		//Added in Picto Version 1.0.12.
+			//Added in Picto Version 1.0.12.  Before this transitions within a state weren't being recorded in the
+			//  session file.
+			engine->addStateTransitionForServer(resultTrans);
+			//Added in Picto Version 1.0.12.
+			Q_ASSERT(results_.contains(result));		
 			setLatestResult(result);
 			//Run result script if there is one.
 			results_.value(result)->runResultScript();
 		}
-		//If we're not in exclusive mode, we should allocate time to process events
-		//This would occur if we were running a state machine somewhere other than
-		//Director (e.g. debugging it in Workstation)
+		//If we're not in exclusive mode, we should allocate time to process events.  This would occur if we were running
+		//  a state machine somewhere other than Director (e.g. debugging it in Workstation)
 		if(!engine->getExclusiveMode())
 		{
 			QCoreApplication::processEvents();
@@ -177,8 +179,8 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 	return result;
 }
 
-/*! \brief When a State is run as a slave, it really doesn't do anything except render frames until the State ends, since the
- *	SlaveExperimentDriver handles changing of Property values.  This function is therefore empty and slaveRenderFrame()
+/*! \brief When a State is run as a slave, it really doesn't do anything except render frames until the State ends, since
+ *	the SlaveExperimentDriver handles changing of Property values.  This function is therefore empty and slaveRenderFrame()
  *	handles frame rendering.
  */
 QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
@@ -189,7 +191,7 @@ QString State::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 
 /*! \brief Handles rendering of the latest frame to the display while this State is active and when the Experiment is
  *	running in slave mode.
-*/
+ */
 QString State::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
 	sigChannel_ = engine->getSignalChannel("Position");
@@ -290,7 +292,7 @@ void State::postDeserialize()
 }
 
 /*! \brief Extends MachineContainer::validateObject() to verify that this State has at least one ControlElement.
-*/
+ */
 bool State::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	////Validate Results (so they're ready for link checking)
@@ -332,10 +334,10 @@ void State::runAnalysisFrameScripts()
 	runAnalysisScripts(StateMachineElement::FRAME);
 }
 
-/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can
- *	correctly render the current scene each frame.
- *	\details This needs to be called at least once before a State is run and after all OutputElement objects
- *	that are in scope have been added.
+/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can correctly render the
+ *	current scene each frame.
+ *	\details This needs to be called at least once before a State is run and after all OutputElement objects that are in
+ *	scope have been added.
  */
 void State::rebuildScene()
 {
@@ -386,10 +388,10 @@ void State::rebuildScene()
 */
 void State::activeAnalysisIdsChanged()
 {
-	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function
-	//should run in the Experiment thread.  Since the experiment thread never runs during the course of scene rendering (if 
-	//they are in two different threads, the experiment thread pauses and waits), there should be no issue of accidentally
-	//changing scene values while they are being used in the UI thread.
+	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the
+	//  function should run in the Experiment thread.  Since the experiment thread never runs during the course of scene
+	//  rendering (if they are in two different threads, the experiment thread pauses and waits), there should be no issue
+	//  of accidentally changing scene values while they are being used in the UI thread.
 	rebuildScene();
 }
 

@@ -6,6 +6,8 @@
 
 namespace Picto{
 
+/*! \brief A struct designed to hold error messages thrown by the DesignRoot.
+ */
 struct DesignMessage
 {
 	DesignMessage(){name="";details="";};

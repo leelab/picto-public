@@ -159,68 +159,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">//image_ = QImage(pixmap);</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">   69</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">OperatorPlot::postDeserialize</a>()</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;{</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="class_picto_1_1_scriptable_container.html#a0654af2c08f9a6c967a21b57614950ba">DataViewElement::postDeserialize</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">void</span> OperatorPlot::submitValue(<span class="keywordtype">long</span> iBin, <span class="keywordtype">double</span> dValue)</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;{</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.contains(iBin))</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>[iBin]++;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>[iBin] += dValue;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>[iBin] += dValue*dValue;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">   73</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">OperatorPlot::postDeserialize</a>()</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_picto_1_1_scriptable_container.html#a0654af2c08f9a6c967a21b57614950ba">DataViewElement::postDeserialize</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//getDesignConfig()-&gt;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> OperatorPlot::submitValue(<span class="keywordtype">long</span> iBin, <span class="keywordtype">double</span> dValue)</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.contains(iBin))</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#af6e4ab5644c1b28443b4895b6ac4a8d8">m_bBinsChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>[iBin] = 1;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>[iBin] = dValue;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>[iBin] = dValue*dValue;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>[iBin]++;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>[iBin] += dValue;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>[iBin] += dValue*dValue;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#af6e4ab5644c1b28443b4895b6ac4a8d8">m_bBinsChanged</a> = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> OperatorPlot::dropBin(<span class="keywordtype">long</span> iBin)</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.contains(iBin))</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#af6e4ab5644c1b28443b4895b6ac4a8d8">m_bBinsChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.remove(iBin);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>.remove(iBin);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>.remove(iBin);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>[iBin] = 1;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>[iBin] = dValue;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>[iBin] = dValue*dValue;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> OperatorPlot::dropBin(<span class="keywordtype">long</span> iBin)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.contains(iBin))</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#af6e4ab5644c1b28443b4895b6ac4a8d8">m_bBinsChanged</a> = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">  107</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">OperatorPlot::validateObject</a>(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_scriptable_container.html#a127c17469b1823ce4368bbf9d5df7b78">DataViewElement::validateObject</a>(xmlStreamReader))</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span> OperatorPlot::setTitle(QString newTitle)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">if</span> (m_pPlot)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        m_pPlot-&gt;setTitle(QwtText(newTitle));</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_a42ef70890e72a38b8b8c5f25861409c9"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">Picto::OperatorPlot::validateObject</a></div><div class="ttdeci">virtual bool validateObject(QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</div><div class="ttdoc">Extends Scriptable::validateObject() to check the syntax of this object&#39;s scripts and add a compilati...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00107">OperatorPlot.cpp:107</a></div></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">m_qhlCumulNum</a>.remove(iBin);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">m_qhdCumulValue</a>.remove(iBin);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">m_qhdCumulValSq</a>.remove(iBin);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">  113</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">OperatorPlot::validateObject</a>(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;{</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_scriptable_container.html#a127c17469b1823ce4368bbf9d5df7b78">DataViewElement::validateObject</a>(xmlStreamReader))</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keywordtype">void</span> OperatorPlot::setTitle(QString newTitle)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;{</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">if</span> (m_pPlot)</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        m_pPlot-&gt;setTitle(QwtText(newTitle));</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_a42ef70890e72a38b8b8c5f25861409c9"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a42ef70890e72a38b8b8c5f25861409c9">Picto::OperatorPlot::validateObject</a></div><div class="ttdeci">virtual bool validateObject(QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</div><div class="ttdoc">Extends Scriptable::validateObject() to check the syntax of this object&#39;s scripts and add a compilati...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00113">OperatorPlot.cpp:113</a></div></div>
 <div class="ttc" id="class_picto_1_1_scriptable_container_html_a0654af2c08f9a6c967a21b57614950ba"><div class="ttname"><a href="class_picto_1_1_scriptable_container.html#a0654af2c08f9a6c967a21b57614950ba">Picto::ScriptableContainer::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">This function is called in fromXml() after successful deserialization and is used to initialize the A...</div><div class="ttdef"><b>Definition:</b> <a href="_scriptable_container_8cpp_source.html#l00407">ScriptableContainer.cpp:407</a></div></div>
 <div class="ttc" id="class_picto_1_1_scriptable_container_html_a127c17469b1823ce4368bbf9d5df7b78"><div class="ttname"><a href="class_picto_1_1_scriptable_container.html#a127c17469b1823ce4368bbf9d5df7b78">Picto::ScriptableContainer::validateObject</a></div><div class="ttdeci">virtual bool validateObject(QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</div><div class="ttdoc">Extends Scriptable::validateObject() to check the syntax of this object&#39;s scripts and add a compilati...</div><div class="ttdef"><b>Definition:</b> <a href="_scriptable_container_8cpp_source.html#l00427">ScriptableContainer.cpp:427</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_affc1d3936367b03d08d2131ba6a7a027"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">Picto::OperatorPlot::m_bDataChanged</a></div><div class="ttdeci">bool m_bDataChanged</div><div class="ttdoc">Flag for when the plot need to be recalculated. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00073">OperatorPlot.h:73</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_aa9ed7e9f385ac9ed8355db9e7374d5ee"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#aa9ed7e9f385ac9ed8355db9e7374d5ee">Picto::OperatorPlot::m_qhdCumulValSq</a></div><div class="ttdeci">QHash&lt; long, double &gt; m_qhdCumulValSq</div><div class="ttdoc">The cumulative binwise-sum of the squares of submitted values. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00059">OperatorPlot.h:59</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_af6e4ab5644c1b28443b4895b6ac4a8d8"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#af6e4ab5644c1b28443b4895b6ac4a8d8">Picto::OperatorPlot::m_bBinsChanged</a></div><div class="ttdeci">bool m_bBinsChanged</div><div class="ttdoc">Flag for when the bounds need to be recalculated. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00071">OperatorPlot.h:71</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_ae1a832385f878245f436771f089792b1"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#ae1a832385f878245f436771f089792b1">Picto::OperatorPlot::m_qhdCumulValue</a></div><div class="ttdeci">QHash&lt; long, double &gt; m_qhdCumulValue</div><div class="ttdoc">The cumulative binwise-sum of submitted values. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00056">OperatorPlot.h:56</a></div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_a8c6c18fbd8004388db081029ccf93fba"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">Picto::OperatorPlot::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">This function is called in fromXml() after successful deserialization and is used to initialize the A...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00069">OperatorPlot.cpp:69</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_a8c6c18fbd8004388db081029ccf93fba"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">Picto::OperatorPlot::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">Registers plot with the Task object, so the task can pass on the information to various UI elements...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00073">OperatorPlot.cpp:73</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_abb6c37df2ce1cd3f8794d3b9fe609d1e"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#abb6c37df2ce1cd3f8794d3b9fe609d1e">Picto::OperatorPlot::m_qhlCumulNum</a></div><div class="ttdeci">QHash&lt; long, long &gt; m_qhlCumulNum</div><div class="ttdoc">The cumulative binwise-total of the number of submitted values. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00062">OperatorPlot.h:62</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_aefb97f8460180bb35294a41a96fb382c"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#aefb97f8460180bb35294a41a96fb382c">Picto::OperatorPlot::m_lPlotMax</a></div><div class="ttdeci">long m_lPlotMax</div><div class="ttdoc">Max Bound. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00077">OperatorPlot.h:77</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_ab87e063ea4db5b03bcd0c6e5e22c59f9"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#ab87e063ea4db5b03bcd0c6e5e22c59f9">Picto::OperatorPlot::m_lPlotMin</a></div><div class="ttdeci">long m_lPlotMin</div><div class="ttdoc">Min Bound. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00075">OperatorPlot.h:75</a></div></div>

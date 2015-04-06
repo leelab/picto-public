@@ -123,26 +123,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    QSharedPointer&lt;AssetFactory&gt; variableFactory_;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    QSharedPointer&lt;AssetFactory&gt; parameterFactory_;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QMap&lt;QString, QSharedPointer&lt;ResultContainer&gt; &gt; elements_;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QMultiMap&lt;QString, QSharedPointer&lt;Transition&gt; &gt; transitions_; <span class="comment">//&lt;source, transition&gt;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QSharedPointer&lt;Transition&gt; initTransition_;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">bool</span> getTransitionAssets(QSharedPointer&lt;Transition&gt; transition, QSharedPointer&lt;ResultContainer&gt;&amp; source,QSharedPointer&lt;ResultContainer&gt;&amp; sourceResult, QSharedPointer&lt;ResultContainer&gt;&amp; destination);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QString transitionTag_;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    QString elementTag_;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">bool</span> addingTransition_;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> childWasAdded(QSharedPointer&lt;Asset&gt; newChild);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> updateListsFromChildren();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_picto_1_1_machine_container.html#a396a1b9e009a6482ef73971c36ca3582">   47</a></span>&#160;    QMultiMap&lt;QString, QSharedPointer&lt;Transition&gt; &gt; <a class="code" href="class_picto_1_1_machine_container.html#a396a1b9e009a6482ef73971c36ca3582">transitions_</a>; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QSharedPointer&lt;Transition&gt; initTransition_;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">bool</span> getTransitionAssets(QSharedPointer&lt;Transition&gt; transition, QSharedPointer&lt;ResultContainer&gt;&amp; source,QSharedPointer&lt;ResultContainer&gt;&amp; sourceResult, QSharedPointer&lt;ResultContainer&gt;&amp; destination);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    QString transitionTag_;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QString elementTag_;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">bool</span> addingTransition_;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> childWasAdded(QSharedPointer&lt;Asset&gt; newChild);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> updateListsFromChildren();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_machine_container_html"><div class="ttname"><a href="class_picto_1_1_machine_container.html">Picto::MachineContainer</a></div><div class="ttdoc">A base class for everything that can contain transitions and other elements. </div><div class="ttdef"><b>Definition:</b> <a href="_machine_container_8h_source.html#l00026">MachineContainer.h:26</a></div></div>
+<div class="ttc" id="class_picto_1_1_machine_container_html_a396a1b9e009a6482ef73971c36ca3582"><div class="ttname"><a href="class_picto_1_1_machine_container.html#a396a1b9e009a6482ef73971c36ca3582">Picto::MachineContainer::transitions_</a></div><div class="ttdeci">QMultiMap&lt; QString, QSharedPointer&lt; Transition &gt; &gt; transitions_</div><div class="ttdoc">A Map from Source to Transition. </div><div class="ttdef"><b>Definition:</b> <a href="_machine_container_8h_source.html#l00047">MachineContainer.h:47</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 <div class="ttc" id="class_picto_1_1_output_element_container_html"><div class="ttname"><a href="class_picto_1_1_output_element_container.html">Picto::OutputElementContainer</a></div><div class="ttdoc">A base class for elements that hold OutputElement objects. </div><div class="ttdef"><b>Definition:</b> <a href="_output_element_container_8h_source.html#l00029">OutputElementContainer.h:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -195,12 +195,10 @@ void PictoEngine::markTaskRunStop()
 
 /*! \brief Sends an alignment code over the EventCodeGenerator set in setEventCodeGenerator and returns the time in seconds
  *	before the function returned that the event code was triggered.  
- *	\details The idea here is that in general, most EventCodeGenerators are going to need to hold a signal
- *	high for some number of microseconds before returning.  In order to get an
- *	accurage timestamp, we will record the time when this function returns minus
- *	the value that it returns.  We can't simply use the time at which the function
- *	is called because setup times may vary and are typically going to be harder to
- *	estimate.
+ *	\details The idea here is that in general, most EventCodeGenerators are going to need to hold a signal high for some
+ *	number of microseconds before returning.  In order to get an accurage timestamp, we will record the time when this
+ *	function returns minus the value that it returns.  We can't simply use the time at which the function is called
+ *	because setup times may vary and are typically going to be harder to estimate.
  *	\sa setEventCodeGenerator()
  */
 double PictoEngine::generateEvent(unsigned int eventCode)
@@ -212,8 +210,8 @@ double PictoEngine::generateEvent(unsigned int eventCode)
 
 
 /*! \brief Issues a reward and sends notfication of such to the server.  
- *	\details quantity is the number of ms to supply reward.  
- *	minRewardPeriod is the time between start of one reward and start of the next.
+ *	\details quantity is the number of ms to supply reward.  minRewardPeriod is the time between start of one reward and
+ *	start of the next.
  */
 void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 {
@@ -283,7 +281,8 @@ void PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)
 
 
 }
-/*! \brief Returns a list of all rewards supplied since the last time this function was called.*/
+/*! \brief Returns a list of all rewards supplied since the last time this function was called.
+ */
 QList<QSharedPointer<RewardDataUnit>> PictoEngine::getDeliveredRewards()
 {
 	if(rewardController_.isNull())
@@ -301,8 +300,8 @@ void PictoEngine::setOutputSignalValue(QString port, int pinId, QVariant value)
 	outSigControllers_[port]->setValue(pinId,value);
 }
 /*! \brief Enables/disables the signal on pinId of port.
- *	\details If disabled, the pin voltage goes to zero.  Otherwise, it goes to whatever value
- *	was last set on setOutputSignalValue()
+ *	\details If disabled, the pin voltage goes to zero.  Otherwise, it goes to whatever value was last set on
+ *	setOutputSignalValue()
  */
 void PictoEngine::enableOutputSignal(QString port, int pinId,bool enable)
 {
@@ -687,8 +686,8 @@ void PictoEngine::stop()
 
 /*! \brief Sets the name of the system on which this PictoEngine's experiment is running.
  *	\details For example, in a real experiment, this would be the name of the PictoBox.
- *	\note The name returned here is not the computer's network id.  It is a simple string, stored inside
- *	Picto used to reference this instance of the Picto application.
+ *	\note The name returned here is not the computer's network id.  It is a simple string, stored inside Picto used to
+ *	reference this instance of the Picto application.
  */
 void PictoEngine::setName(QString name) 
 {

@@ -76,8 +76,8 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 }
 
 /*! \brief Attempts to create an analysis based on the input design text and import it into the design.
-*	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns
-*	the imported analysis object.
+*	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns the imported analysis
+*	object.
 */
 QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
 {
@@ -88,9 +88,9 @@ QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
 }
 
 /*! \brief Removes the analysis with the input index from the design where index is a function of the creation/import order.
- *	\details The removal is performed by marking the analysis as deleted.  This means that it will not
- *	be serialized out with the rest of the design, so if you refreshFromXml() the analysis will
- *	dissappear.  If you don't refreshFromXml() though, the analysis will remain until you do so.
+ *	\details The removal is performed by marking the analysis as deleted.  This means that it will not be serialized out
+ *	with the rest of the design, so if you refreshFromXml() the analysis will dissappear.  If you don't refreshFromXml()
+ *	though, the analysis will remain until you do so.
  *	/sa refreshFromXml(), getNumAnalyses(),getAnalysis()
  */
 bool DesignRoot::removeAnalysis(int index)
@@ -129,14 +129,12 @@ QSharedPointer<Asset> DesignRoot::getAnalysis(int index)
 }
 
 /*! \brief Sets the current state of the design as an undo point.
- *	\details This means that once the next change is made, if someone calls undo, the experiment
- *	will return to the state that it was in when this function was called.
- *	There are certainly vastly more efficient ways to handle undo than what we're doing here, but
- *	in the interest of saving time, we are simply serializaing out the entire design every time 
- *	this function is called, and changing an underlying QTextDocument (which knows how to handle
- *	undo and redo) accordingly.  To perform an undo, we simply call undo on the QTextDocument and then
- *	resetDesignRoot() from the new text.  Its incredibly inefficient, but it works, albeit slowly.
- *	This would be a good thing to upgrade in the future.
+ *	\details This means that once the next change is made, if someone calls undo, the experiment will return to the state
+ *	that it was in when this function was called.  There are certainly vastly more efficient ways to handle undo than
+ *	what we're doing here, but in the interest of saving time, we are simply serializaing out the entire design every time 
+ *	this function is called, and changing an underlying QTextDocument (which knows how to handle undo and redo)
+ *	accordingly.  To perform an undo, we simply call undo on the QTextDocument and then resetDesignRoot() from the new
+ *	text.  Its incredibly inefficient, but it works, albeit slowly.  This would be a good thing to upgrade in the future.
  *	\sa undo(), redo()
  */
 void DesignRoot::setUndoPoint()
@@ -186,8 +184,8 @@ QSharedPointer<Asset> DesignRoot::getOpenAsset()
 }
 
 /*! \brief Sets the asset that will be considered open in the designer window.
- *	\note This information will be saved along with the other UI information (element positions on the canvas) 
- *	as part of a UIData category in the serialized xml design.
+ *	\note This information will be saved along with the other UI information (element positions on the canvas) as part of
+ *	a UIData category in the serialized xml design.
  */
 void DesignRoot::setOpenAsset(QSharedPointer<Asset> asset)
 {
@@ -240,10 +238,10 @@ void DesignRoot::redo()
 	emit undoAvailable(hasUndo());
 }
 /*! \brief Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()).
- *	\details Since currently, deleting assets just sets a deleted flag which causes them to not be serialized
- *	out, truly deleting asset objects from a design means, setting their deleted flag, serializing the experiment
- *	to xml, the reloading the experiment from that text.  At some point, this should be made more efficient, in
- *	which case this function won't be necessary.
+ *	\details Since currently, deleting assets just sets a deleted flag which causes them to not be serialized out, truly
+ *	deleting asset objects from a design means, setting their deleted flag, serializing the experiment to xml, then
+ *	reloading the experiment from that text.  At some point, this should be made more efficient, in which case this
+ *	function won't be necessary.
  */
 void DesignRoot::refreshFromXml()
 {
@@ -302,20 +300,18 @@ QString DesignRoot::getDesignRootText()
 }
 
 /*! \brief Returns true if the current Design succesfully compiles without errors (ie. has valid syntax).
- *	\details If the function returns true, a descriptiong of the compilation errors will appear in the 
- *	string pointed to by the errors input.
+ *	\details If the function returns true, a descriptiong of the compilation errors will appear in the string pointed to
+ *	by the errors input.
  *
- *	\note Rather than recompiling every time this function is called, a compiled_ flag is maintained
- *	to mark if a new compiliation needs to occur or not.  The run time of this function is therefore
- *	highly dependent on whether the design has been changed since the last time it was called.
- *	It should also be pointed out that there is no need to actually "compile" Picto design code.  The
- *	code is simply interpreted by Picto and turned into a design tree in RAM that is run to perform an
- *	experiment.  Compiling is therefore simply checking for valid syntax.  If a design has valid
- *	syntax we say that it compiles.  This does not preclude runtime errors in Javascript however.
- *	Javascript is so flexible that it is notoriously hard to catch javascript syntax errors before run
- *	time.  Any syntax errors that are catchable will be caught in this function; however, runtime errors
- *	will not be exposed until the experiment is tested, and these will show up in the debug viewer
- *	during the test run.
+ *	\note Rather than recompiling every time this function is called, a compiled_ flag is maintained to mark if a new
+ *	compiliation needs to occur or not.  The run time of this function is therefore highly dependent on whether the
+ *	design has been changed since the last time it was called.  It should also be pointed out that there is no need to
+ *	actually "compile" Picto design code.  The code is simply interpreted by Picto and turned into a design tree in RAM
+ *	that is run to perform an experiment.  Compiling is therefore simply checking for valid syntax.  If a design has valid
+ *	syntax we say that it compiles.  This does not preclude runtime errors in Javascript however.  Javascript is so
+ *	flexible that it is notoriously hard to catch javascript syntax errors before runtime.  Any syntax errors that are
+ *	catchable will be caught in this function; however, runtime errors will not be exposed until the experiment is tested,
+ *	and these will show up in the debug viewer during the test run.
  */
 bool DesignRoot::compiles(QString* errors)
 {
@@ -352,10 +348,8 @@ void DesignRoot::enableRunMode(bool runMode)
 }
 
 /*! \brief Marks this design as "not compiled".
- *	\details This is called every time anything in the underlying design
- *	is edited.  It sets the compiled_ flag to false so that the compiles()
- *	function will not that it has to recheck the design syntax before it
- *	can return true.
+ *	\details This is called every time anything in the underlying design is edited.  It sets the compiled_ flag to false
+ *	so that the compiles() function will not that it has to recheck the design syntax before it can return true.
  *	\sa compiles()
  */
 void DesignRoot::designEdited()

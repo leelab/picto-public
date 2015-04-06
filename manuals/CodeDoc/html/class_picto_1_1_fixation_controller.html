@@ -114,10 +114,10 @@ Inheritance diagram for Picto::FixationController:</div>
  <div class="center">
   <img src="class_picto_1_1_fixation_controller.png" usemap="#Picto::FixationController_map" alt=""/>
   <map id="Picto::FixationController_map" name="Picto::FixationController_map">
-<area href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its..." alt="Picto::ControlElement" shape="rect" coords="168,392,326,416"/>
-<area href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. " alt="Picto::ResultContainer" shape="rect" coords="168,336,326,360"/>
-<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="168,280,326,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="168,224,326,248"/>
+<area href="class_picto_1_1_control_element.html" title="Triggers a result according to a logic test that runs each frame, thereby ending the execution of its..." alt="Picto::ControlElement" shape="rect" coords="84,392,242,416"/>
+<area href="class_picto_1_1_result_container.html" title="A base class for elements that may contain Result elements. " alt="Picto::ResultContainer" shape="rect" coords="84,336,242,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="84,280,242,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="84,224,242,248"/>
 <area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="84,168,242,192"/>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="84,112,242,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="84,56,242,80"/>
@@ -767,7 +767,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ac660682acd7da329220cc7c4d7a9d825">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00063">63</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00066">66</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -795,7 +795,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Reattaches to the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> by calling <a class="el" href="class_picto_1_1_fixation_controller.html#adc472dcc9fd8929e264afd26d5aa5687" title="Reconnects this object to its attached controlTarget_. ">scriptableContainerWasReinitialized()</a> </p>
 <p>This function is called whenever the designer changes the value in the <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> field. When that value changes, it indicates that we need to update the attached <a class="el" href="class_picto_1_1_control_target.html" title="A ControlTarget is a VisualElement that defines a fixation region and is invisible to the subject by ...">ControlTarget</a> which is why we must reattach. </p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00337">337</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00340">340</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -825,7 +825,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ac5d3e0d806747e930702b2444509ce82">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00069">69</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00072">72</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -996,7 +996,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Returns true if the <a class="el" href="class_picto_1_1_fixation_controller.html" title="Returns a result based on whether the subject fixated on a set target or failed to do so according to...">FixationController</a> has found a result, false if it is still looking. </p>
 <p>This contains the meat of the logic that you would expect to find in the <a class="el" href="class_picto_1_1_fixation_controller.html#ad5d8d0c37dd6edca49793b1ea846740b" title="isDone will return true if the ControlElement&#39;s logic determines that some condition has been met...">isDone()</a> function. In the case of this class, this logic needed to be used in multiple places so it was a good idea to move it into its own separate function. </p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00154">154</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00158">158</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1026,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#a51697af839f1b0f3e792516f59fd5941">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00299">299</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00302">302</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -1056,7 +1056,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#acabb0f86283aefd4e247f076b56504cd">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00114">114</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00118">118</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -1204,7 +1204,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#a29316418d618837adeebf47bb8d58308">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00043">43</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00046">46</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>
@@ -1236,7 +1236,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_control_element.html#ad373499cb9f2b816627954d49e12de19">Picto::ControlElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00058">58</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_fixation_controller_8cpp_source.html#l00061">61</a> of file <a class="el" href="_fixation_controller_8cpp_source.html">FixationController.cpp</a>.</p>
 
 </div>
 </div>

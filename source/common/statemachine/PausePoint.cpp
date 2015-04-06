@@ -11,32 +11,37 @@ namespace Picto
 {
 
 /*! \brief Constructs a new PausePoint object.
- *	\details Adds a ForcePause Property that, when 'true', causes the Experiment to pause whenever control reaches this PausePoint.
+ *	\details Adds a ForcePause Property that, when 'true', causes the Experiment to pause whenever control reaches this
+ *	PausePoint.
  */
 PausePoint::PausePoint()
 : scene_(Scene::createScene()),
 hasCursor_(false)
 {
-	//PausePoints don't contain transitions.  All of their results are logic results which differ
-	//from regular results in that they don't have scripts.  Replace the default result factory with
-	//a factory that creates LogicResults that are required.
-	defineResultFactoryType("",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
+	//PausePoints don't contain transitions.  All of their results are logic results which differ from regular results in
+	//	that they don't have scripts.  Replace the default result factory with a factory that creates LogicResults that
+	//	are required.
+	defineResultFactoryType("",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(LogicResult::Create))));
 	setMaxOptionalResults(0);
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
-	AddDefinableObjectFactory("PausingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
-	AddDefinableObjectFactory("RestartingScript",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("PausingScript",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
+	AddDefinableObjectFactory("RestartingScript",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 	AddDefinableProperty(QVariant::Bool,"ForcePause",false);
 	addRequiredResult("done");
 }
 
-/*! \brief Creates a new PausePoint object and returns a shared Asset pointer to it.*/
+/*! \brief Creates a new PausePoint object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Asset> PausePoint::Create()
 {
 	return QSharedPointer<Asset>(new PausePoint());
 }
 
 /*! \brief rebuilds the scene whenever run mode is enable in case something about the scene changed.
-*/
+ */
 void PausePoint::enableRunMode(bool enable)
 {
 	OutputElementContainer::enableRunMode(enable);
@@ -45,14 +50,13 @@ void PausePoint::enableRunMode(bool enable)
 	rebuildScene();
 }
 /*! \brief Runs this PausePoint's execution logic within the framework of the input PictoEngine.
- *	\details This function handles running entry and exit scripts, and, if the engine says so (ie. the operator pressed the pause button),
- *	pausing execution.  When ForcePause is true, this function always pauses until the engines says to resume (ie. the operator presses the play
- *	button again).
+ *	\details This function handles running entry and exit scripts, and, if the engine says so (ie. the operator pressed
+ *	the pause button), pausing execution.  When ForcePause is true, this function always pauses until the engines says to
+ *	resume (ie. the operator presses the play button again).
  *
- *	While Paused, PausePoints display all in scope OutputElements and this function handles that during the course of the Pause.
- *
- *	Since PausePoint objects always have a single "done" result, this function always returns "done".
-*/
+ *	While Paused, PausePoints display all in scope OutputElements and this function handles that during the course of the
+ *	Pause.  Since PausePoint objects always have a single "done" result, this function always returns "done".
+ */
 QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
@@ -61,9 +65,9 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 	if( (command != Engine::PictoEngine::StopEngine) 
 		&& propertyContainer_->getPropertyValue("ForcePause").toBool())
 	{
-		//We don't directly pause the engine because then whoever is controlling
-		//the engine (componentStatusManager, TestViewer, etc) won't know about it.
-		//Instead we use requestPause() to ask the master to pause the engine for us.
+		//We don't directly pause the engine because then whoever is controlling the engine (componentStatusManager,
+		//	TestViewer, etc) won't know about it.  Instead we use requestPause() to ask the master to pause the engine
+		//	for us.
 		engine->requestPause();
 
 		command = engine->getEngineCommand();
@@ -89,8 +93,8 @@ QString PausePoint::run(QSharedPointer<Engine::PictoEngine> engine)
 	return "done";
 }
 
-/*! \brief When a PausePoint is run as a slave, it really doesn't do anything except render frames until Pause ends.  This function is therefore empty
- *	and slaveRenderFrame() handles frame rendering.
+/*! \brief When a PausePoint is run as a slave, it really doesn't do anything except render frames until Pause ends.  This
+ *	function is therefore empty and slaveRenderFrame() handles frame rendering.
  */
 QString PausePoint::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -98,8 +102,9 @@ QString PausePoint::slaveRun(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
-/*! \brief Handles rendering of the latest frame to the display during a Pause when the Experiment is running in slave mode.
-*/
+/*! \brief Handles rendering of the latest frame to the display during a Pause when the Experiment is running in
+ *	slave mode.
+ */
 QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 {
 	//Add the cursor to the scene if it isn't there already
@@ -122,16 +127,16 @@ QString PausePoint::slaveRenderFrame(QSharedPointer<Engine::PictoEngine> engine)
 	return result; 
 }
 
-/*! \brief Extends OutputElementContainer::upgradeVersion() to copy any "PausingScript" Property value from an older Design syntax and paste
- *	it into the "EntryScript" Property which now exists on all StateMachineElement objects.
+/*! \brief Extends OutputElementContainer::upgradeVersion() to copy any "PausingScript" Property value from an older
+ *	Design syntax and paste it into the "EntryScript" Property which now exists on all StateMachineElement objects.
  */
 void PausePoint::upgradeVersion(QString deserializedVersion)
 {
 	OutputElementContainer::upgradeVersion(deserializedVersion);
 	if(deserializedVersion < "0.0.1")
-	{	//Before 0.0.1, Scripts for pause elements were called PausingScript and RestartingScript.  These
-		//have been changed to EntryScript and ExitScript respectively for consistency with the rest of the system.
-		//Here we copy contents of the old script properties into the new script properties.
+	{	//Before 0.0.1, Scripts for pause elements were called PausingScript and RestartingScript.  These have been
+		//	changed to EntryScript and ExitScript respectively for consistency with the rest of the system.  Here we copy
+		//	contents of the old script properties into the new script properties.
 		QList<QSharedPointer<Asset>> childList = getGeneratedChildren("PausingScript");
 		Q_ASSERT(childList.size() <= 1);
 		if(childList.size())
@@ -151,7 +156,8 @@ void PausePoint::upgradeVersion(QString deserializedVersion)
 
 void PausePoint::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
-	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the DesignConfig.
+	//We need to know whenever Analyses are activated or deactivated, so we connect to the appropriate signal from the
+	//	DesignConfig.
 	if(getDesignConfig())
 		disconnect(getDesignConfig().data(),SIGNAL(activeAnalysisIdsChanged()),this,SLOT(activeAnalysisIdsChanged()));
 	OutputElementContainer::setDesignConfig(designConfig);
@@ -163,8 +169,7 @@ void PausePoint::postDeserialize()
 	OutputElementContainer::postDeserialize();
 	setPropertyRuntimeEditable("ForcePause");
 
-	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from
-	//the UI.
+	//We're not using this right now, but maybe someday we will, so we're not getting rid of it, just hiding it from the UI
 	propertyContainer_->getProperty("BackgroundColor")->setVisible(false);
 }
 
@@ -182,15 +187,15 @@ bool PausePoint::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
-/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can
- *	correctly render the current scene each frame.
- *	\details This needs to be called at least once before a PausePoint is run and after all OutputElement objects
- *	that are in scope have been added.
+/*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can correctly render the
+ *	current scene each frame.
+ *	\details This needs to be called at least once before a PausePoint is run and after all OutputElement objects that are
+ *	in scope have been added.
  */
 void PausePoint::rebuildScene()
 {
-	//Since the scene needs access to visual elements stored above it in the tree, we get
-	//our output elements from the output element list.
+	//Since the scene needs access to visual elements stored above it in the tree, we get our output elements from the
+	//	output element list.
 	scene_ = Scene::createScene();
 	hasCursor_ = false;
 	QList<QSharedPointer<ContainerElement>> outputs = getElementList();
@@ -227,15 +232,15 @@ void PausePoint::rebuildScene()
 }
 
 /*! \brief Calls rebuildScene() any time the Active Analysis changes.
- *	\details This should be more useful when/if we start adding Analysis Output Elements (plots or text info)
- *	to the scene in the Workstation when Analyses are active.
-*/
+ *	\details This should be more useful when/if we start adding Analysis Output Elements (plots or text info) to the scene
+ *	in the Workstation when Analyses are active.
+ */
 void PausePoint::activeAnalysisIdsChanged()
 {
-	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the function
-	//should run in the Experiment thread.  Since the experiment thread never runs during the course of scene rendering (if 
-	//they are in two different threads, the experiment thread pauses and waits), there should be no issue of accidentally
-	//changing scene values while they are being used in the UI thread.
+	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the
+	//	function should run in the Experiment thread.  Since the experiment thread never runs during the course of scene
+	//	rendering (if they are in two different threads, the experiment thread pauses and waits), there should be no issue
+	//	of accidentally changing scene values while they are being used in the UI thread.
 	rebuildScene();
 }
 

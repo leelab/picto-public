@@ -23,17 +23,20 @@ namespace Picto
 	addRequiredResult("Initial Acquisition Time Exceeded");
 }
 
-/*! \brief Constructs and returns the pointer to a new FixationController*/
+/*! \brief Constructs and returns the pointer to a new FixationController
+ */
 ControlElement* FixationController::NewFixationController()
 {
 	return new FixationController;
 }
-/*! \brief Constructs and returns a shared pointer to a new FixationController*/
+/*! \brief Constructs and returns a shared pointer to a new FixationController
+ */
 QSharedPointer<Asset> FixationController::Create()
 {
 	return QSharedPointer<Asset>(new FixationController());
 }
-/*! \brief Returns the name of this type of ControlElement: "Fixation Controller"*/
+/*! \brief Returns the name of this type of ControlElement: "Fixation Controller"
+ */
 QString FixationController::ControllerType()
 {
 	return "Fixation Controller";
@@ -94,22 +97,23 @@ bool FixationController::userOnTarget()
 {
 	return propertyContainer_->getPropertyValue("OnTarget").toBool();
 }
-/*! \brief Returns true if the user started fixating on the attached target during the previous frame, false otherwise*/
+/*! \brief Returns true if the user started fixating on the attached target during the previous frame, false otherwise
+ */
 bool FixationController::userEnteredTarget()
 {
 	return userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
 }
-/*! \brief Returns true if the user stopped fixating on the attached target during the previous frame, false otherwise*/
+/*! \brief Returns true if the user stopped fixating on the attached target during the previous frame, false otherwise
+ */
 bool FixationController::userExitedTarget()
 {
 	return !userOnTarget() && propertyContainer_->getPropertyValue("OnTargetChanged").toBool();
 }
 
 /*! \brief Reconnects this object to its attached controlTarget_
- *	\details This function is called whenever something changed in the scripting system
- *	in this element's scope.  Since the change could be the name of the attached
- *	ControlTarget, whenever this function is called we reconnect to the ControlTarget
- *	based on its name.
+ *	\details This function is called whenever something changed in the scripting system in this element's scope.  Since the
+ *	change could be the name of the attached ControlTarget, whenever this function is called we reconnect to the
+ *	ControlTarget based on its name.
  */
 void FixationController::scriptableContainerWasReinitialized()
 {
@@ -147,9 +151,9 @@ bool FixationController::executeSearchAlgorithm(SearchRequest searchRequest)
 }
 
 /*! \brief Returns true if the FixationController has found a result, false if it is still looking
- *	\details This contains the meat of the logic that you would expect to find in the isDone()
- *	function.  In the case of this class, this logic needed to be used in multiple places so it
- *	was a good idea to move it into its own separate function.
+ *	\details This contains the meat of the logic that you would expect to find in the isDone() function.  In the case of
+ *	this class, this logic needed to be used in multiple places so it was a good idea to move it into its own separate
+ *	function.
  */
 bool FixationController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engine)
 {
@@ -176,8 +180,7 @@ bool FixationController::isDonePrivate(QSharedPointer<Engine::PictoEngine> engin
 	//just entered target
 	if(!targetAcquired_ && isInsideTarget)
 	{
-		//if we're past the Min Initial Acquisition Time mark the target as acquired
-		//and start running the timer
+		//if we're past the Min Initial Acquisition Time mark the target as acquired and start running the timer
 		if (initialAcquisitionOccurred_ || currAcqTime >= getMinAcqTime())
 		{
 			if (!initialAcquisitionOccurred_)
@@ -307,7 +310,8 @@ void FixationController::postDeserialize()
 	propertyContainer_->getProperty("OnTarget")->setVisible(false);
 	propertyContainer_->getProperty("OnTargetChanged")->setVisible(false);
 
-	//Whenever the ControlTarget name changes, we need to reset the ControlTarget pointer.  To accomplish this, we connect its edited() signal to our controlTargetNameEdited() slot
+	//Whenever the ControlTarget name changes, we need to reset the ControlTarget pointer.  To accomplish this, we connect
+	//  its edited() signal to our controlTargetNameEdited() slot
 	connect(propertyContainer_->getProperty("ControlTarget").data(),SIGNAL(edited()),this,SLOT(controlTargetNameEdited()));
 
 	setPropertyRuntimeEditable("FixationTime");
@@ -330,9 +334,8 @@ bool FixationController::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 }
 
 /*! \brief Reattaches to the ControlTarget by calling scriptableContainerWasReinitialized()
- *	\details This function is called whenever the designer changes the value in the ControlTarget
- *	field.  When that value changes, it indicates that we need to update the attached ControlTarget
- *	which is why we must reattach.
+ *	\details This function is called whenever the designer changes the value in the ControlTarget field.  When that value
+ *	changes, it indicates that we need to update the attached ControlTarget which is why we must reattach.
  */
 void FixationController::controlTargetNameEdited()
 {

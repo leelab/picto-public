@@ -15,9 +15,9 @@ namespace Picto {
 
 /*!	\brief A Base class for all Elements representing data that is output to the Observer while viewing an experiment.
  *
- *	\details It is useful to be able to group together these types of elements such that they can be handled in similar ways.
- *	This way, any element that can define some kind of output to the Observer subject can inherit DataViewElement and 
- *	all of its associated logic.
+ *	\details It is useful to be able to group together these types of elements such that they can be handled in similar
+ *	ways.  This way, any element that can define some kind of output to the Observer subject can inherit DataViewElement
+ *	and all of its associated logic.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

@@ -66,9 +66,15 @@ void OperatorPlot::replot()
 	//image_ = QImage(pixmap);
 }
 
+
+/*! \brief Registers plot with the Task object, so the task can pass on the information to various UI elements, and
+ *	intercept/handle scripting language commands.
+ */
 void OperatorPlot::postDeserialize()
 {
 	DataViewElement::postDeserialize();
+
+	//getDesignConfig()->
 }
 
 void OperatorPlot::submitValue(long iBin, double dValue)

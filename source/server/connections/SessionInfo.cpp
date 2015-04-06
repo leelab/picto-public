@@ -39,8 +39,8 @@ QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
  *	@param DesignConfig The serialized DesignConfig object that manages the Design used in this session.  This contains 
  *		information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup 
  *		tables in the session file.
- *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an Authorized
- *		observer (ie. It is authorized to make state changes to the Session).
+ *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an
+ *		Authorized observer (ie. It is authorized to make state changes to the Session).
  *	@param password	The password that gives workstations authorization to change the Session state.
 */
 QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password)
@@ -52,9 +52,11 @@ QSharedPointer<SessionInfo> SessionInfo::CreateSession(QString designName, QStri
 	return returnVal;
 }
 
-/*! \brief Loads the Session with the input sessionId and the Sqlite Session file at the input databaseFilePath and returns it.
- *	\details Internally, if the SessionInfo object for this session is already loaded, the function just returns it.  If it isn't
- *	loaded, a new SessionInfo object is created and all of the data from the Sqlite Session file is loaded into that object.
+/*! \brief Loads the Session with the input sessionId and the Sqlite Session file at the input databaseFilePath and returns
+ *	it.
+ *	\details Internally, if the SessionInfo object for this session is already loaded, the function just returns it.  If it
+ *	isn't loaded, a new SessionInfo object is created and all of the data from the Sqlite Session file is loaded into that
+ *	object.
  */
 QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString databaseFilePath)
 {
@@ -74,17 +76,15 @@ QSharedPointer<SessionInfo> SessionInfo::LoadSession(QString sessionID, QString 
 }
 
 /*! \brief Handles session deletion while maintaining a list of loaded sessions
- *	\details If a session is removed from the openSessions list by the ConnectionManager but
- *	still hasn't been deleted since something with a shared pointer is stuck in a long
- *	operation, we want to make sure that nothing else reopens the session from file
- *	before the loaded session actually gets deleted.  To do this, we maintain a 
- *	loadedSessions_ list that contains QWeakPointers to all currently loaded sessions.  
- *	When LoadSession is called, this list is checked first and if a session is found 
- *	with the input sessionID, the weak reference is converted to a regular shared pointer
- *	and returned.  Viola!  No duplicate copies of sessions.
+ *	\details If a session is removed from the openSessions list by the ConnectionManager but still hasn't been deleted
+ *	since something with a shared pointer is stuck in a long operation, we want to make sure that nothing else reopens the
+ *	session from file before the loaded session actually gets deleted.  To do this, we maintain a loadedSessions_ list that
+ *	contains QWeakPointers to all currently loaded sessions.  When LoadSession is called, this list is checked first and if
+ *	a session is found with the input sessionID, the weak reference is converted to a regular shared pointer and returned.
+ *	Viola!  No duplicate copies of sessions.
  *
- *	This function takes care of actually removing the SessionInfo weak pointer from the
- *	list when the last SessionInfo strong smart pointer is cleared.
+ *	This function takes care of actually removing the SessionInfo weak pointer from the list when the last SessionInfo
+ *	strong smart pointer is cleared.
  *	\sa LoadSession()
  */
 void SessionInfo::deleteSession(SessionInfo* session)
@@ -112,12 +112,12 @@ void SessionInfo::deleteSession(SessionInfo* session)
  *	@param DesignConfig The serialized DesignConfig object that manages the Design used in this session.  This contains 
  *		information for identifying Assets from the AssetIds and is useful for building Element/Transition/etc lookup 
  *		tables in the session file.
- *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an Authorized
- *		observer (ie. It is authorized to make state changes to the Session).
+ *	@param initialObserverId The Uuid of the workstation that is starting this Session.  It will be considered an
+ *		Authorized observer (ie. It is authorized to make state changes to the Session).
  *	@param password	The password that gives workstations authorization to change the Session state.
- *	\details Apart from the actual object construction, this function handles variable initialization by using InitializeVariables().
- *	It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and SetupBaseSessionDatabase() to setup those
- *	objects.
+ *	\details Apart from the actual object construction, this function handles variable initialization by using
+ *	InitializeVariables().  It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and
+ *	SetupBaseSessionDatabase() to setup those objects.
  */
 SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray designXml, QByteArray DesignConfig, QUuid initialObserverId, QString password):
 	designXml_(designXml),
@@ -155,11 +155,13 @@ SessionInfo::SessionInfo(QString designName, QString directorName, QByteArray de
 	//file_.open(QIODevice::WriteOnly);
 }
 
-/*! \brief Constructs a new SessionInfo object based on the contents of an old timed out Sqlite Session file at the input databaseFilePath.
- *	\details Apart from the actual object construction, this function handles variable initialization by using InitializeVariables().
- *	It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and SetupBaseSessionDatabase() to setup those
- *	objects.  Once all of the SessionData objects are setup, this constructor extracts all data from the Sqlite session file that needs to 
- *	be in RAM  (using a StoredSessionData object) and enters it into the relevant variables and SessionData objects.
+/*! \brief Constructs a new SessionInfo object based on the contents of an old timed out Sqlite Session file at the input
+ *	databaseFilePath.
+ *	\details Apart from the actual object construction, this function handles variable initialization by using
+ *	InitializeVariables().  It also calls LoadBaseSessionDatabase() to create neccessary SessionData objects and
+ *	SetupBaseSessionDatabase() to setup those objects.  Once all of the SessionData objects are setup, this constructor
+ *	extracts all data from the Sqlite session file that needs to be in RAM  (using a StoredSessionData object) and enters
+ *	it into the relevant variables and SessionData objects.
  */
 SessionInfo::SessionInfo(QString databaseFilePath)
 {
@@ -285,7 +287,7 @@ SessionInfo::~SessionInfo()
 }
 
 /*! \brief Adds a Component represented by the input ComponentInfo object to the current session (ie. Director or Proxy)
-*/
+ */
 void SessionInfo::AddComponent(QSharedPointer<ComponentInfo> component)
 {
 	storedSessionData_->insertData(
@@ -330,8 +332,8 @@ void SessionInfo::UpdateComponentActivity()
 	}
 }
 
-/*! \brief Returns true if any of the Components associated with this Session are currently active (ie. Attached to the Server and
- *	reporting that they are working on this Session.
+/*! \brief Returns true if any of the Components associated with this Session are currently active (ie. Attached to the
+ *	Server and reporting that they are working on this Session).
  *	\note If ignoreComponents() has been called, this will always return false.
  *	\sa UpdateComponentActivity()
  */
@@ -347,8 +349,9 @@ bool SessionInfo::hasActiveComponents()
 	return false;
 }
 
-/*! \brief Returns the ComponentInfo object representing the Component of the input type (ie. "DIRECTOR", "PROXY") that is associated with this Session.
-*/
+/*! \brief Returns the ComponentInfo object representing the Component of the input type (ie. "DIRECTOR", "PROXY") that is
+ *	associated with this Session.
+ */
 QSharedPointer<ComponentInfo> SessionInfo::getComponentByType(QString type)
 {
 	if(components_.contains(type))
@@ -368,8 +371,8 @@ bool SessionInfo::hasComponent(QUuid componentID)
 	return false;
 }
 
-/*! \brief Sets the type of component to which other component types' timestamps should be aligned.
- *	If this is not called, component timestamps will not be aligned.
+/*! \brief Sets the type of component to which other component types' timestamps should be aligned.  If this is not called,
+ *	component timestamps will not be aligned.
  *	\details Currently, the input should always be "DIRECTOR".
  */
 void SessionInfo::alignTimestampsTo(QString componentType)
@@ -384,7 +387,7 @@ void SessionInfo::alignTimestampsTo(QString componentType)
 /*! Returns the Directive that should be sent to the Component with the input componentId.
  *	\details Internally, there is a queue of pending directives.  This function removes the first one from the queue and
  *	returns it.
-*/
+ */
 QString SessionInfo::pendingDirective(QUuid componentID)
 {
 	if(!pendingDirectives_.contains(componentID) || pendingDirectives_[componentID].isEmpty())
@@ -410,8 +413,8 @@ void SessionInfo::addPendingDirective(QString directive, QString componentType)
  *	Ending a session requires the following actions to be taken
  *	 -	Add an end time in the sessioninfo
  *	 -  Realign timebases now that the entire Session's worth of data is available.
- *	 -  Create the various indeces in the Sqlite Session file that will speed up queries now that there is no danger of them
- *		slowing down data entry.
+ *	 -  Create the various indeces in the Sqlite Session file that will speed up queries now that there is no danger of
+ *			them slowing down data entry.
  *	 -	Flush all final cached data to the Sqlite file (flushCache()).
  */
 bool SessionInfo::endSession()
@@ -433,21 +436,20 @@ bool SessionInfo::endSession()
 }
 
 
-/*!	\brief Determines if the observer with the passed in ID is authorized to issue commands and change the State of the Session.
+/*!	\brief Determines if the observer with the passed in ID is authorized to issue commands and change the State of the
+ *	Session.
  *
- *	This is a really simple means of setting permissions on the session.  Effectively there
- *	are two levels of user: authorized, and unauthorized.  This allows us to limit who is 
- *	allowed to do things like issuing TASK and ENDSESSION commands and changing Experimental runtime Properties.
+ *	This is a really simple means of setting permissions on the session.  Effectively there are two levels of user:
+ *	authorized, and unauthorized.  This allows us to limit who is allowed to do things like issuing TASK and ENDSESSION
+ *	commands and changing Experimental runtime Properties.
  *
- *	The authorized observers list contains all observers who are authorized at the higher 
- *	permission level.  However, there is a special case.  If the list contains a null Uuid,
- *	then all observers (including those using null IDs) are considered to be at the authorized
- *	level.
+ *	The authorized observers list contains all observers who are authorized at the higher permission level.  However, there
+ *	is a special case.  If the list contains a null Uuid, then all observers (including those using null IDs) are
+ *	considered to be at the authorized level.
  *
- *	\warning This is by no means a secure method of assigning permissions.  Since all network communication
- *	is unencrypted, it would be trivial to intercept a valid observer ID, and then append it to
- *	spoofed commands.  The password is also not encrypted on the Server or Workstation.
- *	If you want real security, you'll need to rewrite this.
+ *	\warning This is by no means a secure method of assigning permissions.  Since all network communication is unencrypted,
+ *	it would be trivial to intercept a valid observer ID, and then append it to spoofed commands.  The password is also not
+ *	encrypted on the Server or Workstation.  If you want real security, you'll need to rewrite this.
  */
 bool SessionInfo::isAuthorizedObserver(QUuid observerId)
 {
@@ -459,8 +461,7 @@ bool SessionInfo::isAuthorizedObserver(QUuid observerId)
 		return false;
 }
 
-/*! \brief Adds the input observerId to the list of authorized ids if
- *  the correct password is input.
+/*! \brief Adds the input observerId to the list of authorized ids if the correct password is input.
  *	\details Returns true if the password was correct and the observer is authorized now
  */
 bool SessionInfo::addAuthorizedObserver(QUuid observerId, QString password)
@@ -473,21 +474,24 @@ bool SessionInfo::addAuthorizedObserver(QUuid observerId, QString password)
 	return  false;
 }
 
-/*! \brief Returns the password that will give a Workstation access to change things about the Session and be more than a simple viewer.
-*/
+/*! \brief Returns the password that will give a Workstation access to change things about the Session and be more than a
+ *	simple viewer.
+ */
 QString SessionInfo::getPassword()
 {
 	return password_;
 }
 
-/*! \brief Marks the time that the latest data was written to this Session by the input source type (ie. "DIRECTOR" or "PROXY").
-*/
+/*! \brief Marks the time that the latest data was written to this Session by the input source type (ie. "DIRECTOR" or
+ *	"PROXY").
+ */
 void SessionInfo::markLastDataTime(QString source)
 {
 	dataTimeBySource_[source] = totalSessionTime_.elapsed();
 }
-/*! \brief Returns whether the last data written from the input source preceded the beginning of the latest flush of RAM data to Disk.
-*/
+/*! \brief Returns whether the last data written from the input source preceded the beginning of the latest flush of RAM
+ *	data to Disk.
+ */
 bool SessionInfo::lastDataPrecededFlush(QString source)
 {
 	if(!dataTimeBySource_.contains(source))
@@ -499,8 +503,9 @@ bool SessionInfo::lastDataPrecededFlush(QString source)
 	}
 	return false;
 }
-/*! \brief Returns whether the last data written from the input source followed the end of the latest flush of RAM data to Disk.
-*/
+/*! \brief Returns whether the last data written from the input source followed the end of the latest flush of RAM data to
+ *	Disk.
+ */
 bool SessionInfo::lastDataFollowedFlush(QString source)
 {
 	if(!dataTimeBySource_.contains(source))
@@ -515,22 +520,25 @@ bool SessionInfo::lastDataFollowedFlush(QString source)
 
 /*! \brief Dumps the RAM cached data into the file based Session database
  *
- *	@param sourceType The type of data source whose data will be written to the disk backed data base.  Options are currently "DIRECTOR", "PROXY"
- *		or "".  In the case of the empty "" string, data from both the Director and the Proxy will be written to disk.
+ *	@param sourceType The type of data source whose data will be written to the disk backed data base.  Options are
+ *		currently "DIRECTOR", "PROXY" or "".  In the case of the empty "" string, data from both the Director and the
+ *		Proxy will be written to disk.
  *
- *	\details We buffer several seconds of data at a time in RAM for the purpose of avoiding the large SQL overhead every time a SQL write query
- *	is performed.  We then save it to disk to that we won't lose data if Picto crashes.  This function 
- *	moves the contents of the RAM data to the file based session database.  
+ *	\details We buffer several seconds of data at a time in RAM for the purpose of avoiding the large SQL overhead every
+ *	time a SQL write query is performed.  We then save it to disk to that we won't lose data if Picto crashes.  This
+ *	function moves the contents of the RAM data to the file based session database.  
  *
- *	This works closely with the ProtocolResponse system.  That system tells Picto Components which of their commmands' data has been saved
- *	to disk (See ProtocolResponse::RegisteredResponseType).  When a long time goes by without a Component hearing that its data has been written
- *	to disk, it sends it again.  This way, we are sure that a Server can crash and restart without any data being lost in the Session.
+ *	This works closely with the ProtocolResponse system.  That system tells Picto Components which of their commmands'
+ *	data has been saved to disk (See ProtocolResponse::RegisteredResponseType).  When a long time goes by without a
+ *	Component hearing that its data has been written to disk, it sends it again.  This way, we are sure that a Server can
+ *	crash and restart without any data being lost in the Session.
  *	
- *	\note The table of current Property, etc Values is also written to disk so that we can correctly pick up where we left off if the Server
- *	crashes and restarts.
+ *	\note The table of current Property, etc Values is also written to disk so that we can correctly pick up where we left
+ *	off if the Server crashes and restarts.
  *
- *	\note The time at which the flush starts and ends are also carefully marked for use with lastDataPrecededFlush() and lastDataFollowedFlush()
- *	which are necessary to be sure we tell the Picto components exactly which data has been written to disk in this multi-threaded environment.
+ *	\note The time at which the flush starts and ends are also carefully marked for use with lastDataPrecededFlush() and
+ *	lastDataFollowedFlush() which are necessary to be sure we tell the Picto components exactly which data has been written
+ *	to disk in this multi-threaded environment.
  *
  *	Returns true on success or false if nothing happened.
  */
@@ -662,9 +670,8 @@ void SessionInfo::insertBehavioralData(QSharedPointer<Picto::BehavioralDataUnitP
 		//Only write a behavioralDataUnitPackage with the last data unit
 		//
 		//Use the package text because that contains the signal channel name, time, sampleperiod.
-		//Use the unit id because that was generated when the last data unit
-		//was generated and will preserve the information generation order
-		//in the stateVariable list.
+		//Use the unit id because that was generated when the last data unit was generated and will preserve the
+		//  information generation order in the stateVariable list.
 		data->clearAllButLastDataPoints();
 		if(data->length() == 1)
 		{
@@ -762,7 +769,7 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 
 /*! \brief Adds an AlignmentDataUnit data point to the appropriate SessionData object attempts alignment with the
  *	latest data using alignTimeBases().
-*/
+ */
 void SessionInfo::insertAlignmentData(QSharedPointer<Picto::AlignmentDataUnit> data)
 {
 	// If the alignevent comes with an alignNumber, it must be from the component providing the time baseline, 
@@ -823,8 +830,8 @@ void SessionInfo::insertLFPData(QSharedPointer<Picto::LFPDataUnitPackage> data)
 	setLatestNeuralData(data->getDataID(),data->toXml(),fittedTimestamp);
 }
 
-/*! \brief Inserts a StateDataUnitPackage (Transition traversal) record into the CachedSessionData and the record of the current Session state.  
- *	The CachedSessionData will later be flushed to disk in flushCache().
+/*! \brief Inserts a StateDataUnitPackage (Transition traversal) record into the CachedSessionData and the record of the
+ *	current Session state.  The CachedSessionData will later be flushed to disk in flushCache().
  */
 void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> data)
 {
@@ -842,8 +849,8 @@ void SessionInfo::insertStateData(QSharedPointer<Picto::StateDataUnitPackage> da
 	}	
 }
 
-/*! \brief Inserts a TaskRunDataUnit record into the appropriate SessionData objects.  Also takes care of adding an end time
- *	to an already existing TaskRunDataUnit record if the Task Run has ended.
+/*! \brief Inserts a TaskRunDataUnit record into the appropriate SessionData objects.  Also takes care of adding an end
+ *	time to an already existing TaskRunDataUnit record if the Task Run has ended.
  */
 void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 {
@@ -879,8 +886,9 @@ void SessionInfo::insertTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 	}
 }
 
-/*! \brief Modifies an existing TaskRunDataUnit database entry.  This is used by the Workstation to change the Run name, notes, or saved value.
-*/
+/*! \brief Modifies an existing TaskRunDataUnit database entry.  This is used by the Workstation to change the Run name,
+ *	notes, or saved value.
+ */
 void SessionInfo::modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 {
 	QMutexLocker locker(&sessionDataMutex_);
@@ -901,7 +909,7 @@ void SessionInfo::modifyTaskRunData(QSharedPointer<Picto::TaskRunDataUnit> data)
 	}
 }
 
-/*! \brief Inserts a FrameDataUnitPackage record into the CachedSessionData and the record of the current Session state.  
+/*! \brief Inserts a FrameDataUnitPackage record into the CachedSessionData and the record of the current Session state.
  *	The CachedSessionData will later be flushed to disk in flushCache().
  */
 void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> data)
@@ -928,7 +936,7 @@ void SessionInfo::insertFrameData(QSharedPointer<Picto::FrameDataUnitPackage> da
 	}
 }
 
-/*! \brief Inserts a RewardDataUnit record into the CachedSessionData and the record of the current Session state.  
+/*! \brief Inserts a RewardDataUnit record into the CachedSessionData and the record of the current Session state.
  *	The CachedSessionData will later be flushed to disk in flushCache().
  */
 void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
@@ -953,15 +961,13 @@ void SessionInfo::insertRewardData(QSharedPointer<Picto::RewardDataUnit> data)
 }
 
 /*! \brief Returns a serialized version of all State Variables that have changed since the input time.
- *	\details We use a single table to track the latest state of all variables pertinant to running
- *	a picto workstation.  Using this table, we can assure requests for the latest picto
- *	state will have constant runtime independant of the previous runtime of the current
- *	experiment.  New variable values always update existing values with the same id if 
- *	their timestamp is greater than that of their predecessor.  Calling selectStateVariables
- *	will return a string that can be sent to a workstation.  This string contains all of the
- *	stateVariables that have changed after (not including) the input time.  The format of 
- *	the returned variables is just the serialization that the director used when sending
- *	them to the server.
+ *	\details We use a single table to track the latest state of all variables pertinant to running a picto workstation.
+ *	Using this table, we can assure requests for the latest picto state will have constant runtime independant of the
+ *	previous runtime of the current experiment.  New variable values always update existing values with the same id if
+ *	their timestamp is greater than that of their predecessor.  Calling selectStateVariables will return a string that can
+ *	be sent to a workstation.  This string contains all of the stateVariables that have changed after (not including) the
+ *	input time.  The format of the returned variables is just the serialization that the director used when sending them to
+ *	the server.
  */
 QString SessionInfo::selectStateVariables(QString fromTime)
 {
@@ -1003,8 +1009,7 @@ QString SessionInfo::selectLatestNeuralData(QString fromDataId)
 }
 
 /*! \brief Returns the latest SessionDataPackage for this Session in XML serial form.
- *	\details The SessionDataPackage includes data about all Task Runs that have occured 
- *	in this Session.
+ *	\details The SessionDataPackage includes data about all Task Runs that have occured in this Session.
  */
 QString SessionInfo::selectSessionDataPackage()
 {
@@ -1017,7 +1022,7 @@ QString SessionInfo::selectSessionDataPackage()
 }
 
 /*! \brief Initializes all SessionInfo member variables for a new SessionInfo object.
-*/
+ */
 void SessionInfo::InitializeVariables()
 {
 	databaseWriteMutex_ = QSharedPointer<QMutex>(new QMutex(QMutex::Recursive));
@@ -1036,9 +1041,12 @@ void SessionInfo::InitializeVariables()
 	{
 		uuid_ = QUuid::createUuid();
 	}
-	databaseVersion_ = PICTOVERSION;	//As of Pictoversion 1.0.28, we just put pictoversion into the database version field.  Before this it was 1.0.
-										//In this version, we changed the SessionInfo table such that it now has a dataId field that can be used to
-										//update individual rows.
+
+	//As of Pictoversion 1.0.28, we just put pictoversion into the database version field.  Before this it was 1.0.
+	//In this version, we changed the SessionInfo table such that it now has a dataId field that can be used to
+	//update individual rows.
+	databaseVersion_ = PICTOVERSION;
+
 	nextSigChanVarId_ = MAX_SIG_CHAN_VAR_ID;
 
 #ifdef NO_AUTH_REQUIRED
@@ -1055,8 +1063,8 @@ void SessionInfo::InitializeVariables()
 }
 
 /*! \brief Creates all SessionData object necessary for storing Session data in this SessionInfo object.
- *	\details The name of this function is historical and should probably be changed to something more
- *	suitable.  Alternatively, this can all just be moved to InitializeVariables().
+ *	\details The name of this function is historical and should probably be changed to something more suitable.
+ *	Alternatively, this can all just be moved to InitializeVariables().
  */
 void SessionInfo::LoadBaseSessionDatabase(QString path, QString databaseName)
 {
@@ -1069,9 +1077,8 @@ void SessionInfo::LoadBaseSessionDatabase(QString path, QString databaseName)
 	baseSessionDbFilepath_ = path + "/" + databaseName;
 }
 
-/*! \brief Sets up the SessionData objects created in LoadBaseSessionDatabase().  In the case where this is
- *	a previously timed out Session, data in the existing Sqlite database needed to initialize this SessionInfo
- *	object is loaded into it.
+/*! \brief Sets up the SessionData objects created in LoadBaseSessionDatabase().  In the case where this is a previously
+ *	timed out Session, data in the existing Sqlite database needed to initialize this SessionInfo object is loaded into it.
  */
 void SessionInfo::SetupBaseSessionDatabase()
 {
@@ -1101,10 +1108,6 @@ void SessionInfo::SetupBaseSessionDatabase()
 	////temporary tables can produce signifigant savings. DEFAULT specifies the compiled-in default, 
 	////which is FILE unless the source has been modified.
 	//executeWriteQuery(&sessionQ,"PRAGMA temp_store = 2");
-
-
-
-
 
 
 	//Define database
@@ -1196,38 +1199,36 @@ void SessionInfo::SetupBaseSessionDatabase()
 		}
 	}
 	
-	//Now that everything has been written to the tempCachedSessionData object.  Move it all to the StoredSessionData object in one
-	//big transaction
+	//Now that everything has been written to the tempCachedSessionData object.  Move it all to the StoredSessionData
+	//	object in one big transaction
 	tempCachedSessionData->moveDataTo(storedSessionData_.data());
 }
 
-/*! \brief Should be used with SessionData values of BEHAVIORAL_ALIGN_EVENTS_TYPE.  Returns
- *	true if the event represented by vList1 happened before the event represented by vList2.
+/*! \brief Should be used with SessionData values of BEHAVIORAL_ALIGN_EVENTS_TYPE.  Returns true if the event represented
+ *	by vList1 happened before the event represented by vList2.
  */
 bool behavAlignLessThan(const QVariantList& vList1, const QVariantList& vList2)
 {
 	return vList1[BEHAV_TIMESTAMP_COLUMN].toDouble() < vList2[BEHAV_TIMESTAMP_COLUMN].toDouble();
 }
 
-/*! \brief Should be used with SessionData values of NEURAL_ALIGN_EVENTS_TYPE.  Returns
- *	true if the event represented by vList1 happened before the event represented by vList2.
+/*! \brief Should be used with SessionData values of NEURAL_ALIGN_EVENTS_TYPE.  Returns true if the event represented by
+ *	vList1 happened before the event represented by vList2.
  */
 bool neuralAlignLessThan(const QVariantList& vList1, const QVariantList& vList2)
 {
 	return vList1[NEURAL_TIMESTAMP_COLUMN].toDouble() < vList2[NEURAL_TIMESTAMP_COLUMN].toDouble();
 }
 
-/*! \brief Runs the alignment algorithm to calculate the offset and linear coefficient that aligns
- *	the "PROXY" and "DIRECTOR" timestreams.
- *	\details Whenever this function is called, it checks which behavioral and neural alignment events
- *	have not yet been matched, then goes through and attempts to make the match.  When a match is 
- *	found, AlignmentTool::updateCoefficients() is used to improven the precision of the alignment parameters
- *	using a least squares algorithm.
+/*! \brief Runs the alignment algorithm to calculate the offset and linear coefficient that aligns the "PROXY" and
+ *	"DIRECTOR" timestreams.
+ *	\details Whenever this function is called, it checks which behavioral and neural alignment events have not yet been
+ *	matched, then goes through and attempts to make the match.  When a match is found, AlignmentTool::updateCoefficients()
+ *	is used to improve the precision of the alignment parameters using a least squares algorithm.
  *
- *	When realignAll is set to true, all alignment events from the entire session are rematched and the
- *	least squares timestamp alignment parameters are recalculated.  This takes care of possible losses in
- *	precision that may arise if there is a connection problem and some alignment events arrive out of order
- *	during the Session.
+ *	When realignAll is set to true, all alignment events from the entire session are rematched and the least squares
+ *	timestamp alignment parameters are recalculated.  This takes care of possible losses in precision that may arise if
+ *	there is a connection problem and some alignment events arrive out of order during the Session.
  */
 void SessionInfo::alignTimeBases(bool realignAll)
 {
@@ -1235,8 +1236,9 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	{
 		// Make sure that everything is written to file
 		flushCache();
-		//Clear Neural and Behavioral align session data objects in case somethign wasn't yet matched (meaning that flushCache wouldn't
-		//cause that data to be erased) and refill them with all align events from the entire experiment
+		//Clear Neural and Behavioral align session data objects in case somethign wasn't yet matched (meaning that
+		//	flushCache wouldn't cause that data to be erased) and refill them with all align events from the entire
+		//	experiment
 		behavAlignSessionData_->clearData();
 		neuralAlignSessionData_->clearData();
 
@@ -1272,7 +1274,8 @@ void SessionInfo::alignTimeBases(bool realignAll)
 	qSort(behavAlignEvents.begin(),behavAlignEvents.end(),behavAlignLessThan);
 	qSort(neuralAlignEvents.begin(),neuralAlignEvents.end(),neuralAlignLessThan);
 
-	//Set everything that's unmatched in lists below last aligned time to be ignored (we ignore align codes that are sent out of order)
+	//Set everything that's unmatched in lists below last aligned time to be ignored (we ignore align codes that are sent
+	//	out of order)
 	for(QList<QVariantList>::Iterator it = behavAlignEvents.begin();it != behavAlignEvents.end();it++)
 	{
 		if((*it)[BEHAV_TIMESTAMP_COLUMN].toDouble() > latestBehavioralTimestamp_)
@@ -1290,8 +1293,8 @@ void SessionInfo::alignTimeBases(bool realignAll)
 		(*it)[NEURAL_MATCHED_COLUMN] = -1;
 	}
 
-	//Move through behavioral and neural lists, find every aligncode that matches.  Where they match,
-	//set their matched values and put a new alignment event row in the cachedDirectorSessionData_
+	//Move through behavioral and neural lists, find every aligncode that matches.  Where they match, set their matched
+	//	values and put a new alignment event row in the cachedDirectorSessionData_
 	QList<QVariantList>::Iterator bIt = behavAlignEvents.begin();
 	QList<QVariantList> newAlignEvents;
 	if(bIt != behavAlignEvents.end())
@@ -1315,8 +1318,9 @@ void SessionInfo::alignTimeBases(bool realignAll)
 						continue;
 					}
 					//Check if the neural and behavioral align codes match
-					//Note: We compare the behavioral align event to only the bottom 7 digits of the neural align event.  This way
-					//systems can bind the top hardware bit to high if need be (ie. For -onesided mode) and it won't affect alignment
+					//Note: We compare the behavioral align event to only the bottom 7 digits of the neural align event.
+					//	This way systems can bind the top hardware bit to high if need be (ie. For -onesided mode) and it
+					//	won't affect alignment
 					//int neuralEventCode = (*nIt)[NEURAL_EVENT_CODE_COLUMN].toInt() & 0x7F;
 					//int behavEventCode = (*bIt)[BEHAV_EVENT_CODE_COLUMN].toInt() & 0x7F;
 					if(((*nIt)[NEURAL_EVENT_CODE_COLUMN].toInt() & 0x7F) == ((*bIt)[BEHAV_EVENT_CODE_COLUMN].toInt() & 0x7F))
@@ -1348,8 +1352,8 @@ void SessionInfo::alignTimeBases(bool realignAll)
 		} while(++bIt != behavAlignEvents.end());
 	}
 
-	// Update all jitter and correlation values in our new align events list with the latest calculated alignment coefficients
-	// then put the events into the cachedDirectorSessionData
+	//Update all jitter and correlation values in our new align events list with the latest calculated alignment
+	//	coefficients then put the events into the cachedDirectorSessionData
 	for(QList<QVariantList>::Iterator it = newAlignEvents.begin();it != newAlignEvents.end();it++)
 	{
 		(*it)[4] = alignmentTool_->getJitter((*it)[3].toDouble(),(*it)[2].toDouble());//Jitter
@@ -1416,16 +1420,15 @@ void SessionInfo::createSessionIndeces()
 	storedSessionData_->buildTableIndeces();
 }
 
-/*! \brief Adds a new Picto current state variable to a list that will be added to a CurrentSessionData object
- *	for the purpose of updating the Picto Workstation with the current experimental state.  The list's data is
- *	copied to the CurrentSessionData object in updateCurrentStateTable().
- *	\details We use a single CurrentSessionData object to track the latest state of all variables needed to run
- *	a remote session on a Picto Workstation.  Using this object, we can assure requests for the latest Picto
- *	state will have constant runtime independant of how long the the current experiment has been running.
- *	New variable values always update existing values with the same id if their timestamp is greater than 
- *	that of their predecessor, such that the CurrentSessionData object always contains the most up to date
- *	picture of the current Experimental state.  
-*/
+/*! \brief Adds a new Picto current state variable to a list that will be added to a CurrentSessionData object for the
+ *	purpose of updating the Picto Workstation with the current experimental state.  The list's data is copied to the
+ *	CurrentSessionData object in updateCurrentStateTable().
+ *	\details We use a single CurrentSessionData object to track the latest state of all variables needed to run a remote
+ *	session on a Picto Workstation.  Using this object, we can assure requests for the latest Picto state will have
+ *	constant runtime independant of how long the the current experiment has been running.  New variable values always
+ *	update existing values with the same id if their timestamp is greater than that of their predecessor, such that the
+ *	CurrentSessionData object always contains the most up to date picture of the current Experimental state.  
+ */
 void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValue)
 {
 	Variable var;
@@ -1436,12 +1439,11 @@ void SessionInfo::setStateVariable(int dataid, int varid, QString serializedValu
 }
 
 /*! \brief Adds the input neural data to the latestNeuralData buffer.  
- *	\details The buffer stays NEURAL_DATA_BUFFER_SECS long, and if the input data has a timestamp of more 
- *	than NEURAL_DATA_BUFFER_SECS from the beginning of the buffer, values from the beginning are removed 
- *	accordingly.
+ *	\details The buffer stays NEURAL_DATA_BUFFER_SECS long, and if the input data has a timestamp of more than
+ *	NEURAL_DATA_BUFFER_SECS from the beginning of the buffer, values from the beginning are removed accordingly.
  *
- *	This buffer is used to send neural data to Picto Workstations monitoring the current session
- *	so that the neural data can be displayed to the operator.
+ *	This buffer is used to send neural data to Picto Workstations monitoring the current session so that the neural data
+ *	can be displayed to the operator.
  */
 void SessionInfo::setLatestNeuralData(int dataid, QString serializedValue, double fittedTime)
 {
@@ -1496,8 +1498,8 @@ void SessionInfo::updateCurrentStateTable(QString updateTime)
 }
 
 /*! \brief Adds the Workstation with the input Uuid to the authorized observer list.  
- *	\details This means that Workstation will be able to use commands to change the Session 
- *	state and not just watch what is happening in the Session.
+ *	\details This means that Workstation will be able to use commands to change the Session state and not just watch what
+ *	is happening in the Session.
  */
 void SessionInfo::addAuthorizedObserver(QUuid observerId)
 {

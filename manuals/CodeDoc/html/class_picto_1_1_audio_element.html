@@ -116,10 +116,10 @@ Inheritance diagram for Picto::AudioElement:</div>
  <div class="center">
   <img src="class_picto_1_1_audio_element.png" usemap="#Picto::AudioElement_map" alt=""/>
   <map id="Picto::AudioElement_map" name="Picto::AudioElement_map">
-<area href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame..." alt="Picto::OutputElement" shape="rect" coords="168,392,326,416"/>
-<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="168,336,326,360"/>
-<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="168,280,326,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="168,224,326,248"/>
+<area href="class_picto_1_1_output_element.html" title="A Base class for all Elements representing data that is output to the Experiment subject during frame..." alt="Picto::OutputElement" shape="rect" coords="84,392,242,416"/>
+<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="84,336,242,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="84,280,242,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="84,224,242,248"/>
 <area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="84,168,242,192"/>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="84,112,242,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="84,56,242,80"/>
@@ -783,7 +783,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Called when the Trigger <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> changes to make sure that we perform all of the latest sound commans. See <a class="el" href="class_picto_1_1_audio_element.html#a951238e7f62fec6db90a6b56a4a766fa" title="Performs the latest sound commands that were set with the play() or stop() functions. ">doSoundCommands()</a> for more details. </p>
 <p>Internally, this just calls <a class="el" href="class_picto_1_1_audio_element.html#a951238e7f62fec6db90a6b56a4a766fa" title="Performs the latest sound commands that were set with the play() or stop() functions. ">doSoundCommands()</a>. </p>
 
-<p>Definition at line <a class="el" href="_audio_element_8cpp_source.html#l00231">231</a> of file <a class="el" href="_audio_element_8cpp_source.html">AudioElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_audio_element_8cpp_source.html#l00230">230</a> of file <a class="el" href="_audio_element_8cpp_source.html">AudioElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -811,7 +811,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 <p>Performs the latest sound commands that were set with the <a class="el" href="class_picto_1_1_audio_element.html#a7f0539817be5838b8f5208d3e3e1030c" title="Call this function to start the underlying audio file playing at the time of the next frame...">play()</a> or <a class="el" href="class_picto_1_1_audio_element.html#a9960f41ed8077abd3efed9a71c84926b" title="Call this function to stop the underlying audio file playback at the time of the next frame...">stop()</a> functions. </p>
 <p>What actually happens here is that a start or stop is scheduled in all MixingSamples depending on whether <a class="el" href="class_picto_1_1_audio_element.html#a7f0539817be5838b8f5208d3e3e1030c" title="Call this function to start the underlying audio file playing at the time of the next frame...">play()</a> or <a class="el" href="class_picto_1_1_audio_element.html#a9960f41ed8077abd3efed9a71c84926b" title="Call this function to stop the underlying audio file playback at the time of the next frame...">stop()</a> was selected. We don't simply do this inside those functions since this indirection allows the same system to trigger playback in a SlaveExperiment. Since we use a change in the Trigger <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> to trigger a call to this function, and this function just looks at the Playing value. The same command will occur on both the Master and Slave Experiments. </p>
 
-<p>Definition at line <a class="el" href="_audio_element_8cpp_source.html#l00203">203</a> of file <a class="el" href="_audio_element_8cpp_source.html">AudioElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_audio_element_8cpp_source.html#l00202">202</a> of file <a class="el" href="_audio_element_8cpp_source.html">AudioElement.cpp</a>.</p>
 
 </div>
 </div>

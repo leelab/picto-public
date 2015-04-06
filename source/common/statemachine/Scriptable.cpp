@@ -9,7 +9,8 @@ Scriptable::Scriptable()
 {
 }
 
-/*! \brief Returns true if something in this Scriptable can be used in a script engine (ie. a script property or script function)
+/*! \brief Returns true if something in this Scriptable can be used in a script engine (ie. a script property or script
+ *	function)
  */
 bool Scriptable::hasContentsForScriptEngine()
 {
@@ -38,7 +39,8 @@ bool Scriptable::hasContentsForScriptEngine()
 	return true;
 }
 
-/*! \brief Binds this Scriptable to the input QScriptEngine so that it can be accessed by any scripts running in that QScriptEngine.
+/*! \brief Binds this Scriptable to the input QScriptEngine so that it can be accessed by any scripts running in that
+ *	QScriptEngine.
  */
 bool Scriptable::bindToScriptEngine(QScriptEngine &engine)
 {
@@ -79,8 +81,8 @@ void Scriptable::enteredScope()
 }
 
 /*! \brief Sets the Property with the input propName to be editable or not editable depending on the editable input.
- *	\details Runtime Editable properties will have corresponding widgets that control their initValues show up in the TestViewer and RemoteViewer
- *	when their parent is set as UIEnabled.
+ *	\details Runtime Editable properties will have corresponding widgets that control their initValues show up in the
+ *	TestViewer and RemoteViewer when their parent is set as UIEnabled.
  *	\sa isUIEnabled(), isRuntimeEditable(), getUIOrder()
  */
 void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
@@ -89,16 +91,15 @@ void Scriptable::setPropertyRuntimeEditable(QString propName, bool editable)
 }
 
 /*! \brief Returns all of the script properties and script function for this Scriptable element.
- *	\details We created this before we created the AssetDescriber which includes more complete documentation on
- *	Picto element's scriptable properties and functions.  Possibly we should just use data from that
- *	class here.  Alternatively, we can get rid of this all together along with the "Scripting Info" tab
- *	in the Designer since it isn't really all that useful.
- *	In case we do keep this around, it should be noted that since we don't want people to use the various signals 
- *	and slots from Scriptable Superclasses, but we DO want to enable hierarchical scripting property/function 
+ *	\details We created this before we created the AssetDescriber which includes more complete documentation on Picto
+ *	element's scriptable properties and functions.  Possibly we should just use data from that class here.  Alternatively,
+ *	we can get rid of this all together along with the "Scripting Info" tab in the Designer since it isn't really all
+ *	that useful.  In case we do keep this around, it should be noted that since we don't want people to use the various
+ *	signals and slots from Scriptable Superclasses, but we DO want to enable hierarchical scripting property/function
  *	definitions, when we print out the available scripts we ignore any properties and methods that are available in the
- *	Scriptable class, leaving all of those in its subclasses.
- *	Since these functions are all still technically available to anyone that wants to use them,
- *	this is a clear application security risk.  For now, we're not going to worry about that though.
+ *	Scriptable class, leaving all of those in its subclasses.  Since these functions are all still technically available
+ *	to anyone that wants to use them, this is a clear application security risk.  For now, we're not going to worry about
+ *	that, though.
  */
 QString Scriptable::getScriptingInfo()
 {
@@ -106,7 +107,6 @@ QString Scriptable::getScriptingInfo()
 
 	int numScriptableClassProps = Scriptable::staticMetaObject.propertyCount();
 	int numScriptableClassFuncs = Scriptable::staticMetaObject.methodCount();
-
 
 	//Print out the scriptable's properties, ignoring those that are in scriptable and its superclasses.
 	const QMetaObject* metaObj = metaObject();
@@ -120,7 +120,7 @@ QString Scriptable::getScriptingInfo()
 	}
 
 	//Now print out the functions that are available for scripting, ignoring those that are in 
-	//scriptable and its superclasses.  Only display functions defined as public slots.
+	//  scriptable and its superclasses.  Only display functions defined as public slots.
 	int functions = metaObj->methodCount();
 	QMetaMethod metaMeth;
 	for(int i=numScriptableClassFuncs;i<functions;i++)
@@ -141,9 +141,10 @@ QString Scriptable::getScriptingInfo()
 			(*paramTypeIter).append("</span>");
 			while((paramTypeIter != commaSplitSig.end()) && (paramNameIter != paramNames.end()))
 			{
-				if(paramTypeIter != commaSplitSig.begin())
+				if (paramTypeIter != commaSplitSig.begin())
 					(*paramTypeIter) = QString("<span style=\"color:grey\">%1</span>").arg(*paramTypeIter);
-				(*paramTypeIter).replace("QString","String");	//We don't want QString in our UI, so we replace it with "String".
+				//We don't want QString in our UI, so we replace it with "String".
+				(*paramTypeIter).replace("QString", "String");
 				(*paramTypeIter).append(QString(" <span style=\"color:blue\">%1</span>").arg(QString(*paramNameIter)));
 				paramTypeIter++;
 				paramNameIter++;
@@ -207,7 +208,7 @@ void Scriptable::postDeserialize()
 }
 
 /*! \brief Verifies that, if the element has scripting elements, its name is valid for use in a script environment.
-*/
+ */
 bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
 	if(!UIEnabled::validateObject(xmlStreamReader))
