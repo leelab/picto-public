@@ -50,7 +50,7 @@ var searchData=
   ['min',['min',['../class_picto_1_1_pseudorandom_int_parameter.html#ae1b16a72b8f7da941a54efb4150e2910',1,'Picto::PseudorandomIntParameter']]],
   ['minacquisitiontime',['minAcquisitionTime',['../class_picto_1_1_fixation_controller.html#a9789fcc37892a38032cf25d94d949623',1,'Picto::FixationController::minAcquisitionTime()'],['../class_picto_1_1_target_controller.html#af01d5d25f96ea79072310f7ce36d55d9',1,'Picto::TargetController::minAcquisitionTime()']]],
   ['minfortime',['minForTime',['../struct_picto_1_1_playback_index.html#a4e258793e5728ac68f0c58037955e4c3',1,'Picto::PlaybackIndex']]],
-  ['minrewardperiod',['minRewardPeriod',['../class_picto_1_1_reward.html#ad06e280ebc6025df96111d994068c1e9',1,'Picto::Reward']]],
+  ['minrewardperiod',['minRewardPeriod',['../struct_picto_1_1_reward_controller_1_1_reward_unit.html#acfde635e64b82035420e342a74816ff6',1,'Picto::RewardController::RewardUnit::minRewardPeriod()'],['../class_picto_1_1_reward.html#ad06e280ebc6025df96111d994068c1e9',1,'Picto::Reward::minRewardPeriod()']]],
   ['mix',['mix',['../class_picto_1_1_aural_target.html#af4ae061fb6f1edb78843d9b1ac69fd0b',1,'Picto::AuralTarget::mix()'],['../class_picto_1_1_p_c_m_aural_target.html#a17bce3805e561894eacd5ac20bc8cc2a',1,'Picto::PCMAuralTarget::mix()']]],
   ['mixingsample',['MixingSample',['../class_picto_1_1_mixing_sample.html',1,'Picto']]],
   ['modifyrundataunit',['modifyRunDataUnit',['../class_remote_viewer.html#a64d7245d10252b02db070adc8d17f418',1,'RemoteViewer']]],

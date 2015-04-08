@@ -24,7 +24,7 @@ struct PropInfo{int id; QString name; int parent;};
  */
 struct TransInfo{int id; QString name; int parent; QString source;QString result;QString dest;};
 
-/*! \brief There are many operations and data elements that need to be associated with a design as a whole, accessable by
+/*! \brief There are many operations and data elements that need to be associated with a design as a whole, accessible by
  *	all elements of the design and with access to all elements of a design.  Objects of the DesignConfig class handle
  *	these types of operations and store this type of data.
  *	

@@ -212,7 +212,7 @@ QList&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rewar
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a0fdf778975117e1fd3c507bb2a71a33a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fdf778975117e1fd3c507bb2a71a33a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_reward_controller.html#a0fdf778975117e1fd3c507bb2a71a33a">appendDeliveredRewards</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_reward_data_unit.html">RewardDataUnit</a> &gt; rewardUnit)</td></tr>
-<tr class="memdesc:a0fdf778975117e1fd3c507bb2a71a33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">triggerRewards()</a> to append a reward that has been supplied to a list that is accessable from <a class="el" href="class_picto_1_1_reward_controller.html#a1a56936f22612a215077b3ab494b27c5" title="Returns a list of the latest rewards to have been supplied, clearing it in the process. ">getDeliveredRewards()</a> <br /></td></tr>
+<tr class="memdesc:a0fdf778975117e1fd3c507bb2a71a33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">triggerRewards()</a> to append a reward that has been supplied to a list that is accessible from <a class="el" href="class_picto_1_1_reward_controller.html#a1a56936f22612a215077b3ab494b27c5" title="Returns a list of the latest rewards to have been supplied, clearing it in the process. ">getDeliveredRewards()</a> <br /></td></tr>
 <tr class="separator:a0fdf778975117e1fd3c507bb2a71a33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -232,17 +232,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>discardOverlap_</b></
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the base class for classes that provide rewards to the subject of a Picto experiment. </p>
-<p>Since there are multiple different types reward controllers, this base class exists to allow the creation of reward controllers for different platforms (and different types of controllers)</p>
+<p>Since there are multiple different types reward controllers, this base class exists to allow the creation of reward controllers for different platforms (and different types of controllers).</p>
 <p>All reward controllers are assumed to have the following features:</p><ul>
 <li>Access to one or more individual reward "channels" (numbered from 1 to N)</li>
 <li>The ability to give rewards seperately on each channel <a class="el" href="class_picto_1_1_reward.html" title="A StateMachineElement that initiates reward feedback for the test subject. ">Reward</a> controllers may also have the ability to vary reward duration. If they do not have that ability, the reward duration resolution will be defined by the frequency of calls to <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">triggerRewards()</a>. Since <a class="el" href="class_picto_1_1_reward_controller.html#ae9f9b5b07f824d9078b30cb116ff3323" title="Triggers the next reward from addReward() if the previous one on its channel is done. ">triggerRewards()</a> is currently called once per frame by the <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Engine::PictoEngine</a>, this means that reward controllers that don't have the ability to define their duration will have resolution of about 16ms.</li>
 </ul>
 <p>Hardware specific reward controllers won't be located in the common/iodevices folder, but will rather be in the folders of the source that actually uses them (e.g. <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>).</p>
-<dl class="section note"><dt>Note</dt><dd>reward controllers are numbered from 1 to n </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="class_picto_1_1_reward.html" title="A StateMachineElement that initiates reward feedback for the test subject. ">Reward</a> controllers are numbered from 1 to n. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_reward_controller_8h_source.html#l00044">44</a> of file <a class="el" href="_reward_controller_8h_source.html">RewardController.h</a>.</p>
+<p>Definition at line <a class="el" href="_reward_controller_8h_source.html#l00041">41</a> of file <a class="el" href="_reward_controller_8h_source.html">RewardController.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a287522c7b84e646e85f5aa85dc49bb74"></a>
 <div class="memitem">
@@ -440,7 +440,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>discardOverlap_</b></
 <p>Triggers the next reward from <a class="el" href="class_picto_1_1_reward_controller.html#a287522c7b84e646e85f5aa85dc49bb74" title="Appends a reward to the list of startable rewards for the input channel and with the input quantity a...">addReward()</a> if the previous one on its channel is done. </p>
 <p>If <a class="el" href="class_picto_1_1_reward_controller.html#a0ea32b937d64aeaf7928ee4b696d697b" title="Set this to true if rewards that are queued up on a given channel, waiting for the one in progress to...">discardOverlapingRewards()</a> was set true and a previous reward on a channel is in progress, all pending rewards on that channel will be removed. If appendToList it true, every reward supplied will be added to a list that is retrievable using <a class="el" href="class_picto_1_1_reward_controller.html#a1a56936f22612a215077b3ab494b27c5" title="Returns a list of the latest rewards to have been supplied, clearing it in the process. ">getDeliveredRewards()</a> this allows a record of delivered rewards to be sent to the PictoServer from the <a class="el" href="class_director.html" title="Defines an object that runs a Picto Experiment for a test subject, transmits experimental data to the...">Director</a>. </p>
 
-<p>Definition at line <a class="el" href="_reward_controller_8cpp_source.html#l00049">49</a> of file <a class="el" href="_reward_controller_8cpp_source.html">RewardController.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_reward_controller_8cpp_source.html#l00048">48</a> of file <a class="el" href="_reward_controller_8cpp_source.html">RewardController.cpp</a>.</p>
 
 </div>
 </div>

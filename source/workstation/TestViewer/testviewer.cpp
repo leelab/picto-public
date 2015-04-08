@@ -284,16 +284,16 @@ void TestViewer::setupUi()
 	rightTabs->addTab(analysisSelector_,"Select Analyses");
 	rightTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
-	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
-	viewSelectionWidget->registerView(taskView);
-	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget->setDefaultView(taskView,0,0,VIEW_SIZE_3x3);
+	viewSelectionWidget_ = new ViewSelectionWidget();
+	viewSelectionWidget_->registerView(taskView);
+	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget_->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
 
 
 	QVBoxLayout *leftToolFrame = new QVBoxLayout;
-	leftToolFrame->addWidget(viewSelectionWidget, 0);
+	leftToolFrame->addWidget(viewSelectionWidget_, 0);
 	leftToolFrame->addWidget(propertyFrame_, 1);
 	
 
@@ -484,6 +484,11 @@ void TestViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = experiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
+
+	viewSelectionWidget_->clear();
+	viewSelectionWidget_->connectToTaskConfig(task->getTaskConfig());
+	viewSelectionWidget_->rebuild();
+
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 	loadPropsAction_->setEnabled(true);
 	Q_ASSERT(testController_);

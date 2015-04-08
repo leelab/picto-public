@@ -46,6 +46,7 @@ public:
 	void render(QSharedPointer<Engine::PictoEngine> engine,int callerId);
 	void setBackgroundColor(QColor color);
 	void addVisualElement(QSharedPointer<VisualElement> element);
+	void addDataViewElement(QSharedPointer<DataViewElement> element);
 	void addAudioElement(QSharedPointer<AudioElement> element);
 	void addOutputSignal(QSharedPointer<OutputSignal> element);
 	void addInputSignal(QSharedPointer<InputSignal> element);
@@ -67,6 +68,9 @@ private:
 	QColor backgroundColor_;
 	QList<QSharedPointer <VisualElement> > visualElements_;
 	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;
+
+	QList<QSharedPointer <DataViewElement> > dataViewElements_;
+	QList<QSharedPointer <DataViewElement> > unaddedDataViewElements_;
 
 	QList<QSharedPointer <AudioElement> > audioElements_;
 	QList<QSharedPointer <AudioElement> > unaddedAudioElements_;

@@ -179,6 +179,15 @@ void Task::sendFinalStateDataToServer(QString result, QSharedPointer<Engine::Pic
 	engine->reportNewFrame(frameTime,getAssetId());
 }
 
+/*! \brief Extends ScriptableContainer::preDeserialize() to create the TaskConfig object for this task.
+ */
+void Task::preDeserialize()
+{
+	setTaskConfig(QSharedPointer<TaskConfig>(new TaskConfig()));
+
+	ScriptableContainer::preDeserialize();
+}
+
 /*! \brief Extends ScriptableContainer::postDeserialize() to set the UIEnabled Property invisible since it doesn't do
  *	anything in Task objects.
  */

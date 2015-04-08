@@ -16,6 +16,7 @@
 
 #include <QUuid>
 #include <QFuture>
+
 using namespace Picto;
 
 class QAction;
@@ -26,6 +27,7 @@ class QSlider;
 class QSpinBox;
 class QLineEdit;
 class QTabWidget;
+class ViewSelectionWidget;
 
 /*!	\brief	This allows Operators to view and control a remotely running Experimental Session.
  *	\details This is the control panle that the operator uses while an experiment is running.  It has the following
@@ -176,6 +178,7 @@ private:
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	Picto::VisualTargetHost *visualTargetHost_;
+	ViewSelectionWidget *viewSelectionWidget_;
 	QSharedPointer<Picto::Experiment> experiment_;
 	QHash<QUuid,QSharedPointer<Picto::ProtocolResponse>> pendingResponses_;
 	QWidget *propertyFrame_;

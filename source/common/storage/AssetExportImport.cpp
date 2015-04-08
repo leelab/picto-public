@@ -13,14 +13,15 @@ AssetExportImport::~AssetExportImport()
 {
 }
 
-/*! \brief Serializes the input assets from the input associateRootHost object's tree to a text string and returns that string.
- *	\details The returned string is meant to be used with AssetExportImport::importFromText().  If the returned string is empty,
- *	there was a problem and more information is available from getLatestMessage().  The input associateRootHost is the 
- *	Experiment object if the input objects are experimental assets and the Analysis object if the input objects are AnalysisElements.
- *	Experimental and Analysis elements cannot be exported at the same time.  The serialized text includes UIData so that imported
- *	elements will appear with the same positions as the exported elements with the exception of top level elements which will have the
- *	same relative positions but will be imported at the point where the mouse clicks for the import.
- *	Exported string looks something like this:
+/*! \brief Serializes the input assets from the input associateRootHost object's tree to a text string and returns that
+ *	string.
+ *	\details The returned string is meant to be used with AssetExportImport::importFromText().  If the returned string is
+ *	empty, there was a problem and more information is available from getLatestMessage().  The input associateRootHost is
+ *	the Experiment object if the input objects are experimental assets and the Analysis object if the input objects are
+ *	AnalysisElements.  Experimental and Analysis elements cannot be exported at the same time.  The serialized text
+ *	includes UIData so that imported elements will appear with the same positions as the exported elements with the
+ *	exception of top level elements which will have the same relative positions but will be imported at the point where
+ *	the mouse clicks for the import.  Exported string looks something like this:
  *	\code
  	<CopyData>
  		<CopiedFrom>[DesignPath]</CopyFrom>
@@ -122,7 +123,7 @@ QString AssetExportImport::exportToText(QList<QSharedPointer<Asset>> assets,Asso
 	//			return "";
 	//		}
 	//	}
- //   }
+	//   }
 
 	//Create a list of assets that need to be copied. (For experimental, and analysis elements this is just the input list.  For analysis from an experimental container,
 	//it is a list of analysis assets attached to the asset trees in the single input).
@@ -216,21 +217,26 @@ QString AssetExportImport::exportToText(QList<QSharedPointer<Asset>> assets,Asso
 
 /*! \brief Imports text exported from exportToText() into the input pasteParent
  *	\details pasteParent is the Asset which will be the parent of the imported Assets.
- *	pasteText is the text that was exported from exportToText.
- *	experimentRootHost is the AssoicateRootHost pointer to the Experiment object to which the imported experimental or analysis assets are associated 
- *	pastePosition is the position at which the assets should be placed (ie. If the user right clicked and selected paste somewhere, that position would go here)
- *	analysisRootHost is the AssoicateRootHost pointer to the Analysis object into which any analysis elements will be imported (it may be null if importing only experimental assets).
- *	The returned value is an enum from AssetExportImport::IMPORT_RESULT_TYPE.
+ *	pasteText is the text that was exported from exportToText.  experimentRootHost is the AssoicateRootHost pointer to the
+ *	Experiment object to which the imported experimental or analysis assets are associated pastePosition is the position
+ *	at which the assets should be placed (ie. If the user right clicked and selected paste somewhere, that position would
+ *	go here).  analysisRootHost is the AssoicateRootHost pointer to the Analysis object into which any analysis elements
+ *	will be imported (it may be null if importing only experimental assets).  The returned value is an enum from
+ *	AssetExportImport::IMPORT_RESULT_TYPE.
  *	
- *	The import algorithm is fairly involved considering the fact that imported assets may be experimental or analysis, and they have associated UIElement data which
- *	references its associated elements by asset id, yet asset ids can change if assets are immediately imported into an experiment where one of their asset ids is
- *	already taken.  The best way to understand what is happening is to just read the code, but in a nutshell we take care of most of these issues by serializing
- *	the imported text in with a temporary DesignConfig, then once the associate links are set up moving the assets to the correct DesignConfig and only updating their AssetIds
- *	at that point.
- *	\note A common event is that the import will succeed with warnings, and the warnings will include a list of elements that could not be imported.  This occurs when
- *	an experiment has changed slightly and we are trying to import an analysis.  Frequently most of the analysis elements will find their attached experimental
- *	elements, but a few of them will fail since the experimental elements' names have changed.  In this case the users might undo, fix the names and reimport, or simply
- *	import the analysis elements whose associated experimental elements could not be found one by one at the appropriate level.
+ *	The import algorithm is fairly involved considering the fact that imported assets may be experimental or analysis, and
+ *	they have associated UIElement data which references its associated elements by asset id, yet asset ids can change if
+ *	assets are immediately imported into an experiment where one of their asset ids is already taken.  The best way to
+ *	understand what is happening is to just read the code, but in a nutshell we take care of most of these issues by
+ *	serializing the imported text in with a temporary DesignConfig, then once the associate links are set up moving the
+ *	assets to the correct DesignConfig and only updating their AssetIds at that point.
+ *
+ *	\note A common event is that the import will succeed with warnings, and the warnings will include a list of elements
+ *	that could not be imported.  This occurs when an experiment has changed slightly and we are trying to import an
+ *	analysis.  Frequently most of the analysis elements will find their attached experimental elements, but a few of them
+ *	will fail since the experimental elements' names have changed.  In this case the users might undo, fix the names and
+ *	reimport, or simply import the analysis elements whose associated experimental elements could not be found one by one
+ *	at the appropriate level.
  */
 int AssetExportImport::importFromText(QSharedPointer<Asset> pasteParent, QString pasteText, AssociateRootHost* experimentRootHost, QPoint pastePosition, AssociateRootHost* analysisRootHost)
 {
@@ -366,10 +372,9 @@ int AssetExportImport::importFromText(QSharedPointer<Asset> pasteParent, QString
 	}
 
 	//Create a temporary design config and set it to the current window asset.
-	//We use a temporary design config so that newly imported assets will not have their asset ids
-	//change and UIElements can reattach to these assets based on their
-	//asset ids instead of using path names (which could lead to problems if there was another
-	//asset with the same path).
+	//We use a temporary design config so that newly imported assets will not have their asset ids change and UIElements
+	//	can reattach to these assets based on their asset ids instead of using path names (which could lead to problems if
+	//	there was another asset with the same path).
 	QSharedPointer<DesignConfig> origDesignConfig = dynamic_cast<Asset*>(experimentRootHost)->getDesignConfig();
 	QSharedPointer<DesignConfig> tempDesignConfig(new DesignConfig());
 
@@ -547,7 +552,8 @@ int AssetExportImport::importFromText(QSharedPointer<Asset> pasteParent, QString
 	return IMPORT_SUCCEEDED;
 }
 
-/*! \brief Returns the type of command that can be performed with the input text where the input text should have been produced with exportToString().
+/*! \brief Returns the type of command that can be performed with the input text where the input text should have been
+*	produced with exportToString().
  *	\details The returned value is a AssetExportImport::TEXT_COMMAND_TYPE.
  *	\note The returned value is based entirely on the contents of the input text string.
  */
@@ -660,10 +666,10 @@ int AssetExportImport::commandTypeOfText(QString text)
 	return returnVal;
 }
 
-/*! \brief A convenience function used with ImportFromText() that reads in text from the input xmlReader at the current read pointer up to the appearance
- *	of the input endTag.
- *	\details Output text is set into the output string reference.
- *	Returns true on success, false on failure due to invalid syntax, not finding the end tag, or other problems.
+/*! \brief A convenience function used with ImportFromText() that reads in text from the input xmlReader at the current
+ *	read pointer up to the appearance of the input endTag.
+ *	\details Output text is set into the output string reference.  Returns true on success, false on failure due to
+ *	invalid syntax, not finding the end tag, or other problems.
  */
 bool AssetExportImport::getContentsUntilEndTag(QSharedPointer<QXmlStreamReader> xmlReader, QString endTag, QString& output)
 {

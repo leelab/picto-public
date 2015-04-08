@@ -46,6 +46,7 @@ protected:
 	QSharedPointer<AssetFactory> outputSignalFactory_;
 	QSharedPointer<AssetFactory> inputSignalFactory_;
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
+	QSharedPointer<AssetFactory> dataViewElementFactory_;
 
 private:
 	friend class OutputElementContainer;

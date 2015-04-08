@@ -1,6 +1,3 @@
-#include <QPalette>
-#include <QLabel>
-
 #include "DataViewWidget.h"
 #include "ViewSelectionWidget.h"
 
@@ -10,12 +7,14 @@ using namespace Picto;
 
 /*! \brief Constructs a new DataViewWidget with the specified name and containing the passed Widget
 */
-DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget)
-	: currentlyDisplayed_(false), lastViewSize_(VIEW_SIZE_1x1), xPos_(0), yPos_(0)
+DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget, DVW_RetentionPolicy ePolicy)
+	: currentlyDisplayed_(false), lastViewSize_(VIEW_SIZE_1x1), xPos_(0), yPos_(0), eRetentionPolicy_(ePolicy),
+	myViewWidget_(pqwWidget)
 {
 	layout_ = new QGridLayout();
-	layout_->addWidget(new QLabel(cqsName),0,0);
-	layout_->addWidget(pqwWidget,1,0);
+	myLabel_ = new QLabel(cqsName);
+	layout_->addWidget(myLabel_, 0, 0);
+	layout_->addWidget(myViewWidget_, 1, 0);
 
 	layout_->setRowStretch(0, 0);
 	layout_->setRowStretch(1, 1);
@@ -25,11 +24,13 @@ DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget)
 	name_ = cqsName;
 }
 
-/*! \brief DataViewWidget destructor
-*/
+/*! \brief DataViewWidget destructor automatically dissociates itself from its view widget so the owning asset can control
+ *	its memory.
+ *	\sa DataViewWidget::dissociate()
+ */
 DataViewWidget::~DataViewWidget()
 {
-
+	dissociate();
 }
 
 /*! \brief Hides the default DataViewWidget Title, for when the attached widget comes with
@@ -81,3 +82,25 @@ bool DataViewWidget::containsPosition(int xPos, int yPos)
 
 	return false;
 }
+
+/*! \brief This segregates the view widget from this DataViewWidget container prior to deletion, so that the actual view
+ *	item can be managed by its true owner, the Asset responsible for spawning it.
+ */
+void DataViewWidget::dissociate()
+{
+	if (myViewWidget_)
+	{
+		layout_->removeWidget(myViewWidget_);
+		myViewWidget_->setParent(nullptr);
+		myViewWidget_ = nullptr;
+	}
+}
+
+/* \brief Sets the current name and label of this widget
+*/
+void DataViewWidget::setName(const QString &newName)
+{
+	name_ = newName;
+	myLabel_->setText(newName);
+}
+

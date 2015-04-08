@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "../memleakdetect.h"
 #include "../stimuli/boxgraphic.h"
+#include "../operator/DataViewElement.h"
+
 using namespace Picto;
 
 /*! \brief Returns true if the layer of the first VisualElement input is lower than the layer of the second.*/
@@ -91,6 +93,14 @@ void Scene::addVisualElement(QSharedPointer<VisualElement> element)
 	unaddedVisualElements_.push_back(element);
 }
 
+/*! \brief Adds the input DataViewElement to this Scene so that it will be updated during rendering.
+ */
+void Scene::addDataViewElement(QSharedPointer<DataViewElement> element)
+{
+	QMutexLocker locker(mutex_.data());
+	unaddedDataViewElements_.push_back(element);
+}
+
 /*! \brief Adds the input AudioElement to this Scene so that it will be played next frame if it is set to play.*/
 void Scene::addAudioElement(QSharedPointer<AudioElement> element)
 {
@@ -111,6 +121,7 @@ void Scene::addInputSignal(QSharedPointer<InputSignal> element)
 	QMutexLocker locker(mutex_.data());
 	unaddedInputSignals_.push_back(element);
 }
+
 
 /*! \brief Sets the current zoom level of this scene.
  *	\details The zoom value must be greater than zero and less than 1. Essentially, this value will
@@ -192,6 +203,17 @@ void Scene::doRender(int callerId)
 		//Sort visual elements
 		qSort(visualElements_.begin(), visualElements_.end(), &visualElementLessThan);
 
+
+		//Add any unadded Data View Elements to the visual elements list
+		if (!unaddedDataViewElements_.isEmpty())
+		{
+			for (int i = 0; i<unaddedDataViewElements_.length(); i++)
+			{
+				dataViewElements_.append(unaddedDataViewElements_[i]);
+			}
+			unaddedDataViewElements_.clear();
+		}
+
 		//Add any unadded output signals to the outputSignals_ list
 		if(!unaddedOutputSignals_.isEmpty())
 		{
@@ -242,9 +264,11 @@ void Scene::doRender(int callerId)
 			inputSignal->setValue(fInputValue);
 		}
 
-
-
-
+		//Should probably just update displayed plots, but I'm doing this for now.
+		foreach(QSharedPointer<DataViewElement> element, dataViewElements_)
+		{
+			element->draw();
+		}
 
 
 		//Add any unadded audio elements to the audio elements list

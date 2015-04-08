@@ -4,6 +4,7 @@ var searchData=
   ['targetcontroller',['TargetController',['../class_picto_1_1_target_controller.html',1,'Picto']]],
   ['task',['Task',['../class_picto_1_1_task.html',1,'Picto']]],
   ['taskcommandhandler',['TaskCommandHandler',['../struct_task_command_handler.html',1,'']]],
+  ['taskconfig',['TaskConfig',['../class_picto_1_1_task_config.html',1,'Picto']]],
   ['taskrundataunit',['TaskRunDataUnit',['../class_picto_1_1_task_run_data_unit.html',1,'Picto']]],
   ['taskrunviewer',['TaskRunViewer',['../class_task_run_viewer.html',1,'']]],
   ['tdtplugin',['TdtPlugin',['../class_tdt_plugin.html',1,'']]],

@@ -171,7 +171,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 <p>This class is used for copy/paste functionality and larger scale importing of entire Analyses into new experiments during the design process or to Analyze a session that didn't have an appropriate Analysis saved with the design when the session was run. With this class, Experimental and Analysis elements must be exported separately. Since Analysis elements don't define a tree structure but are added into an experimental tree structure, import of analysis elements can be partially succesful where some Analyses find their correct parent elements and some don't. In these cases, Analysis elements that can be added are added, and those that can't are listed in a returned message. It is also possible for the import to fail but with a changed design. In these cases, the return value from the <a class="el" href="class_asset_export_import.html#ac05d9fb6c66ad9a103eaef364f96dd77" title="Imports text exported from exportToText() into the input pasteParent. ">importFromText()</a> function will indicate this, and a <a class="el" href="class_asset_export_import.html#ac5e6cc644505281203cb591ccdfe1bca" title="A change to the design occured but failed, roll the design back to its previous state. ">rollbackDesignRequired()</a> signal will be triggered as well. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00024">24</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00026">26</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a class="anchor" id="aca4cd77d57caadb60bc50edc33ca3d9e"></a>
 <div class="memitem">
@@ -199,7 +199,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00032">32</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00034">34</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00044">44</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8h_source.html#l00048">48</a> of file <a class="el" href="_asset_export_import_8h_source.html">AssetExportImport.h</a>.</p>
 
 </div>
 </div>
@@ -259,7 +259,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 <p>Returns the type of command that can be performed with the input text where the input text should have been produced with exportToString(). </p>
 <p>The returned value is a <a class="el" href="class_asset_export_import.html#a37d3ee8f821ba2e32f16705c7c471d7e" title="An enum describing the types of operations available for a given string exported from exportToText() ...">AssetExportImport::TEXT_COMMAND_TYPE</a>. </p><dl class="section note"><dt>Note</dt><dd>The returned value is based entirely on the contents of the input text string. </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00554">554</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00560">560</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
 
 </div>
 </div>
@@ -306,7 +306,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 <div class="line">        ...</div>
 <div class="line">&lt;/CopyData&gt;</div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00044">44</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00045">45</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
 
 </div>
 </div>
@@ -351,7 +351,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 <p>A convenience function used with ImportFromText() that reads in text from the input xmlReader at the current read pointer up to the appearance of the input endTag. </p>
 <p>Output text is set into the output string reference. Returns true on success, false on failure due to invalid syntax, not finding the end tag, or other problems. </p>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00668">668</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00674">674</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,10 +398,11 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>latestMessage_</b>
 </div><div class="memdoc">
 
 <p>Imports text exported from <a class="el" href="class_asset_export_import.html#a164a5810ba088a4577ecb5e7b81a12ef" title="Serializes the input assets from the input associateRootHost object&#39;s tree to a text string and retur...">exportToText()</a> into the input pasteParent. </p>
-<p>pasteParent is the Asset which will be the parent of the imported Assets. pasteText is the text that was exported from exportToText. experimentRootHost is the AssoicateRootHost pointer to the Experiment object to which the imported experimental or analysis assets are associated pastePosition is the position at which the assets should be placed (ie. If the user right clicked and selected paste somewhere, that position would go here) analysisRootHost is the AssoicateRootHost pointer to the Analysis object into which any analysis elements will be imported (it may be null if importing only experimental assets). The returned value is an enum from <a class="el" href="class_asset_export_import.html#aca4cd77d57caadb60bc50edc33ca3d9e" title="An enum describing the result of an import process. ">AssetExportImport::IMPORT_RESULT_TYPE</a>.</p>
-<p>The import algorithm is fairly involved considering the fact that imported assets may be experimental or analysis, and they have associated UIElement data which references its associated elements by asset id, yet asset ids can change if assets are immediately imported into an experiment where one of their asset ids is already taken. The best way to understand what is happening is to just read the code, but in a nutshell we take care of most of these issues by serializing the imported text in with a temporary DesignConfig, then once the associate links are set up moving the assets to the correct DesignConfig and only updating their AssetIds at that point. </p><dl class="section note"><dt>Note</dt><dd>A common event is that the import will succeed with warnings, and the warnings will include a list of elements that could not be imported. This occurs when an experiment has changed slightly and we are trying to import an analysis. Frequently most of the analysis elements will find their attached experimental elements, but a few of them will fail since the experimental elements' names have changed. In this case the users might undo, fix the names and reimport, or simply import the analysis elements whose associated experimental elements could not be found one by one at the appropriate level. </dd></dl>
+<p>pasteParent is the Asset which will be the parent of the imported Assets. pasteText is the text that was exported from exportToText. experimentRootHost is the AssoicateRootHost pointer to the Experiment object to which the imported experimental or analysis assets are associated pastePosition is the position at which the assets should be placed (ie. If the user right clicked and selected paste somewhere, that position would go here). analysisRootHost is the AssoicateRootHost pointer to the Analysis object into which any analysis elements will be imported (it may be null if importing only experimental assets). The returned value is an enum from <a class="el" href="class_asset_export_import.html#aca4cd77d57caadb60bc50edc33ca3d9e" title="An enum describing the result of an import process. ">AssetExportImport::IMPORT_RESULT_TYPE</a>.</p>
+<p>The import algorithm is fairly involved considering the fact that imported assets may be experimental or analysis, and they have associated UIElement data which references its associated elements by asset id, yet asset ids can change if assets are immediately imported into an experiment where one of their asset ids is already taken. The best way to understand what is happening is to just read the code, but in a nutshell we take care of most of these issues by serializing the imported text in with a temporary DesignConfig, then once the associate links are set up moving the assets to the correct DesignConfig and only updating their AssetIds at that point.</p>
+<dl class="section note"><dt>Note</dt><dd>A common event is that the import will succeed with warnings, and the warnings will include a list of elements that could not be imported. This occurs when an experiment has changed slightly and we are trying to import an analysis. Frequently most of the analysis elements will find their attached experimental elements, but a few of them will fail since the experimental elements' names have changed. In this case the users might undo, fix the names and reimport, or simply import the analysis elements whose associated experimental elements could not be found one by one at the appropriate level. </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00235">235</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_export_import_8cpp_source.html#l00241">241</a> of file <a class="el" href="_asset_export_import_8cpp_source.html">AssetExportImport.cpp</a>.</p>
 
 </div>
 </div>

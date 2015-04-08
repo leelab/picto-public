@@ -18,6 +18,7 @@
 #include "../controlelements/TargetController.h"
 #include "../controlelements/ChoiceController.h"
 #include "../controlelements/FixationController.h"
+#include "../operator/DataViewElement.h"
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -375,6 +376,11 @@ void State::rebuildScene()
 		else if(output.dynamicCast<InputSignal>())
 		{
 			scene_->addInputSignal(output.staticCast<InputSignal>());
+		}
+		else if (output.dynamicCast<DataViewElement>())
+		{
+			output.staticCast<DataViewElement>()->reset();
+			scene_->addDataViewElement(output.staticCast<DataViewElement>());
 		}
 	}
 	QColor backgroundColor;

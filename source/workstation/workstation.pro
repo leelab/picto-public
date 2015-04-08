@@ -63,6 +63,8 @@ SOURCES += $$(PICTO_TREE)/source/workstation/replayviewer/RecordingVisualTargetH
 
 HEADERS += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewWidget.h
 SOURCES += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewWidget.cpp
+HEADERS += $$(PICTO_TREE)/source/workstation/DataViewer/PlotViewWidget.h
+SOURCES += $$(PICTO_TREE)/source/workstation/DataViewer/PlotViewWidget.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewLayout.h
 SOURCES += $$(PICTO_TREE)/source/workstation/DataViewer/DataViewLayout.cpp
 HEADERS += $$(PICTO_TREE)/source/workstation/DataViewer/ViewSelectionWidget.h

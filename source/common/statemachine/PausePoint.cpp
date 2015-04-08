@@ -6,6 +6,7 @@
 #include "../storage/ObsoleteAsset.h"
 #include "../stimuli/OutputElement.h"
 #include "../parameter/AssociateElement.h"
+#include "../operator/DataViewElement.h"
 #include "../memleakdetect.h"
 namespace Picto
 {
@@ -224,6 +225,10 @@ void PausePoint::rebuildScene()
 		else if(output.dynamicCast<AudioElement>())
 		{
 			scene_->addAudioElement(output.staticCast<AudioElement>());
+		}
+		else if (output.dynamicCast<DataViewElement>())
+		{
+			scene_->addDataViewElement(output.staticCast<DataViewElement>());
 		}
 	}
 	QColor backgroundColor;

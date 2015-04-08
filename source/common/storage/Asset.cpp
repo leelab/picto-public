@@ -169,16 +169,28 @@ void Asset::upgradeVersion(QString)
 }
 /*! \brief Sets the DesignConfig object managing the current Design to this Asset.
  *	\details Every Design has a single DesignConfig object that manages global issues affecting the entire design.  It can
- *	access every asset in the design and is accessable from every asset in the design.  It is set to an asset using the
+ *	access every asset in the design and is accessible from every asset in the design.  It is set to an asset using the
  *	setDesignConfig function, typically by the Asset's parent.
  *	\note There is high potential here for a memory leak due to circular shared pointers.  To avoid this, Assets maintain
  *	SharedPointers to the DesignConfig but the DesignConfig uses WeakPointers to all assets.
- *	\sa setDesignConfig, DesignConfig
+ *	\sa getDesignConfig, DesignConfig
  */
 void Asset::setDesignConfig(QSharedPointer<DesignConfig> designConfig)
 {
 	designConfig_ = designConfig;
 	designConfig_->addManagedAsset(selfPtr());
+}
+
+/*! \brief Sets the TaskConfig object managing the current Task to this Asset.
+*	\details Every Design has one TaskConfig object for each task.  The TaskConfig object manages task-global issues.
+*	It is accessible from every asset in the design.  It is set to an asset using the setTaskConfig function.
+*	\note There is high potential here for a memory leak due to circular shared pointers.  To avoid this, Assets maintain
+*	SharedPointers to the DesignConfig but the DesignConfig uses WeakPointers to all assets.
+*	\sa getTaskConfig, TaskConfig
+*/
+void Asset::setTaskConfig(QSharedPointer<TaskConfig> taskConfig)
+{
+	taskConfig_ = taskConfig;
 }
 
 /*! \brief This function is called in fromXml() before deserialization and is used to prepare the Asset for
@@ -197,6 +209,13 @@ void Asset::preDeserialize()
 	if(!designConfig)
 		return;
 	setDesignConfig(designConfig);
+
+	QSharedPointer<TaskConfig> taskConfig = parent->getTaskConfig();
+	if (taskConfig)
+	{
+		setTaskConfig(taskConfig);
+	}
+	
 }
 
 /*! \brief This function is called in fromXml() after successful deserialization and is used to initialize the Asset based
@@ -212,8 +231,10 @@ void Asset::postDeserialize()
 	//  disallowDuplicateAssetIds() which doesn't happen until the end of experiment deserialization so that we're not
 	//  crazily rewriting asset ids every time we deserialize.  This does, however, assure us that assets that are
 	//  created after experiments are deserialized will be setup with nonduplicated ids.
-	if(designConfig_)
+	if (designConfig_)
+	{
 		designConfig_->fixDuplicatedAssetIds();
+	}
 }
 
 /*! \brief A convenience function for adding an error to the list returned by Serializable::getErrors().

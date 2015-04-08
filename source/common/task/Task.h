@@ -12,8 +12,7 @@
 
 namespace Picto {
 
-/*!	\brief A Task contains the top level StateMachine that defines the logic for researching an
- *	experimental question.
+/*!	\brief A Task contains the top level StateMachine that defines the logic for researching an experimental question.
  *
  *	A Task can define anything from a MemorySaccade exercise, to a system for checking the calibration of a reward supply
  *	system.  An Experiment usually contains multiple Tasks with each Task containing only one StateMachine.  The period
@@ -49,6 +48,7 @@ public:
 
 protected:
 	virtual QString defaultTagName(){return "Task";};
+	virtual void preDeserialize();
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 

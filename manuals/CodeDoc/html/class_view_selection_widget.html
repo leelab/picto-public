@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
@@ -111,6 +112,21 @@ Inheritance diagram for ViewSelectionWidget:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:a2e95dfe922d909b67f909e72d0f2411a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e95dfe922d909b67f909e72d0f2411a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a2e95dfe922d909b67f909e72d0f2411a">updateWidgetContainer</a> (QWidget *pWidget)</td></tr>
+<tr class="memdesc:a2e95dfe922d909b67f909e72d0f2411a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the container for the passed-in widget. The title is queried from the TaskConfig. <br /></td></tr>
+<tr class="separator:a2e95dfe922d909b67f909e72d0f2411a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a487743bb9c5f647c6fb09f6b6591ca13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a487743bb9c5f647c6fb09f6b6591ca13"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a487743bb9c5f647c6fb09f6b6591ca13">removeWidgetContainer</a> (QWidget *pWidget)</td></tr>
+<tr class="memdesc:a487743bb9c5f647c6fb09f6b6591ca13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the container for the passed-in widget. <br /></td></tr>
+<tr class="separator:a487743bb9c5f647c6fb09f6b6591ca13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf98c8455287295837213af1cb97976e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf98c8455287295837213af1cb97976e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#abf98c8455287295837213af1cb97976e">addWidgetContainer</a> (QWidget *pWidget)</td></tr>
+<tr class="memdesc:abf98c8455287295837213af1cb97976e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new container for the passed-in widget. The title is queried from the TaskConfig. <br /></td></tr>
+<tr class="separator:abf98c8455287295837213af1cb97976e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a56c6be91ee1ad4900fba15af9f4e8ab9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56c6be91ee1ad4900fba15af9f4e8ab9"></a>
@@ -134,20 +150,43 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#ace898156cb153ab6be5c0646f11a6351">setDefaultView</a> (<a class="el" href="class_data_view_widget.html">DataViewWidget</a> *pDefaultView, int x, int y, ViewSize eSize)</td></tr>
 <tr class="memdesc:ace898156cb153ab6be5c0646f11a6351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a default widget to be shown. <br /></td></tr>
 <tr class="separator:ace898156cb153ab6be5c0646f11a6351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a0cbd37025658c3d2342b5c95670422"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a0cbd37025658c3d2342b5c95670422"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a4a0cbd37025658c3d2342b5c95670422">registerView</a> (<a class="el" href="class_data_view_widget.html">DataViewWidget</a> *pNewView)</td></tr>
-<tr class="memdesc:a4a0cbd37025658c3d2342b5c95670422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> to the list of widgets to select from. <br /></td></tr>
+<tr class="memitem:a4a0cbd37025658c3d2342b5c95670422"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a4a0cbd37025658c3d2342b5c95670422">registerView</a> (<a class="el" href="class_data_view_widget.html">DataViewWidget</a> *pNewView)</td></tr>
+<tr class="memdesc:a4a0cbd37025658c3d2342b5c95670422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> to the list of widgets to select from.  <a href="#a4a0cbd37025658c3d2342b5c95670422">More...</a><br /></td></tr>
 <tr class="separator:a4a0cbd37025658c3d2342b5c95670422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61135c0a22d6961fed8666c8e11c587a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a61135c0a22d6961fed8666c8e11c587a">addContainer</a> (QWidget *pNewView)</td></tr>
+<tr class="memdesc:a61135c0a22d6961fed8666c8e11c587a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> to the list of widgets to select from.  <a href="#a61135c0a22d6961fed8666c8e11c587a">More...</a><br /></td></tr>
+<tr class="separator:a61135c0a22d6961fed8666c8e11c587a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b0b996036ac6a8d71daf80b44979699"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b0b996036ac6a8d71daf80b44979699"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a1b0b996036ac6a8d71daf80b44979699">connectToViewerLayout</a> (<a class="el" href="class_data_view_layout.html">DataViewLayout</a> *pLayout)</td></tr>
 <tr class="memdesc:a1b0b996036ac6a8d71daf80b44979699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the Signals of the <a class="el" href="class_view_selection_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionWidget</a> with the Slots of the <a class="el" href="class_data_view_layout.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewLayout</a>. <br /></td></tr>
 <tr class="separator:a1b0b996036ac6a8d71daf80b44979699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056f6de3c973c1cfdb3922eee4e3c19d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a056f6de3c973c1cfdb3922eee4e3c19d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a056f6de3c973c1cfdb3922eee4e3c19d">connectToTaskConfig</a> (<a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> *pTaskConfig)</td></tr>
+<tr class="memdesc:a056f6de3c973c1cfdb3922eee4e3c19d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the Slots of the <a class="el" href="class_view_selection_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionWidget</a> with the Signals of the TaskConfig. <br /></td></tr>
+<tr class="separator:a056f6de3c973c1cfdb3922eee4e3c19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b900083916965aaadd10080040ffbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06b900083916965aaadd10080040ffbe"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a06b900083916965aaadd10080040ffbe">rebuild</a> ()</td></tr>
+<tr class="memdesc:a06b900083916965aaadd10080040ffbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears and reconstructs entire set of views. <br /></td></tr>
+<tr class="separator:a06b900083916965aaadd10080040ffbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ead722a0ddfe862fb17127ca10125ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ead722a0ddfe862fb17127ca10125ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a3ead722a0ddfe862fb17127ca10125ac">clear</a> ()</td></tr>
+<tr class="memdesc:a3ead722a0ddfe862fb17127ca10125ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all registered Widgets with a RetentionPolicy of Clear. <br /></td></tr>
+<tr class="separator:a3ead722a0ddfe862fb17127ca10125ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a86a95ecf12a9da5e8421afcdd4f467fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86a95ecf12a9da5e8421afcdd4f467fe"></a>
 QVector&lt; <a class="el" href="class_data_view_widget.html">DataViewWidget</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataViewWidgets_</b></td></tr>
 <tr class="separator:a86a95ecf12a9da5e8421afcdd4f467fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a817eba8618029db6d7ee8bdb11685926"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a817eba8618029db6d7ee8bdb11685926"></a>
+QMap&lt; int, <a class="el" href="class_data_view_widget.html">DataViewWidget</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>widgetIndexMap_</b></td></tr>
+<tr class="separator:a817eba8618029db6d7ee8bdb11685926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1ea3c58a986c5cb22e365b7d685aff5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1ea3c58a986c5cb22e365b7d685aff5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nextIndex_</b></td></tr>
+<tr class="separator:ac1ea3c58a986c5cb22e365b7d685aff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde2cb46d3982968e94ec612aefdb5de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abde2cb46d3982968e94ec612aefdb5de"></a>
+QMap&lt; QWidget *, <a class="el" href="class_data_view_widget.html">DataViewWidget</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>viewContainerMap_</b></td></tr>
+<tr class="separator:abde2cb46d3982968e94ec612aefdb5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
 Private Slots</h2></td></tr>
@@ -178,6 +217,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a261fc17c745a5b8fa168dbe7a0290c7a">checkboxChanged</a> (bool bNewValue, int x, int y)</td></tr>
 <tr class="memdesc:a261fc17c745a5b8fa168dbe7a0290c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback when a checkbox is clicked. This updates the associated values about the position in the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a>, and the signal emitted removes and re-adds the widget to the connected <a class="el" href="class_data_view_layout.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewLayout</a>. Finally, the current statuses of the Checkboxes and ComboBoxes are reset to their current values. <br /></td></tr>
 <tr class="separator:a261fc17c745a5b8fa168dbe7a0290c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1b58344c87b515be653c981d5c96b63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_view_widget.html">DataViewWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#aa1b58344c87b515be653c981d5c96b63">createDataViewWidget</a> (QWidget *pWidget)</td></tr>
+<tr class="memdesc:aa1b58344c87b515be653c981d5c96b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">A specialized factory for finding the proper associated <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> child class for the passed-in widget.  <a href="#aa1b58344c87b515be653c981d5c96b63">More...</a><br /></td></tr>
+<tr class="separator:aa1b58344c87b515be653c981d5c96b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a588d20bc79ce3e24ee55f951c1b37238"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a588d20bc79ce3e24ee55f951c1b37238"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view_selection_widget.html#a588d20bc79ce3e24ee55f951c1b37238">removeDataViewWidget</a> (<a class="el" href="class_data_view_widget.html">DataViewWidget</a> *pWidget, bool bRemoveFromVector=true)</td></tr>
+<tr class="memdesc:a588d20bc79ce3e24ee55f951c1b37238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes all references to the passed-in widget. <br /></td></tr>
+<tr class="separator:a588d20bc79ce3e24ee55f951c1b37238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -193,6 +239,9 @@ QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>sizeSelection_
 <tr class="memitem:aa16837fbb444804343e16872b9af5488"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa16837fbb444804343e16872b9af5488"></a>
 QCheckBox *&#160;</td><td class="memItemRight" valign="bottom"><b>positionCheckBoxes_</b> [VIEWGRIDWIDTH][VIEWGRIDHEIGHT]</td></tr>
 <tr class="separator:aa16837fbb444804343e16872b9af5488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64a3ef2225e36bde4fe8377b7ffa0541"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64a3ef2225e36bde4fe8377b7ffa0541"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentTaskConfig_</b></td></tr>
+<tr class="separator:a64a3ef2225e36bde4fe8377b7ffa0541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af12b0d5ac43203c4e78b413bc8e13254"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af12b0d5ac43203c4e78b413bc8e13254"></a>
 QMap&lt; QObject *, QSharedPointer&lt; <a class="el" href="struct_widget_coords.html">WidgetCoords</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>coordsMap</b></td></tr>
 <tr class="separator:af12b0d5ac43203c4e78b413bc8e13254"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,8 +251,80 @@ QMap&lt; QObject *, QSharedPointer&lt; <a class="el" href="struct_widget_coords.
 <p>Details forthcoming </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_view_selection_widget_8h_source.html#l00051">51</a> of file <a class="el" href="_view_selection_widget_8h_source.html">ViewSelectionWidget.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<p>Definition at line <a class="el" href="_view_selection_widget_8h_source.html#l00054">54</a> of file <a class="el" href="_view_selection_widget_8h_source.html">ViewSelectionWidget.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a61135c0a22d6961fed8666c8e11c587a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ViewSelectionWidget::addContainer </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>pNewView</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> to the list of widgets to select from. </p>
+<dl class="section note"><dt>Note</dt><dd>the <a class="el" href="class_view_selection_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionWidget</a> will be responsible for deleting the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a>, but the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> will release control of its owned widget prior to doing so. Currently, all DataViewWidgets contain externally-managed widgets. This may create memory issues down the road. </dd></dl>
+
+<p>Definition at line <a class="el" href="_view_selection_widget_8cpp_source.html#l00188">188</a> of file <a class="el" href="_view_selection_widget_8cpp_source.html">ViewSelectionWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa1b58344c87b515be653c981d5c96b63"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_view_widget.html">DataViewWidget</a> * ViewSelectionWidget::createDataViewWidget </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>pWidget</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A specialized factory for finding the proper associated <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> child class for the passed-in widget. </p>
+<dl class="section note"><dt>Note</dt><dd>Most of the complexity here is an attempt to keep a solid boundary between the libPicto base and the other projects which include it. This is meant to expand to support other <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> types. </dd></dl>
+
+<p>Definition at line <a class="el" href="_view_selection_widget_8cpp_source.html#l00443">443</a> of file <a class="el" href="_view_selection_widget_8cpp_source.html">ViewSelectionWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a0cbd37025658c3d2342b5c95670422"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ViewSelectionWidget::registerView </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_view_widget.html">DataViewWidget</a> *&#160;</td>
+          <td class="paramname"><em>pNewView</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> to the list of widgets to select from. </p>
+<dl class="section note"><dt>Note</dt><dd>the <a class="el" href="class_view_selection_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">ViewSelectionWidget</a> will be responsible for deleting the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a>, but the <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> will release control of its owned widget prior to doing so. Currently, all DataViewWidgets contain externally-managed widgets. This may create memory issues down the road. </dd></dl>
+
+<p>Definition at line <a class="el" href="_view_selection_widget_8cpp_source.html#l00169">169</a> of file <a class="el" href="_view_selection_widget_8cpp_source.html">ViewSelectionWidget.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/workstation/DataViewer/<a class="el" href="_view_selection_widget_8h_source.html">ViewSelectionWidget.h</a></li>
 <li>source/workstation/DataViewer/<a class="el" href="_view_selection_widget_8cpp_source.html">ViewSelectionWidget.cpp</a></li>
 </ul>

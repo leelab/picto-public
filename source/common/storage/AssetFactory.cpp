@@ -38,15 +38,14 @@ uITemplateInitialized_(false)
 }
 
 /*! \brief Adds a sub-AssetFactory to this object to handle creation of Assets of the input type.
- *	\details Calling this function generates a lookup table of sub-AssetFactory objects that
- *	handle Asset creation when getAsset() is called with a type input that matches their type.
- *	\note When sub-AssetFactories are used.  Both their minAssets/maxAssets values must
- *	be met as well as those of the parent AssetFactory.  This means, for example, that if the
- *	parant AssetFactory has a maximum of 5 Assets, all Assets from all
- *	sub-Factores added together must be at least 5.  It is your job to make sure that the
- *	total maxAsset/minAsset values of sub-AssetFactories and the parent AssetFactory are logically
- *	consisten.  Also note that AssetFactories with sub-AssetFactories cannot create their own Assets. 
- *	These types of AssetFactories are constructed without the newAssetFnPtr input.
+ *	\details Calling this function generates a lookup table of sub-AssetFactory objects that handle Asset creation when
+ *	getAsset() is called with a type input that matches their type.
+ *	\note When sub-AssetFactories are used.  Both their minAssets/maxAssets values must be met as well as those of the
+ *	parent AssetFactory.  This means, for example, that if the parant AssetFactory has a maximum of 5 Assets, all Assets
+ *	from all sub-Factores added together must be at least 5.  It is your job to make sure that the total maxAsset/minAsset
+ *	values of sub-AssetFactories and the parent AssetFactory are logically consistent.  Also note that AssetFactories with
+ *	sub-AssetFactories cannot create their own Assets.  These types of AssetFactories are constructed without the
+ *	newAssetFnPtr input.
  */
 void AssetFactory::addAssetType(QString type,QSharedPointer<AssetFactory> factory)
 {
@@ -56,9 +55,8 @@ void AssetFactory::addAssetType(QString type,QSharedPointer<AssetFactory> factor
 }
 
 /*! \brief Returns the types of sub-Asset Factories in this AssetFactory.
- *	\details If this isn't a "Group" AssetFactory, the StringList will only contain one
- *	value: an empty string.
-*/
+ *	\details If this isn't a "Group" AssetFactory, the StringList will only contain one value: an empty string.
+ */
 QStringList AssetFactory::getTypes()
 {
 	QList<QString> returnVal;
@@ -69,14 +67,13 @@ QStringList AssetFactory::getTypes()
 	return returnVal;
 }
 
-/*! \brief Creates a new Asset of the input type.  If there is a problem generating the Asset, 
- *	 a descriptive error string is returned in the error reference input.
- *	\details If this is a "Group" AssetFactory, sub-AssetFactory objects are used to construct
- *	the Asset.  Otherwise, generateNewAsset() generates the Asset.  
- *	\note This function also counts the number of Assets that it generates.  Whenever it generates
- *	an Asset, it connects to its destroyed() signals so that it can track when the Asset is
- *	deleted.  If a generated Asset is deleted, it frees up another Asset generation in cases where there
- *	is a maximum allowed number of Assets.
+/*! \brief Creates a new Asset of the input type.  If there is a problem generating the Asset, a descriptive error string
+ *	is returned in the error reference input.
+ *	\details If this is a "Group" AssetFactory, sub-AssetFactory objects are used to construct the Asset.  Otherwise,
+ *	generateNewAsset() generates the Asset.
+ *	\note This function also counts the number of Assets that it generates.  Whenever it generates an Asset, it connects
+ *	to its destroyed() signals so that it can track when the Asset is deleted.  If a generated Asset is deleted, it frees
+ *	up another Asset generation in cases where there is a maximum allowed number of Assets.
  */
 QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 {
@@ -130,7 +127,7 @@ QSharedPointer<Asset> AssetFactory::getAsset(QString& error, QString type)
 }
 
 /*! \brief Generates a new Asset using the creation function pointer and returns a shared pointer to it.
-*/
+ */
 QSharedPointer<Asset> AssetFactory::generateNewAsset()
 {
 	Q_ASSERT(!isGroupFactory_);
@@ -138,7 +135,7 @@ QSharedPointer<Asset> AssetFactory::generateNewAsset()
 }
 
 /*! \brief Initializes Asset generation by resetting the number of Assets sourced so far.
-*/
+ */
 void AssetFactory::startSourcing()
 {
 	numSourcedAssets_ = 0;
@@ -148,8 +145,8 @@ void AssetFactory::startSourcing()
 	}
 }
 
-/*! \brief Call this function repeatedly until it returns an empty pointer to generate the required
- *	minimum	number of Assets for this Factory.
+/*! \brief Call this function repeatedly until it returns an empty pointer to generate the required minimum	number of
+ *	Assets for this Factory.
  *	\details Returns a string with the type of the generated Asset in the returnedType reference parameter.
  *	\sa addAssetType()
  */
@@ -198,8 +195,8 @@ QSharedPointer<Asset> AssetFactory::getRequiredAsset(QString& returnedType)
 	return newAsset;
 }
 
-/* \brief Returns true if no more Assets of the input type can be produced by this factory (since the
- *	maxAssets value was reached).
+/*!	\brief Returns true if no more Assets of the input type can be produced by this factory (since the maxAssets value was
+ *	reached).
  */
 bool AssetFactory::reachedProductionLimit(QString type)
 {
@@ -217,9 +214,8 @@ bool AssetFactory::reachedProductionLimit(QString type)
 }
 
 /*! \brief Returns the maximum allowed number of Assets for the input type.
- *	\details An empty type causes the function to return this Factory's (not a sub-Factory)
- *	maximum number of Assets.
-*/
+ *	\details An empty type causes the function to return this Factory's (not a sub-Factory) maximum number of Assets.
+ */
 int AssetFactory::getMaxAssets(QString type)
 {
 	if(isGroupFactory_)
@@ -234,9 +230,8 @@ int AssetFactory::getMaxAssets(QString type)
 }
 
 /*! \brief Returns the minimum allowed number of Assets for the input type.
- *	\details An empty type causes the function to return this Factory's (not a sub-Factory)
- *	minimum number of Assets.
-*/
+ *	\details An empty type causes the function to return this Factory's (not a sub-Factory) minimum number of Assets.
+ */
 int AssetFactory::getMinAssets(QString type)
 {
 	if(isGroupFactory_)
@@ -268,8 +263,7 @@ QString AssetFactory::getUITemplate(QString type)
 }
 
 /*! \brief Returns the name of the UIGroup to be used by the GUI for Assets of the input type.
- *	\details A UIGroup defines the section of a GUI toolbox in which generation buttons for 
- *	Assets of this type will appear.
+ *	\details A UIGroup defines the section of GUI toolbox in which generation buttons for Assets of this type will appear.
  *	\details An empty type refers to this AssetFactory (not a sub-factory).
  */
 QString AssetFactory::getUIGroup(QString type)
@@ -315,8 +309,8 @@ QString AssetFactory::getGeneratedAssetClassName(QString type)
 	return assetClassName_;
 }
 
-/*! \brief Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted
- *	this allows the AssetFactory to create an additional Asset if the maxAssets value has been reached.
+/*! \brief Decreases the numSourcedAssets counter whenever an asset created by this factory is deleted this allows the
+ *	AssetFactory to create an additional Asset if the maxAssets value has been reached.
  */
 void AssetFactory::createdAssetDestroyed(QObject*)
 {

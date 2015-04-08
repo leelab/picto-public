@@ -28,6 +28,8 @@
 #include "../stimuli/AnalogInput.h"
 #include "../statemachine/ScriptFunction.h"
 
+#include "../operator/OperatorPlot.h"
+
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -40,7 +42,8 @@ OutputElementContainer::OutputElementContainer() :
 	audioElementFactory_(new AssetFactory(0,-1)),
 	outputSignalFactory_(new AssetFactory(0,-1)),
 	inputSignalFactory_(new AssetFactory(0,-1)),
-	scriptFunctionFactory_(new AssetFactory(0,-1))
+	scriptFunctionFactory_(new AssetFactory(0,-1)),
+	dataViewElementFactory_(new AssetFactory(0,-1))
 {
 	//Hmm... It may have made more sense to put ScriptFunction somewhere else, it isn't an OutputElement.
 	AddDefinableObjectFactory("ScriptFunction",scriptFunctionFactory_);
@@ -90,6 +93,10 @@ OutputElementContainer::OutputElementContainer() :
 	AddDefinableObjectFactory("InputSignal", inputSignalFactory_);
 	inputSignalFactory_->addAssetType(AnalogInput::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalogInput::Create))));
+
+	AddDefinableObjectFactory("DataViewElement", dataViewElementFactory_);
+	dataViewElementFactory_->addAssetType(OperatorPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(OperatorPlot::Create))));
 }
 
 void OutputElementContainer::postDeserialize()

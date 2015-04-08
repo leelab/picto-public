@@ -100,78 +100,94 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;QVBoxLayout&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QComboBox&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QCheckBox&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../viewer.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QMap&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../viewer.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//&lt;! The Number of view slots horizontally on the Data View Tab</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define VIEWGRIDWIDTH 4</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//&lt;! The Number of view slots vertically on the Data View Tab</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define VIEWGRIDWIDTH 4</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define VIEWGRIDHEIGHT 4</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">class </span><a class="code" href="class_data_view_widget.html">DataViewWidget</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span><a class="code" href="class_data_view_layout.html">DataViewLayout</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">enum</span> ViewSize : <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    VIEW_SIZE_1x1 = 1,  <span class="comment">//&lt;! A 1x1 view</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    VIEW_SIZE_2x2,      <span class="comment">//&lt;! A 2x2 view</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    VIEW_SIZE_3x3,      <span class="comment">//&lt;! A 3x3 view</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    VIEW_SIZE_4x4,      <span class="comment">//&lt;! A 4x4 view</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    VIEW_SIZE_MAX       <span class="comment">//&lt;! An invalid value</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="struct_widget_coords.html">   35</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_widget_coords.html">WidgetCoords</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="struct_widget_coords.html">WidgetCoords</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        x_ = x;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        y_ = y;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">int</span> x_;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">int</span> y_;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_view_selection_widget.html">   51</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a> : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a>();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">bool</span> setDefaultView(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pDefaultView, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, ViewSize eSize);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> registerView(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pNewView);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> connectToViewerLayout(<a class="code" href="class_data_view_layout.html">DataViewLayout</a> *pLayout);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;signals:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> widgetRemoved(QWidget *pWidget);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> widgetAdded(QWidget *pWidget, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, ViewSize size);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QGridLayout* selectionLayout_;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QComboBox *plotSelection_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QComboBox *sizeSelection_;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QCheckBox *positionCheckBoxes_[VIEWGRIDWIDTH][VIEWGRIDHEIGHT];</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    QMap&lt;QObject*, QSharedPointer&lt;WidgetCoords&gt;&gt; coordsMap;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> updateSizeAndPositionOptions();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> checkboxChanged(<span class="keywordtype">bool</span> bNewValue, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> selectedPlotIndexChanged(<span class="keywordtype">int</span> selectedIndex);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">void</span> selectedSizeIndexChanged(<span class="keywordtype">int</span> selectedIndex);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> checkClicked(<span class="keywordtype">bool</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">bool</span> isWidgetPosValid(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pWidget, <span class="keywordtype">int</span> testX, <span class="keywordtype">int</span> testY);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    QVector&lt;DataViewWidget*&gt; dataViewWidgets_;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;};</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="class_view_selection_widget_html"><div class="ttname"><a href="class_view_selection_widget.html">ViewSelectionWidget</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_widget_8h_source.html#l00051">ViewSelectionWidget.h:51</a></div></div>
-<div class="ttc" id="class_data_view_widget_html"><div class="ttname"><a href="class_data_view_widget.html">DataViewWidget</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_widget_8h_source.html#l00020">DataViewWidget.h:20</a></div></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span><a class="code" href="class_data_view_widget.html">DataViewWidget</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">class </span><a class="code" href="class_data_view_layout.html">DataViewLayout</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">enum</span> ViewSize : <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    VIEW_SIZE_1x1 = 1,  <span class="comment">//&lt;! A 1x1 view</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    VIEW_SIZE_2x2,      <span class="comment">//&lt;! A 2x2 view</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    VIEW_SIZE_3x3,      <span class="comment">//&lt;! A 3x3 view</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    VIEW_SIZE_4x4,      <span class="comment">//&lt;! A 4x4 view</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    VIEW_SIZE_MAX       <span class="comment">//&lt;! An invalid value</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="struct_widget_coords.html">   38</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_widget_coords.html">WidgetCoords</a></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="struct_widget_coords.html">WidgetCoords</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        x_ = x;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        y_ = y;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">int</span> x_;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">int</span> y_;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_view_selection_widget.html">   54</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a> : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_view_selection_widget.html">ViewSelectionWidget</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">bool</span> setDefaultView(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pDefaultView, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, ViewSize eSize);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> registerView(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pNewView);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> addContainer(QWidget *pNewView);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> connectToViewerLayout(<a class="code" href="class_data_view_layout.html">DataViewLayout</a> *pLayout);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> connectToTaskConfig(<a class="code" href="class_picto_1_1_task_config.html">TaskConfig</a> *pTaskConfig);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> rebuild();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;signals:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> widgetRemoved(QWidget *pWidget);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> widgetAdded(QWidget *pWidget, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, ViewSize size);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> updateWidgetContainer(QWidget *pWidget);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> removeWidgetContainer(QWidget *pWidget);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> addWidgetContainer(QWidget *pWidget);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    QGridLayout* selectionLayout_;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QComboBox *plotSelection_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QComboBox *sizeSelection_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    QCheckBox *positionCheckBoxes_[VIEWGRIDWIDTH][VIEWGRIDHEIGHT];</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    QSharedPointer&lt;TaskConfig&gt; currentTaskConfig_;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    QMap&lt;QObject*, QSharedPointer&lt;WidgetCoords&gt;&gt; coordsMap;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> updateSizeAndPositionOptions();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> checkboxChanged(<span class="keywordtype">bool</span> bNewValue, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <a class="code" href="class_data_view_widget.html">DataViewWidget</a> *createDataViewWidget(QWidget *pWidget);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> removeDataViewWidget(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pWidget, <span class="keywordtype">bool</span> bRemoveFromVector = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> selectedPlotIndexChanged(<span class="keywordtype">int</span> selectedIndex);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> selectedSizeIndexChanged(<span class="keywordtype">int</span> selectedIndex);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> checkClicked(<span class="keywordtype">bool</span>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">bool</span> isWidgetPosValid(<a class="code" href="class_data_view_widget.html">DataViewWidget</a> *pWidget, <span class="keywordtype">int</span> testX, <span class="keywordtype">int</span> testY);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    QVector&lt;DataViewWidget*&gt; dataViewWidgets_;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    QMap&lt;int, DataViewWidget*&gt; widgetIndexMap_;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">int</span> nextIndex_;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    QMap&lt;QWidget*, DataViewWidget*&gt; viewContainerMap_;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_view_selection_widget_html"><div class="ttname"><a href="class_view_selection_widget.html">ViewSelectionWidget</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_widget_8h_source.html#l00054">ViewSelectionWidget.h:54</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html"><div class="ttname"><a href="class_picto_1_1_task_config.html">Picto::TaskConfig</a></div><div class="ttdoc">There are many operations and data elements that need to be associated with a task as a whole...</div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8h_source.html#l00031">TaskConfig.h:31</a></div></div>
+<div class="ttc" id="class_data_view_widget_html"><div class="ttname"><a href="class_data_view_widget.html">DataViewWidget</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_widget_8h_source.html#l00028">DataViewWidget.h:28</a></div></div>
 <div class="ttc" id="class_data_view_layout_html"><div class="ttname"><a href="class_data_view_layout.html">DataViewLayout</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_layout_8h_source.html#l00020">DataViewLayout.h:20</a></div></div>
-<div class="ttc" id="struct_widget_coords_html"><div class="ttname"><a href="struct_widget_coords.html">WidgetCoords</a></div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_widget_8h_source.html#l00035">ViewSelectionWidget.h:35</a></div></div>
+<div class="ttc" id="struct_widget_coords_html"><div class="ttname"><a href="struct_widget_coords.html">WidgetCoords</a></div><div class="ttdoc">A struct to keep track of the location of widgets within the viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_widget_8h_source.html#l00038">ViewSelectionWidget.h:38</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

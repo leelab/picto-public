@@ -1017,12 +1017,12 @@ void RemoteViewer::setupUi()
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
 	
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
-	DataViewWidget *testView = new DataViewWidget("Test2", activeExpName_);
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
 	DataViewLayout *dataViewLayout = new DataViewLayout();
 
 	//Set up a temporary test plot
+	/*
 	OperatorPlot *pOpPlot = new OperatorPlot();
 	DataViewWidget *testPlot = new DataViewWidget("Test Gaussian Histo", pOpPlot->getWidget());
 	pOpPlot->setTitle("Test Gaussian Histo");
@@ -1034,15 +1034,15 @@ void RemoteViewer::setupUi()
 	pOpPlot->submitValue(4, 40);
 	pOpPlot->submitValue(5, 2);
 	pOpPlot->draw();
-	
-	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
-	viewSelectionWidget->registerView(taskView);
-	viewSelectionWidget->registerView(testView);
-	viewSelectionWidget->registerView(testPlot);
-	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
+	*/
+	viewSelectionWidget_ = new ViewSelectionWidget();
+	viewSelectionWidget_->registerView(taskView);
+	//viewSelectionWidget_->registerView(testPlot);
+	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget_->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
 
 	//Set up a number of temporary test plots
+	/*
 	for (int i = 0; i < 12; i++)
 	{
 		OperatorPlot *pOpPlot = new OperatorPlot();
@@ -1056,13 +1056,13 @@ void RemoteViewer::setupUi()
 			pOpPlot->submitValue(j, rand() % range);
 		}
 		pOpPlot->draw();
-		viewSelectionWidget->registerView(testPlot);
+		viewSelectionWidget_->registerView(testPlot);
 	}
-
+	*/
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
-	leftPane->addWidget(viewSelectionWidget);
+	leftPane->addWidget(viewSelectionWidget_);
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
@@ -2114,6 +2114,9 @@ void RemoteViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
+	viewSelectionWidget_->clear();
+	viewSelectionWidget_->connectToTaskConfig(task->getTaskConfig());
+	viewSelectionWidget_->rebuild();
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }
 

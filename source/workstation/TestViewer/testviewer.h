@@ -20,6 +20,7 @@ class QAction;
 class QToolBar;
 class QComboBox;
 class QSlider;
+class ViewSelectionWidget;
 
 /*!	\brief	This allows designers to run the Experiment/Analysis that they are creating in a test
  *	environment for debugging.
@@ -104,6 +105,7 @@ private:
 	QComboBox *taskListBox_;
 	QComboBox *userType_;
 	OutputWidgetHolder* outputWidgetHolder_;
+	ViewSelectionWidget *viewSelectionWidget_;
 
 	bool deiniting_;
 	enum Status {Ending, Stopped, Running, Paused};

@@ -104,18 +104,18 @@ Inheritance diagram for DataViewWidget:</div>
  <div class="center">
   <img src="class_data_view_widget.png" usemap="#DataViewWidget_map" alt=""/>
   <map id="DataViewWidget_map" name="DataViewWidget_map">
+<area href="class_plot_view_widget.html" title="A widget to contain plots meant to be displayed in the Experiment Viewer. " alt="PlotViewWidget" shape="rect" coords="0,112,104,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5c333ffb8ac4599211f478bb9c49aa89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c333ffb8ac4599211f478bb9c49aa89"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a5c333ffb8ac4599211f478bb9c49aa89">DataViewWidget</a> (const QString cqsName, QWidget *pqwWidget)</td></tr>
-<tr class="memdesc:a5c333ffb8ac4599211f478bb9c49aa89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> with the specified name and containing the passed Widget. <br /></td></tr>
-<tr class="separator:a5c333ffb8ac4599211f478bb9c49aa89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcced93e90a047bc983dc3d9dcc50832"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcced93e90a047bc983dc3d9dcc50832"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#abcced93e90a047bc983dc3d9dcc50832">~DataViewWidget</a> ()</td></tr>
-<tr class="memdesc:abcced93e90a047bc983dc3d9dcc50832"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> destructor. <br /></td></tr>
+<tr class="memitem:a2f4c828043f2251f2b68328f51d05443"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f4c828043f2251f2b68328f51d05443"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a2f4c828043f2251f2b68328f51d05443">DataViewWidget</a> (const QString cqsName, QWidget *pqwWidget, DVW_RetentionPolicy eRetentionPolicy=DVW_CLEAR)</td></tr>
+<tr class="memdesc:a2f4c828043f2251f2b68328f51d05443"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> with the specified name and containing the passed Widget. <br /></td></tr>
+<tr class="separator:a2f4c828043f2251f2b68328f51d05443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcced93e90a047bc983dc3d9dcc50832"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#abcced93e90a047bc983dc3d9dcc50832">~DataViewWidget</a> ()</td></tr>
+<tr class="memdesc:abcced93e90a047bc983dc3d9dcc50832"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> destructor automatically dissociates itself from its view widget so the owning asset can control its memory.  <a href="#abcced93e90a047bc983dc3d9dcc50832">More...</a><br /></td></tr>
 <tr class="separator:abcced93e90a047bc983dc3d9dcc50832"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5529026ef0dba5fc38eda52d3f14ad1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5529026ef0dba5fc38eda52d3f14ad1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#ad5529026ef0dba5fc38eda52d3f14ad1">setDisplayed</a> (bool enable)</td></tr>
@@ -130,9 +130,15 @@ ViewSize&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentSize</b
 <tr class="memitem:ae6ef98a7402e3dcd6d68430b64b376b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6ef98a7402e3dcd6d68430b64b376b2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setCurrentSize</b> (ViewSize eSize)</td></tr>
 <tr class="separator:ae6ef98a7402e3dcd6d68430b64b376b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88471b326495b13edd5d79d83853b853"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88471b326495b13edd5d79d83853b853"></a>
-const QString&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const </td></tr>
-<tr class="separator:a88471b326495b13edd5d79d83853b853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb0094b61added251b1c99693560579"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cb0094b61added251b1c99693560579"></a>
+virtual const QString&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const </td></tr>
+<tr class="separator:a8cb0094b61added251b1c99693560579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea86d36000473d9dc5284dc8bf57c69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ea86d36000473d9dc5284dc8bf57c69"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setName</b> (const QString &amp;newName)</td></tr>
+<tr class="separator:a6ea86d36000473d9dc5284dc8bf57c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ffc7601fa978816aa524241b6aae0f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ffc7601fa978816aa524241b6aae0f2"></a>
+DVW_RetentionPolicy&#160;</td><td class="memItemRight" valign="bottom"><b>getRetentionPolicy</b> () const </td></tr>
+<tr class="separator:a9ffc7601fa978816aa524241b6aae0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bc3a58271ca0d0e35db8e8e36e7353b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bc3a58271ca0d0e35db8e8e36e7353b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a7bc3a58271ca0d0e35db8e8e36e7353b">setPosition</a> (int xPos, int yPos)</td></tr>
 <tr class="memdesc:a7bc3a58271ca0d0e35db8e8e36e7353b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the grid position for the widget. <br /></td></tr>
@@ -148,6 +154,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#ad19fe407b0e8fea7e91723d53ad12e68">hideDefaultTitle</a> ()</td></tr>
 <tr class="memdesc:ad19fe407b0e8fea7e91723d53ad12e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hides the default <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> Title, for when the attached widget comes with its own title. <br /></td></tr>
 <tr class="separator:ad19fe407b0e8fea7e91723d53ad12e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db5f3a819e8c71c9295fce7355328a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4db5f3a819e8c71c9295fce7355328a1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_view_widget.html#a4db5f3a819e8c71c9295fce7355328a1">dissociate</a> ()</td></tr>
+<tr class="memdesc:a4db5f3a819e8c71c9295fce7355328a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This segregates the view widget from this <a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> container prior to deletion, so that the actual view item can be managed by its true owner, the Asset responsible for spawning it. <br /></td></tr>
+<tr class="separator:a4db5f3a819e8c71c9295fce7355328a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -169,14 +179,52 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>xPos_</b></td></tr>
 <tr class="memitem:ac0e97d8f31bc78aaa1d94ff27cdd3bcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0e97d8f31bc78aaa1d94ff27cdd3bcf"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>yPos_</b></td></tr>
 <tr class="separator:ac0e97d8f31bc78aaa1d94ff27cdd3bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae859d4642b0bd03e79c28cc15e70772"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae859d4642b0bd03e79c28cc15e70772"></a>
+DVW_RetentionPolicy&#160;</td><td class="memItemRight" valign="bottom"><b>eRetentionPolicy_</b></td></tr>
+<tr class="separator:aae859d4642b0bd03e79c28cc15e70772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7441ed38567e18bec881b3500e201eb6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7441ed38567e18bec881b3500e201eb6"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>myViewWidget_</b></td></tr>
+<tr class="separator:a7441ed38567e18bec881b3500e201eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf1daacb5e34d522361a0e8a6bf9d720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf1daacb5e34d522361a0e8a6bf9d720"></a>
+QLabel *&#160;</td><td class="memItemRight" valign="bottom"><b>myLabel_</b></td></tr>
+<tr class="separator:abf1daacb5e34d522361a0e8a6bf9d720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget to contain objects meant to be displayed in the Experiment <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. </p>
 <p>Details forthcoming </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_data_view_widget_8h_source.html#l00020">20</a> of file <a class="el" href="_data_view_widget_8h_source.html">DataViewWidget.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p>Definition at line <a class="el" href="_data_view_widget_8h_source.html#l00028">28</a> of file <a class="el" href="_data_view_widget_8h_source.html">DataViewWidget.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="abcced93e90a047bc983dc3d9dcc50832"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataViewWidget::~DataViewWidget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="class_data_view_widget.html" title="A widget to contain objects meant to be displayed in the Experiment Viewer. ">DataViewWidget</a> destructor automatically dissociates itself from its view widget so the owning asset can control its memory. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_data_view_widget.html#a4db5f3a819e8c71c9295fce7355328a1" title="This segregates the view widget from this DataViewWidget container prior to deletion, so that the actual view item can be managed by its true owner, the Asset responsible for spawning it. ">DataViewWidget::dissociate()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_data_view_widget_8cpp_source.html#l00031">31</a> of file <a class="el" href="_data_view_widget_8cpp_source.html">DataViewWidget.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="abffce3122238554426ccf72ca360f9ff"></a>
 <div class="memitem">
 <div class="memproto">
@@ -204,7 +252,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>yPos_</b></td></tr>
 <p>Returns whether or not the indicated position is occupied by this widget. </p>
 <dl class="section note"><dt>Note</dt><dd>This does not check whether or not the current widget is set to be displayed. </dd></dl>
 
-<p>Definition at line <a class="el" href="_data_view_widget_8cpp_source.html#l00072">72</a> of file <a class="el" href="_data_view_widget_8cpp_source.html">DataViewWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_data_view_widget_8cpp_source.html#l00073">73</a> of file <a class="el" href="_data_view_widget_8cpp_source.html">DataViewWidget.cpp</a>.</p>
 
 </div>
 </div>

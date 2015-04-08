@@ -6,6 +6,7 @@
 
 #include "../common.h"
 #include "DesignConfig.h"
+#include "TaskConfig.h"
 #include "Serializable.h"
 namespace Picto {
 /*! \brief The base class for all elements of a Picto experiment/analysis design
@@ -146,11 +147,19 @@ public:
 	virtual void setDesignConfig(QSharedPointer<DesignConfig> designConfig);
 	/*! \brief Returns a QSharedPointer to the DesignConfig managing this asset.
 	 *	\details Every Design has a single DesignConfig object that manages global issues affecting the entire design.
-	 *	It can access every asset in the design and is accessable from every asset in the design.  It is set to an asset
+	 *	It can access every asset in the design and is accessible from every asset in the design.  It is set to an asset
 	 *	using the setDesignConfig function.
 	 *	\sa setDesignConfig, DesignConfig
 	 */
 	QSharedPointer<DesignConfig> getDesignConfig(){return designConfig_;};
+
+	virtual void setTaskConfig(QSharedPointer<TaskConfig> taskConfig);
+	/*! \brief Returns a QSharedPointer to the TaskConfig managing this asset.
+	*	\details Every Design has one TaskConfig object for each task.  The TaskConfig object manages task-global issues.
+	*	It is accessible from every asset in the design.  It is set to an asset using the setTaskConfig function.
+	*	\sa setTaskConfig, TaskConfig
+	*/
+	QSharedPointer<TaskConfig> getTaskConfig(){ return taskConfig_; };
 
 	virtual void upgradeVersion(QString deserializedVersion);
 signals:
@@ -200,7 +209,10 @@ protected:
 	void requireUniqueName(bool require = true){needsUniqueName_ = require;};
 
 	//! \brief The design config managing this Asset and the Design containing it.
-	QSharedPointer<DesignConfig> designConfig_;	
+	QSharedPointer<DesignConfig> designConfig_;
+
+	//! \brief The task config managing this Asset and the Task containing it.
+	QSharedPointer<TaskConfig> taskConfig_;
 private:
 
 	bool edited_;

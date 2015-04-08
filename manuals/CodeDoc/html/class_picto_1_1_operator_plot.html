@@ -148,9 +148,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>dropBin</b> (
 <tr class="memitem:a958df0bdd27173bbd5da9a92d71f29f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a958df0bdd27173bbd5da9a92d71f29f2"></a>
 virtual QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>getWidget</b> ()</td></tr>
 <tr class="separator:a958df0bdd27173bbd5da9a92d71f29f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a212990e5aac6da1ea705cf40b7c2860f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a212990e5aac6da1ea705cf40b7c2860f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setTitle</b> (QString newTitle)</td></tr>
-<tr class="separator:a212990e5aac6da1ea705cf40b7c2860f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fa85cad563e502bf1febe10eba7ea87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fa85cad563e502bf1febe10eba7ea87"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setTitle</b> (const QString &amp;newTitle)</td></tr>
+<tr class="separator:a7fa85cad563e502bf1febe10eba7ea87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31798daa775a742d89f8862842135968"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31798daa775a742d89f8862842135968"></a>
+virtual const QString&#160;</td><td class="memItemRight" valign="bottom"><b>getTitle</b> () const </td></tr>
+<tr class="separator:a31798daa775a742d89f8862842135968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
 <tr class="memitem:ab8b4c61dbb0dc6724544a6607efa93e6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab8b4c61dbb0dc6724544a6607efa93e6">addScriptable</a> (QWeakPointer&lt; <a class="el" href="class_picto_1_1_scriptable.html">Scriptable</a> &gt; scriptable)</td></tr>
 <tr class="memdesc:ab8b4c61dbb0dc6724544a6607efa93e6 inherit pub_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> object to this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> and makes it accessible to all <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> objects for which it will be in scope.  <a href="#ab8b4c61dbb0dc6724544a6607efa93e6">More...</a><br /></td></tr>
@@ -403,6 +406,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a44b0ef3025e5bb5f0712fc176c769e5d inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a44b0ef3025e5bb5f0712fc176c769e5d">getDesignConfig</a> ()</td></tr>
 <tr class="memdesc:a44b0ef3025e5bb5f0712fc176c769e5d inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a QSharedPointer to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a> managing this asset.  <a href="#a44b0ef3025e5bb5f0712fc176c769e5d">More...</a><br /></td></tr>
 <tr class="separator:a44b0ef3025e5bb5f0712fc176c769e5d inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9fd0f753d62fbe02942f5616e52a9c1 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#ab9fd0f753d62fbe02942f5616e52a9c1">setTaskConfig</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt; taskConfig)</td></tr>
+<tr class="memdesc:ab9fd0f753d62fbe02942f5616e52a9c1 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> object managing the current <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> to this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>.  <a href="#ab9fd0f753d62fbe02942f5616e52a9c1">More...</a><br /></td></tr>
+<tr class="separator:ab9fd0f753d62fbe02942f5616e52a9c1 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28b907c0b7e4786062592b1f4674ad16 inherit pub_methods_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a> ()</td></tr>
+<tr class="memdesc:a28b907c0b7e4786062592b1f4674ad16 inherit pub_methods_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a QSharedPointer to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> managing this asset.  <a href="#a28b907c0b7e4786062592b1f4674ad16">More...</a><br /></td></tr>
+<tr class="separator:a28b907c0b7e4786062592b1f4674ad16 inherit pub_methods_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_serializable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_serializable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_serializable.html">Picto::Serializable</a></td></tr>
 <tr class="memitem:a2715cc957dfee3198e54643f546eba26 inherit pub_methods_class_picto_1_1_serializable"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2715cc957dfee3198e54643f546eba26"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_serializable.html#a2715cc957dfee3198e54643f546eba26">toXml</a> ()</td></tr>
@@ -572,6 +581,10 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_container.html">
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">DesignConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73">designConfig_</a></td></tr>
 <tr class="memdesc:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The design config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the Design containing it. <br /></td></tr>
 <tr class="separator:a70fb85473984a1c8dc2f9a9079364f73 inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2185d556cd79264dd6e409660e78fd9a"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a">taskConfig_</a></td></tr>
+<tr class="memdesc:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> containing it. <br /></td></tr>
+<tr class="separator:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -631,7 +644,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00026">26</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
+<p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00025">25</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a01a1bceea23c96b2e0ec3b668d7643b8"></a>
 <div class="memitem">
@@ -659,7 +672,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_data_view_element.html#a174bc0a6f0578f95e33c8de7d2ab2e70">Picto::DataViewElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00040">40</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
+<p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00039">39</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
 
 </div>
 </div>

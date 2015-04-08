@@ -31,6 +31,7 @@ var searchData=
   ['playbacktransdata',['PlaybackTransData',['../struct_picto_1_1_playback_trans_data.html',1,'Picto']]],
   ['playruninfo',['PlayRunInfo',['../struct_replay_viewer_1_1_play_run_info.html',1,'ReplayViewer']]],
   ['plexonplugin',['PlexonPlugin',['../class_plexon_plugin.html',1,'']]],
+  ['plotviewwidget',['PlotViewWidget',['../class_plot_view_widget.html',1,'']]],
   ['pointproperty',['PointProperty',['../class_picto_1_1_point_property.html',1,'Picto']]],
   ['portnums',['PortNums',['../class_picto_1_1_port_nums.html',1,'Picto']]],
   ['preloadedsessiondata',['PreloadedSessionData',['../struct_preloaded_session_data.html',1,'']]],

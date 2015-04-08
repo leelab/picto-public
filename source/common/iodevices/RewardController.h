@@ -17,24 +17,21 @@ namespace Picto {
 
 /*! \brief This is the base class for classes that provide rewards to the subject of a Picto experiment.
  *
- *	Since there are multiple different types reward controllers, this
- *	base class exists to allow the creation of reward controllers
- *	for different platforms (and different types of controllers)
+ *	Since there are multiple different types reward controllers, this base class exists to allow the creation of reward
+ *	controllers for different platforms (and different types of controllers).
  *
  *	All reward controllers are assumed to have the following features:
  *		- Access to one or more individual reward "channels" (numbered from 1 to N)
  *		- The ability to give rewards seperately on each channel
- *	Reward controllers may also have the ability to vary reward duration.  If they do not have that
- *	ability, the reward duration resolution will be defined by the frequency of calls to triggerRewards().
- *	Since triggerRewards() is currently called once per frame by the Engine::PictoEngine, this means that
- *	reward controllers that don't have the ability to define their duration will have resolution of about
- *	16ms.
+ *	Reward controllers may also have the ability to vary reward duration.  If they do not have that ability, the reward
+ *	duration resolution will be defined by the frequency of calls to triggerRewards().  Since triggerRewards() is
+ *	currently called once per frame by the Engine::PictoEngine, this means that reward controllers that don't have the
+ *	ability to define their duration will have resolution of about 16ms.
  *
- *	Hardware specific reward controllers won't be located
- *	in the common/iodevices folder, but will rather be in the folders of the source
- *	that actually uses them (e.g. Director).
+ *	Hardware specific reward controllers won't be located in the common/iodevices folder, but will rather be in the
+ *	folders of the source that actually uses them (e.g. Director).
  *
- *	\note reward controllers are numbered from 1 to n
+ *	\note Reward controllers are numbered from 1 to n.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -88,31 +85,29 @@ protected:
 	QList<float> rewardVolumes_;
 private:
 	/*! \brief Holds data about a particular reward to be supplied.
-	 *	\details 
-	 *	- quantity is the time length of the reward in ms.
-	 *	- minRewardPeriod is the minimum time between rewards in ms.
-	 *	- isFlush indicates if this reward is actually a flush.
 	 */
 	struct RewardUnit
 	{
 		RewardUnit(int q, int m, bool f=false){quantity = q;minRewardPeriod = m;isFlush = f;};
+		//! quantity is the time length of the reward in ms.
 		int quantity;
+		//! minRewardPeriod is the minimum time between rewards in ms.
 		int minRewardPeriod;
+		//! isFlush indicates if this reward is actually a flush.
 		bool isFlush;
 	};
 	/*! \brief Contains data about a give Reward channel.
-	 *	\details
-	 *	- stopwatch is a timer used to detect how long ago the reward was triggered.
-	 *	- lastRewardPeriod is the last set minimum time between rewards in ms.
-	 *	- inFlush indicates if a flush is currently occuring on this channel.
-	 *	- pendingRewards is a list of RewardUnit objects to be supplied on this channel.
 	 */
 	struct RewardChannel
 	{
 		RewardChannel():lastRewardPeriod(0),inFlush(0){};
+		//! stopwatch is a timer used to detect how long ago the reward was triggered.
 		Stopwatch stopwatch;
+		//! lastRewardPeriod is the last set minimum time between rewards in ms.
 		int lastRewardPeriod;
+		//! inFlush indicates if a flush is currently occuring on this channel.
 		bool inFlush;
+		//! pendingRewards is a list of RewardUnit objects to be supplied on this channel.
 		QLinkedList<RewardUnit> pendingRewards;
 	};
 	QHash<int,RewardChannel> rewardChannels_;
