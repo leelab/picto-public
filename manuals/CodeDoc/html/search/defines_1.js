@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['chars_5fbefore_5fflush',['CHARS_BEFORE_FLUSH',['../_analysis_file_output_8cpp.html#a8cc5a8693d40bcf0577d7db51f4dca6e',1,'AnalysisFileOutput.cpp']]]
+  ['buffer_5fsize_5fper_5fchan',['BUFFER_SIZE_PER_CHAN',['../_legacy_system_x_p_analog_input_port_8cpp.html#a4bb737cd5118b02b3fc2e8a415813f66',1,'BUFFER_SIZE_PER_CHAN():&#160;LegacySystemXPAnalogInputPort.cpp'],['../_picto_box_x_p_analog_input_port_8cpp.html#a4bb737cd5118b02b3fc2e8a415813f66',1,'BUFFER_SIZE_PER_CHAN():&#160;PictoBoxXPAnalogInputPort.cpp']]]
 ];

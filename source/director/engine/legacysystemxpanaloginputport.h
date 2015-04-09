@@ -7,10 +7,10 @@
 
 namespace Picto {
 
-/*! \brief An InputPort object for collecting analog input data when running Picto on a LegacySystemXP (ie. an old Orion machine).
+/*! \brief An InputPort object for collecting analog input data when running Picto on a LegacySystemXP (ie. an old Orion
+ *	machine).
  *	
- *	This InputPort is designed to collect analog data from the inputs to the 
- *	NIDAQ board in the LegacySystem.
+ *	This InputPort is designed to collect analog data from the inputs to the NIDAQ board in the LegacySystem.
  *
  *	The following assumptions are made in the code:
  *	- LegacySystem is running Windows XP
@@ -35,8 +35,6 @@ protected:
 	virtual void stopSampling();
 	virtual double updateDataBuffer();
 private:
-
-	//unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
 	void*  daqTaskHandle_;	// For Nidaqmx after 8.5
 	unsigned int bufferSize_;
 	short *dataBuffer_;

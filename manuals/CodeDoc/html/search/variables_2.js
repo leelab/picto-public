@@ -3,6 +3,7 @@ var searchData=
   ['casesensitive',['caseSensitive',['../struct_search_request.html#a62864a7f29e2878ed9c87dc063dbb982',1,'SearchRequest']]],
   ['centerval',['centerVal',['../struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html#a3c074999afdefc09f3b63985166bdac0',1,'Picto::DoubletSignalChannel::scaleFactors']]],
   ['changed',['changed',['../struct_picto_1_1_output_signal_controller_1_1_pin_data.html#a273a553e0e0242900b836e1a1a1b557b',1,'Picto::OutputSignalController::PinData']]],
+  ['channel_5f',['channel_',['../class_picto_1_1_input_data_unit_package.html#a658e0d6f252f3b53b3905299721e2733',1,'Picto::InputDataUnitPackage']]],
   ['channelbuffers_5f',['channelBuffers_',['../class_picto_1_1_input_port.html#a09aff384b2a6d499f824a1cbb9f7746a',1,'Picto::InputPort']]],
   ['channelleftovers',['channelLeftOvers',['../class_picto_1_1_input_port.html#afd4102969f9644b2c609782970e32990',1,'Picto::InputPort']]],
   ['channelnums_5f',['channelNums_',['../class_picto_1_1_input_port.html#af7fd054102d952d0c77724715be1b686',1,'Picto::InputPort']]],

@@ -22,6 +22,7 @@ var searchData=
   ['changespeed',['ChangeSpeed',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8ea515eed5e72def6d10032f5355c45db7f',1,'PlaybackCommand']]],
   ['changesystemnumber',['changeSystemNumber',['../class_main_window.html#ade759e6c30539d7b534cb49e790509a5',1,'MainWindow']]],
   ['changeusertype',['ChangeUserType',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8eaf57269e1d9cd5a942965e968b2da03cf',1,'PlaybackCommand']]],
+  ['channel_5f',['channel_',['../class_picto_1_1_input_data_unit_package.html#a658e0d6f252f3b53b3905299721e2733',1,'Picto::InputDataUnitPackage']]],
   ['channelbuffers_5f',['channelBuffers_',['../class_picto_1_1_input_port.html#a09aff384b2a6d499f824a1cbb9f7746a',1,'Picto::InputPort']]],
   ['channeldisconnected',['channelDisconnected',['../class_picto_1_1_command_channel.html#a257a279e6a6b8ddfe4a22339e348d865',1,'Picto::CommandChannel']]],
   ['channelleftovers',['channelLeftOvers',['../class_picto_1_1_input_port.html#afd4102969f9644b2c609782970e32990',1,'Picto::InputPort']]],
@@ -173,7 +174,7 @@ var searchData=
   ['currrunname',['currRunName',['../class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1',1,'Picto::FileSessionLoader']]],
   ['currtaskchanged',['currTaskChanged',['../class_remote_viewer.html#af8fbd9bbf8ddebc82789765c2e888925',1,'RemoteViewer']]],
   ['currunit',['currUnit',['../class_neural_data_viewer.html#a17ce9132f1eacd87868566ac7c40bb62',1,'NeuralDataViewer']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
   ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
   ['customvertex',['CUSTOMVERTEX',['../struct_picto_1_1_d3_d_visual_target_1_1_c_u_s_t_o_m_v_e_r_t_e_x.html',1,'Picto::D3DVisualTarget']]]
 ];

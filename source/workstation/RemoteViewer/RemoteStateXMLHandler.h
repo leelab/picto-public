@@ -51,6 +51,8 @@ class PropertyDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief PropertyDataUnitHandler constructor.
+	 */
 	PropertyDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~PropertyDataUnitHandler() {};
 
@@ -82,12 +84,14 @@ class BehavioralDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief BehavioralDataUnitHandler constructor.
+	 */
 	BehavioralDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~BehavioralDataUnitHandler() {};
 
 	virtual void handle(QSharedPointer<QXmlStreamReader> xmlReader);
 	/*! \brief A static function that returns the XML Identifier for the package.  Used to index the handler in a map.
-	*/
+	 */
 	static QString getDataPackageName() { return QString("BDUP"); };
 signals:
 	/*! \brief Emitted when new signal data comes in.
@@ -108,12 +112,14 @@ class InputDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief InputDataUnitHandler constructor.
+	 */
 	InputDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~InputDataUnitHandler() {};
 
 	virtual void handle(QSharedPointer<QXmlStreamReader> xmlReader);
 	/*! \brief A static function that returns the XML Identifier for the package.  Used to index the handler in a map.
-	*/
+	 */
 	static QString getDataPackageName() { return QString("IDUP"); };
 signals:
 	/*! \brief Emitted when new signal data comes in.
@@ -134,12 +140,14 @@ class StateDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief StateDataUnitHandler constructor.
+	 */
 	StateDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~StateDataUnitHandler() {};
 
 	virtual void handle(QSharedPointer<QXmlStreamReader> xmlReader);
 	/*! \brief A static function that returns the XML Identifier for the package.  Used to index the handler in a map.
-	*/
+	 */
 	static QString getDataPackageName() { return QString("SDU"); };
 signals:
 	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
@@ -160,12 +168,14 @@ class FrameDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief FrameDataUnitHandler constructor.
+	 */
 	FrameDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~FrameDataUnitHandler() {};
 
 	virtual void handle(QSharedPointer<QXmlStreamReader> xmlReader);
 	/*! \brief A static function that returns the XML Identifier for the package.  Used to index the handler in a map.
-	*/
+	 */
 	static QString getDataPackageName() { return QString("FDU"); };
 signals:
 	/*! \brief Emitted when a new frame is presented.  time is the time at which the first phosphor appeared on the
@@ -190,22 +200,24 @@ class RewardDataUnitHandler : public RemoteStateXMLHandler
 {
 	Q_OBJECT
 public:
+	/*! \brief RewardDataUnitHandler constructor.
+	 */
 	RewardDataUnitHandler(RemoteStateUpdater *pParent);
 	virtual ~RewardDataUnitHandler() {};
 
 	virtual void handle(QSharedPointer<QXmlStreamReader> xmlReader);
 	/*! \brief A static function that returns the XML Identifier for the package.  Used to index the handler in a map.
-	*/
+	 */
 	static QString getDataPackageName() { return QString("RDU"); };
 signals:
 	/*! \brief Emitted when a reward is triggered.
-	*	\details time is the time when the reward starts, duration is its duration in ms, channel is the
-	*	reward channel on which the reward was provided.
+	 *	\details time is the time when the reward starts, duration is its duration in ms, channel is the
+	 *	reward channel on which the reward was provided.
 	 *	\sa RemoteStateUpdater::rewardSupplied
-	*/
+	 */
 	void rewardSupplied(double time, int duration, int channel);
 	/*!	\brief Emitted to update the parent StateUpdater with the currUnitTime
-	*/
+	 */
 	void updateCurrUnitTime(QString time);
 protected:
 	//! A local DataUnit to avoid unnecessary allocations.

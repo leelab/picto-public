@@ -8,9 +8,8 @@ InputDataUnitPackage::InputDataUnitPackage()
 }
 
 /*! \brief Input a comma separated list of value names for the input data.
- * \details This string is used to identify the number of input values, and 
- * is sent along with the data to describe individual data points significance.
- * (ex. "input0,input1,input2,input3,input4,input5,input6,input7")
+ * \details This string is used to identify the number of input values, and is sent along with the data to describe
+ *	individual data points significance. (ex. "input0,input1,input2,input3,input4,input5,input6,input7")
  */
 void InputDataUnitPackage::setDescriptor(QString descriptor)
 {
@@ -31,11 +30,10 @@ void InputDataUnitPackage::addData(double input[8])
 	data_.append(newPoint);
 }
 
-/*!	\brief Adds the map returned from a behavioral data signal channel
+/*!	\brief Adds the map returned from a behavioral data signal channel.
  *
- *	The format of the input to this function seems a bit odd, but it is
- *	exactly the same Map used by SignalChannel::getValues(), allowing
- *	us to add the data directly to our data store.
+ *	The format of the input to this function seems a bit odd, but it is exactly the same Map used by
+ *	SignalChannel::getValues(), allowing us to add the data directly to our data store.
  *
  *	frameToSampleOffset is the offset time between when the previous frame's phosphor appeared and when the first samples
  *	in the input signalChannelData were read.
@@ -100,7 +98,7 @@ void InputDataUnitPackage::addData(QMap<QString, QVector<double>> signalChannelD
 }
 
 /*! \brief Clears all data points apart from the ones at the latest time.
-*/
+ */
 void InputDataUnitPackage::clearAllButLastDataPoints()
 {
 	if(length() > 1)
@@ -110,10 +108,11 @@ void InputDataUnitPackage::clearAllButLastDataPoints()
 }
 
 /*! \brief Returns the list of BehavioralDataUnits as a ByteArray.
-*/
+ */
 QByteArray InputDataUnitPackage::getDataAsByteArray()
 {
-	int arraySize = data_.size() * 8;//"* 8" is for the 8 channels.  \\ At some point this should be configurable so that we can support variable-sized signal channels.
+	//At some point this should be configurable so that we can support variable - sized signal channels.
+	int arraySize = data_.size() * 8; //"* 8" is for the 8 channels.  
 	float* data = new float[arraySize];
 	int i=0;
 	foreach(QSharedPointer<InputDataUnit> unit, data_)
@@ -130,7 +129,8 @@ QByteArray InputDataUnitPackage::getDataAsByteArray()
 	return returnVal;
 }
 
-/*! \brief Returns the DataId of the last BehavioralDataUnit in the list.*/
+/*! \brief Returns the DataId of the last BehavioralDataUnit in the list.
+ */
 qulonglong InputDataUnitPackage::getDataIDOfLastUnit()
 {
 	if(!data_.size())

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['sampresmap_5f',['sampResMap_',['../class_picto_1_1_input_port.html#a9e056370043a71e4080f39bbc3f150ec',1,'Picto::InputPort']]],
   ['saved_5f',['saved_',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html#af7243fb83082f326003601ba797e6975',1,'Picto::RunSelectorWidget::RunInfo::saved_()'],['../struct_picto_1_1_file_session_loader_1_1_run_data.html#a1bbe00dbc0c04496a340d418a72bfb02',1,'Picto::FileSessionLoader::RunData::saved_()'],['../class_picto_1_1_task_run_data_unit.html#ab7866019ebf15d8deea6e3037331f272',1,'Picto::TaskRunDataUnit::saved_()']]],
   ['savedruns_5f',['savedRuns_',['../struct_preloaded_session_data.html#a7dec1d02142bf49ab5aa605cd47b3486',1,'PreloadedSessionData']]],
   ['scalea',['scaleA',['../struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html#acfc7f774e918f07f841a56ff3bb6d43b',1,'Picto::DoubletSignalChannel::scaleFactors']]],

@@ -5,7 +5,8 @@
 #include "../../common/timing/Timestamper.h"
 #include "../../common/memleakdetect.h"
 /*! \file */
-/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.*/
+/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.
+ */
 #define DAQmxErrChk(rc) { if (rc) { \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
@@ -16,9 +17,13 @@
 							Q_ASSERT_X(!rc, "LegacySystemXPAnalogInputPort", msg.toLatin1()); \
 						} }
 						
-/*! \brief In the legacy system, device name for the PCI-MIO-16XE-50 should always be Dev2 because Orion wouldn't have worked otherwise.*/
+/*! \brief In the legacy system, device name for the PCI-MIO-16XE-50 should always be Dev2 because Orion wouldn't have
+ *	worked otherwise.
+ */
 #define DEVICE_NAME "Dev2"
+//! \brief The name used when creating the Analog Input task
 #define TASK_NAME "SigChanCapture"
+//! \brief The size of each channel of the signal buffer
 #define BUFFER_SIZE_PER_CHAN 300
 using namespace Picto;
 
@@ -31,8 +36,8 @@ LegacySystemXPAnalogInputPort::LegacySystemXPAnalogInputPort()
 }
 
 /*!	\copydoc InputPort::startSampling()
- *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and run it whenever we want to sample
- *	input data (DAQmxStartTask()).
+ *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and
+ *	run it whenever we want to sample input data (DAQmxStartTask()).
  *	\details Sample rate is configured using DAQmxCfgSampClkTiming().
  */
 bool LegacySystemXPAnalogInputPort::startSampling()

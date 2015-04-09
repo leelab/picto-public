@@ -5,7 +5,8 @@
 #include "../../common/timing/Timestamper.h"
 #include "../../common/memleakdetect.h"
 /*! \file */
-/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.*/
+/*! \brief A macro for checking the results of a NiDaq function call and triggering an assertion in the case of an error.
+ */
 #define DAQmxErrChk(rc) { if (rc) { \
 							char error[512]; \
 							DAQmxGetErrorString(rc, error,512); \
@@ -17,9 +18,11 @@
 						} }
 						
 /*! \brief The device name of the Pictobox's DAQ card.  This is the default since Pictobox includes only a single DAQ card.
-*/
+ */
 #define DEVICE_NAME "Dev1"
+//! \brief The name used when creating the Analog Input task
 #define TASK_NAME "SigChanCapture"
+//! \brief The size of each channel of the signal buffer
 #define BUFFER_SIZE_PER_CHAN 300
 using namespace Picto;
 
@@ -31,8 +34,8 @@ PictoBoxXPAnalogInputPort::PictoBoxXPAnalogInputPort()
 }
 
 /*!	\copydoc InputPort::startSampling()
- *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and run it whenever we want to sample
- *	input data (DAQmxStartTask()).
+ *	\details In the case of NiDaq systems, we create a NiDaq analog input capture "Task" (DAQmxCreateAIVoltageChan()) and
+ *	run it whenever we want to sample input data (DAQmxStartTask()).
  *	\details Sample rate is configured using DAQmxCfgSampClkTiming().
  */
 bool PictoBoxXPAnalogInputPort::startSampling()
@@ -92,7 +95,7 @@ void PictoBoxXPAnalogInputPort::stopSampling()
 /*! \copydoc InputPort::updateDataBuffer()
  *	\details The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16().  We estimate the precise
  *	read time by storing the time just after that function is called.  That is the time that is returned from the
- *	function,
+ *	function.
  */
 double PictoBoxXPAnalogInputPort::updateDataBuffer()
 {
