@@ -4,22 +4,20 @@
 using namespace Picto;
 
 /*! \brief Copies the Elements from the passed in container
-*
-*	This is used when adding an child element to a parent ElementContainer.  By passing
-*	in the parent ElementContainer, we now have access to all of the parent's Elements.  This allows us to
-*	have Elements with Picto scope.
-*/
+ *
+ *	This is used when adding an child element to a parent ElementContainer.  By passing in the parent ElementContainer, we
+ *	now have access to all of the parent's Elements.  This allows us to have Elements with Picto scope.
+ */
 void StateMachineElementContainer::addElements(QSharedPointer<StateMachineElementContainer> elementContainer)
 {
 	addElements(elementContainer.data());
 }
 
 /*! \brief Copies the Elements from the passed in container
-*
-*	This is used when adding an child element to a parent ElementContainer.  By passing
-*	in the parent ElementContainer, we now have access to all of the parent's Elements.  This allows us to
-*	have Elements with Picto scope.
-*/
+ *
+ *	This is used when adding an child element to a parent ElementContainer.  By passing in the parent ElementContainer, we
+ *	now have access to all of the parent's Elements.  This allows us to have Elements with Picto scope.
+ */
 void StateMachineElementContainer::addElements(StateMachineElementContainer* elementContainer)
 {
 	QList<QSharedPointer<ContainerElement>> Elements = elementContainer->getElementList();
@@ -30,25 +28,26 @@ void StateMachineElementContainer::addElements(StateMachineElementContainer* ele
 }
 
 /*! \brief Adds the input ElementContainer to this one's list of child ElementContainers and uses the child's
-*	addElements() function to add this one's Elements to it.
-*	\details We need to store child ElementContainers so that whenever a new Element is added to this container,
-*	it can be added automatically to the child's ElementContainers as well.
-*/
+ *	addElements() function to add this one's Elements to it.
+ *	\details We need to store child ElementContainers so that whenever a new Element is added to this container, it can be
+ *	added automatically to the child's ElementContainers as well.
+ */
 void StateMachineElementContainer::addChildElementContainer(QSharedPointer<StateMachineElementContainer> child)
 {
 	elementContainers_.push_back(child);
 	child->addElements(this);
 }
 
-/*! \brief Returns a list of all Element objects that are in scope for this object. */
+/*! \brief Returns a list of all Element objects that are in scope for this object.
+ */
 QList<QSharedPointer<ContainerElement>> StateMachineElementContainer::getElementList()
 {
 	return elements_;
 }
 
-/*! \brief Extends StateMachineElement::ClearAssociateChildren() to remove AssociateChildren with the input
-*	associateId from this element's in-scope elements_ list as well.
-*/
+/*! \brief Extends StateMachineElement::ClearAssociateChildren() to remove AssociateChildren with the input associateId
+ *	from this element's in-scope elements_ list as well.
+ */
 void StateMachineElementContainer::ClearAssociateChildren(QUuid associateId)
 {
 	StateMachineElement::ClearAssociateChildren(associateId);
@@ -97,7 +96,7 @@ bool StateMachineElementContainer::validateObject(QSharedPointer<QXmlStreamReade
 }
 
 /*! \brief Adds a new Element to this object's in-scope Elements list as well as those of its child ElementContainers.
-*/
+ */
 void StateMachineElementContainer::addElement(QSharedPointer<ContainerElement> element)
 {
 	//If the Element is empty return
@@ -113,9 +112,9 @@ void StateMachineElementContainer::addElement(QSharedPointer<ContainerElement> e
 }
 
 /*! \brief Handles the case where a child is added to this element after postDeserialize().  In that case, depending
-*	on the child's type, we may need to add it using either addElement() or addChildElementContainer().  We handle
-*	that here.
-*/
+ *	on the child's type, we may need to add it using either addElement() or addChildElementContainer().  We handle
+ *	that here.
+ */
 void StateMachineElementContainer::addChildToElementLists(QSharedPointer<Asset> newChild)
 {
 	if (newChild.dynamicCast<ContainerElement>())

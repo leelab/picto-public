@@ -23,6 +23,7 @@ public:
 	virtual const QString getName() const;
 	virtual void setName(const QString &newName);
 private:
+	//! A raw pointer to the Asset that created the associated plot.
 	DataViewElement *owningAsset_;
 };
 

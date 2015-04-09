@@ -592,10 +592,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a492df7235a32d190dcae69c6023de8a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a492df7235a32d190dcae69c6023de8a7"></a>
-QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_container_element.html">ContainerElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elements_</b></td></tr>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_container_element.html">ContainerElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element_container.html#a492df7235a32d190dcae69c6023de8a7">elements_</a></td></tr>
+<tr class="memdesc:a492df7235a32d190dcae69c6023de8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A QList of all in-scope elements. <br /></td></tr>
 <tr class="separator:a492df7235a32d190dcae69c6023de8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f93a0ba6693bd3f3a933d04e8e540b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f93a0ba6693bd3f3a933d04e8e540b8"></a>
-QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_machine_element_container.html">StateMachineElementContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elementContainers_</b></td></tr>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_machine_element_container.html">StateMachineElementContainer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element_container.html#a8f93a0ba6693bd3f3a933d04e8e540b8">elementContainers_</a></td></tr>
+<tr class="memdesc:a8f93a0ba6693bd3f3a933d04e8e540b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A QList of all child element containers. <br /></td></tr>
 <tr class="separator:a8f93a0ba6693bd3f3a933d04e8e540b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -715,7 +717,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Adds the input ElementContainer to this one's list of child ElementContainers and uses the child's <a class="el" href="class_picto_1_1_state_machine_element_container.html#a6e707110eca67bc9989b061ca03634a5" title="Copies the Elements from the passed in container. ">addElements()</a> function to add this one's Elements to it. </p>
 <p>We need to store child ElementContainers so that whenever a new Element is added to this container, it can be added automatically to the child's ElementContainers as well. </p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00037">37</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00035">35</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -736,7 +738,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Copies the Elements from the passed in container. </p>
 <p>This is used when adding an child element to a parent ElementContainer. By passing in the parent ElementContainer, we now have access to all of the parent's Elements. This allows us to have Elements with Picto scope. </p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00012">12</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00011">11</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -757,7 +759,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Copies the Elements from the passed in container. </p>
 <p>This is used when adding an child element to a parent ElementContainer. By passing in the parent ElementContainer, we now have access to all of the parent's Elements. This allows us to have Elements with Picto scope. </p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00023">23</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00021">21</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -853,7 +855,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_pause_point.html#ad0934a59b009d24126005cab68edb641">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state.html#a8e789d2395df4d047a278f3c09716468">Picto::State</a>, <a class="el" href="class_picto_1_1_state_machine.html#a3b28ab6e5310ea16c2dbb19d6e071f80">Picto::StateMachine</a>, <a class="el" href="class_picto_1_1_data_view_element_container.html#ad4ee82936987658a24a5ee53572b5f69">Picto::DataViewElementContainer</a>, <a class="el" href="class_picto_1_1_output_element_container.html#a0aa8ba5d35859292b2f3365f99c242c3">Picto::OutputElementContainer</a>, and <a class="el" href="class_picto_1_1_machine_container.html#a36591811c50d2086866100c246d751d0">Picto::MachineContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00077">77</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_container_8cpp_source.html#l00076">76</a> of file <a class="el" href="_state_machine_element_container_8cpp_source.html">StateMachineElementContainer.cpp</a>.</p>
 
 </div>
 </div>

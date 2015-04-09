@@ -89,6 +89,7 @@ private:
 	QSharedPointer<TestPlaybackController> testController_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
+	//! Holds and renders the Task view
 	Picto::VisualTargetHost *visualTargetHost_;
 	QWidget *propertyFrame_;
 	Picto::AnalysisSelectorWidget* analysisSelector_;
@@ -98,13 +99,13 @@ private:
 	QAction *pauseAction_;
 	QAction *stopAction_;
 	QAction *loadPropsAction_;
-	//QSlider *zoomSlider_;	//Zoom slider isn't actually useful for testing and we need to complicate the mouse signal input code to make it work correctly, so its disabled here for now.
 
 	QToolBar* testToolbar_;
 
 	QComboBox *taskListBox_;
 	QComboBox *userType_;
 	OutputWidgetHolder* outputWidgetHolder_;
+	//! The widget that can rearrange the ViewWidgets in the Central View
 	ViewSelectionWidget *viewSelectionWidget_;
 
 	bool deiniting_;
@@ -127,7 +128,6 @@ private slots:
 	void operatorClickDetected(QPoint pos);
 	void setUserType(int index);
 	void runStarted(QUuid runId);
-	//void zoomChanged(int zoom);
 
 };
 

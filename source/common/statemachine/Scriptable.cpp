@@ -241,7 +241,7 @@ bool Scriptable::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader
 	return true;
 }
 
-/* \brief Copies initValues to runValues for all Properties in this element.
+/*!	\brief Copies initValues to runValues for all Properties in this element.
  */
 void Scriptable::restoreProperties()
 {

@@ -103,64 +103,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AssetFactory : <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html">   37</a></span>&#160;class <a class="code" href="class_picto_1_1_asset_factory.html">AssetFactory</a></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">typedef</span> QSharedPointer&lt;Asset&gt; (*NewAssetFnPtr)();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="class_picto_1_1_asset_factory.html">AssetFactory</a>(<span class="keywordtype">int</span> minAssets = 0,<span class="keywordtype">int</span> maxAssets = -1);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    AssetFactory(   <span class="keywordtype">int</span> minAssets,<span class="keywordtype">int</span> maxAssets,NewAssetFnPtr newAssetFn);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> ~AssetFactory(){};</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> addAssetType(QString type,QSharedPointer&lt;AssetFactory&gt; factory);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QStringList getTypes();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QSharedPointer&lt;Asset&gt; getAsset(QString&amp; error, QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> startSourcing();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QSharedPointer&lt;Asset&gt; getRequiredAsset(QString&amp; returnedType);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">bool</span> reachedProductionLimit(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">int</span> getMaxAssets(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">   57</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">setMaxAssets</a>(<span class="keywordtype">int</span> maxAssets){maxAssets_ = maxAssets;};</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> getMinAssets(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">   62</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">setMinAssets</a>(<span class="keywordtype">int</span> minAssets){minAssets_ = minAssets;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">   66</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">getGeneratedAssets</a>(){<span class="keywordflow">return</span> numSourcedAssets_;};</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">   71</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">setGeneratedAssets</a>(<span class="keywordtype">int</span> numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QString getUITemplate(QString type);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QString getUIGroup(QString type);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    QString getGeneratedAssetTypeName(QString type);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    QString getGeneratedAssetClassName(QString type);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Asset&gt; generateNewAsset();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QVector&lt;QSharedPointer&lt;Asset&gt;&gt; defaultAssets_;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">int</span> minAssets_;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">int</span> maxAssets_;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">int</span> numSourcedAssets_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> isGroupFactory_;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    QString uITemplate_;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    QString uIGroup_;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    QString generatedAssetTypeName_;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    QString assetClassName_;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">bool</span> uITemplateInitialized_;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    NewAssetFnPtr newAssetFn_;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QMap&lt;QString, QSharedPointer&lt;AssetFactory&gt;&gt; factoriesByType_;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> createdAssetDestroyed(QObject* obj);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AssetFactory : <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html">   36</a></span>&#160;class <a class="code" href="class_picto_1_1_asset_factory.html">AssetFactory</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">typedef</span> QSharedPointer&lt;Asset&gt; (*NewAssetFnPtr)();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="class_picto_1_1_asset_factory.html">AssetFactory</a>(<span class="keywordtype">int</span> minAssets = 0,<span class="keywordtype">int</span> maxAssets = -1);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    AssetFactory(   <span class="keywordtype">int</span> minAssets,<span class="keywordtype">int</span> maxAssets,NewAssetFnPtr newAssetFn);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> ~AssetFactory(){};</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> addAssetType(QString type,QSharedPointer&lt;AssetFactory&gt; factory);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QStringList getTypes();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QSharedPointer&lt;Asset&gt; getAsset(QString&amp; error, QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> startSourcing();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QSharedPointer&lt;Asset&gt; getRequiredAsset(QString&amp; returnedType);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">bool</span> reachedProductionLimit(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">int</span> getMaxAssets(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">   56</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">setMaxAssets</a>(<span class="keywordtype">int</span> maxAssets){maxAssets_ = maxAssets;};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">int</span> getMinAssets(QString type = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">   61</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">setMinAssets</a>(<span class="keywordtype">int</span> minAssets){minAssets_ = minAssets;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">   64</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">getGeneratedAssets</a>(){<span class="keywordflow">return</span> numSourcedAssets_;};</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">   69</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">setGeneratedAssets</a>(<span class="keywordtype">int</span> numGeneratedAssets){numSourcedAssets_ = numGeneratedAssets;};</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    QString getUITemplate(QString type);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QString getUIGroup(QString type);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QString getGeneratedAssetTypeName(QString type);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QString getGeneratedAssetClassName(QString type);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;Asset&gt; generateNewAsset();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    QVector&lt;QSharedPointer&lt;Asset&gt;&gt; defaultAssets_;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">int</span> minAssets_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">int</span> maxAssets_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">int</span> numSourcedAssets_;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> isGroupFactory_;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QString uITemplate_;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    QString uIGroup_;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    QString generatedAssetTypeName_;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    QString assetClassName_;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">bool</span> uITemplateInitialized_;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    NewAssetFnPtr newAssetFn_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    QMap&lt;QString, QSharedPointer&lt;AssetFactory&gt;&gt; factoriesByType_;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> createdAssetDestroyed(QObject* obj);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;};</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_asset_factory_html_aeb33cb9006f15ede50c870f2c24e6c01"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">Picto::AssetFactory::setMaxAssets</a></div><div class="ttdeci">void setMaxAssets(int maxAssets)</div><div class="ttdoc">Sets the maximum number of Assets that may be generated by this factory. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00057">AssetFactory.h:57</a></div></div>
-<div class="ttc" id="class_picto_1_1_asset_factory_html_a1e09240d230de6aae8196d83a3b3764f"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">Picto::AssetFactory::getGeneratedAssets</a></div><div class="ttdeci">int getGeneratedAssets()</div><div class="ttdoc">Returns the number of Assets generated by this Factory so far (since the last startSourcing() call...</div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00066">AssetFactory.h:66</a></div></div>
-<div class="ttc" id="class_picto_1_1_asset_factory_html_a97003f49a756545c68dd4f754ceef550"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">Picto::AssetFactory::setMinAssets</a></div><div class="ttdeci">void setMinAssets(int minAssets)</div><div class="ttdoc">Sets the minimum number of Assets that must be generated by this factory. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00062">AssetFactory.h:62</a></div></div>
-<div class="ttc" id="class_picto_1_1_asset_factory_html"><div class="ttname"><a href="class_picto_1_1_asset_factory.html">Picto::AssetFactory</a></div><div class="ttdoc">A Factory class used to generate Asset objects. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00037">AssetFactory.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_asset_factory_html_a6d9302135b0c04c6f03f124fd5d7370b"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">Picto::AssetFactory::setGeneratedAssets</a></div><div class="ttdeci">void setGeneratedAssets(int numGeneratedAssets)</div><div class="ttdoc">In exceptional cases where Assets need to be created outside the Factory for some reason but need to ...</div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00071">AssetFactory.h:71</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_factory_html_aeb33cb9006f15ede50c870f2c24e6c01"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#aeb33cb9006f15ede50c870f2c24e6c01">Picto::AssetFactory::setMaxAssets</a></div><div class="ttdeci">void setMaxAssets(int maxAssets)</div><div class="ttdoc">Sets the maximum number of Assets that may be generated by this factory. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00056">AssetFactory.h:56</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_factory_html_a1e09240d230de6aae8196d83a3b3764f"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a1e09240d230de6aae8196d83a3b3764f">Picto::AssetFactory::getGeneratedAssets</a></div><div class="ttdeci">int getGeneratedAssets()</div><div class="ttdoc">Returns the number of Assets generated by this Factory so far (since the last startSourcing() call)...</div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00064">AssetFactory.h:64</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_factory_html_a97003f49a756545c68dd4f754ceef550"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a97003f49a756545c68dd4f754ceef550">Picto::AssetFactory::setMinAssets</a></div><div class="ttdeci">void setMinAssets(int minAssets)</div><div class="ttdoc">Sets the minimum number of Assets that must be generated by this factory. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00061">AssetFactory.h:61</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_factory_html"><div class="ttname"><a href="class_picto_1_1_asset_factory.html">Picto::AssetFactory</a></div><div class="ttdoc">A Factory class used to generate Asset objects. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00036">AssetFactory.h:36</a></div></div>
+<div class="ttc" id="class_picto_1_1_asset_factory_html_a6d9302135b0c04c6f03f124fd5d7370b"><div class="ttname"><a href="class_picto_1_1_asset_factory.html#a6d9302135b0c04c6f03f124fd5d7370b">Picto::AssetFactory::setGeneratedAssets</a></div><div class="ttdeci">void setGeneratedAssets(int numGeneratedAssets)</div><div class="ttdoc">In exceptional cases where Assets need to be created outside the Factory for some reason but need to ...</div><div class="ttdef"><b>Definition:</b> <a href="_asset_factory_8h_source.html#l00069">AssetFactory.h:69</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -33,23 +33,25 @@ public:
 	virtual ~DataViewElement();
 
 	/*! \brief Abstract method for getting the title of the DataViewElement.
-	*/
+	 */
 	virtual const QString getTitle() const = 0;
 	/*! \brief Abstract method for setting the title of the DataViewElement.
-	*/
+	 */
 	virtual void setTitle(const QString &newTitle) = 0;
 
 	/*! \brief Abstract method used to prepare drawn elements.
-	*/
+	 */
 	virtual void draw() = 0;
 
 	/*! \brief Abstract method used to prepare the DataViewElement for a new run.
-	*/
+	 */
 	virtual void reset() = 0;
 
 	virtual QString friendlyTypeName(){return "Data View Element";};
 	virtual QString getUIGroup(){return "Operator Features";};
 public slots:
+	/*! \brief A slot that is signaled whenever the name of this DataViewElement changes.
+	 */
 	void nameWasEdited();
 protected:
 	virtual void postDeserialize();

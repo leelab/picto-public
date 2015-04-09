@@ -42,6 +42,7 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	//! A Factory for creating fresh DataViewElements
 	QSharedPointer<AssetFactory> dataViewElementFactory_;
 
 private:

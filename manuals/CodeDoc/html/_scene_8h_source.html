@@ -124,49 +124,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> render(QSharedPointer&lt;Engine::PictoEngine&gt; engine,<span class="keywordtype">int</span> callerId);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> setBackgroundColor(QColor color);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> addVisualElement(QSharedPointer&lt;VisualElement&gt; element);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> addAudioElement(QSharedPointer&lt;AudioElement&gt; element);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> addOutputSignal(QSharedPointer&lt;OutputSignal&gt; element);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> addInputSignal(QSharedPointer&lt;InputSignal&gt; element);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> setZoom(<span class="keywordtype">float</span> zoom);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> closeRenderLoops();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;signals:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> readyForRender(<span class="keywordtype">int</span> callerId);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> addDataViewElement(QSharedPointer&lt;DataViewElement&gt; element);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> addAudioElement(QSharedPointer&lt;AudioElement&gt; element);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> addOutputSignal(QSharedPointer&lt;OutputSignal&gt; element);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> addInputSignal(QSharedPointer&lt;InputSignal&gt; element);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> setZoom(<span class="keywordtype">float</span> zoom);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> closeRenderLoops();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;signals:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> readyForRender(<span class="keywordtype">int</span> callerId);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="class_picto_1_1_scene.html">Scene</a>();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QSharedPointer&lt;QMutex&gt; mutex_;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QSharedPointer&lt;Engine::PictoEngine&gt; engine_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QColor backgroundColor_;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QList&lt;QSharedPointer &lt;VisualElement&gt; &gt; visualElements_;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QList&lt;QSharedPointer &lt;VisualElement&gt; &gt; unaddedVisualElements_;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QList&lt;QSharedPointer &lt;AudioElement&gt; &gt; audioElements_;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QList&lt;QSharedPointer &lt;AudioElement&gt; &gt; unaddedAudioElements_;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    QList&lt;QSharedPointer &lt;OutputSignal&gt; &gt; outputSignals_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    QList&lt;QSharedPointer &lt;OutputSignal&gt; &gt; unaddedOutputSignals_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    QList&lt;QSharedPointer &lt;InputSignal&gt; &gt; inputSignals_;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QList&lt;QSharedPointer &lt;InputSignal&gt; &gt; unaddedInputSignals_;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">int</span> frame_;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    QTime elapsedTime_;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">double</span> firstPhosphorTime_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">bool</span> readyToRender_;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> zoom_;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> closeRenderLoops_;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">static</span> QMutex staticMutex_;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> doRender(<span class="keywordtype">int</span> callerId);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="class_picto_1_1_scene.html">Scene</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QSharedPointer&lt;QMutex&gt; mutex_;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QSharedPointer&lt;Engine::PictoEngine&gt; engine_;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QColor backgroundColor_;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QList&lt;QSharedPointer &lt;VisualElement&gt; &gt; visualElements_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    QList&lt;QSharedPointer &lt;VisualElement&gt; &gt; unaddedVisualElements_;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QList&lt;QSharedPointer &lt;DataViewElement&gt; &gt; dataViewElements_;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QList&lt;QSharedPointer &lt;DataViewElement&gt; &gt; unaddedDataViewElements_;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    QList&lt;QSharedPointer &lt;AudioElement&gt; &gt; audioElements_;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    QList&lt;QSharedPointer &lt;AudioElement&gt; &gt; unaddedAudioElements_;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QList&lt;QSharedPointer &lt;OutputSignal&gt; &gt; outputSignals_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QList&lt;QSharedPointer &lt;OutputSignal&gt; &gt; unaddedOutputSignals_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    QList&lt;QSharedPointer &lt;InputSignal&gt; &gt; inputSignals_;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QList&lt;QSharedPointer &lt;InputSignal&gt; &gt; unaddedInputSignals_;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">int</span> frame_;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    QTime elapsedTime_;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">double</span> firstPhosphorTime_;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">bool</span> readyToRender_;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> zoom_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> closeRenderLoops_;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">static</span> QMutex staticMutex_;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> doRender(<span class="keywordtype">int</span> callerId);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_picto_1_1_scene_html"><div class="ttname"><a href="class_picto_1_1_scene.html">Picto::Scene</a></div><div class="ttdoc">Handles rendering of OutputElements each frame. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00038">Scene.h:38</a></div></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>

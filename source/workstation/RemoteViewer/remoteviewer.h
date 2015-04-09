@@ -84,8 +84,6 @@ private slots:
 
 
 private:
-
-
 	void enterState();
 	void runState();
 	void endState();
@@ -94,6 +92,8 @@ private:
 	QTime sessionDataTimer_;
 	QTime rewardDurChangeTimer_;
 
+	/* \brief The States for the ViewerState StateMachine.
+	 */
 	enum ViewerState
 	{
 		InitState,
@@ -107,6 +107,8 @@ private:
 		EndingSession
 	} currState_;
 
+	/* \brief The various causes for a change in the ViewerState.
+	 */
 	enum ViewerTrigger
 	{
 		NoViewerTrigger,
@@ -164,8 +166,7 @@ private:
 	void updateSessionDataPackage(bool immediate = false);
 	void updatePlotOptions();
 
-	//Since we don't want the experiemnt to be changed while it is being run
-	//we keep a local copy here.
+	//Since we don't want the experiemnt to be changed while it is being run we keep a local copy here.
 	QSharedPointer<Picto::Experiment> activeExperiment_;
 	QSharedPointer<DesignRoot> activeDesignRoot_;
 
@@ -177,8 +178,10 @@ private:
 	QSharedPointer<DesignRoot> myDesignRoot_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
+	//! Holds and renders the Task view
 	Picto::VisualTargetHost *visualTargetHost_;
-	ViewSelectionWidget *viewSelectionWidget_;
+	//! The widget that can rearrange the ViewWidgets in the Central View
+	ViewSelectionWidget *viewSelectionWidget_;	
 	QSharedPointer<Picto::Experiment> experiment_;
 	QHash<QUuid,QSharedPointer<Picto::ProtocolResponse>> pendingResponses_;
 	QWidget *propertyFrame_;
@@ -218,7 +221,8 @@ private:
 	QUuid sessionId_;
 	QUuid observerId_;
 
-	int rewardChannel_;  //Channel used for issuing manual rewards
+	//!	Channel used for issuing manual rewards
+	int rewardChannel_;  
 
 	QList<ComponentInstance> currDirectorList_;
 	QList<ComponentInstance> currProxyList_;

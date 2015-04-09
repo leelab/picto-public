@@ -55,7 +55,9 @@ protected:
 private:
 	void addElement(QSharedPointer<ContainerElement> element);
 
+	//! A QList of all in-scope elements.
 	QList<QSharedPointer<ContainerElement> > elements_;
+	//! A QList of all child element containers.
 	QList<QSharedPointer<StateMachineElementContainer> > elementContainers_;
 
 protected slots:

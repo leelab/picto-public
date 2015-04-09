@@ -142,22 +142,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> deserializeFromXml(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    QString channel_;   <span class="comment">//The signal channel from which this data was drawn</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">double</span> resolution_;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    QString time_;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    qulonglong actionFrame_;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    QString descriptor_;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    QList&lt;QSharedPointer&lt;InputDataUnit&gt;&gt; data_;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    QString channel_;   <span class="comment">//The signal channel from which this data was drawn</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">double</span> resolution_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    QString time_;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    qulonglong actionFrame_;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QString descriptor_;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    QList&lt;QSharedPointer&lt;InputDataUnit&gt;&gt; data_;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_input_data_unit_package_html_a301c5fc7389adef23fd006f7ad8201f6"><div class="ttname"><a href="class_picto_1_1_input_data_unit_package.html#a301c5fc7389adef23fd006f7ad8201f6">Picto::InputDataUnitPackage::getOffsetTime</a></div><div class="ttdeci">QString getOffsetTime()</div><div class="ttdoc">Returns the offset from the time that the Action frame occured to the time that the first sample in t...</div><div class="ttdef"><b>Definition:</b> <a href="_input_data_unit_package_8h_source.html#l00046">InputDataUnitPackage.h:46</a></div></div>
 <div class="ttc" id="class_picto_1_1_input_data_unit_package_html_a7226f840c4a08bb9bbcf7138bed976a8"><div class="ttname"><a href="class_picto_1_1_input_data_unit_package.html#a7226f840c4a08bb9bbcf7138bed976a8">Picto::InputDataUnitPackage::getActionFrame</a></div><div class="ttdeci">qulonglong getActionFrame()</div><div class="ttdoc">Returns the FrameId of the frame after which this object&#39;s InputData occured. </div><div class="ttdef"><b>Definition:</b> <a href="_input_data_unit_package_8h_source.html#l00056">InputDataUnitPackage.h:56</a></div></div>

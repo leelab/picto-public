@@ -17,6 +17,34 @@
 
 namespace Picto {
 
+/*!	\brief This class is used to scale Normalized plots.
+ */
+class NormalizedScaleDraw : public QwtScaleDraw
+{
+public:
+	/*!	\brief Constructor to set our properties.
+	 */
+	NormalizedScaleDraw(double max)
+		:max_(max)
+	{
+		setTickLength(QwtScaleDiv::MajorTick, 6);
+		setTickLength(QwtScaleDiv::MediumTick, 3);
+		setTickLength(QwtScaleDiv::MinorTick, 0);
+
+		setSpacing(15);
+	}
+
+	/*!	\brief Overwriting labeling functionality
+	 */
+	virtual QwtText label(double value) const
+	{
+		return QString("%1").arg(value / max_);
+	}
+private:
+	//! \brief NormalizedScaleDraw holds onto the current total (Normalization quantity).
+	double max_;
+};
+
 const QString OperatorPlot::type = "Operator Plot";
 
 OperatorPlot::OperatorPlot()
@@ -32,12 +60,11 @@ OperatorPlot::OperatorPlot()
 	canvas->setBorderRadius(10);
 	m_pPlot->setCanvas(canvas);
 
-	m_pPlot->plotLayout()->setAlignCanvasToScales(true);
-
 	m_pHistoPlotItem = new QwtPlotHistogram("Data");
 	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
 	m_pHistoPlotItem->setBrush(QBrush(Qt::red));
 	m_pHistoPlotItem->attach(m_pPlot);
+
 
 	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
 	errorBar->setWidth(8);
@@ -51,6 +78,8 @@ OperatorPlot::OperatorPlot()
 	m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
 
 	m_pErrorBars->attach(m_pPlot);
+	m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
+
 
 	AddDefinableProperty(QVariant::Bool, "DisplayStdDev", false);
 	m_bLastErrorBarState = false;
@@ -59,6 +88,8 @@ OperatorPlot::OperatorPlot()
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 }
 
+/*!	\brief Constructs and returns a shared pointer to a new OperatorPlot
+ */
 QSharedPointer<Asset> OperatorPlot::Create()
 {
 	return QSharedPointer<Asset>(new OperatorPlot());
@@ -88,27 +119,8 @@ void OperatorPlot::draw()
 	}
 }
 
-class NormalizedScaleDraw : public QwtScaleDraw
-{
-public:
-	NormalizedScaleDraw(double max)
-		:max_(max)
-	{
-		setTickLength(QwtScaleDiv::MajorTick, 6);
-		setTickLength(QwtScaleDiv::MediumTick, 3);
-		setTickLength(QwtScaleDiv::MinorTick, 0);
-
-		setSpacing(15);
-	}
-
-	virtual QwtText label(double value) const
-	{
-		return QString("%1").arg(value/max_);
-	}
-private:
-	double max_;
-};
-
+/*!	\brief Reconstructs elements of underlying plot.
+*/
 void OperatorPlot::replot()
 {
 	QVector<QwtIntervalSample> qvSamples;
@@ -209,7 +221,21 @@ void OperatorPlot::postDeserialize()
 	}
 }
 
+/*!	\brief Clears all values for this plot.
+ */
+void OperatorPlot::reset()
+{
+	m_qhdCumulValue.clear();
+	m_qhdCumulValSq.clear();
+	m_qhlCumulNum.clear();
 
+	m_bDataChanged = true;
+	m_bBinsChanged = true;
+}
+
+/*!	\brief Accumulates a value in the Histogram's data in the given bin.  The displayed value is the average of all
+ *	values inserted in said bin.
+ */
 void OperatorPlot::submitValue(long iBin, double dValue)
 {
 	m_bDataChanged = true;
@@ -230,6 +256,8 @@ void OperatorPlot::submitValue(long iBin, double dValue)
 	}
 }
 
+/*!	\brief Eliminates the values in indicated bin.
+ */
 void OperatorPlot::dropBin(long iBin)
 {
 	if (m_qhlCumulNum.contains(iBin))
@@ -243,6 +271,8 @@ void OperatorPlot::dropBin(long iBin)
 	}
 }
 
+/*!	\brief Sets the value in indicated bin to the value.
+ */
 void OperatorPlot::setBin(long bin, double value)
 {
 	m_bDataChanged = true;
@@ -261,6 +291,8 @@ void OperatorPlot::setBin(long bin, double value)
 	}
 }
 
+/*!	\brief Sets the value of the square of the indicated bin's submissions.
+ */
 void OperatorPlot::setBinSquared(long bin, double value)
 {
 	m_bDataChanged = true;
@@ -279,6 +311,8 @@ void OperatorPlot::setBinSquared(long bin, double value)
 	}
 }
 
+/*!	\brief Sets the number of samples taken in indicated bin to the value.
+ */
 void OperatorPlot::setBinSamples(long bin, long samples)
 {
 	m_bDataChanged = true;
@@ -297,6 +331,8 @@ void OperatorPlot::setBinSamples(long bin, long samples)
 	}
 }
 
+/*!	\brief Returns the value of the indicated bin.
+ */
 double OperatorPlot::getBin(long bin)
 {
 	if (m_qhdCumulValue.contains(bin))
@@ -307,6 +343,8 @@ double OperatorPlot::getBin(long bin)
 	return 0.0;
 }
 
+/*!	\brief Returns the square of the values of the indicated bin's submissions.
+ */
 double OperatorPlot::getBinSquared(long bin)
 {
 	if (m_qhdCumulValSq.contains(bin))
@@ -317,6 +355,8 @@ double OperatorPlot::getBinSquared(long bin)
 	return 0.0;
 }
 
+/*!	\brief Returns the number of Samples taken for the indicated bin.
+ */
 long OperatorPlot::getSamples(long bin)
 {
 	if (m_qhlCumulNum.contains(bin))
@@ -325,16 +365,6 @@ long OperatorPlot::getSamples(long bin)
 	}
 
 	return 0L;
-}
-
-void OperatorPlot::reset()
-{
-	m_qhdCumulValue.clear();
-	m_qhdCumulValSq.clear();
-	m_qhlCumulNum.clear();
-
-	m_bDataChanged = true;
-	m_bBinsChanged = true;
 }
 
 

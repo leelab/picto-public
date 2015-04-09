@@ -135,6 +135,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059">addVisualElement</a> (QSharedPointer&lt; <a class="el" href="struct_picto_1_1_visual_element.html">VisualElement</a> &gt; element)</td></tr>
 <tr class="memdesc:a84a42dfd298e46798bf7fad2df2d3059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input <a class="el" href="struct_picto_1_1_visual_element.html" title="A base class for all elements that represent graphics to be drawn onto the the display&#39;s Scene...">VisualElement</a> to this <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> so that it will be displayed next frame if it is marked visible. <br /></td></tr>
 <tr class="separator:a84a42dfd298e46798bf7fad2df2d3059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9becf679f216274e36d609681091078b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9becf679f216274e36d609681091078b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scene.html#a9becf679f216274e36d609681091078b">addDataViewElement</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> &gt; element)</td></tr>
+<tr class="memdesc:a9becf679f216274e36d609681091078b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input <a class="el" href="class_picto_1_1_data_view_element.html" title="A Base class for all Elements representing data that is output to the Observer while viewing an exper...">DataViewElement</a> to this <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> so that it will be updated during rendering. <br /></td></tr>
+<tr class="separator:a9becf679f216274e36d609681091078b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4522aca529497fb2901ce69e3748c60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4522aca529497fb2901ce69e3748c60"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scene.html#af4522aca529497fb2901ce69e3748c60">addAudioElement</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_audio_element.html">AudioElement</a> &gt; element)</td></tr>
 <tr class="memdesc:af4522aca529497fb2901ce69e3748c60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the input <a class="el" href="class_picto_1_1_audio_element.html" title="An Audio Stimulus used to play sounds in Picto. ">AudioElement</a> to this <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> so that it will be played next frame if it is set to play. <br /></td></tr>
@@ -190,6 +194,12 @@ QList&lt; QSharedPointer&lt; <a class="el" href="struct_picto_1_1_visual_element
 <tr class="memitem:a142447dd041749e50d125b27e929cccd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a142447dd041749e50d125b27e929cccd"></a>
 QList&lt; QSharedPointer&lt; <a class="el" href="struct_picto_1_1_visual_element.html">VisualElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>unaddedVisualElements_</b></td></tr>
 <tr class="separator:a142447dd041749e50d125b27e929cccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b5b26eff4ebcb306a87e658b57a40ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b5b26eff4ebcb306a87e658b57a40ec"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataViewElements_</b></td></tr>
+<tr class="separator:a4b5b26eff4ebcb306a87e658b57a40ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c1d4973cdc827e6682eea4e04e1d11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72c1d4973cdc827e6682eea4e04e1d11"></a>
+QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>unaddedDataViewElements_</b></td></tr>
+<tr class="separator:a72c1d4973cdc827e6682eea4e04e1d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab38fd1f589a9c7d1bc01e85af36dab18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab38fd1f589a9c7d1bc01e85af36dab18"></a>
 QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_audio_element.html">AudioElement</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>audioElements_</b></td></tr>
 <tr class="separator:ab38fd1f589a9c7d1bc01e85af36dab18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,7 +276,7 @@ static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>staticMutex_
 <p>Constructs a <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> object. </p>
 <p>Among other things, this connects the <a class="el" href="class_picto_1_1_scene.html#a1558a1f1eec6582e509defd1ff684fb7" title="Emitted when rendering is setup and the object wants doRender() to be called. ">readyForRender()</a> signal to the <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> slot so that we can assure that all calls to <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> occur in the main UI thread. See <a class="el" href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9" title="Sets up rendering and then causes the actual render to happen by triggering the doRender() function...">render()</a>, <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> for more details. </p>
 
-<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00141">141</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00152">152</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
 
 </div>
 </div>
@@ -296,7 +306,7 @@ static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>staticMutex_
 <dl class="section note"><dt>Note</dt><dd>The scene handles rendering to the UI so it's rendering system must run in the UI thread. To make sure this happens, we use the qt signal-&gt;slot system which gaurantees that if we mark this object as running the main thread, any slots that are triggered on the object will wait for the UI thread to run. Since we only call the private <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> function through a signal-&gt;slot connection, we are gauranteed that rendering is in the UI thread. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9" title="Sets up rendering and then causes the actual render to happen by triggering the doRender() function...">render()</a>, <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a>, <a class="el" href="class_picto_1_1_scene.html#a1558a1f1eec6582e509defd1ff684fb7" title="Emitted when rendering is setup and the object wants doRender() to be called. ">readyForRender()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00028">28</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00030">30</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
 
 </div>
 </div>
@@ -326,7 +336,7 @@ static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>staticMutex_
 <p>This function sorts Visual Targets according to their layer, presents them to screen, plays any <a class="el" href="class_picto_1_1_audio_element.html" title="An Audio Stimulus used to play sounds in Picto. ">AudioElement</a> objects that are currently audible, and pushes the latest output signals to their respective output ports. callerId is the AssetId of the element that is starting this <a class="el" href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9" title="Sets up rendering and then causes the actual render to happen by triggering the doRender() function...">render()</a> it will be used to report the active element during the course of each frame presentation. </p><dl class="section note"><dt>Note</dt><dd>Qt requires that this function be called from the main UI thread since it calls functions that render graphics to screen. This is handled by pushing this object into the UI thread and only calling <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> from a signal-slot connection. See <a class="el" href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9" title="Sets up rendering and then causes the actual render to happen by triggering the doRender() function...">render()</a> for more details. </dd></dl>
 <p>firstPhosphorTime_ is the time that the first phosphor appeared on the first visual target In the current code iteration, visual targets block until the first phosphor of their scene is drawn to the display. This means that if there are multiple visual targets, things are not going to be synchronized. In keeping with this deficiency, the recorded first phosphor time is simply the time that the first phosphor appeared on the first screen. Down the line we should synchronize multiple displays. </p>
 
-<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00159">159</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00170">170</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +395,7 @@ static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>staticMutex_
 <p>The actual rendering code that displays to the screen must run in the main UI thread but we don't want to require everything else to be in that thread. Originally Picto wasn't designed with seperation of the View and Control logic into different threads so we needed to allow rendering code to occur in the UI thread and Control logic to occur in a separate thread without rewriting the whole system. The method that we are using for now is to simply setup the render in this routine, then pause the Control logic thread until the <a class="el" href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd" title="Renders the Scene. ">doRender()</a> which actually performs the render is called in the UI thread. </p><dl class="section note"><dt>Note</dt><dd>When running on the PictoDirector there is only one thread (ie. everything runs in the UI Thread) and so there is no pause.</dd></dl>
 <p>callerId is the AssetId of the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> calling <a class="el" href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9" title="Sets up rendering and then causes the actual render to happen by triggering the doRender() function...">render()</a>. </p>
 
-<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00050">50</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00052">52</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +424,7 @@ static QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>staticMutex_
 <p>Sets the current zoom level of this scene. </p>
 <p>The zoom value must be greater than zero and less than 1. Essentially, this value will multiply all of the dimensions of objects in the <a class="el" href="class_picto_1_1_scene.html" title="Handles rendering of OutputElements each frame. ">Scene</a> to create smaller objects for smaller zoom values and simulate a 'Zoom Out' effect. </p>
 
-<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00120">120</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_scene_8cpp_source.html#l00131">131</a> of file <a class="el" href="_scene_8cpp_source.html">Scene.cpp</a>.</p>
 
 </div>
 </div>

@@ -96,8 +96,8 @@ void DataViewWidget::dissociate()
 	}
 }
 
-/* \brief Sets the current name and label of this widget
-*/
+/*!	\brief Sets the current name and label of this widget
+ */
 void DataViewWidget::setName(const QString &newName)
 {
 	name_ = newName;

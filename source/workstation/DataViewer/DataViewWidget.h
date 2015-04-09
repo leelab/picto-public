@@ -13,6 +13,10 @@ using namespace Picto;
 
 enum ViewSize : int;
 
+/*!	\brief The RetentionPolicy dictates whether the widget should be deleted and removed when reset is called on the
+ *	controlling ViewSelectionWidget.
+ *	\sa ViewSelectionWidget::reset
+ */
 enum DVW_RetentionPolicy
 {
 	DVW_CLEAR = 0,
@@ -33,22 +37,24 @@ public:
 	virtual ~DataViewWidget();
 
 	void setDisplayed (bool enable);
-	/* \brief Returns whether the widget is currently displayed
+	/*!	\brief Returns whether the widget is currently displayed
 	 */
 	bool getDisplayed() { return currentlyDisplayed_; };
 
-	/* \brief Returns the current size of this widget
+	/*!	\brief Returns the current size of this widget
 	 */
 	ViewSize getCurrentSize() { return lastViewSize_; };
-	/* \brief Sets the current size of this widget
+	/*!	\brief Sets the current size of this widget
 	 */
 	void setCurrentSize(ViewSize eSize) { lastViewSize_ = eSize; };
 
-	/* \brief Returns the current name of this widget
+	/*!	\brief Returns the current name of this widget
 	 */
 	virtual const QString getName() const { return name_; };
 	virtual void setName(const QString &newName);
 
+	/*! \brief Returns the current RetentionPolicy of this widget
+	 */
 	DVW_RetentionPolicy getRetentionPolicy() const { return eRetentionPolicy_; };
 
 	void setPosition(int xPos, int yPos);
@@ -61,15 +67,28 @@ public:
 	void dissociate();
 
 private:
+	//! This widget's organizational layout
 	QGridLayout* layout_;
+	//! The name of this widget
 	QString name_;
-	bool currentlyDisplayed_;
-	ViewSize lastViewSize_;
-	int xPos_;
-	int yPos_;
-	DVW_RetentionPolicy eRetentionPolicy_;
+	//! Holds a raw pointer to the widget to be wrapped.
 	QWidget *myViewWidget_;
+	//! An (optional) label.  We retain a pointer to it in case we need to remove it.
 	QLabel *myLabel_;
+
+	/*!	\brief The retention policy of this DataViewWidget.  DataViewWidgets that are set to be retained are not deleted
+	*	when the views are reset.
+	*/
+	DVW_RetentionPolicy eRetentionPolicy_;
+	//! The current ViewSize of this widget.  Only meaningful if it is currentlyDisplayed_.
+	ViewSize lastViewSize_;
+
+	//! If this DataViewWidget is currently being displayed in the grid.
+	bool currentlyDisplayed_;
+	//! The current X-Position in the View Grid of this widget.  Only meaningful if it is currentlyDisplayed_.
+	int xPos_;
+	//! The current Y-Position in the View Grid of this widget.  Only meaningful if it is currentlyDisplayed_.
+	int yPos_;
 };
 
 #endif

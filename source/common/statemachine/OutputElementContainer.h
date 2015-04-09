@@ -41,11 +41,17 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
+	//! A factory for new VisualElements
 	QSharedPointer<AssetFactory> visualElementFactory_;
+	//! A factory for new AudioSignals
 	QSharedPointer<AssetFactory> audioElementFactory_;
+	//! A factory for new OutputSignals
 	QSharedPointer<AssetFactory> outputSignalFactory_;
+	//! A factory for new InputSignals
 	QSharedPointer<AssetFactory> inputSignalFactory_;
+	//! A factory for new ScriptFunctions
 	QSharedPointer<AssetFactory> scriptFunctionFactory_;
+	//! A factory for new DataViewElements
 	QSharedPointer<AssetFactory> dataViewElementFactory_;
 
 private:

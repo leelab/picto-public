@@ -78,7 +78,9 @@ public:
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 protected:
+	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
 	virtual void postDeserialize();
+	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 private:

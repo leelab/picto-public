@@ -123,11 +123,13 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#a774d772302c58686d086986a180ebd42">~GenericInput</a> ()</td></tr>
 <tr class="memdesc:a774d772302c58686d086986a180ebd42"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_picto_1_1_generic_input.html" title="A signal channel for representing Generic Inputs to be read by the State Machine. ...">GenericInput</a> virutal destructor. <br /></td></tr>
 <tr class="separator:a774d772302c58686d086986a180ebd42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06924324f1488dc17ea8e2638979486e"><td class="memItemLeft" align="right" valign="top">virtual QMap&lt; QString, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#a06924324f1488dc17ea8e2638979486e">getValues</a> ()</td></tr>
-<tr class="memdesc:a06924324f1488dc17ea8e2638979486e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a map of data sample vectors indexed by sub-channel name.  <a href="#a06924324f1488dc17ea8e2638979486e">More...</a><br /></td></tr>
+<tr class="memitem:a06924324f1488dc17ea8e2638979486e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06924324f1488dc17ea8e2638979486e"></a>
+virtual QMap&lt; QString, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#a06924324f1488dc17ea8e2638979486e">getValues</a> ()</td></tr>
+<tr class="memdesc:a06924324f1488dc17ea8e2638979486e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the values in the RawDataBuffer scaled by the SIGNAL_TO_VOLTAGE_COEFFICIENT. <br /></td></tr>
 <tr class="separator:a06924324f1488dc17ea8e2638979486e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcbaf8f24508ae61656332e32ae7a1ff"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#afcbaf8f24508ae61656332e32ae7a1ff">peekValue</a> (QString subchannel)</td></tr>
-<tr class="memdesc:afcbaf8f24508ae61656332e32ae7a1ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the most recent value from the subchannel.  <a href="#afcbaf8f24508ae61656332e32ae7a1ff">More...</a><br /></td></tr>
+<tr class="memitem:afcbaf8f24508ae61656332e32ae7a1ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcbaf8f24508ae61656332e32ae7a1ff"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#afcbaf8f24508ae61656332e32ae7a1ff">peekValue</a> (QString subchannel)</td></tr>
+<tr class="memdesc:afcbaf8f24508ae61656332e32ae7a1ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the most recent value for the specified subchannel in the RawDataBuffer scaled by the SIGNAL_TO_VOLTAGE_COEFFICIENT. <br /></td></tr>
 <tr class="separator:afcbaf8f24508ae61656332e32ae7a1ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae97ce452a265bf91ecd7747795c3bb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae97ce452a265bf91ecd7747795c3bb08"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_data_unit_package.html">InputDataUnitPackage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_generic_input.html#ae97ce452a265bf91ecd7747795c3bb08">getDataPackage</a> ()</td></tr>
@@ -283,68 +285,6 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_input_port.html">InputPor
 <p>When using this constructor a default value of 4 readings per ms is used. </p><dl class="section note"><dt>Note</dt><dd>Multiple SignalChannels can share a single <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a>. The <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> represents a DAQ device, for example, whereas the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> represents one logical signal such as "Position." </dd></dl>
 
 <p>Definition at line <a class="el" href="_generic_input_8cpp_source.html#l00038">38</a> of file <a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a06924324f1488dc17ea8e2638979486e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QMap&lt; QString, QVector&lt; double &gt; &gt; GenericInput::getValues </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns a map of data sample vectors indexed by sub-channel name. </p>
-<dl class="section note"><dt>Note</dt><dd>This function calls <a class="el" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520" title="Gets data for this SignalChannel from the InputPort and returns it. ">getRawValues()</a> which has a side effect in that it clears out all read data such that the next call to <a class="el" href="class_picto_1_1_generic_input.html#a06924324f1488dc17ea8e2638979486e" title="Returns a map of data sample vectors indexed by sub-channel name. ">getValues()</a> will return only the values read since the function was last called. </dd></dl>
-
-<p>Reimplemented from <a class="el" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">Picto::SignalChannel</a>.</p>
-
-<p>Definition at line <a class="el" href="_generic_input_8cpp_source.html#l00063">63</a> of file <a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afcbaf8f24508ae61656332e32ae7a1ff"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double GenericInput::peekValue </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>subchannel</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the most recent value from the subchannel. </p>
-<p>This function does not cause data to be deleted. The data returned by this function will still be returned in the next call to <a class="el" href="class_picto_1_1_generic_input.html#a06924324f1488dc17ea8e2638979486e" title="Returns a map of data sample vectors indexed by sub-channel name. ">getValues()</a>. </p>
-
-<p>Reimplemented from <a class="el" href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">Picto::SignalChannel</a>.</p>
-
-<p>Definition at line <a class="el" href="_generic_input_8cpp_source.html#l00086">86</a> of file <a class="el" href="_generic_input_8cpp_source.html">GenericInput.cpp</a>.</p>
 
 </div>
 </div>

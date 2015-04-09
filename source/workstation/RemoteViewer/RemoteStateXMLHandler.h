@@ -173,7 +173,7 @@ signals:
 	 *	\sa RemoteStateUpdater::framePresented
 	 */
 	void framePresented(double time);
-	/* \brief Emitted to update the parent StateUpdater with the currUnitTime
+	/*!	\brief Emitted to update the parent StateUpdater with the currUnitTime
 	 */
 	void updateCurrUnitTime(QString time);
 protected:
@@ -204,7 +204,7 @@ signals:
 	 *	\sa RemoteStateUpdater::rewardSupplied
 	*/
 	void rewardSupplied(double time, int duration, int channel);
-	/* \brief Emitted to update the parent StateUpdater with the currUnitTime
+	/*!	\brief Emitted to update the parent StateUpdater with the currUnitTime
 	*/
 	void updateCurrUnitTime(QString time);
 protected:
