@@ -5,7 +5,7 @@ using namespace Picto;
 
 DataViewElement::DataViewElement()
 {
-
+	AddDefinableProperty(QVariant::String, "ViewTitle", "View Element");
 }
 
 DataViewElement::~DataViewElement()
@@ -16,11 +16,11 @@ DataViewElement::~DataViewElement()
 void DataViewElement::postDeserialize()
 {
 	ContainerElement::postDeserialize();
-	connect(propertyContainer_->getProperty("Name").data(), SIGNAL(edited()), this, SLOT(nameWasEdited()));
+	connect(propertyContainer_->getProperty("ViewTitle").data(), SIGNAL(edited()), this, SLOT(nameWasEdited()));
 	nameWasEdited();
 }
 
 void DataViewElement::nameWasEdited()
 {
-	setTitle(propertyContainer_->getPropertyValue("Name").toString());
+	setTitle(propertyContainer_->getPropertyValue("ViewTitle").toString());
 }

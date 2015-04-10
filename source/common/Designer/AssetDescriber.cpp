@@ -187,6 +187,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("ContainerElement"));
 	curr = addDescription("DataViewElement");
 	curr->setInherits(getAssetDescription("ContainerElement"));
+	curr->addProp("ViewTitle", "The title given to the element when it is displayed while a task is running.");
 
 	curr = addDescription("OutputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
@@ -1027,4 +1028,59 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("DataViewElement"));
 	curr->setOverview("Used to display realtime plots for the Operator.");
 
+	curr = addDescription("BarBase");
+	curr->setInherits(getAssetDescription("OperatorPlot"));
+	curr->setOverview("Used as a base for all bar-based plotting objects.");
+	curr->addProp("DisplayLegend", "Determines whether or not the legend for your plot is displayed alongside the plot.");
+	curr->addProp("NormalizedDisplay", "Turning this on normalizes the Y-axis across your dataset.");
+	curr->addSFunc("clearPlot()", "Clears the contents and data associated with this plot.");
+
+	curr = addDescription("BarPlot");
+	curr->setInherits(getAssetDescription("BarBase"));
+	curr->setOverview("Creates a Bar Plot for real-time or analysis viewing.  The bins are indexed by an arbitrary integer.");
+	curr->addSFunc("adjustValue(int bin, number value)", "Modifies the value in the indicated bin by the passed-in value.");
+	curr->addSFunc("setValue(int bin, number value)", "Sets the value in indicated bin to the value.");
+	curr->addSFunc("getValue(int bin)", "Returns the value of the indicated bin.");
+	curr->addSFunc("dropBin(int bin)", "Eliminates the values in the indicated bin.");
+
+	curr = addDescription("HistogramPlot");
+	curr->setInherits(getAssetDescription("BarBase"));
+	curr->setOverview("Creates a Histogram for real-time or analysis viewing.  The bin size is specified by the parameter BinSize, and values are submitted with the continuous parameter (time, for instance) in the place of the bin.");
+	curr->addProp("BinSize", "The width, in terms of your continuous indexing parameter, of each bin.  The bin actually used to store the data is (index / BinSize).");
+	curr->addSFunc("adjustValue(number index, number value)", "Modifies the value in the implied bin by the passed-in value.");
+	curr->addSFunc("setValue(number index, number value)", "Sets the value in implied bin to the value.");
+	curr->addSFunc("getValue(number index)", "Returns the value of the implied bin.");
+	curr->addSFunc("dropBin(number index)", "Eliminates the values in the implied bin.");
+
+	curr = addDescription("SamplingBarBase");
+	curr->setInherits(getAssetDescription("BarBase"));
+	curr->setOverview("Adds the concept of collecting samples and calculating Standard Error to BarBase.");
+	curr->addProp("DisplayStdErr", "Turns on the display of Standard Error for each bin of the Sampling Plot.");
+
+	curr = addDescription("SamplingBarPlot");
+	curr->setInherits(getAssetDescription("SamplingBarBase"));
+	curr->setOverview("A Bar Plot meant for accumulating samples and displaying the Average value submitted to each bin.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
+	curr->addSFunc("submitValue(int bin, number value)", "Modifies the indicated bin with the passed-in sample.");
+	curr->addSFunc("getValue(int bin)", "Returns the average of the samples submitted to the indicated bin.");
+	curr->addSFunc("setCumulativeValue(int bin, number value)", "Sets the accumulated value in indicated bin to the value.  You generally won't need to use this.");
+	curr->addSFunc("getCumulativeValue(int bin)", "Returns the accumulated value in the indicated bin.  You generally won't need to use this.");
+	curr->addSFunc("setSamples(int bin, int value)", "Sets the number of samples received for the indicated bin to the value.");
+	curr->addSFunc("getSamples(int bin)", "Returns the number of samples received for the indicated bin.");
+	curr->addSFunc("setCumulativeValueSquared(int bin, number value)", "Sets the accumualted sample-value-squared for the indicated bin to the value.");
+	curr->addSFunc("getCumulativeValueSquared(int bin)", "Returns the accumulated sample-value-squared for the indicated bin.");
+	curr->addSFunc("dropBin(int bin)", "Eliminates the values in the indicated bin.");
+
+	curr = addDescription("SamplingHistogramPlot");
+	curr->setInherits(getAssetDescription("SamplingBarBase"));
+	curr->setOverview("A Histogram meant for accumulating samples and displaying the Average value submitted to each bin.  The bin size is specified by the parameter BinSize, and values are submitted with the continuous parameter (time, for instance) in the place of the bin.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
+	curr->addProp("BinSize", "The width, in terms of your continuous indexing parameter, of each bin.  The bin actually used to store the data is (index / BinSize).");
+	curr->addSFunc("submitValue(number index, number value)", "Modifies the implied bin with the passed-in sample.");
+	curr->addSFunc("getValue(number index)", "Returns the average of the samples submitted to the implied bin.");
+	curr->addSFunc("setCumulativeValue(number index, number value)", "Sets the accumulated value in implied bin to the value.  You generally won't need to use this.");
+	curr->addSFunc("getCumulativeValue(number index)", "Returns the accumulated value in the implied bin.  You generally won't need to use this.");
+	curr->addSFunc("setSamples(number index, int value)", "Sets the number of samples received for the implied bin to the value.  You generally won't need to use this.");
+	curr->addSFunc("getSamples(number index)", "Returns the number of samples received for the implied bin.  You generally won't need to use this.");
+	curr->addSFunc("setCumulativeValueSquared(number index, number value)", "Sets the accumualted sample-value-squared for the implied bin to the value.  You generally won't need to use this.");
+	curr->addSFunc("getCumulativeValueSquared(number index)", "Returns the accumulated sample-value-squared for the implied bin.  You generally won't need to use this.");
+	curr->addSFunc("dropBin(number index)", "Eliminates the values in the implied bin.");
 }

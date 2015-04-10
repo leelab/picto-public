@@ -28,7 +28,11 @@
 #include "../stimuli/AnalogInput.h"
 #include "../statemachine/ScriptFunction.h"
 
-#include "../operator/OperatorPlot.h"
+#include "../operator/DataViewElement.h"
+#include "../operator/BarPlot.h"
+#include "../operator/HistogramPlot.h"
+#include "../operator/SamplingBarPlot.h"
+#include "../operator/SamplingHistogramPlot.h"
 
 #include "../memleakdetect.h"
 
@@ -95,8 +99,14 @@ OutputElementContainer::OutputElementContainer() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalogInput::Create))));
 
 	AddDefinableObjectFactory("DataViewElement", dataViewElementFactory_);
-	dataViewElementFactory_->addAssetType(OperatorPlot::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(OperatorPlot::Create))));
+	dataViewElementFactory_->addAssetType(BarPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(BarPlot::Create))));
+	dataViewElementFactory_->addAssetType(SamplingBarPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingBarPlot::Create))));
+	dataViewElementFactory_->addAssetType(HistogramPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(HistogramPlot::Create))));
+	dataViewElementFactory_->addAssetType(SamplingHistogramPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingHistogramPlot::Create))));
 }
 
 void OutputElementContainer::postDeserialize()

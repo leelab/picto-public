@@ -157,31 +157,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059">   90</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059">Scene::addVisualElement</a>(QSharedPointer&lt;VisualElement&gt; element)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    QMutexLocker locker(mutex_.data());</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    unaddedVisualElements_.push_back(element);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>.push_back(element);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="class_picto_1_1_scene.html#a9becf679f216274e36d609681091078b">   98</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_scene.html#a9becf679f216274e36d609681091078b">Scene::addDataViewElement</a>(QSharedPointer&lt;DataViewElement&gt; element)</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    QMutexLocker locker(mutex_.data());</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    unaddedDataViewElements_.push_back(element);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">unaddedDataViewElements_</a>.push_back(element);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
 <div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="class_picto_1_1_scene.html#af4522aca529497fb2901ce69e3748c60">  105</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_scene.html#af4522aca529497fb2901ce69e3748c60">Scene::addAudioElement</a>(QSharedPointer&lt;AudioElement&gt; element)</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    QMutexLocker locker(mutex_.data());</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    unaddedAudioElements_.push_back(element);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>.push_back(element);</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
 <div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="class_picto_1_1_scene.html#aa08595cf0763b8969bfef393bb6447f0">  112</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_scene.html#aa08595cf0763b8969bfef393bb6447f0">Scene::addOutputSignal</a>(QSharedPointer&lt;OutputSignal&gt; element)</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;{</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    QMutexLocker locker(mutex_.data());</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    unaddedOutputSignals_.push_back(element);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">unaddedOutputSignals_</a>.push_back(element);</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="class_picto_1_1_scene.html#a28074237325a6360e733bb37a1d79203">  119</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_scene.html#a28074237325a6360e733bb37a1d79203">Scene::addInputSignal</a>(QSharedPointer&lt;InputSignal&gt; element)</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;{</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    QMutexLocker locker(mutex_.data());</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    unaddedInputSignals_.push_back(element);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">unaddedInputSignals_</a>.push_back(element);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
@@ -227,46 +227,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        renderingTargets = engine_-&gt;getRenderingTargets();</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        </div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="comment">//Add any unadded visual elements to the visual elements list</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordflow">if</span>(!unaddedVisualElements_.isEmpty())</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>.isEmpty())</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        {</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            QSharedPointer&lt;Picto::CompositingSurface&gt; compositingSurface;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="comment">//add the appropriate compositing surfaces to the element</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;unaddedVisualElements_.length(); i++)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>.length(); i++)</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            {</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                <span class="keywordflow">foreach</span>(QSharedPointer&lt;RenderingTarget&gt; renderTarget, renderingTargets)</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                {</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                    compositingSurface = renderTarget-&gt;generateCompositingSurface();</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                    unaddedVisualElements_[i]-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                    <a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>[i]-&gt;addCompositingSurface(compositingSurface-&gt;getTypeName(),compositingSurface);</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                visualElements_.append(unaddedVisualElements_[i]);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                <a class="code" href="class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242">visualElements_</a>.append(<a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>[i]);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            }</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            unaddedVisualElements_.clear();</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            <a class="code" href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">unaddedVisualElements_</a>.clear();</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        }</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <span class="comment">//Sort visual elements</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        qSort(visualElements_.begin(), visualElements_.end(), &amp;visualElementLessThan);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        qSort(<a class="code" href="class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242">visualElements_</a>.begin(), <a class="code" href="class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242">visualElements_</a>.end(), &amp;visualElementLessThan);</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="comment">//Add any unadded Data View Elements to the visual elements list</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">if</span> (!unaddedDataViewElements_.isEmpty())</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">unaddedDataViewElements_</a>.isEmpty())</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        {</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;unaddedDataViewElements_.length(); i++)</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;<a class="code" href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">unaddedDataViewElements_</a>.length(); i++)</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                dataViewElements_.append(unaddedDataViewElements_[i]);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                <a class="code" href="class_picto_1_1_scene.html#a4b5b26eff4ebcb306a87e658b57a40ec">dataViewElements_</a>.append(<a class="code" href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">unaddedDataViewElements_</a>[i]);</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            unaddedDataViewElements_.clear();</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            <a class="code" href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">unaddedDataViewElements_</a>.clear();</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        }</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="comment">//Add any unadded output signals to the outputSignals_ list</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">if</span>(!unaddedOutputSignals_.isEmpty())</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">unaddedOutputSignals_</a>.isEmpty())</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        {</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="comment">//add the appropriate compositing surfaces to the element</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;unaddedOutputSignals_.length(); i++)</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">unaddedOutputSignals_</a>.length(); i++)</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            {</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                <span class="comment">//Do Output Signal setup here</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                outputSignals_.append(unaddedOutputSignals_[i]);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                <a class="code" href="class_picto_1_1_scene.html#aedcf94b314329bc4b6aa2b3ee9eb3276">outputSignals_</a>.append(<a class="code" href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">unaddedOutputSignals_</a>[i]);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            unaddedOutputSignals_.clear();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <a class="code" href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">unaddedOutputSignals_</a>.clear();</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="comment">//Set Output Signals Values to engine</span></div>
@@ -274,7 +274,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordtype">int</span> pinId;</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        QVariant value;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        QString port;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;OutputSignal&gt; outputSignal, outputSignals_)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;OutputSignal&gt; outputSignal, <a class="code" href="class_picto_1_1_scene.html#aedcf94b314329bc4b6aa2b3ee9eb3276">outputSignals_</a>)</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        {</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            port = outputSignal-&gt;getPort();</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            pinId = outputSignal-&gt;getPin();</div>
@@ -285,21 +285,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        }</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="comment">//Add any unadded input signals to the inputSignals_ list</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="keywordflow">if</span> (!unaddedInputSignals_.isEmpty())</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">unaddedInputSignals_</a>.isEmpty())</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        {</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="comment">//add the appropriate compositing surfaces to the element</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;unaddedInputSignals_.length(); i++)</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;<a class="code" href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">unaddedInputSignals_</a>.length(); i++)</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                <span class="comment">//Do Input Signal setup here</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                inputSignals_.append(unaddedInputSignals_[i]);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                <a class="code" href="class_picto_1_1_scene.html#a6b113091afab91a1f92a210bf4e6bf7f">inputSignals_</a>.append(<a class="code" href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">unaddedInputSignals_</a>[i]);</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            }</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            unaddedInputSignals_.clear();</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            <a class="code" href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">unaddedInputSignals_</a>.clear();</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        }</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <span class="comment">//Set Input Signals Values to engine</span></div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        pinId = 0;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        <span class="keywordtype">double</span> fInputValue;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;InputSignal&gt; inputSignal, inputSignals_)</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;InputSignal&gt; inputSignal, <a class="code" href="class_picto_1_1_scene.html#a6b113091afab91a1f92a210bf4e6bf7f">inputSignals_</a>)</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        {</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            pinId = inputSignal-&gt;getPin();</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            QSharedPointer&lt;SignalChannel&gt; sigChan = engine_-&gt;getSignalChannel(QString(<span class="stringliteral">&quot;GenericInputs&quot;</span>));</div>
@@ -308,28 +308,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        }</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="comment">//Should probably just update displayed plots, but I&#39;m doing this for now.</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;DataViewElement&gt; element, dataViewElements_)</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;DataViewElement&gt; element, <a class="code" href="class_picto_1_1_scene.html#a4b5b26eff4ebcb306a87e658b57a40ec">dataViewElements_</a>)</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        {</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            element-&gt;draw();</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        }</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <span class="comment">//Add any unadded audio elements to the audio elements list</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordflow">if</span>(!unaddedAudioElements_.isEmpty())</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>.isEmpty())</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        {</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            QSharedPointer&lt;Picto::MixingSample&gt; mixingSample;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            <span class="comment">//add the appropriate compositing surfaces to the element</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;unaddedAudioElements_.length(); i++)</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;<a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>.length(); i++)</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            {</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                <span class="keywordflow">foreach</span>(QSharedPointer&lt;RenderingTarget&gt; renderTarget, renderingTargets)</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                {</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                    mixingSample = renderTarget-&gt;generateMixingSample();</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                    unaddedAudioElements_[i]-&gt;addMixingSample(mixingSample);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                    <a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>[i]-&gt;addMixingSample(mixingSample);</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                }</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                audioElements_.append(unaddedAudioElements_[i]);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                <a class="code" href="class_picto_1_1_scene.html#ab38fd1f589a9c7d1bc01e85af36dab18">audioElements_</a>.append(<a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>[i]);</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;            }</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            unaddedAudioElements_.clear();</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            <a class="code" href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">unaddedAudioElements_</a>.clear();</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        }</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="comment">//Render visual elements to each rendering target</span></div>
@@ -340,7 +340,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            visualTarget-&gt;setZoom(frameZoom);</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            <span class="comment">//run through all our visualElements updating the animation and drawing</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;VisualElement&gt; visualElement, visualElements_)</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;VisualElement&gt; visualElement, <a class="code" href="class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242">visualElements_</a>)</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            {</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                visualElement-&gt;updateAnimation(frame_,elapsedTime_);</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                <span class="keywordflow">if</span>(visualElement-&gt;getVisibleByUser(!engine_-&gt;operatorIsUser()))</div>
@@ -357,7 +357,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            QSharedPointer&lt;AuralTarget&gt; auralTarget = renderTarget-&gt;getAuralTarget();</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            <span class="comment">//run through all our audioElements and mix them into the auralTarget</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;AudioElement&gt; audioElement, audioElements_)</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            <span class="keywordflow">foreach</span>(QSharedPointer&lt;AudioElement&gt; audioElement, <a class="code" href="class_picto_1_1_scene.html#ab38fd1f589a9c7d1bc01e85af36dab18">audioElements_</a>)</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            {</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                auralTarget-&gt;mix(audioElement-&gt;getMixingSample(auralTarget-&gt;getTypeName()));</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            }</div>
@@ -378,18 +378,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    readyToRender_ = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_scene_html_a26d9a1e0c272cdbaf9d6c61125be1700"><div class="ttname"><a href="class_picto_1_1_scene.html#a26d9a1e0c272cdbaf9d6c61125be1700">Picto::Scene::createScene</a></div><div class="ttdeci">static QSharedPointer&lt; Scene &gt; createScene()</div><div class="ttdoc">Creates a new Scene object and returns a shared pointer to it. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00030">Scene.cpp:30</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_ab38fd1f589a9c7d1bc01e85af36dab18"><div class="ttname"><a href="class_picto_1_1_scene.html#ab38fd1f589a9c7d1bc01e85af36dab18">Picto::Scene::audioElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; AudioElement &gt; &gt; audioElements_</div><div class="ttdoc">A QList of AudioElements that we are updating. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00081">Scene.h:81</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a28074237325a6360e733bb37a1d79203"><div class="ttname"><a href="class_picto_1_1_scene.html#a28074237325a6360e733bb37a1d79203">Picto::Scene::addInputSignal</a></div><div class="ttdeci">void addInputSignal(QSharedPointer&lt; InputSignal &gt; element)</div><div class="ttdoc">Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00119">Scene.cpp:119</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_a142447dd041749e50d125b27e929cccd"><div class="ttname"><a href="class_picto_1_1_scene.html#a142447dd041749e50d125b27e929cccd">Picto::Scene::unaddedVisualElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; VisualElement &gt; &gt; unaddedVisualElements_</div><div class="ttdoc">A QList of VisualElements that we stream in from the Task. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00073">Scene.h:73</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_aa6e1366db22819f2518d62d9536d3242"><div class="ttname"><a href="class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242">Picto::Scene::visualElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; VisualElement &gt; &gt; visualElements_</div><div class="ttdoc">A QList of VisualElements that we are updating. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00071">Scene.h:71</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a3ec0d6a558ec913fc7313181257b3dfd"><div class="ttname"><a href="class_picto_1_1_scene.html#a3ec0d6a558ec913fc7313181257b3dfd">Picto::Scene::doRender</a></div><div class="ttdeci">void doRender(int callerId)</div><div class="ttdoc">Renders the Scene. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00170">Scene.cpp:170</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_adc82ad010c1ccb425676714d436094d2"><div class="ttname"><a href="class_picto_1_1_scene.html#adc82ad010c1ccb425676714d436094d2">Picto::Scene::unaddedAudioElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; AudioElement &gt; &gt; unaddedAudioElements_</div><div class="ttdoc">A QList of AudioElements that we stream in from the Task. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00083">Scene.h:83</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_ae8009d1b0b96e81c50706fcccbd18b0b"><div class="ttname"><a href="class_picto_1_1_scene.html#ae8009d1b0b96e81c50706fcccbd18b0b">Picto::Scene::closeRenderLoops</a></div><div class="ttdeci">static void closeRenderLoops()</div><div class="ttdoc">In case the render() function is stuck waiting for doRender() to render graphics for some reason...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00141">Scene.cpp:141</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a34b54232e27f489aa0c88ca4492882d3"><div class="ttname"><a href="class_picto_1_1_scene.html#a34b54232e27f489aa0c88ca4492882d3">Picto::Scene::setBackgroundColor</a></div><div class="ttdeci">void setBackgroundColor(QColor color)</div><div class="ttdoc">Not currently used, but the idea is that this would set the background color rendered by this Scene...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00083">Scene.cpp:83</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_aabe013ad3b7c2051de6c37d38f19f95f"><div class="ttname"><a href="class_picto_1_1_scene.html#aabe013ad3b7c2051de6c37d38f19f95f">Picto::Scene::unaddedInputSignals_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; InputSignal &gt; &gt; unaddedInputSignals_</div><div class="ttdoc">A QList of InputSignals that we stream in from the Task. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00093">Scene.h:93</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_a4b5b26eff4ebcb306a87e658b57a40ec"><div class="ttname"><a href="class_picto_1_1_scene.html#a4b5b26eff4ebcb306a87e658b57a40ec">Picto::Scene::dataViewElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; DataViewElement &gt; &gt; dataViewElements_</div><div class="ttdoc">A QList of DataViewElements that we are updating. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00076">Scene.h:76</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_a6b113091afab91a1f92a210bf4e6bf7f"><div class="ttname"><a href="class_picto_1_1_scene.html#a6b113091afab91a1f92a210bf4e6bf7f">Picto::Scene::inputSignals_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; InputSignal &gt; &gt; inputSignals_</div><div class="ttdoc">A QList of InputSignals that we are updating. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00091">Scene.h:91</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_aedcf94b314329bc4b6aa2b3ee9eb3276"><div class="ttname"><a href="class_picto_1_1_scene.html#aedcf94b314329bc4b6aa2b3ee9eb3276">Picto::Scene::outputSignals_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; OutputSignal &gt; &gt; outputSignals_</div><div class="ttdoc">A QList of OutputSignals that we are updating. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00086">Scene.h:86</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a84a42dfd298e46798bf7fad2df2d3059"><div class="ttname"><a href="class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059">Picto::Scene::addVisualElement</a></div><div class="ttdeci">void addVisualElement(QSharedPointer&lt; VisualElement &gt; element)</div><div class="ttdoc">Adds the input VisualElement to this Scene so that it will be displayed next frame if it is marked vi...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00090">Scene.cpp:90</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a5d9afebbcf97818d17f3da512ab94df9"><div class="ttname"><a href="class_picto_1_1_scene.html#a5d9afebbcf97818d17f3da512ab94df9">Picto::Scene::setZoom</a></div><div class="ttdeci">static void setZoom(float zoom)</div><div class="ttdoc">Sets the current zoom level of this scene. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00131">Scene.cpp:131</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_a72c1d4973cdc827e6682eea4e04e1d11"><div class="ttname"><a href="class_picto_1_1_scene.html#a72c1d4973cdc827e6682eea4e04e1d11">Picto::Scene::unaddedDataViewElements_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; DataViewElement &gt; &gt; unaddedDataViewElements_</div><div class="ttdoc">A QList of DataViewElements that we stream in from the Task. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00078">Scene.h:78</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a1558a1f1eec6582e509defd1ff684fb7"><div class="ttname"><a href="class_picto_1_1_scene.html#a1558a1f1eec6582e509defd1ff684fb7">Picto::Scene::readyForRender</a></div><div class="ttdeci">void readyForRender(int callerId)</div><div class="ttdoc">Emitted when rendering is setup and the object wants doRender() to be called. </div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_aaf9d9efc4da11b8596628a102b152de9"><div class="ttname"><a href="class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9">Picto::Scene::render</a></div><div class="ttdeci">void render(QSharedPointer&lt; Engine::PictoEngine &gt; engine, int callerId)</div><div class="ttdoc">Sets up rendering and then causes the actual render to happen by triggering the doRender() function...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00052">Scene.cpp:52</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_aa08595cf0763b8969bfef393bb6447f0"><div class="ttname"><a href="class_picto_1_1_scene.html#aa08595cf0763b8969bfef393bb6447f0">Picto::Scene::addOutputSignal</a></div><div class="ttdeci">void addOutputSignal(QSharedPointer&lt; OutputSignal &gt; element)</div><div class="ttdoc">Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00112">Scene.cpp:112</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_ad10176d75a9cc0da56626f682d083507"><div class="ttname"><a href="class_picto_1_1_scene.html#ad10176d75a9cc0da56626f682d083507">Picto::Scene::Scene</a></div><div class="ttdeci">Scene()</div><div class="ttdoc">Constructs a Scene object. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00152">Scene.cpp:152</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_a9becf679f216274e36d609681091078b"><div class="ttname"><a href="class_picto_1_1_scene.html#a9becf679f216274e36d609681091078b">Picto::Scene::addDataViewElement</a></div><div class="ttdeci">void addDataViewElement(QSharedPointer&lt; DataViewElement &gt; element)</div><div class="ttdoc">Adds the input DataViewElement to this Scene so that it will be updated during rendering. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00098">Scene.cpp:98</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
+<div class="ttc" id="class_picto_1_1_scene_html_a4632387578c788d2613000a7e630c650"><div class="ttname"><a href="class_picto_1_1_scene.html#a4632387578c788d2613000a7e630c650">Picto::Scene::unaddedOutputSignals_</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; OutputSignal &gt; &gt; unaddedOutputSignals_</div><div class="ttdoc">A QList of OutputSignals that we stream in from the Task. </div><div class="ttdef"><b>Definition:</b> <a href="_scene_8h_source.html#l00088">Scene.h:88</a></div></div>
 <div class="ttc" id="class_picto_1_1_scene_html_af4522aca529497fb2901ce69e3748c60"><div class="ttname"><a href="class_picto_1_1_scene.html#af4522aca529497fb2901ce69e3748c60">Picto::Scene::addAudioElement</a></div><div class="ttdeci">void addAudioElement(QSharedPointer&lt; AudioElement &gt; element)</div><div class="ttdoc">Adds the input AudioElement to this Scene so that it will be played next frame if it is set to play...</div><div class="ttdef"><b>Definition:</b> <a href="_scene_8cpp_source.html#l00105">Scene.cpp:105</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

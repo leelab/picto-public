@@ -45,8 +45,6 @@
 #include "../DataViewer/DataViewWidget.h"
 #include "../DataViewer/DataViewLayout.h"
 
-#include "../../common/operator/OperatorPlot.h"
-
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 

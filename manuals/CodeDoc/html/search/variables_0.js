@@ -8,5 +8,6 @@ var searchData=
   ['assethash_5f',['assetHash_',['../class_asset_describer.html#a7a4357d99040ea29eb05a523b5bb44fb',1,'AssetDescriber']]],
   ['assetid_5f',['assetId_',['../class_picto_1_1_data_store.html#afd829fae7e10ab7f69d1e8da5b620bf2',1,'Picto::DataStore']]],
   ['associatechildrenbyguid_5f',['associateChildrenByGuid_',['../class_picto_1_1_data_store.html#a09bd3ad979745a9c39ffa4ce63d933eb',1,'Picto::DataStore']]],
-  ['audioelementfactory_5f',['audioElementFactory_',['../class_picto_1_1_output_element_container.html#ac7af3fe4134fdc30ee96ddb8c624e368',1,'Picto::OutputElementContainer']]]
+  ['audioelementfactory_5f',['audioElementFactory_',['../class_picto_1_1_output_element_container.html#ac7af3fe4134fdc30ee96ddb8c624e368',1,'Picto::OutputElementContainer']]],
+  ['audioelements_5f',['audioElements_',['../class_picto_1_1_scene.html#ab38fd1f589a9c7d1bc01e85af36dab18',1,'Picto::Scene']]]
 ];

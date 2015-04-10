@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['keeppixmapaspectratio',['keepPixmapAspectRatio',['../class_asset_item.html#ad7cef0e33de09351eaaf8cd6f84ca99f',1,'AssetItem']]],
-  ['keypressevent',['keyPressEvent',['../class_picto_1_1_visual_target.html#aca5fb78dbb7243782ee6d2a2f7213c93',1,'Picto::VisualTarget::keyPressEvent()'],['../class_diagram_scene.html#a17a8c291a5140207c913c4bb9e2969f0',1,'DiagramScene::keyPressEvent()'],['../class_searchable_text_edit.html#aedeebdabab6c6865ca8aaa1429967b2a',1,'SearchableTextEdit::keyPressEvent()']]],
-  ['keyreleaseevent',['keyReleaseEvent',['../class_diagram_scene.html#ae797c572d7c9a89ed6d5207497ebd879',1,'DiagramScene']]]
+  ['joinsession',['joinSession',['../class_remote_viewer.html#a9f9797fc32fdd55f9ffa163d9791a345',1,'RemoteViewer']]],
+  ['jumprequested',['jumpRequested',['../class_replay_viewer.html#a8644f4476b0a556d47a0a6e70019e557',1,'ReplayViewer']]],
+  ['jumptoend',['jumpToEnd',['../class_progress_widget.html#a2f86455dd880a393fcca48af01a4787e',1,'ProgressWidget']]],
+  ['jumptotime',['jumpToTime',['../class_playback_controller.html#a5c751dc9c22b95f6f601380f503f8f9c',1,'PlaybackController::jumpToTime()'],['../class_picto_1_1_playback_state_updater.html#ae5d0b66338a56810e71b596edbe0dd5b',1,'Picto::PlaybackStateUpdater::jumpToTime()']]]
 ];

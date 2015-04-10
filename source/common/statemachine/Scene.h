@@ -66,19 +66,30 @@ private:
 	QSharedPointer<QMutex> mutex_;
 	QSharedPointer<Engine::PictoEngine> engine_;
 	QColor backgroundColor_;
+
+	//! A QList of VisualElements that we are updating.
 	QList<QSharedPointer <VisualElement> > visualElements_;
+	//! A QList of VisualElements that we stream in from the Task.
 	QList<QSharedPointer <VisualElement> > unaddedVisualElements_;
 
+	//! A QList of DataViewElements that we are updating.
 	QList<QSharedPointer <DataViewElement> > dataViewElements_;
+	//! A QList of DataViewElements that we stream in from the Task.
 	QList<QSharedPointer <DataViewElement> > unaddedDataViewElements_;
 
+	//! A QList of AudioElements that we are updating.
 	QList<QSharedPointer <AudioElement> > audioElements_;
+	//! A QList of AudioElements that we stream in from the Task.
 	QList<QSharedPointer <AudioElement> > unaddedAudioElements_;
 
+	//! A QList of OutputSignals that we are updating.
 	QList<QSharedPointer <OutputSignal> > outputSignals_;
+	//! A QList of OutputSignals that we stream in from the Task.
 	QList<QSharedPointer <OutputSignal> > unaddedOutputSignals_;
 
+	//! A QList of InputSignals that we are updating.
 	QList<QSharedPointer <InputSignal> > inputSignals_;
+	//! A QList of InputSignals that we stream in from the Task.
 	QList<QSharedPointer <InputSignal> > unaddedInputSignals_;
 	
 	int frame_;

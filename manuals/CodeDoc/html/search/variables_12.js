@@ -5,5 +5,6 @@ var searchData=
   ['viewcontainermap_5f',['viewContainerMap_',['../class_view_selection_widget.html#abde2cb46d3982968e94ec612aefdb5de',1,'ViewSelectionWidget']]],
   ['viewselectionwidget_5f',['viewSelectionWidget_',['../class_remote_viewer.html#a44ec718f628f5544469f612abafd8e63',1,'RemoteViewer::viewSelectionWidget_()'],['../class_test_viewer.html#a75de6ab99acc32d7aa825d39b06f2d1b',1,'TestViewer::viewSelectionWidget_()']]],
   ['visualelementfactory_5f',['visualElementFactory_',['../class_picto_1_1_output_element_container.html#a06053bf2033cc326dca71c1c36065dca',1,'Picto::OutputElementContainer']]],
+  ['visualelements_5f',['visualElements_',['../class_picto_1_1_scene.html#aa6e1366db22819f2518d62d9536d3242',1,'Picto::Scene']]],
   ['visualtargethost_5f',['visualTargetHost_',['../class_remote_viewer.html#a12ac0e7540d023038609763e5e46e7cc',1,'RemoteViewer::visualTargetHost_()'],['../class_test_viewer.html#a16d0beb7e5a8e5a195119922f8a987f5',1,'TestViewer::visualTargetHost_()']]]
 ];

@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['samplingbarbase',['SamplingBarBase',['../class_picto_1_1_sampling_bar_base.html',1,'Picto']]],
+  ['samplingbarplot',['SamplingBarPlot',['../class_picto_1_1_sampling_bar_plot.html',1,'Picto']]],
+  ['samplinghistogramplot',['SamplingHistogramPlot',['../class_picto_1_1_sampling_histogram_plot.html',1,'Picto']]],
   ['saveoutputdialog',['SaveOutputDialog',['../class_save_output_dialog.html',1,'']]],
   ['scalefactors',['scaleFactors',['../struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html',1,'Picto::DoubletSignalChannel']]],
   ['scene',['Scene',['../class_picto_1_1_scene.html',1,'Picto']]],

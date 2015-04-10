@@ -37,6 +37,7 @@ enum ViewSize : int
 */
 struct WidgetCoords
 {
+	//! Construct a new WidgetCoords struct.
 	WidgetCoords(int x, int y)
 	{
 		x_ = x;
