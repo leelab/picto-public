@@ -129,7 +129,7 @@ Inheritance diagram for Picto::SamplingBarPlot:</div>
 Public Slots</h2></td></tr>
 <tr class="memitem:ad0dfcda6454c79f2e1739429a09754fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0dfcda6454c79f2e1739429a09754fa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#ad0dfcda6454c79f2e1739429a09754fa">submitValue</a> (long bin, double value)</td></tr>
-<tr class="memdesc:ad0dfcda6454c79f2e1739429a09754fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the value in the indicated bin by the passed-in value. <br /></td></tr>
+<tr class="memdesc:ad0dfcda6454c79f2e1739429a09754fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the indicated bin with the passed-in sample. <br /></td></tr>
 <tr class="separator:ad0dfcda6454c79f2e1739429a09754fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_bar_base')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_bar_base.html">Picto::BarBase</a></td></tr>
 <tr class="memitem:a53751cace554826adc6839239469b814 inherit pub_slots_class_picto_1_1_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53751cace554826adc6839239469b814"></a>
@@ -154,11 +154,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1a9630ae337f31f899efdcdde194b406"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50332875d5ba0716e7ec9ab234a09583"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50332875d5ba0716e7ec9ab234a09583"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a50332875d5ba0716e7ec9ab234a09583">getValue</a> (long bin) const </td></tr>
-<tr class="memdesc:a50332875d5ba0716e7ec9ab234a09583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the indicated bin. <br /></td></tr>
+<tr class="memdesc:a50332875d5ba0716e7ec9ab234a09583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the average of the samples submitted to the indicated bin. <br /></td></tr>
 <tr class="separator:a50332875d5ba0716e7ec9ab234a09583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba9ba65d381296961649c6686421485c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba9ba65d381296961649c6686421485c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#aba9ba65d381296961649c6686421485c">setCumulativeValue</a> (long bin, double value)</td></tr>
-<tr class="memdesc:aba9ba65d381296961649c6686421485c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value in indicated bin to the value. <br /></td></tr>
+<tr class="memdesc:aba9ba65d381296961649c6686421485c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the accumulated value in indicated bin to the value. <br /></td></tr>
 <tr class="separator:aba9ba65d381296961649c6686421485c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69162227467187f8b9e0320bf40ce43d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69162227467187f8b9e0320bf40ce43d"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a69162227467187f8b9e0320bf40ce43d">getCumulativeValue</a> (long bin) const </td></tr>
@@ -166,19 +166,19 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="separator:a69162227467187f8b9e0320bf40ce43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a727cb8cec6134c522164d00ffdac87e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a727cb8cec6134c522164d00ffdac87e5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a727cb8cec6134c522164d00ffdac87e5">setSamples</a> (long bin, long value)</td></tr>
-<tr class="memdesc:a727cb8cec6134c522164d00ffdac87e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value in indicated bin to the value. <br /></td></tr>
+<tr class="memdesc:a727cb8cec6134c522164d00ffdac87e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the number of samples received for the indicated bin to the value. <br /></td></tr>
 <tr class="separator:a727cb8cec6134c522164d00ffdac87e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f6baf9d04e02f6a49cec4b280be523a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f6baf9d04e02f6a49cec4b280be523a"></a>
 long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a3f6baf9d04e02f6a49cec4b280be523a">getSamples</a> (long bin) const </td></tr>
-<tr class="memdesc:a3f6baf9d04e02f6a49cec4b280be523a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the accumulated value in the indicated bin. <br /></td></tr>
+<tr class="memdesc:a3f6baf9d04e02f6a49cec4b280be523a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of samples received for the indicated bin. <br /></td></tr>
 <tr class="separator:a3f6baf9d04e02f6a49cec4b280be523a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9837d0e74bb669158ea4bf8f13c024ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9837d0e74bb669158ea4bf8f13c024ee"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a9837d0e74bb669158ea4bf8f13c024ee">setCumulativeValueSquared</a> (long bin, double value)</td></tr>
-<tr class="memdesc:a9837d0e74bb669158ea4bf8f13c024ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value in indicated bin to the value. <br /></td></tr>
+<tr class="memdesc:a9837d0e74bb669158ea4bf8f13c024ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the accumualted sample-value-squared for the indicated bin to the value. <br /></td></tr>
 <tr class="separator:a9837d0e74bb669158ea4bf8f13c024ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a530a7148a1ad6b5a2f2ed707ef0a42f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a530a7148a1ad6b5a2f2ed707ef0a42f6"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a530a7148a1ad6b5a2f2ed707ef0a42f6">getCumulativeValueSquared</a> (long bin) const </td></tr>
-<tr class="memdesc:a530a7148a1ad6b5a2f2ed707ef0a42f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the accumulated value in the indicated bin. <br /></td></tr>
+<tr class="memdesc:a530a7148a1ad6b5a2f2ed707ef0a42f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the accumulated sample-value-squared for the indicated bin. <br /></td></tr>
 <tr class="separator:a530a7148a1ad6b5a2f2ed707ef0a42f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a824d5aec4f6ffbeae0091d59d35cf306"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a824d5aec4f6ffbeae0091d59d35cf306"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#a824d5aec4f6ffbeae0091d59d35cf306">dropBin</a> (long bin)</td></tr>
@@ -485,7 +485,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa851bc08bf5cd98250f392bc7b0788ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa851bc08bf5cd98250f392bc7b0788ae"></a>
 static QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_plot.html#aa851bc08bf5cd98250f392bc7b0788ae">Create</a> ()</td></tr>
-<tr class="memdesc:aa851bc08bf5cd98250f392bc7b0788ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and returns a shared pointer to a new <a class="el" href="class_picto_1_1_operator_plot.html" title="A plot populated in realtime during experiments or analysis. ">OperatorPlot</a>. <br /></td></tr>
+<tr class="memdesc:aa851bc08bf5cd98250f392bc7b0788ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and returns a shared pointer to a new <a class="el" href="class_picto_1_1_sampling_bar_plot.html" title="A plot populated in realtime during experiments or analysis. ">SamplingBarPlot</a>. <br /></td></tr>
 <tr class="separator:aa851bc08bf5cd98250f392bc7b0788ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a150caa9544965aea41579bc38e9e2ac5 inherit pub_static_methods_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a150caa9544965aea41579bc38e9e2ac5"></a>
@@ -534,9 +534,12 @@ virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a613cef1da8e30a20db90b7d4fae3973c">postDeserialize</a> ()</td></tr>
 <tr class="memdesc:a613cef1da8e30a20db90b7d4fae3973c inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers plot with the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object, so the task can pass on the information to various UI elements, and intercept/handle scripting language commands. <br /></td></tr>
 <tr class="separator:a613cef1da8e30a20db90b7d4fae3973c inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98717b0fb31dcd2f7bdac10bd49792e1 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a98717b0fb31dcd2f7bdac10bd49792e1">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;qvError)</td></tr>
-<tr class="memdesc:a98717b0fb31dcd2f7bdac10bd49792e1 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a98717b0fb31dcd2f7bdac10bd49792e1">More...</a><br /></td></tr>
-<tr class="separator:a98717b0fb31dcd2f7bdac10bd49792e1 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93c31b456f4978556d0bae998e478d6f"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>_getSampleValue</b> (long bin) const </td></tr>
+<tr class="separator:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36768e75027e8b2eb63660be2a441569 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;)</td></tr>
+<tr class="memdesc:a36768e75027e8b2eb63660be2a441569 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a36768e75027e8b2eb63660be2a441569">More...</a><br /></td></tr>
+<tr class="separator:a36768e75027e8b2eb63660be2a441569 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a7d06dcc1767acaae9f02af163f63fe inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a7a7d06dcc1767acaae9f02af163f63fe">_handleErrorValue</a> (long bin, double &amp;rdRangeMax, QVector&lt; QwtIntervalSample &gt; &amp;qvError)</td></tr>
 <tr class="memdesc:a7a7d06dcc1767acaae9f02af163f63fe inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the standard error of each bin and pushes the value into the vector.  <a href="#a7a7d06dcc1767acaae9f02af163f63fe">More...</a><br /></td></tr>
 <tr class="separator:a7a7d06dcc1767acaae9f02af163f63fe inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -728,7 +731,7 @@ QHash&lt; long, long &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <tr class="separator:ac858b52991842b6c75039255bf9d3497 inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ee6f8ea62f5fd6f7729896c5ef6711b inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ee6f8ea62f5fd6f7729896c5ef6711b"></a>
 QwtPlotIntervalCurve *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a2ee6f8ea62f5fd6f7729896c5ef6711b">m_pErrorBars</a></td></tr>
-<tr class="memdesc:a2ee6f8ea62f5fd6f7729896c5ef6711b inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_operator_plot.html" title="A plot populated in realtime during experiments or analysis. ">OperatorPlot</a>'s IntervalCurve used to represent error bars. <br /></td></tr>
+<tr class="memdesc:a2ee6f8ea62f5fd6f7729896c5ef6711b inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_sampling_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">SamplingBarBase</a>'s IntervalCurve used to represent error bars. <br /></td></tr>
 <tr class="separator:a2ee6f8ea62f5fd6f7729896c5ef6711b inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67ead9e952c71222b7fc618169904db3 inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67ead9e952c71222b7fc618169904db3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">m_bLastErrorBarState</a></td></tr>
@@ -737,11 +740,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="inherit_header pro_attribs_class_picto_1_1_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_bar_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_bar_base.html">Picto::BarBase</a></td></tr>
 <tr class="memitem:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a444536313fa0afc21909fd5fcea99462"></a>
 QHash&lt; long, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a></td></tr>
-<tr class="memdesc:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise-sum of submitted values. <br /></td></tr>
+<tr class="memdesc:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise values. <br /></td></tr>
 <tr class="separator:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76ad9a211541611d32ea42e735ace04d"></a>
 QwtPlotHistogram *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a></td></tr>
-<tr class="memdesc:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_operator_plot.html" title="A plot populated in realtime during experiments or analysis. ">OperatorPlot</a>'s Qwt Histogram object. <br /></td></tr>
+<tr class="memdesc:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s Qwt Histogram object. <br /></td></tr>
 <tr class="separator:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_operator_plot"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_operator_plot')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_operator_plot.html">Picto::OperatorPlot</a></td></tr>
 <tr class="memitem:a1d5c23d874db5390ee941677b00d915f inherit pro_attribs_class_picto_1_1_operator_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d5c23d874db5390ee941677b00d915f"></a>

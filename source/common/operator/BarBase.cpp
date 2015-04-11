@@ -151,13 +151,13 @@ void BarBase::createNormalizedScale(double dMaxValue, double dTotalValue)
 	int numOfDivs = 2;
 	for (int i = 0; i < numOfDivs + 1; i++)
 	{
-		majorTicks += (i / (dAxisMax*numOfDivs))*dTotalValue;
+		majorTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;
 	}
 
 	numOfDivs = 10;
 	for (int i = 0; i < numOfDivs + 1; i++)
 	{
-		mediumTicks += (i / (dAxisMax*numOfDivs))*dTotalValue;
+		mediumTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;
 	}
 
 

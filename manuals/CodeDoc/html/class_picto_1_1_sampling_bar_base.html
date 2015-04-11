@@ -449,9 +449,12 @@ Protected Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a613cef1da8e30a20db90b7d4fae3973c">postDeserialize</a> ()</td></tr>
 <tr class="memdesc:a613cef1da8e30a20db90b7d4fae3973c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers plot with the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object, so the task can pass on the information to various UI elements, and intercept/handle scripting language commands. <br /></td></tr>
 <tr class="separator:a613cef1da8e30a20db90b7d4fae3973c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98717b0fb31dcd2f7bdac10bd49792e1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a98717b0fb31dcd2f7bdac10bd49792e1">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;qvError)</td></tr>
-<tr class="memdesc:a98717b0fb31dcd2f7bdac10bd49792e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a98717b0fb31dcd2f7bdac10bd49792e1">More...</a><br /></td></tr>
-<tr class="separator:a98717b0fb31dcd2f7bdac10bd49792e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c31b456f4978556d0bae998e478d6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93c31b456f4978556d0bae998e478d6f"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>_getSampleValue</b> (long bin) const </td></tr>
+<tr class="separator:a93c31b456f4978556d0bae998e478d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36768e75027e8b2eb63660be2a441569"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;)</td></tr>
+<tr class="memdesc:a36768e75027e8b2eb63660be2a441569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a36768e75027e8b2eb63660be2a441569">More...</a><br /></td></tr>
+<tr class="separator:a36768e75027e8b2eb63660be2a441569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a7d06dcc1767acaae9f02af163f63fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a7a7d06dcc1767acaae9f02af163f63fe">_handleErrorValue</a> (long bin, double &amp;rdRangeMax, QVector&lt; QwtIntervalSample &gt; &amp;qvError)</td></tr>
 <tr class="memdesc:a7a7d06dcc1767acaae9f02af163f63fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the standard error of each bin and pushes the value into the vector.  <a href="#a7a7d06dcc1767acaae9f02af163f63fe">More...</a><br /></td></tr>
 <tr class="separator:a7a7d06dcc1767acaae9f02af163f63fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -621,7 +624,7 @@ QHash&lt; long, long &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <tr class="separator:ac858b52991842b6c75039255bf9d3497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ee6f8ea62f5fd6f7729896c5ef6711b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ee6f8ea62f5fd6f7729896c5ef6711b"></a>
 QwtPlotIntervalCurve *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a2ee6f8ea62f5fd6f7729896c5ef6711b">m_pErrorBars</a></td></tr>
-<tr class="memdesc:a2ee6f8ea62f5fd6f7729896c5ef6711b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_operator_plot.html" title="A plot populated in realtime during experiments or analysis. ">OperatorPlot</a>'s IntervalCurve used to represent error bars. <br /></td></tr>
+<tr class="memdesc:a2ee6f8ea62f5fd6f7729896c5ef6711b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_sampling_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">SamplingBarBase</a>'s IntervalCurve used to represent error bars. <br /></td></tr>
 <tr class="separator:a2ee6f8ea62f5fd6f7729896c5ef6711b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67ead9e952c71222b7fc618169904db3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67ead9e952c71222b7fc618169904db3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">m_bLastErrorBarState</a></td></tr>
@@ -630,11 +633,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="inherit_header pro_attribs_class_picto_1_1_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_bar_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_bar_base.html">Picto::BarBase</a></td></tr>
 <tr class="memitem:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a444536313fa0afc21909fd5fcea99462"></a>
 QHash&lt; long, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a></td></tr>
-<tr class="memdesc:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise-sum of submitted values. <br /></td></tr>
+<tr class="memdesc:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise values. <br /></td></tr>
 <tr class="separator:a444536313fa0afc21909fd5fcea99462 inherit pro_attribs_class_picto_1_1_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76ad9a211541611d32ea42e735ace04d"></a>
 QwtPlotHistogram *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a></td></tr>
-<tr class="memdesc:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_operator_plot.html" title="A plot populated in realtime during experiments or analysis. ">OperatorPlot</a>'s Qwt Histogram object. <br /></td></tr>
+<tr class="memdesc:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s Qwt Histogram object. <br /></td></tr>
 <tr class="separator:a76ad9a211541611d32ea42e735ace04d inherit pro_attribs_class_picto_1_1_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_operator_plot"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_operator_plot')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_operator_plot.html">Picto::OperatorPlot</a></td></tr>
 <tr class="memitem:a1d5c23d874db5390ee941677b00d915f inherit pro_attribs_class_picto_1_1_operator_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d5c23d874db5390ee941677b00d915f"></a>
@@ -759,13 +762,13 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="section note"><dt>Note</dt><dd>This Vector is empty if m_bLastErrorBarState was false. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26" title="Reconstructs elements of underlying plot. ">BarBase::replot</a>, <a class="el" href="class_picto_1_1_sampling_bar_base.html#a7a7d06dcc1767acaae9f02af163f63fe" title="Calculates the standard error of each bin and pushes the value into the vector. ">SamplingBarBase::_handleErrorValue</a> </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#acbd3270d08bd8a0517cc6d467b91333b">Picto::BarBase</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7">Picto::BarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_sampling_bar_base_8cpp_source.html#l00077">77</a> of file <a class="el" href="_sampling_bar_base_8cpp_source.html">SamplingBarBase.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_sampling_bar_base_8cpp_source.html#l00082">82</a> of file <a class="el" href="_sampling_bar_base_8cpp_source.html">SamplingBarBase.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a98717b0fb31dcd2f7bdac10bd49792e1"></a>
+<a class="anchor" id="a36768e75027e8b2eb63660be2a441569"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -776,7 +779,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
           <td class="memname">virtual void Picto::SamplingBarBase::_handleErrorInitial </td>
           <td>(</td>
           <td class="paramtype">QVector&lt; QwtIntervalSample &gt; &amp;&#160;</td>
-          <td class="paramname"><em>qvError</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -790,9 +793,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Optional error calculation for future children. Called start of replot. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26" title="Reconstructs elements of underlying plot. ">BarBase::replot</a> </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#a5d73fd756fcf7a641ac15568ae5d64d1">Picto::BarBase</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">Picto::BarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_sampling_bar_base_8h_source.html#l00042">42</a> of file <a class="el" href="_sampling_bar_base_8h_source.html">SamplingBarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_sampling_bar_base_8h_source.html#l00044">44</a> of file <a class="el" href="_sampling_bar_base_8h_source.html">SamplingBarBase.h</a>.</p>
 
 </div>
 </div>
@@ -837,9 +840,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Calculates the standard error of each bin and pushes the value into the vector. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26" title="Reconstructs elements of underlying plot. ">BarBase::replot</a> </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#a292d9c79fbe904d7e9fc27a4799d58d0">Picto::BarBase</a>.</p>
+<p>Reimplemented from <a class="el" href="class_picto_1_1_bar_base.html#a9eebf11cd4f9dc4d6e3bdfb5d619d9e3">Picto::BarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_sampling_bar_base_8cpp_source.html#l00052">52</a> of file <a class="el" href="_sampling_bar_base_8cpp_source.html">SamplingBarBase.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_sampling_bar_base_8cpp_source.html#l00057">57</a> of file <a class="el" href="_sampling_bar_base_8cpp_source.html">SamplingBarBase.cpp</a>.</p>
 
 </div>
 </div>
