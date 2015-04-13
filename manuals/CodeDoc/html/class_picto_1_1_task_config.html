@@ -114,10 +114,6 @@ Inheritance diagram for Picto::TaskConfig:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a502dde84dce83343e596b74253a3aa6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a502dde84dce83343e596b74253a3aa6f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a502dde84dce83343e596b74253a3aa6f">widgetMapUpdated</a> (QWidget *pWidget)</td></tr>
-<tr class="memdesc:a502dde84dce83343e596b74253a3aa6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A signal sent whenever the title or other associated values of a viewer widget is updated. <br /></td></tr>
-<tr class="separator:a502dde84dce83343e596b74253a3aa6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a93c472098747355c55e4d2af8dae64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a93c472098747355c55e4d2af8dae64"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64">widgetAddedToMap</a> (QWidget *pWidget)</td></tr>
 <tr class="memdesc:a3a93c472098747355c55e4d2af8dae64"><td class="mdescLeft">&#160;</td><td class="mdescRight">A signal sent whenever a viewer widget is added to the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>. <br /></td></tr>
@@ -133,10 +129,6 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">addObserverWidget</a> (<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset, QWidget *widget)</td></tr>
 <tr class="memdesc:a0bf382041cbaf6524f157f08319b44be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the passed in ObserverWidget to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a>. <br /></td></tr>
 <tr class="separator:a0bf382041cbaf6524f157f08319b44be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2713302bcbb7155f6c28ccbb6ffdedf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2713302bcbb7155f6c28ccbb6ffdedf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#ae2713302bcbb7155f6c28ccbb6ffdedf">updateWidgetName</a> (QWidget *widget, const QString &amp;newName)</td></tr>
-<tr class="memdesc:ae2713302bcbb7155f6c28ccbb6ffdedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the name stored for the referenced Widget. <br /></td></tr>
-<tr class="separator:ae2713302bcbb7155f6c28ccbb6ffdedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f3c52e84abe837cb4289262a97752eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f3c52e84abe837cb4289262a97752eb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">removeWidget</a> (QWidget *widget)</td></tr>
 <tr class="memdesc:a6f3c52e84abe837cb4289262a97752eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the passed widget from the widgetNameMap, as well all assets pointing to it from the widgetMap. <br /></td></tr>
@@ -151,7 +143,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3333d04513326f4d98b794e127e52f43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3333d04513326f4d98b794e127e52f43"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">setUpdateSignalEnabled</a> (bool bEnabled=true)</td></tr>
-<tr class="memdesc:a3333d04513326f4d98b794e127e52f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether <a class="el" href="class_picto_1_1_task_config.html#a502dde84dce83343e596b74253a3aa6f" title="A signal sent whenever the title or other associated values of a viewer widget is updated...">widgetMapUpdated()</a> is emitted every time a change occurs. <br /></td></tr>
+<tr class="memdesc:a3333d04513326f4d98b794e127e52f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether widgetMapUpdated() is emitted every time a change occurs. <br /></td></tr>
 <tr class="separator:a3333d04513326f4d98b794e127e52f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8151f559c5992237add0e2b770125a7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8151f559c5992237add0e2b770125a7f"></a>
 const QList&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">getWidgets</a> () const </td></tr>

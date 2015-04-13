@@ -41,6 +41,8 @@ public slots:
 protected:
 	//! \brief Returns the current Bin Size
 	virtual double getBinSize() const { return propertyContainer_->getPropertyValue("BinSize").toDouble(); };
+	//! Returns the current Bin Spacing
+	virtual double getBinSpacing() const { return 0.0; };
 };
 
 

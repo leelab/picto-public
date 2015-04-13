@@ -6,6 +6,7 @@
 
 namespace Picto {
 
+class BarAxisHandler;
 /*!	\brief A plot populated in realtime during experiments or analysis.
  *
  *	The plot is meant for display in the Operator View.
@@ -52,11 +53,19 @@ public slots:
 	//! Returns the accumulated sample-value-squared for the indicated bin.
 	double getCumulativeValueSquared(long bin) const { return _getValueSquared(bin); };
 
+	const QString getLabel(long bin) const;
+	void setLabel(long bin, QString name);
+
 	//! Eliminates the values in indicated bin.
 	void dropBin(long bin) { _dropBin(bin); };
 
 protected:
 	virtual double getBinSize() const { return 1.0; };
+	virtual double getBinSpacing() const { return propertyContainer_->getPropertyValue("BinSpacing").toDouble(); };
+	virtual void handleXLabels(long lLowerBound, long lUpperBound);
+
+	//! Manages the storing and rendering of axis names
+	BarAxisHandler *m_pAxisHandler;
 };
 
 

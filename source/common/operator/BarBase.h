@@ -45,8 +45,14 @@ protected:
 	virtual void replot();
 	void createNormalizedScale(double dMaxValue, double dTotalValue);
 
+	//! Flag to update the bins
+	bool m_bBinsModified;
 	//! Returns the current Bin Size
 	virtual double getBinSize() const = 0;
+	//! Returns the current Bin Spacing
+	virtual double getBinSpacing() const = 0;
+	//! Sets X Labels for children that change the default behavior.  Accepts Lower and Upper bounds as arguments.
+	virtual void handleXLabels(long, long) {};
 
 	//! Returns the value of the NormalizedDisplay property.
 	bool getNormalized() const { return propertyContainer_->getPropertyValue("NormalizedDisplay").toBool(); };

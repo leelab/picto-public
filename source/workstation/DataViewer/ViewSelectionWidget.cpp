@@ -353,7 +353,6 @@ void ViewSelectionWidget::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCo
 {
 	currentTaskConfig_ = pTaskConfig;
 	
-	connect(currentTaskConfig_.data(), SIGNAL(widgetMapUpdated(QWidget*)), this, SLOT(updateWidgetContainer(QWidget*)));
 	connect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
 	connect(currentTaskConfig_.data(), SIGNAL(widgetRemovedFromMap(QWidget*)), this, SLOT(removeWidgetContainer(QWidget*)));
 }

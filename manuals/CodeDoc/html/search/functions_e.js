@@ -5,7 +5,6 @@ var searchData=
   ['namechangerequest',['nameChangeRequest',['../class_control_panel_interface.html#a8251e17c19a1c3a51b416e586e224dec',1,'ControlPanelInterface']]],
   ['nameedited',['nameEdited',['../class_picto_1_1_u_i_enabled.html#a323aef51f96a9a8a6102e768add07226',1,'Picto::UIEnabled']]],
   ['namewaschanged',['nameWasChanged',['../class_control_panel_interface.html#a1ff4cd53f53e2b46ace9db8d15af29e8',1,'ControlPanelInterface::nameWasChanged()'],['../class_f_p_interface.html#a4582783afa21edafe30d900889324ca1',1,'FPInterface::nameWasChanged()']]],
-  ['namewasedited',['nameWasEdited',['../class_picto_1_1_data_view_element.html#ae4393df4524663224c2afda2e9804d73',1,'Picto::DataViewElement']]],
   ['needsuniquechildnames',['needsUniqueChildNames',['../class_picto_1_1_data_store.html#af4853c8c9ec20506d352b1c1bd01360a',1,'Picto::DataStore']]],
   ['needsuniquename',['needsUniqueName',['../class_picto_1_1_asset.html#ad2b39292a4648dcdb9917f4bcf4bd658',1,'Picto::Asset']]],
   ['neuraldataviewer',['NeuralDataViewer',['../class_neural_data_viewer.html#a2e9aa904728f717169190b383d779945',1,'NeuralDataViewer']]],

@@ -37,7 +37,6 @@ public:
 	virtual ~TaskConfig(){};
 
 	void addObserverWidget(DataViewElement *owningAsset, QWidget *widget);
-	void updateWidgetName(QWidget *widget, const QString &newName);
 
 	void removeWidget(QWidget *widget);
 	void removeAsset(DataViewElement *owningAsset);
@@ -53,9 +52,6 @@ public:
 	DataViewElement *getAsset(QWidget *pWidget) const;
 
 signals:
-	/*! \brief A signal sent whenever the title or other associated values of a viewer widget is updated.
-	 */
-	void widgetMapUpdated(QWidget *pWidget);
 	/*! \brief A signal sent whenever a viewer widget is added to the Task.
 	*/
 	void widgetAddedToMap(QWidget *pWidget);

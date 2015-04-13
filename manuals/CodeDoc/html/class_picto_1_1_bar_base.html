@@ -134,11 +134,6 @@ Public Slots</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a53751cace554826adc6839239469b814">clearPlot</a> ()</td></tr>
 <tr class="memdesc:a53751cace554826adc6839239469b814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all of the current plot data. <br /></td></tr>
 <tr class="separator:a53751cace554826adc6839239469b814"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_slots_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
-<tr class="memitem:ae4393df4524663224c2afda2e9804d73 inherit pub_slots_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4393df4524663224c2afda2e9804d73"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#ae4393df4524663224c2afda2e9804d73">nameWasEdited</a> ()</td></tr>
-<tr class="memdesc:ae4393df4524663224c2afda2e9804d73 inherit pub_slots_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">A slot that is signaled whenever the name of this <a class="el" href="class_picto_1_1_data_view_element.html" title="A Base class for all Elements representing data that is output to the Observer while viewing an exper...">DataViewElement</a> changes. <br /></td></tr>
-<tr class="separator:ae4393df4524663224c2afda2e9804d73 inherit pub_slots_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bb6ca0be073c2537c66b82242c26aa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
@@ -475,6 +470,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a0ab41088af382a1602648d3e0df94e69">getBinSize</a> () const =0</td></tr>
 <tr class="memdesc:a0ab41088af382a1602648d3e0df94e69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current Bin Size. <br /></td></tr>
 <tr class="separator:a0ab41088af382a1602648d3e0df94e69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa69588799a1b98f0096aa88304ce37d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa69588799a1b98f0096aa88304ce37d9"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aa69588799a1b98f0096aa88304ce37d9">getBinSpacing</a> () const =0</td></tr>
+<tr class="memdesc:aa69588799a1b98f0096aa88304ce37d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current Bin Spacing. <br /></td></tr>
+<tr class="separator:aa69588799a1b98f0096aa88304ce37d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a523a63cef9bf25a88434430686405c50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a523a63cef9bf25a88434430686405c50"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">handleXLabels</a> (long, long)</td></tr>
+<tr class="memdesc:a523a63cef9bf25a88434430686405c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets X Labels for children that change the default behavior. Accepts Lower and Upper bounds as arguments. <br /></td></tr>
+<tr class="separator:a523a63cef9bf25a88434430686405c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1c15c9e27e57df776eafd3caecdcada"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1c15c9e27e57df776eafd3caecdcada"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ab1c15c9e27e57df776eafd3caecdcada">getNormalized</a> () const </td></tr>
 <tr class="memdesc:ab1c15c9e27e57df776eafd3caecdcada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the NormalizedDisplay property. <br /></td></tr>
@@ -604,6 +607,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:aad85f4aeca60ac7a7a5bbad8d5e83eca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad85f4aeca60ac7a7a5bbad8d5e83eca"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a></td></tr>
+<tr class="memdesc:aad85f4aeca60ac7a7a5bbad8d5e83eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to update the bins. <br /></td></tr>
+<tr class="separator:aad85f4aeca60ac7a7a5bbad8d5e83eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a444536313fa0afc21909fd5fcea99462"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a444536313fa0afc21909fd5fcea99462"></a>
 QHash&lt; long, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a></td></tr>
 <tr class="memdesc:a444536313fa0afc21909fd5fcea99462"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise values. <br /></td></tr>
@@ -721,7 +728,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a5cfc344b6d250f620c90623cca040415">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00069">69</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00075">75</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -752,7 +759,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00059">59</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00065">65</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -799,7 +806,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a7a7d06dcc1767acaae9f02af163f63fe">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00064">64</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00070">70</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -838,7 +845,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Uses the passed-in values to generate the ideal normalized plot range. </p>
 <dl class="section note"><dt>Note</dt><dd>Normalization in this case is really just a trick of the scale. </dd></dl>
 
-<p>Definition at line <a class="el" href="_bar_base_8cpp_source.html#l00130">130</a> of file <a class="el" href="_bar_base_8cpp_source.html">BarBase.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8cpp_source.html#l00141">141</a> of file <a class="el" href="_bar_base_8cpp_source.html">BarBase.cpp</a>.</p>
 
 </div>
 </div>
@@ -868,7 +875,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_operator_plot.html#a01a1bceea23c96b2e0ec3b668d7643b8">Picto::OperatorPlot</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#aa43c27480556676a1e98f064f8196984">Picto::SamplingBarBase</a>, <a class="el" href="class_picto_1_1_bar_plot.html#a8f8b40bfbe8e215b2844cc7f9e6a3c39">Picto::BarPlot</a>, <a class="el" href="class_picto_1_1_histogram_plot.html#a3d80b63333de0652ea5cb35e7f12f163">Picto::HistogramPlot</a>, <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a1a9630ae337f31f899efdcdde194b406">Picto::SamplingBarPlot</a>, and <a class="el" href="class_picto_1_1_sampling_histogram_plot.html#ae8fb5d0c961a33009899d9365a12ee9e">Picto::SamplingHistogramPlot</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#aa43c27480556676a1e98f064f8196984">Picto::SamplingBarBase</a>, <a class="el" href="class_picto_1_1_bar_plot.html#a8f8b40bfbe8e215b2844cc7f9e6a3c39">Picto::BarPlot</a>, <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a1a9630ae337f31f899efdcdde194b406">Picto::SamplingBarPlot</a>, <a class="el" href="class_picto_1_1_histogram_plot.html#a3d80b63333de0652ea5cb35e7f12f163">Picto::HistogramPlot</a>, and <a class="el" href="class_picto_1_1_sampling_histogram_plot.html#ae8fb5d0c961a33009899d9365a12ee9e">Picto::SamplingHistogramPlot</a>.</p>
 
 <p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00034">34</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 

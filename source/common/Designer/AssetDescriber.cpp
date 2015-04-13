@@ -1027,6 +1027,8 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("OperatorPlot");
 	curr->setInherits(getAssetDescription("DataViewElement"));
 	curr->setOverview("Used to display realtime plots for the Operator.");
+	curr->addProp("XTitle", "The title of the X-Axis of the plot.");
+	curr->addProp("YTitle", "The title of the Y-Axis of the plot.");
 
 	curr = addDescription("BarBase");
 	curr->setInherits(getAssetDescription("OperatorPlot"));
@@ -1038,10 +1040,13 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("BarPlot");
 	curr->setInherits(getAssetDescription("BarBase"));
 	curr->setOverview("Creates a Bar Plot for real-time or analysis viewing.  The bins are indexed by an arbitrary integer.");
+	curr->addProp("BinSpacing", "The amount of space to be left between each bar, as a fraction of the size of the bars.");
 	curr->addSFunc("adjustValue(int bin, number value)", "Modifies the value in the indicated bin by the passed-in value.");
 	curr->addSFunc("setValue(int bin, number value)", "Sets the value in indicated bin to the value.");
 	curr->addSFunc("getValue(int bin)", "Returns the value of the indicated bin.");
 	curr->addSFunc("dropBin(int bin)", "Eliminates the values in the indicated bin.");
+	curr->addSFunc("getLabel(int bin)", "Returns the user-assigned label for the indicated bin.");
+	curr->addSFunc("setLabel(int bin, string label)", "Sets the label for the indicated bin.");
 
 	curr = addDescription("HistogramPlot");
 	curr->setInherits(getAssetDescription("BarBase"));
@@ -1060,6 +1065,7 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("SamplingBarPlot");
 	curr->setInherits(getAssetDescription("SamplingBarBase"));
 	curr->setOverview("A Bar Plot meant for accumulating samples and displaying the Average value submitted to each bin.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
+	curr->addProp("BinSpacing", "The amount of space to be left between each bar, as a fraction of the size of the bars.");
 	curr->addSFunc("submitValue(int bin, number value)", "Modifies the indicated bin with the passed-in sample.");
 	curr->addSFunc("getValue(int bin)", "Returns the average of the samples submitted to the indicated bin.");
 	curr->addSFunc("setCumulativeValue(int bin, number value)", "Sets the accumulated value in indicated bin to the value.  You generally won't need to use this.");
@@ -1069,6 +1075,8 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("setCumulativeValueSquared(int bin, number value)", "Sets the accumualted sample-value-squared for the indicated bin to the value.");
 	curr->addSFunc("getCumulativeValueSquared(int bin)", "Returns the accumulated sample-value-squared for the indicated bin.");
 	curr->addSFunc("dropBin(int bin)", "Eliminates the values in the indicated bin.");
+	curr->addSFunc("getLabel(int bin)", "Returns the user-assigned label for the indicated bin.");
+	curr->addSFunc("setLabel(int bin, string label)", "Sets the label for the indicated bin.");
 
 	curr = addDescription("SamplingHistogramPlot");
 	curr->setInherits(getAssetDescription("SamplingBarBase"));

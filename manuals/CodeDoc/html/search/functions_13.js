@@ -176,6 +176,7 @@ var searchData=
   ['setip',['setIP',['../class_director_interface.html#ac461d58ad8cc8bd1e58d48420f48503b',1,'DirectorInterface']]],
   ['setipaddress',['setIpAddress',['../struct_f_p_g_e_t_command_handler.html#a4a95d31b5d87c78f147dac71fba64c34',1,'FPGETCommandHandler']]],
   ['setitemcolor',['setItemColor',['../class_diagram_scene.html#a479732f4ab6aac056fdb52ac925e36e3',1,'DiagramScene::setItemColor()'],['../class_editor_state.html#a97266d3f8d232b317c2bbacf9dc46f93',1,'EditorState::setItemColor()']]],
+  ['setlabel',['setLabel',['../class_picto_1_1_bar_plot.html#ab669dde2e51a321fefa23723670185f4',1,'Picto::BarPlot::setLabel()'],['../class_picto_1_1_sampling_bar_plot.html#aab201f8cba6307323b2acabd4da78642',1,'Picto::SamplingBarPlot::setLabel()']]],
   ['setlastactionundoable',['setLastActionUndoable',['../class_editor_state.html#a14a1806929ce9f6fc1c48a5dc356da4f',1,'EditorState']]],
   ['setlastclick',['setLastClick',['../class_picto_1_1_operator_click_parameter.html#acec2127f2b6c18313f3136b2dd31c065',1,'Picto::OperatorClickParameter']]],
   ['setlastframe',['setLastFrame',['../class_picto_1_1_engine_1_1_picto_engine.html#a9867511d183491bd8a84b2fc5f24f0a8',1,'Picto::Engine::PictoEngine']]],

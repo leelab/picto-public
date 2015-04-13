@@ -9,6 +9,7 @@
 #include <qwt_legend_label.h>
 #include <qwt_scale_draw.h>
 #include <qwt_plot_intervalcurve.h>
+#include <qwt_scale_engine.h>
 
 namespace Picto {
 
@@ -43,7 +44,7 @@ private:
 const QString BarBase::type = "Bar Base";
 
 BarBase::BarBase()
-	: m_pHistoPlotItem(nullptr)
+	: m_pHistoPlotItem(nullptr), m_bBinsModified(false)
 {
 
 	m_pHistoPlotItem = new QwtPlotHistogram("Data");
@@ -53,6 +54,8 @@ BarBase::BarBase()
 
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
+
+	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
 }
 
 /*!	\brief Reconstructs elements of underlying plot.
@@ -90,8 +93,9 @@ void BarBase::replot()
 	foreach(long key, keyList)
 	{
 		const double dSample = _getSampleValue(key);
-		const double dMin = (key - 0.5) * dBinSize;
-		const double dMax = (key + 0.5) * dBinSize;
+		const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
+		const double dMin = (key - dBinWidth) * dBinSize;
+		const double dMax = (key + dBinWidth) * dBinSize;
 		qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));
 
 		if (bNormalized)
@@ -114,6 +118,13 @@ void BarBase::replot()
 	if (bNormalized)
 	{
 		createNormalizedScale(dRangeMax, total);
+	}
+
+	if (m_bBinsModified)
+	{
+		m_bBinsModified = false;
+		m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setMargins(0.5*dBinSize, 0.5*dBinSize);
+		handleXLabels(*keyList.begin(), *(keyList.end()-1));
 	}
 
 	m_pPlot->replot();
@@ -254,6 +265,8 @@ double BarBase::_getValue(long bin) const
 void BarBase::_createBin(long bin)
 {
 	m_qhdCumulValue[bin] = 0;
+
+	m_bBinsModified = true;
 }
 
 /*!	\brief Virtual function to define behavior when a bin needs to be destroyed.
@@ -261,6 +274,8 @@ void BarBase::_createBin(long bin)
 void BarBase::_destroyBin(long bin)
 {
 	m_qhdCumulValue.remove(bin);
+
+	m_bBinsModified = true;
 }
 
 }; //namespace Picto

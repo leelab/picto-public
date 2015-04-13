@@ -8,7 +8,6 @@ var searchData=
   ['widgetaddedtomap',['widgetAddedToMap',['../class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64',1,'Picto::TaskConfig']]],
   ['widgetcoords',['WidgetCoords',['../struct_widget_coords.html#ad0f0cff1663b8c552d6c645704d446b9',1,'WidgetCoords']]],
   ['widgetisvalid',['widgetIsValid',['../class_picto_1_1_analysis_output.html#a459b96a480c7f6a4ae4fd63960f07b63',1,'Picto::AnalysisOutput::widgetIsValid()'],['../class_picto_1_1_analysis_output_widget_container.html#a92d7901bd7f01b7eefd066d3faa7091b',1,'Picto::AnalysisOutputWidgetContainer::widgetIsValid()']]],
-  ['widgetmapupdated',['widgetMapUpdated',['../class_picto_1_1_task_config.html#a502dde84dce83343e596b74253a3aa6f',1,'Picto::TaskConfig']]],
   ['widgetremoved',['widgetRemoved',['../class_view_selection_widget.html#a56c6be91ee1ad4900fba15af9f4e8ab9',1,'ViewSelectionWidget']]],
   ['widgetremovedfrommap',['widgetRemovedFromMap',['../class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00',1,'Picto::TaskConfig']]],
   ['windowassetchanged',['windowAssetChanged',['../class_editor_state.html#a8ab4806896be67c7b57ae53f9f02147a',1,'EditorState::windowAssetChanged()'],['../class_level_up_button.html#a8056c2d96bb2d47071bbe89359a21a39',1,'LevelUpButton::windowAssetChanged()']]],

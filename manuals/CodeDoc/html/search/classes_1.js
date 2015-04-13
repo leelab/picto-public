@@ -1,6 +1,7 @@
 var searchData=
 [
   ['backgroundtoolgroup',['BackgroundToolGroup',['../class_background_tool_group.html',1,'']]],
+  ['baraxishandler',['BarAxisHandler',['../class_picto_1_1_bar_axis_handler.html',1,'Picto']]],
   ['barbase',['BarBase',['../class_picto_1_1_bar_base.html',1,'Picto']]],
   ['barplot',['BarPlot',['../class_picto_1_1_bar_plot.html',1,'Picto']]],
   ['behavioraldataunit',['BehavioralDataUnit',['../class_picto_1_1_behavioral_data_unit.html',1,'Picto']]],

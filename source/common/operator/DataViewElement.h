@@ -49,10 +49,6 @@ public:
 
 	virtual QString friendlyTypeName(){return "Data View Element";};
 	virtual QString getUIGroup(){return "Operator Features";};
-public slots:
-	/*! \brief A slot that is signaled whenever the name of this DataViewElement changes.
-	 */
-	void nameWasEdited();
 protected:
 	virtual void postDeserialize();
 };

@@ -1,13 +1,16 @@
 var searchData=
 [
+  ['m_5fbbinsmodified',['m_bBinsModified',['../class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca',1,'Picto::BarBase']]],
   ['m_5fbdatachanged',['m_bDataChanged',['../class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027',1,'Picto::OperatorPlot']]],
   ['m_5fblasterrorbarstate',['m_bLastErrorBarState',['../class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3',1,'Picto::SamplingBarBase']]],
+  ['m_5fpaxishandler',['m_pAxisHandler',['../class_picto_1_1_bar_plot.html#a4f316d5a456dfe47f169a650a3e6e251',1,'Picto::BarPlot::m_pAxisHandler()'],['../class_picto_1_1_sampling_bar_plot.html#adc66d4e275efb818b83f16dc9d431904',1,'Picto::SamplingBarPlot::m_pAxisHandler()']]],
   ['m_5fperrorbars',['m_pErrorBars',['../class_picto_1_1_sampling_bar_base.html#a2ee6f8ea62f5fd6f7729896c5ef6711b',1,'Picto::SamplingBarBase']]],
   ['m_5fphistoplotitem',['m_pHistoPlotItem',['../class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d',1,'Picto::BarBase']]],
   ['m_5fpplot',['m_pPlot',['../class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f',1,'Picto::OperatorPlot']]],
   ['m_5fqhdcumulvalsq',['m_qhdCumulValSq',['../class_picto_1_1_sampling_bar_base.html#addb16fe891f61d6312118cc77fe92659',1,'Picto::SamplingBarBase']]],
   ['m_5fqhdcumulvalue',['m_qhdCumulValue',['../class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462',1,'Picto::BarBase']]],
   ['m_5fqhlcumulnum',['m_qhlCumulNum',['../class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497',1,'Picto::SamplingBarBase']]],
+  ['m_5fqhslabels',['m_qhsLabels',['../class_picto_1_1_bar_axis_handler.html#aa87f3e94baddab57f212db8c440144b1',1,'Picto::BarAxisHandler']]],
   ['mapinitialized_5f',['mapInitialized_',['../class_diagram_item_factory.html#a676bb7e5ff8981cdab42d5efcb81c786',1,'DiagramItemFactory']]],
   ['max_5f',['max_',['../class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99',1,'Picto::NormalizedScaleDraw']]],
   ['minrewardperiod',['minRewardPeriod',['../struct_picto_1_1_reward_controller_1_1_reward_unit.html#acfde635e64b82035420e342a74816ff6',1,'Picto::RewardController::RewardUnit']]],

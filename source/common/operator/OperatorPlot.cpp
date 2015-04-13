@@ -20,6 +20,9 @@ OperatorPlot::OperatorPlot()
 	canvas->setPalette(Qt::gray);
 	canvas->setBorderRadius(10);
 	m_pPlot->setCanvas(canvas);
+
+	AddDefinableProperty(QVariant::String, "XTitle", "");
+	AddDefinableProperty(QVariant::String, "YTitle", "");
 }
 
 void OperatorPlot::draw()
@@ -40,6 +43,9 @@ void OperatorPlot::postDeserialize()
 	DataViewElement::postDeserialize();
 
 	getTaskConfig()->addObserverWidget(this, m_pPlot);
+
+	m_pPlot->setAxisTitle(QwtPlot::xBottom, propertyContainer_->getPropertyValue("XTitle").toString());
+	m_pPlot->setAxisTitle(QwtPlot::yLeft, propertyContainer_->getPropertyValue("YTitle").toString());
 }
 
 void OperatorPlot::setTitle(const QString &newTitle)

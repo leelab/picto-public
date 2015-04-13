@@ -184,6 +184,8 @@ void SamplingBarBase::_createBin(long bin)
 	m_qhlCumulNum[bin] = 0;
 	m_qhdCumulValue[bin] = 0;
 	m_qhdCumulValSq[bin] = 0;
+
+	m_bBinsModified = true;
 }
 
 /*!	\brief Virtual function to define behavior when a bin needs to be destroyed.
@@ -193,6 +195,8 @@ void SamplingBarBase::_destroyBin(long bin)
 	m_qhdCumulValue.remove(bin);
 	m_qhlCumulNum.remove(bin);
 	m_qhdCumulValSq.remove(bin);
+
+	m_bBinsModified = true;
 }
 
 }; //namespace Picto

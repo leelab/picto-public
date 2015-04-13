@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['label',['label',['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw']]],
+  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label()']]],
   ['last',['last',['../class_picto_1_1_analysis_variable_list.html#aa82766ac746114423f1efdd96fa45153',1,'Picto::AnalysisVariableList::last()'],['../class_picto_1_1_variable_list.html#ac684133fd817f006316f4e5d15f2ea98',1,'Picto::VariableList::last()']]],
   ['lastasnum',['lastAsNum',['../class_picto_1_1_analysis_variable_list.html#ab8327a2a13d12929da67083395cf53dd',1,'Picto::AnalysisVariableList::lastAsNum()'],['../class_picto_1_1_variable_list.html#a5597f41e1e1d3dfe659748c366b1682b',1,'Picto::VariableList::lastAsNum()']]],
   ['lastasstring',['lastAsString',['../class_picto_1_1_analysis_variable_list.html#a1e13597818e378e3ba8a72dd1d5f0862',1,'Picto::AnalysisVariableList::lastAsString()'],['../class_picto_1_1_variable_list.html#a863164951812d766efd0b68d629ebd17',1,'Picto::VariableList::lastAsString()']]],
@@ -62,7 +62,7 @@ var searchData=
   ['loadrun',['loadRun',['../class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c',1,'Picto::FileSessionLoader::loadRun()'],['../class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200',1,'Picto::PlaybackStateUpdater::loadRun()']]],
   ['loadrundata',['loadRunData',['../class_picto_1_1_file_session_loader.html#a7f02445db069cb6c8b1fb5110426cbd3',1,'Picto::FileSessionLoader']]],
   ['loadscene',['loadScene',['../class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b',1,'Designer']]],
-  ['loadsession',['loadSession',['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()'],['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()']]],
+  ['loadsession',['LoadSession',['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()'],['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()']]],
   ['loadwidget',['loadWidget',['../class_picto_1_1_analysis_output.html#a8dfcc745ea219323befdb49fcb7892e0',1,'Picto::AnalysisOutput']]],
   ['lockfile_5f',['lockFile_',['../class_picto_1_1_analysis_output.html#a92f59f26f9e3fb8c2da26c0d64ea5802',1,'Picto::AnalysisOutput']]],
   ['logicresult',['LogicResult',['../class_picto_1_1_logic_result.html',1,'Picto']]]

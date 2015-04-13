@@ -45,25 +45,6 @@ void TaskConfig::addObserverWidget(DataViewElement *owningAsset, QWidget *widget
 	}
 }
 
-/*! \brief Updates the name stored for the referenced Widget.
- */
-void TaskConfig::updateWidgetName(QWidget *widget, const QString &newName)
-{
-	if (widgetNameMap.contains(widget))
-	{
-		widgetNameMap[widget] = newName;
-	}
-	else
-	{
-		qDebug() << "Widget Title modified for non-existant Widget";
-	}
-
-	if (updateSignalEnabled_)
-	{
-		emit widgetMapUpdated(widget);
-	}
-}
-
 /*! \brief Removes the passed widget from the widgetNameMap, as well all assets pointing to it from the widgetMap.
  */
 void TaskConfig::removeWidget(QWidget *widget)
