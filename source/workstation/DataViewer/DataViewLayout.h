@@ -7,10 +7,10 @@
 #include <QGridLayout>
 
 #include "../viewer.h"
+#include "../../common/operator/DataViewSpecs.h"
 
 using namespace Picto;
 
-enum ViewSize : int;
 
 /*!	\brief A widget to contain objects meant to be displayed in the Experiment Viewer
  *  \details Details forthcoming
@@ -25,7 +25,7 @@ public:
 	virtual ~DataViewLayout();
 public slots:
 	void removeWidgetSlot(QWidget *pWidget);
-	void addWidgetSlot(QWidget *pWidget, int x, int y, ViewSize size);
+	void addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size);
 };
 
 #endif

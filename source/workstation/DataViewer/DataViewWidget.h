@@ -8,10 +8,9 @@
 #include <QLabel>
 
 #include "../viewer.h"
+#include "../../common/operator/DataViewSpecs.h"
 
 using namespace Picto;
-
-enum ViewSize : int;
 
 /*!	\brief The RetentionPolicy dictates whether the widget should be deleted and removed when reset is called on the
  *	controlling ViewSelectionWidget.
@@ -43,10 +42,10 @@ public:
 
 	/*!	\brief Returns the current size of this widget
 	 */
-	ViewSize getCurrentSize() { return lastViewSize_; };
+	DataViewSize::ViewSize getCurrentSize() { return lastViewSize_; };
 	/*!	\brief Sets the current size of this widget
 	 */
-	void setCurrentSize(ViewSize eSize) { lastViewSize_ = eSize; };
+	void setCurrentSize(DataViewSize::ViewSize eSize) { lastViewSize_ = eSize; };
 
 	/*!	\brief Returns the current name of this widget
 	 */
@@ -81,7 +80,7 @@ private:
 	*/
 	DVW_RetentionPolicy eRetentionPolicy_;
 	//! The current ViewSize of this widget.  Only meaningful if it is currentlyDisplayed_.
-	ViewSize lastViewSize_;
+	DataViewSize::ViewSize lastViewSize_;
 
 	//! If this DataViewWidget is currently being displayed in the grid.
 	bool currentlyDisplayed_;

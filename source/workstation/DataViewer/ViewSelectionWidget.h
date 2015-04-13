@@ -10,9 +10,9 @@
 #include <QMap>
 
 #include "../viewer.h"
+#include "../../common/operator/DataViewSpecs.h"
 
 using namespace Picto;
-
 
 //! The Number of view slots horizontally on the Data View Tab
 #define VIEWGRIDWIDTH 4
@@ -22,16 +22,6 @@ using namespace Picto;
 class DataViewWidget;
 class DataViewLayout;
 
-/*!	\brief Enumeration of the various sizes Views can take.
-*/
-enum ViewSize : int
-{
-	VIEW_SIZE_1x1 = 1,	//!< A 1x1 view
-	VIEW_SIZE_2x2,		//!< A 2x2 view
-	VIEW_SIZE_3x3,		//!< A 3x3 view
-	VIEW_SIZE_4x4,		//!< A 4x4 view
-	VIEW_SIZE_MAX		//!< An invalid value
-};
 
 /*!	\brief A struct to keep track of the location of widgets within the viewer.
 */
@@ -59,7 +49,7 @@ public:
 	ViewSelectionWidget();
 	virtual ~ViewSelectionWidget();
 
-	bool setDefaultView(DataViewWidget *pDefaultView, int x, int y, ViewSize eSize);
+	bool setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize);
 	void registerView(DataViewWidget *pNewView);
 	void addContainer(QWidget *pNewView);
 	void connectToViewerLayout(DataViewLayout *pLayout);
@@ -74,7 +64,7 @@ signals:
 	void widgetRemoved(QWidget *pWidget);
 	/*! \brief A signal broadcast when a widget is added to the connected ViewSelectionLayout.
 	*/
-	void widgetAdded(QWidget *pWidget, int x, int y, ViewSize size);
+	void widgetAdded(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size);
 
 public slots:
 	void updateWidgetContainer(QWidget *pWidget);

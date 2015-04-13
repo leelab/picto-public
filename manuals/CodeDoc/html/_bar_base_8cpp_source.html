@@ -141,238 +141,284 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    AddDefinableProperty(QVariant::Bool, <span class="stringliteral">&quot;DisplayLegend&quot;</span>, <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    AddDefinableProperty(QVariant::Bool, <span class="stringliteral">&quot;NormalizedDisplay&quot;</span>, <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setAttribute(QwtScaleEngine::Floating, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">   63</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">BarBase::replot</a>()</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QVector&lt;QwtIntervalSample&gt; qvSamples;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QVector&lt;QwtIntervalSample&gt; qvError;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> bNormalized = <a class="code" href="class_picto_1_1_bar_base.html#ab1c15c9e27e57df776eafd3caecdcada">getNormalized</a>();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> dBinSize = <a class="code" href="class_picto_1_1_bar_base.html#a0ab41088af382a1602648d3e0df94e69">getBinSize</a>();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">_handleErrorInitial</a>(qvError);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.isEmpty())</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//Indexed by enum ColumnType</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    columnTypes_ &lt;&lt; <span class="stringliteral">&quot;Outline&quot;</span> &lt;&lt; <span class="stringliteral">&quot;Flat Columns&quot;</span> &lt;&lt; <span class="stringliteral">&quot;Raised Columns&quot;</span> &lt;&lt; <span class="stringliteral">&quot;Lines&quot;</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    AddDefinableProperty(<a class="code" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">PropertyContainer::enumTypeId</a>(), <span class="stringliteral">&quot;ColumnType&quot;</span>, 0, <span class="stringliteral">&quot;enumNames&quot;</span>, columnTypes_);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setAttribute(QwtScaleEngine::Floating, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">   67</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">BarBase::replot</a>()</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QVector&lt;QwtIntervalSample&gt; qvSamples;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    QVector&lt;QwtIntervalSample&gt; qvError;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> bNormalized = <a class="code" href="class_picto_1_1_bar_base.html#ab1c15c9e27e57df776eafd3caecdcada">getNormalized</a>();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> dBinSize = <a class="code" href="class_picto_1_1_bar_base.html#a0ab41088af382a1602648d3e0df94e69">getBinSize</a>();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">_handleErrorInitial</a>(qvError);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> (bNormalized)</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">createNormalizedScale</a>(1.0, 1.0);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;replot();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.isEmpty())</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">if</span> (bNormalized)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">createNormalizedScale</a>(1.0, 1.0);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    QList&lt;long&gt; keyList = <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.keys();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    std::sort(keyList.begin(), keyList.end());</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;replot();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">double</span> total = 0.0;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">double</span> dRangeMax = 0.0;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">foreach</span>(<span class="keywordtype">long</span> key, keyList)</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dSample = _getSampleValue(key);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dBinWidth = 0.5 / (<a class="code" href="class_picto_1_1_bar_base.html#aa69588799a1b98f0096aa88304ce37d9">getBinSpacing</a>() + 1.0);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dMin = (key - dBinWidth) * dBinSize;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dMax = (key + dBinWidth) * dBinSize;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">if</span> (bNormalized)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keywordflow">if</span> (dSample &gt; dRangeMax)</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                dRangeMax = dSample;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            total += dSample;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a9eebf11cd4f9dc4d6e3bdfb5d619d9e3">_handleErrorValue</a>(key, dRangeMax, qvError);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7">_handleErrorFinal</a>(qvError);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    QList&lt;long&gt; keyList = <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.keys();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::sort(keyList.begin(), keyList.end());</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">double</span> total = 0.0;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">double</span> dRangeMax = 0.0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">foreach</span>(<span class="keywordtype">long</span> key, keyList)</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dSample = _getSampleValue(key);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dBinWidth = 0.5 / (<a class="code" href="class_picto_1_1_bar_base.html#aa69588799a1b98f0096aa88304ce37d9">getBinSpacing</a>() + 1.0);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dMin = (key - dBinWidth) * dBinSize;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> dMax = (key + dBinWidth) * dBinSize;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">if</span> (bNormalized)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">if</span> (dSample &gt; dRangeMax)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                dRangeMax = dSample;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            total += dSample;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a9eebf11cd4f9dc4d6e3bdfb5d619d9e3">_handleErrorValue</a>(key, dRangeMax, qvError);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span> (bNormalized)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">createNormalizedScale</a>(dRangeMax, total);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a>)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setMargins(0.5*dBinSize, 0.5*dBinSize);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">handleXLabels</a>(*keyList.begin(), *(keyList.end()-1));</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;replot();</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordtype">double</span> BarBase::_getSampleValue(<span class="keywordtype">long</span> bin)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin];</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">  141</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">BarBase::createNormalizedScale</a>(<span class="keywordtype">double</span> dMaxValue, <span class="keywordtype">double</span> dTotalValue)</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;{</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordtype">double</span> dRangeMax = dMaxValue / dTotalValue;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">double</span> dAxisMax = 1.0;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">double</span> dTestRange = dAxisMax / 2.0;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">if</span> (dRangeMax &gt; 0.0)</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keywordflow">while</span> (dRangeMax &lt;= dTestRange)</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        {</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            dAxisMax = dTestRange;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            dTestRange /= 2.0;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="comment">//Change the y-axis labeling to give the appearance of normalization.</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    QList&lt;double&gt; majorTicks;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    QList&lt;double&gt; mediumTicks;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    QList&lt;double&gt; minorTicks;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">int</span> numOfDivs = 2;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numOfDivs + 1; i++)</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        majorTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    numOfDivs = 10;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numOfDivs + 1; i++)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        mediumTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    QwtScaleDiv scaleDiv(0, dAxisMax*dTotalValue, minorTicks, mediumTicks, majorTicks);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    QwtScaleDraw *scaleDraw = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a>(dTotalValue);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7">_handleErrorFinal</a>(qvError);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">if</span> (bNormalized)</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">createNormalizedScale</a>(dRangeMax, total);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a>)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setMargins(0.5*dBinSize, 0.5*dBinSize);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">handleXLabels</a>(*keyList.begin(), *(keyList.end()-1));</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;replot();</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keywordtype">double</span> BarBase::_getSampleValue(<span class="keywordtype">long</span> bin)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin];</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">  145</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">BarBase::createNormalizedScale</a>(<span class="keywordtype">double</span> dMaxValue, <span class="keywordtype">double</span> dTotalValue)</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordtype">double</span> dRangeMax = dMaxValue / dTotalValue;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">double</span> dAxisMax = 1.0;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordtype">double</span> dTestRange = dAxisMax / 2.0;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">if</span> (dRangeMax &gt; 0.0)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">while</span> (dRangeMax &lt;= dTestRange)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            dAxisMax = dTestRange;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            dTestRange /= 2.0;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="comment">//Change the y-axis labeling to give the appearance of normalization.</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    QList&lt;double&gt; majorTicks;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    QList&lt;double&gt; mediumTicks;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    QList&lt;double&gt; minorTicks;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">int</span> numOfDivs = 2;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numOfDivs + 1; i++)</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        majorTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    }</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    numOfDivs = 10;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numOfDivs + 1; i++)</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        mediumTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    }</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;setAxisScaleDraw(QwtPlot::yLeft, scaleDraw);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    QwtScaleDiv scaleDiv(0, dAxisMax*dTotalValue, minorTicks, mediumTicks, majorTicks);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    QwtScaleDraw *scaleDraw = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a>(dTotalValue);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">  187</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">BarBase::postDeserialize</a>()</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;{</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">OperatorPlot::postDeserialize</a>();</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;DisplayLegend&quot;</span>).toBool())</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    {</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        QwtLegend *legend = <span class="keyword">new</span> QwtLegend;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        legend-&gt;setDefaultItemMode(QwtLegendData::ReadOnly);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;insertLegend(legend, QwtPlot::RightLegend);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    }</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;insertLegend(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;setAxisScaleDraw(QwtPlot::yLeft, scaleDraw);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">  191</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">BarBase::postDeserialize</a>()</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">OperatorPlot::postDeserialize</a>();</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;DisplayLegend&quot;</span>).toBool())</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        QwtLegend *legend = <span class="keyword">new</span> QwtLegend;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        legend-&gt;setDefaultItemMode(QwtLegendData::ReadOnly);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;insertLegend(legend, QwtPlot::RightLegend);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    }</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;}</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">  205</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">BarBase::reset</a>()</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;{</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.clear();</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00214"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">  214</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">BarBase::_adjustValue</a>(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value)</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;{</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">_createBin</a>(bin);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] += value;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">  228</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">BarBase::_setValue</a>(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;{</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    {</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">_createBin</a>(bin);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    }</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] = value;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">  242</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">BarBase::_dropBin</a>(<span class="keywordtype">long</span> bin)</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;{</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">_destroyBin</a>(bin);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">  253</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">BarBase::_getValue</a>(<span class="keywordtype">long</span> bin)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    {</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin];</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    }</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    {</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">m_pPlot</a>-&gt;insertLegend(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keyword">const</span> ColumnType::ColumnType eColumnType = getColumnType();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    QPen pen(Qt::black, 0);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    QwtColumnSymbol *symbol = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordflow">switch</span> (eColumnType)</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordflow">case</span> ColumnType::COLUMN_OUTLINE:</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setStyle(QwtPlotHistogram::Outline);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setPen(pen);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">case</span> ColumnType::COLUMN_FLAT_COLUMN:</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setStyle(QwtPlotHistogram::Columns);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setPen(pen);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordflow">case</span> ColumnType::COLUMN_RAISED_COLUMN:</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setStyle(QwtPlotHistogram::Columns);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        symbol = <span class="keyword">new</span> QwtColumnSymbol(QwtColumnSymbol::Box);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        symbol-&gt;setFrameStyle(QwtColumnSymbol::Raised);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        symbol-&gt;setLineWidth(2);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        symbol-&gt;setPalette(QPalette(<a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;brush().color()));</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSymbol(symbol);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">case</span> ColumnType::COLUMN_LINES:</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setStyle(QwtPlotHistogram::Lines);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        pen.setBrush(<a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;brush());</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">m_pHistoPlotItem</a>-&gt;setPen(pen);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    }</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">  245</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">BarBase::reset</a>()</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;{</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.clear();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">  254</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">BarBase::_adjustValue</a>(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value)</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;{</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">_createBin</a>(bin);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    }</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
-<div class="line"><a name="l00265"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">  265</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">BarBase::_createBin</a>(<span class="keywordtype">long</span> bin)</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;{</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] = 0;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;}</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] += value;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">  268</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">BarBase::_setValue</a>(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value)</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;{</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">  274</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">BarBase::_destroyBin</a>(<span class="keywordtype">long</span> bin)</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;{</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.remove(bin);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_ae167aef53e5d5f8712a2393356745e43"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">Picto::BarBase::_adjustValue</a></div><div class="ttdeci">void _adjustValue(long bin, double value)</div><div class="ttdoc">Modifies the value in the indicated bin by the passed-in value. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00214">BarBase.cpp:214</a></div></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">_createBin</a>(bin);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    }</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] = value;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">  282</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">BarBase::_dropBin</a>(<span class="keywordtype">long</span> bin)</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;{</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <a class="code" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <a class="code" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">_destroyBin</a>(bin);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    }</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;}</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">  293</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">BarBase::_getValue</a>(<span class="keywordtype">long</span> bin)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.contains(bin))</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    {</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin];</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    }</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;}</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
+<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">  305</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">BarBase::_createBin</a>(<span class="keywordtype">long</span> bin)</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;{</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>[bin] = 0;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;}</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
+<div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">  314</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">BarBase::_destroyBin</a>(<span class="keywordtype">long</span> bin)</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;{</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a>.remove(bin);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <a class="code" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;}</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;ColumnType::ColumnType BarBase::getColumnType()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordflow">return</span> (ColumnType::ColumnType)<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;ColumnType&quot;</span>).toInt();</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_ae167aef53e5d5f8712a2393356745e43"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ae167aef53e5d5f8712a2393356745e43">Picto::BarBase::_adjustValue</a></div><div class="ttdeci">void _adjustValue(long bin, double value)</div><div class="ttdoc">Modifies the value in the indicated bin by the passed-in value. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00254">BarBase.cpp:254</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_store_html_af50c0cd3df239ba86be9edc72ded3ccf"><div class="ttname"><a href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">Picto::DataStore::propertyContainer_</a></div><div class="ttdeci">QSharedPointer&lt; PropertyContainer &gt; propertyContainer_</div><div class="ttdoc">The property container managing this DataStore&#39;s properties. </div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8h_source.html#l00199">DataStore.h:199</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_base_html_aad85f4aeca60ac7a7a5bbad8d5e83eca"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">Picto::BarBase::m_bBinsModified</a></div><div class="ttdeci">bool m_bBinsModified</div><div class="ttdoc">Flag to update the bins. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00049">BarBase.h:49</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a9eebf11cd4f9dc4d6e3bdfb5d619d9e3"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a9eebf11cd4f9dc4d6e3bdfb5d619d9e3">Picto::BarBase::_handleErrorValue</a></div><div class="ttdeci">virtual void _handleErrorValue(long, double &amp;, QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called on each bin of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00070">BarBase.h:70</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_af9d2775a07e882dc28967b0eadabf5c9"><div class="ttname"><a href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">Picto::PropertyContainer::enumTypeId</a></div><div class="ttdeci">static int enumTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00078">PropertyContainer.cpp:78</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a9eebf11cd4f9dc4d6e3bdfb5d619d9e3"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a9eebf11cd4f9dc4d6e3bdfb5d619d9e3">Picto::BarBase::_handleErrorValue</a></div><div class="ttdeci">virtual void _handleErrorValue(long, double &amp;, QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called on each bin of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00072">BarBase.h:72</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_affc1d3936367b03d08d2131ba6a7a027"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">Picto::OperatorPlot::m_bDataChanged</a></div><div class="ttdeci">bool m_bDataChanged</div><div class="ttdoc">Flag for when the plot need to be recalculated. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00061">OperatorPlot.h:61</a></div></div>
 <div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_af3e1b6bf63c0d7dbb2e127d4cf595e75"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">Picto::NormalizedScaleDraw::NormalizedScaleDraw</a></div><div class="ttdeci">NormalizedScaleDraw(double max)</div><div class="ttdoc">Constructor to set our properties. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00023">BarBase.cpp:23</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a523a63cef9bf25a88434430686405c50"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">Picto::BarBase::handleXLabels</a></div><div class="ttdeci">virtual void handleXLabels(long, long)</div><div class="ttdoc">Sets X Labels for children that change the default behavior. Accepts Lower and Upper bounds as argume...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00055">BarBase.h:55</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_ae4b5c9a8338ebe8b7e90c131ec04644e"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">Picto::BarBase::_getValue</a></div><div class="ttdeci">double _getValue(long bin) const </div><div class="ttdoc">Returns the value of the indicated bin. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00253">BarBase.cpp:253</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a523a63cef9bf25a88434430686405c50"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">Picto::BarBase::handleXLabels</a></div><div class="ttdeci">virtual void handleXLabels(long, long)</div><div class="ttdoc">Sets X Labels for children that change the default behavior. Accepts Lower and Upper bounds as argume...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00057">BarBase.h:57</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_ae4b5c9a8338ebe8b7e90c131ec04644e"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e">Picto::BarBase::_getValue</a></div><div class="ttdeci">double _getValue(long bin) const </div><div class="ttdoc">Returns the value of the indicated bin. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00293">BarBase.cpp:293</a></div></div>
 <div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_afc2e57978b9a71012dde45f7d54ae049"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">Picto::NormalizedScaleDraw::label</a></div><div class="ttdeci">virtual QwtText label(double value) const </div><div class="ttdoc">Overwriting labeling functionality. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00035">BarBase.cpp:35</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a76ad9a211541611d32ea42e735ace04d"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">Picto::BarBase::m_pHistoPlotItem</a></div><div class="ttdeci">QwtPlotHistogram * m_pHistoPlotItem</div><div class="ttdoc">A pointer to the BarBase&#39;s Qwt Histogram object. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00089">BarBase.h:89</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a57d49bf60001b7c04b19cdfb7bc9f8eb"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">Picto::BarBase::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">Registers plot with the Task object, so the task can pass on the information to various UI elements...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00187">BarBase.cpp:187</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a9049e54309c28db6e23c87872d239beb"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">Picto::BarBase::_setValue</a></div><div class="ttdeci">void _setValue(long bin, double value)</div><div class="ttdoc">Sets the value in indicated bin to the value. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00228">BarBase.cpp:228</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a76ad9a211541611d32ea42e735ace04d"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a76ad9a211541611d32ea42e735ace04d">Picto::BarBase::m_pHistoPlotItem</a></div><div class="ttdeci">QwtPlotHistogram * m_pHistoPlotItem</div><div class="ttdoc">A pointer to the BarBase&#39;s Qwt Histogram object. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00091">BarBase.h:91</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a57d49bf60001b7c04b19cdfb7bc9f8eb"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a57d49bf60001b7c04b19cdfb7bc9f8eb">Picto::BarBase::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">Registers plot with the Task object, so the task can pass on the information to various UI elements...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00191">BarBase.cpp:191</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a9049e54309c28db6e23c87872d239beb"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a9049e54309c28db6e23c87872d239beb">Picto::BarBase::_setValue</a></div><div class="ttdeci">void _setValue(long bin, double value)</div><div class="ttdoc">Sets the value in indicated bin to the value. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00268">BarBase.cpp:268</a></div></div>
 <div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_ae934cbc15614aa52c6866a3358cf9b99"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">Picto::NormalizedScaleDraw::max_</a></div><div class="ttdeci">double max_</div><div class="ttdoc">NormalizedScaleDraw holds onto the current total (Normalization quantity). </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00041">BarBase.cpp:41</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_aa57022b80accb0ef283509192b029f8b"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">Picto::BarBase::_destroyBin</a></div><div class="ttdeci">virtual void _destroyBin(long bin)</div><div class="ttdoc">Virtual function to define behavior when a bin needs to be destroyed. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00274">BarBase.cpp:274</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a770012047f7142ab27e611ef543afe40"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">Picto::BarBase::_dropBin</a></div><div class="ttdeci">void _dropBin(long bin)</div><div class="ttdoc">Eliminates the values in indicated bin. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00242">BarBase.cpp:242</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_aa57022b80accb0ef283509192b029f8b"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aa57022b80accb0ef283509192b029f8b">Picto::BarBase::_destroyBin</a></div><div class="ttdeci">virtual void _destroyBin(long bin)</div><div class="ttdoc">Virtual function to define behavior when a bin needs to be destroyed. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00314">BarBase.cpp:314</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a770012047f7142ab27e611ef543afe40"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40">Picto::BarBase::_dropBin</a></div><div class="ttdeci">void _dropBin(long bin)</div><div class="ttdoc">Eliminates the values in indicated bin. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00282">BarBase.cpp:282</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_a8c6c18fbd8004388db081029ccf93fba"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a8c6c18fbd8004388db081029ccf93fba">Picto::OperatorPlot::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">Registers plot with the Task object, so the task can pass on the information to various UI elements...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00041">OperatorPlot.cpp:41</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a2d7e9b068a692da40698e889cd4f4e26"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">Picto::BarBase::replot</a></div><div class="ttdeci">virtual void replot()</div><div class="ttdoc">Reconstructs elements of underlying plot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00063">BarBase.cpp:63</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_ab1c15c9e27e57df776eafd3caecdcada"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ab1c15c9e27e57df776eafd3caecdcada">Picto::BarBase::getNormalized</a></div><div class="ttdeci">bool getNormalized() const </div><div class="ttdoc">Returns the value of the NormalizedDisplay property. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00058">BarBase.h:58</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a2d7e9b068a692da40698e889cd4f4e26"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26">Picto::BarBase::replot</a></div><div class="ttdeci">virtual void replot()</div><div class="ttdoc">Reconstructs elements of underlying plot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00067">BarBase.cpp:67</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_ab1c15c9e27e57df776eafd3caecdcada"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ab1c15c9e27e57df776eafd3caecdcada">Picto::BarBase::getNormalized</a></div><div class="ttdeci">bool getNormalized() const </div><div class="ttdoc">Returns the value of the NormalizedDisplay property. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00060">BarBase.h:60</a></div></div>
 <div class="ttc" id="class_picto_1_1_normalized_scale_draw_html"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html">Picto::NormalizedScaleDraw</a></div><div class="ttdoc">This class is used to scale Normalized plots. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00018">BarBase.cpp:18</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_a1d5c23d874db5390ee941677b00d915f"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a1d5c23d874db5390ee941677b00d915f">Picto::OperatorPlot::m_pPlot</a></div><div class="ttdeci">QwtPlot * m_pPlot</div><div class="ttdoc">A pointer to the OperatorPlot&#39;s underlying Qwt Plot widget. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00059">OperatorPlot.h:59</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a77f1b1ba9c08ed67923989558fec61ea"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">Picto::BarBase::_handleErrorInitial</a></div><div class="ttdeci">virtual void _handleErrorInitial(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called start of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00065">BarBase.h:65</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a77f1b1ba9c08ed67923989558fec61ea"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">Picto::BarBase::_handleErrorInitial</a></div><div class="ttdeci">virtual void _handleErrorInitial(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called start of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00067">BarBase.h:67</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_base_html_a0ab41088af382a1602648d3e0df94e69"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a0ab41088af382a1602648d3e0df94e69">Picto::BarBase::getBinSize</a></div><div class="ttdeci">virtual double getBinSize() const =0</div><div class="ttdoc">Returns the current Bin Size. </div></div>
 <div class="ttc" id="class_picto_1_1_bar_base_html_ad43344870e7001794536a191e5a18728"><div class="ttname"><a href="class_picto_1_1_bar_base.html#ad43344870e7001794536a191e5a18728">Picto::BarBase::type</a></div><div class="ttdeci">static const QString type</div><div class="ttdoc">An Asset-identifying string used with AssetFactory::addAssetType. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00034">BarBase.h:34</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a19ff9d6764570a76e2599498abdde8a2"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">Picto::BarBase::_createBin</a></div><div class="ttdeci">virtual void _createBin(long bin)</div><div class="ttdoc">Virtual function to define behavior when a new bin needs to be created. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00265">BarBase.cpp:265</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_aff67967b5391d4b236934f8ddedec905"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">Picto::BarBase::reset</a></div><div class="ttdeci">virtual void reset()</div><div class="ttdoc">Clears all values for this plot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00205">BarBase.cpp:205</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_aa694173c6eef4763e3896ce06947d9f8"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">Picto::BarBase::createNormalizedScale</a></div><div class="ttdeci">void createNormalizedScale(double dMaxValue, double dTotalValue)</div><div class="ttdoc">Uses the passed-in values to generate the ideal normalized plot range. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00141">BarBase.cpp:141</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a19ff9d6764570a76e2599498abdde8a2"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a19ff9d6764570a76e2599498abdde8a2">Picto::BarBase::_createBin</a></div><div class="ttdeci">virtual void _createBin(long bin)</div><div class="ttdoc">Virtual function to define behavior when a new bin needs to be created. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00305">BarBase.cpp:305</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_aff67967b5391d4b236934f8ddedec905"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">Picto::BarBase::reset</a></div><div class="ttdeci">virtual void reset()</div><div class="ttdoc">Clears all values for this plot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00245">BarBase.cpp:245</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_aa694173c6eef4763e3896ce06947d9f8"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8">Picto::BarBase::createNormalizedScale</a></div><div class="ttdeci">void createNormalizedScale(double dMaxValue, double dTotalValue)</div><div class="ttdoc">Uses the passed-in values to generate the ideal normalized plot range. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8cpp_source.html#l00145">BarBase.cpp:145</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_a444536313fa0afc21909fd5fcea99462"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">Picto::BarBase::m_qhdCumulValue</a></div><div class="ttdeci">QHash&lt; long, double &gt; m_qhdCumulValue</div><div class="ttdoc">The cumulative binwise values. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00087">BarBase.h:87</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_a444536313fa0afc21909fd5fcea99462"><div class="ttname"><a href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">Picto::BarBase::m_qhdCumulValue</a></div><div class="ttdeci">QHash&lt; long, double &gt; m_qhdCumulValue</div><div class="ttdoc">The cumulative binwise values. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00089">BarBase.h:89</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_base_html_aa69588799a1b98f0096aa88304ce37d9"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aa69588799a1b98f0096aa88304ce37d9">Picto::BarBase::getBinSpacing</a></div><div class="ttdeci">virtual double getBinSpacing() const =0</div><div class="ttdoc">Returns the current Bin Spacing. </div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html_adab9622a6875bf3eb04dd06a41f46ab7"><div class="ttname"><a href="class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7">Picto::BarBase::_handleErrorFinal</a></div><div class="ttdeci">virtual void _handleErrorFinal(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called at end of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00075">BarBase.h:75</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html_adab9622a6875bf3eb04dd06a41f46ab7"><div class="ttname"><a href="class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7">Picto::BarBase::_handleErrorFinal</a></div><div class="ttdeci">virtual void _handleErrorFinal(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called at end of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00077">BarBase.h:77</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

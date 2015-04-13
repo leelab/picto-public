@@ -91,7 +91,7 @@ var searchData=
   ['addvisualelement',['addVisualElement',['../class_picto_1_1_scene.html#a84a42dfd298e46798bf7fad2df2d3059',1,'Picto::Scene']]],
   ['addwidget',['addWidget',['../class_picto_1_1_analysis_output_widget_container.html#a3a88420f7582d082b105642f792ec11d',1,'Picto::AnalysisOutputWidgetContainer']]],
   ['addwidgetcontainer',['addWidgetContainer',['../class_view_selection_widget.html#abf98c8455287295837213af1cb97976e',1,'ViewSelectionWidget']]],
-  ['addwidgetslot',['addWidgetSlot',['../class_data_view_layout.html#a3cfea8ad3be78cbe43ff542f331a9c7a',1,'DataViewLayout']]],
+  ['addwidgetslot',['addWidgetSlot',['../class_data_view_layout.html#ad6c069320bc1a5407dd37b366af632b4',1,'DataViewLayout']]],
   ['adjustvalue',['adjustValue',['../class_picto_1_1_bar_plot.html#adf3e6accc260cbc9ece83408a22a4101',1,'Picto::BarPlot::adjustValue()'],['../class_picto_1_1_histogram_plot.html#a2e9917349346ac8e430ec3e7fd02909b',1,'Picto::HistogramPlot::adjustValue()']]],
   ['alignmentdataunit',['AlignmentDataUnit',['../class_picto_1_1_alignment_data_unit.html',1,'Picto']]],
   ['alignmentevent',['AlignmentEvent',['../struct_alignment_tool_1_1_alignment_event.html',1,'AlignmentTool']]],

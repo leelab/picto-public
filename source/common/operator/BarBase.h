@@ -51,6 +51,8 @@ protected:
 	virtual double getBinSize() const = 0;
 	//! Returns the current Bin Spacing
 	virtual double getBinSpacing() const = 0;
+
+	ColumnType::ColumnType getColumnType() const;
 	//! Sets X Labels for children that change the default behavior.  Accepts Lower and Upper bounds as arguments.
 	virtual void handleXLabels(long, long) {};
 
@@ -87,6 +89,8 @@ protected:
 	QHash<long, double> m_qhdCumulValue;
 	//! A pointer to the BarBase's Qwt Histogram object
 	QwtPlotHistogram *m_pHistoPlotItem;
+	//! A QStringList of Column Types
+	QStringList columnTypes_;
 };
 
 

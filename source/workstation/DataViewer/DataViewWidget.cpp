@@ -8,7 +8,7 @@ using namespace Picto;
 /*! \brief Constructs a new DataViewWidget with the specified name and containing the passed Widget
 */
 DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget, DVW_RetentionPolicy ePolicy)
-	: currentlyDisplayed_(false), lastViewSize_(VIEW_SIZE_1x1), xPos_(0), yPos_(0), eRetentionPolicy_(ePolicy),
+	: currentlyDisplayed_(false), lastViewSize_(DataViewSize::VIEW_SIZE_1x1), xPos_(0), yPos_(0), eRetentionPolicy_(ePolicy),
 	myViewWidget_(pqwWidget)
 {
 	layout_ = new QGridLayout();

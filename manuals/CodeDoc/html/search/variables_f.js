@@ -19,6 +19,7 @@ var searchData=
   ['shouldupdatecompositingsurfaces_5f',['shouldUpdateCompositingSurfaces_',['../struct_picto_1_1_visual_element.html#aff8a9bd2c730821317cde3409803bc0e',1,'Picto::VisualElement']]],
   ['sigchantypes_5f',['sigChanTypes_',['../class_session_info.html#aa698d772ce42fbe3f384bd197cb01185',1,'SessionInfo']]],
   ['singleton_5f',['singleton_',['../class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5',1,'Picto::AutoSaver']]],
+  ['sizelist_5f',['sizeList_',['../class_picto_1_1_data_view_element.html#adf9d8bd65d619366f3f039e2d6880ecb',1,'Picto::DataViewElement']]],
   ['sizeselection_5f',['sizeSelection_',['../class_view_selection_widget.html#ac34f280e29f96a212cff07fa149bcf51',1,'ViewSelectionWidget']]],
   ['soundstomix_5f',['soundsToMix_',['../class_picto_1_1_p_c_m_aural_target.html#ab1b523beaeb8d7d749299da102904b8e',1,'Picto::PCMAuralTarget']]],
   ['startframe_5f',['startFrame_',['../struct_picto_1_1_file_session_loader_1_1_run_data.html#ac2523539bffa43cf2ee22a5d6fe6ae08',1,'Picto::FileSessionLoader::RunData::startFrame_()'],['../class_picto_1_1_task_run_data_unit.html#a0ec6bd0bf2409e317caf57f32c6170b7',1,'Picto::TaskRunDataUnit::startFrame_()']]],

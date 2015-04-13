@@ -246,6 +246,8 @@ HEADERS += $$(PICTO_TREE)/source/common/operator/SamplingHistogramPlot.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/SamplingHistogramPlot.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElement.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElement.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewSpecs.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewSpecs.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.cpp
 

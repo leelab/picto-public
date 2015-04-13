@@ -8,7 +8,7 @@ var searchData=
   ['lastdataprecededflush',['lastDataPrecededFlush',['../class_session_info.html#a5ed2bbb223d5a377502bf6b41f383c07',1,'SessionInfo']]],
   ['lastrewardperiod',['lastRewardPeriod',['../struct_picto_1_1_reward_controller_1_1_reward_channel.html#a6739217981d922354087f6c7cd68e107',1,'Picto::RewardController::RewardChannel']]],
   ['lastsaveversion_5f',['lastSaveVersion_',['../class_picto_1_1_design_root.html#a09909ceef8a5469eea9f3a623429377f',1,'Picto::DesignRoot']]],
-  ['lastviewsize_5f',['lastViewSize_',['../class_data_view_widget.html#a3ee6f7f55d2b8e6611478c9e56d277a7',1,'DataViewWidget']]],
+  ['lastviewsize_5f',['lastViewSize_',['../class_data_view_widget.html#a89ae598e00e86cc7a796a7248fbdbc8e',1,'DataViewWidget']]],
   ['latestframesuccesfullyrendered',['latestFrameSuccesfullyRendered',['../struct_picto_1_1_pixmap_visual_target.html#a4f1dbd1319f35b1aa295b607b4066510',1,'Picto::PixmapVisualTarget::latestFrameSuccesfullyRendered()'],['../class_picto_1_1_visual_target.html#a62d2be22dc12dc3fec6e125bafce53aa',1,'Picto::VisualTarget::latestFrameSuccesfullyRendered()'],['../class_picto_1_1_d3_d_visual_target.html#a7eaf842bb33a22c71d111f16205f9afa',1,'Picto::D3DVisualTarget::latestFrameSuccesfullyRendered()']]],
   ['latestupdateeventoffset',['latestUpdateEventOffset',['../class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2',1,'Picto::SignalChannel']]],
   ['layer',['layer',['../struct_picto_1_1_visual_element.html#acad7fb65649363c5bb3a36ac012f4015',1,'Picto::VisualElement']]],

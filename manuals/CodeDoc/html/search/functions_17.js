@@ -4,7 +4,7 @@ var searchData=
   ['waitforresponse',['waitForResponse',['../class_picto_1_1_command_channel.html#adc000fefa9fa963e93aff6e067bca69c',1,'Picto::CommandChannel']]],
   ['wasedited',['wasEdited',['../class_picto_1_1_asset.html#a0937b75a65094505ea69b00be1aaab7b',1,'Picto::Asset']]],
   ['wheelevent',['wheelEvent',['../class_viewer_window.html#adf9ad10474494224ee894bf82b5dd046',1,'ViewerWindow']]],
-  ['widgetadded',['widgetAdded',['../class_view_selection_widget.html#a8346cf3dba0a814df9b9f257c185aeb6',1,'ViewSelectionWidget']]],
+  ['widgetadded',['widgetAdded',['../class_view_selection_widget.html#a7e61c5db47c5b4c498564bd06973edb0',1,'ViewSelectionWidget']]],
   ['widgetaddedtomap',['widgetAddedToMap',['../class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64',1,'Picto::TaskConfig']]],
   ['widgetcoords',['WidgetCoords',['../struct_widget_coords.html#ad0f0cff1663b8c552d6c645704d446b9',1,'WidgetCoords']]],
   ['widgetisvalid',['widgetIsValid',['../class_picto_1_1_analysis_output.html#a459b96a480c7f6a4ae4fd63960f07b63',1,'Picto::AnalysisOutput::widgetIsValid()'],['../class_picto_1_1_analysis_output_widget_container.html#a92d7901bd7f01b7eefd066d3faa7091b',1,'Picto::AnalysisOutputWidgetContainer::widgetIsValid()']]],

@@ -238,7 +238,7 @@ void ReplayViewer::setupUi()
 	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
 	viewSelectionWidget->registerView(taskView);
 	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
+	viewSelectionWidget->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 
 
 	QVBoxLayout *infoLayout = new QVBoxLayout();

@@ -51,7 +51,7 @@ void DataViewLayout::removeWidgetSlot(QWidget *pWidget)
 /*! \brief A slot emitted by the ViewSelectionWidget to signal that the specified widget should be added to the
 *	layout at the specified position with the indiciated span.
 */
-void DataViewLayout::addWidgetSlot(QWidget *pWidget, int x, int y, ViewSize size)
+void DataViewLayout::addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)
 {
 	addWidget(pWidget, x, y, size, size);
 }

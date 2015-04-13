@@ -1037,7 +1037,7 @@ void RemoteViewer::setupUi()
 	viewSelectionWidget_->registerView(taskView);
 	//viewSelectionWidget_->registerView(testPlot);
 	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget_->setDefaultView(taskView, 0, 0, VIEW_SIZE_3x3);
+	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 
 	//Set up a number of temporary test plots
 	/*

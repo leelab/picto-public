@@ -6,7 +6,6 @@
 #include "PlotViewWidget.h"
 
 #include "../../common/storage/TaskConfig.h"
-
 #include "../../common/memleakdetect.h"
 
 
@@ -35,10 +34,10 @@ ViewSelectionWidget::ViewSelectionWidget()
 	sizeSelection_->setInsertPolicy(QComboBox::InsertAtBottom);
 	sizeSelection_->setEditable(false);
 
-	sizeSelection_->addItem("1x1", VIEW_SIZE_1x1);
-	sizeSelection_->addItem("2x2", VIEW_SIZE_2x2);
-	sizeSelection_->addItem("3x3", VIEW_SIZE_3x3);
-	sizeSelection_->addItem("4x4", VIEW_SIZE_4x4);
+	sizeSelection_->addItem("1x1", DataViewSize::VIEW_SIZE_1x1);
+	sizeSelection_->addItem("2x2", DataViewSize::VIEW_SIZE_2x2);
+	sizeSelection_->addItem("3x3", DataViewSize::VIEW_SIZE_3x3);
+	sizeSelection_->addItem("4x4", DataViewSize::VIEW_SIZE_4x4);
 
 	connect(sizeSelection_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedSizeIndexChanged(int)));
 
@@ -96,7 +95,7 @@ void ViewSelectionWidget::selectedSizeIndexChanged(int)
 	//The current widget
 	DataViewWidget *pCurrentView = widgetIndexMap_[plotSelection_->currentData().toInt()];
 
-	pCurrentView->setCurrentSize((ViewSize)sizeSelection_->currentData().toInt());
+	pCurrentView->setCurrentSize((DataViewSize::ViewSize)sizeSelection_->currentData().toInt());
 
 	int x, y;
 	pCurrentView->getPosition(x, y);
@@ -139,9 +138,9 @@ void ViewSelectionWidget::checkboxChanged(bool bNewValue, int x, int y)
 
 	if (bNewValue)
 	{
-		while (!isWidgetPosValid(pCurrentView, x, y) && pCurrentView->getCurrentSize() > VIEW_SIZE_1x1)
+		while (!isWidgetPosValid(pCurrentView, x, y) && pCurrentView->getCurrentSize() > DataViewSize::VIEW_SIZE_1x1)
 		{
-			pCurrentView->setCurrentSize((ViewSize)(pCurrentView->getCurrentSize() - 1));
+			pCurrentView->setCurrentSize((DataViewSize::ViewSize)(pCurrentView->getCurrentSize() - 1));
 		}
 
 		pCurrentView->setPosition(x, y);
@@ -343,7 +342,7 @@ bool ViewSelectionWidget::isWidgetPosValid(DataViewWidget *pTestWidget, int test
 void ViewSelectionWidget::connectToViewerLayout(DataViewLayout *pLayout)
 {
 	connect(this, SIGNAL(widgetRemoved(QWidget*)), pLayout, SLOT(removeWidgetSlot(QWidget*)));
-	connect(this, SIGNAL(widgetAdded(QWidget*, int, int, ViewSize)), pLayout, SLOT(addWidgetSlot(QWidget*, int, int, ViewSize)));
+	connect(this, SIGNAL(widgetAdded(QWidget*, int, int, DataViewSize::ViewSize)), pLayout, SLOT(addWidgetSlot(QWidget*, int, int, DataViewSize::ViewSize)));
 
 }
 
@@ -389,7 +388,7 @@ void ViewSelectionWidget::addWidgetContainer(QWidget *pWidget)
 
 /*! \brief Sets a default widget to be shown.
  */
-bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, int y, ViewSize eSize)
+bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize)
 {
 	Q_ASSERT(pDefaultView);
 

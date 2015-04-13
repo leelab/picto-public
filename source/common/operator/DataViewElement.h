@@ -10,6 +10,7 @@
 
 #include "../statemachine/ContainerElement.h"
 #include "../property/PropertyContainer.h"
+#include "DataViewSpecs.h"
 
 namespace Picto {
 
@@ -49,8 +50,14 @@ public:
 
 	virtual QString friendlyTypeName(){return "Data View Element";};
 	virtual QString getUIGroup(){return "Operator Features";};
+
+	//! Get the default view size for this element
+	DataViewSize::ViewSize getDefaultViewSize() const;
+
 protected:
 	virtual void postDeserialize();
+	//! A List used to keep track of the possible default sizes.
+	QStringList sizeList_;
 };
 
 }; //namespace Picto

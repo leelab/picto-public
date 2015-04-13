@@ -55,6 +55,10 @@ BarBase::BarBase()
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
 
+	//Indexed by enum ColumnType
+	columnTypes_ << "Outline" << "Flat Columns" << "Raised Columns" << "Lines";
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "ColumnType", 0, "enumNames", columnTypes_);
+
 	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
 }
 
@@ -198,6 +202,42 @@ void BarBase::postDeserialize()
 	{
 		m_pPlot->insertLegend(nullptr);
 	}
+
+	const ColumnType::ColumnType eColumnType = getColumnType();
+	QPen pen(Qt::black, 0);
+	QwtColumnSymbol *symbol = nullptr;
+
+	switch (eColumnType)
+	{
+	case ColumnType::COLUMN_OUTLINE:
+		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Outline);
+		m_pHistoPlotItem->setSymbol(nullptr);
+		m_pHistoPlotItem->setPen(pen);
+		break;
+	case ColumnType::COLUMN_FLAT_COLUMN:
+		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
+		m_pHistoPlotItem->setSymbol(nullptr);
+		m_pHistoPlotItem->setPen(pen);
+		break;
+	case ColumnType::COLUMN_RAISED_COLUMN:
+		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
+
+		symbol = new QwtColumnSymbol(QwtColumnSymbol::Box);
+		symbol->setFrameStyle(QwtColumnSymbol::Raised);
+		symbol->setLineWidth(2);
+		symbol->setPalette(QPalette(m_pHistoPlotItem->brush().color()));
+
+		m_pHistoPlotItem->setSymbol(symbol);
+		break;
+	case ColumnType::COLUMN_LINES:
+		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Lines);
+		m_pHistoPlotItem->setSymbol(nullptr);
+		pen.setBrush(m_pHistoPlotItem->brush());
+		m_pHistoPlotItem->setPen(pen);
+		break;
+	default:
+		break;
+	}
 }
 
 /*!	\brief Clears all values for this plot.
@@ -276,6 +316,11 @@ void BarBase::_destroyBin(long bin)
 	m_qhdCumulValue.remove(bin);
 
 	m_bBinsModified = true;
+}
+
+ColumnType::ColumnType BarBase::getColumnType() const
+{
+	return (ColumnType::ColumnType)propertyContainer_->getPropertyValue("ColumnType").toInt();
 }
 
 }; //namespace Picto

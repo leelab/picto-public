@@ -15,6 +15,7 @@ PlotViewWidget::PlotViewWidget(const QString cqsName, QWidget *pqwWidget, DataVi
 	: DataViewWidget(cqsName, pqwWidget, DVW_CLEAR)
 {
 	owningAsset_ = pOwningAsset;
+	setCurrentSize(pOwningAsset->getDefaultViewSize());
 	hideDefaultTitle();
 }
 
