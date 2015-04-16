@@ -132,24 +132,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QByteArray getWaveformAsByteArray();</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> setWaveformFromByteArray(QByteArray waveform);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">double</span> timestamp_;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">double</span> fittedtime_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keywordtype">double</span> correlation_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">double</span> resolution_;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">int</span> channel_;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">int</span> unit_;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;QStringList waveform_;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">double</span> timestamp_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">double</span> fittedtime_;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">double</span> correlation_;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> resolution_;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">int</span> channel_;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">int</span> unit_;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    QStringList waveform_;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html">Picto::NeuralDataUnit</a></div><div class="ttdoc">Stores Neural Spike data for transmission over a network. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00024">NeuralDataUnit.h:24</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_aee21f003133a3af967a56a4b960d645f"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#aee21f003133a3af967a56a4b960d645f">Picto::NeuralDataUnit::getTimestamp</a></div><div class="ttdeci">double getTimestamp()</div><div class="ttdoc">Returns the time at which the spike occured (not yet aligned to behavioral timestream). </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00051">NeuralDataUnit.h:51</a></div></div>
@@ -159,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_a1bda76d767efdab3f2c3c8f88ded6945"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#a1bda76d767efdab3f2c3c8f88ded6945">Picto::NeuralDataUnit::getCorrelation</a></div><div class="ttdeci">double getCorrelation()</div><div class="ttdoc">Returns the least squares correlation coefficient describing the quality of the neural to behavioral ...</div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00057">NeuralDataUnit.h:57</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_afa5e035fcfa5b0df630e01f570a581b0"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#afa5e035fcfa5b0df630e01f570a581b0">Picto::NeuralDataUnit::getFittedtime</a></div><div class="ttdeci">double getFittedtime()</div><div class="ttdoc">Returns the time at which the spike occured as aligned to the behavioral timestream. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00053">NeuralDataUnit.h:53</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_a3476bf9ff1856f578286705093af8122"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#a3476bf9ff1856f578286705093af8122">Picto::NeuralDataUnit::setTimestamp</a></div><div class="ttdeci">void setTimestamp(double timestamp)</div><div class="ttdoc">Sets the time at which the spike occured (not yet aligned to behavioral timestream). </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00034">NeuralDataUnit.h:34</a></div></div>
-<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00025">DataUnit.h:25</a></div></div>
+<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00027">DataUnit.h:27</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_aae74ee04a2953d0aefeaa7ecb59a748a"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#aae74ee04a2953d0aefeaa7ecb59a748a">Picto::NeuralDataUnit::setFittedtime</a></div><div class="ttdeci">void setFittedtime(double fittedtime)</div><div class="ttdoc">Sets the time at which the spike occured as aligned to the behavioral timestream. ...</div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00036">NeuralDataUnit.h:36</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_a7aed10c7ec7f6c28d49efd24bc243393"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#a7aed10c7ec7f6c28d49efd24bc243393">Picto::NeuralDataUnit::setUnit</a></div><div class="ttdeci">void setUnit(int unit)</div><div class="ttdoc">Sets the unit on which the spike occured. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00044">NeuralDataUnit.h:44</a></div></div>
 <div class="ttc" id="class_picto_1_1_neural_data_unit_html_adcf50016891616837cefe6698b9563f8"><div class="ttname"><a href="class_picto_1_1_neural_data_unit.html#adcf50016891616837cefe6698b9563f8">Picto::NeuralDataUnit::getUnit</a></div><div class="ttdeci">int getUnit()</div><div class="ttdoc">Returns the unit on which the spike occured. </div><div class="ttdef"><b>Definition:</b> <a href="_neural_data_unit_8h_source.html#l00061">NeuralDataUnit.h:61</a></div></div>

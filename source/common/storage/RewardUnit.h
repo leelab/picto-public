@@ -33,10 +33,6 @@ public:
 	int getDuration();
 	int getChannel();
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
 	int channel_;
 	int duration_;

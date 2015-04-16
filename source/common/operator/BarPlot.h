@@ -29,7 +29,7 @@ public:
 
 	virtual QString friendlyTypeName(){return "Bar Plot";};
 
-	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
+	//! An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
 public slots:
@@ -47,6 +47,7 @@ public slots:
 	void dropBin(long bin) { _dropBin(bin); };
 
 protected:
+	virtual void postDeserialize();
 	virtual double getBinSize() const { return 1.0; };
 	virtual double getBinSpacing() const { return propertyContainer_->getPropertyValue("BinSpacing").toDouble(); };
 	virtual void handleXLabels(long lLowerBound, long lUpperBound);

@@ -98,8 +98,11 @@ protected:
 
 private:
 	void rebuildScene();
+	//! Scene object used for rendering during the Pause
 	QSharedPointer<Scene> scene_;
+	//! SignalChannel object used for renering fixation cursor during pause
 	QSharedPointer<SignalChannel> sigChannel_;
+	//! Passed in the constructor to indicate if the fixation cursor should be rendered.
 	bool hasCursor_;
 private slots:
 	void activeAnalysisIdsChanged();

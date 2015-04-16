@@ -33,7 +33,7 @@ public:
 
 	virtual QString friendlyTypeName(){return "Sampling Bar Base";};
 
-	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
+	//! An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
 protected:

@@ -67,14 +67,4 @@ bool AlignmentDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	return true;
 }
 
-void AlignmentDataUnit::postDeserialize()
-{
-
-}
-
-bool AlignmentDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 }; //namespace Picto

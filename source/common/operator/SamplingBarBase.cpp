@@ -16,21 +16,6 @@ const QString SamplingBarBase::type = "Sampling Bar Base";
 SamplingBarBase::SamplingBarBase()
 	: m_pErrorBars(nullptr), m_bLastErrorBarState(false)
 {
-	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
-	errorBar->setWidth(8);
-	errorBar->setPen(QColor(Qt::blue));
-	
-	m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
-	m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
-	m_pErrorBars->setSymbol(errorBar);
-	m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
-	m_pErrorBars->setPen(Qt::white);
-	m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
-
-	m_pErrorBars->attach(m_pPlot);
-	m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
-
-
 	AddDefinableProperty(QVariant::Bool, "DisplayStdErr", false);
 }
 
@@ -91,6 +76,20 @@ void SamplingBarBase::_handleErrorFinal(QVector<QwtIntervalSample> &qvError)
 void SamplingBarBase::postDeserialize()
 {
 	BarBase::postDeserialize();
+
+	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
+	errorBar->setWidth(8);
+	errorBar->setPen(QColor(Qt::blue));
+
+	m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
+	m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
+	m_pErrorBars->setSymbol(errorBar);
+	m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
+	m_pErrorBars->setPen(Qt::white);
+	m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
+
+	m_pErrorBars->attach(m_pPlot);
+	m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
 
 	setPropertyRuntimeEditable("DisplayStdErr");
 	m_bLastErrorBarState = _getDisplayErr();

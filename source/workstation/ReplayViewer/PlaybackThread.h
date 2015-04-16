@@ -10,7 +10,7 @@
  *	in its thread.  To do this, they use QObject::moveToThread(), then attach slots to the init() 
  *	and update() signals accordingly.
  *	\note Objects that want functions to run in this thread need to use QObject::moveToThread() because if
- *	they don'y Qt will simply queue up calls to init() and update() and run them in the event queue of
+ *	they don't, Qt will simply queue up calls to init() and update() and run them in the event queue of
  *	the thread that the object belongs to.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015

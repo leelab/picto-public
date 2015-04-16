@@ -10,11 +10,6 @@ const QString SamplingBarPlot::type = "Sampling Bar Plot";
 SamplingBarPlot::SamplingBarPlot()
 	: m_pAxisHandler(nullptr)
 {
-	m_pAxisHandler = new BarAxisHandler(0, 1);
-
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
-	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
-
 	AddDefinableProperty(QVariant::Double, "BinSpacing", 0.2);
 }
 
@@ -23,6 +18,16 @@ SamplingBarPlot::SamplingBarPlot()
 QSharedPointer<Asset> SamplingBarPlot::Create()
 {
 	return QSharedPointer<Asset>(new SamplingBarPlot());
+}
+
+void SamplingBarPlot::postDeserialize()
+{
+	SamplingBarBase::postDeserialize();
+
+	m_pAxisHandler = new BarAxisHandler(0, 1);
+
+	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
+	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
 }
 
 void SamplingBarPlot::handleXLabels(long lLowerBound, long lUpperBound)

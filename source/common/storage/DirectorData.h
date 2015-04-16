@@ -31,10 +31,6 @@ public:
 	int getRewardDuration(int channel);
 	QHash<int,int> getRewardMap();
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
 	QHash<int,QSharedPointer<RewardUnit>> rewardMap_;
 };

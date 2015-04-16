@@ -267,7 +267,8 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>tagName_</b></td><
 QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attrMap_</b></td></tr>
 <tr class="separator:abb355ee1ad0ebb81967578426515f4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acaf18f263ba840a25234d07886d4c4cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acaf18f263ba840a25234d07886d4c4cc"></a>
-QMultiMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_obsolete_asset.html">ObsoleteAsset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>children_</b></td></tr>
+QMultiMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_obsolete_asset.html">ObsoleteAsset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_obsolete_asset.html#acaf18f263ba840a25234d07886d4c4cc">children_</a></td></tr>
+<tr class="memdesc:acaf18f263ba840a25234d07886d4c4cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map of children by name. <br /></td></tr>
 <tr class="separator:acaf18f263ba840a25234d07886d4c4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0f2ab35b287f69c0fd468fd6c90aa2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0f2ab35b287f69c0fd468fd6c90aa2a"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>value_</b></td></tr>
@@ -341,7 +342,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Used to hold data from XML tags representing Assets that are now obsolete. </p>
-<p>Inevitably, as we have developed Picto bugs have cropped up and design decision changes have been made; however, since Sessions had already been run and designs built, we needed a way to be able to automatically upgrade old syntax and still be able to playback old sessions. Part of this system is the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> class. When design syntax changes need to be made, we increase the #define DESIGNSYNTAXVERSION, then we set the particular XML tag for the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> type that is becoming obsolete to deserialize into an <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a>. After the design is deserialized, we can use <a class="el" href="class_picto_1_1_asset.html#aacaaedf9d76c3af2c7168d5c14fed914" title="Upgrades the version of this asset from the input version to the current version. ...">Asset::upgradeVersion()</a> in the parent of the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> to extract any important data from the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> and put it somewhere where it will be needed in the upgraded design syntax.</p>
+<p>Inevitably, as we have developed Picto bugs have cropped up and design decision changes have been made. However, since Sessions had already been run and designs built, we needed a way to be able to automatically upgrade old syntax and still be able to playback old sessions. Part of this system is the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> class. When design syntax changes need to be made, we increase the #define DESIGNSYNTAXVERSION, then we set the particular XML tag for the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> type that is becoming obsolete to deserialize into an <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a>. After the design is deserialized, we can use <a class="el" href="class_picto_1_1_asset.html#aacaaedf9d76c3af2c7168d5c14fed914" title="Upgrades the version of this asset from the input version to the current version. ...">Asset::upgradeVersion()</a> in the parent of the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> to extract any important data from the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> and put it somewhere where it will be needed in the upgraded design syntax.</p>
 <p>Data that is deserialized into the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> can be extracted using <a class="el" href="class_picto_1_1_obsolete_asset.html#a2c13b775185c9398f5adb5a6f897f1f4" title="Returns the attribute name that was included in this ObsoleteAsset&#39;s XML tag at the input index...">getAttributeName()</a>, <a class="el" href="class_picto_1_1_obsolete_asset.html#a09aeef81dbc64bcbbf34b2ee991f76fb" title="Returns the attribute value that was included in this ObsoleteAsset&#39;s XML tag at the input index...">getAttributeValue()</a>, <a class="el" href="class_picto_1_1_obsolete_asset.html#a495b9dc57f02784d6142908efa50c6c6" title="Returns the value contained in the ObsoleteAsset (between the open and closing xml tags for cases whe...">getValue()</a>, etc functions. Also, if the XML of the <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> contains other XML tags, each of those will be deserialized into its own child <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> which is accessible from <a class="el" href="class_picto_1_1_obsolete_asset.html#a562aa6312d8505809f7150882c9f2e5d" title="Returns the child ObsoleteAsset that was serialized in with the input tagName. ">getObsoleteChildAsset()</a>.</p>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
@@ -371,11 +372,11 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_picto_1_1_asset.html#a45e33e9da0d81734ec9e50a02ac325be" title="Loads this object from a QXmlStringReader containing descriptive XML text with the read pointer locat...">Asset::deserializeFromXml()</a> to deserialize everything from the input XML tag to its closing tag into a "tree" of <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> objects, each containing a list of XML tag attributes, and the tag values. </p>
-<p>THis function also uses <a class="el" href="class_picto_1_1_old_version_asset.html#ae0813a051e7dd735a8ae1a86319e4535" title="Call this to tell the OldVersionAsset class taht an OldVersionAsset was encountered and an automatic ...">reportOldVersionAsset()</a> to inform Picto that something that was obsolete was serialized in so it will have to perform an automatic upgrade. </p>
+<p>This function also uses <a class="el" href="class_picto_1_1_old_version_asset.html#ae0813a051e7dd735a8ae1a86319e4535" title="Call this to tell the OldVersionAsset class taht an OldVersionAsset was encountered and an automatic ...">reportOldVersionAsset()</a> to inform Picto that something that was obsolete was serialized in so it will have to perform an automatic upgrade. </p>
 
 <p>Implements <a class="el" href="class_picto_1_1_asset.html#a45e33e9da0d81734ec9e50a02ac325be">Picto::Asset</a>.</p>
 
-<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00034">34</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00038">38</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
 
 </div>
 </div>
@@ -426,7 +427,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns the attribute name that was included in this <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a>'s XML tag at the input index. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_obsolete_asset.html#afde5b3db6920d338802d609fdce021be" title="Returns the number of attributes that were included in the XML tag from which this ObsoleteAsset was ...">numAttributes()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00085">85</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00089">89</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
 
 </div>
 </div>
@@ -447,7 +448,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns the attribute value that was included in this <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a>'s XML tag at the input index. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_obsolete_asset.html#afde5b3db6920d338802d609fdce021be" title="Returns the number of attributes that were included in the XML tag from which this ObsoleteAsset was ...">numAttributes()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00095">95</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00099">99</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
 
 </div>
 </div>
@@ -468,7 +469,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Returns the child <a class="el" href="class_picto_1_1_obsolete_asset.html" title="Used to hold data from XML tags representing Assets that are now obsolete. ">ObsoleteAsset</a> that was serialized in with the input tagName. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_obsolete_asset.html#a89766dd18a16e9368a4e737df8798310" title="Implements Asset::deserializeFromXml() to deserialize everything from the input XML tag to its closin...">deserializeFromXml()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00075">75</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_obsolete_asset_8cpp_source.html#l00079">79</a> of file <a class="el" href="_obsolete_asset_8cpp_source.html">ObsoleteAsset.cpp</a>.</p>
 
 </div>
 </div>

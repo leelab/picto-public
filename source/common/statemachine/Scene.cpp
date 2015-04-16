@@ -8,7 +8,8 @@
 
 using namespace Picto;
 
-/*! \brief Returns true if the layer of the first VisualElement input is lower than the layer of the second.*/
+/*! \brief Returns true if the layer of the first VisualElement input is lower than the layer of the second.
+ */
 bool visualElementLessThan(const QSharedPointer<VisualElement> &e1, const QSharedPointer<VisualElement> &e2) 
 { 
 	return e1->getLayer() < e2->getLayer(); 
@@ -20,13 +21,12 @@ QMutex Scene::staticMutex_;
 
 /*! \brief Creates a new Scene object and returns a shared pointer to it.
  *	\note The scene handles rendering to the UI so it's rendering system must run in the UI thread.
- *	To make sure this happens, we use the qt signal->slot system which gaurantees that if
- *	we mark this object as running the main thread, any slots that are triggered on the 
- *	object will wait for the UI thread to run.  Since we only call the private doRender()
- *	function through a signal->slot connection, we are gauranteed that rendering is in the
- *	UI thread.
+ *	To make sure this happens, we use the qt signal and slot system which guarantees that if we mark this object as
+ *	running the main thread, any slots that are triggered on the object will wait for the UI thread to run.
+ *	Since we only call the private doRender() function through a signal->slot connection, we are guaranteed that
+ *	rendering is in the UI thread.
  *	\sa render(), doRender(), readyForRender()
-*/
+ */
 QSharedPointer<Scene> Scene::createScene()
 {
 	QSharedPointer<Scene> result(new Scene());
@@ -37,21 +37,21 @@ QSharedPointer<Scene> Scene::createScene()
 }
 
 /*! \brief Sets up rendering and then causes the actual render to happen by triggering the doRender() function.
- *	\details The actual rendering code that displays to the screen must run in the main UI thread
- *	but we don't want to require everything else to be in that thread.  Originally Picto
- *	wasn't designed with seperation of the View and Control logic into different threads
- *	so we needed to allow rendering code to occur in the UI thread and Control logic to
- *	occur in a separate thread without rewriting the whole system.  The method that we
- *	are using for now is to simply setup the render in this routine, then pause the Control logic
- *	thread until the doRender() which actually performs the render is called in the UI thread.  
- *	\note When running on the PictoDirector there is only one thread (ie. everything runs in the
- *	UI Thread) and so there is no pause.
+ *	\details The actual rendering code that displays to the screen must run in the main UI thread but we don't want to
+ *	require everything else to be in that thread.  Originally Picto wasn't designed with seperation of the View and
+ *	Control logic into different threads so we needed to allow rendering code to occur in the UI thread and Control
+ *	logic to occur in a separate thread without rewriting the whole system.  The method that we are using for now is to
+ *	simply set up the render in this routine, then pause the Control logic thread until the doRender() which actually
+ *	performs the render is called in the UI thread.  
+ *	\note When running on the PictoDirector there is only one thread (ie. everything runs in the UI Thread) and so there
+ *	is no pause.
  *
- *	callerId is the AssetId of the Asset calling render().
+ *	@param engine A shared pointer to the logic-driving PictoEngine
+ *	@param callerId The AssetId of the Asset calling render().
  */
 void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 {
-	//Setup rendering routine.
+	//Set up rendering routine.
 	QMutexLocker locker(mutex_.data());
 	engine_ = engine;
 	readyToRender_ = true;
@@ -79,14 +79,15 @@ void Scene::render(QSharedPointer<Engine::PictoEngine> engine,int callerId)
 }
 
 /*! \brief Not currently used, but the idea is that this would set the background color rendered by this Scene.
-*/
+ */
 void Scene::setBackgroundColor(QColor color)
 {
 	QMutexLocker locker(mutex_.data());
 	backgroundColor_ = color;
 }
 
-/*! \brief Adds the input VisualElement to this Scene so that it will be displayed next frame if it is marked visible.*/
+/*! \brief Adds the input VisualElement to this Scene so that it will be displayed next frame if it is marked visible.
+ */
 void Scene::addVisualElement(QSharedPointer<VisualElement> element)
 {
 	QMutexLocker locker(mutex_.data());
@@ -101,21 +102,24 @@ void Scene::addDataViewElement(QSharedPointer<DataViewElement> element)
 	unaddedDataViewElements_.push_back(element);
 }
 
-/*! \brief Adds the input AudioElement to this Scene so that it will be played next frame if it is set to play.*/
+/*! \brief Adds the input AudioElement to this Scene so that it will be played next frame if it is set to play.
+ */
 void Scene::addAudioElement(QSharedPointer<AudioElement> element)
 {
 	QMutexLocker locker(mutex_.data());
 	unaddedAudioElements_.push_back(element);
 }
 
-/*! \brief Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame.*/
+/*! \brief Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame.
+ */
 void Scene::addOutputSignal(QSharedPointer<OutputSignal> element)
 {
 	QMutexLocker locker(mutex_.data());
 	unaddedOutputSignals_.push_back(element);
 }
 
-/*! \brief Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame.*/
+/*! \brief Adds the input OutputSignal to this Scene so that its voltage effects will be triggered next frame.
+ */
 void Scene::addInputSignal(QSharedPointer<InputSignal> element)
 {
 	QMutexLocker locker(mutex_.data());
@@ -127,7 +131,7 @@ void Scene::addInputSignal(QSharedPointer<InputSignal> element)
  *	\details The zoom value must be greater than zero and less than 1. Essentially, this value will
  *	multiply all of the dimensions of objects in the Scene to create smaller objects for smaller zoom values
  *	and simulate a 'Zoom Out' effect.
-*/
+ */
 void Scene::setZoom(float zoom)
 {
 	staticMutex_.lock();
@@ -135,8 +139,8 @@ void Scene::setZoom(float zoom)
 	staticMutex_.unlock();
 }
 
-/*! \brief In case the render() function is stuck waiting for doRender() to render graphics for some reason, this function
- *	causes execution to break out of that loop.
+/*! \brief In case the render() function is stuck waiting for doRender() to render graphics for some reason, this
+ *	function causes execution to break out of that loop.
  */
 void Scene::closeRenderLoops()
 {
@@ -146,8 +150,8 @@ void Scene::closeRenderLoops()
 }
 
 /*! \brief Constructs a Scene object.
- *	\details Among other things, this connects the readyForRender() signal to the doRender() slot so that we can assure that all calls to 
- *	doRender() occur in the main UI thread.  See render(), doRender() for more details.
+ *	\details Among other things, this connects the readyForRender() signal to the doRender() slot so that we can assure
+ *	that all calls to doRender() occur in the main UI thread.  See render(), doRender() for more details.
  */
 Scene::Scene()
 : backgroundColor_(QColor(Qt::black)),
@@ -161,11 +165,13 @@ Scene::Scene()
 }
 
 /*! \brief Renders the Scene.
- *	\details This function sorts Visual Targets according to their layer, presents them to screen, plays any AudioElement objects that are currently
- *	audible, and pushes the latest output signals to their respective output ports.  callerId is the AssetId of the element that is starting this render()
- *	it will be used to report the active element during the course of each frame presentation.
- *	\note Qt requires that this function be called from the main UI thread since it calls functions that render graphics to screen.  This is handled by
- *	pushing this object into the UI thread and only calling doRender() from a signal-slot connection.  See render() for more details.
+ *	\details This function sorts Visual Targets according to their layer, presents them to screen, plays any AudioElement
+ *	objects that are currently audible, and pushes the latest output signals to their respective output ports.
+ *	@param callerId is the AssetId of the element that is starting this render(), used to report the active element
+ *	during the course of each frame presentation.
+ *	\note Qt requires that this function be called from the main UI thread since it render graphics to screen.
+ *	This is handled by pushing this object into the UI thread and only calling doRender() from a signal-slot connection.
+ *	\sa Scene::render()
  */
 void Scene::doRender(int callerId)
 {
@@ -220,7 +226,7 @@ void Scene::doRender(int callerId)
 			//add the appropriate compositing surfaces to the element
 			for(int i=0; i<unaddedOutputSignals_.length(); i++)
 			{
-				//Do Output Signal setup here
+				//Do Output Signal set up here
 				outputSignals_.append(unaddedOutputSignals_[i]);
 			}
 			unaddedOutputSignals_.clear();
@@ -331,12 +337,7 @@ void Scene::doRender(int callerId)
 	}while(!sceneRendered);
 	frame_++;
 	elapsedTime_.restart();
-	//! firstPhosphorTime_ is the time that the first phosphor appeared on the first visual target
-	//! In the current code iteration, visual targets block until the first phosphor of their
-	//!	scene is drawn to the display.  This means that if there are multiple visual targets, things
-	//! are not going to be synchronized.  In keeping with this deficiency, the recorded first phosphor
-	//! time is simply the time that the first phosphor appeared on the first screen.  Down the line
-	//! we should synchronize multiple displays.
+
 	engine_->reportNewFrame(firstPhosphorTime_,callerId);
 	readyToRender_ = false;
 }

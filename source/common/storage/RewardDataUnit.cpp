@@ -126,15 +126,4 @@ bool RewardDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void RewardDataUnit::postDeserialize()
-{
-
-}
-
-bool RewardDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

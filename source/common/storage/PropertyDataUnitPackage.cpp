@@ -90,15 +90,5 @@ bool PropertyDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader
 	return true;
 }
 
-void PropertyDataUnitPackage::postDeserialize()
-{
-
-}
-
-bool PropertyDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 
 }; //namespace Picto

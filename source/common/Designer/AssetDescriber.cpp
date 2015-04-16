@@ -1,15 +1,12 @@
 #include "AssetDescriber.h"
 #include "../memleakdetect.h"
 
-/*! \brief Indicates whether documentation text has been fully loaded into the AssetDescriber
- *	system.
- */
 bool AssetDescriber::isSetup_ = false;
-/*! \brief A lookup table containing AssetDescription objects under className keys.*/
+
 QHash<QString,QSharedPointer<AssetDescription>> AssetDescriber::assetHash_;
 
 /*! \brief A helpful function used to remove duplicate entries in a pre-ordered stringlist
-*/
+ */
 void removeCopies(QStringList& stringList)
 {
 	for(QStringList::Iterator iter = stringList.begin();iter != stringList.end();iter++)
@@ -22,22 +19,23 @@ void removeCopies(QStringList& stringList)
 	}
 }
 
-/*! \brief Returns a text overview of the class represented by this AssetDescription.*/
+/*! \brief Returns a text overview of the class represented by this AssetDescription.
+ */
 QString AssetDescription::getOverview()
 {
 	return overview;
 }
 
-/*! \brief Returns a text warning associated with the class represented by this AssetDescription.*/
+/*! \brief Returns a text warning associated with the class represented by this AssetDescription.
+ */
 QString AssetDescription::getWarning()
 {
 	return warning;
 }
 
 /*! \brief Returns a list of properties that elements of the class represented by this AssetDescription contain.
- *	\details Properties are the values that appear on the right hand side of the Designer that define each
- *	element.
-*/
+ *	\details Properties are the values that appear on the right hand side of the Designer that define each element.
+ */
 QStringList AssetDescription::getProperties()
 {
 	QStringList returnVal;
@@ -53,11 +51,11 @@ QStringList AssetDescription::getProperties()
 /*! \brief Returns a list of script properties that elements of the class represented by this AssetDescription contain.
  *	\details Script properties are properties that are usable in scripts in a set/get scenario such as: 
  *	\code
- *	boxGraphic.x = 132;
- *	boxGraphic.red = 15;
- *	boxTarget.x = boxGraphic.x;
+ *		boxGraphic.x = 132;
+ *		boxGraphic.red = 15;
+ *		boxTarget.x = boxGraphic.x;
  *	\endcode
-*/
+ */
 QStringList AssetDescription::getScriptProperties()
 {
 	QStringList returnVal;
@@ -72,12 +70,12 @@ QStringList AssetDescription::getScriptProperties()
 /*! \brief Returns a list of script functions that elements of the class represented by this AssetDescription contain.
  *	\details Script functions are functions that are usable in scripts to set or get data, ie.: 
  *	\code
- *	if(fixState.getLatestResult() == "Success")
- *	{
- *		fixGraphic.setPos(100,200);
- *	}
+ *		if(fixState.getLatestResult() == "Success")
+ *		{
+ *			fixGraphic.setPos(100,200);
+ *		}
  *	\endcode
-*/
+ */
 QStringList AssetDescription::getScriptFunctions()
 {
 	QStringList returnVal;
@@ -125,8 +123,7 @@ QString AssetDescription::getScriptFunctionDescription(QString name)
 }
 
 /*! \brief Returns an AssetDescription object describing Assets of the input className.
- *	\details If no information is found for the input className, an empty AssetDescription
- *	QSharedPointer is returned.
+ *	\details If no information is found for the input className, an empty AssetDescription QSharedPointer is returned.
  */
 QSharedPointer<AssetDescription> AssetDescriber::getAssetDescription(QString className)
 {
@@ -152,13 +149,12 @@ QSharedPointer<AssetDescription> AssetDescriber::addDescription(QString classNam
 }
 /*! \brief A giant function that loads all descriptive text into all AssetDescriptions for every
  *	class used in the Picto Designer.
- *	\details Putting all the text in this one big function is a somewhat clunky way to do things, 
- *	but has some nice features such as allowing us to only load the documentation if we need it.  It
- *	would be cleaner to store the documentation with the class being documented and we should probably
- *	do this at some point.  There are a few things to think about if we do that though.  We want the 
- *	documentation to be stored statically, not in every class instance.  We also want to be able to 
- *	retreive inherited function, data descriptions, and it would be nice if we could set things up so
- *	that no ducumnentation is stored if not necessary.
+ *	\details Putting all the text in this one big function is a somewhat clunky way to do things, but has some nice
+ *	features such as allowing us to only load the documentation if we need it.  It would be cleaner to store the
+ *	documentation with the class being documented and we should probably do this at some point.  There are a few things
+ *	to think about if we do that though.  We want the documentation to be stored statically, not in every class instance.
+ *	We also want to be able to retreive inherited function, data descriptions, and it would be nice if we could set
+ *	things up so that no ducumnentation is stored if not necessary.
  */
 void AssetDescriber::setupDescriptions()
 {
@@ -172,7 +168,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("UIEnabled"));
 	curr->addProp("Name","The name of this element.  When this element is accessed in scripts, this is the name used.");
 	curr->addProp("UIEnabled","Defines whether run-time editable properties from this element will appear during task runs.");
-	//curr->addProp("UIOrder","Not Yet Implemented.  Used to define the order of run-time editable properties");
+
 	curr = addDescription("ScriptableContainer");
 	curr->setInherits(getAssetDescription("Scriptable"));
 	curr = addDescription("ContainerElement");
@@ -185,9 +181,11 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("OutputElement");
 	curr->setInherits(getAssetDescription("ContainerElement"));
+
 	curr = addDescription("DataViewElement");
 	curr->setInherits(getAssetDescription("ContainerElement"));
 	curr->addProp("ViewTitle", "The title given to the element when it is displayed while a task is running.");
+	curr->addProp("DefaultSize", "The default size given to this View Element in the DataViewer.");
 
 	curr = addDescription("OutputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
@@ -201,7 +199,7 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("VisualElement");
 	curr->setInherits(getAssetDescription("OutputElement"));
 	curr->addProp("Position","The x,y position of this graphic.  x goes from 0 to 800 and y goes from 0 to 600 where (0,0) is the top left corner of the screen.");
-	curr->addProp("Color","The  color of this graphic.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
+	curr->addProp("Color","The color of this graphic.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
 	curr->addProp("Layer","The z-layer of this graphic in the scene.  Graphics with higher layer will appear on top of graphics with lower layer.");
 	curr->addProp("Visible","Defines whether this graphic is visible to either the operator, user or both depending on whether 'OperatorView' and/or 'SubjectView' are true.");
 	curr->addProp("OperatorView","When 'Visible' is true, defines whether this graphic is visible to the operator.");
@@ -250,8 +248,6 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("OutputElementContainer");
 	curr->setInherits(getAssetDescription("StateMachineElementContainer"));
-	curr = addDescription("DataViewElementContainer");
-	curr->setInherits(getAssetDescription("StateMachineElementContainer"));
 
 	curr = addDescription("MachineContainer");
 	curr->setInherits(getAssetDescription("OutputElementContainer"));
@@ -297,7 +293,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("PausePoint");
 	curr->setInherits(getAssetDescription("OutputElementContainer"));
-	curr->setOverview("Pause Points are used to define points in task execution where it will be logical for a pauses to occur.  When an operator presses the pause button during a session run, execution continues until it reaches the first pause point, where it waits for the operator to press the play button.  In some respects, pause points are like states that use a sort of 'play button controller.'  They are the only elements apart from States in which experimental time can pass and display any visual elements that are in scope or inside the pause element during the course of the pause.  Entry and exit scripts on a Pause Point are run regardless of whether the operator pressed pause.    State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+	curr->setOverview("Pause Points are used to define points in task execution where it will be logical for a pauses to occur.  When an operator presses the pause button during a session run, execution continues until it reaches the first pause point, where it waits for the operator to press the play button.  In some respects, pause points are like states that use a sort of 'play button controller.'  They are the only elements apart from States in which experimental time can pass and display any visual elements that are in scope or inside the pause element during the course of the pause.  Entry and exit scripts on a Pause Point are run regardless of whether the operator pressed pause.  State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
 	curr->addProp("ForcePause","When this property is set true, execution will pause whenever it reaches this Pause Point regardless of whether the operator pressed pause.");
 	
 	curr = addDescription("Reward");
@@ -320,7 +316,7 @@ void AssetDescriber::setupDescriptions()
 
 	curr = addDescription("StateMachine");
 	curr->setInherits(getAssetDescription("MachineContainer"));
-	curr->setOverview("State Machines are the containers for all execution logic in Picto.  They can contain any State Machine Elements, Variables, Parameters, Logic Elements or Stimulus Elements.  When execution hits a State Machine, the first thing that happens is that all of its contained elements reset their properties back to the initial states defined in the State Machine Editor.  Next the State Machine's Entry State is run, execution then follows from the initial state connected to the State Machine's Start Bar and continues internally until one of the State Machine's results are hit, or the operator presses stop.  After the result's scripts are run or the stop button is pressed, the State Machine's exit script is called and execution continues at the level above and transitions away from the result that was hit.  The two tunnels into and out of a State Machine level are there for the Start Bar and the Results.    State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
+	curr->setOverview("State Machines are the containers for all execution logic in Picto.  They can contain any State Machine Elements, Variables, Parameters, Logic Elements or Stimulus Elements.  When execution hits a State Machine, the first thing that happens is that all of its contained elements reset their properties back to the initial states defined in the State Machine Editor.  Next the State Machine's Entry State is run, execution then follows from the initial state connected to the State Machine's Start Bar and continues internally until one of the State Machine's results are hit, or the operator presses stop.  After the result's scripts are run or the stop button is pressed, the State Machine's exit script is called and execution continues at the level above and transitions away from the result that was hit.  The two tunnels into and out of a State Machine level are there for the Start Bar and the Results.  State Machines, States and Pause Points contribute to the layered structure of a State Machine Design.  The rules of scope in each of these cases is that any element can access any other element in its own level or in a level above it.  This is true of scripts that are used to get and set values, and output stimuli that are considered enabled during a State or Pause Point when they are in scope.");
 
 	curr = addDescription("SwitchElement");
 	curr->setInherits(getAssetDescription("StateMachineElement"));
@@ -989,11 +985,11 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("getNextChannel()","Returns the channel of the next spike to occur.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
 	curr->addSFunc("getNextUnit()","Returns the unit of the next spike to occur.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
 	curr->addSFunc("getNextWaveform()","Returns an array of waveform values for the next spike to occur.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
-	curr->addSFunc("getPrevTimes(number secsPreceding)","Returns an array of spike times that occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  There is a one to one matchup between the arrays for all of the getPrevValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).   Note that the input quantity need not be an integer.");
+	curr->addSFunc("getPrevTimes(number secsPreceding)","Returns an array of spike times that occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  There is a one to one matchup between the arrays for all of the getPrevValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getPrevChannels(number secsPreceding)","Returns an array of channels on which spikes occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  There is a one to one matchup between the arrays for all of the getPrevValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getPrevUnits(number secsPreceding)","Returns an array of the units (within a channel) on which spikes occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  There is a one to one matchup between the arrays for all of the getPrevValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getPrevWaveforms(number secsPreceding)","Returns an array of waveforms of spikes that occured after the input number of seconds preceding the latest frame time, up to and including the latest frame time.  Note that the returned quantity is an array of waveform data arrays, ie. To access the mth element of the nth waveform, use getPrevWaveforms(?)[n][m].  There is a one to one matchup between the arrays for all of the getPrevValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
-	curr->addSFunc("getNextTimes(number secsPreceding)","Returns an array of spike times that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.  There is a one to one matchup between the arrays for all of the getNextValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).   Note that the input quantity need not be an integer.");
+	curr->addSFunc("getNextTimes(number secsPreceding)","Returns an array of spike times that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.  There is a one to one matchup between the arrays for all of the getNextValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getNextChannels(number secsPreceding)","Returns an array of channels of spikes that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.  There is a one to one matchup between the arrays for all of the getNextValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getNextUnits(number secsPreceding)","Returns an array of units (within a channel) that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.  There is a one to one matchup between the arrays for all of the getNextValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
 	curr->addSFunc("getNextWaveforms(number secsPreceding)","Returns an array of waveforms of spikes that will occur with times > the latest frame time and &lt;= the input # sec after the latest frame.  Note that the returned quantity is an array of waveform data arrays, ie. To access the mth element of the nth waveform, use getNextWaveforms(?)[n][m].  There is a one to one matchup between the arrays for all of the getNextValues() functions (ie. The same index in the array in different returned arrays provides data about the same spike).  Note that the input quantity need not be an integer.");
@@ -1035,6 +1031,15 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("Used as a base for all bar-based plotting objects.");
 	curr->addProp("DisplayLegend", "Determines whether or not the legend for your plot is displayed alongside the plot.");
 	curr->addProp("NormalizedDisplay", "Turning this on normalizes the Y-axis across your dataset.");
+	curr->addProp("ColumnType", "Sets the column style used for the plot.");
+	curr->addProp("ColumnColor", "The color of the columns of this plot.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
+	curr->addProp("CanvasColor", "The color of the background of this plot.  Color is made up of red, green, blue and alpha components where alpha defines the color opacity (0=transparent,255=opaque).");
+	curr->addSProp("red", "Used to set or get the red component of this plot's column's color.  Ranges from 0-255.");
+	curr->addSProp("green", "Used to set or get the green component of this plot's column's color.  Ranges from 0-255.");
+	curr->addSProp("blue", "Used to set or get the blue component of this plot's column's color.  Ranges from 0-255.");
+	curr->addSProp("alpha", "Used to set or get the alpha component of this plot's column's color where alpha defines the color opacity (0=transparent,255=opaque).");
+	curr->addSProp("color", "Sets/Gets the current color value as a string containing hexadecimal r,g,b values (#rrggbb).");
+	curr->addSFunc("setColor(r,g,b) or setColor(r,g,b,a)", "A convenience function to set the rgb or rgba color components at once.  Inputs are (r,g,b) or (r,g,b,a) with each input ranging from 0-255.");
 	curr->addSFunc("clearPlot()", "Clears the contents and data associated with this plot.");
 
 	curr = addDescription("BarPlot");

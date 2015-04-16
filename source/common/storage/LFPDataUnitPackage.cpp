@@ -135,16 +135,6 @@ bool LFPDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
-void LFPDataUnitPackage::postDeserialize()
-{
-
-}
-
-bool LFPDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 /*! \brief Adds the input list of Local Field Potential readings to this package.
  *	@param adPotentialReadings An array of potential readings
  *	@param numVals the size of the adPotentialReadings array

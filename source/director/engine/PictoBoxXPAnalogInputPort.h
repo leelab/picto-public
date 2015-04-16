@@ -2,7 +2,6 @@
 #define PICTOBOXXPANALOGSIGNALCHANNEL_H
 
 
-//#include "../../common/common.h"
 #include "../../common/engine/InputPort.h"
 
 namespace Picto {
@@ -35,11 +34,13 @@ protected:
 	virtual bool startSampling();
 	virtual void stopSampling();
 	virtual double updateDataBuffer();
-private:
 
-	//unsigned long  daqTaskHandle_; // For Nidaqmx 8.5
-	void*  daqTaskHandle_;	// For Nidaqmx after 8.5
+private:
+	//! Task handle for Analog Reads
+	void*  daqTaskHandle_;
+	//! Total number of elements needed in data buffer
 	unsigned int bufferSize_;
+	//! Pointer to allocated data buffer
 	short *dataBuffer_;
 
 };

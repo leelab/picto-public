@@ -81,10 +81,6 @@ public:
 	/*! \brief Returns the lfp channel whose data is stored in this object.*/
 	int getChannel(){return channel_;};
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
 	int channel_;
 	double correlation_;

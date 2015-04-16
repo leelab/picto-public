@@ -128,15 +128,4 @@ bool TaskRunDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStr
 	return true;
 }
 
-void TaskRunDataUnit::postDeserialize()
-{
-
-}
-
-bool TaskRunDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

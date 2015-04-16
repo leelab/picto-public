@@ -96,191 +96,195 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">   12</a></span>&#160;<a class="code" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">SignalChannel::SignalChannel</a>(QString name,QSharedPointer&lt;InputPort&gt; port)</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    name_ = name;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    port_ = port;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">setSampleResolution</a>(1);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a76034e92addacd628ee3d3c7226f5df3">   24</a></span>&#160;<a class="code" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">SignalChannel::SignalChannel</a>(QString name, <span class="keywordtype">int</span> msPerSample, QSharedPointer&lt;InputPort&gt; port)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    name_ = name.toLower();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    port_ = port;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">setSampleResolution</a>(msPerSample);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">SignalChannel::addSubchannel</a>(QString subchannelName, <span class="keywordtype">int</span> channelIndex)</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    QVector&lt;double&gt; data;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">if</span>(!rawDataBuffer_.contains(subchannelName))</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        rawDataBuffer_[subchannelName] = data;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        rawDataLastValue_[subchannelName] = 0.0;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span>(port_)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        port_-&gt;addInputChannel(channelIndex,msPerSample_);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">if</span>(!channelIndexMap_.contains(subchannelName))</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            channelIndexMap_[subchannelName] = channelIndex;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">   11</a></span>&#160;<a class="code" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">SignalChannel::SignalChannel</a>(QString name,QSharedPointer&lt;InputPort&gt; port)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a6d775f0e96b2c7ec456a2b3c030b65e1">name_</a> = name;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a> = port;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">setSampleResolution</a>(1);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a76034e92addacd628ee3d3c7226f5df3">   22</a></span>&#160;<a class="code" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">SignalChannel::SignalChannel</a>(QString name, <span class="keywordtype">int</span> msPerSample, QSharedPointer&lt;InputPort&gt; port)</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a6d775f0e96b2c7ec456a2b3c030b65e1">name_</a> = name.toLower();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a> = port;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">setSampleResolution</a>(msPerSample);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">   34</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">SignalChannel::addSubchannel</a>(QString subchannelName, <span class="keywordtype">int</span> channelIndex)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    QVector&lt;double&gt; data;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.contains(subchannelName))</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[subchannelName] = data;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[subchannelName] = 0.0;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;addInputChannel(channelIndex,<a class="code" href="class_picto_1_1_signal_channel.html#a021e383cb5e3b4e64ff2085b126ff697">msPerSample_</a>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">channelIndexMap_</a>.contains(subchannelName))</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">channelIndexMap_</a>[subchannelName] = channelIndex;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">SignalChannel::setSampleResolution</a>(<span class="keywordtype">int</span> msPerSample)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    Q_ASSERT(msPerSample != 0);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    msPerSample_ = msPerSample;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">   69</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">SignalChannel::latestUpdateEventOffset</a>()</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;{</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span>(!port_)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">return</span> port_-&gt;getFrameToSampleOffset(channelIndexMap_.begin().value());</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">   80</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">SignalChannel::peekValue</a>(QString subchannel)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;{</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">getDataFromPort</a>();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">if</span>(!rawDataBuffer_.contains(subchannel))</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> 0.0;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//Update the rawDataLastValue_ map with this subchannel and a shearAsFuncOf channel</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">if</span>(!rawDataBuffer_.value(subchannel).isEmpty())</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        rawDataLastValue_[subchannel] = rawDataBuffer_.value(subchannel).last();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    Q_ASSERT(rawDataLastValue_.contains(subchannel));</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> rawDataLastValue_.value(subchannel);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">  100</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">SignalChannel::clearValues</a>()</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">//clear out the raw data</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt;::iterator x = rawDataBuffer_.begin();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">while</span>(x != rawDataBuffer_.end())</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">//Update the last raw value that was read.</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span>(!x.value().isEmpty())</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            rawDataLastValue_[x.key()] = x.value().last();</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        x.value().clear();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        x++;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">  117</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">SignalChannel::start</a>()</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;{</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">if</span>(!port_)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    port_-&gt;enable(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">  127</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">SignalChannel::stop</a>()</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keywordflow">if</span>(!port_)</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    port_-&gt;enable(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">clearValues</a>();</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">  140</a></span>&#160;QMap&lt;QString, QVector&lt;double&gt; &gt; <a class="code" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">SignalChannel::getValues</a>()</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;{</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">getRawValues</a>();</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">  148</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">SignalChannel::updateData</a>(<span class="keywordtype">double</span> currentTime)</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;{</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">if</span>(port_)</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        port_-&gt;updateDataBuffer(currentTime);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">  158</a></span>&#160;QMap&lt;QString, QVector&lt;double&gt; &gt; <a class="code" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">SignalChannel::getRawValues</a>()</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">getDataFromPort</a>();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt; dataBuffer = rawDataBuffer_;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="comment">//clear out the raw data</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt;::iterator x = rawDataBuffer_.begin();</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">while</span>(x != rawDataBuffer_.end())</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    {</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="comment">//Update the last raw value that was read.</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">if</span>(!x.value().isEmpty())</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            rawDataLastValue_[x.key()] = x.value().last();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        x.value().clear();</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        x++;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    }</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">return</span> dataBuffer;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">  188</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">SignalChannel::insertValue</a>(QString subchannel, <span class="keywordtype">double</span> val)</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;{</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="comment">//When this is called, the passed in value is immediately added to the </span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="comment">//rawDataBuffer_.  Since real data is only added to the rawDataBuffer_</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">//when updateDataBuffer is called, the inserted data is slightly out of</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="comment">//order.  This shouldn&#39;t be a big deal, since it is unlikely that we&#39;ll be </span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="comment">//inserting values at the same time as we&#39;re collecting real data.</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="comment">//Should this become an issue, we&#39;ll want to add timestamps.</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">   57</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">SignalChannel::setSampleResolution</a>(<span class="keywordtype">int</span> msPerSample)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    Q_ASSERT(msPerSample != 0);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a021e383cb5e3b4e64ff2085b126ff697">msPerSample_</a> = msPerSample;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">   68</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">SignalChannel::latestUpdateEventOffset</a>()</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;getFrameToSampleOffset(<a class="code" href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">channelIndexMap_</a>.begin().value());</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">   79</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">SignalChannel::peekValue</a>(QString subchannel)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">getDataFromPort</a>();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.contains(subchannel))</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">return</span> 0.0;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">//Update the rawDataLastValue_ map with this subchannel and a shearAsFuncOf channel</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.value(subchannel).isEmpty())</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[subchannel] = <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.value(subchannel).last();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    Q_ASSERT(<a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>.contains(subchannel));</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>.value(subchannel);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">   99</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">SignalChannel::clearValues</a>()</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="comment">//clear out the raw data</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt;::iterator x = <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.begin();</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">while</span>(x != <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.end())</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="comment">//Update the last raw value that was read.</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">if</span>(!x.value().isEmpty())</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[x.key()] = x.value().last();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        x.value().clear();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        x++;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">  116</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">SignalChannel::start</a>()</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;enable(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">  126</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">SignalChannel::stop</a>()</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;enable(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">clearValues</a>();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">  139</a></span>&#160;QMap&lt;QString, QVector&lt;double&gt; &gt; <a class="code" href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">SignalChannel::getValues</a>()</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;{</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">getRawValues</a>();</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">  147</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">SignalChannel::updateData</a>(<span class="keywordtype">double</span> currentTime)</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;{</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;updateDataBuffer(currentTime);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;}</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">  157</a></span>&#160;QMap&lt;QString, QVector&lt;double&gt; &gt; <a class="code" href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">SignalChannel::getRawValues</a>()</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;{</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">getDataFromPort</a>();</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt; dataBuffer = <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="comment">//clear out the raw data</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    QMap&lt;QString, QVector&lt;double&gt; &gt;::iterator x = <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.begin();</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">while</span>(x != <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.end())</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="comment">//Update the last raw value that was read.</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">if</span>(!x.value().isEmpty())</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[x.key()] = x.value().last();</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        x.value().clear();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        x++;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> dataBuffer;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;}</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">  185</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">SignalChannel::insertValue</a>(QString subchannel, <span class="keywordtype">double</span> val)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;{</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="comment">//When this is called, the passed in value is immediately added to the rawDataBuffer_.  Since real data is only added</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="comment">//  to the rawDataBuffer_ when updateDataBuffer is called, the inserted data is slightly out of order.  This shouldn&#39;t</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="comment">//  be a big deal, since it is unlikely that we&#39;ll be inserting values at the same time as we&#39;re collecting real data.</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="comment">//  Should this become an issue, we&#39;ll want to add timestamps.</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    Q_ASSERT(<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.contains(subchannel));</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[subchannel].append(val);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[subchannel] = val;</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    Q_ASSERT(rawDataBuffer_.contains(subchannel));</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    rawDataBuffer_[subchannel].append(val);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    rawDataLastValue_[subchannel] = val;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">  213</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">SignalChannel::insertValues</a>(QString subchannel, QVector&lt;double&gt; vals)</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;{</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordflow">if</span>(rawDataBuffer_.contains(subchannel))</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    {</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        rawDataBuffer_[subchannel] &lt;&lt; vals;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">if</span>(rawDataBuffer_[subchannel].size())</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            rawDataLastValue_[subchannel] = vals.last();</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    }</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">  226</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">SignalChannel::getDataFromPort</a>()</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;{</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">if</span>(!port_)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    QMap&lt;QString, int&gt;::iterator it;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">for</span>(it = channelIndexMap_.begin();it != channelIndexMap_.end();it++)</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        rawDataBuffer_[it.key()] &lt;&lt; port_-&gt;getData(it.value());</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">if</span>(rawDataBuffer_[it.key()].size())</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            rawDataLastValue_[it.key()] = rawDataBuffer_[it.key()].last();</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    }</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a3c06dc4ca6a36b0e5397f0cc0ba1d520"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">Picto::SignalChannel::getRawValues</a></div><div class="ttdeci">virtual QMap&lt; QString, QVector&lt; double &gt; &gt; getRawValues()</div><div class="ttdoc">Gets data for this SignalChannel from the InputPort and returns it. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00158">SignalChannel.cpp:158</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_ab36c2e645b71df0e11eabe31d468ad85"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">Picto::SignalChannel::getDataFromPort</a></div><div class="ttdeci">void getDataFromPort()</div><div class="ttdoc">Copies data in from the InputPort to this SignalChannel for all sub-channels. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00226">SignalChannel.cpp:226</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a656a421939ffd3f75fad08289e5f3ba2"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">Picto::SignalChannel::latestUpdateEventOffset</a></div><div class="ttdeci">double latestUpdateEventOffset()</div><div class="ttdoc">Returns the offset from the time that the previous frame occured to the time that the first sample ap...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00069">SignalChannel.cpp:69</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a734076de8d92b65d138be9c5b47e24b9"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">Picto::SignalChannel::updateData</a></div><div class="ttdeci">void updateData(double currentTime)</div><div class="ttdoc">Loads data into the underlying InputPort so that it will be available for the next call to getValues(...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00148">SignalChannel.cpp:148</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_afd9b6db73405a692074553032f1ca33c"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">Picto::SignalChannel::SignalChannel</a></div><div class="ttdeci">SignalChannel(QString name, QSharedPointer&lt; InputPort &gt; port=QSharedPointer&lt; InputPort &gt;())</div><div class="ttdoc">Constructs a new SignalChannel with the input name and InputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00012">SignalChannel.cpp:12</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a6d3da16b7a2233f581617aabdb1c4c72"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">Picto::SignalChannel::getValues</a></div><div class="ttdeci">virtual QMap&lt; QString, QVector&lt; double &gt; &gt; getValues()</div><div class="ttdoc">Returns a map of data sample vectors indexed by sub-channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00140">SignalChannel.cpp:140</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a14f7b5e24440a75104ed0540371f2f7b"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">Picto::SignalChannel::insertValues</a></div><div class="ttdeci">void insertValues(QString subchannel, QVector&lt; double &gt; vals)</div><div class="ttdoc">Adds data values to the input sub-channel from an outside source. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00213">SignalChannel.cpp:213</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_adafa510c5afd2ef630777181d0fac523"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">Picto::SignalChannel::insertValue</a></div><div class="ttdeci">void insertValue(QString subchannel, double val)</div><div class="ttdoc">Adds a single input value to the input subchannel from an outside source. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00188">SignalChannel.cpp:188</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a96f537342b8c367f0865398dda7322a4"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">Picto::SignalChannel::start</a></div><div class="ttdeci">bool start()</div><div class="ttdoc">Starts data capture for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00117">SignalChannel.cpp:117</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_ad5df0c04b3e889c4f68f9d6bfec001bb"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">Picto::SignalChannel::peekValue</a></div><div class="ttdeci">virtual double peekValue(QString subchannel)</div><div class="ttdoc">Gets the most recent value from the subchannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00080">SignalChannel.cpp:80</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_a50f252249632b01ab624ae92e5db6c86"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">Picto::SignalChannel::setSampleResolution</a></div><div class="ttdeci">void setSampleResolution(int msPerSample)</div><div class="ttdoc">Sets the resolution at which this channel will be sampled. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00059">SignalChannel.cpp:59</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_abfe16a2da824414da1ed01ae72604077"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">Picto::SignalChannel::addSubchannel</a></div><div class="ttdeci">virtual void addSubchannel(QString subchannelName, int channelIndex)</div><div class="ttdoc">Adds a subchannel for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00036">SignalChannel.cpp:36</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_ae359aef18212642b4c748f786f181f46"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">Picto::SignalChannel::stop</a></div><div class="ttdeci">bool stop()</div><div class="ttdoc">Stops data capture for this SignalChannel and clears out any remaining data in buffers. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00127">SignalChannel.cpp:127</a></div></div>
-<div class="ttc" id="class_picto_1_1_signal_channel_html_acc73cc79098df2b940c3390a235ecf5c"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">Picto::SignalChannel::clearValues</a></div><div class="ttdeci">void clearValues()</div><div class="ttdoc">Clears the latest data that was read in from the InputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00100">SignalChannel.cpp:100</a></div></div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">  206</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">SignalChannel::insertValues</a>(QString subchannel, QVector&lt;double&gt; vals)</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;{</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>.contains(subchannel))</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[subchannel] &lt;&lt; vals;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[subchannel].size())</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[subchannel] = vals.last();</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    }</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;}</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">  219</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">SignalChannel::getDataFromPort</a>()</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;{</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">if</span>(!<a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>)</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    QMap&lt;QString, int&gt;::iterator it;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordflow">for</span>(it = <a class="code" href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">channelIndexMap_</a>.begin();it != <a class="code" href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">channelIndexMap_</a>.end();it++)</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[it.key()] &lt;&lt; <a class="code" href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">port_</a>-&gt;getData(it.value());</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[it.key()].size())</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            <a class="code" href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">rawDataLastValue_</a>[it.key()] = <a class="code" href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">rawDataBuffer_</a>[it.key()].last();</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    }</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a3c06dc4ca6a36b0e5397f0cc0ba1d520"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a3c06dc4ca6a36b0e5397f0cc0ba1d520">Picto::SignalChannel::getRawValues</a></div><div class="ttdeci">virtual QMap&lt; QString, QVector&lt; double &gt; &gt; getRawValues()</div><div class="ttdoc">Gets data for this SignalChannel from the InputPort and returns it. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00157">SignalChannel.cpp:157</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_ab36c2e645b71df0e11eabe31d468ad85"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ab36c2e645b71df0e11eabe31d468ad85">Picto::SignalChannel::getDataFromPort</a></div><div class="ttdeci">void getDataFromPort()</div><div class="ttdoc">Places current data (everything that has been generated since the last call) into rawDataBuffer_...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00219">SignalChannel.cpp:219</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a656a421939ffd3f75fad08289e5f3ba2"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2">Picto::SignalChannel::latestUpdateEventOffset</a></div><div class="ttdeci">double latestUpdateEventOffset()</div><div class="ttdoc">Returns the offset from the time that the previous frame occured to the time that the first sample ap...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00068">SignalChannel.cpp:68</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_abc9e24321005434a885bcb951a31bfcb"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#abc9e24321005434a885bcb951a31bfcb">Picto::SignalChannel::rawDataBuffer_</a></div><div class="ttdeci">QMap&lt; QString, QVector&lt; double &gt; &gt; rawDataBuffer_</div><div class="ttdoc">Holds data buffers indexed by channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00086">SignalChannel.h:86</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a6d775f0e96b2c7ec456a2b3c030b65e1"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a6d775f0e96b2c7ec456a2b3c030b65e1">Picto::SignalChannel::name_</a></div><div class="ttdeci">QString name_</div><div class="ttdoc">The name of this signal channel, passed in through the constructor. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00093">SignalChannel.h:93</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a734076de8d92b65d138be9c5b47e24b9"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a734076de8d92b65d138be9c5b47e24b9">Picto::SignalChannel::updateData</a></div><div class="ttdeci">void updateData(double currentTime)</div><div class="ttdoc">Loads data into the underlying InputPort so that it will be available for the next call to getValues(...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00147">SignalChannel.cpp:147</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_afd9b6db73405a692074553032f1ca33c"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">Picto::SignalChannel::SignalChannel</a></div><div class="ttdeci">SignalChannel(QString name, QSharedPointer&lt; InputPort &gt; port=QSharedPointer&lt; InputPort &gt;())</div><div class="ttdoc">Constructs a new SignalChannel with the input name and InputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00011">SignalChannel.cpp:11</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a6d3da16b7a2233f581617aabdb1c4c72"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a6d3da16b7a2233f581617aabdb1c4c72">Picto::SignalChannel::getValues</a></div><div class="ttdeci">virtual QMap&lt; QString, QVector&lt; double &gt; &gt; getValues()</div><div class="ttdoc">Returns a map of data sample vectors indexed by sub-channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00139">SignalChannel.cpp:139</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a14f7b5e24440a75104ed0540371f2f7b"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b">Picto::SignalChannel::insertValues</a></div><div class="ttdeci">void insertValues(QString subchannel, QVector&lt; double &gt; vals)</div><div class="ttdoc">Adds data values to the input sub-channel from an outside source. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00206">SignalChannel.cpp:206</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_ad01cca890df5462ce285bc013587f128"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128">Picto::SignalChannel::port_</a></div><div class="ttdeci">QSharedPointer&lt; InputPort &gt; port_</div><div class="ttdoc">A shared pointer to this SignalChannel&#39;s InputPort object, used to actually collect data...</div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00098">SignalChannel.h:98</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a6b509f778fe217095d62b1b9a04f738a"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a6b509f778fe217095d62b1b9a04f738a">Picto::SignalChannel::channelIndexMap_</a></div><div class="ttdeci">QMap&lt; QString, int &gt; channelIndexMap_</div><div class="ttdoc">A map of all this SignalChannel object&#39;s channel numbers, indexed by channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00096">SignalChannel.h:96</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_adafa510c5afd2ef630777181d0fac523"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523">Picto::SignalChannel::insertValue</a></div><div class="ttdeci">void insertValue(QString subchannel, double val)</div><div class="ttdoc">Adds a single input value to the input subchannel from an outside source. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00185">SignalChannel.cpp:185</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a96f537342b8c367f0865398dda7322a4"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a96f537342b8c367f0865398dda7322a4">Picto::SignalChannel::start</a></div><div class="ttdeci">bool start()</div><div class="ttdoc">Starts data capture for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00116">SignalChannel.cpp:116</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_ad5df0c04b3e889c4f68f9d6bfec001bb"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ad5df0c04b3e889c4f68f9d6bfec001bb">Picto::SignalChannel::peekValue</a></div><div class="ttdeci">virtual double peekValue(QString subchannel)</div><div class="ttdoc">Gets the most recent value from the subchannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00079">SignalChannel.cpp:79</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a021e383cb5e3b4e64ff2085b126ff697"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a021e383cb5e3b4e64ff2085b126ff697">Picto::SignalChannel::msPerSample_</a></div><div class="ttdeci">int msPerSample_</div><div class="ttdoc">Sample period in milliseconds. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00091">SignalChannel.h:91</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a50f252249632b01ab624ae92e5db6c86"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">Picto::SignalChannel::setSampleResolution</a></div><div class="ttdeci">void setSampleResolution(int msPerSample)</div><div class="ttdoc">Sets the resolution at which this channel will be sampled. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00057">SignalChannel.cpp:57</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_abfe16a2da824414da1ed01ae72604077"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077">Picto::SignalChannel::addSubchannel</a></div><div class="ttdeci">virtual void addSubchannel(QString subchannelName, int channelIndex)</div><div class="ttdoc">Adds a subchannel for this SignalChannel. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00034">SignalChannel.cpp:34</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_ae359aef18212642b4c748f786f181f46"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#ae359aef18212642b4c748f786f181f46">Picto::SignalChannel::stop</a></div><div class="ttdeci">bool stop()</div><div class="ttdoc">Stops data capture for this SignalChannel and clears out any remaining data in buffers. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00126">SignalChannel.cpp:126</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_acc73cc79098df2b940c3390a235ecf5c"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#acc73cc79098df2b940c3390a235ecf5c">Picto::SignalChannel::clearValues</a></div><div class="ttdeci">void clearValues()</div><div class="ttdoc">Clears the latest data that was read in from the InputPort. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8cpp_source.html#l00099">SignalChannel.cpp:99</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
+<div class="ttc" id="class_picto_1_1_signal_channel_html_a649e84bd10a07938af4a4c41d3dcb869"><div class="ttname"><a href="class_picto_1_1_signal_channel.html#a649e84bd10a07938af4a4c41d3dcb869">Picto::SignalChannel::rawDataLastValue_</a></div><div class="ttdeci">QMap&lt; QString, double &gt; rawDataLastValue_</div><div class="ttdoc">Holds the last data element, used for peeking. Indexed by channel name. </div><div class="ttdef"><b>Definition:</b> <a href="_signal_channel_8h_source.html#l00088">SignalChannel.h:88</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

@@ -89,12 +89,6 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-protected:
-	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
-	virtual void postDeserialize();
-	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
 	//! The signal channel from which this data was drawn
 	QString channel_;

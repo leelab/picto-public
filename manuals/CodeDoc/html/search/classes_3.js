@@ -9,7 +9,6 @@ var searchData=
   ['datastore',['DataStore',['../class_picto_1_1_data_store.html',1,'Picto']]],
   ['dataunit',['DataUnit',['../class_picto_1_1_data_unit.html',1,'Picto']]],
   ['dataviewelement',['DataViewElement',['../class_picto_1_1_data_view_element.html',1,'Picto']]],
-  ['dataviewelementcontainer',['DataViewElementContainer',['../class_picto_1_1_data_view_element_container.html',1,'Picto']]],
   ['dataviewlayout',['DataViewLayout',['../class_data_view_layout.html',1,'']]],
   ['dataviewwidget',['DataViewWidget',['../class_data_view_widget.html',1,'']]],
   ['designconfig',['DesignConfig',['../class_picto_1_1_design_config.html',1,'Picto']]],

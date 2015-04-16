@@ -144,14 +144,6 @@ void PausePoint::upgradeVersion(QString deserializedVersion)
 		{
 			getPropertyContainer()->setPropertyValue("EntryScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
 		}
-
-		//No one used this so we don't need to do it, and we're getting rid of PausePoint exit scripts.
-		//childList = getGeneratedChildren("RestartingScript");
-		//Q_ASSERT(childList.size() <= 1);
-		//if(childList.size())
-		//{
-		//	getPropertyContainer()->setPropertyValue("ExitScript",childList.first().staticCast<ObsoleteAsset>()->getValue());
-		//}
 	}
 }
 

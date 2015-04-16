@@ -13,23 +13,27 @@ assetId_(0)
 ObsoleteAsset::~ObsoleteAsset()
 {
 }
-/*! \brief Constructs and returns a shared pointer to a new ObsoleteAsset.*/
+
+/*! \brief Constructs and returns a shared pointer to a new ObsoleteAsset.
+ */
 QSharedPointer<Asset> ObsoleteAsset::Create()
 {
 	return QSharedPointer<Asset>(new ObsoleteAsset());
 }
 
-/*! \brief Implements Asset::serializeAsXml() to do nothing since ObsoleteAsset values are obsolete and never serialized out.*/
+/*! \brief Implements Asset::serializeAsXml() to do nothing since ObsoleteAsset values are obsolete and never serialized
+ *	out.
+ */
 bool ObsoleteAsset::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter)
 {
 	Q_ASSERT_X(false,"ObsoleteAsset::serializeAsXml","An ObsoleteAsset's serializeAsXml() function should never be used.");
 	return true;
 }
 
-/*! \brief Implements Asset::deserializeFromXml() to deserialize everything from the input XML tag to its closing tag into a 
- *	"tree" of ObsoleteAsset objects, each containing a list of XML tag attributes, and the tag values.
- *	\details THis function also uses reportOldVersionAsset() to inform Picto that something that was obsolete was serialized
- *	in so it will have to perform an automatic upgrade.
+/*! \brief Implements Asset::deserializeFromXml() to deserialize everything from the input XML tag to its closing tag into
+ *	a "tree" of ObsoleteAsset objects, each containing a list of XML tag attributes, and the tag values.
+ *	\details This function also uses reportOldVersionAsset() to inform Picto that something that was obsolete was
+ *	serialized in so it will have to perform an automatic upgrade.
  */
 bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 {
@@ -59,8 +63,8 @@ bool ObsoleteAsset::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
-/*! \brief Extends Asset::postDeserialize() to set this object deleted and emit the edited() signal to tell Parent Assets that this
- *	ObsoleteAsset won't be saved out.
+/*! \brief Extends Asset::postDeserialize() to set this object deleted and emit the edited() signal to tell Parent Assets
+ *	that this ObsoleteAsset won't be saved out.
  */
 void ObsoleteAsset::postDeserialize()
 {

@@ -292,17 +292,27 @@ private:
 	bool bExclusiveMode_;
 	
 	QSharedPointer<EventCodeGenerator> eventCodeGenerator_;
+	//! A Map of SignalChannel objects by SignalChannel name, used to control and sample input
 	QMap<QString, QSharedPointer<SignalChannel> > signalChannels_;
+	//! A list of RenderingTargets to which the task should be rendered
 	QList<QSharedPointer<RenderingTarget> > renderingTargets_;
 	QList<QSharedPointer<ControlPanelInterface>> controlPanelIfs_;
+	//! A shared pointer to this engine's RewardController
 	QSharedPointer<RewardController> rewardController_;
+	//! A Map of OutputSignalControllers indexed by name
 	QMap<QString,QSharedPointer<OutputSignalController>> outSigControllers_;
 	QSharedPointer<PropertyDataUnitPackage> propPackage_;
 	QSharedPointer<StateDataUnitPackage> stateDataPackage_;
-	QSharedPointer<CommandChannel> dataCommandChannel_;		//Used for sending data to the server
-	QSharedPointer<CommandChannel> updateCommandChannel_;	//Used for sending everything except data
-	QSharedPointer<CommandChannel> fpCommandChannel_;		//Used for receiving commands from the front panel
-	QSharedPointer<CommandChannel> fpEventChannel_;			//Used for sending event data to the front panel
+
+	//! Used for sending data to the server
+	QSharedPointer<CommandChannel> dataCommandChannel_;
+	//! Used for sending everything except data
+	QSharedPointer<CommandChannel> updateCommandChannel_;
+	//! Used for receiving commands from the front panel
+	QSharedPointer<CommandChannel> fpCommandChannel_;
+	//! Used for sending event data to the front panel
+	QSharedPointer<CommandChannel> fpEventChannel_;
+
 	QSharedPointer<PropertyTable> propTable_;
 	QList<QSharedPointer<RewardDataUnit>> deliveredRewards_;
 	QVector<int> rewardDurations_;

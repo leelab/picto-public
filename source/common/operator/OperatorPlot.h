@@ -24,7 +24,7 @@ class OperatorPlot : public DataViewElement
 	Q_OBJECT
 public:
 	OperatorPlot();
-	virtual ~OperatorPlot(){};
+	virtual ~OperatorPlot();
 
 	/*!	\brief Prepares the underlying Plot for rendering.
 	 */
@@ -59,6 +59,8 @@ protected:
 	QwtPlot *m_pPlot;
 	//!	Flag for when the plot need to be recalculated.
 	bool m_bDataChanged;
+	//! Holds a copy of the plot's title
+	QString m_title;
 };
 
 

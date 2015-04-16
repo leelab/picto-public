@@ -124,21 +124,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> serializeAsXml(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> deserializeFromXml(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QList&lt;QSharedPointer&lt;StateDataUnit&gt;&gt; data_;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    QList&lt;QSharedPointer&lt;StateDataUnit&gt;&gt; data_;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00025">DataUnit.h:25</a></div></div>
+<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00027">DataUnit.h:27</a></div></div>
 <div class="ttc" id="class_picto_1_1_state_data_unit_package_html_a57ba13dd0c3f19342f5efb39d59ea2ad"><div class="ttname"><a href="class_picto_1_1_state_data_unit_package.html#a57ba13dd0c3f19342f5efb39d59ea2ad">Picto::StateDataUnitPackage::takeLastDataPoint</a></div><div class="ttdeci">QSharedPointer&lt; StateDataUnit &gt; takeLastDataPoint()</div><div class="ttdoc">Returns the last StateDataUnit in this package&#39;s list then removes it from the list. </div><div class="ttdef"><b>Definition:</b> <a href="_state_data_unit_package_8h_source.html#l00042">StateDataUnitPackage.h:42</a></div></div>
 <div class="ttc" id="class_picto_1_1_state_data_unit_package_html"><div class="ttname"><a href="class_picto_1_1_state_data_unit_package.html">Picto::StateDataUnitPackage</a></div><div class="ttdoc">Stores a list of StateDataUnit objects representing StateMachine Transitions between one frame and th...</div><div class="ttdef"><b>Definition:</b> <a href="_state_data_unit_package_8h_source.html#l00025">StateDataUnitPackage.h:25</a></div></div>
 <div class="ttc" id="class_picto_1_1_state_data_unit_package_html_a04b0b6926106ffe6e77209421c732734"><div class="ttname"><a href="class_picto_1_1_state_data_unit_package.html#a04b0b6926106ffe6e77209421c732734">Picto::StateDataUnitPackage::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Removes all StateDataUnit objects from this package&#39;s list. </div><div class="ttdef"><b>Definition:</b> <a href="_state_data_unit_package_8h_source.html#l00038">StateDataUnitPackage.h:38</a></div></div>

@@ -95,6 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="class_picto_1_1_bar_base-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Picto::BarBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -130,10 +131,9 @@ Inheritance diagram for Picto::BarBase:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr class="memitem:a53751cace554826adc6839239469b814"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53751cace554826adc6839239469b814"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a53751cace554826adc6839239469b814">clearPlot</a> ()</td></tr>
-<tr class="memdesc:a53751cace554826adc6839239469b814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all of the current plot data. <br /></td></tr>
-<tr class="separator:a53751cace554826adc6839239469b814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae177295c998bad9d4ed63b4ca3bfb317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ae177295c998bad9d4ed63b4ca3bfb317">setColor</a> (int r, int g, int b, int a=255)</td></tr>
+<tr class="memdesc:ae177295c998bad9d4ed63b4ca3bfb317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the color of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>.  <a href="#ae177295c998bad9d4ed63b4ca3bfb317">More...</a><br /></td></tr>
+<tr class="separator:ae177295c998bad9d4ed63b4ca3bfb317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bb6ca0be073c2537c66b82242c26aa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
@@ -146,14 +146,62 @@ Public Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aff67967b5391d4b236934f8ddedec905">reset</a> ()</td></tr>
 <tr class="memdesc:aff67967b5391d4b236934f8ddedec905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all values for this plot. <br /></td></tr>
 <tr class="separator:aff67967b5391d4b236934f8ddedec905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bf40042755455a97739b60c96cae006"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bf40042755455a97739b60c96cae006"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a1bf40042755455a97739b60c96cae006">draw</a> ()</td></tr>
+<tr class="memdesc:a1bf40042755455a97739b60c96cae006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the underlying Plot for rendering. <br /></td></tr>
+<tr class="separator:a1bf40042755455a97739b60c96cae006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c5007887a8310b2cf3e1961a8d8162e"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a1c5007887a8310b2cf3e1961a8d8162e">friendlyTypeName</a> ()</td></tr>
 <tr class="memdesc:a1c5007887a8310b2cf3e1961a8d8162e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a friendly string identifying this type of <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>.  <a href="#a1c5007887a8310b2cf3e1961a8d8162e">More...</a><br /></td></tr>
 <tr class="separator:a1c5007887a8310b2cf3e1961a8d8162e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce39d36df8c496653ec51ff55761360"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ce39d36df8c496653ec51ff55761360"></a>
+const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a6ce39d36df8c496653ec51ff55761360">getColor</a> () const </td></tr>
+<tr class="memdesc:a6ce39d36df8c496653ec51ff55761360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the color of the <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>. <br /></td></tr>
+<tr class="separator:a6ce39d36df8c496653ec51ff55761360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaea571fee2df5e5e015252081ab12274"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaea571fee2df5e5e015252081ab12274"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aaea571fee2df5e5e015252081ab12274">setColor</a> (QColor <a class="el" href="class_picto_1_1_bar_base.html#ab887da5ab9e74ad2749bbf0a7687e82a">color</a>)</td></tr>
+<tr class="memdesc:aaea571fee2df5e5e015252081ab12274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the color of the <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>. <br /></td></tr>
+<tr class="separator:aaea571fee2df5e5e015252081ab12274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9216592b5e7f53e30713fdfb12870635"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9216592b5e7f53e30713fdfb12870635"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a9216592b5e7f53e30713fdfb12870635">setColor</a> (QVariant <a class="el" href="class_picto_1_1_bar_base.html#ab887da5ab9e74ad2749bbf0a7687e82a">color</a>)</td></tr>
+<tr class="memdesc:a9216592b5e7f53e30713fdfb12870635"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the color of the <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>. <br /></td></tr>
+<tr class="separator:a9216592b5e7f53e30713fdfb12870635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f70206743b3a05548ed7f53efde9890"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f70206743b3a05548ed7f53efde9890"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a8f70206743b3a05548ed7f53efde9890">getRed</a> () const </td></tr>
+<tr class="memdesc:a8f70206743b3a05548ed7f53efde9890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the red component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a8f70206743b3a05548ed7f53efde9890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a432eb4de91a98be937b321dfc8a946dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a432eb4de91a98be937b321dfc8a946dc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a432eb4de91a98be937b321dfc8a946dc">getGreen</a> () const </td></tr>
+<tr class="memdesc:a432eb4de91a98be937b321dfc8a946dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the green component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a432eb4de91a98be937b321dfc8a946dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab013e26af14228cf2ff8299acdfcc4d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab013e26af14228cf2ff8299acdfcc4d4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ab013e26af14228cf2ff8299acdfcc4d4">getBlue</a> () const </td></tr>
+<tr class="memdesc:ab013e26af14228cf2ff8299acdfcc4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the blue component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:ab013e26af14228cf2ff8299acdfcc4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5f99ac5b1fa9a5e3859c68f181d11e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae5f99ac5b1fa9a5e3859c68f181d11e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aae5f99ac5b1fa9a5e3859c68f181d11e">getAlpha</a> () const </td></tr>
+<tr class="memdesc:aae5f99ac5b1fa9a5e3859c68f181d11e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the alpha component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:aae5f99ac5b1fa9a5e3859c68f181d11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af21a63c75b51bd2228f9fc22ba1eece8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af21a63c75b51bd2228f9fc22ba1eece8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#af21a63c75b51bd2228f9fc22ba1eece8">setRed</a> (int r)</td></tr>
+<tr class="memdesc:af21a63c75b51bd2228f9fc22ba1eece8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the red component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:af21a63c75b51bd2228f9fc22ba1eece8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad86a95648ef1b7ef791118553261d8ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad86a95648ef1b7ef791118553261d8ab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ad86a95648ef1b7ef791118553261d8ab">setGreen</a> (int g)</td></tr>
+<tr class="memdesc:ad86a95648ef1b7ef791118553261d8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the green component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:ad86a95648ef1b7ef791118553261d8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca2475709460c6502d87bcda79c790e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ca2475709460c6502d87bcda79c790e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a6ca2475709460c6502d87bcda79c790e">setBlue</a> (int b)</td></tr>
+<tr class="memdesc:a6ca2475709460c6502d87bcda79c790e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the blue component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a6ca2475709460c6502d87bcda79c790e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad07a92918d8226b1c7f898f1ee50758e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad07a92918d8226b1c7f898f1ee50758e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ad07a92918d8226b1c7f898f1ee50758e">setAlpha</a> (int a)</td></tr>
+<tr class="memdesc:ad07a92918d8226b1c7f898f1ee50758e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the alpha component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:ad07a92918d8226b1c7f898f1ee50758e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53751cace554826adc6839239469b814"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53751cace554826adc6839239469b814"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a53751cace554826adc6839239469b814">clearPlot</a> ()</td></tr>
+<tr class="memdesc:a53751cace554826adc6839239469b814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all of the current plot data. <br /></td></tr>
+<tr class="separator:a53751cace554826adc6839239469b814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_operator_plot"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_operator_plot')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_operator_plot.html">Picto::OperatorPlot</a></td></tr>
-<tr class="memitem:a313e7d69954d47dd9677d4d8c6f4cef2 inherit pub_methods_class_picto_1_1_operator_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a313e7d69954d47dd9677d4d8c6f4cef2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a313e7d69954d47dd9677d4d8c6f4cef2">draw</a> ()</td></tr>
-<tr class="memdesc:a313e7d69954d47dd9677d4d8c6f4cef2 inherit pub_methods_class_picto_1_1_operator_plot"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the underlying Plot for rendering. <br /></td></tr>
-<tr class="separator:a313e7d69954d47dd9677d4d8c6f4cef2 inherit pub_methods_class_picto_1_1_operator_plot"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5d90949473d0795614c56430e0eaacb inherit pub_methods_class_picto_1_1_operator_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5d90949473d0795614c56430e0eaacb"></a>
 virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#aa5d90949473d0795614c56430e0eaacb">getUITemplate</a> ()</td></tr>
 <tr class="memdesc:aa5d90949473d0795614c56430e0eaacb inherit pub_methods_class_picto_1_1_operator_plot"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of a user interface template that should be used to represent this element in a UI. <br /></td></tr>
@@ -480,7 +528,8 @@ virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:aa69588799a1b98f0096aa88304ce37d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current Bin Spacing. <br /></td></tr>
 <tr class="separator:aa69588799a1b98f0096aa88304ce37d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1215194af4fe484a7c95e3d98b98ecc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1215194af4fe484a7c95e3d98b98ecc4"></a>
-ColumnType::ColumnType&#160;</td><td class="memItemRight" valign="bottom"><b>getColumnType</b> () const </td></tr>
+ColumnType::ColumnType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a1215194af4fe484a7c95e3d98b98ecc4">getColumnType</a> () const </td></tr>
+<tr class="memdesc:a1215194af4fe484a7c95e3d98b98ecc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current ColumnType parameter. <br /></td></tr>
 <tr class="separator:a1215194af4fe484a7c95e3d98b98ecc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a523a63cef9bf25a88434430686405c50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a523a63cef9bf25a88434430686405c50"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a523a63cef9bf25a88434430686405c50">handleXLabels</a> (long, long)</td></tr>
@@ -491,8 +540,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:ab1c15c9e27e57df776eafd3caecdcada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the NormalizedDisplay property. <br /></td></tr>
 <tr class="separator:ab1c15c9e27e57df776eafd3caecdcada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d687b8570c231b70aed1ccf9e6d00fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d687b8570c231b70aed1ccf9e6d00fe"></a>
-virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>_getSampleValue</b> (long bin) const </td></tr>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a8d687b8570c231b70aed1ccf9e6d00fe">_getSampleValue</a> (long bin) const </td></tr>
+<tr class="memdesc:a8d687b8570c231b70aed1ccf9e6d00fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the passed-in bin. <br /></td></tr>
 <tr class="separator:a8d687b8570c231b70aed1ccf9e6d00fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee239bd90be00612312eedf4a4477e06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee239bd90be00612312eedf4a4477e06"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aee239bd90be00612312eedf4a4477e06">updateColors</a> ()</td></tr>
+<tr class="memdesc:aee239bd90be00612312eedf4a4477e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to update the plot with new colors. <br /></td></tr>
+<tr class="separator:aee239bd90be00612312eedf4a4477e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08abebe526ecce2cdbd369e914d92461"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08abebe526ecce2cdbd369e914d92461"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a08abebe526ecce2cdbd369e914d92461">updateColumns</a> ()</td></tr>
+<tr class="memdesc:a08abebe526ecce2cdbd369e914d92461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to recreate the columns using the updatd colors and style. <br /></td></tr>
+<tr class="separator:a08abebe526ecce2cdbd369e914d92461"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77f1b1ba9c08ed67923989558fec61ea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a77f1b1ba9c08ed67923989558fec61ea">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;)</td></tr>
 <tr class="memdesc:a77f1b1ba9c08ed67923989558fec61ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a77f1b1ba9c08ed67923989558fec61ea">More...</a><br /></td></tr>
 <tr class="separator:a77f1b1ba9c08ed67923989558fec61ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -619,6 +677,10 @@ Protected Attributes</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">m_bBinsModified</a></td></tr>
 <tr class="memdesc:aad85f4aeca60ac7a7a5bbad8d5e83eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to update the bins. <br /></td></tr>
 <tr class="separator:aad85f4aeca60ac7a7a5bbad8d5e83eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81b5c712d2b609585c2ebd0b3a4e312c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81b5c712d2b609585c2ebd0b3a4e312c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a81b5c712d2b609585c2ebd0b3a4e312c">m_bUpdateBrush</a></td></tr>
+<tr class="memdesc:a81b5c712d2b609585c2ebd0b3a4e312c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to update the Colors and Brushes. <br /></td></tr>
+<tr class="separator:a81b5c712d2b609585c2ebd0b3a4e312c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a444536313fa0afc21909fd5fcea99462"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a444536313fa0afc21909fd5fcea99462"></a>
 QHash&lt; long, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a444536313fa0afc21909fd5fcea99462">m_qhdCumulValue</a></td></tr>
 <tr class="memdesc:a444536313fa0afc21909fd5fcea99462"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cumulative binwise values. <br /></td></tr>
@@ -640,6 +702,10 @@ QwtPlot *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">m_bDataChanged</a></td></tr>
 <tr class="memdesc:affc1d3936367b03d08d2131ba6a7a027 inherit pro_attribs_class_picto_1_1_operator_plot"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for when the plot need to be recalculated. <br /></td></tr>
 <tr class="separator:affc1d3936367b03d08d2131ba6a7a027 inherit pro_attribs_class_picto_1_1_operator_plot"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e89b6fdaa56f4ccf652c541d0ce766 inherit pro_attribs_class_picto_1_1_operator_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32e89b6fdaa56f4ccf652c541d0ce766"></a>
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a></td></tr>
+<tr class="memdesc:a32e89b6fdaa56f4ccf652c541d0ce766 inherit pro_attribs_class_picto_1_1_operator_plot"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a copy of the plot's title. <br /></td></tr>
+<tr class="separator:a32e89b6fdaa56f4ccf652c541d0ce766 inherit pro_attribs_class_picto_1_1_operator_plot"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
 <tr class="memitem:adf9d8bd65d619366f3f039e2d6880ecb inherit pro_attribs_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf9d8bd65d619366f3f039e2d6880ecb"></a>
 QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#adf9d8bd65d619366f3f039e2d6880ecb">sizeList_</a></td></tr>
@@ -668,6 +734,28 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a">taskConfig_</a></td></tr>
 <tr class="memdesc:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> containing it. <br /></td></tr>
 <tr class="separator:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:aa9fc6bdad81e54ea6f3614cb96adb0c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9fc6bdad81e54ea6f3614cb96adb0c7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#aa9fc6bdad81e54ea6f3614cb96adb0c7">red</a></td></tr>
+<tr class="memdesc:aa9fc6bdad81e54ea6f3614cb96adb0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the red component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:aa9fc6bdad81e54ea6f3614cb96adb0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb74aff58cd9de1ed95d7512e936746"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7eb74aff58cd9de1ed95d7512e936746"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a7eb74aff58cd9de1ed95d7512e936746">green</a></td></tr>
+<tr class="memdesc:a7eb74aff58cd9de1ed95d7512e936746"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the green component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a7eb74aff58cd9de1ed95d7512e936746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7504fe0ffe83ebdf2d0ef5883d66a5cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7504fe0ffe83ebdf2d0ef5883d66a5cc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a7504fe0ffe83ebdf2d0ef5883d66a5cc">blue</a></td></tr>
+<tr class="memdesc:a7504fe0ffe83ebdf2d0ef5883d66a5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the blue component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a7504fe0ffe83ebdf2d0ef5883d66a5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65fc18e3d67ffad4dcf3f07ebc95d1a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65fc18e3d67ffad4dcf3f07ebc95d1a7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#a65fc18e3d67ffad4dcf3f07ebc95d1a7">alpha</a></td></tr>
+<tr class="memdesc:a65fc18e3d67ffad4dcf3f07ebc95d1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the alpha component of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color. <br /></td></tr>
+<tr class="separator:a65fc18e3d67ffad4dcf3f07ebc95d1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab887da5ab9e74ad2749bbf0a7687e82a"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_bar_base.html#ab887da5ab9e74ad2749bbf0a7687e82a">color</a></td></tr>
+<tr class="memdesc:ab887da5ab9e74ad2749bbf0a7687e82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets/gets the this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color in the #rrbbgg format (ex. #FF2255).  <a href="#ab887da5ab9e74ad2749bbf0a7687e82a">More...</a><br /></td></tr>
+<tr class="separator:ab887da5ab9e74ad2749bbf0a7687e82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -745,7 +833,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a5cfc344b6d250f620c90623cca040415">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00077">77</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00123">123</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -776,7 +864,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00067">67</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00113">113</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -823,7 +911,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#a7a7d06dcc1767acaae9f02af163f63fe">Picto::SamplingBarBase</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00072">72</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00118">118</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>
@@ -862,7 +950,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Uses the passed-in values to generate the ideal normalized plot range. </p>
 <dl class="section note"><dt>Note</dt><dd>Normalization in this case is really just a trick of the scale. </dd></dl>
 
-<p>Definition at line <a class="el" href="_bar_base_8cpp_source.html#l00145">145</a> of file <a class="el" href="_bar_base_8cpp_source.html">BarBase.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8cpp_source.html#l00156">156</a> of file <a class="el" href="_bar_base_8cpp_source.html">BarBase.cpp</a>.</p>
 
 </div>
 </div>
@@ -894,7 +982,84 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_sampling_bar_base.html#aa43c27480556676a1e98f064f8196984">Picto::SamplingBarBase</a>, <a class="el" href="class_picto_1_1_bar_plot.html#a8f8b40bfbe8e215b2844cc7f9e6a3c39">Picto::BarPlot</a>, <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a1a9630ae337f31f899efdcdde194b406">Picto::SamplingBarPlot</a>, <a class="el" href="class_picto_1_1_histogram_plot.html#a3d80b63333de0652ea5cb35e7f12f163">Picto::HistogramPlot</a>, and <a class="el" href="class_picto_1_1_sampling_histogram_plot.html#ae8fb5d0c961a33009899d9365a12ee9e">Picto::SamplingHistogramPlot</a>.</p>
 
-<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00034">34</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00047">47</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae177295c998bad9d4ed63b4ca3bfb317"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::BarBase::setColor </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em> = <code>255</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the color of this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>. </p>
+<p>Inputs are from 0-255. </p>
+
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00080">80</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a class="anchor" id="ab887da5ab9e74ad2749bbf0a7687e82a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant Picto::BarBase::color</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets/gets the this <a class="el" href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. ">BarBase</a>'s color in the #rrbbgg format (ex. #FF2255). </p>
+<dl class="section note"><dt>Note</dt><dd>This script property is compatible with values read from/written to a <a class="el" href="class_picto_1_1_color_parameter.html" title="A simple parameter for holding a color value. ">ColorParameter</a>. </dd></dl>
+
+<p>Definition at line <a class="el" href="_bar_base_8h_source.html#l00039">39</a> of file <a class="el" href="_bar_base_8h_source.html">BarBase.h</a>.</p>
 
 </div>
 </div>

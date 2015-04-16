@@ -95,15 +95,4 @@ int RewardUnit::getChannel()
 	return channel_;
 }
 
-void RewardUnit::postDeserialize()
-{
-
-}
-
-bool RewardUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

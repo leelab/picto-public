@@ -163,13 +163,16 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ad52d72b8bcf42a6e48ef7cd6fedba4f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad52d72b8bcf42a6e48ef7cd6fedba4f5"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>daqTaskHandle_</b></td></tr>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_legacy_system_x_p_analog_input_port.html#ad52d72b8bcf42a6e48ef7cd6fedba4f5">daqTaskHandle_</a></td></tr>
+<tr class="memdesc:ad52d72b8bcf42a6e48ef7cd6fedba4f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> handle for Analog Reads. <br /></td></tr>
 <tr class="separator:ad52d72b8bcf42a6e48ef7cd6fedba4f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a985beaf7c746a1b4d41a47bd7e5182d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a985beaf7c746a1b4d41a47bd7e5182d0"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>bufferSize_</b></td></tr>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_legacy_system_x_p_analog_input_port.html#a985beaf7c746a1b4d41a47bd7e5182d0">bufferSize_</a></td></tr>
+<tr class="memdesc:a985beaf7c746a1b4d41a47bd7e5182d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of elements needed in data buffer. <br /></td></tr>
 <tr class="separator:a985beaf7c746a1b4d41a47bd7e5182d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a498c99e2dac082e3bdeeb74958bdfc68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a498c99e2dac082e3bdeeb74958bdfc68"></a>
-short *&#160;</td><td class="memItemRight" valign="bottom"><b>dataBuffer_</b></td></tr>
+short *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_legacy_system_x_p_analog_input_port.html#a498c99e2dac082e3bdeeb74958bdfc68">dataBuffer_</a></td></tr>
+<tr class="memdesc:a498c99e2dac082e3bdeeb74958bdfc68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to allocated data buffer. <br /></td></tr>
 <tr class="separator:a498c99e2dac082e3bdeeb74958bdfc68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -200,7 +203,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 </li>
 </ul>
 
-<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html#l00023">23</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html">LegacySystemXPAnalogInputPort.h</a>.</p>
+<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html#l00022">22</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html">LegacySystemXPAnalogInputPort.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a316f1a839eefb91fbf6b4b346eeb6351"></a>
 <div class="memitem">
@@ -226,7 +229,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 <p>Called when this <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> is deleted. </p>
 <p>Calls <a class="el" href="class_picto_1_1_legacy_system_x_p_analog_input_port.html#afb580c736fa6e629c1af5ac7bdd3931a" title="Stops sampling of the DAQ hardware. Returns false if sampling can&#39;t be stopped. ">stopSampling()</a> to make sure that the NiDaq card is properly deinitialized. </p>
 
-<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html#l00030">30</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html">LegacySystemXPAnalogInputPort.h</a>.</p>
+<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html#l00029">29</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8h_source.html">LegacySystemXPAnalogInputPort.h</a>.</p>
 
 </div>
 </div>
@@ -258,7 +261,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 
 <p>Implements <a class="el" href="class_picto_1_1_input_port.html#aefd4ff8fcdb966e2d39c47d244ed6925">Picto::InputPort</a>.</p>
 
-<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html#l00043">43</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html">LegacySystemXPAnalogInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html#l00045">45</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html">LegacySystemXPAnalogInputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -284,11 +287,11 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 </div><div class="memdoc">
 
 <p>Loads channelBuffers_ with data, returns the precise time when the data was actually read. </p>
-<p>The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16(). We estimate the precise read time by storing the time just after that function is called. That is the time that is returned from the function, </p>
+<p>The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16(). We estimate the precise read time by storing the time just after that function is called. That is the time that is returned from the function. </p>
 
 <p>Implements <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957">Picto::InputPort</a>.</p>
 
-<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html#l00102">102</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html">LegacySystemXPAnalogInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html#l00103">103</a> of file <a class="el" href="_legacy_system_x_p_analog_input_port_8cpp_source.html">LegacySystemXPAnalogInputPort.cpp</a>.</p>
 
 </div>
 </div>

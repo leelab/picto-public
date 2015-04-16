@@ -6,7 +6,7 @@
 using namespace Picto;
 
 
-/*! \brief This is a Recursive Greatest Common Devisor function for use in calculating the nidaqSampleRate.
+/*! \brief This is a Recursive Greatest Common Divisor function for use in calculating the nidaqSampleRate.
  *	Pretty cool right?!  See http://www.phailed.me/2011/02/greatest-common-denominator/
  */
 int gcd(int high,int low)
@@ -31,22 +31,22 @@ InputPort::~InputPort()
 }
 
 /*! \brief Adds a new input channel to this InputPort that is to be sampled at the input number of msPerSample.
- *	\details Since the synchronization algorithm used by this InputPort requires that we sample at 4 times the
- *	fastest sample rate, we take the Greatest Common Devisor of all channels' sample periods, devide it by 4
- *	and sample at that sample period.
+ *	\details Since the synchronization algorithm used by this InputPort requires that we sample at 4 times the fastest
+ *	sample rate, we take the Greatest Common Divisor of all channels' sample periods, divide it by 4 and sample at that
+ *	sample period.
  */
 void InputPort::addInputChannel(int channelNum, int msPerSample)
 {
 	Q_ASSERT(!sampResMap_.contains(channelNum));
 	sampResMap_[channelNum] = msPerSample;
-	polledDataMap_[channelNum] = true;	//Since this channel was just added, its as if it was just polled.
+	//Since this channel was just added, its as if it was just polled.
+	polledDataMap_[channelNum] = true;
 	channelPhaseMap_[channelNum] = 0;
 	channelNums_.append(channelNum);
 	latestFrameOffsetTimes_[channelNum] = -1;
 
-	//Get Greatest Common Devisor of all sample resolutions
-	//Loop through sample resolutions getting GCD of previous GCD
-	//and current sample resolution
+	//Get Greatest Common Divisor of all sample resolutions
+	//Loop through sample resolutions getting GCD of previous GCD and current sample resolution
 	QHash<int, int>::iterator iter = sampResMap_.begin();
 	int currGCD = iter.value();
 	iter++;
@@ -71,9 +71,8 @@ void InputPort::addInputChannel(int channelNum, int msPerSample)
 
 /*!	\brief Starts the DAQ collecting data.
  *
- *	This should be called as close to the point at which the data will actually
- *	be collected as possible.  Otherwise, data will pile up in the buffer.
- *	Also note that calling this clears out any existing data in the channel.
+ *	This should be called as close to the point at which the data will actually be collected as possible.  Otherwise, data
+ *	will pile up in the buffer. Also note that calling this clears out any existing data in the channel.
  *
  *	This function is called by updateDataBuffer()
  */
@@ -85,8 +84,7 @@ bool InputPort::start()
 		if(!startSampling())
 			return false;
 
-		//Set sampsCollected as if sampling started from
-		//the beginning of the Timestamper clock.
+		//Set sampsCollected as if sampling started from the beginning of the Timestamper clock.
 		sampsCollected_=stamper.stampSec()*deviceSampRate_;
 		taskRunning_ = true;
 		needsUpdate_ = false;
@@ -95,9 +93,8 @@ bool InputPort::start()
 
 }
 
-/*! The port starts sampling data as soon as the first updateDataBuffer() is
- * called if the port is enabled.  disabling the port means that the port will
- * start sampling from scratch the next time it is reenabled and 
+/*! The port starts sampling data as soon as the first updateDataBuffer() is called if the port is enabled.
+ *	Disabling the port means that the port will start sampling from scratch the next time it is reenabled and
  *	updateDataBuffer() is called.
  */
 void InputPort::enable(bool en)
@@ -118,17 +115,21 @@ void InputPort::enable(bool en)
 	}
 }
 
-/*! \brief Calls the empty updateDataBuffer() function to load data from the DAQ into channelBuffers_, then aligns timestamps in case of an imperfect DAQ clock.
- *	\details When this function loads data, it reads the time at which the data was actually read and calculates the time that the last data point came in
- *	assuming that each sample was read at exactly the time dictaded by a perfect clock for the set sample period.  If the calculated time is significantly 
- *	lower than the actual time, a data point is duplicated to make up for it.  If the calculated time is significantly higher than the actual time, a data 
- *	point is deleted to make up for it.  This function takes care of all of these issues.
+/*! \brief Calls the empty updateDataBuffer() function to load data from the DAQ into channelBuffers_, then aligns
+ *	timestamps in case of an imperfect DAQ clock.
+ *	\details When this function loads data, it reads the time at which the data was actually read and calculates the time
+ *	that the last data point came in assuming that each sample was read at exactly the time dictaded by a perfect clock for
+ *	the set sample period.  If the calculated time is significantly lower than the actual time, a data point is duplicated
+ *	to make up for it.  If the calculated time is significantly higher than the actual time, a data point is deleted to
+ *	make up for it.  This function takes care of all of these issues.
  *
- *	The input currTimestamp is the last time for which data should be returned for the current frame.  Since there may have been some lag since the latest
- *	frame was displayed until this function was called, there may be some data points here that were read after the frame was over.  When we read this data
- *	though, we only want data that came in up to the time that the frame was presented.  This allows us to store data that came in too late for next frame
- *	and prepare only the data that occured during the previous frame.
- *	\note updateDataBuffer() doesn't do anything unless all input channel data has been read since the last call to this function.
+ *	The input currTimestamp is the last time for which data should be returned for the current frame.  Since there may have
+ *	been some lag since the latest frame was displayed until this function was called, there may be some data points here
+ *	that were read after the frame was over.  When we read this data though, we only want data that came in up to the time
+ *	that the frame was presented.  This allows us to store data that came in too late for next frame and prepare only the
+ *	data that occured during the previous frame.
+ *	\note updateDataBuffer() doesn't do anything unless all input channel data has been read since the last call to this
+ *	function.
  */
 void InputPort::updateDataBuffer(double currTimestamp)
 {
@@ -149,9 +150,8 @@ void InputPort::updateDataBuffer(double currTimestamp)
 
 	double dataReadTime = updateDataBuffer();
 
-	//If any data was left over last time this function was called (ie. it corresponded 
-	//to times that were less than dataReadTime but greater than currTimestamp, it is
-	//added to the head of the list here.
+	//If any data was left over last time this function was called (ie. it corresponded to times that were less than
+	//	dataReadTime but greater than currTimestamp), it is added to the head of the list here.
 	if(channelLeftOvers[channelNums_[0]].size())
 	{
 		QHash<int, QVector<double>>::iterator it;
@@ -164,11 +164,10 @@ void InputPort::updateDataBuffer(double currTimestamp)
 
 	int totalSampsRead = channelBuffers_[channelNums_[0]].size();
 
-	//Throw out or duplicate readings to bring sample times into alignment
-	//Since we are using at least 4 times the sample rate of the highest
-	//resolution channel, and the clock is good enough that we should never 
-	//need to duplicate more than 1 sample to regain alignment, this is 
-	//within any set resolution boundaries.
+	//Throw out or duplicate readings to bring sample times into alignment.
+	//	Since we are using at least 4 times the sample rate of the highest resolution channel, and the clock is good enough
+	//	that we should never need to duplicate more than 1 sample to regain alignment, this is within any set resolution
+	//	boundaries.
 	double calculatedFinalReadTime = (sampsCollected_+totalSampsRead)/deviceSampRate_;
 	double jitter = calculatedFinalReadTime-dataReadTime;
 	int sampleListSizeChange = -jitter*deviceSampRate_;
@@ -193,11 +192,10 @@ void InputPort::updateDataBuffer(double currTimestamp)
 		}
 	}
 
-	//We used the actual data read time reported from updateDataBuffer() to calculate
-	//jitter and synchronize accordingly.  There may have been some delay between the 
-	//passed in currTimestamp and the actual read time though.  The caller wants data
-	//that was read before currTimestamp.  For this reason, we remove the entries off
-	//the back of the channelBuffers_ vectors and save them for the next data read.
+	//We used the actual data read time reported from updateDataBuffer() to calculate jitter and synchronize accordingly.
+	//	There may have been some delay between the passed in currTimestamp and the actual read time though.  The caller
+	//	wants data that was read before currTimestamp.  For this reason, we remove the entries off the back of the
+	//	channelBuffers_ vectors and save them for the next data read.
 	int leftoverData = 0;
 	calculatedFinalReadTime = (sampsCollected_+totalSampsRead+sampleListSizeChange)/deviceSampRate_;
 	if(calculatedFinalReadTime > currTimestamp)
@@ -234,7 +232,8 @@ void InputPort::updateDataBuffer(double currTimestamp)
 	}
 }
 
-/*! \brief Returns true if there is new data available on this InputPort. */
+/*! \brief Returns true if there is new data available on this InputPort.
+ */
 bool InputPort::hasNewData(int channelNum)
 {
 	return channelBuffers_[channelNum].size() > 0;
@@ -242,7 +241,7 @@ bool InputPort::hasNewData(int channelNum)
 
 /*! \brief Returns a vector of data samples for the input channel number.
  *	\note A side effect of this function is that it clears out the data buffer for the input channelNum.
-*/
+ */
 QVector<double> InputPort::getData(int channelNum)
 {
 	Q_ASSERT_X(sampResMap_.contains(channelNum),"InputPort::getData","Data was requested for a channel that doesn't exist");
@@ -254,8 +253,8 @@ QVector<double> InputPort::getData(int channelNum)
 	//Create the return array with the correct size
 	QVector<double> returnVal((currList->size()+currPhase)/sampsPerRead);
 
-	//Put every "sampsPerReadth" value from the daq data into the return array taking
-	//into account last time's remaining phase.
+	//Put every "sampsPerRead"th value from the daq data into the return array taking into account last time's
+	//	remaining phase.
 	int i=0, j=0;
 	for(;i<currList->size();i++)
 	{
@@ -286,8 +285,9 @@ QVector<double> InputPort::getData(int channelNum)
 	return returnVal;
 }
 
-/*!	\brief Returns the offset from the time that the previous frame occured to the time that the first sample on the input channel was read.
-*/
+/*!	\brief Returns the offset from the time that the previous frame occured to the time that the first sample on the input
+ *	channel was read.
+ */
 double InputPort::getFrameToSampleOffset(int channelNum)
 {
 	return latestFrameOffsetTimes_[channelNum];

@@ -122,23 +122,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> serializeAsXml(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> deserializeFromXml(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QString sourceName_;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">double</span> offsetTime_;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">double</span> temporalFactor_;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QString sourceName_;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">double</span> offsetTime_;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">double</span> temporalFactor_;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_picto_1_1_alignment_info_html_aa61c49a8eca640df1a4c2ab59db14f2b"><div class="ttname"><a href="class_picto_1_1_alignment_info.html#aa61c49a8eca640df1a4c2ab59db14f2b">Picto::AlignmentInfo::getOffsetTime</a></div><div class="ttdeci">double getOffsetTime()</div><div class="ttdoc">Returns the offset time. </div><div class="ttdef"><b>Definition:</b> <a href="_alignment_info_8h_source.html#l00048">AlignmentInfo.h:48</a></div></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_alignment_info_html_a32f507e5b6c746cf91579b66e1523555"><div class="ttname"><a href="class_picto_1_1_alignment_info.html#a32f507e5b6c746cf91579b66e1523555">Picto::AlignmentInfo::setTemporalFactor</a></div><div class="ttdeci">void setTemporalFactor(double temporalFactor)</div><div class="ttdoc">Sets the temporal factor. </div><div class="ttdef"><b>Definition:</b> <a href="_alignment_info_8h_source.html#l00043">AlignmentInfo.h:43</a></div></div>
-<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00025">DataUnit.h:25</a></div></div>
+<div class="ttc" id="class_picto_1_1_data_unit_html"><div class="ttname"><a href="class_picto_1_1_data_unit.html">Picto::DataUnit</a></div><div class="ttdoc">A base class for all Picto data types that need to be individually identifiable and communicatable ov...</div><div class="ttdef"><b>Definition:</b> <a href="_data_unit_8h_source.html#l00027">DataUnit.h:27</a></div></div>
 <div class="ttc" id="class_picto_1_1_alignment_info_html"><div class="ttname"><a href="class_picto_1_1_alignment_info.html">Picto::AlignmentInfo</a></div><div class="ttdoc">Stores information about the relationship between a secondary timestream and the primary timestream i...</div><div class="ttdef"><b>Definition:</b> <a href="_alignment_info_8h_source.html#l00028">AlignmentInfo.h:28</a></div></div>
 <div class="ttc" id="class_picto_1_1_alignment_info_html_af78883e4a6f087a6be6b05a5b608b9f9"><div class="ttname"><a href="class_picto_1_1_alignment_info.html#af78883e4a6f087a6be6b05a5b608b9f9">Picto::AlignmentInfo::getTemporalFactor</a></div><div class="ttdeci">double getTemporalFactor()</div><div class="ttdoc">Returns the temporal factor. </div><div class="ttdef"><b>Definition:</b> <a href="_alignment_info_8h_source.html#l00052">AlignmentInfo.h:52</a></div></div>
 <div class="ttc" id="class_picto_1_1_alignment_info_html_a8921fe39423771e3239e2b4209fa35a3"><div class="ttname"><a href="class_picto_1_1_alignment_info.html#a8921fe39423771e3239e2b4209fa35a3">Picto::AlignmentInfo::setOffsetTime</a></div><div class="ttdeci">void setOffsetTime(double offsetTime)</div><div class="ttdoc">Returns the offset time. </div><div class="ttdef"><b>Definition:</b> <a href="_alignment_info_8h_source.html#l00039">AlignmentInfo.h:39</a></div></div>

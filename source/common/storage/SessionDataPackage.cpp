@@ -105,13 +105,3 @@ bool SessionDataPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	}
 	return true;
 }
-
-void SessionDataPackage::postDeserialize()
-{
-
-}
-
-bool SessionDataPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}

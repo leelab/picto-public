@@ -65,18 +65,14 @@ public:
 	QByteArray getWaveformAsByteArray();
 	void setWaveformFromByteArray(QByteArray waveform);
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
-double timestamp_;
-double fittedtime_;
-double correlation_;
-double resolution_;
-int channel_;
-int unit_;
-QStringList waveform_;
+	double timestamp_;
+	double fittedtime_;
+	double correlation_;
+	double resolution_;
+	int channel_;
+	int unit_;
+	QStringList waveform_;
 };
 
 

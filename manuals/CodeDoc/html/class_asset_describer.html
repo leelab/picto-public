@@ -133,7 +133,7 @@ static QHash&lt; QString, QSharedPointer&lt; <a class="el" href="struct_asset_de
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_describer_8h_source.html#l00066">66</a> of file <a class="el" href="_asset_describer_8h_source.html">AssetDescriber.h</a>.</p>
+<p>Definition at line <a class="el" href="_asset_describer_8h_source.html#l00071">71</a> of file <a class="el" href="_asset_describer_8h_source.html">AssetDescriber.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="abbb4f0834484d1fc3611f3adf7d97ceb"></a>
 <div class="memitem">
@@ -160,7 +160,7 @@ static QHash&lt; QString, QSharedPointer&lt; <a class="el" href="struct_asset_de
 <p>Returns an <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> object describing Assets of the input className. </p>
 <p>If no information is found for the input className, an empty <a class="el" href="struct_asset_description.html" title="Contains documentation for the usage of a scriptable element of a Picto design both overall and withi...">AssetDescription</a> QSharedPointer is returned. </p>
 
-<p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00131">131</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00128">128</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
 
 </div>
 </div>
@@ -188,7 +188,7 @@ static QHash&lt; QString, QSharedPointer&lt; <a class="el" href="struct_asset_de
 <p>A giant function that loads all descriptive text into all AssetDescriptions for every class used in the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
 <p>Putting all the text in this one big function is a somewhat clunky way to do things, but has some nice features such as allowing us to only load the documentation if we need it. It would be cleaner to store the documentation with the class being documented and we should probably do this at some point. There are a few things to think about if we do that though. We want the documentation to be stored statically, not in every class instance. We also want to be able to retreive inherited function, data descriptions, and it would be nice if we could set things up so that no ducumnentation is stored if not necessary. </p>
 
-<p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00163">163</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_describer_8cpp_source.html#l00159">159</a> of file <a class="el" href="_asset_describer_8cpp_source.html">AssetDescriber.cpp</a>.</p>
 
 </div>
 </div>

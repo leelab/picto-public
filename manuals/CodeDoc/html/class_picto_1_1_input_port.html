@@ -186,35 +186,44 @@ QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cl
 <tr class="memdesc:a9e056370043a71e4080f39bbc3f150ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps channel num to samplerate. <br /></td></tr>
 <tr class="separator:a9e056370043a71e4080f39bbc3f150ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a018e100737a3ff84db00e568456b6f42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a018e100737a3ff84db00e568456b6f42"></a>
-QHash&lt; int, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>latestFrameOffsetTimes_</b></td></tr>
+QHash&lt; int, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a018e100737a3ff84db00e568456b6f42">latestFrameOffsetTimes_</a></td></tr>
+<tr class="memdesc:a018e100737a3ff84db00e568456b6f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset times between start of frame and first input sample, indexed by channel. <br /></td></tr>
 <tr class="separator:a018e100737a3ff84db00e568456b6f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af41380c1b3dda1474f010d8295bfe09b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af41380c1b3dda1474f010d8295bfe09b"></a>
-QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sampsPerReadMap_</b></td></tr>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#af41380c1b3dda1474f010d8295bfe09b">sampsPerReadMap_</a></td></tr>
+<tr class="memdesc:af41380c1b3dda1474f010d8295bfe09b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of samples to be returned per read, indexed by channel. <br /></td></tr>
 <tr class="separator:af41380c1b3dda1474f010d8295bfe09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d8ca8c443c7c2ae12b97bff252cc4c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d8ca8c443c7c2ae12b97bff252cc4c9"></a>
-QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>channelPhaseMap_</b></td></tr>
+QHash&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a7d8ca8c443c7c2ae12b97bff252cc4c9">channelPhaseMap_</a></td></tr>
+<tr class="memdesc:a7d8ca8c443c7c2ae12b97bff252cc4c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples retained from previous reads for future return (the measurement offset), indexed by channel. <br /></td></tr>
 <tr class="separator:a7d8ca8c443c7c2ae12b97bff252cc4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62015fe27445184f80ce1a8ba2544ad9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62015fe27445184f80ce1a8ba2544ad9"></a>
-QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>polledDataMap_</b></td></tr>
+QHash&lt; int, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a62015fe27445184f80ce1a8ba2544ad9">polledDataMap_</a></td></tr>
+<tr class="memdesc:a62015fe27445184f80ce1a8ba2544ad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks whether the channel data has been polled, indexed by channel. <br /></td></tr>
 <tr class="separator:a62015fe27445184f80ce1a8ba2544ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd4102969f9644b2c609782970e32990"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd4102969f9644b2c609782970e32990"></a>
 QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#afd4102969f9644b2c609782970e32990">channelLeftOvers</a></td></tr>
 <tr class="memdesc:afd4102969f9644b2c609782970e32990"><td class="mdescLeft">&#160;</td><td class="mdescRight">A hash of data buffers indexed by channel number with data that will be used on the next <a class="el" href="class_picto_1_1_input_port.html#aa0230b63e579442362a33b7aa0a6b3a1" title="Calls the empty updateDataBuffer() function to load data from the DAQ into channelBuffers_, then aligns timestamps in case of an imperfect DAQ clock. ">updateDataBuffer(double)</a> call. <br /></td></tr>
 <tr class="separator:afd4102969f9644b2c609782970e32990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dc85c94cb5927fc32187a41c99443a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0dc85c94cb5927fc32187a41c99443a5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>taskRunning_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a0dc85c94cb5927fc32187a41c99443a5">taskRunning_</a></td></tr>
+<tr class="memdesc:a0dc85c94cb5927fc32187a41c99443a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the task is currently running. <br /></td></tr>
 <tr class="separator:a0dc85c94cb5927fc32187a41c99443a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa00118360b4fb10697a86c828d555f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa00118360b4fb10697a86c828d555f4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>sampsCollected_</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#aaa00118360b4fb10697a86c828d555f4">sampsCollected_</a></td></tr>
+<tr class="memdesc:aaa00118360b4fb10697a86c828d555f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of samples passed added to the DataBuffer. <br /></td></tr>
 <tr class="separator:aaa00118360b4fb10697a86c828d555f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d4ce9042fc6d730fd5ff7d98b8e89c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d4ce9042fc6d730fd5ff7d98b8e89c5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>needsUpdate_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a6d4ce9042fc6d730fd5ff7d98b8e89c5">needsUpdate_</a></td></tr>
+<tr class="memdesc:a6d4ce9042fc6d730fd5ff7d98b8e89c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether all channels have been looked at since last update. <br /></td></tr>
 <tr class="separator:a6d4ce9042fc6d730fd5ff7d98b8e89c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b2781f98f87353df574dce2406b6333"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b2781f98f87353df574dce2406b6333"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>lastSyncTimestamp_</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#a4b2781f98f87353df574dce2406b6333">lastSyncTimestamp_</a></td></tr>
+<tr class="memdesc:a4b2781f98f87353df574dce2406b6333"><td class="mdescLeft">&#160;</td><td class="mdescRight">The last time for which data should be returned for the current frame. <br /></td></tr>
 <tr class="separator:a4b2781f98f87353df574dce2406b6333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfbf414c63792c971ed3e9fb9f730902"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfbf414c63792c971ed3e9fb9f730902"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_input_port.html#adfbf414c63792c971ed3e9fb9f730902">enabled_</a></td></tr>
+<tr class="memdesc:adfbf414c63792c971ed3e9fb9f730902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the port is currently sampling. Flipping this will clear the buffer. <br /></td></tr>
 <tr class="separator:adfbf414c63792c971ed3e9fb9f730902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -250,7 +259,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr
 </div><div class="memdoc">
 
 <p>Adds a new input channel to this <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> that is to be sampled at the input number of msPerSample. </p>
-<p>Since the synchronization algorithm used by this <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> requires that we sample at 4 times the fastest sample rate, we take the Greatest Common Devisor of all channels' sample periods, devide it by 4 and sample at that sample period. </p>
+<p>Since the synchronization algorithm used by this <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> requires that we sample at 4 times the fastest sample rate, we take the Greatest Common Divisor of all channels' sample periods, divide it by 4 and sample at that sample period. </p>
 
 <p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00038">38</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
@@ -269,9 +278,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The port starts sampling data as soon as the first <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called if the port is enabled. disabling the port means that the port will start sampling from scratch the next time it is reenabled and <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called. </p>
+<p>The port starts sampling data as soon as the first <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called if the port is enabled. Disabling the port means that the port will start sampling from scratch the next time it is reenabled and <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called. </p>
 
-<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00103">103</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00100">100</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -292,7 +301,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr
 <p>Returns a vector of data samples for the input channel number. </p>
 <dl class="section note"><dt>Note</dt><dd>A side effect of this function is that it clears out the data buffer for the input channelNum. </dd></dl>
 
-<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00246">246</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00245">245</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -321,7 +330,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr
 <p>This should be called as close to the point at which the data will actually be collected as possible. Otherwise, data will pile up in the buffer. Also note that calling this clears out any existing data in the channel.</p>
 <p>This function is called by <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> </p>
 
-<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00080">80</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00079">79</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -343,7 +352,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr
 <p>When this function loads data, it reads the time at which the data was actually read and calculates the time that the last data point came in assuming that each sample was read at exactly the time dictaded by a perfect clock for the set sample period. If the calculated time is significantly lower than the actual time, a data point is duplicated to make up for it. If the calculated time is significantly higher than the actual time, a data point is deleted to make up for it. This function takes care of all of these issues.</p>
 <p>The input currTimestamp is the last time for which data should be returned for the current frame. Since there may have been some lag since the latest frame was displayed until this function was called, there may be some data points here that were read after the frame was over. When we read this data though, we only want data that came in up to the time that the frame was presented. This allows us to store data that came in too late for next frame and prepare only the data that occured during the previous frame. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> doesn't do anything unless all input channel data has been read since the last call to this function. </dd></dl>
 
-<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00133">133</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_input_port_8cpp_source.html#l00134">134</a> of file <a class="el" href="_input_port_8cpp_source.html">InputPort.cpp</a>.</p>
 
 </div>
 </div>

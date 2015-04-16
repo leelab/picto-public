@@ -102,15 +102,4 @@ bool PropertyDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlSt
 	return true;
 }
 
-void PropertyDataUnit::postDeserialize()
-{
-
-}
-
-bool PropertyDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

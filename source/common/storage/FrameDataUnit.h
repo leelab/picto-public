@@ -35,10 +35,6 @@ public:
 
 	QString time;	//!< The time of the frame's first phosphor.
 	int stateId_;	//!< The AssetId of the State that was active when this frame was displayed.
-
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

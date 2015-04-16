@@ -95,15 +95,4 @@ bool StateDataUnitPackage::deserializeFromXml(QSharedPointer<QXmlStreamReader> x
 	return true;
 }
 
-void StateDataUnitPackage::postDeserialize()
-{
-
-}
-
-bool StateDataUnitPackage::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

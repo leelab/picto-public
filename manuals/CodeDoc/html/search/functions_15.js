@@ -12,6 +12,8 @@ var searchData=
   ['updateapps',['updateApps',['../class_update_downloader.html#a076198e9e5bb0c1180fcbdd0548ef590',1,'UpdateDownloader']]],
   ['updatearrowportdimensions',['updateArrowPortDimensions',['../class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690',1,'WireableItem']]],
   ['updatecoefficients',['updateCoefficients',['../class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457',1,'AlignmentTool']]],
+  ['updatecolors',['updateColors',['../class_picto_1_1_bar_base.html#aee239bd90be00612312eedf4a4477e06',1,'Picto::BarBase']]],
+  ['updatecolumns',['updateColumns',['../class_picto_1_1_bar_base.html#a08abebe526ecce2cdbd369e914d92461',1,'Picto::BarBase']]],
   ['updatecombobox',['updateComboBox',['../class_task_run_viewer.html#af7d3d044c210a3dad0993f72da4a5fe4',1,'TaskRunViewer']]],
   ['updatecomponent',['updateComponent',['../class_connection_manager.html#ab4d8f848dd065a478a6123f8d400c712',1,'ConnectionManager']]],
   ['updatecomponentactivity',['UpdateComponentActivity',['../class_session_info.html#acc27036c722407afba5bf30965084fbb',1,'SessionInfo']]],

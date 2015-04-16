@@ -44,15 +44,11 @@ public:
 	/*! \brief Returns the alignment number.*/
 	int getAlignNumber(){return alignNumber_;}
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 private:
-double timestamp_;
-int alignCode_;
-int alignNumber_;
-bool hasAlignNumber_;
+	double timestamp_;
+	int alignCode_;
+	int alignNumber_;
+	bool hasAlignNumber_;
 };
 
 

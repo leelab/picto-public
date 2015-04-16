@@ -84,16 +84,6 @@ bool NeuralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void NeuralDataUnit::postDeserialize()
-{
-
-}
-
-bool NeuralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 /*! \brief Sets the stored spike waveform to the input vector of float values.*/
 void NeuralDataUnit::setWaveform(QSharedPointer<QVector<float>> waveform)
 {

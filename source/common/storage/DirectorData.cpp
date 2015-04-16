@@ -83,15 +83,4 @@ QHash<int,int> DirectorData::getRewardMap()
 	return returnVal;
 }
 
-void DirectorData::postDeserialize()
-{
-
-}
-
-bool DirectorData::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

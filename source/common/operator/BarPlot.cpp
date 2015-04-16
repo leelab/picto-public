@@ -10,11 +10,6 @@ const QString BarPlot::type = "Bar Plot";
 BarPlot::BarPlot()
 	: m_pAxisHandler(nullptr)
 {
-	m_pAxisHandler = new BarAxisHandler(0, 1);
-
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
-	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
-
 	AddDefinableProperty(QVariant::Double, "BinSpacing", 0.2);
 }
 
@@ -41,6 +36,17 @@ const QString BarPlot::getLabel(long bin) const
 void BarPlot::setLabel(long bin, QString name)
 {
 	m_pAxisHandler->submitLabel(bin, name);
+}
+
+
+void BarPlot::postDeserialize()
+{
+	BarBase::postDeserialize();
+
+	m_pAxisHandler = new BarAxisHandler(0, 1);
+
+	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
+	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
 }
 
 }; //namespace Picto

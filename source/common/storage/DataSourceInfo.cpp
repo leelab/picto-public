@@ -81,15 +81,4 @@ bool DataSourceInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStre
 	return true;
 }
 
-void DataSourceInfo::postDeserialize()
-{
-
-}
-
-bool DataSourceInfo::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

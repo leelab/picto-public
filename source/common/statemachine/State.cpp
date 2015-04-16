@@ -51,14 +51,15 @@ State::State() :
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(FixationController::Create))));
 }
 
-/*! \brief Creates a new State object and returns a shared Asset pointer to it.*/
+/*! \brief Creates a new State object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Asset> State::Create()
 {
 	return QSharedPointer<Asset>(new State());
 }
 
 /*! \brief rebuilds the scene whenever run mode is enable in case something about the scene changed.
-*/
+ */
 void State::enableRunMode(bool enable)
 {
 	MachineContainer::enableRunMode(enable);
@@ -77,7 +78,7 @@ void State::enableRunMode(bool enable)
  *	Entry and Exit Scripts.  The AnalysisFrameScript is run after the Scene is rendered.
  *	
  *	The name of the result that ended the State execution is returned from the function as a string.
-*/
+ */
 QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 {
 	resetScriptableValues();
@@ -329,7 +330,8 @@ QMap<QString,QString> State::getScripts()
 	return scripts;
 }
 
-/*! \brief Runs this State's AnalysisFrameScript if it isn't empty.*/
+/*! \brief Runs this State's AnalysisFrameScript if it isn't empty.
+ */
 void State::runAnalysisFrameScripts()
 {
 	runAnalysisScripts(StateMachineElement::FRAME);
@@ -391,7 +393,7 @@ void State::rebuildScene()
 /*! \brief Calls rebuildScene() any time the Active Analysis changes.
  *	\details This should be more useful when/if we start adding Analysis Output Elements (plots or text info)
  *	to the scene in the Workstation when Analyses are active.
-*/
+ */
 void State::activeAnalysisIdsChanged()
 {
 	//Even though this happens as a result of a change in the UI.  Since its connected on a signal->slot basis, the

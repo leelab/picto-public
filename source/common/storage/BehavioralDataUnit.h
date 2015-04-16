@@ -33,12 +33,7 @@ public:
 	double x;	//!< The X component of the data
 	double y;	//!< The Y component of the data
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 };
-
 
 }; //namespace Picto
 

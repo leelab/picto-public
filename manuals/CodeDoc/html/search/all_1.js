@@ -102,7 +102,7 @@ var searchData=
   ['aligntimebases',['alignTimeBases',['../class_session_info.html#a56cbcad35daa14a7b589e8ecce162c81',1,'SessionInfo']]],
   ['aligntimestampsto',['alignTimestampsTo',['../class_session_info.html#abdc6f3d0225de15740712135d57d8c5f',1,'SessionInfo']]],
   ['aligntotype_5f',['alignToType_',['../class_session_info.html#acba867ab513484d54573c4d80e332df5',1,'SessionInfo']]],
-  ['alpha',['alpha',['../class_picto_1_1_color_parameter.html#a6ad876eb5e2c6f853b0fb59e5f525363',1,'Picto::ColorParameter::alpha()'],['../struct_picto_1_1_visual_element.html#aa03bc277daf4d3514f43bd77503ccfba',1,'Picto::VisualElement::alpha()']]],
+  ['alpha',['alpha',['../class_picto_1_1_bar_base.html#a65fc18e3d67ffad4dcf3f07ebc95d1a7',1,'Picto::BarBase::alpha()'],['../class_picto_1_1_color_parameter.html#a6ad876eb5e2c6f853b0fb59e5f525363',1,'Picto::ColorParameter::alpha()'],['../struct_picto_1_1_visual_element.html#aa03bc277daf4d3514f43bd77503ccfba',1,'Picto::VisualElement::alpha()']]],
   ['analoginput',['AnalogInput',['../class_picto_1_1_analog_input.html#ab5186484be9e3c90ebfdcebd722c3e59',1,'Picto::AnalogInput']]],
   ['analoginput',['AnalogInput',['../class_picto_1_1_analog_input.html',1,'Picto']]],
   ['analysis',['Analysis',['../class_picto_1_1_analysis.html',1,'Picto']]],

@@ -37,10 +37,6 @@ public:
 	QString name_;	//!< Stores the name that the operator set for this run.
 	QString notes_;	//!< Stores the notes that the operator saved including information about this run.
 	bool saved_;	//!< Stores whether the operator marked this run as saved.
-
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 };
 
 

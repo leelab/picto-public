@@ -91,15 +91,4 @@ bool FrameDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
-void FrameDataUnit::postDeserialize()
-{
-
-}
-
-bool FrameDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto

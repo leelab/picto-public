@@ -25,18 +25,59 @@ class BarBase : public OperatorPlot
 #endif
 {
 	Q_OBJECT
+	/*! \brief Sets/gets the red component of this BarBase's color.*/
+	Q_PROPERTY(int red READ getRed WRITE setRed)
+	/*! \brief Sets/gets the green component of this BarBase's color.*/
+	Q_PROPERTY(int green READ getGreen WRITE setGreen)
+	/*! \brief Sets/gets the blue component of this BarBase's color.*/
+	Q_PROPERTY(int blue READ getBlue WRITE setBlue)
+	/*! \brief Sets/gets the alpha component of this BarBase's color.*/
+	Q_PROPERTY(int alpha READ getAlpha WRITE setAlpha)
+	/*! \brief Sets/gets the this BarBase's color in the \#rrbbgg format (ex. \#FF2255).
+	*	\note This script property is compatible with values read from/written to a ColorParameter.
+	*/
+	Q_PROPERTY(QVariant color READ getColor WRITE setColor)
 public:
 	BarBase();
 	virtual ~BarBase(){};
 
 	virtual void reset();
+	virtual void draw();
 
 	virtual QString friendlyTypeName(){return "Bar Base";};
 
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
+	//! Gets the color of the BarBase.
+	const QColor getColor() const { return propertyContainer_->getPropertyValue("ColumnColor").value<QColor>(); };
+	//! Sets the color of the BarBase.
+	void setColor(QColor color) { propertyContainer_->setPropertyValue("ColumnColor", color); m_bUpdateBrush = true; };
+	//! Sets the color of the BarBase.
+	void setColor(QVariant color) { setColor(color.value<QColor>()); };
+
+	//! Gets the red component of this BarBase's color.
+	int getRed() const { return getColor().red(); };
+	//! Gets the green component of this BarBase's color.
+	int getGreen() const { return getColor().green(); };
+	//! Gets the blue component of this BarBase's color.
+	int getBlue() const { return getColor().blue(); };
+	//! Gets the alpha component of this BarBase's color.
+	int getAlpha() const { return getColor().alpha(); };
+	//! Sets the red component of this BarBase's color.
+	void setRed(int r){ QColor val = getColor(); val.setRed(r); setColor(val); };
+	//! Sets the green component of this BarBase's color.
+	void setGreen(int g){ QColor val = getColor(); val.setGreen(g); setColor(val); };
+	//! Sets the blue component of this BarBase's color.
+	void setBlue(int b){ QColor val = getColor(); val.setBlue(b); setColor(val); };
+	//! Sets the alpha component of this BarBase's color.
+	void setAlpha(int a){ QColor val = getColor(); val.setAlpha(a); setColor(val); };
+
 public slots:
+	/*! \brief Sets the color of this BarBase.
+	*	\details Inputs are from 0-255.
+	*/
+	void setColor(int r, int g, int b, int a = 255){ setColor(QColor(r, g, b, a)); };
 	//! Clears all of the current plot data.
 	void clearPlot() { reset(); };
 
@@ -47,6 +88,8 @@ protected:
 
 	//! Flag to update the bins
 	bool m_bBinsModified;
+	//! Flag to update the Colors and Brushes
+	bool m_bUpdateBrush;
 	//! Returns the current Bin Size
 	virtual double getBinSize() const = 0;
 	//! Returns the current Bin Spacing
@@ -60,6 +103,9 @@ protected:
 	bool getNormalized() const { return propertyContainer_->getPropertyValue("NormalizedDisplay").toBool(); };
 
 	virtual double _getSampleValue(long bin) const;
+
+	void updateColors();
+	void updateColumns();
 
 	/*! \brief Optional error calculation for future children.  Called start of replot.
 	*	\sa BarBase::replot

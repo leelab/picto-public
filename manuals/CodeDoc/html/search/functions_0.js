@@ -6,6 +6,7 @@ var searchData=
   ['_5fdropbin',['_dropBin',['../class_picto_1_1_bar_base.html#a770012047f7142ab27e611ef543afe40',1,'Picto::BarBase']]],
   ['_5fgetdisplayerr',['_getDisplayErr',['../class_picto_1_1_sampling_bar_base.html#a6ac179a21f755a03bd27af8b21eeb4fb',1,'Picto::SamplingBarBase']]],
   ['_5fgetsamples',['_getSamples',['../class_picto_1_1_sampling_bar_base.html#a80d61ab30424c728866ebeff15383d0d',1,'Picto::SamplingBarBase']]],
+  ['_5fgetsamplevalue',['_getSampleValue',['../class_picto_1_1_bar_base.html#a8d687b8570c231b70aed1ccf9e6d00fe',1,'Picto::BarBase::_getSampleValue()'],['../class_picto_1_1_sampling_bar_base.html#a93c31b456f4978556d0bae998e478d6f',1,'Picto::SamplingBarBase::_getSampleValue()']]],
   ['_5fgetvalue',['_getValue',['../class_picto_1_1_bar_base.html#ae4b5c9a8338ebe8b7e90c131ec04644e',1,'Picto::BarBase']]],
   ['_5fgetvaluesquared',['_getValueSquared',['../class_picto_1_1_sampling_bar_base.html#a9cdb60b2c25bfdda073ab80a5f25f87c',1,'Picto::SamplingBarBase']]],
   ['_5fhandleerrorfinal',['_handleErrorFinal',['../class_picto_1_1_bar_base.html#adab9622a6875bf3eb04dd06a41f46ab7',1,'Picto::BarBase::_handleErrorFinal()'],['../class_picto_1_1_sampling_bar_base.html#a5cfc344b6d250f620c90623cca040415',1,'Picto::SamplingBarBase::_handleErrorFinal()']]],

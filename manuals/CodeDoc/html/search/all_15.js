@@ -22,7 +22,10 @@ var searchData=
   ['updateapps',['updateApps',['../class_update_downloader.html#a076198e9e5bb0c1180fcbdd0548ef590',1,'UpdateDownloader']]],
   ['updatearrowportdimensions',['updateArrowPortDimensions',['../class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690',1,'WireableItem']]],
   ['updatecoefficients',['updateCoefficients',['../class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457',1,'AlignmentTool']]],
+  ['updatecolors',['updateColors',['../class_picto_1_1_bar_base.html#aee239bd90be00612312eedf4a4477e06',1,'Picto::BarBase']]],
+  ['updatecolumns',['updateColumns',['../class_picto_1_1_bar_base.html#a08abebe526ecce2cdbd369e914d92461',1,'Picto::BarBase']]],
   ['updatecombobox',['updateComboBox',['../class_task_run_viewer.html#af7d3d044c210a3dad0993f72da4a5fe4',1,'TaskRunViewer']]],
+  ['updatecommandchannel_5f',['updateCommandChannel_',['../class_picto_1_1_engine_1_1_picto_engine.html#a051df94b21c51baa5a98ce52c0488f5e',1,'Picto::Engine::PictoEngine']]],
   ['updatecomponent',['updateComponent',['../class_connection_manager.html#ab4d8f848dd065a478a6123f8d400c712',1,'ConnectionManager']]],
   ['updatecomponentactivity',['UpdateComponentActivity',['../class_session_info.html#acc27036c722407afba5bf30965084fbb',1,'SessionInfo']]],
   ['updatecomponentlists',['updateComponentLists',['../class_remote_viewer.html#aa9111ce64f67ead7b47688689d0faaa2',1,'RemoteViewer']]],
@@ -86,5 +89,6 @@ var searchData=
   ['userinputslot',['userInputSlot',['../class_display_mode.html#ae3ba1617fac36e0cea757a12575fffa7',1,'DisplayMode::userInputSlot()'],['../class_menu.html#a3a8a0e8b13f44978f239e280d78b38bd',1,'Menu::userInputSlot()']]],
   ['userontarget',['userOnTarget',['../class_picto_1_1_choice_controller.html#a01f58afc4505925fe53d9b68c7163971',1,'Picto::ChoiceController::userOnTarget()'],['../class_picto_1_1_fixation_controller.html#a7cc3b985414da3cf53ea496c3a216b1c',1,'Picto::FixationController::userOnTarget()'],['../class_picto_1_1_target_controller.html#ac358ce65a6a2f1bbf7f938e6e631f4e6',1,'Picto::TargetController::userOnTarget()']]],
   ['usertype',['UserType',['../struct_playback_command.html#a63cad2fec38e9515df367a1575fcf6ff',1,'PlaybackCommand']]],
+  ['usescalefactors_5f',['useScaleFactors_',['../class_picto_1_1_doublet_signal_channel.html#aa73471b2391e66d92eb84456a008d132',1,'Picto::DoubletSignalChannel']]],
   ['useseperatesubdirs',['useSeperateSubDirs',['../class_save_output_dialog.html#a542d237dada5dafeb6e6493a38941292',1,'SaveOutputDialog']]]
 ];

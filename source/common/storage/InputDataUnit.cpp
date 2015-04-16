@@ -72,15 +72,5 @@ bool InputDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStrea
 	return true;
 }
 
-void InputDataUnit::postDeserialize()
-{
-
-}
-
-bool InputDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 
 }; //namespace Picto

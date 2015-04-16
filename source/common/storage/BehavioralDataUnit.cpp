@@ -78,15 +78,5 @@ bool BehavioralDataUnit::deserializeFromXml(QSharedPointer<QXmlStreamReader> xml
 	return true;
 }
 
-void BehavioralDataUnit::postDeserialize()
-{
-
-}
-
-bool BehavioralDataUnit::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
 
 }; //namespace Picto

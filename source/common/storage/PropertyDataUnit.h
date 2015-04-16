@@ -42,11 +42,6 @@ public:
 	QString value_;				//!< The new Property value.
 	qulonglong actionFrame_;	//!< The FrameId of the next Frame to be presented after the Property change takes place.
 
-protected:
-	virtual void postDeserialize();
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
-
 };
 
 

@@ -5,10 +5,9 @@ namespace Picto {
 
 /*! \brief Constructs a new SignalChannel with the input name and InputPort.
  *	\details When using this constructor a default value of 1 reading per ms is used.
- *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
- *	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
- *	as "Position."
-*/
+ *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents a DAQ device, for example,
+ *	whereas the SignalChannel represents one logical signal such as "Position."
+ */
 SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 {
 	name_ = name;
@@ -17,10 +16,9 @@ SignalChannel::SignalChannel(QString name,QSharedPointer<InputPort> port)
 }
 
 /*! \brief Constructs a new SignalChannel with the input name, InputPort and msPerSample sample period.
- *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents
- *	a DAQ device, for example, whereas the SignalChannel represents one logical signal such
- *	as "Position."
-*/
+ *	\note Multiple SignalChannels can share  a single InputPort.  The InputPort represents a DAQ device, for example,
+ *	whereas the SignalChannel represents one logical signal such as "Position."
+ */
 SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<InputPort> port)
 {
 	name_ = name.toLower();
@@ -29,9 +27,9 @@ SignalChannel::SignalChannel(QString name, int msPerSample, QSharedPointer<Input
 }
 
 /*! \brief Adds a subchannel for this SignalChannel.
- *	\details Subchannels allow a signal to be broken into its sub components.  The position
- *	signal for example includes two sub channels, x and y.  Each subchannel should be provided
- *	with a name that is unique to this SignalChannel and a channelIndex that is unique to the InputPort.
+ *	\details Subchannels allow a signal to be broken into its sub components.  The position signal for example includes two
+ *	sub channels, x and y.  Each subchannel should be provided with a name that is unique to this SignalChannel and a
+ *	channelIndex that is unique to the InputPort.
  */
 void SignalChannel::addSubchannel(QString subchannelName, int channelIndex)
 {
@@ -62,7 +60,8 @@ void SignalChannel::setSampleResolution(int msPerSample)
 	msPerSample_ = msPerSample;
 }
 
-/*!	\brief Returns the offset from the time that the previous frame occured to the time that the first sample appears on the SignalChannel.
+/*!	\brief Returns the offset from the time that the previous frame occured to the time that the first sample appears on
+ *	the SignalChannel.
  *	\note This will always be less than the sample rate.
  *	\sa InputPort::getFrameToSampleOffset()
  */
@@ -74,8 +73,8 @@ double SignalChannel::latestUpdateEventOffset()
 }
 
 /*! \brief Gets the most recent value from the subchannel.
- *	\details This function does not cause data to be deleted.  The data returned by this
- *	function will still be returned in the next call to getValues().
+ *	\details This function does not cause data to be deleted.  The data returned by this function will still be returned in
+ *	the next call to getValues().
  */
 double SignalChannel::peekValue(QString subchannel)
 {
@@ -123,7 +122,7 @@ bool SignalChannel::start()
 }
 
 /*! \brief Stops data capture for this SignalChannel and clears out any remaining data in buffers.
-*/
+ */
 bool SignalChannel::stop()
 {
 	if(!port_)
@@ -152,8 +151,8 @@ void SignalChannel::updateData(double currentTime)
 }
 
 /*! \brief Gets data for this SignalChannel from the InputPort and returns it.
- *	\note A side effect of this function is that it clears out all read data such that the
- *	next call to getRawValues() will return only the values read since the function was last called.
+ *	\note A side effect of this function is that it clears out all read data such that the next call to getRawValues() will
+ *	return only the values read since the function was last called.
  */
 QMap<QString, QVector<double> > SignalChannel::getRawValues()
 {
@@ -177,22 +176,18 @@ QMap<QString, QVector<double> > SignalChannel::getRawValues()
 }
 
 /*! \brief Adds a single input value to the input subchannel from an outside source.
- *	\details This is useful for slave situations in which the data
- *	is coming in from a master and not from an underlying InputPort.
- *	\note It would probably be more logically consistent if we created
- *	a SlaveInputPort that recieved data from the master or possibly a 
- *	SlaveSignalChannel class that would reimplement some of this
- *	class's functions since master data is prescaled.
- *	For now, this is working even though it isn't too clean.
+ *	\details This is useful for slave situations in which the data is coming in from a master and not from an underlying
+ *	InputPort.
+ *	\note It would probably be more logically consistent if we created a SlaveInputPort that recieved data from the master
+ *	or possibly a SlaveSignalChannel class that would reimplement some of this class's functions since master data is
+ *	prescaled.  For now, this is working even though it isn't too clean.
  */
 void SignalChannel::insertValue(QString subchannel, double val)
 {
-	//When this is called, the passed in value is immediately added to the 
-	//rawDataBuffer_.  Since real data is only added to the rawDataBuffer_
-	//when updateDataBuffer is called, the inserted data is slightly out of
-	//order.  This shouldn't be a big deal, since it is unlikely that we'll be 
-	//inserting values at the same time as we're collecting real data.
-	//Should this become an issue, we'll want to add timestamps.
+	//When this is called, the passed in value is immediately added to the rawDataBuffer_.  Since real data is only added
+	//	to the rawDataBuffer_ when updateDataBuffer is called, the inserted data is slightly out of order.  This shouldn't
+	//	be a big deal, since it is unlikely that we'll be inserting values at the same time as we're collecting real data.
+	//	Should this become an issue, we'll want to add timestamps.
 	
 	Q_ASSERT(rawDataBuffer_.contains(subchannel));
 
@@ -202,13 +197,11 @@ void SignalChannel::insertValue(QString subchannel, double val)
 }
 
 /*! \brief Adds data values to the input sub-channel from an outside source.
- *	\details This is useful for slave situations in which the data
- *	is coming in from a master and not from an underlying InputPort.
- *	\note It would probably be more logically consistent if we created
- *	a SlaveInputPort that recieved data from the master or possibly a 
- *	SlaveSignalChannel class that would reimplement some of this
- *	class's functions since master data is prescaled.
- *	For now, this is working even though it isn't too clean.
+ *	\details This is useful for slave situations in which the data is coming in from a master and not from an underlying
+ *	InputPort.
+ *	\note It would probably be more logically consistent if we created a SlaveInputPort that recieved data from the master
+ *	or possibly a SlaveSignalChannel class that would reimplement some of this class's functions since master data is
+ *	prescaled.  For now, this is working even though it isn't too clean.
  */
 void SignalChannel::insertValues(QString subchannel, QVector<double> vals)
 {

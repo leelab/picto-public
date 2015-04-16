@@ -24,10 +24,9 @@ MouseInputPort::MouseInputPort(QWidget *widget)
 }
 
 /*! \brief Initializes the mouse port for sampling mouse data.
- *	\details There is no initialization necessary to start reading mouse data from the OS;
- *	however, since in the mouse port we simulate sampling at the sample rate configured 
- *	in InputPort, we need to mark the startSampling time in order to calculate the number
- *	of simulated samples that "have occured" when updateDataBuffer() is called.
+ *	\details There is no initialization necessary to start reading mouse data from the OS.  However, since in the mouse
+ *	port we simulate sampling at the sample rate configured in InputPort, we need to mark the startSampling time in order
+ *	to calculate the number of simulated samples that "have occured" when updateDataBuffer() is called.
  */
 bool MouseInputPort::startSampling()
 {
@@ -44,13 +43,11 @@ void MouseInputPort::stopSampling()
 }
 
 /*! \copydoc InputPort::updateDataBuffer()
- *	\details In the case of the MouseInputPort, there is no external hardware system or any
- *	external data buffer that is filled and needs to be copied in.  Also, whenever the 
- *	mouse is used as the input, precise timing is unnecessary.  For this reason, we "simulate"
- *	reading in mouse data at the correct sample rate.  We actually just check the mouse position
- *	once for every time that this function is called, but fake additional samples are 
- *	produced to fill out the correct number of samples based on the configured sample rate
- *	and elapsed time since this function was last called.
+ *	\details In the case of the MouseInputPort, there is no external hardware system or any external data buffer that is
+ *	filled and needs to be copied in.  Also, whenever the mouse is used as the input, precise timing is unnecessary.
+ *	For this reason, we "simulate" reading in mouse data at the correct sample rate.  We actually just check the mouse
+ *	position once for every time that this function is called, but fake additional samples are produced to fill out the
+ *	correct number of samples based on the configured sample rate and elapsed time since this function was last called.
  */
 double MouseInputPort::updateDataBuffer()
 {
@@ -71,13 +68,10 @@ double MouseInputPort::updateDataBuffer()
 	QPoint mousePos = pollMouse();
 	int numSamps = (curr-lastTime_)/samplePeriod;
 
-	//Loop through channelBuffer vectors adding latest mouse pos for all
-	//new entries.
-	//Actually reading mouse data at the correct interval would mean
-	//multi-threading which we don't want to do for the time being
-	//since it messes up the system frame rate to have multiple threads.
-	//Mouse tasks never need precise timing anyway, so this shouldn't be
-	//an issue.  
+	//Loop through channelBuffer vectors adding latest mouse pos for all new entries.
+	//	Actually reading mouse data at the correct interval would mean multi-threading which we don't want to do for the
+	//	time being since it messes up the system frame rate to have multiple threads.  Mouse tasks never need precise
+	//	timing anyway, so this shouldn't be an issue.  
 	QHash<int, QVector<double>>::iterator it;
 	int oldSize;
 	for(it = channelBuffers_.begin();it != channelBuffers_.end(); it++)
@@ -105,8 +99,9 @@ double MouseInputPort::updateDataBuffer()
 	return curr;
 }
 
-/*! \brief Returns a QPoint with the current mouse position in the coordinate frame of the widget passed into the constructor.
-*/
+/*! \brief Returns a QPoint with the current mouse position in the coordinate frame of the widget passed into the
+ *	constructor.
+ */
 QPoint MouseInputPort::pollMouse()
 {
 	Timestamper stamper;

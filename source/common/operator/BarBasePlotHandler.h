@@ -1,0 +1,52 @@
+#ifndef _BAR_BASE_PLOT_HANDLER_H_
+#define _BAR_BASE_PLOT_HANDLER_H_
+
+#include "../common.h"
+#include "DataViewSpecs.h"
+#include "OperatorPlotHandler.h"
+
+#include <QObject>
+#include <QSharedPointer>
+#include <QColor>
+#include <QVector>
+
+class QwtPlotHistogram;
+class QwtPlot;
+class QwtIntervalSample;
+
+namespace Picto {
+
+/*! \brief A base class for manufacturing Widgets.
+ *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+ *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
+ *	\date 2009-2015
+ */
+#if defined WIN32 || defined WINCE
+class PICTOLIB_API BarBasePlotHandler : public OperatorPlotHandler
+#else
+class BarBasePlotHandler : public QObject
+#endif
+{
+	Q_OBJECT
+public:
+	BarBasePlotHandler();
+	virtual ~BarBasePlotHandler(){};
+
+public slots:
+	void initializeHisto(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType);
+
+	void updateColor(QColor color);
+	void updateColumns(ColumnType::ColumnType eType);
+	void normalizeScale(double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
+
+	void setSamples(const QVector<QwtIntervalSample> &qvSamples);
+
+	virtual void handleXLabels(long, long) {};
+
+protected:
+	QwtPlotHistogram *m_pHistoPlotItem;
+};
+
+}; //namespace Picto
+
+#endif

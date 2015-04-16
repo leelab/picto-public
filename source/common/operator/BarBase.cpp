@@ -13,13 +13,11 @@
 
 namespace Picto {
 
-/*!	\brief This class is used to scale Normalized plots.
- */
+//!	This class is used to scale Normalized plots.
 class NormalizedScaleDraw : public QwtScaleDraw
 {
 public:
-	/*!	\brief Constructor to set our properties.
-	 */
+	//! Constructor to set our properties.
 	NormalizedScaleDraw(double max)
 		:max_(max)
 	{
@@ -30,40 +28,33 @@ public:
 		setSpacing(15);
 	}
 
-	/*!	\brief Overwriting labeling functionality
-	 */
+	//!	Overwriting labeling functionality
 	virtual QwtText label(double value) const
 	{
 		return QString("%1").arg(value / max_);
 	}
 private:
-	//! \brief NormalizedScaleDraw holds onto the current total (Normalization quantity).
+	//! NormalizedScaleDraw holds onto the current total (Normalization quantity).
 	double max_;
 };
 
 const QString BarBase::type = "Bar Base";
 
 BarBase::BarBase()
-	: m_pHistoPlotItem(nullptr), m_bBinsModified(false)
+	: m_pHistoPlotItem(nullptr), m_bBinsModified(false), m_bUpdateBrush(false)
 {
-
-	m_pHistoPlotItem = new QwtPlotHistogram("Data");
-	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
-	m_pHistoPlotItem->setBrush(QBrush(Qt::red));
-	m_pHistoPlotItem->attach(m_pPlot);
-
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
 
 	//Indexed by enum ColumnType
 	columnTypes_ << "Outline" << "Flat Columns" << "Raised Columns" << "Lines";
-	AddDefinableProperty(PropertyContainer::enumTypeId(), "ColumnType", 0, "enumNames", columnTypes_);
-
-	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "ColumnType", 1, "enumNames", columnTypes_);
+	AddDefinableProperty(QVariant::Color, "ColumnColor", QColor(Qt::red));
+	AddDefinableProperty(QVariant::Color, "CanvasColor", QColor(Qt::lightGray));
 }
 
 /*!	\brief Reconstructs elements of underlying plot.
-*/
+ */
 void BarBase::replot()
 {
 	QVector<QwtIntervalSample> qvSamples;
@@ -89,7 +80,6 @@ void BarBase::replot()
 
 	QList<long> keyList = m_qhdCumulValue.keys();
 	std::sort(keyList.begin(), keyList.end());
-
 
 	double total = 0.0;
 	double dRangeMax = 0.0;
@@ -131,9 +121,30 @@ void BarBase::replot()
 		handleXLabels(*keyList.begin(), *(keyList.end()-1));
 	}
 
+	if (m_bUpdateBrush)
+	{
+		m_bUpdateBrush = false;
+		updateColors();
+		updateColumns();
+	}
+
 	m_pPlot->replot();
 }
 
+
+void BarBase::draw()
+{
+	//Force a replot if you need an update
+	if (m_bUpdateBrush || m_bBinsModified )
+	{
+		m_bDataChanged = true;
+	}
+
+	//Call parent draw method.
+	OperatorPlot::draw();
+}
+
+//! Returns the value of the passed-in bin.
 double BarBase::_getSampleValue(long bin) const
 {
 	return m_qhdCumulValue[bin];
@@ -191,6 +202,14 @@ void BarBase::createNormalizedScale(double dMaxValue, double dTotalValue)
 void BarBase::postDeserialize()
 {
 	OperatorPlot::postDeserialize();
+
+	m_pHistoPlotItem = new QwtPlotHistogram("Data");
+	m_pHistoPlotItem->setTitle("Data");
+	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
+	m_pHistoPlotItem->setBrush(QBrush(Qt::red));
+	m_pHistoPlotItem->attach(m_pPlot);
+
+	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
 	
 	if (propertyContainer_->getPropertyValue("DisplayLegend").toBool())
 	{
@@ -203,6 +222,21 @@ void BarBase::postDeserialize()
 		m_pPlot->insertLegend(nullptr);
 	}
 
+	// Update the Colors and Bar Types
+	updateColors();
+	updateColumns();
+	m_pPlot->canvas()->setPalette(propertyContainer_->getPropertyValue("CanvasColor").value<QColor>());
+}
+
+//! Called to update the plot with new colors 
+void BarBase::updateColors()
+{
+	m_pHistoPlotItem->setBrush(QBrush(getColor()));
+}
+
+//! Called to recreate the columns using the updatd colors and style 
+void BarBase::updateColumns()
+{
 	const ColumnType::ColumnType eColumnType = getColumnType();
 	QPen pen(Qt::black, 0);
 	QwtColumnSymbol *symbol = nullptr;
@@ -233,6 +267,7 @@ void BarBase::postDeserialize()
 		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Lines);
 		m_pHistoPlotItem->setSymbol(nullptr);
 		pen.setBrush(m_pHistoPlotItem->brush());
+		pen.setWidth(2); 
 		m_pHistoPlotItem->setPen(pen);
 		break;
 	default:
@@ -318,6 +353,7 @@ void BarBase::_destroyBin(long bin)
 	m_bBinsModified = true;
 }
 
+//! Returns the current ColumnType parameter
 ColumnType::ColumnType BarBase::getColumnType() const
 {
 	return (ColumnType::ColumnType)propertyContainer_->getPropertyValue("ColumnType").toInt();

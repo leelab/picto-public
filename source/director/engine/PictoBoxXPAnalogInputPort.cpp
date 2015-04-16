@@ -24,6 +24,7 @@
 #define TASK_NAME "SigChanCapture"
 //! \brief The size of each channel of the signal buffer
 #define BUFFER_SIZE_PER_CHAN 300
+
 using namespace Picto;
 
 PictoBoxXPAnalogInputPort::PictoBoxXPAnalogInputPort()
@@ -55,8 +56,8 @@ bool PictoBoxXPAnalogInputPort::startSampling()
 	if(!hasDevice)
 		return false;
 	
-	//Create the buffer that will be used for read operations.  Its size depends on the number of channels
-	//so we generate it here where we are commited our final list of channels.
+	//Create the buffer that will be used for read operations.  Its size depends on the number of channels so we generate
+	//	it here where we are commited our final list of channels.
 	if(dataBuffer_)
 	{
 		delete[] dataBuffer_;
@@ -104,10 +105,8 @@ double PictoBoxXPAnalogInputPort::updateDataBuffer()
 	Timestamper stamper;
 	double readTime;
 
-	//NOTE: This assumes that the data buffer has the data ordered by channel
-	//in the same order as the channels were created.  It is possbile that 
-	//the ordering is instead numerical, in which case this will need to be 
-	//rewritten
+	//NOTE: This assumes that the data buffer has the data ordered by channel in the same order the channels were created.
+	//	It is possbile that the ordering is instead numerical, in which case this will need to be rewritten
 	do
 	{
 		//read the NIDAQ
@@ -128,6 +127,8 @@ double PictoBoxXPAnalogInputPort::updateDataBuffer()
 			bufferOffset += sampsPerChanRead;
 		}
 		totalSampsRead += sampsPerChanRead;
-	}while(sampsPerChanRead == BUFFER_SIZE_PER_CHAN); //In case there are more data points than will fit in the buffer
+	}
+	while ( sampsPerChanRead == BUFFER_SIZE_PER_CHAN ); //In case there are more data points than will fit in the buffer
+
 	return readTime;
 }

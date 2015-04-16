@@ -67,20 +67,31 @@ protected:
 
 private:
 	bool start();
-	//! Maps channel num to samplerate
+
+	//! Maps channel num to samplerate.
 	QHash<int, int> sampResMap_;
+	//! Offset times between start of frame and first input sample, indexed by channel.
 	QHash<int,double> latestFrameOffsetTimes_;
+	//! Number of samples to be returned per read, indexed by channel.
 	QHash<int, int> sampsPerReadMap_;
+	//! The number of samples retained from previous reads for future return (the measurement offset), indexed by channel.
 	QHash<int,int> channelPhaseMap_;
+	//! Marks whether the channel data has been polled, indexed by channel.
 	QHash<int, bool> polledDataMap_;
 	/*! \brief A hash of data buffers indexed by channel number with data that will be used on the next
 	 *	updateDataBuffer(double) call.
 	 */
 	QHash<int, QVector<double>> channelLeftOvers;
+
+	//! Indicates whether the task is currently running.
 	bool taskRunning_;
+	//! Total number of samples passed added to the DataBuffer.
 	int sampsCollected_;
+	//! Indicates whether all channels have been looked at since last update.
 	bool needsUpdate_;
+	//! The last time for which data should be returned for the current frame
 	double lastSyncTimestamp_;
+	//! Indicates whether the port is currently sampling.  Flipping this will clear the buffer.
 	bool enabled_;
 
 };

@@ -248,8 +248,10 @@ HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElement.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElement.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewSpecs.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewSpecs.cpp
-HEADERS += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.h
-SOURCES += $$(PICTO_TREE)/source/common/operator/DataViewElementContainer.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/OperatorPlotHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/OperatorPlotHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/BarBasePlotHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/BarBasePlotHandler.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp

@@ -208,10 +208,10 @@ protected:
 	 */
 	void requireUniqueName(bool require = true){needsUniqueName_ = require;};
 
-	//! \brief The design config managing this Asset and the Design containing it.
+	//! The design config managing this Asset and the Design containing it.
 	QSharedPointer<DesignConfig> designConfig_;
 
-	//! \brief The task config managing this Asset and the Task containing it.
+	//! The task config managing this Asset and the Task containing it.
 	QSharedPointer<TaskConfig> taskConfig_;
 private:
 

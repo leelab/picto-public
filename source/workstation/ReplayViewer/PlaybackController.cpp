@@ -22,9 +22,9 @@
 using namespace Picto;
 
 /*! \brief Constructs a PlaybackController object.
- *	\details Along with variable initialization, this function creates a new playback QThread, starts its event loop and moves this object
- *	to that thread.  This means that the Session playback/loading will occur in a different, non-gui thread.  This is good because it 
- *	will prevent long processes like loading of session data from tying up the UI.
+ *	\details Along with variable initialization, this function creates a new playback QThread, starts its event loop and
+ *	moves this object to that thread.  This means that the Session playback/loading will occur in a different, non-gui
+ *	thread.  This is good because it will prevent long processes like loading of session data from tying up the UI.
  */
 PlaybackController::PlaybackController()
 {
@@ -49,11 +49,10 @@ PlaybackController::~PlaybackController()
 {
 }
 
-/*! \brief Generates a new PlaybackCommand directing the PlaybackController to preload
- *	all of the files with paths in the input list.
- *	\details Preload loads meta data about the file without loading the large quantities
- *	of actual Session data.  These will be loaded later if Run from a file are 
- *	selected for playback and run.
+/*! \brief Generates a new PlaybackCommand directing the PlaybackController to preload all of the files with paths in the
+ *	input list.
+ *	\details Preload loads meta data about the file without loading the large quantities of actual Session data.
+ *	These will be loaded later if Run from a file are selected for playback and run.
  */
 QString PlaybackController::preLoadSessions(QStringList filenames)
 {

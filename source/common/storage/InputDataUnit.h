@@ -31,12 +31,6 @@ public:
 		
 	double input[8];	//!< The 8 input channels
 
-protected:
-	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
-	virtual void postDeserialize();
-	//! \brief Perhaps UNUSED.  MONITOR AND POSSIBLY DELETE.
-	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
-
 };
 
 

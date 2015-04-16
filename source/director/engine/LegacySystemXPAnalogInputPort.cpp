@@ -25,9 +25,11 @@
 #define TASK_NAME "SigChanCapture"
 //! \brief The size of each channel of the signal buffer
 #define BUFFER_SIZE_PER_CHAN 300
+
 using namespace Picto;
 
-/*! \brief Constructs a new LegacySystemXPAnalogInputPort.*/
+/*! \brief Constructs a new LegacySystemXPAnalogInputPort.
+ */
 LegacySystemXPAnalogInputPort::LegacySystemXPAnalogInputPort()
 {
 	daqTaskHandle_ = 0;
@@ -57,8 +59,8 @@ bool LegacySystemXPAnalogInputPort::startSampling()
 	if(!hasDevice)
 		return false;
 	
-	//Create the buffer that will be used for read operations.  Its size depends on the number of channels
-	//so we generate it here where we are commited our final list of channels.
+	//Create the buffer that will be used for read operations.  Its size depends on the number of channels so we generate
+	//	it here where we are commited our final list of channels.
 	if(dataBuffer_)
 	{
 		delete[] dataBuffer_;
@@ -96,8 +98,7 @@ void LegacySystemXPAnalogInputPort::stopSampling()
 
 /*! \copydoc InputPort::updateDataBuffer()
  *	\details The latest data is read in from the NiDaq's buffer using DAQmxReadBinaryI16().  We estimate the precise
- *	read time by storing the time just after that function is called.  That is the time that is returned from the
- *	function,
+ *	read time by storing the time just after that function is called.  That is the time that is returned from the function.
  */
 double LegacySystemXPAnalogInputPort::updateDataBuffer()
 {
@@ -106,10 +107,8 @@ double LegacySystemXPAnalogInputPort::updateDataBuffer()
 	Timestamper stamper;
 	double readTime;
 
-	//NOTE: This assumes that the data buffer has the data ordered by channel
-	//in the same order as the channels were created.  It is possbile that 
-	//the ordering is instead numerical, in which case this will need to be 
-	//rewritten
+	//NOTE: This assumes that the data buffer has the data ordered by channel in the same order the channels were created.
+	//	It is possbile that the ordering is instead numerical, in which case this will need to be rewritten
 	do
 	{
 		//read the NIDAQ
@@ -130,25 +129,9 @@ double LegacySystemXPAnalogInputPort::updateDataBuffer()
 			bufferOffset += sampsPerChanRead;
 		}
 		totalSampsRead += sampsPerChanRead;
-	}while(sampsPerChanRead == BUFFER_SIZE_PER_CHAN); //In case there are more data points than will fit in the buffer
+	}
+	while ( sampsPerChanRead == BUFFER_SIZE_PER_CHAN ); //In case there are more data points than will fit in the buffer
+
 	return readTime;
 }
 
-//void LegacySystemXPAnalogInputPort::updateDataBuffer()
-//{
-//	port_->updateDataBuffer(/*PUT FIRST PHOSPHOR TIMESTAMP HERE*/);
-//	QMap<QString,int>::iterator iter = channelNumMap_.begin();
-//	int frameOffset = 0;
-//	for(;iter != channelNumMap_.end();iter++)
-//	{
-//		rawDataBuffer_[iter.key()] << port_->getData(iter.value());
-//	}
-//	int frameOffset = port_->getFrameToSampleOffset(iter.value());
-//	iter = channelNumMap_.begin();
-//	int i=0;
-//	while(rawDataBuffer_["time"].size() < rawDataBuffer_[iter.key()])
-//	{
-//		rawDataBuffer_["time"] << frameOffset+msPerSample_*i++;
-//	}
-//		
-//}

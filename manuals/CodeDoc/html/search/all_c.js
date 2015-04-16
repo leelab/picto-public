@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label()']]],
+  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const '],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const ']]],
   ['last',['last',['../class_picto_1_1_analysis_variable_list.html#aa82766ac746114423f1efdd96fa45153',1,'Picto::AnalysisVariableList::last()'],['../class_picto_1_1_variable_list.html#ac684133fd817f006316f4e5d15f2ea98',1,'Picto::VariableList::last()']]],
   ['lastasnum',['lastAsNum',['../class_picto_1_1_analysis_variable_list.html#ab8327a2a13d12929da67083395cf53dd',1,'Picto::AnalysisVariableList::lastAsNum()'],['../class_picto_1_1_variable_list.html#a5597f41e1e1d3dfe659748c366b1682b',1,'Picto::VariableList::lastAsNum()']]],
   ['lastasstring',['lastAsString',['../class_picto_1_1_analysis_variable_list.html#a1e13597818e378e3ba8a72dd1d5f0862',1,'Picto::AnalysisVariableList::lastAsString()'],['../class_picto_1_1_variable_list.html#a863164951812d766efd0b68d629ebd17',1,'Picto::VariableList::lastAsString()']]],
@@ -8,7 +8,10 @@ var searchData=
   ['lastdataprecededflush',['lastDataPrecededFlush',['../class_session_info.html#a5ed2bbb223d5a377502bf6b41f383c07',1,'SessionInfo']]],
   ['lastrewardperiod',['lastRewardPeriod',['../struct_picto_1_1_reward_controller_1_1_reward_channel.html#a6739217981d922354087f6c7cd68e107',1,'Picto::RewardController::RewardChannel']]],
   ['lastsaveversion_5f',['lastSaveVersion_',['../class_picto_1_1_design_root.html#a09909ceef8a5469eea9f3a623429377f',1,'Picto::DesignRoot']]],
+  ['lastsynctimestamp_5f',['lastSyncTimestamp_',['../class_picto_1_1_input_port.html#a4b2781f98f87353df574dce2406b6333',1,'Picto::InputPort']]],
+  ['lasttime_5f',['lastTime_',['../class_picto_1_1_mouse_input_port.html#a72739d3858f26828afc1a6090082aed2',1,'Picto::MouseInputPort']]],
   ['lastviewsize_5f',['lastViewSize_',['../class_data_view_widget.html#a89ae598e00e86cc7a796a7248fbdbc8e',1,'DataViewWidget']]],
+  ['latestframeoffsettimes_5f',['latestFrameOffsetTimes_',['../class_picto_1_1_input_port.html#a018e100737a3ff84db00e568456b6f42',1,'Picto::InputPort']]],
   ['latestframesuccesfullyrendered',['latestFrameSuccesfullyRendered',['../struct_picto_1_1_pixmap_visual_target.html#a4f1dbd1319f35b1aa295b607b4066510',1,'Picto::PixmapVisualTarget::latestFrameSuccesfullyRendered()'],['../class_picto_1_1_visual_target.html#a62d2be22dc12dc3fec6e125bafce53aa',1,'Picto::VisualTarget::latestFrameSuccesfullyRendered()'],['../class_picto_1_1_d3_d_visual_target.html#a7eaf842bb33a22c71d111f16205f9afa',1,'Picto::D3DVisualTarget::latestFrameSuccesfullyRendered()']]],
   ['latestupdateeventoffset',['latestUpdateEventOffset',['../class_picto_1_1_signal_channel.html#a656a421939ffd3f75fad08289e5f3ba2',1,'Picto::SignalChannel']]],
   ['layer',['layer',['../struct_picto_1_1_visual_element.html#acad7fb65649363c5bb3a36ac012f4015',1,'Picto::VisualElement']]],
@@ -38,8 +41,8 @@ var searchData=
   ['linkedassetpropertyedited',['linkedAssetPropertyEdited',['../class_picto_1_1_associate_root.html#ad1423150a4ea02f2ef9a1733e66de0cc',1,'Picto::AssociateRoot']]],
   ['linkedtoasset',['linkedToAsset',['../class_picto_1_1_analysis_script_holder.html#a2c5ecae1610c7bdcd2864a1f14d590d1',1,'Picto::AnalysisScriptHolder::linkedToAsset()'],['../class_picto_1_1_associate_host_link.html#a22c3514b038fa329e1fe266a75fc261e',1,'Picto::AssociateHostLink::linkedToAsset()']]],
   ['linktoasset',['linkToAsset',['../class_picto_1_1_associate_element.html#a8ef5f864d782c1d07772cbb6d585dd11',1,'Picto::AssociateElement::linkToAsset()'],['../class_picto_1_1_associate_host_link.html#ac4a7f2219f146ea54f0c4763ff1eb5e9',1,'Picto::AssociateHostLink::linkToAsset()'],['../class_picto_1_1_associate_root.html#a80d93af8ed349ac651be22eaf556d7c8',1,'Picto::AssociateRoot::LinkToAsset()']]],
-  ['listproperty',['ListProperty',['../class_picto_1_1_list_property.html',1,'Picto']]],
   ['listproperty',['ListProperty',['../class_picto_1_1_list_property.html#a8dc64442839e8ba35293e97f8678576a',1,'Picto::ListProperty']]],
+  ['listproperty',['ListProperty',['../class_picto_1_1_list_property.html',1,'Picto']]],
   ['liveframereader',['LiveFrameReader',['../class_picto_1_1_live_frame_reader.html',1,'Picto']]],
   ['livelfpreader',['LiveLfpReader',['../class_picto_1_1_live_lfp_reader.html',1,'Picto']]],
   ['liverewardreader',['LiveRewardReader',['../class_picto_1_1_live_reward_reader.html',1,'Picto']]],
@@ -62,7 +65,7 @@ var searchData=
   ['loadrun',['loadRun',['../class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c',1,'Picto::FileSessionLoader::loadRun()'],['../class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200',1,'Picto::PlaybackStateUpdater::loadRun()']]],
   ['loadrundata',['loadRunData',['../class_picto_1_1_file_session_loader.html#a7f02445db069cb6c8b1fb5110426cbd3',1,'Picto::FileSessionLoader']]],
   ['loadscene',['loadScene',['../class_designer.html#ac25bc4154a4a4b4b344047d0fa021e1b',1,'Designer']]],
-  ['loadsession',['LoadSession',['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()'],['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()']]],
+  ['loadsession',['loadSession',['../class_connection_manager.html#a86811fb45f5dc933975acecf6bf7788a',1,'ConnectionManager::loadSession()'],['../class_replay_viewer.html#aabc4f54d6184576f17f99df81b6cd013',1,'ReplayViewer::loadSession()'],['../class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c',1,'SessionInfo::LoadSession()']]],
   ['loadwidget',['loadWidget',['../class_picto_1_1_analysis_output.html#a8dfcc745ea219323befdb49fcb7892e0',1,'Picto::AnalysisOutput']]],
   ['lockfile_5f',['lockFile_',['../class_picto_1_1_analysis_output.html#a92f59f26f9e3fb8c2da26c0d64ea5802',1,'Picto::AnalysisOutput']]],
   ['logicresult',['LogicResult',['../class_picto_1_1_logic_result.html',1,'Picto']]]

@@ -5,8 +5,7 @@
 
 namespace Picto {
 namespace DataViewSize {
-	/*!	\brief Enumeration of the various sizes Views can take.
-	*/
+	//!	Enumeration of the various sizes Views can take.
 	enum ViewSize : int
 	{
 		VIEW_SIZE_1x1 = 1,	//!< A 1x1 view
@@ -18,15 +17,28 @@ namespace DataViewSize {
 }; //namespace DataViewSize
 
 namespace ColumnType {
+	//!	Enumeration of the various forms columns can have.
 	enum ColumnType : int
 	{
-		COLUMN_OUTLINE = 0, //!< Histogram Outline
-		COLUMN_FLAT_COLUMN,
-		COLUMN_RAISED_COLUMN,
-		COLUMN_LINES,
-		COLUMN_MAX
+		COLUMN_OUTLINE = 0,		//!< Histogram Outline
+		COLUMN_FLAT_COLUMN,		//!< Flat Bar Plot Symbols
+		COLUMN_RAISED_COLUMN,	//!< 3D Bar Plot Symbols
+		COLUMN_LINES,			//!< Simple lines at the specified values
+		COLUMN_MAX				//!< An invalid value
 	};
 }; //namespace ColumnType
+
+namespace QwtFactoryRequest {
+	/*! \brief Enumeration of the various widgets to request from the QwtFactory
+	 *	\note We have to use a factory to construct our widgets so they belong to the UI thread
+	 */
+	enum QwtWidgetType : int
+	{
+		QWT_HISTOGRAM_PLOT = 0,		//!< A QwtPlotHistogram object
+		QWT_WIDGET_MAX
+	};
+}; //namespace QwtFactoryRequest
+
 }; //namespace Picto
 
 #endif

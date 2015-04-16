@@ -123,15 +123,4 @@ bool SignalChannelInfo::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlS
 	return true;
 }
 
-void SignalChannelInfo::postDeserialize()
-{
-
-}
-
-bool SignalChannelInfo::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
-{
-	return true;
-}
-
-
 }; //namespace Picto
