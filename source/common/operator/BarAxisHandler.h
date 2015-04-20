@@ -5,6 +5,7 @@
 #include <qwt_scale_draw.h>
 #include <qwt_scale_div.h>
 #include <QHash>
+#include <QMutex>
 
 namespace Picto {
 
@@ -37,6 +38,9 @@ protected:
 	QHash<long, QString> m_qhsLabels;
 	long m_lLowerBound;
 	long m_lUpperBound;
+
+	mutable QMutex mtxLabels;
+	mutable QMutex mtxValues;
 };
 
 

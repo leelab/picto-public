@@ -20,7 +20,7 @@ var searchData=
   ['task',['Task',['../class_picto_1_1_task.html#aa0da741a30dd188617708d7d65986259',1,'Picto::Task']]],
   ['task',['Task',['../class_picto_1_1_task.html',1,'Picto']]],
   ['task_5fname',['TASK_NAME',['../_legacy_system_x_p_analog_input_port_8cpp.html#a01ede861e7133023a47a12a22b656523',1,'TASK_NAME():&#160;LegacySystemXPAnalogInputPort.cpp'],['../_picto_box_x_p_analog_input_port_8cpp.html#a01ede861e7133023a47a12a22b656523',1,'TASK_NAME():&#160;PictoBoxXPAnalogInputPort.cpp']]],
-  ['taskchanged',['taskChanged',['../class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1',1,'Picto::SlaveExperimentDriver']]],
+  ['taskchanged',['taskChanged',['../class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1',1,'Picto::SlaveExperimentDriver::taskChanged()'],['../class_playback_controller.html#ae07dabf90132fb9089cca8d4a66756bc',1,'PlaybackController::taskChanged()']]],
   ['taskcommandhandler',['TaskCommandHandler',['../struct_task_command_handler.html',1,'']]],
   ['taskconfig',['TaskConfig',['../class_picto_1_1_task_config.html',1,'Picto']]],
   ['taskconfig_5f',['taskConfig_',['../class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a',1,'Picto::Asset']]],

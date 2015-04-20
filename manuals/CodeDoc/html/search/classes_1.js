@@ -5,6 +5,7 @@ var searchData=
   ['barbase',['BarBase',['../class_picto_1_1_bar_base.html',1,'Picto']]],
   ['barbaseplothandler',['BarBasePlotHandler',['../class_picto_1_1_bar_base_plot_handler.html',1,'Picto']]],
   ['barplot',['BarPlot',['../class_picto_1_1_bar_plot.html',1,'Picto']]],
+  ['barplotplothandler',['BarPlotPlotHandler',['../class_picto_1_1_bar_plot_plot_handler.html',1,'Picto']]],
   ['behavioraldataunit',['BehavioralDataUnit',['../class_picto_1_1_behavioral_data_unit.html',1,'Picto']]],
   ['behavioraldataunithandler',['BehavioralDataUnitHandler',['../class_picto_1_1_behavioral_data_unit_handler.html',1,'Picto']]],
   ['behavioraldataunitpackage',['BehavioralDataUnitPackage',['../class_picto_1_1_behavioral_data_unit_package.html',1,'Picto']]],

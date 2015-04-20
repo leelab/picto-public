@@ -371,7 +371,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>This class implements things like pausing, stopping, playing, etc and defines the correct times to enter into the <a class="el" href="class_picto_1_1_session_player.html" title="Controls the timing and ordering of played back events during Picto Session playback. ">SessionPlayer</a> accordingly. It implements <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> so that it can be used with a <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> to drive a slave's experimental state. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8h_source.html#l00028">28</a> of file <a class="el" href="_playback_state_updater_8h_source.html">PlaybackStateUpdater.h</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8h_source.html#l00026">26</a> of file <a class="el" href="_playback_state_updater_8h_source.html">PlaybackStateUpdater.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="afa95cc3a7575a8b7f1604b48c46dbc8c"></a>
 <div class="memitem">
@@ -425,7 +425,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>Causes the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input. </p>
 <p>It is the responsibility of whoever connects to the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to actually implement the rendering change. </p>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00281">281</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00283">283</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>Loads the run at the input index of the Session, getting it ready for playback. </p>
 <dl class="section note"><dt>Note</dt><dd>This function calls the <a class="el" href="class_picto_1_1_file_session_loader.html#a303ad7f65d6cced38432128826fedd0c" title="Loads the run at the input index (with respect to the list returned from getRunNames()) into the Sess...">FileSessionLoader::loadRun()</a> function which takes a significant amount of time because it loads the Run's Session if it has not yet been loaded. </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00181">181</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00180">180</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -474,7 +474,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>Returns true if playback was suspended. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00316">316</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00317">317</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -502,7 +502,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>Used with <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a>. When this is called, if <a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e" title="This is used whenever playback needs to stop for some amount of time. ">suspendPlayback()</a> was called, the timer used to define the times sent into <a class="el" href="class_picto_1_1_session_player.html#a6ac568dc380670485040937b9cc9e85c" title="Steps the Session time up to the input time. SessionState signals indicating that Session events occu...">SessionPlayer::stepToTime()</a> is restarted. If we didn't do this, the timer would have kept running, and when we resumed from a pause playback would fast forward to where it would have been had pause never happened. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_playback_state_updater.html#a30ecab7434c725a9978407fdfd69a088" title="Returns the time that should be used to offset the latest timerOffset_ value to generate the time use...">PlaybackStateUpdater::getPlaybackOffsetTime()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00304">304</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00305">305</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -564,9 +564,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 </div><div class="memdoc">
 
 <p>Sets the path to the Session file that will be used for playback. </p>
-<p>This function sets up this object to playback the input file. </p><dl class="section note"><dt>Note</dt><dd>This causes the <a class="el" href="class_picto_1_1_file_session_loader.html" title="A Component of the Picto Playback system that loads data from a Session file into a SessionState...">FileSessionLoader</a> to preload the file (ie. Load informatio about the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Runs, Design, etc), but not load the file (load all run data (frame times, <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes, etc). Loading of the file data is done int <a class="el" href="class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200" title="Loads the run at the input index of the Session, getting it ready for playback. ">loadRun()</a>. </dd></dl>
+<p>This function sets up this object to playback the input file. </p><dl class="section note"><dt>Note</dt><dd>This causes the <a class="el" href="class_picto_1_1_file_session_loader.html" title="A Component of the Picto Playback system that loads data from a Session file into a SessionState...">FileSessionLoader</a> to preload the file (ie. Load information about the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Runs, Design, etc), but not load the file (load frame times, <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes, etc). Loading of the file data is done int <a class="el" href="class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200" title="Loads the run at the input index of the Session, getting it ready for playback. ">loadRun()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00109">109</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00105">105</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +637,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>This is used whenever playback needs to stop for some amount of time. </p>
 <p>The function sets firstResumeFrame_ to true. This way, when playback resumes timimg offsets won't be calculated according to the last time that the <a class="el" href="class_picto_1_1_session_player.html" title="Controls the timing and ordering of played back events during Picto Session playback. ">SessionPlayer</a> was stepped forward but will be calculated according to the new resume time. </p>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00294">294</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00296">296</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>
@@ -667,7 +667,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 
 <p>Implements <a class="el" href="class_picto_1_1_state_updater.html#a7554cc46eafbee58fb566edd93d5410e">Picto::StateUpdater</a>.</p>
 
-<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00036">36</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00034">34</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
 </div>
 </div>

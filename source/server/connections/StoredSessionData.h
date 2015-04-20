@@ -2,7 +2,6 @@
 #define _STORED_SESSION_DATA_H_
 
 #include <QVariantList>
-#include <QMutex>
 #include <QSharedPointer>
 #include <QUuid>
 #include <QHash>

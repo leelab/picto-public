@@ -9,7 +9,6 @@
 #include <QFuture>
 #include <QUuid>
 #include <QList>
-#include <QMutex>
 #include <QNetworkInterface>
 #include <QMap>
 
@@ -321,8 +320,6 @@ private:
 	bool taskRunEnding_;
 	QString taskRunName_;
 	QSharedPointer<TaskRunDataUnit> taskRunUnit_;
-	QMutex rewardListMutex_;
-	QMutex rewardMutex_;
 
 	QUuid sessionId_;
 	QString name_;

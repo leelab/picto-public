@@ -1,12 +1,13 @@
 #ifndef _OPERATOR_PLOT_H_
 #define _OPERATOR_PLOT_H_
+#include <QObject>
 
 #include "../common.h"
 #include "DataViewElement.h"
 
-#include <qwt_plot.h>
-
 namespace Picto {
+
+class OperatorPlotHandler;
 
 /*!	\brief A plot populated in realtime during experiments or analysis.
  *
@@ -37,30 +38,39 @@ public:
 	virtual QString getUITemplate(){return "OperatorFeature";};
 	virtual QString getUIGroup(){return "Operator Features";};
 
-	/*!	\brief Returns a pointer to the underlying plot element.  This is used by the TaskConfig object to pass the
-	 *	widgets to the ViewSelectionWidget.
-	 */
-	virtual QWidget *getWidget() { return m_pPlot; };
-
 	virtual void setTitle(const QString &newTitle);
 	virtual const QString getTitle() const;
+
 
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
+	virtual void sendWidgetToTaskConfig();
+
+signals:
+	void initializePlotSig(const QString &xTitle, const QString &yTitle);
+	void setTitleSig(const QString &title);
+	void connectToTaskConfigSig(QSharedPointer<TaskConfig> pTaskConfig);
+
 protected:
 	virtual void postDeserialize();
+
+	virtual void initView();
 
 	/*!	\brief Reconstructs elements of underlying plot.
  	 */
 	virtual void replot() = 0;
 
-	//! A pointer to the OperatorPlot's underlying Qwt Plot widget
-	QwtPlot *m_pPlot;
+	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
+	virtual void connectHandler(QSharedPointer<OperatorPlotHandler> plotHandler);
+	virtual void connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler);
+
 	//!	Flag for when the plot need to be recalculated.
 	bool m_bDataChanged;
 	//! Holds a copy of the plot's title
 	QString m_title;
+
+	QSharedPointer<OperatorPlotHandler> m_pPlotHandler;
 };
 
 

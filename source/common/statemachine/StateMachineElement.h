@@ -82,6 +82,8 @@ protected:
 	virtual bool hasScripts();
 	void runEntryScript();
 	void runExitScript();
+	void runOperatorEntryScript();
+	void runOperatorExitScript();
 	void runAnalysisEntryScripts();
 	void runAnalysisExitScripts();
 	enum ScriptType {ENTRY,FRAME,EXIT};

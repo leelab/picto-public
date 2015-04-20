@@ -6,7 +6,6 @@
 
 #include <QHash>
 
-class QwtPlotIntervalCurve;
 
 namespace Picto {
 
@@ -36,8 +35,13 @@ public:
 	//! An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
+signals:
+	void initializeSamplingSig();
+
 protected:
 	virtual void postDeserialize();
+
+	virtual void initView();
 
 	virtual double _getSampleValue(long bin) const;
 
@@ -56,16 +60,16 @@ protected:
 	void _setValueSquared(long bin, double value);
 	double _getValueSquared(long bin) const;
 
+	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
+	virtual void connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler);
+
 	//! Returns the value of the DisplayStdErr property.
-	bool _getDisplayErr() const { return propertyContainer_->getPropertyValue("DisplayStdErr").toBool(); };
+	bool _getDisplayErrBar() const { return propertyContainer_->getPropertyValue("DisplayStdErr").toBool(); };
 
 	//!	The cumulative binwise-sum of the squares of submitted values.
 	QHash<long, double> m_qhdCumulValSq;
 	//!	The cumulative binwise-total of the number of submitted values.
 	QHash<long, long> m_qhlCumulNum;
-
-	//! A pointer to the SamplingBarBase's IntervalCurve used to represent error bars
-	QwtPlotIntervalCurve *m_pErrorBars;
 
 	//!	Last status of ShowErrorBars, used for updating plot on change.
 	bool m_bLastErrorBarState;

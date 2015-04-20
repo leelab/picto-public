@@ -417,6 +417,8 @@ bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, in
 void ViewSelectionWidget::rebuild()
 {
 	clear();
+	currentTaskConfig_->requestUpdate();
+
 	QList<QWidget*> newWidgets = currentTaskConfig_->getWidgets();
 
 	foreach(QWidget* pWidget, newWidgets)

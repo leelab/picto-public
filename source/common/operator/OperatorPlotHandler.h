@@ -7,11 +7,12 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QString>
+
 #include <qwt_plot.h>
 
-class QwtPlotItem;
-
 namespace Picto {
+
+class TaskConfig;
 
 /*! \brief A base class for manufacturing Widgets.
  *	\note This exists because Qt requires widgets to be constructed in the UI thread.
@@ -33,9 +34,12 @@ public:
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
+	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
 protected:
 	QwtPlot *m_pPlot;
+	QString m_tmpTitle;
+	int index;
 };
 
 }; //namespace Picto

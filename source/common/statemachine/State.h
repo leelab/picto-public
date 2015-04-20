@@ -83,6 +83,7 @@ protected:
 	virtual bool hasScripts();
 	virtual QMap<QString,QString> getScripts();
 	void runAnalysisFrameScripts();
+	void runOperatorFrameScript();
 
 	friend class SlaveExperimentDriver;
 

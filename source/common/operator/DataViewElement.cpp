@@ -1,8 +1,8 @@
 #include "DataViewElement.h"
 #include "../memleakdetect.h"
 
-using namespace Picto;
-
+namespace Picto
+{
 DataViewElement::DataViewElement()
 {
 	AddDefinableProperty(QVariant::String, "ViewTitle", "View Element");
@@ -19,6 +19,8 @@ void DataViewElement::postDeserialize()
 {
 	ContainerElement::postDeserialize();
 	setTitle(propertyContainer_->getPropertyValue("ViewTitle").toString());
+
+	getTaskConfig()->addObserver(this);
 }
 
 DataViewSize::ViewSize DataViewElement::getDefaultViewSize() const
@@ -26,3 +28,12 @@ DataViewSize::ViewSize DataViewElement::getDefaultViewSize() const
 	//We add one to the value because ViewSizes are enumerated from 1 for ease of size-calculation.
 	return (DataViewSize::ViewSize)(propertyContainer_->getPropertyValue("DefaultSize").toInt() + 1);
 }
+
+
+
+void DataViewElement::initView()
+{
+	setTitle(propertyContainer_->getPropertyValue("ViewTitle").toString());
+}
+
+};

@@ -3,8 +3,6 @@
  */
 #include <QApplication>
 #include <QTime>
-#include <QtConcurrentRun>
-#include <QMutexLocker>
 
 #include "PictoEngine.h"
 

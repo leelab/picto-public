@@ -46,4 +46,10 @@ double HistogramPlot::getValue(double bin)
 	return _getValue(long(bin / getBinSize()));
 }
 
+QSharedPointer<OperatorPlotHandler> HistogramPlot::getNewHandler()
+{
+	//Histogram does not need to add any features to the base class yet
+	return BarBase::getNewHandler();
+}
+
 }; //namespace Picto

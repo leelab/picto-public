@@ -1,4 +1,5 @@
 #include "SamplingBarPlot.h"
+#include "SamplingBarPlotPlotHandler.h"
 #include "BarAxisHandler.h"
 
 #include "../memleakdetect.h"
@@ -25,15 +26,18 @@ void SamplingBarPlot::postDeserialize()
 	SamplingBarBase::postDeserialize();
 
 	m_pAxisHandler = new BarAxisHandler(0, 1);
+}
 
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
-	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
+void SamplingBarPlot::initView()
+{
+	SamplingBarBase::initView();
+
+	emit initializeSamplingBarPlotSig(m_pAxisHandler);
 }
 
 void SamplingBarPlot::handleXLabels(long lLowerBound, long lUpperBound)
 {
-	m_pAxisHandler->rescale(lLowerBound, lUpperBound);
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
+	emit handleXLabelsSig(lLowerBound, lUpperBound);
 }
 
 //! Gets the name of the indicated bin.
@@ -46,6 +50,24 @@ const QString SamplingBarPlot::getLabel(long bin) const
 void SamplingBarPlot::setLabel(long bin, QString name)
 {
 	m_pAxisHandler->submitLabel(bin, name);
+}
+
+QSharedPointer<OperatorPlotHandler> SamplingBarPlot::getNewHandler()
+{
+	return QSharedPointer<OperatorPlotHandler>(new SamplingBarPlotPlotHandler());
+}
+
+
+void SamplingBarPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	SamplingBarBase::connectDataSignals(plotHandler);
+
+	QSharedPointer<SamplingBarPlotPlotHandler> barPlotHandler = plotHandler.objectCast<SamplingBarPlotPlotHandler>();
+
+	qRegisterMetaType<BarAxisHandler*>("BarAxisHandlerP");
+	connect(this, SIGNAL(initializeSamplingBarPlotSig(BarAxisHandler *)),
+		barPlotHandler.data(), SLOT(initializeSamplingBarPlot(BarAxisHandler *)));
+
 }
 
 }; //namespace Picto

@@ -1,30 +1,25 @@
+#include <QApplication>
+#include <QThread>
+
 #include "OperatorPlot.h"
 
 #include "../memleakdetect.h"
 
-#include <qwt_text.h>
-#include <qwt_plot_canvas.h>
+#include "OperatorPlotHandler.h"
 
 namespace Picto {
 
 const QString OperatorPlot::type = "Operator Plot";
 
 OperatorPlot::OperatorPlot()
-	: m_bDataChanged(false), m_pPlot(nullptr), m_title("")
+	: m_bDataChanged(false), m_title("")
 {
-	qDebug() << "Create OperatorPlot";
 	AddDefinableProperty(QVariant::String, "XTitle", "");
 	AddDefinableProperty(QVariant::String, "YTitle", "");
 }
 
 OperatorPlot::~OperatorPlot()
 {
-	qDebug() << "Delete OperatorPlot";
-	if (m_pPlot && !m_pPlot->parent())
-	{
-		qDebug() << "Manually Delete OperatorPlot::m_pPlot";
-		delete m_pPlot;
-	}
 }
 
 void OperatorPlot::draw()
@@ -43,41 +38,56 @@ void OperatorPlot::postDeserialize()
 {
 	DataViewElement::postDeserialize();
 
-	qDebug() << "Create OperatorPlot::m_pPlot";
-	
-	m_pPlot = new QwtPlot(QwtText(""));
-	m_title = "";
-
-	m_pPlot->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-	QwtPlotCanvas *pCanvas = new QwtPlotCanvas();
-	pCanvas->setPalette(Qt::gray);
-	pCanvas->setBorderRadius(10);
-	m_pPlot->setCanvas(pCanvas);
-
-	m_pPlot->setAxisTitle(QwtPlot::xBottom, propertyContainer_->getPropertyValue("XTitle").toString());
-	m_pPlot->setAxisTitle(QwtPlot::yLeft, propertyContainer_->getPropertyValue("YTitle").toString());
-
-	getTaskConfig()->addObserverWidget(this, m_pPlot);
+	m_pPlotHandler = getNewHandler();
+	m_pPlotHandler->moveToThread(QApplication::instance()->thread());
+	connectHandler(m_pPlotHandler);
 }
 
 void OperatorPlot::setTitle(const QString &newTitle)
 {
-	if (m_pPlot)
-	{
-		m_pPlot->setTitle(QwtText(newTitle));
-		m_title = newTitle;
-	}
+	emit setTitleSig(newTitle);
+	m_title = newTitle;
 }
 
 const QString OperatorPlot::getTitle() const
 {
-	if (m_pPlot)
-	{
-		return m_title;
-	}
+	return m_title;
+}
 
-	return QString("");
+QSharedPointer<OperatorPlotHandler> OperatorPlot::getNewHandler()
+{
+	return QSharedPointer<OperatorPlotHandler>(new OperatorPlotHandler());
+}
+
+void OperatorPlot::connectHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	qRegisterMetaType<QSharedPointer<TaskConfig>>("QSharedPointer<TaskConfig>");
+	connect(this, SIGNAL(connectToTaskConfigSig(QSharedPointer<TaskConfig>)),
+		plotHandler.data(), SLOT(connectToTaskConfig(QSharedPointer<TaskConfig>)));
+}
+
+void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	connect(this, SIGNAL(setTitleSig(const QString&)),
+		plotHandler.data(), SLOT(setTitle(const QString&)));
+	connect(this, SIGNAL(initializePlotSig(const QString&, const QString&)),
+		plotHandler.data(), SLOT(initializePlot(const QString&, const QString&)));
+}
+
+void OperatorPlot::initView()
+{
+	DataViewElement::initView();
+
+	connectDataSignals(m_pPlotHandler);
+
+	emit initializePlotSig(propertyContainer_->getPropertyValue("XTitle").toString(),
+		propertyContainer_->getPropertyValue("YTitle").toString());
+}
+
+void OperatorPlot::sendWidgetToTaskConfig()
+{
+	initView();
+	emit connectToTaskConfigSig(getTaskConfig());
 }
 
 }; //namespace Picto

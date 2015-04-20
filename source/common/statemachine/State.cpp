@@ -33,7 +33,8 @@ State::State() :
 	hasCursor_(false)
 {
 	//Define script properties
-	AddDefinableProperty("FrameScript","");
+	AddDefinableProperty("FrameScript", "");
+	AddDefinableProperty("OperatorFrameScript", "");
 	AddDefinableProperty(QVariant::Color,"BackgroundColor","");
 	
 	//Define generatable control elements.
@@ -138,6 +139,10 @@ QString State::run(QSharedPointer<Engine::PictoEngine> engine)
 
 			//----------  Draw the scene.  This will automatically send behavioral data to server --------------
 			scene_->render(engine,getAssetId());
+
+			//----------  Run the Operator Frame Script ----------------------------------------
+			runOperatorFrameScript();
+
 
 			//----------  Run the analysis frame scripts ---------------------------------------
 			runAnalysisFrameScripts();
@@ -316,7 +321,8 @@ bool State::hasScripts()
 {
 	if(MachineContainer::hasScripts())
 		return true;
-	return !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty();
+	return ( !propertyContainer_->getPropertyValue("FrameScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("OperatorFrameScript").toString().isEmpty() );
 }
 
 QMap<QString,QString> State::getScripts()
@@ -327,6 +333,13 @@ QMap<QString,QString> State::getScripts()
 		QString scriptName = getName().simplified().remove(' ')+"Frame";
 		scripts[scriptName] = QString("FrameScript");
 	}
+
+	if(!propertyContainer_->getPropertyValue("OperatorFrameScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"OperatorFrame";
+		scripts[scriptName] = QString("OperatorFrameScript");
+	}
+
 	return scripts;
 }
 
@@ -335,6 +348,16 @@ QMap<QString,QString> State::getScripts()
 void State::runAnalysisFrameScripts()
 {
 	runAnalysisScripts(StateMachineElement::FRAME);
+}
+
+/*! \brief Runs this State's OperatorFrameScript if it isn't empty.
+*/
+void State::runOperatorFrameScript()
+{
+	if (propertyContainer_->getPropertyValue("OperatorFrameScript").toString().isEmpty())
+		return;
+	QString operatorEntryScriptName = getName().simplified().remove(' ') + "OperatorFrame";
+	runScript(operatorEntryScriptName);
 }
 
 /*! \brief Initializes the Scene based on all current in scope OutputElement objects so that it can correctly render the

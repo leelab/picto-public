@@ -48,6 +48,8 @@ public:
 	 */
 	virtual void reset() = 0;
 
+	virtual void sendWidgetToTaskConfig() {initView();};
+
 	virtual QString friendlyTypeName(){return "Data View Element";};
 	virtual QString getUIGroup(){return "Operator Features";};
 
@@ -56,6 +58,8 @@ public:
 
 protected:
 	virtual void postDeserialize();
+	//! Used to initialize the associated View widget
+	virtual void initView();
 	//! A List used to keep track of the possible default sizes.
 	QStringList sizeList_;
 };

@@ -102,124 +102,158 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;TaskConfig::TaskConfig()</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    :updateSignalEnabled_(false)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    :updateSignalEnabled_(true)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    reset();</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a25d32a2117ef6d8c131d97d41f0ad4cc">   19</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a25d32a2117ef6d8c131d97d41f0ad4cc">TaskConfig::reset</a>()</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    widgetMap.clear();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    widgetNameMap.clear();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    updateSignalEnabled_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">TaskConfig::addObserverWidget</a>(<a class="code" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset, QWidget *widget)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    QMutexLocker locker(&amp;mtxWaitingAssetProtector);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    widgetMap.clear();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    widgetNameMap.clear();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    updateSignalEnabled_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> TaskConfig::requestUpdate()</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">if</span> (!widgetMap.contains(owningAsset))</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        widgetMap[owningAsset] = widget;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Same Asset added twice to TaskConfig&quot;</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    widgetNameMap[widget] = owningAsset-&gt;<a class="code" href="class_picto_1_1_data_view_element.html#ae501a01388ab0f84657a42d498439a26">getTitle</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        emit <a class="code" href="class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64">widgetAddedToMap</a>(widget);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">TaskConfig::removeWidget</a>(QWidget *widget)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">if</span> (widgetNameMap.contains(widget))</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            emit <a class="code" href="class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00">widgetRemovedFromMap</a>(widget);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">//Remove the naem from the name map</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        widgetNameMap.remove(widget);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">//Iterate over widgetsMap and find elements that point to the widget we want to remove</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = widgetMap.begin(); it != widgetMap.end();)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">if</span> (it.value() == widget)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                widgetMap.erase(it);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                ++it;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">   79</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">TaskConfig::removeAsset</a>(<a class="code" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">if</span> (widgetMap.contains(owningAsset))</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            emit <a class="code" href="class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00">widgetRemovedFromMap</a>(widgetMap[owningAsset]);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        widgetNameMap.remove(widgetMap[owningAsset]);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        widgetMap.remove(owningAsset);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">   96</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">TaskConfig::setUpdateSignalEnabled</a>(<span class="keywordtype">bool</span> bEnabled)</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    updateSignalEnabled_ = bEnabled;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">  104</a></span>&#160;<span class="keyword">const</span> QList&lt;QWidget *&gt; <a class="code" href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">TaskConfig::getWidgets</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">return</span> widgetNameMap.keys();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">  111</a></span>&#160;<span class="keyword">const</span> QList&lt;QString&gt; <a class="code" href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">TaskConfig::getNames</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">return</span> widgetNameMap.values();</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">const</span> QString TaskConfig::getName(QWidget *pWidget)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span> (widgetNameMap.contains(pWidget))</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">return</span> widgetNameMap[pWidget];</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;DataViewElement *TaskConfig::getAsset(QWidget *pWidget)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">return</span> widgetMap.key(pWidget);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    addWaitingAssets();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> TaskConfig::addWaitingAssets()</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    QMutexLocker locker(&amp;mtxWaitingAssetProtector);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">foreach</span>(DataViewElement *asset, waitingAssets)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        asset-&gt;sendWidgetToTaskConfig();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    waitingAssets.clear();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> TaskConfig::addObserver(DataViewElement *newAsset)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QMutexLocker locker(&amp;mtxWaitingAssetProtector);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">if</span> (widgetMap.contains(newAsset) || waitingAssets.contains(newAsset))</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Asset already added to TaskConfig&quot;</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    waitingAssets.push_back(newAsset);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">   62</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">TaskConfig::addObserverWidget</a>(<a class="code" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset, QWidget *widget)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    Q_ASSERT(widget != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span> (!widgetMap.contains(owningAsset))</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        widgetMap[owningAsset] = widget;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Same Asset added twice to TaskConfig&quot;</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    widgetNameMap[widget] = owningAsset-&gt;<a class="code" href="class_picto_1_1_data_view_element.html#ae501a01388ab0f84657a42d498439a26">getTitle</a>();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        emit <a class="code" href="class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64">widgetAddedToMap</a>(widget);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">   84</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">TaskConfig::removeWidget</a>(QWidget *widget)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span> (widgetNameMap.contains(widget))</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            emit <a class="code" href="class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00">widgetRemovedFromMap</a>(widget);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="comment">//Remove the naem from the name map</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        widgetNameMap.remove(widget);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="comment">//Iterate over widgetsMap and find elements that point to the widget we want to remove</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = widgetMap.begin(); it != widgetMap.end();)</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">if</span> (it.value() == widget)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                widgetMap.erase(it);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                ++it;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">  113</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">TaskConfig::removeAsset</a>(<a class="code" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;{</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordflow">if</span> (widgetMap.contains(owningAsset))</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">if</span> (updateSignalEnabled_)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            emit <a class="code" href="class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00">widgetRemovedFromMap</a>(widgetMap[owningAsset]);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        }</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        widgetNameMap.remove(widgetMap[owningAsset]);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        widgetMap.remove(owningAsset);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">  130</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">TaskConfig::setUpdateSignalEnabled</a>(<span class="keywordtype">bool</span> bEnabled)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;{</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    updateSignalEnabled_ = bEnabled;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">  138</a></span>&#160;<span class="keyword">const</span> QList&lt;QWidget *&gt; <a class="code" href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">TaskConfig::getWidgets</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keywordflow">return</span> widgetNameMap.keys();</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">  145</a></span>&#160;<span class="keyword">const</span> QList&lt;QString&gt; <a class="code" href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">TaskConfig::getNames</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordflow">return</span> widgetNameMap.values();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="keyword">const</span> QString TaskConfig::getName(QWidget *pWidget)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">if</span> (widgetNameMap.contains(pWidget))</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">return</span> widgetNameMap[pWidget];</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;DataViewElement *TaskConfig::getAsset(QWidget *pWidget)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">return</span> widgetMap.key(pWidget);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_task_config_html_a25d32a2117ef6d8c131d97d41f0ad4cc"><div class="ttname"><a href="class_picto_1_1_task_config.html#a25d32a2117ef6d8c131d97d41f0ad4cc">Picto::TaskConfig::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Clears out all of this object&#39;s saved data. Returning it to its initial state. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00019">TaskConfig.cpp:19</a></div></div>
 <div class="ttc" id="class_picto_1_1_task_config_html_af344d6d5d6130b8e9430b5383189be00"><div class="ttname"><a href="class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00">Picto::TaskConfig::widgetRemovedFromMap</a></div><div class="ttdeci">void widgetRemovedFromMap(QWidget *pWidget)</div><div class="ttdoc">A signal sent whenever a viewer widget is removed from the Task. </div></div>
 <div class="ttc" id="class_picto_1_1_data_view_element_html_ae501a01388ab0f84657a42d498439a26"><div class="ttname"><a href="class_picto_1_1_data_view_element.html#ae501a01388ab0f84657a42d498439a26">Picto::DataViewElement::getTitle</a></div><div class="ttdeci">virtual const QString getTitle() const =0</div><div class="ttdoc">Abstract method for getting the title of the DataViewElement. </div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_a0bf382041cbaf6524f157f08319b44be"><div class="ttname"><a href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">Picto::TaskConfig::addObserverWidget</a></div><div class="ttdeci">void addObserverWidget(DataViewElement *owningAsset, QWidget *widget)</div><div class="ttdoc">Adds the passed in ObserverWidget to the TaskConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00029">TaskConfig.cpp:29</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_a0bf382041cbaf6524f157f08319b44be"><div class="ttname"><a href="class_picto_1_1_task_config.html#a0bf382041cbaf6524f157f08319b44be">Picto::TaskConfig::addObserverWidget</a></div><div class="ttdeci">void addObserverWidget(DataViewElement *owningAsset, QWidget *widget)</div><div class="ttdoc">Adds the passed in ObserverWidget to the TaskConfig. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00062">TaskConfig.cpp:62</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_view_element_html"><div class="ttname"><a href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></div><div class="ttdoc">A Base class for all Elements representing data that is output to the Observer while viewing an exper...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_element_8h_source.html#l00028">DataViewElement.h:28</a></div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_a17fc800d5f5a42b466bcc2fa9c59b282"><div class="ttname"><a href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">Picto::TaskConfig::removeAsset</a></div><div class="ttdeci">void removeAsset(DataViewElement *owningAsset)</div><div class="ttdoc">Removes the passed asset from the widgetMap, as well as its associated widget from the widgetNameMap...</div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00079">TaskConfig.cpp:79</a></div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_a3333d04513326f4d98b794e127e52f43"><div class="ttname"><a href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">Picto::TaskConfig::setUpdateSignalEnabled</a></div><div class="ttdeci">void setUpdateSignalEnabled(bool bEnabled=true)</div><div class="ttdoc">Toggles whether widgetMapUpdated() is emitted every time a change occurs. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00096">TaskConfig.cpp:96</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_a17fc800d5f5a42b466bcc2fa9c59b282"><div class="ttname"><a href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">Picto::TaskConfig::removeAsset</a></div><div class="ttdeci">void removeAsset(DataViewElement *owningAsset)</div><div class="ttdoc">Removes the passed asset from the widgetMap, as well as its associated widget from the widgetNameMap...</div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00113">TaskConfig.cpp:113</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_a3333d04513326f4d98b794e127e52f43"><div class="ttname"><a href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">Picto::TaskConfig::setUpdateSignalEnabled</a></div><div class="ttdeci">void setUpdateSignalEnabled(bool bEnabled=true)</div><div class="ttdoc">Toggles whether widgetMapUpdated() is emitted every time a change occurs. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00130">TaskConfig.cpp:130</a></div></div>
 <div class="ttc" id="class_picto_1_1_task_config_html_a3a93c472098747355c55e4d2af8dae64"><div class="ttname"><a href="class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64">Picto::TaskConfig::widgetAddedToMap</a></div><div class="ttdeci">void widgetAddedToMap(QWidget *pWidget)</div><div class="ttdoc">A signal sent whenever a viewer widget is added to the Task. </div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_a8151f559c5992237add0e2b770125a7f"><div class="ttname"><a href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">Picto::TaskConfig::getWidgets</a></div><div class="ttdeci">const QList&lt; QWidget * &gt; getWidgets() const </div><div class="ttdoc">Returns a QList of the current View Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00104">TaskConfig.cpp:104</a></div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_aa90e3b434f9b8b24a106278134ec208b"><div class="ttname"><a href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">Picto::TaskConfig::getNames</a></div><div class="ttdeci">const QList&lt; QString &gt; getNames() const </div><div class="ttdoc">Returns a QList of the names of the current View Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00111">TaskConfig.cpp:111</a></div></div>
-<div class="ttc" id="class_picto_1_1_task_config_html_a6f3c52e84abe837cb4289262a97752eb"><div class="ttname"><a href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">Picto::TaskConfig::removeWidget</a></div><div class="ttdeci">void removeWidget(QWidget *widget)</div><div class="ttdoc">Removes the passed widget from the widgetNameMap, as well all assets pointing to it from the widgetMa...</div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00050">TaskConfig.cpp:50</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_a8151f559c5992237add0e2b770125a7f"><div class="ttname"><a href="class_picto_1_1_task_config.html#a8151f559c5992237add0e2b770125a7f">Picto::TaskConfig::getWidgets</a></div><div class="ttdeci">const QList&lt; QWidget * &gt; getWidgets() const </div><div class="ttdoc">Returns a QList of the current View Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00138">TaskConfig.cpp:138</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_aa90e3b434f9b8b24a106278134ec208b"><div class="ttname"><a href="class_picto_1_1_task_config.html#aa90e3b434f9b8b24a106278134ec208b">Picto::TaskConfig::getNames</a></div><div class="ttdeci">const QList&lt; QString &gt; getNames() const </div><div class="ttdoc">Returns a QList of the names of the current View Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00145">TaskConfig.cpp:145</a></div></div>
+<div class="ttc" id="class_picto_1_1_task_config_html_a6f3c52e84abe837cb4289262a97752eb"><div class="ttname"><a href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">Picto::TaskConfig::removeWidget</a></div><div class="ttdeci">void removeWidget(QWidget *widget)</div><div class="ttdoc">Removes the passed widget from the widgetNameMap, as well all assets pointing to it from the widgetMa...</div><div class="ttdef"><b>Definition:</b> <a href="_task_config_8cpp_source.html#l00084">TaskConfig.cpp:84</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

@@ -61,6 +61,7 @@ private:
 	QSharedPointer<AssetFactory> outputFactory_;
 	QSharedPointer<AssetFactory> functionFactory_;
 	QSharedPointer<AssetFactory> scriptFactory_;
+	QSharedPointer<AssetFactory> dataViewElementFactory_;
 
 	bool hostIdBeingEdited_;
 private slots:

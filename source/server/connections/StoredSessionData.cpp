@@ -1,4 +1,3 @@
-#include <QMutexLocker>
 #include <QStringList>
 #include <QThread>
 #include <QSqlDatabase>

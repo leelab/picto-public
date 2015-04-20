@@ -14,6 +14,7 @@
 #include "OutputWidgetHolder.h"
 #include "../../common/Designer/RunSelectorWidget.h"
 #include "../../common/Designer/AnalysisSelectorWidget.h"
+#include "../DataViewer/ViewSelectionWidget.h"
 
 class QLabel;
 class QDoubleSpinBox;
@@ -89,12 +90,12 @@ private:
 	QSharedPointer<Picto::RenderingTarget> renderingTarget_;
 	QSharedPointer<Picto::PixmapVisualTarget> pixmapVisualTarget_;
 	QSharedPointer<Picto::Engine::PictoEngine> engine_;
-	QSharedPointer<Picto::Experiment> experiment_;
 	QSharedPointer<PlaybackStateUpdater> playbackUpdater_;
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	RecordingVisualTargetHost *visualTargetHost_;
 	QVector<QWidget *> outputSignalsWidgets_;
+	ViewSelectionWidget *viewSelectionWidget_;
 
 	QList<PlayRunInfo> runQueue_;
 	PlayRunInfo latestRun_;
@@ -156,6 +157,7 @@ private slots:
 	void finishedPlayback();
 	void loadError(QString errorMsg);
 	void sessionPreloaded(PreloadedSessionData sessionData);
+	void taskChanged(QString newTask);
 	//void zoomChanged(int zoom);
 
 };

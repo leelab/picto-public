@@ -18,17 +18,23 @@ ScriptItemManager::ScriptItemManager(QSharedPointer<EditorState> editorState, QG
 	horizontal_(horizontal)
 {
 	orderedScriptNames_.append("AnalysisEntryScript");
+	orderedScriptNames_.append("OperatorEntryScript");
 	orderedScriptNames_.append("EntryScript");
 	orderedScriptNames_.append("FrameScript");
 	orderedScriptNames_.append("AnalysisFrameScript");
+	orderedScriptNames_.append("OperatorFrameScript");
 	orderedScriptNames_.append("ExitScript");
+	orderedScriptNames_.append("OperatorExitScript");
 	orderedScriptNames_.append("AnalysisExitScript");
 
 	scriptTypeColors_.append(QColor(Qt::yellow));
+	scriptTypeColors_.append(QColor(Qt::gray));
 	scriptTypeColors_.append(QColor(Qt::blue));
 	scriptTypeColors_.append(QColor(Qt::blue));
 	scriptTypeColors_.append(QColor(Qt::yellow));
+	scriptTypeColors_.append(QColor(Qt::gray));
 	scriptTypeColors_.append(QColor(Qt::blue));
+	scriptTypeColors_.append(QColor(Qt::gray));
 	scriptTypeColors_.append(QColor(Qt::yellow));
 
 	minScriptItemHeight_ = float(1.0)/(1+TYPE_NUM);

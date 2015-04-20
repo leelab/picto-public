@@ -9,25 +9,59 @@ namespace Picto
 {
 
 TaskConfig::TaskConfig()
-	:updateSignalEnabled_(false)
+	:updateSignalEnabled_(true)
 {
 	reset();
 }
 
 /*! \brief Clears out all of this object's saved data.  Returning it to its initial state.
- */
+	*/
 void TaskConfig::reset()
 {
+	QMutexLocker locker(&mtxWaitingAssetProtector);
+
 	widgetMap.clear();
 	widgetNameMap.clear();
 
-	updateSignalEnabled_ = false;
+	updateSignalEnabled_ = true;
+}
+
+void TaskConfig::requestUpdate()
+{
+	addWaitingAssets();
+}
+
+void TaskConfig::addWaitingAssets()
+{
+	QMutexLocker locker(&mtxWaitingAssetProtector);
+
+	foreach(DataViewElement *asset, waitingAssets)
+	{
+		asset->sendWidgetToTaskConfig();
+	}
+
+	waitingAssets.clear();
+}
+
+void TaskConfig::addObserver(DataViewElement *newAsset)
+{
+	QMutexLocker locker(&mtxWaitingAssetProtector);
+
+	if (widgetMap.contains(newAsset) || waitingAssets.contains(newAsset))
+	{
+		qDebug() << "Asset already added to TaskConfig";
+		return;
+	}
+
+	waitingAssets.push_back(newAsset);
+
 }
 
 /*! \brief Adds the passed in ObserverWidget to the TaskConfig.
  */
 void TaskConfig::addObserverWidget(DataViewElement *owningAsset, QWidget *widget)
 {
+	Q_ASSERT(widget != nullptr);
 	if (!widgetMap.contains(owningAsset))
 	{
 		widgetMap[owningAsset] = widget;

@@ -2,7 +2,6 @@
 #define _ALIGN_SESSION_DATA_H_
 
 #include <QVariantList>
-#include <QMutex>
 #include <QSharedPointer>
 
 #include "SessionData.h"

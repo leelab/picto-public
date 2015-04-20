@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QList>
+#include <QMutex>
 
 #include "../common.h"
 
@@ -43,6 +44,8 @@ public:
 
 	void reset();
 
+	void requestUpdate();
+
 	void setUpdateSignalEnabled(bool bEnabled = true);
 
 	const QList<QWidget *> getWidgets() const;
@@ -50,6 +53,8 @@ public:
 
 	const QString getName(QWidget *pWidget) const;
 	DataViewElement *getAsset(QWidget *pWidget) const;
+
+	void addObserver(DataViewElement *newAsset);
 
 signals:
 	/*! \brief A signal sent whenever a viewer widget is added to the Task.
@@ -63,6 +68,10 @@ protected:
 	QMap<DataViewElement*, QWidget*> widgetMap;
 	QMap<QWidget*,QString> widgetNameMap;
 	bool updateSignalEnabled_;
+	QList<DataViewElement*> waitingAssets;
+	QMutex mtxWaitingAssetProtector;
+
+	void addWaitingAssets();
 
 
 };

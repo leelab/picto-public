@@ -13,7 +13,7 @@ namespace Picto {
  *	AnalysisDataSource objects, these object are used to retrieve additional data about the experimental run
  *	beyond what is immediately readable from the state of the regular experimental variables.
  *	
- *	Currenlty, this class does not add any functionality to AnalysisVariable, but we wanted to create this base class
+ *	Currently, this class does not add any functionality to AnalysisVariable, but we wanted to create this base class
  *	since its children are conceptually similar and it may be useful to add general functionality for them in the future.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015

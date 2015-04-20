@@ -1,31 +1,27 @@
 #include "SamplingBarBase.h"
+#include "SamplingBarBasePlotHandler.h"
 
 #include "../memleakdetect.h"
 
-#include <qwt_text.h>
-#include <qwt_plot.h>
-#include <qwt_plot_item.h>
-#include <qwt_plot_histogram.h>
-#include <qwt_plot_intervalcurve.h>
-#include <qwt_interval_symbol.h>
+#include <qwt_samples.h>
 
 namespace Picto {
 
 const QString SamplingBarBase::type = "Sampling Bar Base";
 
 SamplingBarBase::SamplingBarBase()
-	: m_pErrorBars(nullptr), m_bLastErrorBarState(false)
+	: m_bLastErrorBarState(false)
 {
 	AddDefinableProperty(QVariant::Bool, "DisplayStdErr", false);
 }
 
 void SamplingBarBase::draw()
 {
-	if (m_bLastErrorBarState != _getDisplayErr())
+	if (m_bLastErrorBarState != _getDisplayErrBar())
 	{
 		m_bLastErrorBarState = !m_bLastErrorBarState;
 		m_bDataChanged = true;
-		m_pErrorBars->setVisible(m_bLastErrorBarState);
+		emit setErrorBarsVisibleSig(m_bLastErrorBarState);
 	}
 
 	BarBase::draw();
@@ -66,7 +62,7 @@ void SamplingBarBase::_handleErrorValue(long bin, double &rdRangeMax, QVector<Qw
  */
 void SamplingBarBase::_handleErrorFinal(QVector<QwtIntervalSample> &qvError)
 {
-	m_pErrorBars->setSamples(new QwtIntervalSeriesData(qvError));
+	emit setErrorSamplesSig(qvError);
 }
 
 
@@ -77,23 +73,16 @@ void SamplingBarBase::postDeserialize()
 {
 	BarBase::postDeserialize();
 
-	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
-	errorBar->setWidth(8);
-	errorBar->setPen(QColor(Qt::blue));
-
-	m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
-	m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
-	m_pErrorBars->setSymbol(errorBar);
-	m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
-	m_pErrorBars->setPen(Qt::white);
-	m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
-
-	m_pErrorBars->attach(m_pPlot);
-	m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
-
 	setPropertyRuntimeEditable("DisplayStdErr");
-	m_bLastErrorBarState = _getDisplayErr();
+	m_bLastErrorBarState = _getDisplayErrBar();
 	propertyContainer_->getProperty("DisplayStdErr")->enableInitRunValueSync(true);
+}
+
+void SamplingBarBase::initView()
+{
+	BarBase::initView();
+
+	emit initializeSamplingSig();
 }
 
 /*!	\brief Clears all values for this plot.
@@ -196,6 +185,22 @@ void SamplingBarBase::_destroyBin(long bin)
 	m_qhdCumulValSq.remove(bin);
 
 	m_bBinsModified = true;
+}
+
+QSharedPointer<OperatorPlotHandler> SamplingBarBase::getNewHandler()
+{
+	return QSharedPointer<OperatorPlotHandler>(new SamplingBarBasePlotHandler());
+}
+
+void SamplingBarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	BarBase::connectDataSignals(plotHandler);
+
+	QSharedPointer<SamplingBarBasePlotHandler> barPlotHandler = plotHandler.objectCast<SamplingBarBasePlotHandler>();
+
+	connect(this, SIGNAL(initializeSamplingSig()),
+		barPlotHandler.data(), SLOT(initializeSampling()));
+
 }
 
 }; //namespace Picto

@@ -6,10 +6,11 @@
 
 #include <QHash>
 
-class QwtPlotHistogram;
 class QwtIntervalSample;
 
 namespace Picto {
+
+class BarBasePlotHandler;
 
 /*!	\brief A plot populated in realtime during experiments or analysis.
  *
@@ -81,9 +82,23 @@ public slots:
 	//! Clears all of the current plot data.
 	void clearPlot() { reset(); };
 
+signals:
+	void initializeHistoSig(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType);
+	void updateColumnsSig(const QColor &color, ColumnType::ColumnType eType);
+	void normalizeScaleSig(double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
+	void setSamplesSig(const QVector<QwtIntervalSample> &qvSamples);
+	void setErrorSamplesSig(const QVector<QwtIntervalSample>&);
+	void setErrorBarsVisibleSig(bool);
+	void scaleAxisSig(double dBinSize);
+	void handleXLabelsSig(long, long);
+	void callReplot();
+
 protected:
 	virtual void postDeserialize();
 	virtual void replot();
+
+	virtual void initView();
+
 	void createNormalizedScale(double dMaxValue, double dTotalValue);
 
 	//! Flag to update the bins
@@ -95,6 +110,10 @@ protected:
 	//! Returns the current Bin Spacing
 	virtual double getBinSpacing() const = 0;
 
+	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
+	virtual void connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler);
+	QSharedPointer<BarBasePlotHandler> getBarBasePlotHandler();
+
 	ColumnType::ColumnType getColumnType() const;
 	//! Sets X Labels for children that change the default behavior.  Accepts Lower and Upper bounds as arguments.
 	virtual void handleXLabels(long, long) {};
@@ -103,9 +122,6 @@ protected:
 	bool getNormalized() const { return propertyContainer_->getPropertyValue("NormalizedDisplay").toBool(); };
 
 	virtual double _getSampleValue(long bin) const;
-
-	void updateColors();
-	void updateColumns();
 
 	/*! \brief Optional error calculation for future children.  Called start of replot.
 	*	\sa BarBase::replot
@@ -122,6 +138,7 @@ protected:
 	*/
 	virtual void _handleErrorFinal(QVector<QwtIntervalSample>&) {};
 
+
 	void _adjustValue(long bin, double value);
 	void _setValue(long bin, double value);
 	double _getValue(long bin) const;
@@ -133,8 +150,6 @@ protected:
 
 	//!	\brief The cumulative binwise values.
 	QHash<long, double> m_qhdCumulValue;
-	//! A pointer to the BarBase's Qwt Histogram object
-	QwtPlotHistogram *m_pHistoPlotItem;
 	//! A QStringList of Column Types
 	QStringList columnTypes_;
 };

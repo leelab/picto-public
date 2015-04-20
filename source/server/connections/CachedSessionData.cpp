@@ -1,5 +1,4 @@
 #include "CachedSessionData.h"
-#include <QMutexLocker>
 
 CachedSessionData::CachedSessionData()
 {

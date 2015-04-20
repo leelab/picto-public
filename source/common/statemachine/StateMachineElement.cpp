@@ -21,6 +21,8 @@ StateMachineElement::StateMachineElement()
 {
 	AddDefinableProperty("EntryScript","");
 	AddDefinableProperty("ExitScript","");
+	AddDefinableProperty("OperatorEntryScript", "");
+	AddDefinableProperty("OperatorExitScript", "");
 	AddDefinableObjectFactory("Type",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteAsset::Create))));
 }
 
@@ -61,7 +63,9 @@ bool StateMachineElement::hasScripts()
 	if(ResultContainer::hasScripts())
 		return true;
 	return (!propertyContainer_->getPropertyValue("EntryScript").toString().isEmpty()
-		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty());
+		|| !propertyContainer_->getPropertyValue("ExitScript").toString().isEmpty()
+		|| !propertyContainer_->getPropertyValue("OperatorEntryScript").toString().isEmpty()
+		|| !!propertyContainer_->getPropertyValue("OperatorExitScript").toString().isEmpty());
 }
 
 /*! \brief Runs this StateMachineElement's EntryScript.
@@ -87,6 +91,29 @@ void StateMachineElement::runExitScript()
 		runScript(exitScriptName);
 	}
 	runAnalysisExitScripts();
+}
+
+/*! \brief Runs this StateMachineElement's OperatorEntryScript.
+ *	\details These scripts are run on SlaveExperimentDrivers to update the operator's view.
+ */
+void StateMachineElement::runOperatorEntryScript()
+{
+	if(propertyContainer_->getPropertyValue("OperatorEntryScript").toString().isEmpty())
+		return;
+	QString operatorEntryScriptName = getName().simplified().remove(' ')+"OperatorEntry";
+	runScript(operatorEntryScriptName);
+}
+
+/*! \brief Runs this StateMachineElement's OperatorExitScript.
+ *	\details These scripts are run on SlaveExperimentDrivers to update the operator's view.
+ */
+void StateMachineElement::runOperatorExitScript()
+{
+	if(!propertyContainer_->getPropertyValue("OperatorExitScript").toString().isEmpty())
+	{
+		QString operatorExitScriptName = getName().simplified().remove(' ')+"OperatorExit";
+		runScript(operatorExitScriptName);
+	}
 }
 
 /*! \brief Runs this any active AnalysisEntryScripts attached to this StateMachineElement.
@@ -122,7 +149,7 @@ void StateMachineElement::runAnalysisScripts(ScriptType type)
 	}
 }
 
-QMap<QString,QString>  StateMachineElement::getScripts()
+QMap<QString,QString> StateMachineElement::getScripts()
 {
 	QMap<QString,QString>  scripts = ResultContainer::getScripts();
 
@@ -136,6 +163,18 @@ QMap<QString,QString>  StateMachineElement::getScripts()
 	{
 		QString scriptName = getName().simplified().remove(' ')+"Exit";
 		scripts[scriptName] = QString("ExitScript");
+	}
+
+	if(!propertyContainer_->getPropertyValue("OperatorEntryScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"OperatorEntry";
+		scripts[scriptName] = QString("OperatorEntryScript");
+	}
+
+	if(!propertyContainer_->getPropertyValue("OperatorExitScript").toString().isEmpty())
+	{
+		QString scriptName = getName().simplified().remove(' ')+"OperatorExit";
+		scripts[scriptName] = QString("OperatorExitScript");
 	}
 
 	return scripts;

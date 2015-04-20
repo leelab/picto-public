@@ -16,6 +16,13 @@
 #include "AnalysisSpikeData.h"
 #include "../storage/ObsoleteNameAsset.h"
 #include "../design/PictoData.h"
+
+#include "../operator/BarPlot.h"
+#include "../operator/HistogramPlot.h"
+#include "../operator/SamplingBarPlot.h"
+#include "../operator/SamplingHistogramPlot.h"
+
+
 #include "../memleakdetect.h"
 
 namespace Picto {
@@ -29,7 +36,8 @@ Analysis::Analysis()
 	outputFactory_(new AssetFactory(0,-1)),
 	dataSourceFactory_(new AssetFactory(0,-1)),
 	functionFactory_(new AssetFactory(0,-1)),
-	scriptFactory_(new AssetFactory(0,-1))
+	scriptFactory_(new AssetFactory(0,-1)),
+	dataViewElementFactory_(new AssetFactory(0, -1))
 {
 	AddDefinableObjectFactory("AnalysisVariable",variableFactory_);
 	variableFactory_->addAssetType("NumberVariable",
@@ -71,10 +79,21 @@ Analysis::Analysis()
 		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisScriptHolder::Create))));
 	requireUniqueChildNames(false);
 
+	AddDefinableObjectFactory("DataViewElement", dataViewElementFactory_);
+	dataViewElementFactory_->addAssetType(BarPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(BarPlot::Create))));
+	dataViewElementFactory_->addAssetType(SamplingBarPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingBarPlot::Create))));
+	dataViewElementFactory_->addAssetType(HistogramPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(HistogramPlot::Create))));
+	dataViewElementFactory_->addAssetType(SamplingHistogramPlot::type,
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingHistogramPlot::Create))));
+
 	//A copy paste error led to all data sources being saved with the AnalysisScriptContainer tag before Picto version 1.0.30 and syntax version 0.0.2
 	//For this reason we changed the AnalysisScriptContainer name to AnalysisScriptHolder and in the upgradeVersion function we are recreating all 
 	//AnalysisDataSource and AnalysisScriptHolder objects with the correct tag names.
-	AddDefinableObjectFactory("AnalysisScriptContainer",QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteNameAsset::Create))));
+	AddDefinableObjectFactory("AnalysisScriptContainer",
+		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(ObsoleteNameAsset::Create))));
 
 	ASSOCIATE_ROOT_HOST_INITIALIZATION
 }

@@ -56,10 +56,9 @@ void SlaveExperimentDriver::renderFrame()
 	
 	if(frameTimer_.elapsed() < FRAMEMS || !renderingEnabled_)
 	{
-		//Even if we don't render the frame, we need to make sure that the signal
-		//channels' data is getting cleared out each frame.  Otherwise they'll become
-		//huge and use up all our memory.  In general, slaveRenderFrame() takes care
-		//of this.
+		//Even if we don't render the frame, we need to make sure that the signal channels' data is getting cleared out
+		//	each frame.  Otherwise they'll become huge and use up all our memory.  In general, slaveRenderFrame() takes
+		//	care of this.
 		experiment_->getEngine()->emptySignalChannels();
 		return;
 	}
@@ -106,10 +105,9 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			}
 			QSharedPointer<Transition> trans = asset.staticCast<Transition>();
 	
-			//As soon as a transition comes in and it has a source result, 
-			//we set that transition's source's latest result to the transition's 
-			//source result.  Then, if the source is a state machine element, we 
-			//call it's AnalysisExitScripts
+			//As soon as a transition comes in and it has a source result, we set that transition's source's latest
+			//	result to the transition's source result.  Then, if the source is a state machine element, we call its
+			//	AnalysisExitScripts
 			QSharedPointer<Asset> sourceResult = trans->getSourceResultAsset();
 			QSharedPointer<Asset> sourceAsset = trans->getSourceAsset();
 			if(sourceResult)
@@ -118,6 +116,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			}
 			if(sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
 			{
+				sourceAsset.staticCast<StateMachineElement>()->runOperatorExitScript();
 				sourceAsset.staticCast<StateMachineElement>()->runAnalysisExitScripts();
 			}
 
@@ -150,6 +149,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			currElement_->resetScriptableValues();
 			currElement_->resetScriptableAnalysisValues();
 			currElement_->runAnalysisEntryScripts();
+			currElement_->runOperatorEntryScript();
 			currElement_->slaveRun(experiment_->getEngine());
 		}
 		break;
@@ -173,10 +173,13 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 	designConfig_->markRunStart(runName);
 
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
+
+	experiment_->getTaskByName(currTask_)->getTaskConfig()->requestUpdate();
 	//Reset Analysis elements to initial states on Top
 	top->resetScriptableAnalysisValues();
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
+	top->runOperatorEntryScript();
 }
 
 /*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
@@ -187,6 +190,7 @@ void SlaveExperimentDriver::masterRunEnding()
 		return;	//This could happen if the task never actually started before it was stopped.
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
 	//Run AnalysisExitScripts on Top
+	top->runOperatorExitScript();
 	top->runAnalysisExitScripts();
 	designConfig_->markRunEnd();
 	eventQueue_.reset();
@@ -215,17 +219,15 @@ void SlaveExperimentDriver::masterTransitionActivated(int transId)
  */
 void SlaveExperimentDriver::masterFramePresented(double time)
 {
-	//Report the time of the frame following all the property and transition updates that are
-	//about to occur.
+	//Report the time of the frame following all the property and transition updates that are about to occur.
 	experiment_->getDesignConfig()->getFrameTimerFactory()->setNextFrameTime(time);
-	//Perform all queued events that occured up to this frame since the last one
-	//(We do this after setting next frame time so that when reading absolute time values during the course
-	//of state machine execution, we will read the absolute time value of the frame that follows
-	//the current position in the state machine.  This is necessary since the timing 
-	//paradigm in Picto is that all property changes and transitions take effect at the time
-	//of the frame that follows them.  Note that this matters in analysis because times
-	//of behavioral events can be compared to times of separately timed signals (eye position,
-	//neural data, etc).  See FrameResolutionTimer for more info.
+	//Perform all queued events that occured up to this frame since the last one 
+	//	(We do this after setting next frame time so that when reading absolute time values during the course of state
+	//	machine execution, we will read the absolute time value of the frame that follows the current position in the
+	//	state machine.  This is necessary since the timing paradigm in Picto is that all property changes and transitions
+	//	take effect at the time of the frame that follows them.  Note that this matters in analysis because times of
+	//	behavioral events can be compared to times of separately timed signals (eye position, neural data, etc).
+	//	See FrameResolutionTimer for more info.
 	SlaveEvent event;
 	while((event = eventQueue_.takeFirstEvent()).type != SlaveEvent::INVALID)
 	{
@@ -242,6 +244,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	if(currState)
 	{
 		currState->runAnalysisFrameScripts();
+		currState->runOperatorFrameScript();
 	}
 }
 /*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine to be supplied

@@ -19,6 +19,7 @@ BarAxisHandler::BarAxisHandler(long lLowerBound, long lUpperBound)
 
 QwtScaleDiv BarAxisHandler::getScaleDiv() const
 {
+	QMutexLocker locker(&mtxValues);
 	QList<double> ticks;
 
 	for (long i = m_lLowerBound; i < m_lUpperBound + 1; i++)
@@ -31,6 +32,8 @@ QwtScaleDiv BarAxisHandler::getScaleDiv() const
 
 void BarAxisHandler::rescale(long lLowerBound, long lUpperBound)
 {
+	QMutexLocker locker(&mtxValues);
+
 	m_lLowerBound = lLowerBound;
 	m_lUpperBound = lUpperBound;
 }
@@ -39,6 +42,8 @@ void BarAxisHandler::rescale(long lLowerBound, long lUpperBound)
 */
 void BarAxisHandler::submitLabel(long bin, const QString &rLabel)
 {
+	QMutexLocker locker(&mtxLabels);
+
 	m_qhsLabels[bin] = rLabel;
 }
 
@@ -46,6 +51,8 @@ void BarAxisHandler::submitLabel(long bin, const QString &rLabel)
 */
 const QString BarAxisHandler::getLabel(long bin) const
 {
+	QMutexLocker locker(&mtxLabels);
+
 	if (m_qhsLabels.contains(bin))
 	{
 		return m_qhsLabels[bin];
@@ -58,6 +65,8 @@ const QString BarAxisHandler::getLabel(long bin) const
 */
 QwtText BarAxisHandler::label(double value) const
 {
+	QMutexLocker locker(&mtxLabels);
+
 	if (m_qhsLabels.contains(long(value)))
 	{
 		return m_qhsLabels[long(value)];
@@ -69,6 +78,12 @@ QwtText BarAxisHandler::label(double value) const
  */
 void BarAxisHandler::reset()
 {
+	QMutexLocker lockerLab(&mtxLabels);
+	QMutexLocker lockerVal(&mtxValues);
+
+	m_lLowerBound = 0;
+	m_lUpperBound = 1;
+
 	m_qhsLabels.clear();
 }
 

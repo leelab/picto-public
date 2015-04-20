@@ -92,61 +92,60 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;CachedSessionData.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;QMutexLocker&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;CachedSessionData::CachedSessionData()</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;CachedSessionData::~CachedSessionData()</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;}</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">   17</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">CachedSessionData::insertData</a>(<span class="keywordtype">int</span> dataType, <span class="keywordtype">int</span> dataId, QVariantList data)</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    QVariantList dataList;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    dataList &lt;&lt; dataId &lt;&lt; data;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_session_data.html#a7cc8594766473824c591396b187354ad">addData</a>(dataType,dataList);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">CachedSessionData::writeData</a>(<span class="keywordtype">int</span> dataType, QVariantList data)</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Q_ASSERT(data.size() &gt; 0);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">int</span> dataId = data[0].toInt();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    QVariantList originalList = data.mid(1,data.size()-1);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">if</span>(dataMap_[dataType].contains(dataId))</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    dataMap_[dataType][dataId] = originalList;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">   41</a></span>&#160;QList&lt;int&gt;<a class="code" href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">CachedSessionData::readDataTypes</a>()</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> dataMap_.keys();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">   50</a></span>&#160;QList&lt;QVariantList&gt; <a class="code" href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">CachedSessionData::readData</a>(<span class="keywordtype">int</span> dataType,QVariant,<span class="keywordtype">bool</span> cut)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">if</span>(!dataMap_.contains(dataType))</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> QList&lt;QVariantList&gt;();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    QList&lt;QVariantList&gt; returnVal = dataMap_[dataType].values();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">if</span>(cut)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        dataMap_[dataType].clear();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        dataMap_.remove(dataType);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> CachedSessionData::eraseEverything()</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    dataMap_.clear();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="ttc" id="class_cached_session_data_html_a772e4f41e01333a090f3e683e4f4e18f"><div class="ttname"><a href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">CachedSessionData::readData</a></div><div class="ttdeci">virtual QList&lt; QVariantList &gt; readData(int dataType, QVariant condition, bool cut=false)</div><div class="ttdoc">Implements SessionData::readData() to return all data of the input DataType and delete it from this o...</div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00050">CachedSessionData.cpp:50</a></div></div>
-<div class="ttc" id="class_cached_session_data_html_aa63a22afd537fbaccbf68dee67981018"><div class="ttname"><a href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">CachedSessionData::readDataTypes</a></div><div class="ttdeci">QList&lt; int &gt; readDataTypes()</div><div class="ttdoc">Returns a list of integers representing types of data handled by this object. </div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00041">CachedSessionData.cpp:41</a></div></div>
-<div class="ttc" id="class_cached_session_data_html_a117bf457f1ec414ecb238ae9c60d35d4"><div class="ttname"><a href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">CachedSessionData::writeData</a></div><div class="ttdeci">void writeData(int dataType, QVariantList data)</div><div class="ttdoc">Implements SessionData::writeData() to write the input data entry to this objects data structure for ...</div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00031">CachedSessionData.cpp:31</a></div></div>
-<div class="ttc" id="class_cached_session_data_html_af55cc646029afe6a6ac0893a3bc8d5fc"><div class="ttname"><a href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">CachedSessionData::insertData</a></div><div class="ttdeci">void insertData(int dataType, int dataId, QVariantList data)</div><div class="ttdoc">Adds a data entry of the input dataType with the input dataId to this object. </div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00017">CachedSessionData.cpp:17</a></div></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;CachedSessionData::CachedSessionData()</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;{</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;}</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;CachedSessionData::~CachedSessionData()</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">   16</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">CachedSessionData::insertData</a>(<span class="keywordtype">int</span> dataType, <span class="keywordtype">int</span> dataId, QVariantList data)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    QVariantList dataList;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    dataList &lt;&lt; dataId &lt;&lt; data;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="class_session_data.html#a7cc8594766473824c591396b187354ad">addData</a>(dataType,dataList);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">   30</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">CachedSessionData::writeData</a>(<span class="keywordtype">int</span> dataType, QVariantList data)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Q_ASSERT(data.size() &gt; 0);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">int</span> dataId = data[0].toInt();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    QVariantList originalList = data.mid(1,data.size()-1);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">if</span>(dataMap_[dataType].contains(dataId))</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    dataMap_[dataType][dataId] = originalList;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">   40</a></span>&#160;QList&lt;int&gt;<a class="code" href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">CachedSessionData::readDataTypes</a>()</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> dataMap_.keys();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">   49</a></span>&#160;QList&lt;QVariantList&gt; <a class="code" href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">CachedSessionData::readData</a>(<span class="keywordtype">int</span> dataType,QVariant,<span class="keywordtype">bool</span> cut)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">if</span>(!dataMap_.contains(dataType))</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> QList&lt;QVariantList&gt;();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QList&lt;QVariantList&gt; returnVal = dataMap_[dataType].values();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span>(cut)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        dataMap_[dataType].clear();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        dataMap_.remove(dataType);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> CachedSessionData::eraseEverything()</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    dataMap_.clear();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="ttc" id="class_cached_session_data_html_a772e4f41e01333a090f3e683e4f4e18f"><div class="ttname"><a href="class_cached_session_data.html#a772e4f41e01333a090f3e683e4f4e18f">CachedSessionData::readData</a></div><div class="ttdeci">virtual QList&lt; QVariantList &gt; readData(int dataType, QVariant condition, bool cut=false)</div><div class="ttdoc">Implements SessionData::readData() to return all data of the input DataType and delete it from this o...</div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00049">CachedSessionData.cpp:49</a></div></div>
+<div class="ttc" id="class_cached_session_data_html_aa63a22afd537fbaccbf68dee67981018"><div class="ttname"><a href="class_cached_session_data.html#aa63a22afd537fbaccbf68dee67981018">CachedSessionData::readDataTypes</a></div><div class="ttdeci">QList&lt; int &gt; readDataTypes()</div><div class="ttdoc">Returns a list of integers representing types of data handled by this object. </div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00040">CachedSessionData.cpp:40</a></div></div>
+<div class="ttc" id="class_cached_session_data_html_a117bf457f1ec414ecb238ae9c60d35d4"><div class="ttname"><a href="class_cached_session_data.html#a117bf457f1ec414ecb238ae9c60d35d4">CachedSessionData::writeData</a></div><div class="ttdeci">void writeData(int dataType, QVariantList data)</div><div class="ttdoc">Implements SessionData::writeData() to write the input data entry to this objects data structure for ...</div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00030">CachedSessionData.cpp:30</a></div></div>
+<div class="ttc" id="class_cached_session_data_html_af55cc646029afe6a6ac0893a3bc8d5fc"><div class="ttname"><a href="class_cached_session_data.html#af55cc646029afe6a6ac0893a3bc8d5fc">CachedSessionData::insertData</a></div><div class="ttdeci">void insertData(int dataType, int dataId, QVariantList data)</div><div class="ttdoc">Adds a data entry of the input dataType with the input dataId to this object. </div><div class="ttdef"><b>Definition:</b> <a href="_cached_session_data_8cpp_source.html#l00016">CachedSessionData.cpp:16</a></div></div>
 <div class="ttc" id="class_session_data_html_a7cc8594766473824c591396b187354ad"><div class="ttname"><a href="class_session_data.html#a7cc8594766473824c591396b187354ad">SessionData::addData</a></div><div class="ttdeci">void addData(int dataType, QVariantList data)</div><div class="ttdoc">Adds a single data entry to this SessionData object of the input type. </div><div class="ttdef"><b>Definition:</b> <a href="_session_data_8cpp_source.html#l00056">SessionData.cpp:56</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

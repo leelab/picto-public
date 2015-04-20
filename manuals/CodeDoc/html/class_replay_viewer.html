@@ -269,6 +269,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_replay_viewer.html#aa8f30c3662c5c04302eeb0ec73052b91">sessionPreloaded</a> (<a class="el" href="struct_preloaded_session_data.html">PreloadedSessionData</a> sessionData)</td></tr>
 <tr class="memdesc:aa8f30c3662c5c04302eeb0ec73052b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> successfully preloads a Session file. Adds the preloaded data to the RunSelectorWidget and AnalysisSelectorWidget. <br /></td></tr>
 <tr class="separator:aa8f30c3662c5c04302eeb0ec73052b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4319d95bd337457af24adf626231362b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4319d95bd337457af24adf626231362b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>taskChanged</b> (QString newTask)</td></tr>
+<tr class="separator:a4319d95bd337457af24adf626231362b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -316,9 +319,6 @@ QSharedPointer&lt; <a class="el" href="struct_picto_1_1_pixmap_visual_target.htm
 <tr class="memitem:a975a64d9f8637c7ae707762657464f8b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a975a64d9f8637c7ae707762657464f8b"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html">Picto::Engine::PictoEngine</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>engine_</b></td></tr>
 <tr class="separator:a975a64d9f8637c7ae707762657464f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a683b74bb7299180d7c9c966fb300d05d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a683b74bb7299180d7c9c966fb300d05d"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_experiment.html">Picto::Experiment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>experiment_</b></td></tr>
-<tr class="separator:a683b74bb7299180d7c9c966fb300d05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a094732eb33a7a0b09ed444cffa1c5a39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a094732eb33a7a0b09ed444cffa1c5a39"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_playback_state_updater.html">PlaybackStateUpdater</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>playbackUpdater_</b></td></tr>
 <tr class="separator:a094732eb33a7a0b09ed444cffa1c5a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -331,6 +331,9 @@ QVector&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_virtual_outpu
 <tr class="memitem:ab33428f0a3d576df1d8a741670aa87c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab33428f0a3d576df1d8a741670aa87c4"></a>
 QVector&lt; QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputSignalsWidgets_</b></td></tr>
 <tr class="separator:ab33428f0a3d576df1d8a741670aa87c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc22cfd87d8baf2aa49d1c4eb1b3cbd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc22cfd87d8baf2aa49d1c4eb1b3cbd8"></a>
+<a class="el" href="class_view_selection_widget.html">ViewSelectionWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>viewSelectionWidget_</b></td></tr>
+<tr class="separator:adc22cfd87d8baf2aa49d1c4eb1b3cbd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af750bc3b416373a6cc81ee3288368414"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af750bc3b416373a6cc81ee3288368414"></a>
 QList&lt; <a class="el" href="struct_replay_viewer_1_1_play_run_info.html">PlayRunInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>runQueue_</b></td></tr>
 <tr class="separator:af750bc3b416373a6cc81ee3288368414"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -440,7 +443,7 @@ end" button when running a Session run. When they do this, a message box will gi
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_replay_viewer_8h_source.html#l00049">49</a> of file <a class="el" href="_replay_viewer_8h_source.html">ReplayViewer.h</a>.</p>
+<p>Definition at line <a class="el" href="_replay_viewer_8h_source.html#l00050">50</a> of file <a class="el" href="_replay_viewer_8h_source.html">ReplayViewer.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8644f4476b0a556d47a0a6e70019e557"></a>
 <div class="memitem">

@@ -557,21 +557,26 @@ void PlaybackController::update()
 				if(nextFilePath != data_.getLoadedFilePath())
 				{
 					setup();
-					slaveExpDriver_.clear();	//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
-												//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
-												//RAM that was allocated for a previous playback will be freed up for loading the new file.  If	
-												//we didn't do this, we would effectively be cutting our maximum RAM capacity in half because when 
-												//switching from one session to the next, only half of the maximum RAM available to the application
-												//is available for the new session.
-					experiment_.clear();		//Experiment also uses up a lot of RAM.
-					designRoot_.clear();		//Design root point to the experiment too.
 
+					//Both SlaveExperimentDriver and Playback Updater contain pointers to the SessionState which is where
+					//all the session data is stored in RAM.  By clearing the slaveExpDriver_ here, we can be sure that
+					//RAM that was allocated for a previous playback will be freed up for loading the new file.  If	
+					//we didn't do this, we would effectively be cutting our maximum RAM capacity in half because when 
+					//switching from one session to the next, only half of the maximum RAM available to the application
+					//is available for the new session.
+					slaveExpDriver_.clear();
+					//Experiment also uses up a lot of RAM.
+					experiment_.clear();
+					//Design root point to the experiment too.
+					designRoot_.clear();
 
 #if defined WIN32 || defined WINCE
-					//Since we're creating lots of giant data structures on the heap, we found that there were some heap fragmentation issues.  ie.  'new' commands
-					//would start to fail wbile creating analysis data structures after we analyzed multiple other sessions, presumably since there weren't 
-					//large enough holes in memory for the new data structures.  For this reason, we are defragmenting the heap each time we start loading a new
-					//session.  This code for heap deframentation is from: http://www.cplusplus.com/forum/windows/8010/
+					//Since we're creating lots of giant data structures on the heap, we found that there were some heap
+					//	fragmentation issues.  ie.  'new' commands would start to fail wbile creating analysis data
+					//	structures after we analyzed multiple other sessions, presumably since there weren't large enough
+					//	holes in memory for the new data structures.  For this reason, we are defragmenting the heap each
+					//	time we start loading a new session.  This code for heap deframentation is
+					//	from: http://www.cplusplus.com/forum/windows/8010/
 					{	
 					  const int MaxNumHeaps= 5000;
 					  HANDLE HeapHandles[MaxNumHeaps];
@@ -632,6 +637,7 @@ void PlaybackController::update()
 
 					//Set up SlaveExperimentDriver to connect StateUpdater and Experiment
 					slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(experiment_,playbackUpdater_));
+					connect(slaveExpDriver_.data(), SIGNAL(taskChanged(QString)), this, SIGNAL(taskChanged(QString)));
 					emit designRootChanged();
 				}
 

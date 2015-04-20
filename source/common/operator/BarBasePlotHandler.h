@@ -11,7 +11,6 @@
 #include <QVector>
 
 class QwtPlotHistogram;
-class QwtPlot;
 class QwtIntervalSample;
 
 namespace Picto {
@@ -24,7 +23,7 @@ namespace Picto {
 #if defined WIN32 || defined WINCE
 class PICTOLIB_API BarBasePlotHandler : public OperatorPlotHandler
 #else
-class BarBasePlotHandler : public QObject
+class BarBasePlotHandler : public OperatorPlotHandler
 #endif
 {
 	Q_OBJECT
@@ -35,13 +34,18 @@ public:
 public slots:
 	void initializeHisto(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType);
 
-	void updateColor(QColor color);
-	void updateColumns(ColumnType::ColumnType eType);
+	void updateColumns(const QColor &color, ColumnType::ColumnType eType);
 	void normalizeScale(double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
 
 	void setSamples(const QVector<QwtIntervalSample> &qvSamples);
+	virtual void setErrorSamples(const QVector<QwtIntervalSample>&) {};
+	virtual void setErrorBarsVisible(bool) {};
+
+	void scaleAxis(double dBinSize);
 
 	virtual void handleXLabels(long, long) {};
+
+	void callReplot();
 
 protected:
 	QwtPlotHistogram *m_pHistoPlotItem;

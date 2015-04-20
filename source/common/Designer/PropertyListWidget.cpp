@@ -55,7 +55,8 @@ void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Pro
 	{
 		QString propName = prop->getName();
 		bool scriptProp = (propName == "EntryScript" || propName == "FrameScript" || propName == "ExitScript"
-			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript");
+			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript"
+			|| propName == "OperatorEntryScript" || propName == "OperatorFrameScript" || propName == "OperatorExitScript");
 		if(scriptProp)
 			addScriptProperty(prop,&propManager_,browser_);
 		else

@@ -1019,44 +1019,11 @@ void RemoteViewer::setupUi()
 
 	DataViewLayout *dataViewLayout = new DataViewLayout();
 
-	//Set up a temporary test plot
-	/*
-	OperatorPlot *pOpPlot = new OperatorPlot();
-	DataViewWidget *testPlot = new DataViewWidget("Test Gaussian Histo", pOpPlot->getWidget());
-	pOpPlot->setTitle("Test Gaussian Histo");
-	testPlot->hideDefaultTitle();
-	pOpPlot->submitValue(0, 10);
-	pOpPlot->submitValue(1, 40);
-	pOpPlot->submitValue(2, 60);
-	pOpPlot->submitValue(3, 100);
-	pOpPlot->submitValue(4, 40);
-	pOpPlot->submitValue(5, 2);
-	pOpPlot->draw();
-	*/
 	viewSelectionWidget_ = new ViewSelectionWidget();
 	viewSelectionWidget_->registerView(taskView);
-	//viewSelectionWidget_->registerView(testPlot);
 	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
 	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 
-	//Set up a number of temporary test plots
-	/*
-	for (int i = 0; i < 12; i++)
-	{
-		OperatorPlot *pOpPlot = new OperatorPlot();
-		DataViewWidget *testPlot = new DataViewWidget(QString("Test Plot %1").arg(i), pOpPlot->getWidget());
-		testPlot->hideDefaultTitle();
-		pOpPlot->setTitle(QString("Test Plot %1").arg(i));
-		int range = rand() % 1000 + 10;
-		int numOfBins = 5 + rand() % 40;
-		for (int j = 0; j < 5 + numOfBins; j++)
-		{
-			pOpPlot->submitValue(j, rand() % range);
-		}
-		pOpPlot->draw();
-		viewSelectionWidget_->registerView(testPlot);
-	}
-	*/
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
@@ -1064,7 +1031,6 @@ void RemoteViewer::setupUi()
 	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	//stimulusLayout->addWidget(visualTargetHost_);
 	stimulusLayout->addLayout(dataViewLayout);
 
 
@@ -2169,4 +2135,8 @@ void RemoteViewer::currTaskChanged(QString task)
 			return;
 		}
 	}
+
+	viewSelectionWidget_->clear();
+	viewSelectionWidget_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
+	viewSelectionWidget_->rebuild();
 }

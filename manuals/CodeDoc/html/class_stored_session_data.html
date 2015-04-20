@@ -221,7 +221,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8h_source.html#l00026">26</a> of file <a class="el" href="_stored_session_data_8h_source.html">StoredSessionData.h</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8h_source.html#l00025">25</a> of file <a class="el" href="_stored_session_data_8h_source.html">StoredSessionData.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ab187a23f5736693963806ea948fb5abf"></a>
 <div class="memitem">
@@ -239,7 +239,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Builds all table indeces that were requested in <a class="el" href="class_stored_session_data.html#a4e05e7d7c7bcffe7d0ab20baac3ff115" title="Stores information about the SQL table that should be used to store data for different data types...">setTableInfo()</a>. </p>
 <p>This should typically be done only at the end of a session. See <a class="el" href="class_stored_session_data.html#a4e05e7d7c7bcffe7d0ab20baac3ff115" title="Stores information about the SQL table that should be used to store data for different data types...">setTableInfo()</a> documentation for more details. </p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00132">132</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00131">131</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -270,7 +270,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Reimplemented from <a class="el" href="class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f">SessionData</a>.</p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00208">208</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00207">207</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +301,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <li>File Databases can be used from multiple threads, but QSqlDatabase database connections cannot be shared across threads. The current solution to these problems is to create a unique database connection for each thread. If you can figure out a cleaner way to do this go for it. </li>
 </ol>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00288">288</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00287">287</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -332,7 +332,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Inserts the input data of the input dataType into this object. </p>
 <p>Internally, this just sends the inputs to <a class="el" href="class_session_data.html#a7cc8594766473824c591396b187354ad" title="Adds a single data entry to this SessionData object of the input type. ">addData()</a>. </p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00151">151</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00150">150</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -379,7 +379,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Implements <a class="el" href="class_session_data.html#a81f4eb49b8a23eb9c1a1575abc2fad4c">SessionData</a>.</p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00238">238</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00237">237</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -400,7 +400,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Sets the SessionId of the session that will use this <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> object. </p>
 <p>The SessionId is used in generating uniquely named database connections when multiple threads access this database. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_stored_session_data.html#a89014048f7a30e42eded903f45eb3d55" title="Generates a thread-specific connection to the Session database. ">getSessionDb()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00081">81</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00080">80</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -459,7 +459,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </dl>
 <p>This function actually creates the necessary table in the Sql database if it doesn't already exist. </p><dl class="section note"><dt>Note</dt><dd>The indeces are not built when you call this function. Once indeces are built, additions to the SQL table can take significantly longer. For this reason, we only want to add indeces at the end of the session. To do that you must use <a class="el" href="class_stored_session_data.html#ab187a23f5736693963806ea948fb5abf" title="Builds all table indeces that were requested in setTableInfo(). ">buildTableIndeces()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00101">101</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00100">100</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -490,7 +490,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Reimplemented from <a class="el" href="class_session_data.html#ab41387e7d78a4261524a201c78d1bb97">SessionData</a>.</p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00161">161</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00160">160</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>
@@ -531,7 +531,7 @@ QReadWriteLock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Implements <a class="el" href="class_session_data.html#ad05a594d8410d638f1a066bfa5a10ba3">SessionData</a>.</p>
 
-<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00187">187</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_stored_session_data_8cpp_source.html#l00186">186</a> of file <a class="el" href="_stored_session_data_8cpp_source.html">StoredSessionData.cpp</a>.</p>
 
 </div>
 </div>

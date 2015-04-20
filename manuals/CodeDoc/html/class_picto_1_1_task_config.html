@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_picto_1_1_task_config-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -141,6 +142,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a25d32a2117ef6d8c131d97d41f0ad4cc">reset</a> ()</td></tr>
 <tr class="memdesc:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears out all of this object's saved data. Returning it to its initial state. <br /></td></tr>
 <tr class="separator:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5d0d8e28669afd7468775944d25d1d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5d0d8e28669afd7468775944d25d1d3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>requestUpdate</b> ()</td></tr>
+<tr class="separator:ab5d0d8e28669afd7468775944d25d1d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3333d04513326f4d98b794e127e52f43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3333d04513326f4d98b794e127e52f43"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">setUpdateSignalEnabled</a> (bool bEnabled=true)</td></tr>
 <tr class="memdesc:a3333d04513326f4d98b794e127e52f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggles whether widgetMapUpdated() is emitted every time a change occurs. <br /></td></tr>
@@ -159,6 +163,15 @@ const QString&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> 
 <tr class="memitem:a997e4a621d538c89dcb86d8afc4d8e70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a997e4a621d538c89dcb86d8afc4d8e70"></a>
 <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getAsset</b> (QWidget *pWidget) const </td></tr>
 <tr class="separator:a997e4a621d538c89dcb86d8afc4d8e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a067e27f96788441452f2e8b1d9e401da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a067e27f96788441452f2e8b1d9e401da"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addObserver</b> (<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *newAsset)</td></tr>
+<tr class="separator:a067e27f96788441452f2e8b1d9e401da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a3f6527dad29e960f1480981b3c749975"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f6527dad29e960f1480981b3c749975"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addWaitingAssets</b> ()</td></tr>
+<tr class="separator:a3f6527dad29e960f1480981b3c749975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -171,6 +184,12 @@ QMap&lt; QWidget *, QString &gt;&#160;</td><td class="memItemRight" valign="bott
 <tr class="memitem:a0af5fa9a53c3ca2180d03ecf4261e17b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0af5fa9a53c3ca2180d03ecf4261e17b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateSignalEnabled_</b></td></tr>
 <tr class="separator:a0af5fa9a53c3ca2180d03ecf4261e17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea28f02f7b9806bbcb4cd9535afd706f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea28f02f7b9806bbcb4cd9535afd706f"></a>
+QList&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>waitingAssets</b></td></tr>
+<tr class="separator:aea28f02f7b9806bbcb4cd9535afd706f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e0bf0bf373239886eca5c3907ba1e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50e0bf0bf373239886eca5c3907ba1e9"></a>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>mtxWaitingAssetProtector</b></td></tr>
+<tr class="separator:a50e0bf0bf373239886eca5c3907ba1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>There are many operations and data elements that need to be associated with a task as a whole, accessible by all elements of the task and with access to all elements of the task. Objects of the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> class handle these types of operations and store this type of data. This is a lower-scoped analog to the <a class="el" href="class_picto_1_1_design_config.html" title="There are many operations and data elements that need to be associated with a design as a whole...">DesignConfig</a> class, and much lighter-weight. </p>
@@ -181,7 +200,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateSignalEnabled_<
 <p>These and other general task configuration issues are handled by this class. Every Picto <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> holds a pointer to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of the task to which it is attached and elements needing to be accessed through the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> add themselves to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> object (which holds a weak pointer to them to avoid circular shared pointer issues). The <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of a particular <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> can be accessed using its <a class="el" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16" title="Returns a QSharedPointer to the TaskConfig managing this asset. ">Asset::getTaskConfig()</a> function. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_task_config_8h_source.html#l00031">31</a> of file <a class="el" href="_task_config_8h_source.html">TaskConfig.h</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8h_source.html#l00032">32</a> of file <a class="el" href="_task_config_8h_source.html">TaskConfig.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/storage/<a class="el" href="_task_config_8h_source.html">TaskConfig.h</a></li>
 <li>source/common/storage/<a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a></li>

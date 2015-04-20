@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QApplication>
+#include <QThread>
 
 #include "BarBasePlotHandler.h"
 
@@ -52,6 +53,8 @@ BarBasePlotHandler::BarBasePlotHandler()
 
 void BarBasePlotHandler::initializeHisto(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType)
 {
+	qDebug() << "\tBarBasePlotHandler::initializePlot called in thread: " << QThread::currentThreadId();
+
 	m_pHistoPlotItem = new QwtPlotHistogram("Data");
 	m_pHistoPlotItem->setTitle("Data");
 	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
@@ -72,18 +75,14 @@ void BarBasePlotHandler::initializeHisto(bool bDisplayLegend, const QColor &barC
 	}
 
 	// Update the Colors and Bar Types
-	updateColor(barColor);
-	updateColumns((ColumnType::ColumnType) eBarType);
+	updateColumns(barColor, (ColumnType::ColumnType) eBarType);
 	m_pPlot->canvas()->setPalette(canvasColor);
 }
 
-void BarBasePlotHandler::updateColor(QColor color)
+void BarBasePlotHandler::updateColumns(const QColor &color, ColumnType::ColumnType eType)
 {
 	m_pHistoPlotItem->setBrush(QBrush(color));
-}
 
-void BarBasePlotHandler::updateColumns(ColumnType::ColumnType eType)
-{
 	QPen pen(Qt::black, 0);
 	QwtColumnSymbol *symbol = nullptr;
 
@@ -135,4 +134,14 @@ void BarBasePlotHandler::normalizeScale(double dAxisMax, double dTotalValue, con
 void BarBasePlotHandler::setSamples(const QVector<QwtIntervalSample> &qvSamples)
 {
 	m_pHistoPlotItem->setSamples(new QwtIntervalSeriesData(qvSamples));
+}
+
+void BarBasePlotHandler::scaleAxis(double dBinSize)
+{
+	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setMargins(0.5*dBinSize, 0.5*dBinSize);
+}
+
+void BarBasePlotHandler::callReplot()
+{
+	m_pPlot->replot();
 }

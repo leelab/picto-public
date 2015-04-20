@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const '],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label(double value) const ']]],
+  ['label',['label',['../class_picto_1_1_bar_axis_handler.html#a73a610ea5a6ac1b214991f7b9e1facc4',1,'Picto::BarAxisHandler::label()'],['../class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049',1,'Picto::NormalizedScaleDraw::label()']]],
   ['last',['last',['../class_picto_1_1_analysis_variable_list.html#aa82766ac746114423f1efdd96fa45153',1,'Picto::AnalysisVariableList::last()'],['../class_picto_1_1_variable_list.html#ac684133fd817f006316f4e5d15f2ea98',1,'Picto::VariableList::last()']]],
   ['lastasnum',['lastAsNum',['../class_picto_1_1_analysis_variable_list.html#ab8327a2a13d12929da67083395cf53dd',1,'Picto::AnalysisVariableList::lastAsNum()'],['../class_picto_1_1_variable_list.html#a5597f41e1e1d3dfe659748c366b1682b',1,'Picto::VariableList::lastAsNum()']]],
   ['lastasstring',['lastAsString',['../class_picto_1_1_analysis_variable_list.html#a1e13597818e378e3ba8a72dd1d5f0862',1,'Picto::AnalysisVariableList::lastAsString()'],['../class_picto_1_1_variable_list.html#a863164951812d766efd0b68d629ebd17',1,'Picto::VariableList::lastAsString()']]],

@@ -46,11 +46,20 @@ public slots:
 	//! Eliminates the values in indicated bin.
 	void dropBin(long bin) { _dropBin(bin); };
 
+signals:
+	void initializeBarPlotSig(BarAxisHandler *pHandler);
+
 protected:
 	virtual void postDeserialize();
+
+	virtual void initView();
+
 	virtual double getBinSize() const { return 1.0; };
 	virtual double getBinSpacing() const { return propertyContainer_->getPropertyValue("BinSpacing").toDouble(); };
 	virtual void handleXLabels(long lLowerBound, long lUpperBound);
+
+	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
+	virtual void connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler);
 
 	//! Manages the storing and rendering of axis names
 	BarAxisHandler *m_pAxisHandler;

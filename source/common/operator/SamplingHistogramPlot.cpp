@@ -79,4 +79,10 @@ void SamplingHistogramPlot::dropBin(double bin)
 	_dropBin(long(bin / getBinSize()));
 }
 
+QSharedPointer<OperatorPlotHandler> SamplingHistogramPlot::getNewHandler()
+{
+	//Histogram does not need to add any features to the base class yet
+	return SamplingBarBase::getNewHandler();
+}
+
 }; //namespace Picto

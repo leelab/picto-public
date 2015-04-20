@@ -1,47 +1,18 @@
+#include <QThread>
+
 #include "BarBase.h"
+#include "BarBasePlotHandler.h"
 
 #include "../memleakdetect.h"
 
-#include <qwt_text.h>
-#include <qwt_plot.h>
-#include <qwt_plot_histogram.h>
-#include <qwt_legend.h>
-#include <qwt_legend_label.h>
-#include <qwt_scale_draw.h>
-#include <qwt_plot_intervalcurve.h>
-#include <qwt_scale_engine.h>
+#include <qwt_samples.h>
 
 namespace Picto {
-
-//!	This class is used to scale Normalized plots.
-class NormalizedScaleDraw : public QwtScaleDraw
-{
-public:
-	//! Constructor to set our properties.
-	NormalizedScaleDraw(double max)
-		:max_(max)
-	{
-		setTickLength(QwtScaleDiv::MajorTick, 6);
-		setTickLength(QwtScaleDiv::MediumTick, 3);
-		setTickLength(QwtScaleDiv::MinorTick, 0);
-
-		setSpacing(15);
-	}
-
-	//!	Overwriting labeling functionality
-	virtual QwtText label(double value) const
-	{
-		return QString("%1").arg(value / max_);
-	}
-private:
-	//! NormalizedScaleDraw holds onto the current total (Normalization quantity).
-	double max_;
-};
 
 const QString BarBase::type = "Bar Base";
 
 BarBase::BarBase()
-	: m_pHistoPlotItem(nullptr), m_bBinsModified(false), m_bUpdateBrush(false)
+	: m_bBinsModified(false), m_bUpdateBrush(false)
 {
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
@@ -67,14 +38,14 @@ void BarBase::replot()
 
 	if (m_qhdCumulValue.isEmpty())
 	{
-		m_pHistoPlotItem->setSamples(new QwtIntervalSeriesData(qvSamples));
+		emit setSamplesSig(qvSamples);
 
 		if (bNormalized)
 		{
 			createNormalizedScale(1.0, 1.0);
 		}
 
-		m_pPlot->replot();
+		emit callReplot();
 		return;
 	}
 
@@ -105,7 +76,7 @@ void BarBase::replot()
 		_handleErrorValue(key, dRangeMax, qvError);
 	}
 
-	m_pHistoPlotItem->setSamples(new QwtIntervalSeriesData(qvSamples));
+	emit setSamplesSig(qvSamples);
 
 	_handleErrorFinal(qvError);
 
@@ -117,18 +88,17 @@ void BarBase::replot()
 	if (m_bBinsModified)
 	{
 		m_bBinsModified = false;
-		m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setMargins(0.5*dBinSize, 0.5*dBinSize);
-		handleXLabels(*keyList.begin(), *(keyList.end()-1));
+		emit scaleAxisSig(dBinSize);
+		emit handleXLabelsSig(*keyList.begin(), *(keyList.end() - 1));
 	}
 
 	if (m_bUpdateBrush)
 	{
 		m_bUpdateBrush = false;
-		updateColors();
-		updateColumns();
+		emit updateColumnsSig(getColor(), getColumnType());
 	}
 
-	m_pPlot->replot();
+	emit callReplot();
 }
 
 
@@ -186,94 +156,26 @@ void BarBase::createNormalizedScale(double dMaxValue, double dTotalValue)
 		mediumTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;
 	}
 
-
-	QwtScaleDiv scaleDiv(0, dAxisMax*dTotalValue, minorTicks, mediumTicks, majorTicks);
-
-	QwtScaleDraw *scaleDraw = new NormalizedScaleDraw(dTotalValue);
-
-	m_pPlot->setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);
-	m_pPlot->setAxisScaleDraw(QwtPlot::yLeft, scaleDraw);
+	emit normalizeScaleSig(dAxisMax, dTotalValue, mediumTicks, majorTicks);
 }
 
-
-/*! \brief Registers plot with the Task object, so the task can pass on the information to various UI elements, and
- *	intercept/handle scripting language commands.
- */
 void BarBase::postDeserialize()
 {
 	OperatorPlot::postDeserialize();
-
-	m_pHistoPlotItem = new QwtPlotHistogram("Data");
-	m_pHistoPlotItem->setTitle("Data");
-	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
-	m_pHistoPlotItem->setBrush(QBrush(Qt::red));
-	m_pHistoPlotItem->attach(m_pPlot);
-
-	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
-	
-	if (propertyContainer_->getPropertyValue("DisplayLegend").toBool())
-	{
-		QwtLegend *legend = new QwtLegend;
-		legend->setDefaultItemMode(QwtLegendData::ReadOnly);
-		m_pPlot->insertLegend(legend, QwtPlot::RightLegend);
-	}
-	else
-	{
-		m_pPlot->insertLegend(nullptr);
-	}
-
-	// Update the Colors and Bar Types
-	updateColors();
-	updateColumns();
-	m_pPlot->canvas()->setPalette(propertyContainer_->getPropertyValue("CanvasColor").value<QColor>());
 }
 
-//! Called to update the plot with new colors 
-void BarBase::updateColors()
+void BarBase::initView()
 {
-	m_pHistoPlotItem->setBrush(QBrush(getColor()));
+	OperatorPlot::initView();
+
+	qDebug() << "\tBarBase::initializeHisto requested in thread: " << QThread::currentThreadId();
+	emit initializeHistoSig(
+		propertyContainer_->getPropertyValue("DisplayLegend").toBool(),
+		getColor(),
+		propertyContainer_->getPropertyValue("CanvasColor").value<QColor>(),
+		getColumnType());
 }
 
-//! Called to recreate the columns using the updatd colors and style 
-void BarBase::updateColumns()
-{
-	const ColumnType::ColumnType eColumnType = getColumnType();
-	QPen pen(Qt::black, 0);
-	QwtColumnSymbol *symbol = nullptr;
-
-	switch (eColumnType)
-	{
-	case ColumnType::COLUMN_OUTLINE:
-		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Outline);
-		m_pHistoPlotItem->setSymbol(nullptr);
-		m_pHistoPlotItem->setPen(pen);
-		break;
-	case ColumnType::COLUMN_FLAT_COLUMN:
-		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
-		m_pHistoPlotItem->setSymbol(nullptr);
-		m_pHistoPlotItem->setPen(pen);
-		break;
-	case ColumnType::COLUMN_RAISED_COLUMN:
-		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
-
-		symbol = new QwtColumnSymbol(QwtColumnSymbol::Box);
-		symbol->setFrameStyle(QwtColumnSymbol::Raised);
-		symbol->setLineWidth(2);
-		symbol->setPalette(QPalette(m_pHistoPlotItem->brush().color()));
-
-		m_pHistoPlotItem->setSymbol(symbol);
-		break;
-	case ColumnType::COLUMN_LINES:
-		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Lines);
-		m_pHistoPlotItem->setSymbol(nullptr);
-		pen.setBrush(m_pHistoPlotItem->brush());
-		pen.setWidth(2); 
-		m_pHistoPlotItem->setPen(pen);
-		break;
-	default:
-		break;
-	}
-}
 
 /*!	\brief Clears all values for this plot.
  */
@@ -358,5 +260,47 @@ ColumnType::ColumnType BarBase::getColumnType() const
 {
 	return (ColumnType::ColumnType)propertyContainer_->getPropertyValue("ColumnType").toInt();
 }
+
+QSharedPointer<OperatorPlotHandler> BarBase::getNewHandler()
+{
+	return QSharedPointer<OperatorPlotHandler>(new BarBasePlotHandler());
+}
+
+
+QSharedPointer<BarBasePlotHandler> BarBase::getBarBasePlotHandler()
+{
+	return m_pPlotHandler.objectCast<BarBasePlotHandler>();
+}
+
+void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	OperatorPlot::connectDataSignals(plotHandler);
+
+	QSharedPointer<BarBasePlotHandler> barPlotHandler = plotHandler.objectCast<BarBasePlotHandler>();
+
+	qRegisterMetaType<QList<double>>("QList<double>");
+	qRegisterMetaType<QVector<QwtIntervalSample>>("QVector<QwtIntervalSample>");
+	qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>");
+
+	connect(this, SIGNAL(initializeHistoSig(bool, const QColor&, const QColor&, int)),
+		barPlotHandler.data(), SLOT(initializeHisto(bool, const QColor&, const QColor&, int)));
+	connect(this, SIGNAL(handleXLabelsSig(long,long)),
+		barPlotHandler.data(), SLOT(handleXLabels(long,long)));
+	connect(this, SIGNAL(updateColumnsSig(const QColor&, ColumnType::ColumnType)),
+		barPlotHandler.data(), SLOT(updateColumns(const QColor&, ColumnType::ColumnType)));
+	connect(this, SIGNAL(normalizeScaleSig(double, double, const QList<double>&, const QList<double>&)),
+		barPlotHandler.data(), SLOT(normalizeScale(double, double, const QList<double>&, const QList<double>&)));
+	connect(this, SIGNAL(setSamplesSig(const QVector<QwtIntervalSample>&)),
+		barPlotHandler.data(), SLOT(setSamples(const QVector<QwtIntervalSample>&)));
+	connect(this, SIGNAL(setErrorSamplesSig(const QVector<QwtIntervalSample>&)),
+		barPlotHandler.data(), SLOT(setErrorSamples(const QVector<QwtIntervalSample>&)));
+	connect(this, SIGNAL(setErrorBarsVisibleSig(bool)),
+		barPlotHandler.data(), SLOT(setErrorBarsVisible(bool)));
+	connect(this, SIGNAL(scaleAxisSig(double)),
+		barPlotHandler.data(), SLOT(scaleAxis(double)));
+	connect(this, SIGNAL(callReplot()),
+		barPlotHandler.data(), SLOT(callReplot()));
+}
+
 
 }; //namespace Picto

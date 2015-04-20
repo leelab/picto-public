@@ -1,7 +1,6 @@
 #ifndef TESTTestPlaybackController_H_
 #define TESTTestPlaybackController_H_
 #include <QObject>
-#include <QMutex>
 #include <QSharedPointer>
 #include <QThread>
 #include "../../common/experiment/Experiment.h"

@@ -1,6 +1,8 @@
 #include <QDebug>
 #include <QApplication>
+#include <QThread>
 
+#include "../storage/TaskConfig.h"
 #include "OperatorPlotHandler.h"
 
 #include "../memleakdetect.h"
@@ -12,24 +14,28 @@ using namespace Picto;
 
 
 OperatorPlotHandler::OperatorPlotHandler()
-	: m_pPlot(nullptr)
+	: m_pPlot(nullptr), m_tmpTitle("")
 {
+	static int count = 0;
+	index = count++;
 
+	qDebug() << "OperatorPlotHandler (" << index << ") created";
 }
 
 OperatorPlotHandler::~OperatorPlotHandler()
 {
-	qDebug() << "Delete OperatorPlot";
+	qDebug() << "Delete OperatorPlot (" << index << ")";
 	if (m_pPlot && !m_pPlot->parent())
 	{
-		qDebug() << "Manually Delete OperatorPlot::m_pPlot";
-		delete m_pPlot;
+		qDebug() << "\tManually Delete OperatorPlot::m_pPlot";
+		m_pPlot->deleteLater();
 	}
 }
 
 void OperatorPlotHandler::initializePlot(const QString &xTitle, const QString &yTitle)
 {
-	m_pPlot = new QwtPlot(QwtText(""));
+	qDebug() << "\tOperatorPlotHandler (" << index << ") created QwtPlot";
+	m_pPlot = new QwtPlot(QwtText(m_tmpTitle));
 
 	m_pPlot->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
@@ -42,7 +48,21 @@ void OperatorPlotHandler::initializePlot(const QString &xTitle, const QString &y
 	m_pPlot->setAxisTitle(QwtPlot::yLeft, yTitle);
 }
 
+void OperatorPlotHandler::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig)
+{
+	DataViewElement *pSender = (DataViewElement*)QObject::sender();
+	pTaskConfig->addObserverWidget(pSender, m_pPlot);
+}
+
 void OperatorPlotHandler::setTitle(const QString &title)
 {
-	m_pPlot->setTitle(QwtText(title));
+	if (m_pPlot)
+	{
+		m_pPlot->setTitle(QwtText(title));
+		m_tmpTitle = title;
+	}
+	else
+	{
+		m_tmpTitle = title;
+	}
 }

@@ -2,8 +2,6 @@
 #ifndef FRONTPANEL_H
 #define FRONTPANEL_H
 
-#include <QMutex>
-#include <QMutexLocker>
 #include <QString>
 #include <QHostAddress>
 #include <QTcpSocket>

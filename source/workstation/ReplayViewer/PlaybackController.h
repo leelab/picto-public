@@ -216,8 +216,8 @@ signals:
 	 *	@param msg An error message describing the error.
 	 */
 	void loadError(QString msg);
-
-
+	//! Emitted when loading a new task.  Used to update plots.
+	void taskChanged(QString taskName);
 
 private:
 	QString activateAnalyses(QStringList analysisData);

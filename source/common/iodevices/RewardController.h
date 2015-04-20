@@ -3,8 +3,6 @@
 
 #include <QList>
 #include <QObject>
-#include <QMutex>
-#include <QReadWriteLock>
 #include <QHash>
 #include <QLinkedList>
 #include "../storage/RewardDataUnit.h"

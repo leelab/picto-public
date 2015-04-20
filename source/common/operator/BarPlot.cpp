@@ -1,4 +1,5 @@
 #include "BarPlot.h"
+#include "BarPlotPlotHandler.h"
 #include "BarAxisHandler.h"
 
 #include "../memleakdetect.h"
@@ -22,8 +23,7 @@ QSharedPointer<Asset> BarPlot::Create()
 
 void BarPlot::handleXLabels(long lLowerBound, long lUpperBound)
 {
-	m_pAxisHandler->rescale(lLowerBound, lUpperBound);
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
+	emit handleXLabelsSig(lLowerBound, lUpperBound);
 }
 
 //! Gets the name of the indicated bin.
@@ -44,9 +44,29 @@ void BarPlot::postDeserialize()
 	BarBase::postDeserialize();
 
 	m_pAxisHandler = new BarAxisHandler(0, 1);
+}
 
-	m_pPlot->setAxisScaleDiv(QwtPlot::xBottom, m_pAxisHandler->getScaleDiv());
-	m_pPlot->setAxisScaleDraw(QwtPlot::xBottom, m_pAxisHandler);
+void BarPlot::initView()
+{
+	BarBase::initView();
+
+	emit initializeBarPlotSig(m_pAxisHandler);
+}
+
+QSharedPointer<OperatorPlotHandler> BarPlot::getNewHandler()
+{
+	return QSharedPointer<OperatorPlotHandler>(new BarPlotPlotHandler());
+}
+
+void BarPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	BarBase::connectDataSignals(plotHandler);
+
+	QSharedPointer<BarPlotPlotHandler> barPlotHandler = plotHandler.objectCast<BarPlotPlotHandler>();
+
+	qRegisterMetaType<BarAxisHandler*>("BarAxisHandlerP");
+	connect(this, SIGNAL(initializeBarPlotSig(BarAxisHandler *)),
+		barPlotHandler.data(), SLOT(initializeBarPlot(BarAxisHandler *)));
 }
 
 }; //namespace Picto

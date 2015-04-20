@@ -1,5 +1,4 @@
 #include "AlignSessionData.h"
-#include <QMutexLocker>
 
 /*! \brief Constructs an AlignSessionData object.
  *	@param dataType The type of data handled by this AlignSessionData object 

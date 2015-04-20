@@ -32,7 +32,6 @@
 
 #include "../DataViewer/DataViewLayout.h"
 #include "../DataViewer/DataViewWidget.h"
-#include "../DataViewer/ViewSelectionWidget.h"
 
 
 #include "../../common/memleakdetect.h"
@@ -44,6 +43,7 @@ ReplayViewer::ReplayViewer(QWidget *parent) :
 	//Create the Playback Controller that handles all Experiment playback
 	playbackController_ = QSharedPointer<PlaybackController>(new PlaybackController());
 	connect(playbackController_.data(),SIGNAL(statusChanged(int)),this,SLOT(playbackStatusChanged(int)));
+	connect(playbackController_.data(), SIGNAL(taskChanged(QString)), this, SLOT(taskChanged(QString)));
 
 	//Setup the user interface
 	setupUi();
@@ -233,16 +233,16 @@ void ReplayViewer::setupUi()
 
 
 
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_);
+	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
-	ViewSelectionWidget *viewSelectionWidget = new ViewSelectionWidget();
-	viewSelectionWidget->registerView(taskView);
-	viewSelectionWidget->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
+	viewSelectionWidget_ = new ViewSelectionWidget();
+	viewSelectionWidget_->registerView(taskView);
+	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
+	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 
 
 	QVBoxLayout *infoLayout = new QVBoxLayout();
-	infoLayout->addWidget(viewSelectionWidget);
+	infoLayout->addWidget(viewSelectionWidget_);
 	infoLayout->addWidget(analysisTabs);
 
 	QHBoxLayout *progressLayout = new QHBoxLayout();
@@ -1047,4 +1047,11 @@ void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
 	}
 	//Add the session's local analyses to the analysisSelector_ widget
 	analysisSelector_->setLocalDesignAnalyses(sessionData.fileName_,sessionData.analysisIds_,sessionData.analysisNames_);
+}
+
+void ReplayViewer::taskChanged(QString newTask)
+{
+	viewSelectionWidget_->clear();
+	viewSelectionWidget_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
+	viewSelectionWidget_->rebuild();
 }

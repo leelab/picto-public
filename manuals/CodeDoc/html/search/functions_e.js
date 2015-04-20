@@ -25,7 +25,7 @@ var searchData=
   ['nextindexsametime',['nextIndexSameTime',['../struct_picto_1_1_playback_index.html#a4dd007f475c7a32c39797caddab3d4c9',1,'Picto::PlaybackIndex']]],
   ['nextpage',['nextPage',['../class_picto_1_1_analysis_file_output_widget.html#af5802ac848cffa0a2749b67ab1e35d1d',1,'Picto::AnalysisFileOutputWidget']]],
   ['nonewversionavailable',['noNewVersionAvailable',['../class_update_downloader.html#ab37de8dabf0ce63b7feba5f149837d09',1,'UpdateDownloader']]],
-  ['normalizedscaledraw',['NormalizedScaleDraw',['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw::NormalizedScaleDraw(double max)'],['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw::NormalizedScaleDraw(double max)']]],
+  ['normalizedscaledraw',['NormalizedScaleDraw',['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw']]],
   ['noteslostfocus',['notesLostFocus',['../class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e',1,'ElementNotesWidget']]],
   ['noteswereedited',['notesWereEdited',['../class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395',1,'ElementNotesWidget']]],
   ['numattributes',['numAttributes',['../class_picto_1_1_obsolete_asset.html#afde5b3db6920d338802d609fdce021be',1,'Picto::ObsoleteAsset']]],
