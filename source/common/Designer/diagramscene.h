@@ -21,13 +21,15 @@ class QFont;
 class QGraphicsTextItem;
 class QColor;
 QT_END_NAMESPACE
- /*! \brief The QGraphicsScene shown in the Designer's central widget to display the children of the current element of the Design's State Machine.
-  *	\details We sometimes refer to this element as a canvas and it is the surface on which all of the DiagramItems and arrows are
-  *	drawn to represent the current level of the StateMachine.  The Scene handles things like creating and inserting new DiagramItems for
-  *	new Assets that are added to the current Window Asset.  It handles copying, deleting, and selecting of elements, navigation and zooming, adding
-  *	of new assets and transitions to the window element, etc.  It is the foundation on which all of the graphical StateMachine UI is based.  
-  *	\note There are some functions here that we don't use.  This is due to the fact that much of the code for this and other elements of the graphical
-  *	StateMachine UI were lifted from Qt Toolkit samples.
+ /*! \brief The QGraphicsScene shown in the Designer's central widget to display the children of the current element of
+  *	the Design's State Machine.
+  *	\details We sometimes refer to this element as a canvas and it is the surface on which all of the DiagramItems and
+  *	arrows are drawn to represent the current level of the StateMachine.  The Scene handles things like creating and
+  *	inserting new DiagramItems for new Assets that are added to the current Window Asset.  It handles copying, deleting,
+  *	and selecting of elements, navigation and zooming, adding of new assets and transitions to the window element, etc.
+  *	It is the foundation on which all of the graphical StateMachine UI is based.
+  *	\note There are some functions here that we don't use.  This is due to the fact that much of the code for this and
+  *	other elements of the graphical StateMachine UI were lifted from Qt Toolkit samples.
   *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
   *	\date 2009-2015
   */
@@ -48,10 +50,6 @@ public:
 public slots:
 	void setSceneAsset(QSharedPointer<Asset> asset);
 	void setLineColor(const QColor &color);
-    void setTextColor(const QColor &color);
-    void setItemColor(const QColor &color);
-    void setFont(const QFont &font);
-	void setBackgroundPattern(QPixmap pattern);
     void editorLostFocus(DiagramTextItem *item);
 	void deleteSelectedItems();
 	void copySelectedItems();
@@ -60,16 +58,18 @@ public slots:
 	void pasteItems();
 
 signals:
-	/*! \brief Emitted every time that a DiagramItem is created and inserted into the DiagramScene.  item is the newly created DiagramItem.*/
+	/*! \brief Emitted every time that a DiagramItem is created and inserted into the DiagramScene.
+	 *	@param item is the newly created DiagramItem.
+	 */
     void itemInserted(DiagramItem *item);
-	/*! \brief This signal is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-    void textInserted(QGraphicsTextItem *item);
-	/*! \brief Emitted whenever a DiagramItem or Arrow is selected.  item is a QGraphicsItem pointer to the selected Item.*/
+	/*! \brief Emitted whenever a DiagramItem or Arrow is selected.
+	 *	@param item is a QGraphicsItem pointer to the selected Item.
+	 */
     void itemSelected(QGraphicsItem *item);
-	/*! \brief Emitted whenever an Asset is selected.  asset is a QGraphicsItem pointer to the selected Item.*/
+	/*! \brief Emitted whenever an Asset is selected.
+	 *	@param asset is a QGraphicsItem pointer to the selected Item.
+	 */
 	void assetSelected(QSharedPointer<Asset> asset);
-	/*! \brief This signal is never used and left over from older code.  It should probably be removed.*/
-	void sceneAssetChanged(QSharedPointer<Asset> asset);
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -81,7 +81,6 @@ protected:
 
 private:
 	QSharedPointer<Asset> createNewAsset();
-	void insertTextItem(QString text,QPointF pos);
     bool isItemChange(int type);
 	QList<QSharedPointer<Asset>> getSelectedAssets();
 

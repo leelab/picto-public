@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -123,6 +124,37 @@ Inheritance diagram for Picto::Experiment:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a63267b0d47316a8fb2afdf87511a2435"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63267b0d47316a8fb2afdf87511a2435"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>taskAdded</b> ()</td></tr>
+<tr class="separator:a63267b0d47316a8fb2afdf87511a2435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
+<tr class="memitem:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323aef51f96a9a8a6102e768add07226"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a323aef51f96a9a8a6102e768add07226">nameEdited</a> ()</td></tr>
+<tr class="memdesc:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when this object's name is changed. <br /></td></tr>
+<tr class="separator:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header signals_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
+<tr class="memitem:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ae3b09c56bc028ba811564096eb5272b9">childAddedAfterDeserialize</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
+<tr class="memdesc:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a child is added to this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> after its Deserialize function has already run.  <a href="#ae3b09c56bc028ba811564096eb5272b9">More...</a><br /></td></tr>
+<tr class="separator:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ce48ec1f3432d4ad58ddf3f8d9323b5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a6ce48ec1f3432d4ad58ddf3f8d9323b5">associateChildEdited</a> ()</td></tr>
+<tr class="memdesc:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever one of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s Associate children is edited. <br /></td></tr>
+<tr class="separator:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header signals_class_picto_1_1_asset"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_asset')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_asset.html">Picto::Asset</a></td></tr>
+<tr class="memitem:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ca6303bf64730a9994a180bf2227da4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a2ca6303bf64730a9994a180bf2227da4">edited</a> ()</td></tr>
+<tr class="memdesc:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever something in this asset changes. <br /></td></tr>
+<tr class="separator:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a">deleted</a> ()</td></tr>
+<tr class="memdesc:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> is marked to be deleted.  <a href="#a5a96aa71c14a5de4a24aea183660147a">More...</a><br /></td></tr>
+<tr class="separator:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9dc9a5935284306615aa5e19a5be49e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#af9dc9a5935284306615aa5e19a5be49e">assetIdEdited</a> ()</td></tr>
+<tr class="memdesc:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>'s <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID changes. <br /></td></tr>
+<tr class="separator:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aaa7ef4c154cdae56f140caa7456e6342"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#aaa7ef4c154cdae56f140caa7456e6342">getName</a> ()</td></tr>
@@ -640,31 +672,6 @@ Additional Inherited Members</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
 <tr class="memdesc:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">This slot is called when a child is edited and causes this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s <a class="el" href="class_picto_1_1_asset.html#a2ca6303bf64730a9994a180bf2227da4" title="Emitted whenever something in this asset changes. ">edited()</a> signal to be emitted as well. <br /></td></tr>
 <tr class="separator:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
-<tr class="memitem:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323aef51f96a9a8a6102e768add07226"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a323aef51f96a9a8a6102e768add07226">nameEdited</a> ()</td></tr>
-<tr class="memdesc:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when this object's name is changed. <br /></td></tr>
-<tr class="separator:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
-<tr class="memitem:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ae3b09c56bc028ba811564096eb5272b9">childAddedAfterDeserialize</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; newChild)</td></tr>
-<tr class="memdesc:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a child is added to this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> after its Deserialize function has already run.  <a href="#ae3b09c56bc028ba811564096eb5272b9">More...</a><br /></td></tr>
-<tr class="separator:ae3b09c56bc028ba811564096eb5272b9 inherit signals_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ce48ec1f3432d4ad58ddf3f8d9323b5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a6ce48ec1f3432d4ad58ddf3f8d9323b5">associateChildEdited</a> ()</td></tr>
-<tr class="memdesc:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever one of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s Associate children is edited. <br /></td></tr>
-<tr class="separator:a6ce48ec1f3432d4ad58ddf3f8d9323b5 inherit signals_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_class_picto_1_1_asset"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_asset')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_asset.html">Picto::Asset</a></td></tr>
-<tr class="memitem:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ca6303bf64730a9994a180bf2227da4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a2ca6303bf64730a9994a180bf2227da4">edited</a> ()</td></tr>
-<tr class="memdesc:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever something in this asset changes. <br /></td></tr>
-<tr class="separator:a2ca6303bf64730a9994a180bf2227da4 inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a5a96aa71c14a5de4a24aea183660147a">deleted</a> ()</td></tr>
-<tr class="memdesc:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> is marked to be deleted.  <a href="#a5a96aa71c14a5de4a24aea183660147a">More...</a><br /></td></tr>
-<tr class="separator:a5a96aa71c14a5de4a24aea183660147a inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9dc9a5935284306615aa5e19a5be49e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#af9dc9a5935284306615aa5e19a5be49e">assetIdEdited</a> ()</td></tr>
-<tr class="memdesc:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>'s <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID changes. <br /></td></tr>
-<tr class="separator:af9dc9a5935284306615aa5e19a5be49e inherit signals_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
 <tr class="memitem:ab5c2f2b808f14d1722c77451dcc84a24 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5c2f2b808f14d1722c77451dcc84a24"></a>
 QSharedPointer&lt; QScriptEngine &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a></td></tr>
@@ -879,7 +886,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object with the input taskName. </p>
 <p>If no <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> with the input taskName is found, returns an empty shared pointer. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00103">103</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00104">104</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1079,7 +1086,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a37082e622412b266560c0cfcd8ee757c">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00176">176</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00177">177</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1107,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Runs the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> with the input taskName starting with the initial transition in its top level <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>. </p>
 <p>This function blocks until the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> is done running, then returns true. If it returns false, the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> could not be found, or an <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Engine::PictoEngine</a> was not yet addded to this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> using <a class="el" href="class_picto_1_1_experiment.html#a567673ce1a500a661712458086612005" title="Sets the Engine::PictoEngine that will be used in running this Experiment to the input object...">setEngine()</a>. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00126">126</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00127">127</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1336,7 +1343,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Updates the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> calibration coefficients SignalChannel::setCalibrationCoefficients() and SignalChannel::setShear() based on the current calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values. </p>
 <p>This is called whenever the calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values change. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00240">240</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00242">242</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>

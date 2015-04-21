@@ -127,6 +127,7 @@ void Designer::loadDesign(QSharedPointer<DesignRoot> designRoot)
 		//Populate the AnalysisSelector
 		editorState_->setCurrentAnalysis(QSharedPointer<Analysis>());
 		analysisOption_->setDesignRoot(designRoot_);
+
 		//Since we just loaded a new design, there are no undos or redos available
 		undoAvailable(false);
 		redoAvailable(false);
@@ -181,8 +182,6 @@ void Designer::loadScene(DiagramScene* newScene)
 	//  multiplying the number of times that the slots are called.  In future versions this may occur though because
 	//  future versions support a Qt::UniqueConnection parameter.  We would just disconnect old connections before
 	//  connecting the new ones but this isn't working for some reason.
-	//connect(newScene, SIGNAL(itemInserted(DiagramItem *)),this,SLOT(itemInserted(DiagramItem *)));
-    //connect(newScene, SIGNAL(textInserted(QGraphicsTextItem *)),this,SLOT(textInserted(QGraphicsTextItem *)));
 	connect(editorState_.data(),SIGNAL(resetExperiment()),this,SLOT(resetExperiment()));
 }
 
@@ -439,9 +438,8 @@ void Designer::createToolbars()
 }
 
 /*! \brief Resets the Designer based on the current DesignRoot.
- *	\details There are a number of actions that result in the element objects contained in the DesignRoot
- *	changing.  This function resets the Designer to work with whatever elements are contained in the 
- *	currently loaded DesignRoot.
+ *	\details There are a number of actions that result in the element objects contained in the DesignRoot changing.
+ *	This function resets the Designer to work with whatever elements are contained in the currently loaded DesignRoot.
  *	\sa loadDesign(), resetExperiment(), performUndoAction(), performRedoAction()
  */
 bool Designer::resetEditor()
@@ -451,6 +449,7 @@ bool Designer::resetEditor()
 
 	//Update the analysis list
 	analysisOption_->updateAnalysisList();
+	analysisOption_->updateTaskList();
 
 	//Reset the window asset
 	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
@@ -461,9 +460,8 @@ bool Designer::resetEditor()
 }
 
 /*! \brief Updates the Designer actions that are enabled based on the currently Designer context.
- *	\details Which actions are enabled depends on what element is currently selected as well
- *	as whether the Designer is operating in Experiment or Analysis mode.  This updates the 
- *	available actions accordingly.
+ *	\details Which actions are enabled depends on what element is currently selected as well as whether the Designer is
+ *	operating in Experiment or Analysis mode.  This updates the available actions accordingly.
  */
 void Designer::updateEnabledActions()
 {

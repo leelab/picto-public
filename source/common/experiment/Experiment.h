@@ -180,6 +180,8 @@ private slots:
 
 	void updateSignalCoefficients(Property* changedProp,QVariant var);
 	void sortTasksIntoList(QSharedPointer<Asset> newChild);
+signals:
+	void taskAdded();
 };
 
 

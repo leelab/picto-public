@@ -49,7 +49,6 @@ var searchData=
   ['insertrewarddata',['insertRewardData',['../class_session_info.html#ae0e9984f6cfa55ef52307bf3fb6eed77',1,'SessionInfo']]],
   ['insertstatedata',['insertStateData',['../class_session_info.html#ae18c0245152db810b0efb443c08b0f1d',1,'SessionInfo']]],
   ['inserttaskrundata',['insertTaskRunData',['../class_session_info.html#a5a8b4530a8514000bf7d911a687e8416',1,'SessionInfo']]],
-  ['inserttextitem',['insertTextItem',['../class_diagram_scene.html#ab8d7b5a5eb07f044364a3d1ee5fa4e73',1,'DiagramScene']]],
   ['inserttransition',['insertTransition',['../class_diagram_scene.html#aa8b98aea4192297641cb2347106fa31d',1,'DiagramScene']]],
   ['insertvalue',['insertValue',['../class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523',1,'Picto::SignalChannel']]],
   ['insertvalues',['insertValues',['../class_picto_1_1_signal_channel.html#a14f7b5e24440a75104ed0540371f2f7b',1,'Picto::SignalChannel']]],
@@ -66,7 +65,7 @@ var searchData=
   ['isdone',['isDone',['../class_picto_1_1_choice_controller.html#abaa4d7f742e0678dc151da1a91be8b0c',1,'Picto::ChoiceController::isDone()'],['../class_picto_1_1_control_element.html#acf73c056833f5da319a0ae046b82b3a8',1,'Picto::ControlElement::isDone()'],['../class_picto_1_1_fixation_controller.html#ad5d8d0c37dd6edca49793b1ea846740b',1,'Picto::FixationController::isDone()'],['../class_picto_1_1_script_controller.html#a2e338d3c263bc259c69812b5c7b8cb10',1,'Picto::ScriptController::isDone()'],['../class_picto_1_1_stopwatch_controller.html#aa388a0ce16f4c09c8ce884ad5f006f0a',1,'Picto::StopwatchController::isDone()'],['../class_picto_1_1_target_controller.html#af4af003d976912a0869f95a603c803e8',1,'Picto::TargetController::isDone()'],['../class_picto_1_1_test_controller.html#a60da5e71238caac387ff2c43dbc2e6df',1,'Picto::TestController::isDone()']]],
   ['isdoneprivate',['isDonePrivate',['../class_picto_1_1_choice_controller.html#aacc3bf5004200fb9ba729b873cbe4692',1,'Picto::ChoiceController::isDonePrivate()'],['../class_picto_1_1_fixation_controller.html#a2c79eaf1ec8e0109fd89c460317d306b',1,'Picto::FixationController::isDonePrivate()'],['../class_picto_1_1_target_controller.html#aed2cf472ece2c025c9fa5f230166b4b9',1,'Picto::TargetController::isDonePrivate()']]],
   ['isempty',['isEmpty',['../class_asset_tool_group.html#a172ffbd18587796e3fbd93dde8d62ba5',1,'AssetToolGroup']]],
-  ['isenabled',['isEnabled',['../class_asset_tool_group.html#ab2ec8039e421e6be073fdfa9d4da7328',1,'AssetToolGroup::isEnabled()'],['../class_background_tool_group.html#ae1f380cbc416556ae99a0a16a524d39c',1,'BackgroundToolGroup::isEnabled()'],['../class_tool_group.html#adf3e25748f41ba5490aac857e375260d',1,'ToolGroup::isEnabled()']]],
+  ['isenabled',['isEnabled',['../class_asset_tool_group.html#ab2ec8039e421e6be073fdfa9d4da7328',1,'AssetToolGroup::isEnabled()'],['../class_tool_group.html#adf3e25748f41ba5490aac857e375260d',1,'ToolGroup::isEnabled()']]],
   ['isfilesupported',['isFileSupported',['../class_picto_1_1_multiplatform_sound.html#adb20dcbef6305c9680aa64da4dad2012',1,'Picto::MultiplatformSound']]],
   ['isflushing',['isFlushing',['../class_picto_1_1_reward_controller.html#ae54c91a54e1997254bdff6ecedab69bc',1,'Picto::RewardController']]],
   ['isguieditable',['isGuiEditable',['../class_picto_1_1_property.html#adeb1e13bb14ed9e05697b0b79cbea0b8',1,'Picto::Property']]],
@@ -92,7 +91,6 @@ var searchData=
   ['iswellformed',['isWellFormed',['../struct_picto_1_1_protocol_command.html#aea9dc20cfbb8a0ee0d846eb5fe8cdd8f',1,'Picto::ProtocolCommand']]],
   ['iswidgetposvalid',['isWidgetPosValid',['../class_view_selection_widget.html#ad7dc9dac8aadb7ed82fec1269b6d388e',1,'ViewSelectionWidget']]],
   ['itemchange',['itemChange',['../class_arrow.html#a6d9409982fc2ff7f44676c319c3016f2',1,'Arrow::itemChange()'],['../class_diagram_item.html#ada966349ddc26ea7b0c04f4f756d9fc3',1,'DiagramItem::itemChange()'],['../class_script_item.html#a828c7408cb2afaabd5a7c040207e7139',1,'ScriptItem::itemChange()']]],
-  ['itemcolorchanged',['itemColorChanged',['../class_editor_state.html#a127386630f919ed5a3bfbbc259d3b30c',1,'EditorState']]],
   ['iteminserted',['itemInserted',['../class_diagram_scene.html#af831d659c3c3b3427a1376a738d27df1',1,'DiagramScene::itemInserted()'],['../class_editor_state.html#ad2d5531ffabffdc1db7e3e343f8ca8bf',1,'EditorState::itemInserted()']]],
   ['itemselected',['itemSelected',['../class_diagram_scene.html#aa0f1ec983181d9513829d99c0666e415',1,'DiagramScene::itemSelected()'],['../class_editor_state.html#a0404b2e2f2f10b818e71f12ec4b8e4cb',1,'EditorState::itemSelected()']]]
 ];

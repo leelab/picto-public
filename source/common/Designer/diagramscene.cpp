@@ -28,10 +28,6 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemC
 	editorState_ = editorState;
 	connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)), this, SLOT(setSceneAsset(QSharedPointer<Asset>)));
 	connect(editorState_.data(), SIGNAL(lineColorChanged(QColor)), this, SLOT(setLineColor(QColor)));
-	connect(editorState_.data(), SIGNAL(textColorChanged(QColor)), this, SLOT(setTextColor(QColor)));
-	connect(editorState_.data(), SIGNAL(itemColorChanged(QColor)), this, SLOT(setItemColor(QColor)));
-	connect(editorState_.data(), SIGNAL(fontChanged(QFont)), this, SLOT(setFont(QFont)));
-	connect(editorState_.data(), SIGNAL(backgroundPatternChanged(QPixmap)), this, SLOT(setBackgroundPattern(QPixmap)));
     myItemMenu = itemContextMenu;
 	sceneMenu_ = sceneContextMenu;
 	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
@@ -45,7 +41,8 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemC
 	mouseOverScene_ = false;
 }
 
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
+/*! \brief This is used to set the color of transition arrows.
+ */
 void DiagramScene::setLineColor(const QColor &)
 {
     if (isItemChange(Arrow::Type)) {
@@ -53,38 +50,6 @@ void DiagramScene::setLineColor(const QColor &)
             qgraphicsitem_cast<Arrow *>(selectedItems().first());
         item->setColor(editorState_->getLineColor());
         update();
-    }
-}
-
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-void DiagramScene::setTextColor(const QColor &)
-{
-    if (isItemChange(DiagramTextItem::Type)) {
-        DiagramTextItem *item =
-            qgraphicsitem_cast<DiagramTextItem *>(selectedItems().first());
-        item->setDefaultTextColor(editorState_->getTextColor());
-    }
-}
-
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-void DiagramScene::setItemColor(const QColor &)
-{
-    if (isItemChange(DiagramItem::Type)) {
-        DiagramItem *item =
-            qgraphicsitem_cast<DiagramItem *>(selectedItems().first());
-        item->setBrush(editorState_->getItemColor());
-    }
-}
-
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-void DiagramScene::setFont(const QFont &)
-{
-    if (isItemChange(DiagramTextItem::Type)) {
-        QGraphicsTextItem *item =
-            qgraphicsitem_cast<DiagramTextItem *>(selectedItems().first());
-        //At this point the selection can change so the first selected item might not be a DiagramTextItem
-        if (item)
-            item->setFont(editorState_->getFont());
     }
 }
 
@@ -320,13 +285,6 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 		}
 	}
 	editorState_->setWindowItemsLoaded();
-}
-
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-void DiagramScene::setBackgroundPattern(QPixmap pattern)
-{
-	setBackgroundBrush(pattern);
-	update();
 }
 
 /*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
@@ -741,22 +699,7 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 
 	return newAsset;
 }
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
-void DiagramScene::insertTextItem(QString text,QPointF pos)
-{
-	textItem = new DiagramTextItem();
-	textItem->setFont(editorState_->getFont());
-	textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
-	textItem->setZValue(1000.0);
-	connect(textItem, SIGNAL(lostFocus(DiagramTextItem *)),
-			this, SLOT(editorLostFocus(DiagramTextItem *)));
-	connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
-			this, SIGNAL(itemSelected(QGraphicsItem *)));
-	addItem(textItem);
-	textItem->setDefaultTextColor(editorState_->getTextColor());
-	textItem->setPos(pos);
-	emit textInserted(textItem);
-}
+
 /*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
 bool DiagramScene::isItemChange(int type)
 {

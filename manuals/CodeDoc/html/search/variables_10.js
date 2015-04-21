@@ -15,6 +15,8 @@ var searchData=
   ['scriptprops',['scriptProps',['../struct_asset_description.html#ae6d797a83967ab5216a59a7ff6348083',1,'AssetDescription']]],
   ['secperevent_5f',['secPerEvent_',['../class_simple_event_source.html#aa941bdcecadfa8144226afce6941d9bd',1,'SimpleEventSource']]],
   ['secpersample_5f',['secPerSample_',['../class_simple_event_source.html#aad9b175e1a1ea0546e408fa221ad9341',1,'SimpleEventSource']]],
+  ['selectanalysisbox_5f',['selectAnalysisBox_',['../class_picto_1_1_analysis_option_widget.html#ad332e52425fd0e72f5dc72925dd524fb',1,'Picto::AnalysisOptionWidget']]],
+  ['selectedanalysis_5f',['selectedAnalysis_',['../class_picto_1_1_analysis_option_widget.html#a21a9078924f025e1e1e77a5bd8a8edcd',1,'Picto::AnalysisOptionWidget']]],
   ['selectionlayout_5f',['selectionLayout_',['../class_view_selection_widget.html#a44c0efa8b874570550ae0b702d4d2da0',1,'ViewSelectionWidget']]],
   ['serverline',['serverLine',['../class_dialog.html#adfdff8046ab5a78512915d76d897f49e',1,'Dialog']]],
   ['serviceworkthread',['serviceWorkThread',['../class_system_service.html#a8d129c09fa92d836a49082585ae36d2d',1,'SystemService']]],

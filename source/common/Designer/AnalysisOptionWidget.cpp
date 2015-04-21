@@ -18,40 +18,92 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	updatingList_(false),
 	ignoreSelectBoxEvents_(false)
 {
-	QGroupBox* groupBox = new QGroupBox("Select Analysis");
+	QGroupBox* groupBox = new QGroupBox("Edit Mode");
 
-	selectBox_ = new QComboBox();
-	selectBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	selectBox_->setInsertPolicy(QComboBox::NoInsert);
-	selectBox_->setEditable(false);
-	connect(selectBox_,SIGNAL(currentIndexChanged(int)),this,SLOT(selectedIndexChanged(int)));
-	connect(selectBox_,SIGNAL(editTextChanged(const QString&)),this,SLOT(selectedItemTextChanged(const QString&)));
+	//----- Task Selection -------------
 
-	addAnalysisAction_ = new QAction(QIcon(":/icons/newanalysis.svg"),
-									tr("Add Analysis"),this);
+	deleteTaskAction_ = new QAction(QIcon(":/icons/delete.png"), tr("Delete Task"), this);
+	deleteTaskAction_->setStatusTip(tr("Delete Task"));
+	deleteTaskAction_->setEnabled(false);
+	connect(deleteTaskAction_, SIGNAL(triggered()), this, SLOT(deleteCurrentTask()));
+
+	QToolButton* deleteTaskButton = new QToolButton();
+	deleteTaskButton->setDefaultAction(deleteTaskAction_);
+	deleteTaskButton->setAutoRaise(true);
+
+	addTaskAction_ = new QAction(QIcon(":/icons/newanalysis.svg"), tr("Add Task"), this);
+	addTaskAction_->setStatusTip(tr("Add Task"));
+	addTaskAction_->setEnabled(true);
+	connect(addTaskAction_, SIGNAL(triggered()), this, SLOT(addTask()));
+
+	QToolButton* addTaskButton = new QToolButton();
+	addTaskButton->setDefaultAction(addTaskAction_);
+	addTaskButton->setAutoRaise(true);
+
+	QHBoxLayout* taskLabel(new QHBoxLayout());
+	taskLabel->addWidget(new QLabel("Task"));
+	taskLabel->addWidget(addTaskButton);
+	taskLabel->addWidget(deleteTaskButton);
+
+	taskBox_ = new QComboBox();
+	taskBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	taskBox_->setInsertPolicy(QComboBox::NoInsert);
+	taskBox_->setEditable(false);
+
+	QHBoxLayout* taskSelect(new QHBoxLayout());
+	taskSelect->addWidget(taskBox_);
+	connect(editorState.data(), SIGNAL(taskAdded()), this, SLOT(updateTaskList()));
+
+	QVBoxLayout* taskSelectionLayout = new QVBoxLayout();
+	taskSelectionLayout->addLayout(taskLabel);
+	taskSelectionLayout->addLayout(taskSelect);
+
+	//----- Analysis Selection -------------
+
+	selectAnalysisBox_ = new QComboBox();
+	selectAnalysisBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	selectAnalysisBox_->setInsertPolicy(QComboBox::NoInsert);
+	selectAnalysisBox_->setEditable(false);
+	connect(selectAnalysisBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedIndexChanged(int)));
+	connect(selectAnalysisBox_, SIGNAL(editTextChanged(const QString&)), this, SLOT(selectedItemTextChanged(const QString&)));
+
+	addAnalysisAction_ = new QAction(QIcon(":/icons/newanalysis.svg"), tr("Add Analysis"),this);
 	addAnalysisAction_->setStatusTip(tr("Add Analysis"));
 	addAnalysisAction_->setEnabled(true);
 	connect(addAnalysisAction_,SIGNAL(triggered()),this,SLOT(addAnalysis()));
+
 	QToolButton* addAnalysisButton = new QToolButton();
 	addAnalysisButton->setDefaultAction(addAnalysisAction_);
 	addAnalysisButton->setAutoRaise(true);
 
-	deleteAnalysisAction_ = new QAction(QIcon(":/icons/delete.png"),
-                               tr("Delete Analysis"), this);
+	deleteAnalysisAction_ = new QAction(QIcon(":/icons/delete.png"), tr("Delete Analysis"), this);
     deleteAnalysisAction_->setStatusTip(tr("Delete Analysis"));
 	deleteAnalysisAction_->setEnabled(false);
 	connect(deleteAnalysisAction_,SIGNAL(triggered()),this,SLOT(deleteSelectedAnalysis()));
+
 	QToolButton* deleteAnalysisButton = new QToolButton();
 	deleteAnalysisButton->setDefaultAction(deleteAnalysisAction_);
 	deleteAnalysisButton->setAutoRaise(true);
 
-	QHBoxLayout* buttonLayout(new QHBoxLayout());
-	buttonLayout->addWidget(addAnalysisButton);
-	buttonLayout->addWidget(deleteAnalysisButton);
+
+	QHBoxLayout *analysisLabel = new QHBoxLayout();
+	analysisLabel->addWidget(new QLabel("Analysis"));
+	analysisLabel->addWidget(addAnalysisButton);
+	analysisLabel->addWidget(deleteAnalysisButton);
+
+	QHBoxLayout* analysisSelect(new QHBoxLayout());
+	analysisSelect->addWidget(selectAnalysisBox_);
+
+	QVBoxLayout* analysisSelectionLayout = new QVBoxLayout();
+	analysisSelectionLayout->addLayout(analysisLabel);
+	analysisSelectionLayout->addLayout(analysisSelect);
+
+	//----- Option Widget Layout --------------
 
 	QHBoxLayout* groupBoxLayout(new QHBoxLayout());
-	groupBoxLayout->addWidget(selectBox_);
-	groupBoxLayout->addLayout(buttonLayout);
+	groupBoxLayout->addLayout(taskSelectionLayout);
+	groupBoxLayout->addSpacing(10);
+	groupBoxLayout->addLayout(analysisSelectionLayout);
 
 	groupBox->setLayout(groupBoxLayout);
 
@@ -61,44 +113,41 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	setLayout(widgetLayout);
 }
 
+/*! \brief Used to pass the widget the current Designer's DesignRoot.
+ */
 void AnalysisOptionWidget::setDesignRoot(QSharedPointer<DesignRoot> designRoot)
 {
 	if(!isEnabled())
 		return;
-	//if(designRoot_)
-	//{
-	//	disconnect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
-	//}
 	designRoot_ = designRoot;
-	//if(designRoot_)
-	//{
-	//	connect(designRoot_.data(),SIGNAL(refreshedFromXml()),this,SLOT(updateAnalysisList()));
-	//}
-	//updateAnalysisList();
 }
 
+/*!	\brief Finds the Analysis with matching analysisId and sets it as the currently selected item in the QComboBox.
+ */
 void AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)
 {
 	if(!isEnabled())
 		return;
 	if(analysisId == QUuid())
 	{
-		selectBox_->setCurrentIndex(0);
+		selectAnalysisBox_->setCurrentIndex(0);
 	}
 	else
 	{
-		for(int i=1;i<selectBox_->count();i++)
+		for (int i = 1; i<selectAnalysisBox_->count(); i++)
 		{
-			QUuid currAnalysisId = selectBox_->itemData(i).toUuid();
-			if(selectBox_->itemData(i).toUuid() == analysisId)
+			QUuid currAnalysisId = selectAnalysisBox_->itemData(i).toUuid();
+			if (selectAnalysisBox_->itemData(i).toUuid() == analysisId)
 			{
-				selectBox_->setCurrentIndex(i);
+				selectAnalysisBox_->setCurrentIndex(i);
 				break;
 			}
 		}
 	}
 }
 
+/*!	\brief Finds the Analysis with matching Asset and sets it as the currently selected item in the QComboBox.
+*/
 void AnalysisOptionWidget::setSelectedAnalysis(QSharedPointer<Analysis> analysis)
 {
 	if(!isEnabled())
@@ -109,11 +158,15 @@ void AnalysisOptionWidget::setSelectedAnalysis(QSharedPointer<Analysis> analysis
 	setSelectedAnalysis(id);
 }
 
+/*! \brief Returns the currently selected Analysis asset. 
+ */
 QSharedPointer<Analysis> AnalysisOptionWidget::getSelectedAnalysis()
 {
 	return selectedAnalysis_;
 }
 
+/*! \brief Returns the analysisId of the currently selected Analysis asset.
+ */
 QUuid AnalysisOptionWidget::getSelectedAnalysisId()
 {
 	QSharedPointer<Analysis> selectedAnalysis = getSelectedAnalysis();
@@ -122,6 +175,8 @@ QUuid AnalysisOptionWidget::getSelectedAnalysisId()
 	return QUuid();
 }
 
+/*! \brief Clears and rebuilds the Analysis List.
+ */
 void AnalysisOptionWidget::updateAnalysisList()
 {
 	if(!isEnabled())
@@ -134,24 +189,26 @@ void AnalysisOptionWidget::updateAnalysisList()
 		lastAnalysisId = selectedAnalysis_->getAssociateId();
 	ignoreSelectBoxEvents_ = true;
 	int newSelectionIndex = 0;
-	selectBox_->clear();
-	selectBox_->addItem("None");
+	selectAnalysisBox_->clear();
+	selectAnalysisBox_->addItem("None");
 	QUuid currAnalysisId;
 	for(int i=0;i<designRoot_->getNumAnalyses();i++)
 	{
 		currAnalysisId = designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId();
-		selectBox_->addItem(designRoot_->getAnalysis(i)->getName(),currAnalysisId);
+		selectAnalysisBox_->addItem(designRoot_->getAnalysis(i)->getName(), currAnalysisId);
 		if(!lastAnalysisId.isNull() && currAnalysisId == lastAnalysisId)
 			newSelectionIndex = i+1;
 	}
-	//We set the current index to -1 so that whatever the newSelectionIndex is, it will
-	//cause selectedIndexChanged to get triggered.
-	selectBox_->setCurrentIndex(-1);
+
+	//We set the current index to -1 so that it will cause selectedIndexChanged to get triggered when set.
+	selectAnalysisBox_->setCurrentIndex(-1);
 	ignoreSelectBoxEvents_ = false;
-	selectBox_->setCurrentIndex(newSelectionIndex);
+	selectAnalysisBox_->setCurrentIndex(newSelectionIndex);
 	updatingList_ = false;
 }
 
+/*! \brief Adds a new analysis to the designRoot, using default values.
+ */
 void AnalysisOptionWidget::addAnalysis()
 {
 	if(!isEnabled())
@@ -176,9 +233,11 @@ void AnalysisOptionWidget::addAnalysis()
 	setSelectedAnalysis(newAnalysis.staticCast<Analysis>()->getAssociateId());
 
 	//Select name of new analysis for editing
-	selectBox_->lineEdit()->selectAll();
+	selectAnalysisBox_->lineEdit()->selectAll();
 }
 
+/*! \brief Connected to the QComboBox::currentIndexChanged signal, this is called whenever a new analysis is selected.
+ */
 void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 {
 	if(!isEnabled())
@@ -194,7 +253,7 @@ void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 	//If no analysis was selected
 	if(selectedIndex <= 0)
 	{
-		selectBox_->setEditable(false);
+		selectAnalysisBox_->setEditable(false);
 		deleteAnalysisAction_->setEnabled(false);
 
 		//Erase the current selected analysis pointer
@@ -202,7 +261,7 @@ void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 	}
 	else
 	{
-		selectBox_->setEditable(true);
+		selectAnalysisBox_->setEditable(true);
 		deleteAnalysisAction_->setEnabled(true);
 
 		//Update the current selected analysis
@@ -215,13 +274,15 @@ void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 	}
 }
 
+/*!	\brief Connected to the QComboBox::editTextChanged signal, this is called whenever the name of an analysis is changed.
+ */
 void AnalysisOptionWidget::selectedItemTextChanged(const QString& selectedItemText)
 {
 	if(!isEnabled())
 		return;
 	if(ignoreSelectBoxEvents_)
 		return;
-	int currIndex = selectBox_->currentIndex();
+	int currIndex = selectAnalysisBox_->currentIndex();
 	if(currIndex <= 0)
 		return;
 	Q_ASSERT(currIndex >= 0 && currIndex <= designRoot_->getNumAnalyses());
@@ -235,6 +296,9 @@ void AnalysisOptionWidget::selectedItemTextChanged(const QString& selectedItemTe
 	}
 }
 
+/*! \brief Connected to the deleteAnalysisAction_, this deletes the currently selected analysis.
+ *	\sa deleteAnalysisAction_
+ */
 void AnalysisOptionWidget::deleteSelectedAnalysis()
 {
 	if(!isEnabled())
@@ -256,7 +320,7 @@ void AnalysisOptionWidget::deleteSelectedAnalysis()
 	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalysisId);
 	
 	//Remove analysis from design
-	int analysisIndexToRemove = selectBox_->currentIndex()-1;
+	int analysisIndexToRemove = selectAnalysisBox_->currentIndex() - 1;
 	Q_ASSERT(analysisIndexToRemove < designRoot_->getNumAnalyses());
 	if(!designRoot_->removeAnalysis(analysisIndexToRemove))
 		Q_ASSERT(false);
@@ -268,3 +332,45 @@ void AnalysisOptionWidget::deleteSelectedAnalysis()
 	//Set current analysis to none.
 	setSelectedAnalysis(QUuid());
 }
+
+/*!	\brief Updates the current list of tasks.
+ */
+void AnalysisOptionWidget::updateTaskList()
+{
+	if (!isEnabled())
+		return;
+	if (updatingList_)
+		return;
+
+	updatingList_ = true;
+
+	QSharedPointer<Experiment> pExperiment = designRoot_->getExperiment().objectCast<Experiment>();
+	if (pExperiment)
+	{
+		taskBox_->clear();
+
+		QStringList tasks = pExperiment->getTaskNames();
+
+		foreach(QString taskName, tasks)
+		{
+			taskBox_->addItem(taskName);
+		}
+	}
+
+	updatingList_ = false;
+}
+
+/*! \brief Bound to AnalysisOptionWidget::addTaskAction_, it creates a new task in the current experiment
+ */
+void AnalysisOptionWidget::addTask()
+{
+
+}
+
+/*! \brief Bound to AnalysisOptionWidget::deleteTaskAction_, it deletes the current task
+*/
+void AnalysisOptionWidget::deleteCurrentTask()
+{
+
+}
+

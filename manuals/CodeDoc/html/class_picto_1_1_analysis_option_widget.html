@@ -91,10 +91,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-slots">Private Slots</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_analysis_option_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -118,23 +116,13 @@ Inheritance diagram for Picto::AnalysisOptionWidget:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a5d984af5ec98a41d4f582824a73e2ff1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d984af5ec98a41d4f582824a73e2ff1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateAnalysisList</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a5d984af5ec98a41d4f582824a73e2ff1">updateAnalysisList</a> ()</td></tr>
+<tr class="memdesc:a5d984af5ec98a41d4f582824a73e2ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears and rebuilds the <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> List. <br /></td></tr>
 <tr class="separator:a5d984af5ec98a41d4f582824a73e2ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
-Signals</h2></td></tr>
-<tr class="memitem:ad3918db3bdbfc1bba1ceff962f5ed18c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3918db3bdbfc1bba1ceff962f5ed18c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>selectedAnalysisChanged</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt; analysis)</td></tr>
-<tr class="separator:ad3918db3bdbfc1bba1ceff962f5ed18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a535a107dfd012fae2585926262aa6212"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a535a107dfd012fae2585926262aa6212"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>analysisNameChangeRequest</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt; analysis, QString newName)</td></tr>
-<tr class="separator:a535a107dfd012fae2585926262aa6212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86786610af5a633109040a8532639e92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86786610af5a633109040a8532639e92"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>newAnalysisRequested</b> ()</td></tr>
-<tr class="separator:a86786610af5a633109040a8532639e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cc7387fc66bb03f2894ef3b5f0abb5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cc7387fc66bb03f2894ef3b5f0abb5f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>deleteAnalysisRequested</b> ()</td></tr>
-<tr class="separator:a6cc7387fc66bb03f2894ef3b5f0abb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26db716f49be8a607da2e54f0b52a846"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26db716f49be8a607da2e54f0b52a846"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a26db716f49be8a607da2e54f0b52a846">updateTaskList</a> ()</td></tr>
+<tr class="memdesc:a26db716f49be8a607da2e54f0b52a846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the current list of tasks. <br /></td></tr>
+<tr class="separator:a26db716f49be8a607da2e54f0b52a846"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -142,81 +130,136 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>AnalysisOptionWidget</b> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QWidget *parent=NULL)</td></tr>
 <tr class="separator:a46e8a55624a83ca7ce4459fb37dfcc98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5d8dab3a79f9e062622ad1c013d1101"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5d8dab3a79f9e062622ad1c013d1101"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDesignRoot</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt; designRoot)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#ae5d8dab3a79f9e062622ad1c013d1101">setDesignRoot</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt; designRoot)</td></tr>
+<tr class="memdesc:ae5d8dab3a79f9e062622ad1c013d1101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to pass the widget the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a>. <br /></td></tr>
 <tr class="separator:ae5d8dab3a79f9e062622ad1c013d1101"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a179414a058b6659e4b981fdce0fc6501"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a179414a058b6659e4b981fdce0fc6501"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSelectedAnalysis</b> (QUuid analysisId)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a179414a058b6659e4b981fdce0fc6501">setSelectedAnalysis</a> (QUuid analysisId)</td></tr>
+<tr class="memdesc:a179414a058b6659e4b981fdce0fc6501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> with matching analysisId and sets it as the currently selected item in the QComboBox. <br /></td></tr>
 <tr class="separator:a179414a058b6659e4b981fdce0fc6501"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0538eff8390b943b3d50acd69039089f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0538eff8390b943b3d50acd69039089f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSelectedAnalysis</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt; analysis)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a0538eff8390b943b3d50acd69039089f">setSelectedAnalysis</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt; analysis)</td></tr>
+<tr class="memdesc:a0538eff8390b943b3d50acd69039089f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> with matching <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and sets it as the currently selected item in the QComboBox. <br /></td></tr>
 <tr class="separator:a0538eff8390b943b3d50acd69039089f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01163da9c32a0c85b43cb82b3ec2ec67"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01163da9c32a0c85b43cb82b3ec2ec67"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getSelectedAnalysis</b> ()</td></tr>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a01163da9c32a0c85b43cb82b3ec2ec67">getSelectedAnalysis</a> ()</td></tr>
+<tr class="memdesc:a01163da9c32a0c85b43cb82b3ec2ec67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the currently selected <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> asset. <br /></td></tr>
 <tr class="separator:a01163da9c32a0c85b43cb82b3ec2ec67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0929ebde3eaabecfea3a2e7d06d46ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0929ebde3eaabecfea3a2e7d06d46ea"></a>
-QUuid&#160;</td><td class="memItemRight" valign="bottom"><b>getSelectedAnalysisId</b> ()</td></tr>
+QUuid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#ac0929ebde3eaabecfea3a2e7d06d46ea">getSelectedAnalysisId</a> ()</td></tr>
+<tr class="memdesc:ac0929ebde3eaabecfea3a2e7d06d46ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the analysisId of the currently selected <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> asset. <br /></td></tr>
 <tr class="separator:ac0929ebde3eaabecfea3a2e7d06d46ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
 Private Slots</h2></td></tr>
 <tr class="memitem:a364d4998851ff89582fa19b0aa52da79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a364d4998851ff89582fa19b0aa52da79"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addAnalysis</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a364d4998851ff89582fa19b0aa52da79">addAnalysis</a> ()</td></tr>
+<tr class="memdesc:a364d4998851ff89582fa19b0aa52da79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new analysis to the designRoot, using default values. <br /></td></tr>
 <tr class="separator:a364d4998851ff89582fa19b0aa52da79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afda8438b2ca653749b566cf244f54a17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#afda8438b2ca653749b566cf244f54a17">deleteSelectedAnalysis</a> ()</td></tr>
+<tr class="memdesc:afda8438b2ca653749b566cf244f54a17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connected to the deleteAnalysisAction_, this deletes the currently selected analysis.  <a href="#afda8438b2ca653749b566cf244f54a17">More...</a><br /></td></tr>
+<tr class="separator:afda8438b2ca653749b566cf244f54a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dd18b11cca2fbb6c8f2c71b333e3bbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dd18b11cca2fbb6c8f2c71b333e3bbb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>selectedIndexChanged</b> (int selectedIndex)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a7dd18b11cca2fbb6c8f2c71b333e3bbb">selectedIndexChanged</a> (int selectedIndex)</td></tr>
+<tr class="memdesc:a7dd18b11cca2fbb6c8f2c71b333e3bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connected to the QComboBox::currentIndexChanged signal, this is called whenever a new analysis is selected. <br /></td></tr>
 <tr class="separator:a7dd18b11cca2fbb6c8f2c71b333e3bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bb30b03976e76b13b1d4f27a548d658"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bb30b03976e76b13b1d4f27a548d658"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>selectedItemTextChanged</b> (const QString &amp;selectedItemText)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a1bb30b03976e76b13b1d4f27a548d658">selectedItemTextChanged</a> (const QString &amp;selectedItemText)</td></tr>
+<tr class="memdesc:a1bb30b03976e76b13b1d4f27a548d658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connected to the QComboBox::editTextChanged signal, this is called whenever the name of an analysis is changed. <br /></td></tr>
 <tr class="separator:a1bb30b03976e76b13b1d4f27a548d658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afda8438b2ca653749b566cf244f54a17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afda8438b2ca653749b566cf244f54a17"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>deleteSelectedAnalysis</b> ()</td></tr>
-<tr class="separator:afda8438b2ca653749b566cf244f54a17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a92acd8cd2a6e4af3be49f9add68b31e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92acd8cd2a6e4af3be49f9add68b31e8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>changeSelectedAnalysisName</b> (QString newName)</td></tr>
-<tr class="separator:a92acd8cd2a6e4af3be49f9add68b31e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d851ecfe7d8a768087fd05658c1f107"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d851ecfe7d8a768087fd05658c1f107"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a8d851ecfe7d8a768087fd05658c1f107">addTask</a> ()</td></tr>
+<tr class="memdesc:a8d851ecfe7d8a768087fd05658c1f107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bound to <a class="el" href="class_picto_1_1_analysis_option_widget.html#a0f8fe9c31a3484495e1545c0f0279c56" title="Action that gets called when the AddTask button is pressed. ">AnalysisOptionWidget::addTaskAction_</a>, it creates a new task in the current experiment. <br /></td></tr>
+<tr class="separator:a8d851ecfe7d8a768087fd05658c1f107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a430230f088917a2aeea7a03faec6a119"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a430230f088917a2aeea7a03faec6a119"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a430230f088917a2aeea7a03faec6a119">deleteCurrentTask</a> ()</td></tr>
+<tr class="memdesc:a430230f088917a2aeea7a03faec6a119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bound to <a class="el" href="class_picto_1_1_analysis_option_widget.html#a4a761b372a6968ab727b221c6423567b" title="Action that gets called when the DeleteTask button is pressed. ">AnalysisOptionWidget::deleteTaskAction_</a>, it deletes the current task. <br /></td></tr>
+<tr class="separator:a430230f088917a2aeea7a03faec6a119"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a9a417cc56434dc6ed7e9e9dd30ecf8fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a417cc56434dc6ed7e9e9dd30ecf8fe"></a>
-QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>editorState_</b></td></tr>
+QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a9a417cc56434dc6ed7e9e9dd30ecf8fe">editorState_</a></td></tr>
+<tr class="memdesc:a9a417cc56434dc6ed7e9e9dd30ecf8fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current design's <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a>. <br /></td></tr>
 <tr class="separator:a9a417cc56434dc6ed7e9e9dd30ecf8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0c2d4ff8990abe571b5fc7241253fc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0c2d4ff8990abe571b5fc7241253fc9"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>designRoot_</b></td></tr>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignRoot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#aa0c2d4ff8990abe571b5fc7241253fc9">designRoot_</a></td></tr>
+<tr class="memdesc:aa0c2d4ff8990abe571b5fc7241253fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current design's <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a>. <br /></td></tr>
 <tr class="separator:aa0c2d4ff8990abe571b5fc7241253fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21a9078924f025e1e1e77a5bd8a8edcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21a9078924f025e1e1e77a5bd8a8edcd"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>selectedAnalysis_</b></td></tr>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_analysis.html">Analysis</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a21a9078924f025e1e1e77a5bd8a8edcd">selectedAnalysis_</a></td></tr>
+<tr class="memdesc:a21a9078924f025e1e1e77a5bd8a8edcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currently selected <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>. <br /></td></tr>
 <tr class="separator:a21a9078924f025e1e1e77a5bd8a8edcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e922ca8b2a53c53352823aefb410d5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e922ca8b2a53c53352823aefb410d5a"></a>
-QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>addAnalysisAction_</b></td></tr>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a1e922ca8b2a53c53352823aefb410d5a">addAnalysisAction_</a></td></tr>
+<tr class="memdesc:a1e922ca8b2a53c53352823aefb410d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Action that gets called when the AddAnalysis button is pressed. <br /></td></tr>
 <tr class="separator:a1e922ca8b2a53c53352823aefb410d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad12e7e5f67856a7f7e18707de315a0c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad12e7e5f67856a7f7e18707de315a0c9"></a>
-QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>deleteAnalysisAction_</b></td></tr>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#ad12e7e5f67856a7f7e18707de315a0c9">deleteAnalysisAction_</a></td></tr>
+<tr class="memdesc:ad12e7e5f67856a7f7e18707de315a0c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Action that gets called when the DeleteAnalysis button is pressed. <br /></td></tr>
 <tr class="separator:ad12e7e5f67856a7f7e18707de315a0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bc650e2d867f66230c0ccd81b9a8de7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bc650e2d867f66230c0ccd81b9a8de7"></a>
-QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>selectBox_</b></td></tr>
-<tr class="separator:a5bc650e2d867f66230c0ccd81b9a8de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f8fe9c31a3484495e1545c0f0279c56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f8fe9c31a3484495e1545c0f0279c56"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a0f8fe9c31a3484495e1545c0f0279c56">addTaskAction_</a></td></tr>
+<tr class="memdesc:a0f8fe9c31a3484495e1545c0f0279c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Action that gets called when the AddTask button is pressed. <br /></td></tr>
+<tr class="separator:a0f8fe9c31a3484495e1545c0f0279c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a761b372a6968ab727b221c6423567b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a761b372a6968ab727b221c6423567b"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a4a761b372a6968ab727b221c6423567b">deleteTaskAction_</a></td></tr>
+<tr class="memdesc:a4a761b372a6968ab727b221c6423567b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Action that gets called when the DeleteTask button is pressed. <br /></td></tr>
+<tr class="separator:a4a761b372a6968ab727b221c6423567b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad332e52425fd0e72f5dc72925dd524fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad332e52425fd0e72f5dc72925dd524fb"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#ad332e52425fd0e72f5dc72925dd524fb">selectAnalysisBox_</a></td></tr>
+<tr class="memdesc:ad332e52425fd0e72f5dc72925dd524fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The QComboBox that holds the Analyses that are available. <br /></td></tr>
+<tr class="separator:ad332e52425fd0e72f5dc72925dd524fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8ad00059ed9468b07f9324c3c2f343"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b8ad00059ed9468b07f9324c3c2f343"></a>
+QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a7b8ad00059ed9468b07f9324c3c2f343">taskBox_</a></td></tr>
+<tr class="memdesc:a7b8ad00059ed9468b07f9324c3c2f343"><td class="mdescLeft">&#160;</td><td class="mdescRight">The QComboBox that holds the Tasks that are available. <br /></td></tr>
+<tr class="separator:a7b8ad00059ed9468b07f9324c3c2f343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9feacbf3e7533b89593d7e33fb0c6b0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9feacbf3e7533b89593d7e33fb0c6b0e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>updatingList_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a9feacbf3e7533b89593d7e33fb0c6b0e">updatingList_</a></td></tr>
+<tr class="memdesc:a9feacbf3e7533b89593d7e33fb0c6b0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag to avoid recursive update calls. <br /></td></tr>
 <tr class="separator:a9feacbf3e7533b89593d7e33fb0c6b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a9ad37794e5646132d47f3286ab1972"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a9ad37794e5646132d47f3286ab1972"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>ignoreSelectBoxEvents_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a7a9ad37794e5646132d47f3286ab1972">ignoreSelectBoxEvents_</a></td></tr>
+<tr class="memdesc:a7a9ad37794e5646132d47f3286ab1972"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag to avoid recursive index updates. <br /></td></tr>
 <tr class="separator:a7a9ad37794e5646132d47f3286ab1972"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa302bc0c6cf030a87c3580de3abb865d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa302bc0c6cf030a87c3580de3abb865d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_</b></td></tr>
-<tr class="separator:aa302bc0c6cf030a87c3580de3abb865d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A drop down menu for selecting Analyses for the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
-<p>The original comment claimed that it wasn't in use, but it seems to be used to select the analysis script being edited in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. Original comment preserved:</p>
-<p>When we started the final version of the analysis system, we used this widget to allow users to choose which <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> they wanted to run. As time went on, features like selecting multiple Analyses and including built-in and importable analyses in one widget became apparent and we have now moved to using the <a class="el" href="class_picto_1_1_analysis_selector_widget.html" title="A widget used to select Analysis designs to apply to a test run or session playback. ">AnalysisSelectorWidget</a>. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_selector_widget.html" title="A widget used to select Analysis designs to apply to a test run or session playback. ">AnalysisSelectorWidget</a> </dd></dl>
+<p>This widget is used to control <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> editing in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. Originally it was also responsible for selecting <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> when running an experiment, but more flexibility was required for that, so the <a class="el" href="class_picto_1_1_analysis_selector_widget.html" title="A widget used to select Analysis designs to apply to a test run or session playback. ">AnalysisSelectorWidget</a> was developed. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_selector_widget.html" title="A widget used to select Analysis designs to apply to a test run or session playback. ">AnalysisSelectorWidget</a> </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_option_widget_8h_source.html#l00029">29</a> of file <a class="el" href="_analysis_option_widget_8h_source.html">AnalysisOptionWidget.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<p>Definition at line <a class="el" href="_analysis_option_widget_8h_source.html#l00024">24</a> of file <a class="el" href="_analysis_option_widget_8h_source.html">AnalysisOptionWidget.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="afda8438b2ca653749b566cf244f54a17"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnalysisOptionWidget::deleteSelectedAnalysis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Connected to the deleteAnalysisAction_, this deletes the currently selected analysis. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_option_widget.html#ad12e7e5f67856a7f7e18707de315a0c9" title="Action that gets called when the DeleteAnalysis button is pressed. ">deleteAnalysisAction_</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="_analysis_option_widget_8cpp_source.html#l00302">302</a> of file <a class="el" href="_analysis_option_widget_8cpp_source.html">AnalysisOptionWidget.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/Designer/<a class="el" href="_analysis_option_widget_8h_source.html">AnalysisOptionWidget.h</a></li>
 <li>source/common/Designer/<a class="el" href="_analysis_option_widget_8cpp_source.html">AnalysisOptionWidget.cpp</a></li>
 </ul>

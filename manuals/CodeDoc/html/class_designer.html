@@ -386,7 +386,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Use this function instead of setEnabled() to enable/disable the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
 <p>This function not only enable/disables user interaction with the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> like setEnabled() does, it also disables some of the internal operations of the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> such that editing of the Design from other locations will not have undesirable side effects. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00142">142</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00143">143</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -413,7 +413,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Checks the syntax of the current XML to see if it is a legal experiment</p>
 <p>In the process it sets the displayed tab in the InfoPane to the <a class="el" href="class_syntax_error_box.html" title="A Syntax Error widget used to display the output of the Picto Design Validation (ie. compilation) process. ">SyntaxErrorBox</a> tab. so that the designer can see the output. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00296">296</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00295">295</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -440,9 +440,9 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 </div><div class="memdoc">
 
 <p>Called when the current Analysis changes to reload the window asset. </p>
-<p>If we are switching Analyses or into or out of an Analysis mode, things are displayed differently on the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas. AnalysisElement specific to the current Analysis are shown. If an Analysis is active, experimental elements need to be grayed out. This assures that the editorState redraws its window properly now that it knows about the currently selected analysis. </p><dl class="section note"><dt>Note</dt><dd>This appears to just be helping the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> do its job. Probably this functionality should be moved out of this class and just happen automatically inside the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> when it emits the <a class="el" href="class_editor_state.html#a50e0836cdfe1d8272171575b2f33a918" title="Emitted if the Analysis currently being displayed in the Designer changed. currAnalysis is the new ac...">EditorState::currentAnalysisChanged()</a> signal. </dd></dl>
+<p>If we are switching Analyses or into or out of an Analysis mode, things are displayed differently on the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas. AnalysisElement specific to the current Analysis are shown. If an Analysis is active, experimental elements need to be grayed out. This assures that the editorState redraws its window properly now that it knows about the currently selected analysis. </p><dl class="section note"><dt>Note</dt><dd>This appears to just be helping the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> do its job. Probably this functionality should be moved out of this class and just happen automatically inside the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> when it emits the <a class="el" href="class_editor_state.html#a50e0836cdfe1d8272171575b2f33a918" title="Emitted if the Analysis currently being displayed in the Designer changed. ">EditorState::currentAnalysisChanged()</a> signal. </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00283">283</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00282">282</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -470,7 +470,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations. </p>
 <p>We make undo/redo slow but easy to program by serializing the Design every time an important change was made and copying it into a document who's operations are tracked for undo/redo purposes. That way to undo/redo we just undo/redo the document and reload the Design from that document. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00213">213</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00212">212</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +520,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>This is an initialization function that loads the input scene as the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> Scene. </p>
 <p>Originally, the designer used to function differently with lots of different scenes being loaded back and forth depending on which Element was the Window Asset. Now we only use a single scene that updates itself depending on the Window Asset. This functions contents could probably just be moved into a larger intialization function at some point. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00167">167</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00168">168</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -548,7 +548,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Redoes a previously undone significant action in the Design. </p>
 <p>Calls redo on the underlying XML document, rebuilds the designRoot based on that document and resets this <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with the new objects underlying the DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0" title="Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...">insertEditBlock()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00235">235</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00234">234</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -576,7 +576,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Undoes the last significant action in the Design. </p>
 <p>Calls undo on the underlying XML document, rebuilds the designRoot based on that document and resets this <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with the new objects underlying the DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#ae9a6d5e594e6a4b4a9e55f9b5ad67db0" title="Puts the latest changes to the Design into the serialized XML that we use for undo/redo operations...">insertEditBlock()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00223">223</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00222">222</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -604,7 +604,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> based on the current DesignRoot. </p>
 <p>There are a number of actions that result in the element objects contained in the DesignRoot changing. This function resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to work with whatever elements are contained in the currently loaded DesignRoot. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a88737acaeeaf7223fdd2f928df93ba8d" title="Called before displaying the Designer on screen to set the DesignRoot on which it will operate...">loadDesign()</a>, <a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026" title="Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...">resetExperiment()</a>, <a class="el" href="class_designer.html#ab98b0f012253a516d6deb316f9584014" title="Undoes the last significant action in the Design. ">performUndoAction()</a>, <a class="el" href="class_designer.html#a81538552ba4b84302354a882933917a4" title="Redoes a previously undone significant action in the Design. ">performRedoAction()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00447">447</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00445">445</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -632,7 +632,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Resets the associated DesignRoot from its XML code and then resets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to function with the newly reset object. </p>
 <p>This is useful because some operations currently require rebuildling the design from text. For example, currently deleting an element in Picto just sets a deleted flag on that element that tells it not to serialize itself out. This helps with maintaining the general serialized XML structure through changes to the design, but in order to actually make the element disappear in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> we need to then rebuild the whole design from its XML text. Obviously that is extremely inefficient but this is the kind of tradeoff that sometimes sped up the Picto development schedule at the expense of runtime efficiency. If you have time, please rework the system such that we won't need to use inefficient functions like this one. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00199">199</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00198">198</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -661,7 +661,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Called when text in the search box changes to initiate a search for the input string. </p>
 <p>Whenever the text in the searchbox is updated, a search is initiated within the Experimental and Active Analysis assets. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00557">557</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00555">555</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -690,7 +690,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Called when the selected Asset in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly. </p>
 <dl class="section note"><dt>Note</dt><dd>This would appear to be redundant with <a class="el" href="class_designer.html#a50b32ea1609d95d1b70e5e854be7d5ab" title="Called when the selected Graphics Item in the Designer canvas changes to update the actions available...">selectedItemChanged()</a>, it might be worth looking into. </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00260">260</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00259">259</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -719,7 +719,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Called when the selected Graphics Item in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> canvas changes to update the actions available in the Toolbar/ContextMenu accordingly. </p>
 <dl class="section note"><dt>Note</dt><dd>This would appear to be redundant with <a class="el" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0" title="Called when the selected Asset in the Designer canvas changes to update the actions available in the ...">selectedAssetChanged()</a>, it might be worth looking into. </dd></dl>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00269">269</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00268">268</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -748,7 +748,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Tells the DesignRoot which asset is currently open in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> so that this information can be saved out with the Design. </p>
 <p>Along with the other UI specific information like Elements' canvas positions, we save the currently opened asset in the Design file. This allows the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> to open Designs to the last Window Asset that was open when they were saved. It also helps in Undo/Redo by moving us to the spot where we were before the last edit block occured (for undo) or after the next redo block occured (for redo). </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00250">250</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00249">249</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>
@@ -776,7 +776,7 @@ QTabWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>infoPane_</b>
 <p>Updates the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> actions that are enabled based on the currently <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> context. </p>
 <p>Which actions are enabled depends on what element is currently selected as well as whether the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> is operating in Experiment or Analysis mode. This updates the available actions accordingly. </p>
 
-<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00468">468</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_designer_8cpp_source.html#l00466">466</a> of file <a class="el" href="_designer_8cpp_source.html">Designer.cpp</a>.</p>
 
 </div>
 </div>

@@ -119,7 +119,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a17d06fef61e3be02d9c9125f24bc72d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a17d06fef61e3be02d9c9125f24bc72d1">AssetToolGroup</a> (QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> &gt; editorState, QStringList displayedUIGroups, QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset=QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;(), QWidget *parent=0)</td></tr>
-<tr class="memdesc:a17d06fef61e3be02d9c9125f24bc72d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> for a <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> with the input editorState and where the current Window Asset is input in asset.  <a href="#a17d06fef61e3be02d9c9125f24bc72d1">More...</a><br /></td></tr>
+<tr class="memdesc:a17d06fef61e3be02d9c9125f24bc72d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> for a <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> with the input editorState.  <a href="#a17d06fef61e3be02d9c9125f24bc72d1">More...</a><br /></td></tr>
 <tr class="separator:a17d06fef61e3be02d9c9125f24bc72d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a822c3d6a7777cf151d47d7ea606f46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a822c3d6a7777cf151d47d7ea606f46"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a9a822c3d6a7777cf151d47d7ea606f46">setAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
@@ -146,13 +146,15 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a5d66a2e3ecdaddadbe1968e66e25d0af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d66a2e3ecdaddadbe1968e66e25d0af"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a5d66a2e3ecdaddadbe1968e66e25d0af">doButtonAction</a> (int buttonId)</td></tr>
-<tr class="memdesc:a5d66a2e3ecdaddadbe1968e66e25d0af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the a button is pressed so that the button can do whatever it's supposed to do. <br /></td></tr>
+<tr class="memdesc:a5d66a2e3ecdaddadbe1968e66e25d0af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare to build the selected asset, if an asset was pressed. <br /></td></tr>
 <tr class="separator:a5d66a2e3ecdaddadbe1968e66e25d0af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40d2cbb367b31985978ea998bd6b6c34"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a40d2cbb367b31985978ea998bd6b6c34">disableButtonActions</a> ()</td></tr>
-<tr class="memdesc:a40d2cbb367b31985978ea998bd6b6c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous <a class="el" href="class_asset_tool_group.html#a5d66a2e3ecdaddadbe1968e66e25d0af" title="Called when the a button is pressed so that the button can do whatever it&#39;s supposed to do...">doButtonAction()</a> call.  <a href="#a40d2cbb367b31985978ea998bd6b6c34">More...</a><br /></td></tr>
+<tr class="memitem:a40d2cbb367b31985978ea998bd6b6c34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40d2cbb367b31985978ea998bd6b6c34"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#a40d2cbb367b31985978ea998bd6b6c34">disableButtonActions</a> ()</td></tr>
+<tr class="memdesc:a40d2cbb367b31985978ea998bd6b6c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the current selected asset. <br /></td></tr>
 <tr class="separator:a40d2cbb367b31985978ea998bd6b6c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ec8039e421e6be073fdfa9d4da7328"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#ab2ec8039e421e6be073fdfa9d4da7328">isEnabled</a> (int buttonId)</td></tr>
-<tr class="memdesc:ab2ec8039e421e6be073fdfa9d4da7328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out.  <a href="#ab2ec8039e421e6be073fdfa9d4da7328">More...</a><br /></td></tr>
+<tr class="memitem:ab2ec8039e421e6be073fdfa9d4da7328"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2ec8039e421e6be073fdfa9d4da7328"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_asset_tool_group.html#ab2ec8039e421e6be073fdfa9d4da7328">isEnabled</a> (int buttonId)</td></tr>
+<tr class="memdesc:ab2ec8039e421e6be073fdfa9d4da7328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the passed-in buttonId is enabled. <br /></td></tr>
 <tr class="separator:ab2ec8039e421e6be073fdfa9d4da7328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_tool_group"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_tool_group')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_tool_group.html">ToolGroup</a></td></tr>
 <tr class="memitem:a5c64e3a5d2932696cf79603664026d78 inherit pro_methods_class_tool_group"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tool_group.html#a5c64e3a5d2932696cf79603664026d78">AddButton</a> (const QString &amp;label, QIcon icon, bool enabled=true)</td></tr>
@@ -194,7 +196,7 @@ QVector&lt; <a class="el" href="struct_asset_tool_group_1_1_elem_info.html">Elem
 <p>In practice, this is the only <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> that we are using. When a designer wants to add a new element to the current Window Asset, they click on that Asset's button, then click on the canvas and behind the scenes the Asset represented by the button is added as a child to the Window Asset and a corresponding <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> representing that Asset is added to the canvas at the input position. Asset buttons are greyed out when the maximum number of that button's Asset have already been added to the current Window Asset. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_tool_group_8h_source.html#l00017">17</a> of file <a class="el" href="_asset_tool_group_8h_source.html">AssetToolGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_asset_tool_group_8h_source.html#l00019">19</a> of file <a class="el" href="_asset_tool_group_8h_source.html">AssetToolGroup.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a17d06fef61e3be02d9c9125f24bc72d1"></a>
 <div class="memitem">
@@ -232,44 +234,22 @@ QVector&lt; <a class="el" href="struct_asset_tool_group_1_1_elem_info.html">Elem
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> for a <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> with the input editorState and where the current Window Asset is input in asset. </p>
-<p>parent is a parent widget. displayedUIGroups is a QStringList of UIGroup names that may be displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. Only child types for the input asset with a UIGroup found in displayedUIGroups will have a ToolButton displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. /sa AssetFactory::getUIGroup() </p>
+<p>Constructs a new <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> for a <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> with the input editorState. </p>
+<p>Only child types for the input asset with a UIGroup found in displayedUIGroups will have a ToolButton displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">editorState</td><td>The current designer's editorstate </td></tr>
+    <tr><td class="paramname">displayedUIGroups</td><td>A QStringList of UIGroup names that may be displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> </td></tr>
+    <tr><td class="paramname">asset</td><td>The current Window Asset </td></tr>
+    <tr><td class="paramname">parent</td><td>The parent widget /sa AssetFactory::getUIGroup() </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00016">16</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00018">18</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a40d2cbb367b31985978ea998bd6b6c34"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AssetToolGroup::disableButtonActions </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called when all buttons are unpressed and similar situations to disable all button actions that may have been started during a previous <a class="el" href="class_asset_tool_group.html#a5d66a2e3ecdaddadbe1968e66e25d0af" title="Called when the a button is pressed so that the button can do whatever it&#39;s supposed to do...">doButtonAction()</a> call. </p>
-<p>For example, as <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> might have set a new insertion item to be added to the design when the user clicks the canvas. When this function is called, it sets the insertion item back to NULL. </p>
-
-<p>Reimplemented from <a class="el" href="class_tool_group.html#ab340659ee03a519aa249bda3592255a6">ToolGroup</a>.</p>
-
-<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00099">99</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a416d88b6018d35285fb43780ce7a4bf8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -293,40 +273,9 @@ QVector&lt; <a class="el" href="struct_asset_tool_group_1_1_elem_info.html">Elem
 </div><div class="memdoc">
 
 <p>Returns true if Assets with the input UIGroup name should be displayed in this <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_asset_tool_group.html#a17d06fef61e3be02d9c9125f24bc72d1" title="Constructs a new AssetToolGroup for a Designer with the input editorState and where the current Windo...">AssetToolGroup::AssetToolGroup()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_asset_tool_group.html#a17d06fef61e3be02d9c9125f24bc72d1" title="Constructs a new AssetToolGroup for a Designer with the input editorState. ">AssetToolGroup::AssetToolGroup()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00114">114</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab2ec8039e421e6be073fdfa9d4da7328"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool AssetToolGroup::isEnabled </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>buttonId</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns true if the button at the input button id should be enabled in the widget and false if it should appear grayed out. </p>
-<p>For example, if the number of child assets of a certain type is limited in a particular window, this would return false for that asset's button once the limit is reached. </p>
-
-<p>Implements <a class="el" href="class_tool_group.html#adf3e25748f41ba5490aac857e375260d">ToolGroup</a>.</p>
-
-<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00104">104</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_asset_tool_group_8cpp_source.html#l00125">125</a> of file <a class="el" href="_asset_tool_group_8cpp_source.html">AssetToolGroup.cpp</a>.</p>
 
 </div>
 </div>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['tagtext_5f',['tagText_',['../class_picto_1_1_data_store.html#ae2bad1a694fe8c8c34c10c0505836e04',1,'Picto::DataStore']]],
+  ['taskbox_5f',['taskBox_',['../class_picto_1_1_analysis_option_widget.html#a7b8ad00059ed9468b07f9324c3c2f343',1,'Picto::AnalysisOptionWidget']]],
   ['taskconfig_5f',['taskConfig_',['../class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a',1,'Picto::Asset']]],
   ['taskrunning_5f',['taskRunning_',['../class_picto_1_1_input_port.html#a0dc85c94cb5927fc32187a41c99443a5',1,'Picto::InputPort']]],
   ['time',['time',['../class_picto_1_1_frame_data_unit.html#aa219e2d7d4fe5eda0e96ba38d2ac9bdf',1,'Picto::FrameDataUnit']]],

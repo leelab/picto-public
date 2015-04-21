@@ -11,14 +11,9 @@
 
 namespace Picto {
 /*! \brief A drop down menu for selecting Analyses for the Designer.
- *	\details The original comment claimed that it wasn't in use, but it seems to be used to
- *	select the analysis script being edited in the Designer.  Original comment preserved:
- *	
- *	When we started the final version of the analysis system, we used
- *	this widget to allow users to choose which Analysis they wanted to run.
- *	As time went on, features like selecting multiple Analyses and including
- *	built-in and importable analyses in one widget became apparent and we have
- *	now moved to using the AnalysisSelectorWidget.
+ *	\details This widget is used to control Analysis editing in the Designer.  Originally it was also responsible for
+ *	selecting Analysis when running an experiment, but more flexibility was required for that, so the
+ *	AnalysisSelectorWidget was developed.
  *	\sa AnalysisSelectorWidget
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -32,37 +27,49 @@ class AnalysisOptionWidget : public QWidget
     Q_OBJECT
 
 public:
-   AnalysisOptionWidget(QSharedPointer<EditorState> editorState, QWidget *parent = NULL);
-   virtual ~AnalysisOptionWidget(){};
-   void setDesignRoot(QSharedPointer<DesignRoot> designRoot);
-   void setSelectedAnalysis(QUuid analysisId);
-   void setSelectedAnalysis(QSharedPointer<Analysis> analysis);
-   QSharedPointer<Analysis> getSelectedAnalysis();
-   QUuid getSelectedAnalysisId();
+	AnalysisOptionWidget(QSharedPointer<EditorState> editorState, QWidget *parent = NULL);
+	virtual ~AnalysisOptionWidget(){};
+	void setDesignRoot(QSharedPointer<DesignRoot> designRoot);
+	void setSelectedAnalysis(QUuid analysisId);
+	void setSelectedAnalysis(QSharedPointer<Analysis> analysis);
+	QSharedPointer<Analysis> getSelectedAnalysis();
+	QUuid getSelectedAnalysisId();
+
 public slots:
 	void updateAnalysisList();
-signals:
-   void selectedAnalysisChanged(QSharedPointer<Analysis> analysis);
-   void analysisNameChangeRequest(QSharedPointer<Analysis> analysis,QString newName);
-   void newAnalysisRequested();
-   void deleteAnalysisRequested();
-private:
-	void changeSelectedAnalysisName(QString newName);
+	void updateTaskList();
 
+private:
+	//! The current design's EditorState
 	QSharedPointer<EditorState> editorState_;
+	//! The current design's DesignRoot
 	QSharedPointer<DesignRoot> designRoot_;
+	//! The currently selected Analysis Asset
 	QSharedPointer<Analysis> selectedAnalysis_;
+	//! Action that gets called when the AddAnalysis button is pressed
 	QAction* addAnalysisAction_;
+	//! Action that gets called when the DeleteAnalysis button is pressed
 	QAction* deleteAnalysisAction_;
-	QComboBox* selectBox_;
+	//! Action that gets called when the AddTask button is pressed
+	QAction* addTaskAction_;
+	//! Action that gets called when the DeleteTask button is pressed
+	QAction* deleteTaskAction_;
+	//! The QComboBox that holds the Analyses that are available
+	QComboBox* selectAnalysisBox_;
+	//! The QComboBox that holds the Tasks that are available
+	QComboBox* taskBox_;
+	//! A flag to avoid recursive update calls
 	bool updatingList_;
+	//! A flag to avoid recursive index updates
 	bool ignoreSelectBoxEvents_;
-	bool enabled_;
+
 private slots:
 	void addAnalysis();
+	void deleteSelectedAnalysis();
 	void selectedIndexChanged(int selectedIndex);
 	void selectedItemTextChanged(const QString& selectedItemText);
-	void deleteSelectedAnalysis();
+	void addTask();
+	void deleteCurrentTask();
 };
 };
 

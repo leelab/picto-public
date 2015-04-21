@@ -6,11 +6,13 @@
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
-/*! \brief Constructs a new AssetToolGroup for a Designer with the input editorState and where the current Window Asset is input
- * in asset.
- *	\details parent is a parent widget.  displayedUIGroups is a QStringList of UIGroup names that may be displayed in this
- *	AssetToolGroup.  Only child types for the input asset with a UIGroup found in displayedUIGroups will have a ToolButton 
+/*! \brief Constructs a new AssetToolGroup for a Designer with the input editorState.
+ *	\details Only child types for the input asset with a UIGroup found in displayedUIGroups will have a ToolButton
  *	displayed in this AssetToolGroup.
+ *	@param editorState The current designer's editorstate
+ *	@param displayedUIGroups A QStringList of UIGroup names that may be displayed in this AssetToolGroup
+ *	@param asset The current Window Asset
+ *	@param parent The parent widget
  *	/sa AssetFactory::getUIGroup()
  */
 AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringList displayedUIGroups,QSharedPointer<Asset> asset, QWidget *parent) :
@@ -24,7 +26,8 @@ AssetToolGroup::AssetToolGroup(QSharedPointer<EditorState> editorState,QStringLi
 
 	setAsset(asset);
 }
-/*! \brief Sets the current Window Asset within which any assets created using this AssetToolGroup will be added as children.
+/*! \brief Sets the current Window Asset within which any assets created using this AssetToolGroup will be added as
+ *	children.
  */
 void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 {
@@ -45,18 +48,19 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 				types = assetFactory->getTypes();
 				foreach(QString type,types)
 				{
-					//If the user is not allowed to generate assets of this type using this factory, move on to the next type.
+					//If the user is not allowed to generate assets of this type using this factory, continue on
+					//	to the next type.
 					if(assetFactory->getMaxAssets(type) == assetFactory->getMinAssets(type))
 						continue;
 					QString uiTemplate = assetFactory->getUITemplate(type);
-					if(uiTemplate.isEmpty())	//This will be the case for objects that don't inherit from UIEnabled
+					//The uiTemplaye will be empty for objects that don't inherit from UIEnabled
+					if(uiTemplate.isEmpty())	
 						continue;
 					QString uIGroup = assetFactory->getUIGroup(type);
 					if(!isDisplayedGroup(uIGroup))
 						continue;
 					QString buttonName = assetFactory->getGeneratedAssetTypeName(type);
-					//if(type != "")
-					//	buttonName.append(QString("\n(%1)").arg(type));
+
 					AddButton(buttonName,DiagramItemFactory::getIcon(assetFactory->getUITemplate(type)),!assetFactory->reachedProductionLimit(type));
 					ElemInfo info;
 					info.tag = childTag;
@@ -69,12 +73,15 @@ void AssetToolGroup::setAsset(QSharedPointer<Asset> asset)
 	}
 }
 
-/*! \brief Returns true if this AssetToolGroup contains no buttons.*/
+/*! \brief Returns true if this AssetToolGroup contains no buttons.
+ */
 bool AssetToolGroup::isEmpty()
 {
 	return (numButtons() <= 0);
 }
 
+/*! \brief Prepare to build the selected asset, if an asset was pressed
+ */
 void AssetToolGroup::doButtonAction(int buttonId)
 {
 	if(buttonId >= elemInfo_.size())
@@ -88,19 +95,23 @@ void AssetToolGroup::doButtonAction(int buttonId)
 			className = elemInfo_[buttonId].assetFactory->getGeneratedAssetClassName(elemInfo_[buttonId].type);
 			friendlyName  = elemInfo_[buttonId].assetFactory->getGeneratedAssetTypeName(elemInfo_[buttonId].type);
 		}
-		//Tells the EditorState that the next time someone wants to insert something into the canvas, it should be an asset with
-		//this buttons className, icon, etc.
+		//Tells the EditorState that the next time someone wants to insert something into the canvas, it should be an
+		//	asset with this buttons className, icon, etc.
 		getEditorState()->setInsertionItem(className,friendlyName,elemInfo_[buttonId].tag,elemInfo_[buttonId].type,getButtonPixmap(buttonId));
 	}
 	else
 		disableButtonActions();
 }
 
+/*! \brief Clear the current selected asset
+*/
 void AssetToolGroup::disableButtonActions()
 {
 	getEditorState()->setInsertionItem();
 }
 
+/*! \brief Returns whether the passed-in buttonId is enabled
+*/
 bool AssetToolGroup::isEnabled(int buttonId)
 {
 	Q_ASSERT((buttonId >= 0) && (buttonId < elemInfo_.size()));

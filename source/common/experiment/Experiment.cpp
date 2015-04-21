@@ -83,6 +83,7 @@ void Experiment::addTask(QSharedPointer<Task> task)
 {
 	tasks_.append(task);
 	task->setTaskNumber(tasks_.size());
+	emit taskAdded();
 }
 
 /*! \brief Returns a list of this Experiment's Task names.
@@ -200,6 +201,7 @@ void Experiment::postDeserialize()
 	{
 		sortTasksIntoList(newTask);
 	}
+	emit taskAdded();
 	//In case tasks are added after deserialization (ie. in the state machine editor).  Attach the childAdded
 	//signal to the sortTasksIntoList slot.
 	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(sortTasksIntoList(QSharedPointer<Asset>)));

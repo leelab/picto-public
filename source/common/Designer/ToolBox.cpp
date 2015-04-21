@@ -1,8 +1,6 @@
 #include <QtWidgets>
 #include "Toolbox.h"
 //#include "AssetToolGroup.h"
-//#include "PropertyToolGroup.h"
-//#include "BackgroundToolGroup.h"
 #include "../../common/memleakdetect.h"
 
 /*! \brief Constructs a new Toolbox.  
@@ -16,12 +14,6 @@ Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 	QToolBox(parent)
 {
 	setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
-	//toolGroups_.push_back(new AssetToolGroup(editorState_));
-	//addItem(toolGroups_.last(),tr("Assets"));
-	//toolGroups_.push_back(new PropertyToolGroup(editorState_));
-	//addItem(toolGroups_.last(),tr("Properties"));
-	//toolGroups_.push_back(new BackgroundToolGroup(editorState_));
-	//addItem(toolGroups_.last(),tr("Backgrounds"));
 	connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),
 		this, SLOT(setAsset(QSharedPointer<Asset>)));
 }

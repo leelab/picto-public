@@ -10,8 +10,11 @@ var searchData=
   ['dataviewelementfactory_5f',['dataViewElementFactory_',['../class_picto_1_1_output_element_container.html#afc655ee436d36d7683360610634471aa',1,'Picto::OutputElementContainer']]],
   ['dataviewelements_5f',['dataViewElements_',['../class_picto_1_1_scene.html#a4b5b26eff4ebcb306a87e658b57a40ec',1,'Picto::Scene']]],
   ['dataviewwidgets_5f',['dataViewWidgets_',['../class_view_selection_widget.html#a86a95ecf12a9da5e8421afcdd4f467fe',1,'ViewSelectionWidget']]],
+  ['deleteanalysisaction_5f',['deleteAnalysisAction_',['../class_picto_1_1_analysis_option_widget.html#ad12e7e5f67856a7f7e18707de315a0c9',1,'Picto::AnalysisOptionWidget']]],
+  ['deletetaskaction_5f',['deleteTaskAction_',['../class_picto_1_1_analysis_option_widget.html#a4a761b372a6968ab727b221c6423567b',1,'Picto::AnalysisOptionWidget']]],
   ['descriptor_5f',['descriptor_',['../class_picto_1_1_input_data_unit_package.html#a94a46546d730aae3dea2ee87ccc4d2f8',1,'Picto::InputDataUnitPackage']]],
   ['designconfig_5f',['designConfig_',['../class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73',1,'Picto::Asset']]],
+  ['designroot_5f',['designRoot_',['../class_picto_1_1_analysis_option_widget.html#aa0c2d4ff8990abe571b5fc7241253fc9',1,'Picto::AnalysisOptionWidget']]],
   ['designundostack_5f',['designUndoStack_',['../class_picto_1_1_design_root.html#aa8bc3678e73bc753c5b23efb5afe9e2f',1,'Picto::DesignRoot']]],
   ['devicesamprate_5f',['deviceSampRate_',['../class_picto_1_1_input_port.html#ab903e1969d02f8ec9f7644b302b224c1',1,'Picto::InputPort']]]
 ];

@@ -2,7 +2,6 @@ var searchData=
 [
   ['backgroundcolor_5f',['backgroundColor_',['../class_picto_1_1_scene.html#ad79e5864f313a4e1179ed3145c0df79e',1,'Picto::Scene']]],
   ['backgroundpatternchanged',['backgroundPatternChanged',['../class_editor_state.html#aff5503b5e634c74bee849b2b9f48ff79',1,'EditorState']]],
-  ['backgroundtoolgroup',['BackgroundToolGroup',['../class_background_tool_group.html',1,'']]],
   ['baraxishandler',['BarAxisHandler',['../class_picto_1_1_bar_axis_handler.html',1,'Picto']]],
   ['barbase',['BarBase',['../class_picto_1_1_bar_base.html',1,'Picto']]],
   ['barbaseplothandler',['BarBasePlotHandler',['../class_picto_1_1_bar_base_plot_handler.html',1,'Picto']]],
@@ -10,8 +9,8 @@ var searchData=
   ['barplotplothandler',['BarPlotPlotHandler',['../class_picto_1_1_bar_plot_plot_handler.html',1,'Picto']]],
   ['behavioraldataunit',['BehavioralDataUnit',['../class_picto_1_1_behavioral_data_unit.html#a14af1fc5a84f9786ba712dcc065d8fbf',1,'Picto::BehavioralDataUnit']]],
   ['behavioraldataunit',['BehavioralDataUnit',['../class_picto_1_1_behavioral_data_unit.html',1,'Picto']]],
-  ['behavioraldataunithandler',['BehavioralDataUnitHandler',['../class_picto_1_1_behavioral_data_unit_handler.html',1,'Picto']]],
   ['behavioraldataunithandler',['BehavioralDataUnitHandler',['../class_picto_1_1_behavioral_data_unit_handler.html#a89a04d269bd4c17909e3ba1691fb94b5',1,'Picto::BehavioralDataUnitHandler']]],
+  ['behavioraldataunithandler',['BehavioralDataUnitHandler',['../class_picto_1_1_behavioral_data_unit_handler.html',1,'Picto']]],
   ['behavioraldataunitpackage',['BehavioralDataUnitPackage',['../class_picto_1_1_behavioral_data_unit_package.html',1,'Picto']]],
   ['behavunitpack_5f',['behavUnitPack_',['../class_picto_1_1_behavioral_data_unit_handler.html#abb4f25d655362fd4b42467ef73457085',1,'Picto::BehavioralDataUnitHandler']]],
   ['binarydataoutput',['BinaryDataOutput',['../class_picto_1_1_binary_data_output.html',1,'Picto']]],
