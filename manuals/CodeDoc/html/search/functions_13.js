@@ -287,6 +287,7 @@ var searchData=
   ['setselectedanalysis',['setSelectedAnalysis',['../class_picto_1_1_analysis_option_widget.html#a179414a058b6659e4b981fdce0fc6501',1,'Picto::AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)'],['../class_picto_1_1_analysis_option_widget.html#a0538eff8390b943b3d50acd69039089f',1,'Picto::AnalysisOptionWidget::setSelectedAnalysis(QSharedPointer&lt; Analysis &gt; analysis)']]],
   ['setselectedasset',['setSelectedAsset',['../class_editor_state.html#a1a3d4da1b215113cc85bbc546e7d2845',1,'EditorState']]],
   ['setselecteditem',['setSelectedItem',['../class_editor_state.html#a88e0f970839edbfd57e12e4189dc6a4a',1,'EditorState']]],
+  ['setselectedtask',['setSelectedTask',['../class_picto_1_1_analysis_option_widget.html#ac15b56eb570335022091bd12315e0ee8',1,'Picto::AnalysisOptionWidget']]],
   ['setselfptr',['setSelfPtr',['../class_picto_1_1_asset.html#aa0e64136d6a51d342a55cd56a8bacd24',1,'Picto::Asset']]],
   ['setserializationattributevalue',['SetSerializationAttributeValue',['../class_picto_1_1_property.html#a981739cdbda8b1e4ae6e57378b74429e',1,'Picto::Property']]],
   ['setsessiondata',['setSessionData',['../class_picto_1_1_session_state.html#a54ef9957c7c3f166de6bcc76f61b65f9',1,'Picto::SessionState']]],

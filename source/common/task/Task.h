@@ -46,6 +46,8 @@ public:
 	*/
 	QSharedPointer<StateMachine> getStateMachine(){return stateMachine_;};
 
+	void rename(const QString &newName);
+
 protected:
 	virtual QString defaultTagName(){return "Task";};
 	virtual void preDeserialize();

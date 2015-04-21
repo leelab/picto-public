@@ -201,7 +201,6 @@ void Experiment::postDeserialize()
 	{
 		sortTasksIntoList(newTask);
 	}
-	emit taskAdded();
 	//In case tasks are added after deserialization (ie. in the state machine editor).  Attach the childAdded
 	//signal to the sortTasksIntoList slot.
 	connect(this,SIGNAL(childAddedAfterDeserialize(QSharedPointer<Asset>)),this,SLOT(sortTasksIntoList(QSharedPointer<Asset>)));

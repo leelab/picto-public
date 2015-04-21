@@ -718,7 +718,7 @@ bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString
 /*! \brief Adds the input child Asset to this DataStore as an AssociateElement child under the tagName category for the
  *	AssociateRoot
  *	with the input associateId.
- *	\details The child is added to a lookup table of lookup tables, under its associateId and tagName.  It's 
+ *	\details The child is added to a lookup table of lookup tables, under its associateId and tagName.  Its 
  *	AssociateElement::linkToAsset() function is called to link it to this DataStore, its edited() signal is connected
  *	to our associateChildEdited() slot, and childAddedAfterDeserialize() is emitted to let interested parties know what
  *	happened.

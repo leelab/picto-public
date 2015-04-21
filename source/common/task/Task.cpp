@@ -198,8 +198,10 @@ void Task::postDeserialize()
 	if(!stateMachines.isEmpty())
 	{
 		stateMachine_ = stateMachines.first().staticCast<StateMachine>();
+		stateMachine_->hideName();
 	}
 	propertyContainer_->getProperty("UIEnabled")->setVisible(false);
+	propertyContainer_->getProperty("Name")->setVisible(false);
 }
 
 bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
@@ -207,6 +209,16 @@ bool Task::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 	if(!ScriptableContainer::validateObject(xmlStreamReader))
 		return false;
 	return true;
+}
+
+//! Propagates new name to Task and child StateMachine - reducing complexity
+void Task::rename(const QString &newName)
+{
+	setName(newName);
+	if (!stateMachine_.isNull())
+	{
+		stateMachine_->setName(newName);
+	}
 }
 
 }; //namespace Picto

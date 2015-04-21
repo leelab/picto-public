@@ -48,6 +48,7 @@ var searchData=
   ['removewidget',['removeWidget',['../class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb',1,'Picto::TaskConfig']]],
   ['removewidgetcontainer',['removeWidgetContainer',['../class_view_selection_widget.html#a487743bb9c5f647c6fb09f6b6591ca13',1,'ViewSelectionWidget']]],
   ['removewidgetslot',['removeWidgetSlot',['../class_data_view_layout.html#af60855ea2a990fb7f9861181ff2452f1',1,'DataViewLayout']]],
+  ['rename',['rename',['../class_picto_1_1_task.html#a9d37def71190f485fefd167f25c53f06',1,'Picto::Task']]],
   ['render',['render',['../class_picto_1_1_scene.html#aaf9d9efc4da11b8596628a102b152de9',1,'Picto::Scene']]],
   ['renderframe',['renderFrame',['../class_picto_1_1_slave_experiment_driver.html#aa95536d556d17901f8e6b3dbfea5b321',1,'Picto::SlaveExperimentDriver']]],
   ['replot',['replot',['../class_picto_1_1_bar_base.html#a2d7e9b068a692da40698e889cd4f4e26',1,'Picto::BarBase::replot()'],['../class_picto_1_1_operator_plot.html#a980167a9f480779712f2d94f48841bec',1,'Picto::OperatorPlot::replot()'],['../class_neural_data_viewer.html#a4157c87495c85be09e6450f94642efd0',1,'NeuralDataViewer::replot()']]],

@@ -34,10 +34,10 @@ public:
 	virtual ~DesignRoot(){};
 
 	bool resetDesignRoot(QString DesignRootText);
-	//Creates a new Analysis using the input analysisText and adds it to the PictoData root.  Returns the new Analysis.
 	QSharedPointer<Asset> importAnalysis(QString analysisText);
-	//Removes the Analysis with the input index
 	bool removeAnalysis(int index);
+
+	QSharedPointer<Asset> createTask();
 
 	QSharedPointer<Asset> getExperiment();
 	int getNumAnalyses();

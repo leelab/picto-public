@@ -44,6 +44,8 @@ public:
 
 	virtual void upgradeVersion(QString deserializedVersion);
 
+	void hideName();
+
 protected:
 	virtual QString defaultTagName(){return "StateMachine";};
 	virtual void postDeserialize();

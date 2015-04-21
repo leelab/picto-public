@@ -16,11 +16,19 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	QWidget(parent),
 	editorState_(editorState),
 	updatingList_(false),
-	ignoreSelectBoxEvents_(false)
+	ignoreSelectBoxEvents_(false),
+	selectedTask_(nullptr)
 {
 	QGroupBox* groupBox = new QGroupBox("Edit Mode");
 
 	//----- Task Selection -------------
+
+	taskBox_ = new QComboBox();
+	taskBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	taskBox_->setInsertPolicy(QComboBox::NoInsert);
+	taskBox_->setEditable(false);
+	connect(taskBox_, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedTaskIndexChanged(int)));
+	connect(taskBox_, SIGNAL(editTextChanged(const QString&)), this, SLOT(selectedTaskTextChanged(const QString&)));
 
 	deleteTaskAction_ = new QAction(QIcon(":/icons/delete.png"), tr("Delete Task"), this);
 	deleteTaskAction_->setStatusTip(tr("Delete Task"));
@@ -45,14 +53,9 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	taskLabel->addWidget(addTaskButton);
 	taskLabel->addWidget(deleteTaskButton);
 
-	taskBox_ = new QComboBox();
-	taskBox_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	taskBox_->setInsertPolicy(QComboBox::NoInsert);
-	taskBox_->setEditable(false);
-
 	QHBoxLayout* taskSelect(new QHBoxLayout());
 	taskSelect->addWidget(taskBox_);
-	connect(editorState.data(), SIGNAL(taskAdded()), this, SLOT(updateTaskList()));
+	//connect(editorState.data(), SIGNAL(taskAdded()), this, SLOT(updateTaskList()));
 
 	QVBoxLayout* taskSelectionLayout = new QVBoxLayout();
 	taskSelectionLayout->addLayout(taskLabel);
@@ -343,6 +346,8 @@ void AnalysisOptionWidget::updateTaskList()
 		return;
 
 	updatingList_ = true;
+	ignoreSelectBoxEvents_ = true;
+	int currentIndex = 0;
 
 	QSharedPointer<Experiment> pExperiment = designRoot_->getExperiment().objectCast<Experiment>();
 	if (pExperiment)
@@ -351,26 +356,158 @@ void AnalysisOptionWidget::updateTaskList()
 
 		QStringList tasks = pExperiment->getTaskNames();
 
-		foreach(QString taskName, tasks)
+		for (int i = 0; i < tasks.count(); i++)
 		{
+			const QString &taskName = tasks[i];
 			taskBox_->addItem(taskName);
+
+			if (selectedTask_ && selectedTask_->getName() == taskName)
+			{
+				currentIndex = i;
+			}
+
 		}
 	}
 
+	ignoreSelectBoxEvents_ = false;
+	taskBox_->setCurrentIndex(-1);
 	updatingList_ = false;
+	taskBox_->setCurrentIndex(currentIndex);
 }
 
 /*! \brief Bound to AnalysisOptionWidget::addTaskAction_, it creates a new task in the current experiment
  */
 void AnalysisOptionWidget::addTask()
 {
+	if (!isEnabled())
+		return;
+	QSharedPointer<Task> newTask = designRoot_->createTask().objectCast<Task>();
+	newTask->rename("NewTask");
 
+
+	//Select new Task
+	setSelectedTask(newTask);
+
+	updateTaskList();
+
+	//Select name of new analysis for editing
+	taskBox_->lineEdit()->selectAll();
 }
 
 /*! \brief Bound to AnalysisOptionWidget::deleteTaskAction_, it deletes the current task
 */
 void AnalysisOptionWidget::deleteCurrentTask()
 {
+	if (!isEnabled())
+		return;
+
+	int ret = QMessageBox::warning(this, tr("Picto"),
+		QString("Are you sure you want to delete the %1 Task?").arg(selectedTask_->getName()),
+		QMessageBox::Yes | QMessageBox::Cancel,
+		QMessageBox::Cancel);
+
+	if (ret != QMessageBox::Yes)
+		return;
+
+	QSharedPointer<Task> tempTask = selectedTask_;
+
+	if (taskBox_->count() <= 1)
+	{
+		addTask();
+	}
+	else
+	{
+		int iNewIndex = (taskBox_->currentIndex() == 0) ? 1 : 0;
+		selectedTaskIndexChanged(iNewIndex);
+
+	}
+
+	tempTask->setDeleted();
+
+	//Reset experiment so that the removal of the Task (setDeleted() is used) takes effect.
+	editorState_->triggerExperimentReset();
+}
+
+/*!	\brief Sets the current task to passed in asset.
+*/
+void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
+{
+	if (!isEnabled())
+		return;
+	if (task == selectedTask_)
+		return;
+	selectedTask_ = task;
+
+	if (!task.isNull() && !task->getStateMachine().isNull())
+	{
+		//Move designer to selected task
+		editorState_->setWindowAsset(task->getStateMachine(), false);
+	}
+	else
+	{
+		editorState_->setWindowAsset(designRoot_->getExperiment(), false);
+	}
 
 }
 
+QSharedPointer<Task> AnalysisOptionWidget::getSelectedTask()
+{
+	return selectedTask_;
+}
+
+
+void AnalysisOptionWidget::selectedTaskIndexChanged(int selectedIndex)
+{
+	if (!isEnabled())
+		return;
+	if (ignoreSelectBoxEvents_)
+		return;
+	if (updatingList_)
+		return;
+
+	//Not a true update if the list is empty
+	if (taskBox_->count() == 0)
+	{
+		return;
+	}
+
+	//If no analysis was selected
+	if (selectedIndex < 0)
+	{
+		taskBox_->setEditable(false);
+		deleteTaskAction_->setEnabled(false);
+
+		//Erase the current selected analysis pointer
+		selectedTask_.clear();
+	}
+	else
+	{
+		taskBox_->setEditable(true);
+		deleteTaskAction_->setEnabled(true);
+
+		QString name = taskBox_->itemText(selectedIndex);
+
+		QSharedPointer<Task> newTask = designRoot_->getExperiment().objectCast<Experiment>()->getTaskByName(name);
+
+		//Update the current selected task
+		setSelectedTask(newTask);
+	}
+}
+
+void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
+{
+	if (!isEnabled())
+		return;
+	if (ignoreSelectBoxEvents_)
+		return;
+	if (updatingList_)
+		return;
+
+	QSharedPointer<Experiment> pExperiment = designRoot_->getExperiment().objectCast<Experiment>();
+	if (pExperiment && name != pExperiment->getTaskNames()[taskBox_->currentIndex()])
+	{
+		selectedTask_->rename(name);
+		taskBox_->setItemText(taskBox_->currentIndex(), name);
+	}
+
+}

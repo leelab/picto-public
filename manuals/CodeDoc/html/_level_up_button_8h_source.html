@@ -99,24 +99,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QHash&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;EditorState.h&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_level_up_button.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_level_up_button.html">LevelUpButton</a> : <span class="keyword">public</span> QToolButton</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>: </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="class_level_up_button.html#aa07bb8c59553adb960a46105551c5fab">LevelUpButton</a>(QSharedPointer&lt;EditorState&gt; editorState, QWidget* parent = NULL);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    QSharedPointer&lt;EditorState&gt; editorState_;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    QString origStyleSheet_;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    QHash&lt;int,bool&gt; highlightByGroup_;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_level_up_button.html#a7dac48fb16c81bc00193dee020930d62">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_level_up_button.html#a8056c2d96bb2d47071bbe89359a21a39">windowAssetChanged</a>(QSharedPointer&lt;Asset&gt; windowAsset);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;};</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_level_up_button.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_level_up_button.html">LevelUpButton</a> : <span class="keyword">public</span> QToolButton</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>: </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="class_level_up_button.html#aa07bb8c59553adb960a46105551c5fab">LevelUpButton</a>(QSharedPointer&lt;EditorState&gt; editorState, QWidget* parent = NULL);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="class_level_up_button.html#a1fbf61682dc42258e77a1d8fa48db267">   24</a></span>&#160;    QSharedPointer&lt;EditorState&gt; <a class="code" href="class_level_up_button.html#a1fbf61682dc42258e77a1d8fa48db267">editorState_</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_level_up_button.html#afb1b3a24cad8672192dd6b29b1f13dc0">   26</a></span>&#160;    QString <a class="code" href="class_level_up_button.html#afb1b3a24cad8672192dd6b29b1f13dc0">origStyleSheet_</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_level_up_button.html#ad01bbfc5b74c602aefc6e98f183fa377">   28</a></span>&#160;    QHash&lt;int,bool&gt; <a class="code" href="class_level_up_button.html#ad01bbfc5b74c602aefc6e98f183fa377">highlightByGroup_</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_level_up_button.html#a7dac48fb16c81bc00193dee020930d62">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_level_up_button.html#a8056c2d96bb2d47071bbe89359a21a39">windowAssetChanged</a>(QSharedPointer&lt;Asset&gt; windowAsset);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
@@ -146,11 +142,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="class_level_up_button_html_a1fbf61682dc42258e77a1d8fa48db267"><div class="ttname"><a href="class_level_up_button.html#a1fbf61682dc42258e77a1d8fa48db267">LevelUpButton::editorState_</a></div><div class="ttdeci">QSharedPointer&lt; EditorState &gt; editorState_</div><div class="ttdoc">A pointer to the current EditorState. </div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00024">LevelUpButton.h:24</a></div></div>
+<div class="ttc" id="class_level_up_button_html_ad01bbfc5b74c602aefc6e98f183fa377"><div class="ttname"><a href="class_level_up_button.html#ad01bbfc5b74c602aefc6e98f183fa377">LevelUpButton::highlightByGroup_</a></div><div class="ttdeci">QHash&lt; int, bool &gt; highlightByGroup_</div><div class="ttdoc">A Hashtable of. </div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00028">LevelUpButton.h:28</a></div></div>
 <div class="ttc" id="class_level_up_button_html_aa07bb8c59553adb960a46105551c5fab"><div class="ttname"><a href="class_level_up_button.html#aa07bb8c59553adb960a46105551c5fab">LevelUpButton::LevelUpButton</a></div><div class="ttdeci">LevelUpButton(QSharedPointer&lt; EditorState &gt; editorState, QWidget *parent=NULL)</div><div class="ttdoc">Constructs a new LevelUpButton. </div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8cpp_source.html#l00009">LevelUpButton.cpp:9</a></div></div>
+<div class="ttc" id="class_level_up_button_html_afb1b3a24cad8672192dd6b29b1f13dc0"><div class="ttname"><a href="class_level_up_button.html#afb1b3a24cad8672192dd6b29b1f13dc0">LevelUpButton::origStyleSheet_</a></div><div class="ttdeci">QString origStyleSheet_</div><div class="ttdoc">A stylesheet string describin. </div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00026">LevelUpButton.h:26</a></div></div>
 <div class="ttc" id="class_level_up_button_html_a8056c2d96bb2d47071bbe89359a21a39"><div class="ttname"><a href="class_level_up_button.html#a8056c2d96bb2d47071bbe89359a21a39">LevelUpButton::windowAssetChanged</a></div><div class="ttdeci">void windowAssetChanged(QSharedPointer&lt; Asset &gt; windowAsset)</div><div class="ttdoc">Called when the Window Asset changes to redo the current search and rehighlight the button accordingl...</div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8cpp_source.html#l00063">LevelUpButton.cpp:63</a></div></div>
 <div class="ttc" id="struct_search_request_html"><div class="ttname"><a href="struct_search_request.html">SearchRequest</a></div><div class="ttdoc">Defines a request for a search. </div><div class="ttdef"><b>Definition:</b> <a href="_search_request_8h_source.html#l00013">SearchRequest.h:13</a></div></div>
-<div class="ttc" id="class_level_up_button_html"><div class="ttname"><a href="class_level_up_button.html">LevelUpButton</a></div><div class="ttdoc">A simple button widget containing an up arrow that turns red if the current Window Asset&#39;s ancestors ...</div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00015">LevelUpButton.h:15</a></div></div>
+<div class="ttc" id="class_level_up_button_html"><div class="ttname"><a href="class_level_up_button.html">LevelUpButton</a></div><div class="ttdoc">A simple button widget containing an up arrow that turns red if the current Window Asset&#39;s ancestors ...</div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8h_source.html#l00016">LevelUpButton.h:16</a></div></div>
 <div class="ttc" id="class_level_up_button_html_a7dac48fb16c81bc00193dee020930d62"><div class="ttname"><a href="class_level_up_button.html#a7dac48fb16c81bc00193dee020930d62">LevelUpButton::searchRequested</a></div><div class="ttdeci">void searchRequested(SearchRequest searchRequest)</div><div class="ttdoc">Called when a new search is requested to search the current Window Asset&#39;s ancestors for the search q...</div><div class="ttdef"><b>Definition:</b> <a href="_level_up_button_8cpp_source.html#l00024">LevelUpButton.cpp:24</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

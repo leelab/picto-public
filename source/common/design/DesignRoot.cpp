@@ -76,14 +76,26 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
 }
 
 /*! \brief Attempts to create an analysis based on the input design text and import it into the design.
-*	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns the imported analysis
-*	object.
-*/
+ *	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns the imported analysis
+ *	object.
+ */
 QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
 {
 	if(!pictoData_)
 		return QSharedPointer<Asset>();
 	QSharedPointer<Asset> newAsset = pictoData_->importChildAsset(analysisText,QString());
+	return newAsset;
+}
+
+/*! \brief Attempts to create a new Task.
+ *	\details If the creation fails, the function returns an empty pointer.  If it succeeds it returns the created object.
+ */
+QSharedPointer<Asset> DesignRoot::createTask()
+{
+	if (!pictoData_)
+		return QSharedPointer<Asset>();
+	Q_ASSERT(pictoData_->getExperiment());
+	QSharedPointer<Asset> newAsset = pictoData_->getExperiment()->importChildAsset("<Task/>", QString());
 	return newAsset;
 }
 

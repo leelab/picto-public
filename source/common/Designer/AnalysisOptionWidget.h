@@ -35,6 +35,8 @@ public:
 	QSharedPointer<Analysis> getSelectedAnalysis();
 	QUuid getSelectedAnalysisId();
 
+	void setSelectedTask(QSharedPointer<Task> task);
+	QSharedPointer<Task> getSelectedTask();
 public slots:
 	void updateAnalysisList();
 	void updateTaskList();
@@ -46,6 +48,9 @@ private:
 	QSharedPointer<DesignRoot> designRoot_;
 	//! The currently selected Analysis Asset
 	QSharedPointer<Analysis> selectedAnalysis_;
+	//! The currently selected Task Asset
+	QSharedPointer<Task> selectedTask_;
+
 	//! Action that gets called when the AddAnalysis button is pressed
 	QAction* addAnalysisAction_;
 	//! Action that gets called when the DeleteAnalysis button is pressed
@@ -68,6 +73,10 @@ private slots:
 	void deleteSelectedAnalysis();
 	void selectedIndexChanged(int selectedIndex);
 	void selectedItemTextChanged(const QString& selectedItemText);
+
+	void selectedTaskIndexChanged(int selectedIndex);
+	void selectedTaskTextChanged(const QString&);
+
 	void addTask();
 	void deleteCurrentTask();
 };

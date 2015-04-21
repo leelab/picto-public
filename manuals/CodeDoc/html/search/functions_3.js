@@ -109,6 +109,7 @@ var searchData=
   ['createsound',['createSound',['../class_picto_1_1_audio_file_parameter.html#a1628a85040b6f01dacaa5420453bae79',1,'Picto::AudioFileParameter::createSound()'],['../class_picto_1_1_preloaded_sound.html#ae242a5728bce44d1ac6bfcac2b958f81',1,'Picto::PreloadedSound::createSound()']]],
   ['createstatuslights',['createStatusLights',['../class_proxy_main_window.html#a330a7ac644b67fc540e35063445ba1d5',1,'ProxyMainWindow']]],
   ['createsubdirectory',['createSubDirectory',['../class_picto_1_1_buffer_file_generator.html#a84f475e6e23c897d83773b488b0379b3',1,'Picto::BufferFileGenerator']]],
+  ['createtask',['createTask',['../class_picto_1_1_design_root.html#acf132b1cfa5b4b875999bf72dc6d5858',1,'Picto::DesignRoot']]],
   ['createtempfile',['createTempFile',['../class_picto_1_1_buffer_file_generator.html#afa04c82713737e28dc38e0d6d28445d1',1,'Picto::BufferFileGenerator']]],
   ['createtoolbars',['createToolbars',['../class_designer.html#ad1f33d36da192385cec3dfdb24f187c8',1,'Designer::createToolbars()'],['../class_main_window.html#a2bb86fc5cd917093593fcf0b0009e018',1,'MainWindow::createToolbars()']]],
   ['createviewers',['createViewers',['../class_main_window.html#a79b1cf240536f4401fababfe6e6ad89f',1,'MainWindow']]],

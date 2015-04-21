@@ -328,5 +328,10 @@ bool StateMachine::hasScripts()
 	return false;
 }
 
+void StateMachine::hideName()
+{
+	propertyContainer_->getProperty("Name")->setVisible(false);
+}
+
 
 }; //namespace Picto
