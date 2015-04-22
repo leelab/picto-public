@@ -9,8 +9,9 @@
 #include <QGroupBox>
 #include "AnalysisOptionWidget.h"
 #include "../../common/memleakdetect.h"
-using namespace Picto;
 
+namespace Picto
+{
 
 AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorState, QWidget *parent) :
 	QWidget(parent),
@@ -395,7 +396,7 @@ void AnalysisOptionWidget::addTask()
 }
 
 /*! \brief Bound to AnalysisOptionWidget::deleteTaskAction_, it deletes the current task
-*/
+ */
 void AnalysisOptionWidget::deleteCurrentTask()
 {
 	if (!isEnabled())
@@ -429,7 +430,7 @@ void AnalysisOptionWidget::deleteCurrentTask()
 }
 
 /*!	\brief Sets the current task to passed in asset.
-*/
+ */
 void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
 {
 	if (!isEnabled())
@@ -450,12 +451,13 @@ void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
 
 }
 
+//! Returns the current Task selected for editing
 QSharedPointer<Task> AnalysisOptionWidget::getSelectedTask()
 {
 	return selectedTask_;
 }
 
-
+//! Connected to the QComboBox signal emitted whenever the index changes in the taskBox_
 void AnalysisOptionWidget::selectedTaskIndexChanged(int selectedIndex)
 {
 	if (!isEnabled())
@@ -494,6 +496,7 @@ void AnalysisOptionWidget::selectedTaskIndexChanged(int selectedIndex)
 	}
 }
 
+//! Connected to the QComboBox signal emitted whenever the name is edited in the taskBox_
 void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
 {
 	if (!isEnabled())
@@ -511,3 +514,5 @@ void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
 	}
 
 }
+
+}; //namespace Picto

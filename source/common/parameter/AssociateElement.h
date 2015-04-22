@@ -37,58 +37,59 @@ namespace Picto {
  *	having diamond inheritance patterns (ie. inheriting from two classes that both inherit from the same class)
  *	which leads to lots of problems.
  */
-#define ASSOCIATE_ELEMENT_IMPLEMENTATION 	virtual QString getParentPath()	\
-											{								\
-												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
-												return lnk->getParentPath();\
-											};	\
-											\
-											virtual int getParentId()	\
-											{								\
-												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
-												return lnk->getParentId();\
-											};	\
-											virtual void linkToAsset(QSharedPointer<Asset> asset)	\
-											{								\
-												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
-												lnk->linkToAsset(asset);	\
-											};	\
-											virtual AttachmentResult attachToLinkedAsset(bool tryLinkingById)	\
-											{	\
-												QSharedPointer<Asset> associateRoot = getParentAsset();	\
-												Q_ASSERT(associateRoot);	\
-												QSharedPointer<Asset> linkedAsset = associateRoot.staticCast<AssociateRoot>()->getLinkedAsset();	\
-												Q_ASSERT(linkedAsset && linkedAsset->inherits("Picto::DataStore"));	\
-												\
-												if(tryLinkingById)	\
-												{	\
-													if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentId(),identifier(),selfPtr()))	\
-														return SUCCESS_BY_LINK;	\
-												}	\
-												if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentPath(),identifier(),selfPtr()))	\
-													return SUCCESS_BY_PATH;	\
-												return FAIL;	\
-											};	\
-											virtual QUuid getAssociateId()	\
-											{								\
-												QSharedPointer<Asset> associateRoot = getParentAsset();	\
-												Q_ASSERT(associateRoot);	\
-												return associateRoot.staticCast<AssociateRoot>()->getAssociateId();	\
-											};	\
-											virtual QString getInfoString()	\
-											{	\
-												return "Name: " + getName() + "\nType: " + identifier() + "\nLinked to: " + getParentPath();	\
-											};	\
-											virtual QSharedPointer<Asset> getLinkedAsset()	\
-											{	\
-												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
-												return lnk->getLinkedAsset();	\
-											};	\
-											virtual void updateLinkPath(QString oldPrefix,QString newPrefix)	\
-											{	\
-												QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
-												return lnk->updateLinkPath(oldPrefix,newPrefix);	\
-											};											
+#define ASSOCIATE_ELEMENT_IMPLEMENTATION 	\
+	virtual QString getParentPath()	\
+	{								\
+		QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+		return lnk->getParentPath();\
+	};	\
+	\
+	virtual int getParentId()	\
+	{								\
+		QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+		return lnk->getParentId();\
+	};	\
+	virtual void linkToAsset(QSharedPointer<Asset> asset)	\
+	{								\
+		QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+		lnk->linkToAsset(asset);	\
+	};	\
+	virtual AttachmentResult attachToLinkedAsset(bool tryLinkingById)	\
+	{	\
+		QSharedPointer<Asset> associateRoot = getParentAsset();	\
+		Q_ASSERT(associateRoot);	\
+		QSharedPointer<Asset> linkedAsset = associateRoot.staticCast<AssociateRoot>()->getLinkedAsset();	\
+		Q_ASSERT(linkedAsset && linkedAsset->inherits("Picto::DataStore"));	\
+		\
+		if(tryLinkingById)	\
+		{	\
+			if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentId(),identifier(),selfPtr()))	\
+				return SUCCESS_BY_LINK;	\
+		}	\
+		if(linkedAsset.staticCast<DataStore>()->AddAssociateChild(getAssociateId(),getParentPath(),identifier(),selfPtr()))	\
+			return SUCCESS_BY_PATH;	\
+		return FAIL;	\
+	};	\
+	virtual QUuid getAssociateId()	\
+	{								\
+		QSharedPointer<Asset> associateRoot = getParentAsset();	\
+		Q_ASSERT(associateRoot);	\
+		return associateRoot.staticCast<AssociateRoot>()->getAssociateId();	\
+	};	\
+	virtual QString getInfoString()	\
+	{	\
+		return "Name: " + getName() + "\nType: " + identifier() + "\nLinked to: " + getParentPath();	\
+	};	\
+	virtual QSharedPointer<Asset> getLinkedAsset()	\
+	{	\
+		QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+		return lnk->getLinkedAsset();	\
+	};	\
+	virtual void updateLinkPath(QString oldPrefix,QString newPrefix)	\
+	{	\
+		QSharedPointer<AssociateHostLink> lnk = getGeneratedChildren("HostLink").first().staticCast<AssociateHostLink>();	\
+		return lnk->updateLinkPath(oldPrefix,newPrefix);	\
+	};											
 
 /*! \brief This \#define should be copied to the end of the constructor of anything inheriting AssociateElement.
  *	\details Adds a required child HostLink to the AssociateElement to store information about the Design element to
@@ -98,7 +99,8 @@ namespace Picto {
  *	having diamond inheritance patterns (ie. inheriting from two classes that both inherit from the same class)
  *	which leads to lots of problems.
  */
-#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("HostLink",QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));
+#define EXP_LINK_FACTORY_CREATION AddDefinableObjectFactory("HostLink", \
+	QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));
 
 /*! \brief AssociateElements are the child elements of an AssociateRootHost.  They have the capability to link to a
  *	DesignElement to provide extra non-vital information about that element.
@@ -119,7 +121,7 @@ namespace Picto {
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AssociateElement
+class PICTOLIB_API AssociateElement
 #else
 class AssociateElement
 #endif

@@ -13,10 +13,11 @@ namespace Picto {
  *	the AssociateElement links.  Since this object is a required child of an AssociateElement, the Property values
  *	will be saved with the AssociateElement so that a record will be maintained of the Asset to which the AssociateElement
  *	should link.
+ *	
  *	Other functionality is included here too.  Once an Asset is linked using the linkToAsset() function, its
  *	signals are connected so that changes in the linked Asset name or id will automatically propogate to this
- *	object's Property values.  updateLinkePath() functionality is also provided for the purpose
- *	of AssociateElement export/import.
+ *	object's Property values.  updateLinkPath() functionality is also provided for the purpose of AssociateElement
+ *	export/import.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

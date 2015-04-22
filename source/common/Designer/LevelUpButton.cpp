@@ -67,4 +67,14 @@ void LevelUpButton::windowAssetChanged(QSharedPointer<Asset> windowAsset)
 	{
 		searchRequested(searchRequest);
 	}
+
+	//If the current StateMachineElement is the StateMachine under a Task, then disable the LevelUpBar
+	if (windowAsset->inherits("Picto::StateMachine") && windowAsset->getParentAsset()->inherits("Picto::Task"))
+	{
+		setDisabled(true);
+	}
+	else
+	{
+		setDisabled(false);
+	}
 }

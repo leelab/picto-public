@@ -27,35 +27,33 @@ DataStore::~DataStore()
 //Autoserialization Stuff-------------------------------------------------------------
 
 /*! \brief Serializes this DataStore along with descendants into a descriptive XML string using the input QXmlStreamWriter.
- *	\details The serialization algorithm in Picto is fairly complex and took some time to develop,
- *	so think twice before changing it.  One of the sources for the complexity, however, was the
- *	desire for the XML code to look the same apart from a small change if we edit the design in
- *	software and then reserialize it out.  We wanted to be able to maintain XML comments without
- *	their getting deleted and to be sure that the order of the XML tags that was put into 
- *	the deserializeFromXml() function would be the same as the order that was put out of the 
- *	serializeAsXml() function.  These requirements are less important now than they once were since
- *	we used to include an XML editor in the Workstation that allowed users to directly manipulate 
- *	Design XML.  Now that we no longer use that, it is still nice to maintain these restrictions 
- *	for the purposes of using file comparison tools to compare different versions of an experiment.
- *	On the other hand, since no one ever touches the XML manually, things like maintaining
- *	ordering in multiple versions of the code might come for free.  While you might consider
- *	relaxing these restrictions in the future and thereby simplifying this function, an overview of 
- *	its operation right now is as follows:
+ *	\details The serialization algorithm in Picto is fairly complex and took some time to develop, so think twice before
+ *	changing it.  One of the sources for the complexity, however, was the desire for the XML code to look the same apart
+ *	from a small change if we edit the design in software and then reserialize it out.  We wanted to be able to maintain
+ *	XML comments without their getting deleted and to be sure that the order of the XML tags that was put into the
+ *	deserializeFromXml() function would be the same as the order that was put out of the serializeAsXml() function.
+ *	These requirements are less important now than they once were since we used to include an XML editor in the
+ *	Workstation that allowed users to directly manipulate Design XML.  Now that we no longer use that, it is still nice to
+ *	maintain these restrictions for the purposes of using file comparison tools to compare different versions of an
+ *	experiment.
+ *	
+ *	On the other hand, since no one ever touches the XML manually, things like maintaining ordering in multiple versions
+ *	of the code might come for free.  While you might consider relaxing these restrictions in the future and thereby
+ *	simplifying this function, an overview of its operation right now is as follows:
  *		-# Start reading out the XML code that was saved during the course of deserializeFromXml().
  *			This code includes the tag names of this DataStore and its immediate children.
  *		-# Write out this DataStores tag name, updating the ID value if there is none or our 
  *			AssetID has changed.
  *		-# Loop through the XML code saved on input.  
- *			- Each time a tag is encountered, move to 
- *				the first child of its type and serialize it out. (If it was deleted, nothing will 
- *				happen).
+ *			- Each time a tag is encountered, move to the first child of its type and serialize it out.
+ *				(If it was deleted, nothing will happen).
  *			- If no child type matches the tag, the tag must be an XML comment, write it out.
  *			- Continue the loop.
  *		-# Loop through any child assets that were not yet serialized out.
  *			- If the asset is both new and edited, write it out.
- *			- Otherwise, skip the asset.  It was either new and undedited: a default asset 
- *				(required and initialized to a default state), or it was edited and not new: 
- *				a complicated condition discussed in comments below.
+ *			- Otherwise, skip the asset.
+ *				It was either new and undedited (a default asset; required and initialized to a default state), or it was
+ *				edited and not new (a complicated condition discussed in comments below).
  *				Only the new, edited version should be serialized.
  *		-# Write out this DataStore's closing tag.
  */
@@ -600,14 +598,12 @@ void DataStore::AddDefinableProperty(
 }
 
 /*! \brief Adds an AssetFactory to this DataStore for the input tagName XML tag.
- *	\details This function adds the input AssetFactory to a lookup table.  When the deserialization 
- *	system encounters an xml tag with the input tagName, the deserialization system uses it to find
- *	this AssetFactory and uses the factory to generate an Asset.  Since it was looked up with
- *	the corresponding XML tag, this Asset will be of the correct kind to match the XML tag's contents
- *	and so the XML tag can be used to deserialize the newly generated Asset.  The various parameters
- *	of the AssetFactory offer additional control including generating sub Asset types based on the 
- *	XML tag's type property and enforcing minimum and maximum numbers of generated Assets for each
- *	DataStore.
+ *	\details This function adds the input AssetFactory to a lookup table.  When the deserialization system encounters an
+ *	xml tag with the input tagName, the deserialization system uses it to find this AssetFactory and uses the factory to
+ *	generate an Asset.  Since it was looked up with the corresponding XML tag, this Asset will be of the correct kind to
+ *	match the XML tag's contents and so the XML tag can be used to deserialize the newly generated Asset.
+ *	The various parameters of the AssetFactory offer additional control including generating sub Asset types based on
+ *	the XML tag's type property and enforcing minimum and maximum numbers of generated Assets for each DataStore.
  */
 void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetFactory> factory)
 {
@@ -628,9 +624,9 @@ void DataStore::AddDefinableObjectFactory(QString tagName, QSharedPointer<AssetF
 
 /*! \brief Adds the input child Asset to this DataStore's child list, under the tagName category (where tagName will also
  *	be the XML tag used to serialize the child)
- *	\details This function provides the child with its shared pointer selfPtr, tells it who its parent is,
- *	adds it to this DataStore's children_ lookup table under the tagName category, and connects up the
- *	childs edited() signal to this DataStore's childEdited() slot.
+ *	\details This function provides the child with its shared pointer selfPtr, tells it who its parent is, adds it to
+ *	this DataStore's children_ lookup table under the tagName category, and connects up the childs edited() signal to
+ *	this DataStore's childEdited() slot.
  *	\sa AddAssociateChild()
  */
 void DataStore::AddChild(QString tagName, QSharedPointer<Asset> child)

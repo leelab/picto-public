@@ -115,7 +115,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a48a564b6917d70f7e5061f126167e63c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_associate_element_8h.html#a48a564b6917d70f7e5061f126167e63c">ASSOCIATE_ELEMENT_IMPLEMENTATION</a></td></tr>
 <tr class="memdesc:a48a564b6917d70f7e5061f126167e63c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This #define should be copied into the public section of anything inheriting AssociateElement in order to implement its pure virtual functions.  <a href="#a48a564b6917d70f7e5061f126167e63c">More...</a><br /></td></tr>
 <tr class="separator:a48a564b6917d70f7e5061f126167e63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad436d805d9710c265fa27f7382a3d510"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_associate_element_8h.html#ad436d805d9710c265fa27f7382a3d510">EXP_LINK_FACTORY_CREATION</a>&#160;&#160;&#160;AddDefinableObjectFactory(&quot;HostLink&quot;,QSharedPointer&lt;AssetFactory&gt;(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));</td></tr>
+<tr class="memitem:ad436d805d9710c265fa27f7382a3d510"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_associate_element_8h.html#ad436d805d9710c265fa27f7382a3d510">EXP_LINK_FACTORY_CREATION</a></td></tr>
 <tr class="memdesc:ad436d805d9710c265fa27f7382a3d510"><td class="mdescLeft">&#160;</td><td class="mdescRight">This #define should be copied to the end of the constructor of anything inheriting AssociateElement.  <a href="#ad436d805d9710c265fa27f7382a3d510">More...</a><br /></td></tr>
 <tr class="separator:ad436d805d9710c265fa27f7382a3d510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -152,15 +152,17 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define EXP_LINK_FACTORY_CREATION&#160;&#160;&#160;AddDefinableObjectFactory(&quot;HostLink&quot;,QSharedPointer&lt;AssetFactory&gt;(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));</td>
+          <td class="memname">#define EXP_LINK_FACTORY_CREATION</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">AddDefinableObjectFactory(<span class="stringliteral">&quot;HostLink&quot;</span>, \</div>
+<div class="line">    QSharedPointer&lt;AssetFactory&gt;(<span class="keyword">new</span> AssetFactory(1,1,AssetFactory::NewAssetFnPtr(AssociateHostLink::Create))));</div>
+</div><!-- fragment -->
 <p>This #define should be copied to the end of the constructor of anything inheriting AssociateElement. </p>
 <p>Adds a required child HostLink to the AssociateElement to store information about the Design element to which the AssociateElement should be linked. </p><dl class="section note"><dt>Note</dt><dd>We don't just include this code in the AssociateElement itself because it would not complile unless the AssociateElement class inherited from DataStore, and this would lead to AssociateElement children having diamond inheritance patterns (ie. inheriting from two classes that both inherit from the same class) which leads to lots of problems. </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00101">101</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
+<p>Definition at line <a class="el" href="_associate_element_8h_source.html#l00102">102</a> of file <a class="el" href="_associate_element_8h_source.html">AssociateElement.h</a>.</p>
 
 </div>
 </div>
