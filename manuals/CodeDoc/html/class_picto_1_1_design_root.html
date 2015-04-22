@@ -133,9 +133,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acae1228aa37df9dc66c0a05ddbb9129b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#acae1228aa37df9dc66c0a05ddbb9129b">resetDesignRoot</a> (QString DesignRootText)</td></tr>
 <tr class="memdesc:acae1228aa37df9dc66c0a05ddbb9129b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebuilds the Experimental Design from a saved xml string.  <a href="#acae1228aa37df9dc66c0a05ddbb9129b">More...</a><br /></td></tr>
 <tr class="separator:acae1228aa37df9dc66c0a05ddbb9129b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8840b2f3c56ba3b6b5bb969b4fce95ff"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#a8840b2f3c56ba3b6b5bb969b4fce95ff">importAnalysis</a> (QString analysisText)</td></tr>
-<tr class="memdesc:a8840b2f3c56ba3b6b5bb969b4fce95ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to create an analysis based on the input design text and import it into the design.  <a href="#a8840b2f3c56ba3b6b5bb969b4fce95ff">More...</a><br /></td></tr>
-<tr class="separator:a8840b2f3c56ba3b6b5bb969b4fce95ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ebe8fd54e6e044f0d08b8be41ffdb6b"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#a6ebe8fd54e6e044f0d08b8be41ffdb6b">importAnalysis</a> (const QString &amp;analysisText)</td></tr>
+<tr class="memdesc:a6ebe8fd54e6e044f0d08b8be41ffdb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to create an analysis based on the input design text and import it into the design.  <a href="#a6ebe8fd54e6e044f0d08b8be41ffdb6b">More...</a><br /></td></tr>
+<tr class="separator:a6ebe8fd54e6e044f0d08b8be41ffdb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ba709385c5ab9f72a9dc38390e6797c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ba709385c5ab9f72a9dc38390e6797c"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#a4ba709385c5ab9f72a9dc38390e6797c">createAnalysis</a> ()</td></tr>
+<tr class="memdesc:a4ba709385c5ab9f72a9dc38390e6797c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to create an analysis and import it into the design. <br /></td></tr>
+<tr class="separator:a4ba709385c5ab9f72a9dc38390e6797c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7049bc66947f5b9f36d7670c470356fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_design_root.html#a7049bc66947f5b9f36d7670c470356fb">removeAnalysis</a> (int index)</td></tr>
 <tr class="memdesc:a7049bc66947f5b9f36d7670c470356fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the analysis with the input index from the design where index is a function of the creation/import order.  <a href="#a7049bc66947f5b9f36d7670c470356fb">More...</a><br /></td></tr>
 <tr class="separator:a7049bc66947f5b9f36d7670c470356fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,7 +282,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>If the function returns true, a descriptiong of the compilation errors will appear in the string pointed to by the errors input.</p>
 <dl class="section note"><dt>Note</dt><dd>Rather than recompiling every time this function is called, a compiled_ flag is maintained to mark if a new compiliation needs to occur or not. The run time of this function is therefore highly dependent on whether the design has been changed since the last time it was called. It should also be pointed out that there is no need to actually "compile" Picto design code. The code is simply interpreted by Picto and turned into a design tree in RAM that is run to perform an experiment. Compiling is therefore simply checking for valid syntax. If a design has valid syntax we say that it compiles. This does not preclude runtime errors in Javascript however. Javascript is so flexible that it is notoriously hard to catch javascript syntax errors before runtime. Any syntax errors that are catchable will be caught in this function; however, runtime errors will not be exposed until the experiment is tested, and these will show up in the debug viewer during the test run. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00328">328</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00346">346</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -298,7 +302,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Attempts to create a new <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a>. </p>
 <p>If the creation fails, the function returns an empty pointer. If it succeeds it returns the created object. </p>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00093">93</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00111">111</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -326,7 +330,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Marks this design as "not compiled". </p>
 <p>This is called every time anything in the underlying design is edited. It sets the compiled_ flag to false so that the <a class="el" href="class_picto_1_1_design_root.html#aa0fbfa60b431b196b01616f4107d101c" title="Returns true if the current Design succesfully compiles without errors (ie. has valid syntax)...">compiles()</a> function will not that it has to recheck the design syntax before it can return true. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#aa0fbfa60b431b196b01616f4107d101c" title="Returns true if the current Design succesfully compiles without errors (ie. has valid syntax)...">compiles()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00367">367</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00385">385</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -347,7 +351,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Enables/Disables run mode for all assets in the design. </p>
 <p>Since every property has 3 underlying values, savedValue, initValue and runValue, we need to set the operation mode of the properties depending on what we are doing. When we are designing the experiment, we can alter any of the values that we want, by default we just set all 3 at once. When we are running an experiment, scripts update only the runValue and parameter changes by the operator change the initValue which is then set to the runValue each time a property's parent enters scope. Depending on which runMode we are in, the standard setValue function on <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects functions differenlty, setting the appropriate underlying value, so we need to make sure to use this function to assure that our updates are going to the right place. This is important because, for example, if we are building a Design and testing it during the course of development, we want to make sure that when we save the design out nothing that happened during a test will affect the saved file. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property.html#a5554f476de8000d1da1b399d9f32d5ca" title="Sets the input value to the appropriate saveValue, initValue and/or runValue according to the current...">Property::setValue()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00355">355</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00373">373</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +371,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Returns a shared pointer to this design's <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>. </p>
 <dl class="section note"><dt>Note</dt><dd>While a design may contain any number of Analyses, it contains only one <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00120">120</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00138">138</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -395,7 +399,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Returns the latest deserialization warning message, and clears it out in the process. </p>
 <p>A <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> warning indicates that Deserialization was successful, but there is something that the user should know about. </p><dl class="section note"><dt>Note</dt><dd>This is currently used to inform the user that design contents were automatically upgraded. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8h_source.html#l00085">85</a> of file <a class="el" href="_design_root_8h_source.html">DesignRoot.h</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8h_source.html#l00086">86</a> of file <a class="el" href="_design_root_8h_source.html">DesignRoot.h</a>.</p>
 
 </div>
 </div>
@@ -415,7 +419,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Returns true if there is an undo available. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#a9f254dea700b90bc4f27d07cc4aa3bda" title="Moves the state of the experiment forward to what it was just before the latest undo() was called...">redo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00218">218</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00236">236</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -435,18 +439,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Returns true if there is an undo available. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#a8f57a2f9ebb4fd5065a6f36b4d8a4b90" title="Moves the state of the experiment back to what it was when setUndoPoint() was last called...">undo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00211">211</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00229">229</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8840b2f3c56ba3b6b5bb969b4fce95ff"></a>
+<a class="anchor" id="a6ebe8fd54e6e044f0d08b8be41ffdb6b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; DesignRoot::importAnalysis </td>
           <td>(</td>
-          <td class="paramtype">QString&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>analysisText</em></td><td>)</td>
           <td></td>
         </tr>
@@ -476,7 +480,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Returns true if the design has been modified by the designer. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#a8f57a2f9ebb4fd5065a6f36b4d8a4b90" title="Moves the state of the experiment back to what it was when setUndoPoint() was last called...">undo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00284">284</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00302">302</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -496,7 +500,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Moves the state of the experiment forward to what it was just before the latest <a class="el" href="class_picto_1_1_design_root.html#a8f57a2f9ebb4fd5065a6f36b4d8a4b90" title="Moves the state of the experiment back to what it was when setUndoPoint() was last called...">undo()</a> was called. </p>
 <p>As described in the <a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a> comments, what we actually do here is redo the serialized design document, then refresh the entire experiment from the XML design code. It's inefficient. It should be improved. But it works, and it fit our schedule. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#a75959f40e084a4b5a0476cee21fee410" title="Returns true if there is an undo available. ">hasRedo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00243">243</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00261">261</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -516,7 +520,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Rebuilds the design from the latest underlying serialized XML design text (see <a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>). </p>
 <p>Since currently, deleting assets just sets a deleted flag which causes them to not be serialized out, truly deleting asset objects from a design means, setting their deleted flag, serializing the experiment to xml, then reloading the experiment from that text. At some point, this should be made more efficient, in which case this function won't be necessary. </p>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00258">258</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00276">276</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -537,7 +541,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Removes the analysis with the input index from the design where index is a function of the creation/import order. </p>
 <p>The removal is performed by marking the analysis as deleted. This means that it will not be serialized out with the rest of the design, so if you <a class="el" href="class_picto_1_1_design_root.html#a3fed86206f2accefe56685239e5ff391" title="Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()). ">refreshFromXml()</a> the analysis will dissappear. If you don't <a class="el" href="class_picto_1_1_design_root.html#a3fed86206f2accefe56685239e5ff391" title="Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()). ">refreshFromXml()</a> though, the analysis will remain until you do so. /sa <a class="el" href="class_picto_1_1_design_root.html#a3fed86206f2accefe56685239e5ff391" title="Rebuilds the design from the latest underlying serialized XML design text (see setUndoPoint()). ">refreshFromXml()</a>, <a class="el" href="class_picto_1_1_design_root.html#aa3fcc78644b5ab4a53423ec8696af56b" title="Returns the number of analyses currently included in this design. ">getNumAnalyses()</a>,<a class="el" href="class_picto_1_1_design_root.html#a9a890862b928fa11267489541e381585" title="Returns a pointer to attached analysis at the input index. ">getAnalysis()</a> </p>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00108">108</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00126">126</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -580,7 +584,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Sets the asset that will be considered open in the designer window. </p>
 <dl class="section note"><dt>Note</dt><dd>This information will be saved along with the other UI information (element positions on the canvas) as part of a <a class="el" href="class_picto_1_1_u_i_data.html" title="The container of all UI information for a particular AssociateRootHost (Experiment or Analysis)...">UIData</a> category in the serialized xml design. </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00202">202</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00220">220</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -600,7 +604,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Sets the current state of the design as an undo point. </p>
 <p>This means that once the next change is made, if someone calls undo, the experiment will return to the state that it was in when this function was called. There are certainly vastly more efficient ways to handle undo than what we're doing here, but in the interest of saving time, we are simply serializaing out the entire design every time this function is called, and changing an underlying QTextDocument (which knows how to handle undo and redo) accordingly. To perform an undo, we simply call undo on the QTextDocument and then <a class="el" href="class_picto_1_1_design_root.html#acae1228aa37df9dc66c0a05ddbb9129b" title="Rebuilds the Experimental Design from a saved xml string. ">resetDesignRoot()</a> from the new text. Its incredibly inefficient, but it works, albeit slowly. This would be a good thing to upgrade in the future. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a8f57a2f9ebb4fd5065a6f36b4d8a4b90" title="Moves the state of the experiment back to what it was when setUndoPoint() was last called...">undo()</a>, <a class="el" href="class_picto_1_1_design_root.html#a9f254dea700b90bc4f27d07cc4aa3bda" title="Moves the state of the experiment forward to what it was just before the latest undo() was called...">redo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00152">152</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00170">170</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -620,7 +624,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Sets the latest version of the design as unmodified. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#a8f57a2f9ebb4fd5065a6f36b4d8a4b90" title="Moves the state of the experiment back to what it was when setUndoPoint() was last called...">undo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00296">296</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00314">314</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +644,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compiled_</b></td></t
 <p>Moves the state of the experiment back to what it was when <a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a> was last called. </p>
 <p>As described in the <a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a> comments, what we actually do here is undo the serialized design document, then refresh the entire experiment from the XML design code. It's inefficient. It should be improved. But it works, and it fit our schedule. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_design_root.html#a0be90b8e58e958fea095f0650f865c46" title="Sets the current state of the design as an undo point. ">setUndoPoint()</a>, <a class="el" href="class_picto_1_1_design_root.html#aed754dcf76ca7ae16f30745f0a895758" title="Returns true if there is an undo available. ">hasUndo()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00228">228</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_design_root_8cpp_source.html#l00246">246</a> of file <a class="el" href="_design_root_8cpp_source.html">DesignRoot.cpp</a>.</p>
 
 </div>
 </div>

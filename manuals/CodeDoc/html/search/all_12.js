@@ -161,7 +161,7 @@ var searchData=
   ['runinfo',['RunInfo',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html#a0e0809f7c6c7aa9a84eb74ac6b7ae91f',1,'Picto::RunSelectorWidget::RunInfo::RunInfo()'],['../struct_picto_1_1_run_selector_widget_1_1_run_info.html#a6976a0614cda05e121149b8a6c9932b1',1,'Picto::RunSelectorWidget::RunInfo::RunInfo(QString fileName, int index, bool saved, QAbstractButton *button, QString notes=&quot;&quot;, RunStatus runStatus=IDLE)']]],
   ['runinfo',['RunInfo',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html',1,'Picto::RunSelectorWidget']]],
   ['runinfo',['RunInfo',['../struct_picto_1_1_run_notes_state_1_1_run_info.html',1,'Picto::RunNotesState']]],
-  ['running',['Running',['../class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90aaf128c5cf5b65d84d7263557dc32b5db',1,'PlaybackControllerData::Running()'],['../class_test_playback_controller.html#ae02259c2ad0ea392389640b93326aebd',1,'TestPlaybackController::running()'],['../class_test_viewer.html#a0d5deed17ddc96436cbe6818c2ca0b92',1,'TestViewer::running()']]],
+  ['running',['running',['../class_test_playback_controller.html#ae02259c2ad0ea392389640b93326aebd',1,'TestPlaybackController::running()'],['../class_test_viewer.html#a0d5deed17ddc96436cbe6818c2ca0b92',1,'TestViewer::running()'],['../class_playback_controller_data.html#a64757fd28c6f9ab34d438f6c778eaf90aaf128c5cf5b65d84d7263557dc32b5db',1,'PlaybackControllerData::Running()']]],
   ['runnormal',['runNormal',['../class_replay_viewer.html#a8bd659a90304b9d40a2d469d1f9ac243',1,'ReplayViewer']]],
   ['runnotesreader',['RunNotesReader',['../class_picto_1_1_run_notes_reader.html',1,'Picto']]],
   ['runnotesstate',['RunNotesState',['../class_picto_1_1_run_notes_state.html',1,'Picto']]],

@@ -104,58 +104,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../parameter/Analysis.h&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AnalysisSelectorWidget : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_picto_1_1_analysis_selector_widget.html">   35</a></span>&#160;class <a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a> : <span class="keyword">public</span> QWidget</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a>(QWidget *parent = NULL);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a>(){};</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> clearLocalAnalyses();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> setLocalDesignRoot(QString filePath,QSharedPointer&lt;DesignRoot&gt; designRoot);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> setLocalDesignAnalyses(QString filePath,QList&lt;QUuid&gt; analysisIds,QStringList analysisNames);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> setDesignRootForImport(QSharedPointer&lt;DesignRoot&gt; designRoot);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> setCurrentFile(QString filePath);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QList&lt;QUuid&gt; getSelectedAnalysisIds();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QList&lt;QUuid&gt; getSelectedAnalysisIdsForImport();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> enableCheckboxes(<span class="keywordtype">bool</span> enable);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">bool</span> hasSelectedIds();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> AnalysisSelectorWidget : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_picto_1_1_analysis_selector_widget.html">   34</a></span>&#160;class <a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a> : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a>(QWidget *parent = NULL);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_analysis_selector_widget.html">AnalysisSelectorWidget</a>(){};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> clearLocalAnalyses();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> setLocalDesignRoot(QString filePath,QSharedPointer&lt;DesignRoot&gt; designRoot);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> setLocalDesignAnalyses(QString filePath,QList&lt;QUuid&gt; analysisIds,QStringList analysisNames);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> setDesignRootForImport(QSharedPointer&lt;DesignRoot&gt; designRoot);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> setCurrentFile(QString filePath);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QList&lt;QUuid&gt; getSelectedAnalysisIds();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QList&lt;QUuid&gt; getSelectedAnalysisIdsForImport();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> enableCheckboxes(<span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">bool</span> hasSelectedIds();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;signals:</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> analysisWidgetChanged();   <span class="comment">//Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    QTabWidget* tabWidget_;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    QWidget* analysesBox_;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    QWidget* analysesForImportBox_;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">   59</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a>(){id_ = QUuid();name_ = <span class="stringliteral">&quot;&quot;</span>;};</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a>(QUuid <span class="keywordtype">id</span>,QString name){id_ = id;name_ = name;};</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        QUuid id_;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        QString name_;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    };</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QHash&lt;QString,QList&lt;AnalysisInfo&gt;&gt; localAnalysisLookup_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QList&lt;AnalysisInfo&gt; analysesForImport_;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QString currFilePath_;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//QStringList   analysisNames_; </span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//QStringList   analysisNamesForImport_;    </span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//QList&lt;QUuid&gt; analysisIds_;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//QList&lt;QUuid&gt; analysisIdsForImport_;</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> updateLocalAnalysisList();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> updateAnalysesForImportList();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">void</span> checkboxChanged(<span class="keywordtype">bool</span> checked);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info_html"><div class="ttname"><a href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">Picto::AnalysisSelectorWidget::AnalysisInfo</a></div><div class="ttdoc">Stores Analysis ID, Analysis Name pairs. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_selector_widget_8h_source.html#l00059">AnalysisSelectorWidget.h:59</a></div></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    QTabWidget* tabWidget_;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    QWidget* analysesBox_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    QWidget* analysesForImportBox_;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">   60</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a>(){id_ = QUuid();name_ = <span class="stringliteral">&quot;&quot;</span>;};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">AnalysisInfo</a>(QUuid <span class="keywordtype">id</span>,QString name){id_ = id;name_ = name;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        QUuid id_;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        QString name_;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QHash&lt;QString,QList&lt;AnalysisInfo&gt;&gt; localAnalysisLookup_;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QList&lt;AnalysisInfo&gt; analysesForImport_;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QString currFilePath_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> updateLocalAnalysisList();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> updateAnalysesForImportList();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> checkboxChanged(<span class="keywordtype">bool</span> checked);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info_html"><div class="ttname"><a href="struct_picto_1_1_analysis_selector_widget_1_1_analysis_info.html">Picto::AnalysisSelectorWidget::AnalysisInfo</a></div><div class="ttdoc">Stores Analysis ID, Analysis Name pairs. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_selector_widget_8h_source.html#l00060">AnalysisSelectorWidget.h:60</a></div></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_analysis_selector_widget_html"><div class="ttname"><a href="class_picto_1_1_analysis_selector_widget.html">Picto::AnalysisSelectorWidget</a></div><div class="ttdoc">A widget used to select Analysis designs to apply to a test run or session playback. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_selector_widget_8h_source.html#l00035">AnalysisSelectorWidget.h:35</a></div></div>
+<div class="ttc" id="class_picto_1_1_analysis_selector_widget_html"><div class="ttname"><a href="class_picto_1_1_analysis_selector_widget.html">Picto::AnalysisSelectorWidget</a></div><div class="ttdoc">A widget used to select Analysis designs to apply to a test run or session playback. </div><div class="ttdef"><b>Definition:</b> <a href="_analysis_selector_widget_8h_source.html#l00034">AnalysisSelectorWidget.h:34</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

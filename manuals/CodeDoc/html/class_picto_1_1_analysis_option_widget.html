@@ -123,6 +123,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a0016fc508fbd9c4c84d0ec301e17c796">updateTaskList</a> ()</td></tr>
 <tr class="memdesc:a0016fc508fbd9c4c84d0ec301e17c796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the current list of tasks. <br /></td></tr>
 <tr class="separator:a0016fc508fbd9c4c84d0ec301e17c796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b2480e79e35c698d974e459d34444b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b2480e79e35c698d974e459d34444b9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a4b2480e79e35c698d974e459d34444b9">updateLists</a> (bool bQuietly)</td></tr>
+<tr class="memdesc:a4b2480e79e35c698d974e459d34444b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates both lists, and does so with fewer calls to rebuild the designer. <br /></td></tr>
+<tr class="separator:a4b2480e79e35c698d974e459d34444b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -242,6 +246,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#a7a9ad37794e5646132d47f3286ab1972">ignoreSelectBoxEvents_</a></td></tr>
 <tr class="memdesc:a7a9ad37794e5646132d47f3286ab1972"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag to avoid recursive index updates. <br /></td></tr>
 <tr class="separator:a7a9ad37794e5646132d47f3286ab1972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefe5033f96ae1641841df29a5620f44b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aefe5033f96ae1641841df29a5620f44b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_option_widget.html#aefe5033f96ae1641841df29a5620f44b">updateLocker_</a></td></tr>
+<tr class="memdesc:aefe5033f96ae1641841df29a5620f44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">An integer used to lock propagation of updates. Only the first on gets to call the final update. <br /></td></tr>
+<tr class="separator:aefe5033f96ae1641841df29a5620f44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A drop down menu for selecting Analyses for the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
@@ -275,7 +283,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Connected to the deleteAnalysisAction_, this deletes the currently selected analysis. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_analysis_option_widget.html#ad12e7e5f67856a7f7e18707de315a0c9" title="Action that gets called when the DeleteAnalysis button is pressed. ">deleteAnalysisAction_</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_option_widget_8cpp_source.html#l00306">306</a> of file <a class="el" href="_analysis_option_widget_8cpp_source.html">AnalysisOptionWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_option_widget_8cpp_source.html#l00313">313</a> of file <a class="el" href="_analysis_option_widget_8cpp_source.html">AnalysisOptionWidget.cpp</a>.</p>
 
 </div>
 </div>

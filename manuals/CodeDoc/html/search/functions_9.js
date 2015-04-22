@@ -6,7 +6,7 @@ var searchData=
   ['ignoretriggered',['ignoreTriggered',['../class_picto_1_1_auto_save_dialog.html#a6cb4db188a0509e2c662d13501a2d92d',1,'Picto::AutoSaveDialog']]],
   ['image',['image',['../class_diagram_item.html#a355f5719b096dbb89375a54be2ee3890',1,'DiagramItem']]],
   ['imagegraphic',['ImageGraphic',['../class_picto_1_1_image_graphic.html#ad954ec9ce5ce2a60872dc91272bb73e6',1,'Picto::ImageGraphic']]],
-  ['importanalysis',['importAnalysis',['../class_picto_1_1_design_root.html#a8840b2f3c56ba3b6b5bb969b4fce95ff',1,'Picto::DesignRoot']]],
+  ['importanalysis',['importAnalysis',['../class_picto_1_1_design_root.html#a6ebe8fd54e6e044f0d08b8be41ffdb6b',1,'Picto::DesignRoot']]],
   ['importchildasset',['importChildAsset',['../class_picto_1_1_data_store.html#a883e407e794dbca85b9891dd6abf0277',1,'Picto::DataStore']]],
   ['importfromtext',['importFromText',['../class_asset_export_import.html#ac05d9fb6c66ad9a103eaef364f96dd77',1,'AssetExportImport']]],
   ['incomingconnection',['incomingConnection',['../class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62',1,'Server']]],

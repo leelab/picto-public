@@ -18,7 +18,8 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	editorState_(editorState),
 	updatingList_(false),
 	ignoreSelectBoxEvents_(false),
-	selectedTask_(nullptr)
+	selectedTask_(nullptr),
+	updateLocker_(0)
 {
 	QGroupBox* groupBox = new QGroupBox("Edit Mode");
 
@@ -151,7 +152,7 @@ void AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)
 }
 
 /*!	\brief Finds the Analysis with matching Asset and sets it as the currently selected item in the QComboBox.
-*/
+ */
 void AnalysisOptionWidget::setSelectedAnalysis(QSharedPointer<Analysis> analysis)
 {
 	if(!isEnabled())
@@ -187,11 +188,13 @@ void AnalysisOptionWidget::updateAnalysisList()
 		return;
 	if(updatingList_)
 		return;
+
 	updatingList_ = true;
+	ignoreSelectBoxEvents_ = true;
+
 	QUuid lastAnalysisId;
 	if(selectedAnalysis_)
 		lastAnalysisId = selectedAnalysis_->getAssociateId();
-	ignoreSelectBoxEvents_ = true;
 	int newSelectionIndex = 0;
 	selectAnalysisBox_->clear();
 	selectAnalysisBox_->addItem("None");
@@ -211,24 +214,28 @@ void AnalysisOptionWidget::updateAnalysisList()
 	updatingList_ = false;
 }
 
+//! Updates both lists, and does so with fewer calls to rebuild the designer
+void AnalysisOptionWidget::updateLists(bool bQuietly)
+{
+	//Prevent the changes in this range from calling EditorState::SetWindowAsset
+	if (bQuietly)
+		updateLocker_++;
+
+	updateTaskList();
+	updateAnalysisList();
+
+	//Unlock calls to EditorState::SetWindowAsset
+	if (bQuietly)
+		updateLocker_--;
+}
+
 /*! \brief Adds a new analysis to the designRoot, using default values.
  */
 void AnalysisOptionWidget::addAnalysis()
 {
 	if(!isEnabled())
 		return;
-	QSharedPointer<Asset> newAnalysis;
-
-	//Add a new Analysis Design to the designRoot
-	newAnalysis = designRoot_->importAnalysis("<Analysis/>");
-	//Create UI Data for the new Analysis and attach it
-	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
-	Q_ASSERT(assocRootHost);
-	QUuid hostId = assocRootHost->getHostId();
-	QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
-	QString feedback;
-	newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
-	Q_ASSERT(newAnalysis);
+	QSharedPointer<Asset> newAnalysis = designRoot_->createAnalysis();
 
 	//Update list to include new analysis
 	updateAnalysisList();
@@ -319,6 +326,9 @@ void AnalysisOptionWidget::deleteSelectedAnalysis()
 	if(ret != QMessageBox::Yes)
 		return;
 
+	//Prevent the changes in this range from calling EditorState::SetWindowAsset
+	updateLocker_++;
+
 	//Detach analysis from experiment
 	QUuid currAnalysisId = selectedAnalysis->getAssociateId();
 	editorState_->getTopLevelAsset().staticCast<DataStore>()->ClearAssociateDescendants(currAnalysisId);
@@ -329,9 +339,12 @@ void AnalysisOptionWidget::deleteSelectedAnalysis()
 	if(!designRoot_->removeAnalysis(analysisIndexToRemove))
 		Q_ASSERT(false);
 
-	//Reset experiment so that the removal of the analysis (setDeleted() is used) takes affect.
+	//Reset experiment so that the removal of the analysis (setDeleted() is used) takes effect.
 	//This will result in updateAnalysisList() getting called.
 	editorState_->triggerExperimentReset();
+
+	//Unlock calls to EditorState::SetWindowAsset
+	updateLocker_--;
 
 	//Set current analysis to none.
 	setSelectedAnalysis(QUuid());
@@ -343,11 +356,13 @@ void AnalysisOptionWidget::updateTaskList()
 {
 	if (!isEnabled())
 		return;
-	if (updatingList_)
-		return;
+
+	//Prevent the changes in this range from calling EditorState::SetWindowAsset
+	updateLocker_++;
 
 	updatingList_ = true;
 	ignoreSelectBoxEvents_ = true;
+
 	int currentIndex = 0;
 
 	QSharedPointer<Experiment> pExperiment = designRoot_->getExperiment().objectCast<Experiment>();
@@ -373,6 +388,8 @@ void AnalysisOptionWidget::updateTaskList()
 	ignoreSelectBoxEvents_ = false;
 	taskBox_->setCurrentIndex(-1);
 	updatingList_ = false;
+	//Unlock calls to EditorState::SetWindowAsset
+	updateLocker_--;
 	taskBox_->setCurrentIndex(currentIndex);
 }
 
@@ -385,9 +402,12 @@ void AnalysisOptionWidget::addTask()
 	QSharedPointer<Task> newTask = designRoot_->createTask().objectCast<Task>();
 	newTask->rename("NewTask");
 
-
+	//Prevent the changes in this range from calling EditorState::SetWindowAsset
+	updateLocker_++;
 	//Select new Task
 	setSelectedTask(newTask);
+	//Unlock calls to EditorState::SetWindowAsset
+	updateLocker_--;
 
 	updateTaskList();
 
@@ -401,6 +421,7 @@ void AnalysisOptionWidget::deleteCurrentTask()
 {
 	if (!isEnabled())
 		return;
+	
 
 	int ret = QMessageBox::warning(this, tr("Picto"),
 		QString("Are you sure you want to delete the %1 Task?").arg(selectedTask_->getName()),
@@ -409,6 +430,9 @@ void AnalysisOptionWidget::deleteCurrentTask()
 
 	if (ret != QMessageBox::Yes)
 		return;
+
+	//Prevent the changes in this range from calling EditorState::SetWindowAsset
+	updateLocker_++;
 
 	QSharedPointer<Task> tempTask = selectedTask_;
 
@@ -427,6 +451,9 @@ void AnalysisOptionWidget::deleteCurrentTask()
 
 	//Reset experiment so that the removal of the Task (setDeleted() is used) takes effect.
 	editorState_->triggerExperimentReset();
+
+	//Unlock calls to EditorState::SetWindowAsset
+	updateLocker_--;
 }
 
 /*!	\brief Sets the current task to passed in asset.
@@ -437,7 +464,18 @@ void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
 		return;
 	if (task == selectedTask_)
 		return;
+
 	selectedTask_ = task;
+
+	//If the recursive lock int updateLocker_ indicates, don't call setWindowAsset
+	if (updateLocker_ > 0)
+	{
+		if (!task.isNull() && !task->getStateMachine().isNull())
+		{
+			designRoot_->setOpenAsset(task->getStateMachine());
+		}
+		return;
+	}
 
 	if (!task.isNull() && !task->getStateMachine().isNull())
 	{
@@ -463,8 +501,6 @@ void AnalysisOptionWidget::selectedTaskIndexChanged(int selectedIndex)
 	if (!isEnabled())
 		return;
 	if (ignoreSelectBoxEvents_)
-		return;
-	if (updatingList_)
 		return;
 
 	//Not a true update if the list is empty

@@ -41,6 +41,8 @@ public slots:
 	void updateAnalysisList();
 	void updateTaskList();
 
+	void updateLists(bool bQuietly);
+
 private:
 	//! The current design's EditorState
 	QSharedPointer<EditorState> editorState_;
@@ -67,6 +69,8 @@ private:
 	bool updatingList_;
 	//! A flag to avoid recursive index updates
 	bool ignoreSelectBoxEvents_;
+	//! An integer used to lock propagation of updates.  Only the first on gets to call the final update.
+	int updateLocker_;
 
 private slots:
 	void addAnalysis();

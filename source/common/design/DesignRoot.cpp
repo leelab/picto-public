@@ -79,12 +79,30 @@ bool DesignRoot::resetDesignRoot(QString DesignRootText)
  *	\details If the import fails, the function returns an empty pointer.  If it succeeds it returns the imported analysis
  *	object.
  */
-QSharedPointer<Asset> DesignRoot::importAnalysis(QString analysisText)
+QSharedPointer<Asset> DesignRoot::importAnalysis(const QString &analysisText)
 {
 	if(!pictoData_)
 		return QSharedPointer<Asset>();
 	QSharedPointer<Asset> newAsset = pictoData_->importChildAsset(analysisText,QString());
 	return newAsset;
+}
+
+/*! \brief Attempts to create an analysis and import it into the design.
+ */
+QSharedPointer<Asset> DesignRoot::createAnalysis()
+{
+	QSharedPointer<Asset> newAnalysis = importAnalysis("<Analysis/>");
+	Q_ASSERT(newAnalysis);
+
+	//Create UI Data for the new Analysis and attach it
+	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+	Q_ASSERT(assocRootHost);
+	QUuid hostId = assocRootHost->getHostId();
+	QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData", QString(), QString());
+	QString feedback;
+	newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis, feedback);
+
+	return newAnalysis;
 }
 
 /*! \brief Attempts to create a new Task.

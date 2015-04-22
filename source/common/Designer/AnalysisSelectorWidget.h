@@ -12,20 +12,19 @@
 
 namespace Picto {
 /*! \brief A widget used to select Analysis designs to apply to a test run or session playback.
- *	\details This widget includes two tabs, one including built in Analyses (ie. Analyses that
- *	are saved as part of a design file) and the other including importable Analyses (ie. 
- *	Analyses that the we can attempt to apply to previously run sessions).  Each tab contains
- *	check boxes such that multiple analyses can be selected at once.  The list of Analyses may
- *	be built up automatically based on DesignRoot objects passed into setDesignRootForImport() and
- *	setLocalDesignRoot or added manually using setLocalDesignAnalyses().  For the purposes of
- *	easily switching between playback of multiple designs, the widget also lets us call 
- *	setLocalDesignRoot() multiple times for different design/session files, then choose which 
- *	Local Analyses we would like to display in the widget by using setCurrentFile().  Only one
- *	"importable" DesignRoot functions at a time however.
- *	Selected Analysis Ids are retrieved by using getSelectedAnlysisIds() for local Analyses
- *	and getSelectedAnalysisIdsForImport() for importable Analyses.
- *	\note This widget performs no import compatibility tests.  Whether or not the importable
- *	Analyses are compatible with the current Design must be tested elsewhere.
+ *	\details This widget includes two tabs, one including built in Analyses (ie. Analyses that are saved as part of a
+ *	design file) and the other including importable Analyses (ie. Analyses that the we can attempt to apply to previously
+ *	run sessions).  Each tab contains check boxes such that multiple analyses can be selected at once.  The list of
+ *	Analyses may be built up automatically based on DesignRoot objects passed into setDesignRootForImport() and
+ *	setLocalDesignRoot or added manually using setLocalDesignAnalyses().  For the purposes of easily switching between
+ *	playback of multiple designs, the widget also lets us call setLocalDesignRoot() multiple times for different
+ *	design/session files, then choose which Local Analyses we would like to display in the widget by using
+ *	setCurrentFile().  Only one "importable" DesignRoot functions at a time however.
+ *
+ *	Selected Analysis Ids are retrieved by using getSelectedAnlysisIds() for local Analyses and
+ *	getSelectedAnalysisIdsForImport() for importable Analyses.
+ *	\note This widget performs no import compatibility tests.  Whether or not the importable Analyses are compatible with
+ *	the current Design must be tested elsewhere.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -49,13 +48,15 @@ public:
 	QList<QUuid> getSelectedAnalysisIdsForImport();
 	void enableCheckboxes(bool enable);
 	bool hasSelectedIds();
+
 signals:
 	void analysisWidgetChanged();	//Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
+
 private:
 	QTabWidget* tabWidget_;
 	QWidget* analysesBox_;
 	QWidget* analysesForImportBox_;
-	/*! \brief Stores Analysis ID, Analysis Name pairs.*/
+	//! Stores Analysis ID, Analysis Name pairs.
 	struct AnalysisInfo
 	{
 		AnalysisInfo(){id_ = QUuid();name_ = "";};
@@ -66,12 +67,9 @@ private:
 	QHash<QString,QList<AnalysisInfo>> localAnalysisLookup_;
 	QList<AnalysisInfo> analysesForImport_;
 	QString currFilePath_;
-	//QStringList	analysisNames_;	
-	//QStringList	analysisNamesForImport_;	
-	//QList<QUuid> analysisIds_;
-	//QList<QUuid> analysisIdsForImport_;
 	void updateLocalAnalysisList();
 	void updateAnalysesForImportList();
+
 private slots:
 	void checkboxChanged(bool checked);
 };

@@ -34,7 +34,8 @@ public:
 	virtual ~DesignRoot(){};
 
 	bool resetDesignRoot(QString DesignRootText);
-	QSharedPointer<Asset> importAnalysis(QString analysisText);
+	QSharedPointer<Asset> importAnalysis(const QString &analysisText);
+	QSharedPointer<Asset> createAnalysis();
 	bool removeAnalysis(int index);
 
 	QSharedPointer<Asset> createTask();

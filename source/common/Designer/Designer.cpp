@@ -81,18 +81,61 @@ Designer::Designer(QWidget *parent) :
 	propertyEditor_ = new PropertyBrowser(editorState_);
 	notesWidget_ = new ElementNotesWidget(editorState_);
 	rightSideWidget->addWidget(propertyEditor_);
+	rightSideWidget->setHandleWidth(13);
 	rightSideWidget->addWidget(notesWidget_);
 
 	QList<int> rightSideSizes;
 	rightSideSizes << 500 << 100;
 	rightSideWidget->setSizes(rightSideSizes);
 
+	//rightSideWidget->handle(1)->setStyleSheet("image: url(:/icons/splitter_horizontal.png);");
+
 	splitter->addWidget(rightSideWidget);
 	splitter->setStretchFactor(1,10);
+	splitter->setHandleWidth(13);
+	//splitter->setStyleSheet("QSplitter::handle {image: url(:/icons/splitter_vertical.png);}");
+	splitter->setStyleSheet(
+		"QSplitter::handle:vertical {																   \
+		image: url(:/icons/splitter_horizontal.png);												   \
+		}																							   \
+																									   \
+		QSplitter::handle:horizontal {																   \
+		image: url(:/icons/splitter_vertical.png);													   \
+		}																							   \
+																									   \
+		#big_splitter::handle{ background - color: blue;  border: 3px dashed  green; height:50px; }	   \
+																									   \
+		QSplitter::handle:hover{																	   \
+		background - color:																			   \
+		qlineargradient(spread : repeat, x1 : 0, y1 : 0, x2 : 1, y2 : 0,							   \
+		stop : 0 rgba(255, 0, 0, 255),																   \
+		stop : 0.17 rgba(255, 0, 0, 255),															   \
+		stop : 0.18 rgba(255, 255, 255, 255),														   \
+		stop : 0.210212 rgba(255, 255, 255, 255),													   \
+		stop : 0.220212 rgba(0, 16, 255, 255),														   \
+		stop : 0.279897 rgba(0, 16, 255, 255),														   \
+		stop : 0.289897 rgba(255, 255, 255, 255),													   \
+		stop : 0.32 rgba(255, 255, 255, 255),														   \
+		stop : 0.33 rgba(255, 0, 0, 255),															   \
+		stop : 1 rgba(255, 0, 0, 255))																   \
+	}																								   \
+																									   \
+	QSplitter::handle : pressed{																	   \
+		background - color: qlineargradient(spread : pad, x1 : 0, y1 : 0, x2 : 1, y2 : 0,			   \
+		stop : 0 rgba(9, 41, 4, 255),																   \
+		stop : 0.085 rgba(2, 79, 0, 255),															   \
+		stop : 0.19 rgba(50, 147, 22, 255),															   \
+		stop : 0.275 rgba(236, 191, 49, 255),														   \
+		stop : 0.39 rgba(243, 61, 34, 255),															   \
+		stop : 0.555 rgba(135, 81, 60, 255),														   \
+		stop : 0.667 rgba(121, 75, 255, 255),														   \
+		stop : 0.825 rgba(164, 255, 244, 255),														   \
+		stop : 0.885 rgba(104, 222, 71, 255),														   \
+		stop : 1 rgba(93, 128, 0, 255));															   \
+		}");
 
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addWidget(splitter);
-
 
 	setLayout(mainLayout);
 }
@@ -448,8 +491,7 @@ bool Designer::resetEditor()
 	editorState_->setTopLevelAsset(designRoot_->getExperiment());
 
 	//Update the analysis list
-	analysisOption_->updateAnalysisList();
-	analysisOption_->updateTaskList();
+	analysisOption_->updateLists(true);
 
 	//Reset the window asset
 	QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
