@@ -151,7 +151,5 @@
         <file>icons/imagefile.svg</file>
         <file>icons/runnotes.svg</file>
         <file>icons/sessionopen.png</file>
-        <file>icons/splitter_horizontal.png</file>
-        <file>icons/splitter_vertical.png</file>
     </qresource>
 </RCC>

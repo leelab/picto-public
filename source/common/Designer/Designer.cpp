@@ -44,9 +44,8 @@ Designer::Designer(QWidget *parent) :
     toolbarLayout->addWidget(pointerToolbar);
 	toolbarLayout->addStretch();
 
-    QSplitter *splitter = new QSplitter;
-	QSplitter *centralLayout = new QSplitter;
-	centralLayout->setOrientation(Qt::Vertical);
+	QSplitter *splitter = new QSplitter(Qt::Horizontal);
+	QSplitter *centralLayout = new QSplitter(Qt::Vertical);
 	upButton = new LevelUpButton(editorState_);
 	connect(upButton,SIGNAL(pressed()),editorState_.data(),SLOT(setWindowAssetToParent()));
 
@@ -69,70 +68,59 @@ Designer::Designer(QWidget *parent) :
 	centralLayout->setStretchFactor(1,10);
 	centralLayout->addWidget(infoPane_);
 	centralLayout->setStretchFactor(2,7);
-	//QWidget* centralLayoutWidget = new QWidget();
-	//centralLayoutWidget->setLayout(centralLayout);
+
+	centralLayout->handle(1)->setDisabled(true);
+	QSplitterHandle *splitterHandle = centralLayout->handle(2);
+	QBoxLayout *handleLayout = new QVBoxLayout(splitterHandle);
+	handleLayout->setContentsMargins(100,0,100,0);
+	QFrame *handleLine = new QFrame(splitterHandle);
+	handleLine->setFrameShape(QFrame::HLine);
+	handleLine->setFrameShadow(QFrame::Sunken);
+	handleLayout->addSpacing(10);
+	handleLayout->addWidget(handleLine);
+	handleLayout->addSpacing(3);
+	centralLayout->setHandleWidth(11);
+
+
 
 	toolbox_ = new Toolbox(editorState_);
 	splitter->addWidget(toolbox_);
     splitter->addWidget(centralLayout);
 
-	QSplitter* rightSideWidget = new QSplitter();
-	rightSideWidget->setOrientation(Qt::Vertical);
+	QSplitter* rightSideWidget = new QSplitter(Qt::Vertical);
 	propertyEditor_ = new PropertyBrowser(editorState_);
 	notesWidget_ = new ElementNotesWidget(editorState_);
 	rightSideWidget->addWidget(propertyEditor_);
-	rightSideWidget->setHandleWidth(13);
 	rightSideWidget->addWidget(notesWidget_);
+
+	splitterHandle = rightSideWidget->handle(1);
+	handleLayout = new QVBoxLayout(splitterHandle);
+	handleLayout->setContentsMargins(30, 0, 30, 0);
+	handleLine = new QFrame(splitterHandle);
+	handleLine->setFrameShape(QFrame::HLine);
+	handleLine->setFrameShadow(QFrame::Sunken);
+	handleLayout->addSpacing(10);
+	handleLayout->addWidget(handleLine);
+	handleLayout->addSpacing(3);
+	rightSideWidget->setHandleWidth(11);
 
 	QList<int> rightSideSizes;
 	rightSideSizes << 500 << 100;
 	rightSideWidget->setSizes(rightSideSizes);
 
-	//rightSideWidget->handle(1)->setStyleSheet("image: url(:/icons/splitter_horizontal.png);");
-
 	splitter->addWidget(rightSideWidget);
 	splitter->setStretchFactor(1,10);
-	splitter->setHandleWidth(13);
-	//splitter->setStyleSheet("QSplitter::handle {image: url(:/icons/splitter_vertical.png);}");
-	splitter->setStyleSheet(
-		"QSplitter::handle:vertical {																   \
-		image: url(:/icons/splitter_horizontal.png);												   \
-		}																							   \
-																									   \
-		QSplitter::handle:horizontal {																   \
-		image: url(:/icons/splitter_vertical.png);													   \
-		}																							   \
-																									   \
-		#big_splitter::handle{ background - color: blue;  border: 3px dashed  green; height:50px; }	   \
-																									   \
-		QSplitter::handle:hover{																	   \
-		background - color:																			   \
-		qlineargradient(spread : repeat, x1 : 0, y1 : 0, x2 : 1, y2 : 0,							   \
-		stop : 0 rgba(255, 0, 0, 255),																   \
-		stop : 0.17 rgba(255, 0, 0, 255),															   \
-		stop : 0.18 rgba(255, 255, 255, 255),														   \
-		stop : 0.210212 rgba(255, 255, 255, 255),													   \
-		stop : 0.220212 rgba(0, 16, 255, 255),														   \
-		stop : 0.279897 rgba(0, 16, 255, 255),														   \
-		stop : 0.289897 rgba(255, 255, 255, 255),													   \
-		stop : 0.32 rgba(255, 255, 255, 255),														   \
-		stop : 0.33 rgba(255, 0, 0, 255),															   \
-		stop : 1 rgba(255, 0, 0, 255))																   \
-	}																								   \
-																									   \
-	QSplitter::handle : pressed{																	   \
-		background - color: qlineargradient(spread : pad, x1 : 0, y1 : 0, x2 : 1, y2 : 0,			   \
-		stop : 0 rgba(9, 41, 4, 255),																   \
-		stop : 0.085 rgba(2, 79, 0, 255),															   \
-		stop : 0.19 rgba(50, 147, 22, 255),															   \
-		stop : 0.275 rgba(236, 191, 49, 255),														   \
-		stop : 0.39 rgba(243, 61, 34, 255),															   \
-		stop : 0.555 rgba(135, 81, 60, 255),														   \
-		stop : 0.667 rgba(121, 75, 255, 255),														   \
-		stop : 0.825 rgba(164, 255, 244, 255),														   \
-		stop : 0.885 rgba(104, 222, 71, 255),														   \
-		stop : 1 rgba(93, 128, 0, 255));															   \
-		}");
+
+	splitterHandle = splitter->handle(1);
+	handleLayout = new QHBoxLayout(splitterHandle);
+	handleLayout->setContentsMargins(0, 100, 0, 100);
+	handleLine = new QFrame(splitterHandle);
+	handleLine->setFrameShape(QFrame::VLine);
+	handleLine->setFrameShadow(QFrame::Sunken);
+	handleLayout->addSpacing(10);
+	handleLayout->addWidget(handleLine);
+	handleLayout->addSpacing(3);
+	splitter->setHandleWidth(11);
 
 	mainLayout->addLayout(toolbarLayout);
 	mainLayout->addWidget(splitter);
