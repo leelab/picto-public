@@ -79,6 +79,7 @@ var searchData=
   ['addsignal',['addSignal',['../class_picto_1_1_session_state.html#a7f5f14858c6ff2d727c1ba6017715633',1,'Picto::SessionState']]],
   ['addsignalchannel',['addSignalChannel',['../class_picto_1_1_engine_1_1_picto_engine.html#a56d9e7dd7be31239a3b457c24245211b',1,'Picto::Engine::PictoEngine']]],
   ['addspikedata',['addSpikeData',['../class_neural_data_viewer.html#ab1e672e37e9902a1053996be1e60949f',1,'NeuralDataViewer']]],
+  ['addsplitterline',['addSplitterLine',['../namespace_picto_1_1_u_i_helper.html#ad05a36ed28f9f094ad28371191ecfdf0',1,'Picto::UIHelper']]],
   ['addsprop',['addSProp',['../struct_asset_description.html#a9132d9f5eaa726bd11d72b56acb2588f',1,'AssetDescription']]],
   ['addstatetransitionforserver',['addStateTransitionForServer',['../class_picto_1_1_engine_1_1_picto_engine.html#a5879ccdce584c3e65f6a6508b2b67d03',1,'Picto::Engine::PictoEngine']]],
   ['addsubchannel',['addSubchannel',['../class_picto_1_1_doublet_signal_channel.html#ac426de86e8ef7f9dfc0dbf50c7bc630b',1,'Picto::DoubletSignalChannel::addSubchannel()'],['../class_picto_1_1_signal_channel.html#abfe16a2da824414da1ed01ae72604077',1,'Picto::SignalChannel::addSubchannel()']]],

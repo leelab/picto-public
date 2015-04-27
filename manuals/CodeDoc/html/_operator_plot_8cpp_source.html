@@ -166,9 +166,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">   77</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">OperatorPlot::initView</a>()</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="class_picto_1_1_data_view_element.html#ae5e4365e7eaaf06c62f11da2ef0994e4">DataViewElement::initView</a>();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    connectDataSignals(m_pPlotHandler);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    connectDataSignals(m_pPlotHandler);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="class_picto_1_1_data_view_element.html#ae5e4365e7eaaf06c62f11da2ef0994e4">DataViewElement::initView</a>();</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    emit initializePlotSig(<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;XTitle&quot;</span>).toString(),</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;YTitle&quot;</span>).toString());</div>

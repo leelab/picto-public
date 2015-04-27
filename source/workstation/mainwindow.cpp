@@ -37,6 +37,7 @@ MainWindow::MainWindow()
 	setCentralWidget(viewerStack_);
 	setWindowIcon(QIcon(":/icons/scope.ico"));
 
+
 	isModified_ = false;
 	
 	//Load a file from a commandline argument

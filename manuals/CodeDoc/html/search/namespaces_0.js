@@ -4,5 +4,6 @@ var searchData=
   ['multipartresponsetype',['MultiPartResponseType',['../namespace_picto_1_1_multi_part_response_type.html',1,'Picto']]],
   ['panelinfo',['PanelInfo',['../namespace_panel_info.html',1,'']]],
   ['protocolresponsetype',['ProtocolResponseType',['../namespace_picto_1_1_protocol_response_type.html',1,'Picto']]],
-  ['registeredresponsetype',['RegisteredResponseType',['../namespace_picto_1_1_registered_response_type.html',1,'Picto']]]
+  ['registeredresponsetype',['RegisteredResponseType',['../namespace_picto_1_1_registered_response_type.html',1,'Picto']]],
+  ['uihelper',['UIHelper',['../namespace_picto_1_1_u_i_helper.html',1,'Picto']]]
 ];

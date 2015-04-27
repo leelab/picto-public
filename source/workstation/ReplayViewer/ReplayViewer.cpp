@@ -13,6 +13,7 @@
 #include <QSlider>
 #include <QApplication>
 #include <QProgressBar>
+#include <QSplitter>
 
 #include "ReplayViewer.h"
 
@@ -20,14 +21,15 @@
 #include "../../common/storage/AssetExportImport.h"
 #include "../../common/compositor/RenderingTarget.h"
 #include "../../common/compositor/PCMAuralTarget.h"
+#include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
+#include "../../common/iodevices/BufferFileGenerator.h"
 #include "../../common/designer/propertyframe.h"
+#include "../../common/designer/UIHelper.h"
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
-#include "../../common/compositor/OutputSignalWidget.h"
-#include "../../common/iodevices/BufferFileGenerator.h"
 #include "../../common/playback/FileSessionLoader.h"
 
 #include "../DataViewer/DataViewLayout.h"
@@ -198,15 +200,17 @@ void ReplayViewer::setupUi()
 	toolbarLayout->addStretch();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
+	
+	DataViewLayout *dataViewLayout = new DataViewLayout();
+	
+
 	//Set up the visual target host
 	//This exists because QSharedPointer<QWidget> results in multiple delete call, which 
 	//gives us memory exceptions.
-
-	DataViewLayout *dataViewLayout = new DataViewLayout();
-
 	visualTargetHost_ = new RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
-	stimulusLayout->addLayout(dataViewLayout);
+
+	stimulusLayout->addWidget(dataViewLayout);
 	connect(visualTargetHost_,SIGNAL(updateRecordingTime(double)),this,SLOT(setRecordTime(double)));
 
 	//Setup Output Signal Widgets
@@ -218,6 +222,8 @@ void ReplayViewer::setupUi()
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
 	stimulusLayout->addWidget(progress_);
+	stimulusLayout->setMargin(0);
+	stimulusLayout->setContentsMargins(0, 0, 0, 0);
 
 	//Setup analysis widgets
 	QTabWidget* analysisTabs = new QTabWidget();
@@ -231,33 +237,53 @@ void ReplayViewer::setupUi()
 	analysisTabs->addTab(analysisSelector_,"Select Analyses");
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
-
-
 	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
 	viewSelectionWidget_ = new ViewSelectionWidget();
 	viewSelectionWidget_->registerView(taskView);
 	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
 	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
-
+	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
+	QHBoxLayout *viewLayout = new QHBoxLayout();
+	viewLayout->setMargin(0);
+	viewLayout->setContentsMargins(0, 0, 0, 0);
+	viewLayout->addWidget(viewSelectionWidget_, 0, Qt::AlignCenter);
 
 	QVBoxLayout *infoLayout = new QVBoxLayout();
-	infoLayout->addWidget(viewSelectionWidget_);
+	infoLayout->addLayout(viewLayout);
 	infoLayout->addWidget(analysisTabs);
+	infoLayout->setContentsMargins(0, 11, 0, 0);
+	infoLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	infoLayout->setAlignment(Qt::AlignTop);
 
 	QHBoxLayout *progressLayout = new QHBoxLayout();
 	progressLayout->addWidget(new QLabel("Load Progress:"));
 	progressLayout->addWidget(loadProgress_);
 	infoLayout->addLayout(progressLayout);
 
-	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(infoLayout,1);
-	operationLayout->addLayout(stimulusLayout,4);
+	QWidget *container = nullptr;
+	QSplitter *operationLayout = new QSplitter(Qt::Horizontal);
+
+	container = new QWidget();
+	container->setLayout(infoLayout);
+	operationLayout->addWidget(container);
+	operationLayout->setStretchFactor(0, 5);
+
+	container = new QWidget();
+	container->setLayout(stimulusLayout);
+	operationLayout->addWidget(container);
+	operationLayout->setStretchFactor(1, 10);
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(1), 200);
+
 	operationLayout->addWidget(speed_);
+	operationLayout->setStretchFactor(2, 0);
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(2), 200);
+
+	operationLayout->setHandleWidth(11);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout,0);
-	mainLayout->addLayout(operationLayout,1);
+	mainLayout->addWidget(operationLayout,1);
 	setLayout(mainLayout);
 }
 

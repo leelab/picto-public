@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
 
 	QApplication app(argc, argv);
 
-	
 #if WIN32
 	//Register the application with its compatible filetypes
 	QString exeFileName = QCoreApplication::applicationFilePath();
@@ -91,7 +90,6 @@ int main(int argc, char *argv[])
 	jumplist.recent()->setTitle("Recent Experiments");
 	jumplist.recent()->setVisible(true);
 #endif
-
 	QLocale systemLocale = QLocale();
 	QString localeLanguageCode = systemLocale.name().left(2);
 

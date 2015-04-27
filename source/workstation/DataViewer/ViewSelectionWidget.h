@@ -4,6 +4,7 @@
 #include <QString>
 #include <QVector>
 #include <QWidget>
+#include <QFrame>
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QCheckBox>
@@ -42,7 +43,7 @@ struct WidgetCoords
 *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
 *	\date 2009-2015
 */
-class ViewSelectionWidget : public QWidget
+class ViewSelectionWidget : public QFrame
 {
 	Q_OBJECT
 public:

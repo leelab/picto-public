@@ -177,6 +177,8 @@ HEADERS += $$(PICTO_TREE)/source/common/designer/RunSelectorWidget.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/RunSelectorWidget.cpp
 HEADERS += $$(PICTO_TREE)/source/common/designer/ViewerWindow.h
 SOURCES += $$(PICTO_TREE)/source/common/designer/ViewerWindow.cpp
+HEADERS += $$(PICTO_TREE)/source/common/designer/UIHelper.h
+SOURCES += $$(PICTO_TREE)/source/common/designer/UIHelper.cpp
 
 
 HEADERS += $$(PICTO_TREE)/source/common/engine/InputPort.h

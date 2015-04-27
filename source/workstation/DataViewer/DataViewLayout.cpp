@@ -1,5 +1,6 @@
 #include <QPalette>
 #include <QLabel>
+#include <QGridLayout>
 
 #include "DataViewLayout.h"
 #include "ViewSelectionWidget.h"
@@ -12,25 +13,32 @@ using namespace Picto;
 */
 DataViewLayout::DataViewLayout()
 {
-	setColumnStretch(0, 1);
-	setColumnStretch(1, 1);
-	setColumnStretch(2, 1);
-	setColumnStretch(3, 1);
+	layout_ = new QGridLayout();
 
-	setColumnMinimumWidth(0, 100);
-	setColumnMinimumWidth(1, 100);
-	setColumnMinimumWidth(2, 100);
-	setColumnMinimumWidth(3, 100);
+	setLayout(layout_);
 
-	setRowStretch(0, 1);
-	setRowStretch(1, 1);
-	setRowStretch(2, 1);
-	setRowStretch(3, 1);
+	layout_->setContentsMargins(0, 0, 0, 0);
+	layout_->setMargin(0);
 
-	setRowMinimumHeight(0, 100);
-	setRowMinimumHeight(1, 100);
-	setRowMinimumHeight(2, 100);
-	setRowMinimumHeight(3, 100);
+	layout_->setColumnStretch(0, 1);
+	layout_->setColumnStretch(1, 1);
+	layout_->setColumnStretch(2, 1);
+	layout_->setColumnStretch(3, 1);
+
+	layout_->setColumnMinimumWidth(0, 100);
+	layout_->setColumnMinimumWidth(1, 100);
+	layout_->setColumnMinimumWidth(2, 100);
+	layout_->setColumnMinimumWidth(3, 100);
+
+	layout_->setRowStretch(0, 1);
+	layout_->setRowStretch(1, 1);
+	layout_->setRowStretch(2, 1);
+	layout_->setRowStretch(3, 1);
+
+	layout_->setRowMinimumHeight(0, 100);
+	layout_->setRowMinimumHeight(1, 100);
+	layout_->setRowMinimumHeight(2, 100);
+	layout_->setRowMinimumHeight(3, 100);
 }
 
 /*! \brief DataViewLayout destructor
@@ -45,7 +53,7 @@ DataViewLayout::~DataViewLayout()
  */
 void DataViewLayout::removeWidgetSlot(QWidget *pWidget)
 {
-	removeWidget(pWidget);
+	layout_->removeWidget(pWidget);
 }
 
 /*! \brief A slot emitted by the ViewSelectionWidget to signal that the specified widget should be added to the
@@ -53,5 +61,6 @@ void DataViewLayout::removeWidgetSlot(QWidget *pWidget)
 */
 void DataViewLayout::addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)
 {
-	addWidget(pWidget, x, y, size, size);
+	//pWidget->setStyleSheet("border: 1px solid black");
+	layout_->addWidget(pWidget, x, y, size, size);
 }

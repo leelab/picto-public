@@ -16,6 +16,7 @@
 #include "ElementNotesWidget.h"
 #include "../parameter/AssociateElement.h"
 #include "../storage/SearchRequest.h"
+#include "UIHelper.h"
 #include "../../common/memleakdetect.h"
 
 const int InsertTextButton = 10;
@@ -70,18 +71,8 @@ Designer::Designer(QWidget *parent) :
 	centralLayout->setStretchFactor(2,7);
 
 	centralLayout->handle(1)->setDisabled(true);
-	QSplitterHandle *splitterHandle = centralLayout->handle(2);
-	QBoxLayout *handleLayout = new QVBoxLayout(splitterHandle);
-	handleLayout->setContentsMargins(100,0,100,0);
-	QFrame *handleLine = new QFrame(splitterHandle);
-	handleLine->setFrameShape(QFrame::HLine);
-	handleLine->setFrameShadow(QFrame::Sunken);
-	handleLayout->addSpacing(10);
-	handleLayout->addWidget(handleLine);
-	handleLayout->addSpacing(3);
+	UIHelper::addSplitterLine(centralLayout->handle(2), 150);
 	centralLayout->setHandleWidth(11);
-
-
 
 	toolbox_ = new Toolbox(editorState_);
 	splitter->addWidget(toolbox_);
@@ -93,15 +84,7 @@ Designer::Designer(QWidget *parent) :
 	rightSideWidget->addWidget(propertyEditor_);
 	rightSideWidget->addWidget(notesWidget_);
 
-	splitterHandle = rightSideWidget->handle(1);
-	handleLayout = new QVBoxLayout(splitterHandle);
-	handleLayout->setContentsMargins(30, 0, 30, 0);
-	handleLine = new QFrame(splitterHandle);
-	handleLine->setFrameShape(QFrame::HLine);
-	handleLine->setFrameShadow(QFrame::Sunken);
-	handleLayout->addSpacing(10);
-	handleLayout->addWidget(handleLine);
-	handleLayout->addSpacing(3);
+	UIHelper::addSplitterLine(rightSideWidget->handle(1), 50);
 	rightSideWidget->setHandleWidth(11);
 
 	QList<int> rightSideSizes;
@@ -111,15 +94,8 @@ Designer::Designer(QWidget *parent) :
 	splitter->addWidget(rightSideWidget);
 	splitter->setStretchFactor(1,10);
 
-	splitterHandle = splitter->handle(1);
-	handleLayout = new QHBoxLayout(splitterHandle);
-	handleLayout->setContentsMargins(0, 100, 0, 100);
-	handleLine = new QFrame(splitterHandle);
-	handleLine->setFrameShape(QFrame::VLine);
-	handleLine->setFrameShadow(QFrame::Sunken);
-	handleLayout->addSpacing(10);
-	handleLayout->addWidget(handleLine);
-	handleLayout->addSpacing(3);
+	UIHelper::addSplitterLine(splitter->handle(1), 150);
+	UIHelper::addSplitterLine(splitter->handle(2), 150);
 	splitter->setHandleWidth(11);
 
 	mainLayout->addLayout(toolbarLayout);

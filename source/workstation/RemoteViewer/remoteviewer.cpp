@@ -1023,16 +1023,20 @@ void RemoteViewer::setupUi()
 	viewSelectionWidget_->registerView(taskView);
 	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
 	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
+	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
 
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
-	leftPane->addWidget(viewSelectionWidget_);
-	leftPane->addWidget(propertyFrame_,Qt::AlignTop);
+	leftPane->addWidget(viewSelectionWidget_,0);
+	leftPane->addWidget(propertyFrame_,1, Qt::AlignTop);
+	leftPane->setContentsMargins(0, 11, 0, 0);
+	leftPane->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	stimulusLayout->addLayout(dataViewLayout);
-
+	stimulusLayout->setContentsMargins(0, 0, 0, 0);
+	stimulusLayout->setMargin(0);
+	stimulusLayout->addWidget(dataViewLayout);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{

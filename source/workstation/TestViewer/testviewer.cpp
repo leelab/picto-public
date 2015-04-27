@@ -12,18 +12,20 @@
 #include <QFileDialog>
 #include <QSlider>
 #include <QTabWidget>
+#include <QSplitter>
 
 #include "testviewer.h"
 
 #include "../../common/compositor/RenderingTarget.h"
 #include "../../common/compositor/PCMAuralTarget.h"
+#include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
 #include "../../common/designer/propertyframe.h"
+#include "../../common/designer/UIHelper.h"
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
-#include "../../common/compositor/OutputSignalWidget.h"
 
 #include "../DataViewer/DataViewLayout.h"
 #include "../DataViewer/DataViewWidget.h"
@@ -235,14 +237,6 @@ void TestViewer::setupUi()
 	engine_->setOperatorAsUser(true);
 	engine_->setSlaveMode(false);
 
-	////Zoom slider
-	//zoomSlider_ = new QSlider;
-	//zoomSlider_->setRange(1,59);
-	//zoomSlider_->setSingleStep(1);
-	//zoomSlider_->setValue(30);
-	//zoomSlider_->setOrientation(Qt::Horizontal);
-	//connect(zoomSlider_, SIGNAL(sliderMoved(int)), this, SLOT(zoomChanged(int)));
-
 
 	//TaskList combo box
 	taskListBox_ = new QComboBox(this);
@@ -258,7 +252,6 @@ void TestViewer::setupUi()
 	testToolbar_->addAction(loadPropsAction_);
 	testToolbar_->addSeparator();
 	testToolbar_->addWidget(userType_);
-	//testToolbar_->addWidget(zoomSlider_);
 	
 	QHBoxLayout *toolbarLayout = new QHBoxLayout;
 	toolbarLayout->addWidget(testToolbar_);
@@ -267,7 +260,9 @@ void TestViewer::setupUi()
 	DataViewLayout *dataViewLayout = new DataViewLayout();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
-	stimulusLayout->addLayout(dataViewLayout);
+	stimulusLayout->setContentsMargins(0, 0, 0, 0);
+	stimulusLayout->setMargin(0);
+	stimulusLayout->addWidget(dataViewLayout);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
@@ -290,24 +285,40 @@ void TestViewer::setupUi()
 	viewSelectionWidget_->registerView(taskView);
 	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
 	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
-
+	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
 
 	QVBoxLayout *leftToolFrame = new QVBoxLayout;
 	leftToolFrame->addWidget(viewSelectionWidget_, 0);
 	leftToolFrame->addWidget(propertyFrame_, 1);
-	
+	leftToolFrame->setContentsMargins(0, 11, 0, 0);
+	leftToolFrame->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	leftToolFrame->setAlignment(Qt::AlignTop);
 
-	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(leftToolFrame,0);
-	operationLayout->addLayout(stimulusLayout,3);
-	operationLayout->addWidget(rightTabs,1);
-	operationLayout->addStretch();
+	QSplitter *operationLayout = new QSplitter(Qt::Horizontal);
+	QWidget *container = new QWidget();
+	container->setLayout(leftToolFrame);
+	container->sizePolicy().setHorizontalStretch(QSizePolicy::Maximum);
+	operationLayout->addWidget(container);
+	operationLayout->setStretchFactor(0, 0);
+	operationLayout->setCollapsible(0, true);
+
+	container = new QWidget();
+	container->setLayout(stimulusLayout);
+	operationLayout->addWidget(container);
+
+	operationLayout->setStretchFactor(1, 10);
+	operationLayout->addWidget(rightTabs);
+	operationLayout->setStretchFactor(2, 3);
+
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(1), 200);
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(2), 200);
+
+	operationLayout->setHandleWidth(11);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout,0);
-	mainLayout->addLayout(operationLayout,1);
+	mainLayout->addWidget(operationLayout,1);
 	setLayout(mainLayout);
-
 }
 
 /*! \brief Loads runtime Property initValues from a previous Session to replace those in the current Experiment.

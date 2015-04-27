@@ -20,6 +20,7 @@ ViewSelectionWidget::ViewSelectionWidget()
 	//Plot Selection Widget
 	plotSelection_ = new QComboBox();
 	plotSelection_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	plotSelection_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 	plotSelection_->setInsertPolicy(QComboBox::InsertAtBottom);
 	plotSelection_->setEditable(false);
 
@@ -31,6 +32,7 @@ ViewSelectionWidget::ViewSelectionWidget()
 	//Size Selection Widget
 	sizeSelection_ = new QComboBox();
 	sizeSelection_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	sizeSelection_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 	sizeSelection_->setInsertPolicy(QComboBox::InsertAtBottom);
 	sizeSelection_->setEditable(false);
 
@@ -69,7 +71,7 @@ ViewSelectionWidget::ViewSelectionWidget()
 	selectionLayout_->setColumnStretch(1, 0);
 	selectionLayout_->setColumnMinimumWidth(1, 20);
 	selectionLayout_->setColumnStretch(2, 0);
-	selectionLayout_->setColumnStretch(3, 1);
+	selectionLayout_->setColumnStretch(3, 0);
 
 	setLayout(selectionLayout_);
 }

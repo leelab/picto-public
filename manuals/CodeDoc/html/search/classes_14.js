@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['variable',['Variable',['../struct_session_info_1_1_variable.html',1,'SessionInfo']]],
   ['variable',['Variable',['../class_picto_1_1_variable.html',1,'Picto']]],
+  ['variable',['Variable',['../struct_session_info_1_1_variable.html',1,'SessionInfo']]],
   ['variablelist',['VariableList',['../class_picto_1_1_variable_list.html',1,'Picto']]],
   ['variablemap',['VariableMap',['../class_picto_1_1_variable_map.html',1,'Picto']]],
   ['viewer',['Viewer',['../class_viewer.html',1,'']]],

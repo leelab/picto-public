@@ -12,6 +12,8 @@ DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget, DVW_Re
 	myViewWidget_(pqwWidget)
 {
 	layout_ = new QGridLayout();
+	layout_->setMargin(0);
+
 	myLabel_ = new QLabel(cqsName);
 	layout_->addWidget(myLabel_, 0, 0);
 	layout_->addWidget(myViewWidget_, 1, 0);

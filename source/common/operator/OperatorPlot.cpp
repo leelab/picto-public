@@ -76,9 +76,9 @@ void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHa
 
 void OperatorPlot::initView()
 {
-	DataViewElement::initView();
-
 	connectDataSignals(m_pPlotHandler);
+
+	DataViewElement::initView();
 
 	emit initializePlotSig(propertyContainer_->getPropertyValue("XTitle").toString(),
 		propertyContainer_->getPropertyValue("YTitle").toString());
