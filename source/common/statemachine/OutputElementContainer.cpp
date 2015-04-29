@@ -97,16 +97,6 @@ OutputElementContainer::OutputElementContainer() :
 	AddDefinableObjectFactory("InputSignal", inputSignalFactory_);
 	inputSignalFactory_->addAssetType(AnalogInput::type,
 		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalogInput::Create))));
-
-	AddDefinableObjectFactory("DataViewElement", dataViewElementFactory_);
-	dataViewElementFactory_->addAssetType(BarPlot::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(BarPlot::Create))));
-	dataViewElementFactory_->addAssetType(SamplingBarPlot::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingBarPlot::Create))));
-	dataViewElementFactory_->addAssetType(HistogramPlot::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(HistogramPlot::Create))));
-	dataViewElementFactory_->addAssetType(SamplingHistogramPlot::type,
-		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(SamplingHistogramPlot::Create))));
 }
 
 void OutputElementContainer::postDeserialize()

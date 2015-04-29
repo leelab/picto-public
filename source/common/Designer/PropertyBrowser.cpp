@@ -27,13 +27,10 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
 
 	//Set up script name order
 	orderedScriptNames_.append("AnalysisEntryScript");
-	orderedScriptNames_.append("OperatorEntryScript");
 	orderedScriptNames_.append("EntryScript");
 	orderedScriptNames_.append("FrameScript");
 	orderedScriptNames_.append("AnalysisFrameScript");
-	orderedScriptNames_.append("OperatorFrameScript");
 	orderedScriptNames_.append("ExitScript");
-	orderedScriptNames_.append("OperatorExitScript");
 	orderedScriptNames_.append("AnalysisExitScript");
 	//Generate lookup table of script names
 	foreach(QString name,orderedScriptNames_)

@@ -723,8 +723,11 @@ for(compilerDefine, QMAKE_COMPILER_DEFINES) {
         }}}}
     }
 }
-#Output PDB file to appropriate directory
-QMAKE_CXXFLAGS+=/Fd$(IntDir)
+
+build_pass:CONFIG(debug, debug|release) {
+	#Output PDB file to appropriate directory
+	QMAKE_CXXFLAGS+=/Fd$(IntDir)
+}
 }
 
 macx {

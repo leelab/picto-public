@@ -5,11 +5,15 @@
 #include <QMap>
 #include <QList>
 #include <QMutex>
+#include <QHash>
+
+#include "../operator/OperatorPlotHandler.h"
 
 #include "../common.h"
 
 namespace Picto {
 class DataViewElement;
+class OperatorPlotHandler;
 /*! \brief There are many operations and data elements that need to be associated with a task as a whole, accessible by
  *	all elements of the task and with access to all elements of the task.  Objects of the TaskConfig class handle
  *	these types of operations and store this type of data.  This is a lower-scoped analog to the DesignConfig class, and
@@ -56,6 +60,10 @@ public:
 
 	void addObserver(DataViewElement *newAsset);
 
+	QSharedPointer<OperatorPlotHandler> getPlotHandler(QString plotPath);
+	void setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler);
+	void clearPlotHandlers();
+
 signals:
 	/*! \brief A signal sent whenever a viewer widget is added to the Task.
 	*/
@@ -65,12 +73,20 @@ signals:
 	void widgetRemovedFromMap(QWidget *pWidget);
 
 protected:
+	//! A Map of Asset pointers vs Widget Pointers.  DANGEROUS?!?
 	QMap<DataViewElement*, QWidget*> widgetMap;
+	//! A Map of widget pointers vs their names.  DANGEROUS?!?
 	QMap<QWidget*,QString> widgetNameMap;
+	//! Flag to enable/disable updates
 	bool updateSignalEnabled_;
+	//! A List of Assets waiting to be pinged for an update;
 	QList<DataViewElement*> waitingAssets;
+	//! A Hash of QSharedPointers to Plot Handlers, indexed by analysis path
+	QHash<QString, QSharedPointer<OperatorPlotHandler>> cachedHandlers_;
+	//! Mutex for protecting the List of Assets waiting to be pinged for an update
 	QMutex mtxWaitingAssetProtector;
 
+	//! Iterates over waiting assets and pings them for an update
 	void addWaitingAssets();
 
 

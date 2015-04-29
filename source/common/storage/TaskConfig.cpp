@@ -22,6 +22,7 @@ void TaskConfig::reset()
 
 	widgetMap.clear();
 	widgetNameMap.clear();
+	waitingAssets.clear();
 
 	updateSignalEnabled_ = true;
 }
@@ -54,7 +55,26 @@ void TaskConfig::addObserver(DataViewElement *newAsset)
 	}
 
 	waitingAssets.push_back(newAsset);
+}
 
+QSharedPointer<OperatorPlotHandler> TaskConfig::getPlotHandler(QString plotPath)
+{
+	if (cachedHandlers_.contains(plotPath))
+	{
+		return cachedHandlers_[plotPath];
+	}
+
+	return QSharedPointer<OperatorPlotHandler>();
+}
+
+void TaskConfig::setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler)
+{
+	cachedHandlers_[plotPath] = handler;
+}
+
+void TaskConfig::clearPlotHandlers()
+{
+	cachedHandlers_.clear();
 }
 
 /*! \brief Adds the passed in ObserverWidget to the TaskConfig.

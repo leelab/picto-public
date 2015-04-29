@@ -36,8 +36,8 @@ void PictoData::postDeserialize()
 	if(tagChildren.size())
 		emit edited();
 
-	//Add all associate roots to their hosts (this has the affect of adding all analyses to their tasks and all
-	//  UIData to their experiments and analyses.
+	//Add all associate roots to their hosts (this has the effect of adding all analyses to their tasks and all
+	//  UIData to their experiments and analyses).
 	QList<QSharedPointer<Asset>> allAssociateRoots = getGeneratedChildren("Analysis");
 	allAssociateRoots.append(getGeneratedChildren("UIData"));
 	QSharedPointer<Asset> linkAsset;

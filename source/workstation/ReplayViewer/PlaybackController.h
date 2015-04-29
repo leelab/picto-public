@@ -236,6 +236,8 @@ private:
 	QString nextFilePath_;
 	int currRun_;
 	int numImportedAnalyses_;
+	QHash<QString, QUuid> cachedAnalysis_;
+	QHash<QString, QString> cachedAnalysisNames_;
 private slots:
 	void newRunLength(double length);
 	void setCurrTime(double time);

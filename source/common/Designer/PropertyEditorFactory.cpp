@@ -91,7 +91,7 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	}
 
 	QWidget* resultWidget = NULL;
-	if((propName == "") || (propName == "Script"))
+	if((propName == "") || (propName == "Script") || (propName == "InitializationScript"))
 	{
 		Q_ASSERT(editorState_);
 		resultWidget = new ScriptWidget(manager,property,editorState_,false,parent);

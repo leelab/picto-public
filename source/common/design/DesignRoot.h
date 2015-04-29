@@ -37,6 +37,7 @@ public:
 	QSharedPointer<Asset> importAnalysis(const QString &analysisText);
 	QSharedPointer<Asset> createAnalysis();
 	bool removeAnalysis(int index);
+	bool cullAnalysis(int index);
 
 	QSharedPointer<Asset> createTask();
 

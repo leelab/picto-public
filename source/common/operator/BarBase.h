@@ -94,7 +94,6 @@ signals:
 	void callReplot();
 
 protected:
-	virtual void postDeserialize();
 	virtual void replot();
 
 	virtual void initView();

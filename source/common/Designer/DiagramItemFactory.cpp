@@ -145,7 +145,9 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 	else if(asset->inherits("Picto::Result"))
 		returnVal = new WireableResultItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::StateMachineElement"))
-		returnVal = new StateMachineElementItem(editorState_, contextMenu_,asset);
+		returnVal = new StateMachineElementItem(editorState_, contextMenu_, asset);
+	else if (asset->inherits("Picto::DataViewElement"))
+		returnVal = new AnalysisItem(editorState_, contextMenu_, asset);
 	else if(asset->inherits("Picto::ControlElement"))
 		returnVal = new ControlElementItem(editorState_, contextMenu_,asset);
 	else if(asset->inherits("Picto::AnalysisVariable"))

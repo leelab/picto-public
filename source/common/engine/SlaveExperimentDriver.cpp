@@ -116,7 +116,6 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			}
 			if(sourceAsset && sourceAsset->inherits("Picto::StateMachineElement"))
 			{
-				sourceAsset.staticCast<StateMachineElement>()->runOperatorExitScript();
 				sourceAsset.staticCast<StateMachineElement>()->runAnalysisExitScripts();
 			}
 
@@ -149,7 +148,6 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			currElement_->resetScriptableValues();
 			currElement_->resetScriptableAnalysisValues();
 			currElement_->runAnalysisEntryScripts();
-			currElement_->runOperatorEntryScript();
 			currElement_->slaveRun(experiment_->getEngine());
 		}
 		break;
@@ -179,7 +177,6 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 	top->resetScriptableAnalysisValues();
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
-	top->runOperatorEntryScript();
 }
 
 /*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
@@ -190,7 +187,6 @@ void SlaveExperimentDriver::masterRunEnding()
 		return;	//This could happen if the task never actually started before it was stopped.
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
 	//Run AnalysisExitScripts on Top
-	top->runOperatorExitScript();
 	top->runAnalysisExitScripts();
 	designConfig_->markRunEnd();
 	eventQueue_.reset();
@@ -244,7 +240,6 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	if(currState)
 	{
 		currState->runAnalysisFrameScripts();
-		currState->runOperatorFrameScript();
 	}
 }
 /*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine to be supplied
@@ -280,3 +275,4 @@ void SlaveExperimentDriver::disableRendering(bool disable)
 	if(shouldRenderFrame)
 		renderFrame();
 }
+

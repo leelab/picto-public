@@ -72,6 +72,8 @@ QString PlaybackController::preLoadSessions(QStringList filenames)
 QString PlaybackController::activateAnalyses(QStringList analysisData)
 {
 	QList<QUuid> localAnalyses;
+	//import analyses that are in the input string list and put them in the activated analysis list.
+	QList<QUuid> importedAnalysisIds;
 	QStringList importAnalyses;
 	foreach(QString analysisDataUnit,analysisData)
 	{
@@ -83,58 +85,108 @@ QString PlaybackController::activateAnalyses(QStringList analysisData)
 
 	data_.clearEnabledBuiltInAnalyses();
 	data_.clearEnabledImportedAnalyses();
+
 	//Delete any analyses that were previously in the import list
-	while(numImportedAnalyses_ > 0)
+	QStringList::iterator itrImportAnalysis = importAnalyses.begin();
+	while (itrImportAnalysis != importAnalyses.end())
 	{
-		int lastAnalysisIndex = getDesignRoot()->getNumAnalyses()-1;
-		QUuid lastAnalysisId = getDesignRoot()->getAnalysis(lastAnalysisIndex).staticCast<Analysis>()->getAssociateId();
-		getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(lastAnalysisId);
-		if(!getDesignRoot()->removeAnalysis(lastAnalysisIndex))
-				Q_ASSERT(false);
-		numImportedAnalyses_--;
+		if (cachedAnalysis_.contains(*itrImportAnalysis))
+		{
+			//Append AnalysisId and remove from import list if it's cached
+			importedAnalysisIds.append(cachedAnalysis_[*itrImportAnalysis]);
+			importAnalyses.erase(itrImportAnalysis++);
+		}
+		else
+		{
+			//Continue if it's not cached
+			itrImportAnalysis++;
+		}
+
 	}
 
-	//import analyses that are in the input string list and put them in the activated analysis list.
-	QList<QUuid> importedAnalysisIds;
+	//Clear unused cached analysis.
+	int savedAnalyses = 0;
+	while (numImportedAnalyses_ - savedAnalyses > 0)
+	{
+		int nextAnalysisIndex = getDesignRoot()->getNumAnalyses() - (1 + savedAnalyses);
+		QUuid nextAnalysisId = getDesignRoot()->getAnalysis(nextAnalysisIndex).staticCast<Analysis>()->getAssociateId();
+		if (importedAnalysisIds.contains(nextAnalysisId))
+		{
+			//We are reimporting this analysis - don't delete, continue
+			savedAnalyses++;
+		}
+		else
+		{
+			//We are deleting this analysis
+			getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(nextAnalysisId);
+			cachedAnalysis_.remove(cachedAnalysis_.key(nextAnalysisId));
+			if (!getDesignRoot()->cullAnalysis(nextAnalysisIndex))
+				Q_ASSERT(false);
+			numImportedAnalyses_--;
+		}
+	}
+
+	//We should only have new analyses left in the importAnalyses list
 	foreach(QString analysis,importAnalyses)
 	{
 		//Create a new analysis to put the exported analysis in.
 		QSharedPointer<Analysis> newAnalysis = getDesignRoot()->importAnalysis("<Analysis/>").staticCast<Analysis>();
-		newAnalysis->setName(QUuid::createUuid().toString());	//Name doesn't matter.  Just make it unique
+
+		QString newName;
+		if (cachedAnalysisNames_.contains(analysis))
+		{
+			//Reassign the old name if an analysis identical to this one was imported.
+			newName = cachedAnalysisNames_[analysis];
+		}
+		else
+		{
+			//Otherwise create a new name and cache it.
+			newName = QUuid::createUuid().toString();
+			cachedAnalysisNames_[analysis] = newName;
+		}
+
+		//Make the name unique
+		newAnalysis->setName(newName);
 		QUuid newAnalysisId = newAnalysis->getAssociateId();
-		bool linkResult = newAnalysis->LinkToAsset(getDesignRoot()->getExperiment(),QString());
+
+
+		bool linkResult = newAnalysis->LinkToAsset(getDesignRoot()->getExperiment(), QString(), true);
 		IGNORED_PARAMETER(linkResult);
 		Q_ASSERT(linkResult);
 		//Create UI Data for the new Analysis and attach it
 		AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
 		Q_ASSERT(assocRootHost);
 		QUuid hostId = assocRootHost->getHostId();
-		QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData",QString(),QString());
+		QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData", QString(), QString());
 		QString feedback;
-		newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis,feedback);
+		newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis, feedback);
 		Q_ASSERT(newAnalysis);
 
 		//Lets try to import the analysis contents into our new analysis from the exportText.
 		QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
-		int result = exportImport->importFromText(getDesignRoot()->getExperiment()
-												,analysis
-												,dynamic_cast<AssociateRootHost*>(getDesignRoot()->getExperiment().data())
-												,QPoint(0,0)
-												,dynamic_cast<AssociateRootHost*>(newAnalysis.data()));
-		switch(result)
+		int result = exportImport->importFromText(getDesignRoot()->getExperiment(),
+				analysis,
+				dynamic_cast<AssociateRootHost*>(getDesignRoot()->getExperiment().data()),
+				QPoint(0, 0),
+				dynamic_cast<AssociateRootHost*>(newAnalysis.data()));
+
+		switch (result)
 		{
 		case AssetExportImport::IMPORT_SUCCEEDED:
 			break;
-		//case AssetExportImport::IMPORT_SUCCEEDED_WITH_WARNINGS:
+			//case AssetExportImport::IMPORT_SUCCEEDED_WITH_WARNINGS:
 		default:
 			//Import failed, remove analysis from design
 			getDesignRoot()->getExperiment().staticCast<DataStore>()->ClearAssociateDescendants(newAnalysisId);
-	
-			int analysisIndexToRemove = getDesignRoot()->getNumAnalyses()-1;
-			if(!getDesignRoot()->removeAnalysis(analysisIndexToRemove))
+
+			int analysisIndexToRemove = getDesignRoot()->getNumAnalyses() - 1;
+			if (!getDesignRoot()->cullAnalysis(analysisIndexToRemove))
 				Q_ASSERT(false);
 			return exportImport->getLatestMessage();
 		}
+
+		//Add cached analysis to our hash table
+		cachedAnalysis_[analysis] = newAnalysisId;
 		importedAnalysisIds.append(newAnalysisId);
 		numImportedAnalyses_++;
 	}
@@ -658,7 +710,8 @@ void PlaybackController::update()
 				//Now that the analyses have been added, we need to reinitialize scripting for the experiment
 				//Since a whole lot of memory is allocated at this point, the script engine allocation occuring
 				//during the initScripting may fail, so we put this in a try catch block.
-				try{
+				try
+				{
 					if(!designRoot_->getExperiment().staticCast<Experiment>()->initScripting(false))
 					{
 						emit loadError("Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.");
@@ -673,8 +726,8 @@ void PlaybackController::update()
 					break;
 				}
 				designRoot_->getExperiment()->getDesignConfig()->setActiveAnalysisIds(data_.getEnabledAnalyses());
-
 				designRoot_->enableRunMode(true);//We do this here so that we're sure all the analyses are attached first
+
 				playbackUpdater_->play();
 				data_.setNextStatus(PlaybackControllerData::Running);
 				if(cmd.commandType == PlaybackCommand::Pause)

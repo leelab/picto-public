@@ -12,7 +12,7 @@ namespace Picto {
 const QString OperatorPlot::type = "Operator Plot";
 
 OperatorPlot::OperatorPlot()
-	: m_bDataChanged(false), m_title("")
+	: m_bDataChanged(false), m_title(""), initialized_(false)
 {
 	AddDefinableProperty(QVariant::String, "XTitle", "");
 	AddDefinableProperty(QVariant::String, "YTitle", "");
@@ -38,8 +38,22 @@ void OperatorPlot::postDeserialize()
 {
 	DataViewElement::postDeserialize();
 
-	m_pPlotHandler = getNewHandler();
-	m_pPlotHandler->moveToThread(QApplication::instance()->thread());
+	initialized_ = false;
+}
+
+void OperatorPlot::postLinkUpdate()
+{
+	DataViewElement::postLinkUpdate();
+
+	m_pPlotHandler = getTaskConfig()->getPlotHandler(getPath());
+
+	if (m_pPlotHandler.isNull())
+	{
+		m_pPlotHandler = getNewHandler();
+		m_pPlotHandler->moveToThread(QApplication::instance()->thread());
+		getTaskConfig()->setPlotHandler(getPath(), m_pPlotHandler);
+	}
+
 	connectHandler(m_pPlotHandler);
 }
 
@@ -76,8 +90,8 @@ void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHa
 
 void OperatorPlot::initView()
 {
+	qDebug() << "\tOperatorPlot::initView Operator Plot (" << dveNum_ << ") Connected to Handler.";
 	connectDataSignals(m_pPlotHandler);
-
 	DataViewElement::initView();
 
 	emit initializePlotSig(propertyContainer_->getPropertyValue("XTitle").toString(),
@@ -88,6 +102,21 @@ void OperatorPlot::sendWidgetToTaskConfig()
 {
 	initView();
 	emit connectToTaskConfigSig(getTaskConfig());
+}
+
+void OperatorPlot::enteredScope()
+{
+	reset();
+}
+
+void OperatorPlot::scriptableContainerWasReinitialized()
+{
+	if (!initialized_ && qsEngine_)
+	{
+		initialized_ = true;
+		QScriptValue returnVal(false);
+		runScript(getName().simplified().remove(' '), returnVal);
+	}
 }
 
 }; //namespace Picto

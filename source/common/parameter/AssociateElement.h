@@ -174,6 +174,8 @@ public:
 	 */
 	virtual void updateLinkPath(QString oldPrefix,QString newPrefix) = 0;
 
+	virtual void postLinkUpdate(){};
+
 private:
 	QUuid AssociateRootId_;
 };

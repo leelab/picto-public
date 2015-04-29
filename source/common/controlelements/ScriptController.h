@@ -39,9 +39,7 @@ public:
 
 	virtual QString getUITemplate(){return "ScriptController";};
 	virtual QString friendlyTypeName(){return "Script Controller";};
-	////DataStore Functions
-	//bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
-	//bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
+
 protected:
 	virtual QString getReturnValueError(QString scriptName,const QScriptValue& returnValue);
 	virtual void postDeserialize();
@@ -50,7 +48,7 @@ protected:
 	virtual bool canHaveScripts(){return true;};
 	virtual bool hasScripts();
 	//This returns a map of QMap<script name,script code>
-	virtual QMap<QString,QString>  getScripts();
+	virtual QMap<QString,QString> getScripts();
 
 private:
 	QString currResult_;

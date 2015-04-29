@@ -46,6 +46,11 @@ public:
 	static const QString type;
 
 	virtual void sendWidgetToTaskConfig();
+	virtual void enteredScope();
+
+	virtual void scriptableContainerWasReinitialized();
+
+	virtual void postLinkUpdate();
 
 signals:
 	void initializePlotSig(const QString &xTitle, const QString &yTitle);
@@ -69,6 +74,9 @@ protected:
 	bool m_bDataChanged;
 	//! Holds a copy of the plot's title
 	QString m_title;
+
+	//! Flag used to identify when the InitializationScript has run for a given Asset
+	bool initialized_;
 
 	QSharedPointer<OperatorPlotHandler> m_pPlotHandler;
 };

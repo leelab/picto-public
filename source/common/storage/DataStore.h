@@ -83,6 +83,7 @@ public:
 	 */
 	QStringList getOrderedPropertyList(){return orderedPropList_;};
 	QList<QSharedPointer<Asset>> getGeneratedChildren(QString tagName);
+	bool killGeneratedChildren(QString tagName, int index);
 	QStringList getAssociateChildTags(QUuid associateId);
 	QList<QSharedPointer<Asset>> getAssociateChildren(QUuid associateId, QString tagName);
 	QList<QSharedPointer<Asset>> getAssociateDescendants(QUuid associateId);

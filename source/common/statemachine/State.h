@@ -13,19 +13,23 @@ namespace Picto {
 class CommandChannel;
 class SignalChannel;
 
-/*!	\brief The StateMachineElement that handles rendering of graphical, audio and signal elements and responding to test subject feedback.
+/*!	\brief The StateMachineElement that handles rendering of graphical, audio and signal elements and responding to test
+ *	subject feedback.
  *	
- *	\details Apart from the PausePoint in which time passes only if the experiment is Paused, the State is the only StateMachineElement in which 
- *	experimental time actually passes.  Essentially, everything that happens in the StateMachine is happening in order to prepare for the next State execution.
- *	States render all in scope OutputElements every frame.  Beyond the usual EntryScript and ExitScript, States also contain a FrameScript that is
- *	run just before rendering each frame.  States contain ControlElement objects that monitor user input and time signals to see when certain events take place.  
- *	Before the FrameScript is called every frame, these ControlElements are checked to see if any of these events have taken place.  Execution continues in
- *	the State until one of those ControlElement events occurs at which point a corresponding result is triggered and the State is finished.  It should be 'nearly'
- *	possible, but extremely messy, to put all Task code into a single State.  Complicated ScriptControllers can always be used to define when the
- *	State ends, and complicated code can always be put into the FrameScript.  We say it is 'nearly' possible because it wouldn't be possible to do things like
- *	provide rewards, but it is important to note that it is 'nearly' true.  Of course, it would be incredibly messy to do this and no one ever should, 
- *	but the fact that it is 'nearly' possible should be an indication of the importance of this class.  With this in mind, be extremely careful before changing 
- *	anything about this class, particularly in the run() method.
+ *	\details Apart from the PausePoint in which time passes only if the experiment is Paused, the State is the only
+ *	StateMachineElement in which experimental time actually passes.  Essentially, everything that happens in the
+ *	StateMachine is happening in order to prepare for the next State execution.  States render all in scope OutputElements
+ *	every frame.  Beyond the usual EntryScript and ExitScript, States also contain a FrameScript that is run just before
+ *	rendering each frame.  States contain ControlElement objects that monitor user input and time signals to see when
+ *	certain events take place.  Before the FrameScript is called every frame, these ControlElements are checked to see if
+ *	any of these events have taken place.  Execution continues in the State until one of those ControlElement events
+ *	occurs at which point a corresponding result is triggered and the State is finished.  It should be 'nearly' possible,
+ *	but extremely messy, to put all Task code into a single State.  Complicated ScriptControllers can always be used to
+ *	define when the State ends, and complicated code can always be put into the FrameScript.  We say it is 'nearly'
+ *	possible because it wouldn't be possible to do things like provide rewards, but it is important to note that it is
+ *	'nearly' true.  Of course, it would be incredibly messy to do this and no one ever should, but the fact that it is
+ *	'nearly' possible should be an indication of the importance of this class.  With this in mind, be extremely careful
+ *	before changing anything about this class, particularly in the run() method.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -83,7 +87,6 @@ protected:
 	virtual bool hasScripts();
 	virtual QMap<QString,QString> getScripts();
 	void runAnalysisFrameScripts();
-	void runOperatorFrameScript();
 
 	friend class SlaveExperimentDriver;
 

@@ -11,11 +11,6 @@ namespace Picto {
  *	\details Adds "AssociateId", "LinkedHostId" and "LinkedHostName" Properties.
  */
 AssociateRoot::AssociateRoot()
-:	variableFactory_(new AssetFactory(0,-1)),
-	outputFactory_(new AssetFactory(0,-1)),
-	dataSourceFactory_(new AssetFactory(0,-1)),
-	functionFactory_(new AssetFactory(0,-1)),
-	scriptFactory_(new AssetFactory(0,-1))
 {
 	AddDefinableProperty(QVariant::Uuid,"AssociateId",QVariant());
 	AddDefinableProperty(QVariant::Uuid,"LinkedHostId",QVariant());
@@ -37,7 +32,7 @@ AssociateRoot::AssociateRoot()
  *	\note This function would be better named linkToHost() or something like that. It is called LinkToAsset() for
  *	historic reasons.
  */
-bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
+bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback, bool tempAsset)
 {
 	if(asset == linkedAsset_.toStrongRef())
 		return true;
@@ -48,7 +43,7 @@ bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
 	QStringList pathMatchedAssociateRootAssets;
 	QStringList unmatchedAssociateRootAssets;
 	//Set this asset as our linked asset
-	setLinkedAsset(asset);
+	setLinkedAsset(asset, tempAsset);
 	foreach(QString childTag,getValidChildTags())
 	{
 		foreach(QSharedPointer<Asset> child,getGeneratedChildren(childTag))
@@ -71,6 +66,7 @@ bool AssociateRoot::LinkToAsset(QSharedPointer<Asset> asset, QString& feedback)
 				child->setDeleted();
 				break;
 			}
+			associateElement->postLinkUpdate();
 		}
 	}
 	if(pathMatchedAssociateRootAssets.size() || unmatchedAssociateRootAssets.size())
@@ -140,7 +136,7 @@ bool AssociateRoot::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamRea
  *	connection to the AssociateRootHost by calling updateLinkedAssetProperties().  Sets the LinkedHostId and
  *	LinkedHostName properties to the input AssociateRootHost's information.  
  */ 
-void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset)
+void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset, bool tempAsset)
 {
 	Q_ASSERT(asset);
 	if(asset == linkedAsset_.toStrongRef())
@@ -158,7 +154,12 @@ void AssociateRoot::setLinkedAsset(QSharedPointer<Asset> asset)
 	linkedAsset_ = asset;
 	AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(linkedAsset_.data());
 	Q_ASSERT(assocRootHost);
-	assocRootHost->setAssociateRoot(identifier(),selfPtr().staticCast<AssociateRoot>());
+
+	//We skip overwriting the AssociateRoot with our temporary analysis.
+	if (!tempAsset)
+	{
+		assocRootHost->setAssociateRoot(identifier(), selfPtr().staticCast<AssociateRoot>());
+	}
 	updateLinkedAssetProperties();
 
 	//Connect to change signals from linked assets's Id and Name properties, so that we can update when

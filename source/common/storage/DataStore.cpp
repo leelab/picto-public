@@ -819,6 +819,15 @@ QList<QSharedPointer<Asset>> DataStore::getGeneratedChildren(QString tagName)
 	return children_[tagName];
 }
 
+//! An attempt to kill children on the spot.  Use only when absolutely safe!
+bool DataStore::killGeneratedChildren(QString tagName, int index)
+{
+	if (!children_.contains(tagName))
+		return false;
+	children_[tagName].removeAt(index);
+	return true;
+}
+
 /*! \brief Returns a list of all XML tags / categories under which AssociateElement children were added to this DataStore
  *	for the input AssociateRoot associateId.
  *	\sa AddAssociateChild()

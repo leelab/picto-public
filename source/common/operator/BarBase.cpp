@@ -159,16 +159,11 @@ void BarBase::createNormalizedScale(double dMaxValue, double dTotalValue)
 	emit normalizeScaleSig(dAxisMax, dTotalValue, mediumTicks, majorTicks);
 }
 
-void BarBase::postDeserialize()
-{
-	OperatorPlot::postDeserialize();
-}
-
 void BarBase::initView()
 {
 	OperatorPlot::initView();
 
-	qDebug() << "\tBarBase::initializeHisto requested in thread: " << QThread::currentThreadId();
+	qDebug() << "\tBarBase::initView requested by: " << dveNum_;
 	emit initializeHistoSig(
 		propertyContainer_->getPropertyValue("DisplayLegend").toBool(),
 		getColor(),

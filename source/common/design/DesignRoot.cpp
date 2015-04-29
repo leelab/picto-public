@@ -132,6 +132,17 @@ bool DesignRoot::removeAnalysis(int index)
 	return true;
 }
 
+//! An attempt to truly delete analysis - Use only when safe to do so!
+bool DesignRoot::cullAnalysis(int index)
+{
+	if (removeAnalysis(index))
+	{
+		return pictoData_->killGeneratedChildren("Analysis", index);
+	}
+
+	return false;
+}
+
 /*! \brief Returns a shared pointer to this design's Experiment.
  *	\note While a design may contain any number of Analyses, it contains only one Experiment.
  */

@@ -52,7 +52,7 @@ public:
 	 *	is linked, returns an empty name.
 	 */
 	QString getLinkedHostName(){return propertyContainer_->getPropertyValue("LinkedHostName").toString();};
-	bool LinkToAsset(QSharedPointer<Asset> asset, QString& feedback);
+	bool LinkToAsset(QSharedPointer<Asset> asset, QString& feedback, bool tempAsset = false);
 	/*! \brief Returns the AssociateRootHost to which this object is linked as an Asset shared pointer.
 	 *	\note This should probably be renamed to getLinkedHost() or something like that.  It is named this way for
 	 *	historical reasons.
@@ -65,18 +65,13 @@ protected:
 	virtual void postDeserialize();
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 private:
-	void setLinkedAsset(QSharedPointer<Asset> asset);
+	void setLinkedAsset(QSharedPointer<Asset> asset, bool tempAsset = false);
 	void updateLinkedAssetProperties();
 	//Returns true if the input asset is directly linkable
 	bool isLinkableAsset(QSharedPointer<Asset> asset);
 	QSharedPointer<Property> getLinkedHostNameProperty();
 	QSharedPointer<Property> getLinkedAssetHostIdProperty();
 	QWeakPointer<Asset> linkedAsset_;
-	QSharedPointer<AssetFactory> variableFactory_;
-	QSharedPointer<AssetFactory> dataSourceFactory_;
-	QSharedPointer<AssetFactory> outputFactory_;
-	QSharedPointer<AssetFactory> functionFactory_;
-	QSharedPointer<AssetFactory> scriptFactory_;
 
 private slots:
 	void linkedAssetPropertyEdited(Property* changedProp,QVariant newValue);

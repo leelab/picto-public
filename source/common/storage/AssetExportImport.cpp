@@ -487,6 +487,8 @@ int AssetExportImport::importFromText(QSharedPointer<Asset> pasteParent, QString
 			failedLinks.append(asset);
 			asset->setDeleted();
 		}
+
+		assocElem->postLinkUpdate();
 	}
 
 	//Go through pasted elements and reposition them according to the input pastePosition

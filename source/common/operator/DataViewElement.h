@@ -10,6 +10,7 @@
 
 #include "../statemachine/ContainerElement.h"
 #include "../property/PropertyContainer.h"
+#include "../parameter/AssociateElement.h"
 #include "DataViewSpecs.h"
 
 namespace Picto {
@@ -23,9 +24,9 @@ namespace Picto {
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-class PICTOLIB_CLASS DataViewElement : public ContainerElement
+class PICTOLIB_CLASS DataViewElement : public ContainerElement, public AssociateElement
 #else
-class DataViewElement : public ContainerElement
+class DataViewElement : public ContainerElement, public AssociateElement
 #endif
 {
 	Q_OBJECT
@@ -56,12 +57,26 @@ public:
 	//! Get the default view size for this element
 	DataViewSize::ViewSize getDefaultViewSize() const;
 
+	virtual void postLinkUpdate();
+
+	ASSOCIATE_ELEMENT_IMPLEMENTATION
+
 protected:
 	virtual void postDeserialize();
 	//! Used to initialize the associated View widget
 	virtual void initView();
 	//! A List used to keep track of the possible default sizes.
+
+	virtual QString defaultTagName(){ return "DataViewElement"; };
+
+	virtual bool canHaveScripts(){ return true; };
+	virtual bool hasScripts();
+	//This returns a map of QMap<script name,script code>
+	virtual QMap<QString, QString> getScripts();
+
 	QStringList sizeList_;
+
+	int dveNum_;
 };
 
 }; //namespace Picto
