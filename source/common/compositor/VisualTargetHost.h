@@ -65,6 +65,7 @@ public:
 	void setVisualTarget(QSharedPointer<VisualTarget> target);
 	/*! \brief Returns the VisualTarget hosted by this VisualTargetHost*/
 	QSharedPointer<VisualTarget> getVisualTarget() { return target_; };
+	const QPoint viewportPointToTargetPoint(const QPoint point) const;
 signals:
 	/*! \brief Emitted with a click position whenever someone clicks within the VisualTargetHost widget*/
 	void clickDetected(QPoint pos);

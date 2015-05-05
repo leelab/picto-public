@@ -90,7 +90,7 @@ QStringList PlaybackController::precacheAnalysisNames(QSharedPointer<DesignRoot>
  *		into the Experiment and (if successful) activated.  If the list includes Analysis Associate IDs
  *		they are assumed to be local Analyses.  The loaded Design will be checked for the Analyses and they
  *		will be activated.
- *	\design If a problem occurs with the activation, a non-empty string will be returned with a discription
+ *	\design If a problem occurs with the activation, a non-empty string will be returned with a description
  *	of the problem.
  */
 QString PlaybackController::activateAnalyses(QStringList analysisData)

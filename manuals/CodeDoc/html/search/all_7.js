@@ -19,7 +19,7 @@ var searchData=
   ['getallerrors',['getAllErrors',['../class_error_list.html#aa6bf2297c742d616cd0f45018d0b41b4',1,'ErrorList']]],
   ['getalpha',['getAlpha',['../class_picto_1_1_bar_base.html#aae5f99ac5b1fa9a5e3859c68f181d11e',1,'Picto::BarBase::getAlpha()'],['../class_picto_1_1_color_parameter.html#ab794e02e826717838ca08603a8d27f33',1,'Picto::ColorParameter::getAlpha()'],['../class_picto_1_1_pause_point.html#ad4859742bbd420cb833ffcd8b078112c',1,'Picto::PausePoint::getAlpha()'],['../class_picto_1_1_state.html#a33d0687b01c64dd3a0463e4c96f67ac6',1,'Picto::State::getAlpha()'],['../struct_picto_1_1_visual_element.html#ad0f32ee1bedf44b213f24b55580e20a2',1,'Picto::VisualElement::getAlpha()']]],
   ['getanalyses',['getAnalyses',['../class_picto_1_1_picto_data.html#a2019b9aceb8ef5a478a21af3aa2b8cf4',1,'Picto::PictoData']]],
-  ['getanalysestoimport',['getAnalysesToImport',['../class_replay_viewer.html#a0e3ea51bdda8f273c4886d76d4723b21',1,'ReplayViewer']]],
+  ['getanalysestoimport',['getAnalysesToImport',['../class_remote_viewer.html#ab2ccc6fb63a3fb7379a2de3bf682499a',1,'RemoteViewer::getAnalysesToImport()'],['../class_replay_viewer.html#a0e3ea51bdda8f273c4886d76d4723b21',1,'ReplayViewer::getAnalysesToImport()']]],
   ['getanalysis',['getAnalysis',['../class_picto_1_1_design_root.html#a9a890862b928fa11267489541e381585',1,'Picto::DesignRoot']]],
   ['getarrowdest',['getArrowDest',['../class_wireable_item.html#a5f8262432eb4666fe5dd85f796ae711d',1,'WireableItem']]],
   ['getarrowsources',['getArrowSources',['../class_wireable_item.html#a17301f066713f101a8b857db9b8a16af',1,'WireableItem']]],

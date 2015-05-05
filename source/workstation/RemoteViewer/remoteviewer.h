@@ -17,8 +17,8 @@
 #include <QUuid>
 #include <QFuture>
 
-using namespace Picto;
 
+QT_BEGIN_NAMESPACE
 class QAction;
 class QToolBar;
 class QComboBox;
@@ -27,8 +27,15 @@ class QSlider;
 class QSpinBox;
 class QLineEdit;
 class QTabWidget;
-class ViewSelectionFrame;
+QT_END_NAMESPACE
 
+
+class ViewSelectionFrame;
+namespace Picto {
+	class AnalysisSelectorWidget;
+}
+
+using namespace Picto;
 /*!	\brief	This allows Operators to view and control a remotely running Experimental Session.
  *	\details This is the control panle that the operator uses while an experiment is running.  It has the following
  *	features:
@@ -117,6 +124,7 @@ private:
 		JoinSessionRequest,
 		StartSessionRequest,
 		DisjoinSessionRequest,
+		RejoinSessionRequest,
 		SessionStarted,
 		SessionDidntStart,
 		SessionStopped,
@@ -176,12 +184,15 @@ private:
 	QSharedPointer<RemoteStateUpdater> updater_;
 	QSharedPointer<SlaveExperimentDriver> slaveExpDriver_;
 	QSharedPointer<DesignRoot> myDesignRoot_;
+
 	QVector<QSharedPointer<Picto::VirtualOutputSignalController>> outSigControllers_;
 
 	//! Holds and renders the Task view
 	Picto::VisualTargetHost *visualTargetHost_;
 	//! The widget that can rearrange the ViewWidgets in the Central View
-	ViewSelectionFrame *viewSelectionFrame_;	
+	ViewSelectionFrame *viewSelectionFrame_;
+	//! Widget used to select what analyses are to be run alongside the task
+	Picto::AnalysisSelectorWidget* analysisSelector_;
 	QSharedPointer<Picto::Experiment> experiment_;
 	QHash<QUuid,QSharedPointer<Picto::ProtocolResponse>> pendingResponses_;
 	QWidget *propertyFrame_;
@@ -237,6 +248,31 @@ private:
 	bool zoomChanged_;
 	float zoomValue_;
 	QHash<QString,int> adaptiveResponseDelays_;
+
+
+	//Stolen from PlaybackController.  Should push into a common, base class in order to reduce duplication
+	QStringList precacheAnalysisNames(QSharedPointer<DesignRoot> import);
+	QString activateAnalyses(QStringList analysisData);
+	QStringList getAnalysesToImport();
+
+	QHash<QString, QString> cachedAnalysisNames_;
+	QHash<QString, QUuid> cachedAnalysis_;
+	int numImportedAnalyses_;
+
+	enum RejoinStatus
+	{
+		None = 0,
+		AwaitingDisconnect,
+		RequestingRejoinSignal,
+		AwaitingRejoinSignal,
+		AwaitingInitialConnect,
+		AwaitingRejoin
+
+	} awaitingRejoin_;
+	QStringList analysesToBeActivated_;
+
+private slots:
+	void notifyAnalysisSelection(const QString&, bool);
 
 private slots:
 	void taskListIndexChanged(int index);

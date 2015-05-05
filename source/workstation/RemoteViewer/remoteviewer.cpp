@@ -21,26 +21,31 @@
 #include <QtConcurrentRun>
 #include <QTabWidget>
 #include <QDir>
+#include <QSplitter>
 
 #include "remoteviewer.h"
 
 #include "../common/globals.h"
 #include "../../common/compositor/RenderingTarget.h"
 #include "../../common/compositor/PCMAuralTarget.h"
+#include "../../common/compositor/OutputSignalWidget.h"
+#include "../../common/engine/XYSignalChannel.h"
 #include "../../common/iodevices/AudioRewardController.h"
 #include "../../common/iodevices/NullEventCodeGenerator.h"
-#include "../../common/engine/XYSignalChannel.h"
 #include "../../common/protocol/protocolcommand.h"
 #include "../../common/protocol/protocolresponse.h"
-#include "../../common/storage/StateDataUnit.h"
 #include "../../common/statemachine/statemachine.h"
-#include "../../common/stimuli/cursorgraphic.h"
 #include "../../common/statemachine/scene.h"
+#include "../../common/stimuli/cursorgraphic.h"
+#include "../../common/storage/StateDataUnit.h"
 #include "../../common/storage/NeuralDataUnit.h"
 #include "../../common/storage/LFPDataUnitPackage.h"
 #include "../../common/storage/directordata.h"
-#include "../../common/compositor/OutputSignalWidget.h"
+#include "../../common/storage/AssetExportImport.h"
 #include "../../common/designer/propertyframe.h"
+#include "../../common/designer/UIHelper.h"
+#include "../../common/designer/AnalysisSelectorWidget.h"
+
 #include "../DataViewer/ViewSelectionFrame.h"
 #include "../DataViewer/DataViewWidget.h"
 #include "../DataViewer/DataViewOrganizer.h"
@@ -87,7 +92,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	statusBar_(NULL),
 	isAuthorized_(false),
 	propertyFrame_(NULL),
-	myDesignRoot_(new DesignRoot())
+	myDesignRoot_(new DesignRoot()),
+	awaitingRejoin_(RejoinStatus::None)
 {
 	setupServerChannel();
 	setupEngine();
@@ -188,6 +194,7 @@ void RemoteViewer::updateState()
 			nextState = RunningSession;
 			break;
 		case DisjoinSessionRequest:
+		case RejoinSessionRequest:
 			nextState = WaitForJoin;
 			break;
 		}
@@ -212,6 +219,7 @@ void RemoteViewer::updateState()
 			nextState = WaitForConnect;
 			break;
 		case DisjoinSessionRequest:
+		case RejoinSessionRequest:
 			nextState = WaitForJoin;
 			break;
 		case EndSessionRequest:
@@ -232,6 +240,7 @@ void RemoteViewer::updateState()
 			nextState = WaitForConnect;
 			break;
 		case DisjoinSessionRequest:
+		case RejoinSessionRequest:
 			nextState = WaitForJoin;
 			break;
 		case SessionRunning:
@@ -250,6 +259,7 @@ void RemoteViewer::updateState()
 			nextState = WaitForConnect;
 			break;
 		case DisjoinSessionRequest:
+		case RejoinSessionRequest:
 			nextState = WaitForJoin;
 			break;
 		case SessionPaused:
@@ -304,9 +314,31 @@ void RemoteViewer::runState()
 		break;
 	case WaitForJoin:
 		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
-		if(connectAction_->isChecked())
+
+		if (awaitingRejoin_ == RejoinStatus::AwaitingRejoin)
 		{
-				
+			stateTrigger_ = JoinSessionRequest;
+		}
+		else if (awaitingRejoin_ == RejoinStatus::RequestingRejoinSignal)
+		{
+			awaitingRejoin_ = RejoinStatus::AwaitingRejoinSignal;
+			QString tmp = activateAnalyses(analysesToBeActivated_);
+			analysesToBeActivated_.clear();
+			if (!tmp.isEmpty())
+			{
+				awaitingRejoin_ = RejoinStatus::None;
+				QMessageBox::warning(this, tr("Picto"),
+					QString("There was a problem with importing the selected analyses: ") + tmp,
+					QMessageBox::Ok);
+			}
+			else
+			{
+				awaitingRejoin_ = RejoinStatus::AwaitingRejoin;
+			}
+		}
+		else if ((awaitingRejoin_ == RejoinStatus::None || awaitingRejoin_ == RejoinStatus::AwaitingInitialConnect ) &&
+			connectAction_->isChecked())
+		{
 			if(remoteStatus == Idle)
 				stateTrigger_ = StartSessionRequest;
 			if(remoteStatus > Ending)
@@ -323,10 +355,22 @@ void RemoteViewer::runState()
 				stateTrigger_ = SessionPaused;
 			else
 				stateTrigger_ = SessionStopped;
+
 		}
+
+		if (awaitingRejoin_ == RejoinStatus::AwaitingInitialConnect)
+		{
+			awaitingRejoin_ = RejoinStatus::AwaitingDisconnect;
+		}
+		else
+		{
+			awaitingRejoin_ = RejoinStatus::None;
+		}
+
 		if(remoteStatus < Stopped)
 		{
 			disjoinSession();
+			awaitingRejoin_ = RejoinStatus::None;
 			stateTrigger_ = DisjoinSessionRequest;
 		}
 		break;
@@ -358,6 +402,12 @@ void RemoteViewer::runState()
 				stateTrigger_ = DisjoinSessionRequest;
 			}
 		}
+		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
+		{
+			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			disjoinSession();
+			stateTrigger_ = RejoinSessionRequest;
+		}
 		if((remoteStatus < Stopped) && (remoteStatus > NotFound))
 		{
 			disjoinSession();
@@ -388,6 +438,12 @@ void RemoteViewer::runState()
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
 		}
+		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
+		{
+			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			disjoinSession();
+			stateTrigger_ = RejoinSessionRequest;
+		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
 		updateSessionDataPackage();
@@ -414,6 +470,12 @@ void RemoteViewer::runState()
 		{
 			disjoinSession();
 			stateTrigger_ = DisjoinSessionRequest;
+		}
+		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
+		{
+			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			disjoinSession();
+			stateTrigger_ = RejoinSessionRequest;
 		}
 		if(stateTrigger_ != NoViewerTrigger)
 			stopExperiment();
@@ -796,6 +858,9 @@ void RemoteViewer::init()
 	stateUpdateTimer_->start();
 	//This timer makes sure that we don't read in old reward duration data just after setting a new value.
 	rewardDurChangeTimer_.restart();
+
+
+	analysisSelector_->setDesignRootForImport(designRoot_, precacheAnalysisNames(designRoot_));
 }
 
 /*! \brief Called just before hiding the viewer.
@@ -1025,17 +1090,18 @@ void RemoteViewer::setupUi()
 	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
 
-	QVBoxLayout *leftPane = new QVBoxLayout;
+	QWidget *pContainer = new QWidget(this);
+	QVBoxLayout *leftPane = new QVBoxLayout(pContainer);
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(viewSelectionFrame_,0);
 	leftPane->addWidget(propertyFrame_,1, Qt::AlignTop);
 	leftPane->setContentsMargins(0, 11, 0, 0);
 	leftPane->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	pContainer->setLayout(leftPane);
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->setContentsMargins(0, 0, 0, 0);
-	stimulusLayout->setMargin(0);
 	stimulusLayout->addWidget(dataViewOrganizer);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
@@ -1047,23 +1113,41 @@ void RemoteViewer::setupUi()
 	stimulusWidget->setLayout(stimulusLayout);
 
 	mainTabbedFrame_ = new QTabWidget(this);
+	mainTabbedFrame_->setLayout(new QVBoxLayout());
 	mainTabbedFrame_->addTab(stimulusWidget,"Behavioral");
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
 	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
 	mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
-	
-	QHBoxLayout *operationLayout = new QHBoxLayout;
-	operationLayout->addLayout(leftPane);
-	operationLayout->addWidget(mainTabbedFrame_);
-	operationLayout->setStretch(0, 0);
-	operationLayout->setStretch(1, 1);
-	operationLayout->addStretch();
+	mainTabbedFrame_->layout()->setContentsMargins(0, 0, 0, 0);
 
+	analysisSelector_ = new Picto::AnalysisSelectorWidget();
+	analysisSelector_->layout()->setContentsMargins(0, 0, 0, 0);;
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
+		this, SLOT(notifyAnalysisSelection(const QString&, bool)));
+	
+	QSplitter *operationLayout = new QSplitter;
+	pContainer->sizePolicy().setHorizontalStretch(QSizePolicy::Maximum);
+	operationLayout->addWidget(pContainer);
+	operationLayout->setStretchFactor(0, 0);
+	operationLayout->setCollapsible(0, true);
+
+	operationLayout->addWidget(mainTabbedFrame_);
+	operationLayout->setStretchFactor(1, 10);
+
+	operationLayout->addWidget(analysisSelector_);
+	operationLayout->setStretchFactor(2, 3);
+
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(1), 200);
+	Picto::UIHelper::addSplitterLine(operationLayout->handle(2), 200);
+
+	operationLayout->setHandleWidth(11);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addLayout(toolbarLayout);
-	mainLayout->addLayout(operationLayout);
+	mainLayout->addWidget(operationLayout,1);
 	mainLayout->addWidget(statusBar_);
 	
 	setLayout(mainLayout);
@@ -1859,6 +1943,8 @@ bool RemoteViewer::joinSession()
 		}
 		activeDesignRoot_->enableRunMode(true);
 		activeExperiment_ = activeDesignRoot_->getExperiment().staticCast<Experiment>();
+		analysisSelector_->setLocalDesignRoot(activeExperiment_->getName(), activeDesignRoot_);
+		analysisSelector_->setCurrentFile(activeExperiment_->getName());
 	}
 	activeExperiment_->setEngine(engine_);
 	updater_->initForNewSession();
@@ -2143,4 +2229,208 @@ void RemoteViewer::currTaskChanged(QString task)
 	viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
+}
+
+
+//! Creates names for potentially imported Analyses so that the TaskConfig can idenfify them before they are first run.
+QStringList RemoteViewer::precacheAnalysisNames(QSharedPointer<DesignRoot> import)
+{
+	Q_ASSERT(import);
+	QStringList resultList;
+
+	for (int i = 0; i<import->getNumAnalyses(); i++)
+	{
+		//Try to export it.
+		QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
+		QString exportText = exportImport->exportToText((QList<QSharedPointer<Asset>>() << import->getExperiment()),
+			dynamic_cast<AssociateRootHost*>(import->getAnalysis(i).data()));
+
+		if (!cachedAnalysisNames_.contains(exportText))
+		{
+			//Create a new name and cache it.
+			cachedAnalysisNames_[exportText] = QUuid::createUuid().toString();
+		}
+		resultList << cachedAnalysisNames_[exportText];
+	}
+
+	return resultList;
+}
+
+/*! \brief Activates the input Analyses in the activeDesignRoot_ and activeExperiment_.
+*	@param analysisData This can either be a list of exported analysis strings or a list of Analysis
+*		AssocateIDs.  If the list includes exported analysis strings, the analyses will be imported
+*		into the Experiment and (if successful) activated.  If the list includes Analysis Associate IDs
+*		they are assumed to be local Analyses.  The loaded Design will be checked for the Analyses and they
+*		will be activated.
+*	\design If a problem occurs with the activation, a non-empty string will be returned with a description
+*	of the problem.
+*/
+QString RemoteViewer::activateAnalyses(QStringList analysisData)
+{
+	QList<QUuid> localAnalyses;
+	//import analyses that are in the input string list and put them in the activated analysis list.
+	QList<QUuid> importedAnalysisIds;
+	QStringList importAnalyses;
+	foreach(QString analysisDataUnit, analysisData)
+	{
+		if (analysisDataUnit.contains("<"))
+			importAnalyses.append(analysisDataUnit);
+		else
+			localAnalyses.append(QUuid(analysisDataUnit));
+	}
+
+	//Delete any analyses that were previously in the import list
+	QStringList::iterator itrImportAnalysis = importAnalyses.begin();
+	while (itrImportAnalysis != importAnalyses.end())
+	{
+		if (cachedAnalysis_.contains(*itrImportAnalysis))
+		{
+			//Append AnalysisId and remove from import list if it's cached
+			importedAnalysisIds.append(cachedAnalysis_[*itrImportAnalysis]);
+			itrImportAnalysis = importAnalyses.erase(itrImportAnalysis);
+		}
+		else
+		{
+			//Continue if it's not cached
+			++itrImportAnalysis;
+		}
+
+	}
+
+	//Clear unused cached analysis.
+	int savedAnalyses = 0;
+	while (numImportedAnalyses_ - savedAnalyses > 0)
+	{
+		int nextAnalysisIndex = activeDesignRoot_->getNumAnalyses() - (1 + savedAnalyses);
+		QUuid nextAnalysisId = activeDesignRoot_->getAnalysis(nextAnalysisIndex).staticCast<Analysis>()->getAssociateId();
+		if (importedAnalysisIds.contains(nextAnalysisId))
+		{
+			//We are reimporting this analysis - don't delete, continue
+			savedAnalyses++;
+		}
+		else
+		{
+			//We are deleting this analysis
+			activeExperiment_->ClearAssociateDescendants(nextAnalysisId);
+			cachedAnalysis_.remove(cachedAnalysis_.key(nextAnalysisId));
+			if (!activeDesignRoot_->cullAnalysis(nextAnalysisIndex))
+				Q_ASSERT(false);
+			numImportedAnalyses_--;
+		}
+	}
+
+	//We should only have new analyses left in the importAnalyses list
+	foreach(QString analysis, importAnalyses)
+	{
+		//Create a new analysis to put the exported analysis in.
+		QSharedPointer<Analysis> newAnalysis = activeDesignRoot_->importAnalysis("<Analysis/>").staticCast<Analysis>();
+
+		QString newName;
+		if (cachedAnalysisNames_.contains(analysis))
+		{
+			//Reassign the old name if an analysis identical to this one was imported.
+			newName = cachedAnalysisNames_[analysis];
+		}
+		else
+		{
+			//Otherwise create a new name and cache it.
+			newName = QUuid::createUuid().toString();
+			cachedAnalysisNames_[analysis] = newName;
+		}
+
+		//Make the name unique
+		newAnalysis->setName(newName);
+		QUuid newAnalysisId = newAnalysis->getAssociateId();
+
+
+		bool linkResult = newAnalysis->LinkToAsset(activeExperiment_, QString(), true);
+		IGNORED_PARAMETER(linkResult);
+		Q_ASSERT(linkResult);
+		//Create UI Data for the new Analysis and attach it
+		AssociateRootHost* assocRootHost = dynamic_cast<AssociateRootHost*>(newAnalysis.data());
+		Q_ASSERT(assocRootHost);
+		QUuid hostId = assocRootHost->getHostId();
+		QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData", QString(), QString());
+		QString feedback;
+		newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis, feedback);
+		Q_ASSERT(newAnalysis);
+
+		//Lets try to import the analysis contents into our new analysis from the exportText.
+		QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
+		int result = exportImport->importFromText(activeDesignRoot_->getExperiment(),
+			analysis,
+			dynamic_cast<AssociateRootHost*>(activeDesignRoot_->getExperiment().data()),
+			QPoint(0, 0),
+			dynamic_cast<AssociateRootHost*>(newAnalysis.data()));
+
+		switch (result)
+		{
+		case AssetExportImport::IMPORT_SUCCEEDED:
+			break;
+			//case AssetExportImport::IMPORT_SUCCEEDED_WITH_WARNINGS:
+		default:
+			//Import failed, remove analysis from design
+			activeExperiment_->ClearAssociateDescendants(newAnalysisId);
+
+			int analysisIndexToRemove = activeDesignRoot_->getNumAnalyses() - 1;
+			if (!activeDesignRoot_->cullAnalysis(analysisIndexToRemove))
+				Q_ASSERT(false);
+			return exportImport->getLatestMessage();
+		}
+
+		//Add cached analysis to our hash table
+		cachedAnalysis_[analysis] = newAnalysisId;
+		importedAnalysisIds.append(newAnalysisId);
+		numImportedAnalyses_++;
+	}
+
+	activeExperiment_->getDesignConfig()->setActiveAnalysisIds(localAnalyses + importedAnalysisIds);
+	emit activeExperiment_->nameEdited();
+	if (!activeExperiment_->initScripting(false))
+	{
+		awaitingRejoin_ = RejoinStatus::None;
+		return "Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.";
+	}
+
+
+	return "";
+}
+
+/*! \brief Returns the exported designs of all selected Analyses that should be imported
+*	into the Session file's design.
+*/
+QStringList RemoteViewer::getAnalysesToImport()
+{
+	QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
+	QStringList resultList;
+	for (int i = 0; i<designRoot_->getNumAnalyses(); i++)
+	{
+		//If this analysis is in our import list
+		if (importAnalysisIds.contains(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId()))
+		{
+			//Try to export it.
+			QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
+			QString exportText = exportImport->exportToText((QList<QSharedPointer<Asset>>() << designRoot_->getExperiment())
+				, dynamic_cast<AssociateRootHost*>(designRoot_->getAnalysis(i).data()));
+			resultList.append(exportText);
+		}
+	}
+	return resultList;
+}
+
+
+void RemoteViewer::notifyAnalysisSelection(const QString&, bool)
+{
+	QStringList analysisList;
+	QList<QUuid> localList = analysisSelector_->getSelectedAnalysisIds();
+	foreach(QUuid analysisID, localList)
+	{
+		analysisList.append(analysisID.toString());
+	}
+
+	analysesToBeActivated_ = analysisList + getAnalysesToImport();
+	if (currState_ == StoppedSession || currState_ == RunningSession || currState_ == PausedSession)
+		awaitingRejoin_ = RejoinStatus::AwaitingDisconnect;
+	else
+		awaitingRejoin_ = RejoinStatus::AwaitingInitialConnect;
 }

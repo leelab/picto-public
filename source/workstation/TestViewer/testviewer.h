@@ -16,10 +16,13 @@
 #include "../../common/playback/LiveSpikeReader.h"
 #include "../../common/playback/LiveSignalReader.h"
 
+QT_BEGIN_NAMESPACE
 class QAction;
 class QToolBar;
 class QComboBox;
 class QSlider;
+QT_END_NAMESPACE
+
 class ViewSelectionFrame;
 
 /*!	\brief	This allows designers to run the Experiment/Analysis that they are creating in a test

@@ -48,7 +48,7 @@ var searchData=
   ['directorstatus',['directorStatus',['../class_remote_viewer.html#a8560976d6db5531277dafbf643b7f248',1,'RemoteViewer']]],
   ['disableallbuttons',['disableAllButtons',['../class_tool_group.html#a294340e34715125e763487626cb0f087',1,'ToolGroup']]],
   ['disablebuttonactions',['disableButtonActions',['../class_asset_tool_group.html#a40d2cbb367b31985978ea998bd6b6c34',1,'AssetToolGroup::disableButtonActions()'],['../class_tool_group.html#ab340659ee03a519aa249bda3592255a6',1,'ToolGroup::disableButtonActions()']]],
-  ['disablerendering',['disableRendering',['../class_picto_1_1_slave_experiment_driver.html#a2c899b105a18e22ad37e6cf42ae370fd',1,'Picto::SlaveExperimentDriver::disableRendering()'],['../class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8',1,'Picto::StateUpdater::disableRendering()'],['../class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c',1,'Picto::PlaybackStateUpdater::disableRendering()']]],
+  ['disablerendering',['disableRendering',['../class_picto_1_1_slave_experiment_driver.html#a2c899b105a18e22ad37e6cf42ae370fd',1,'Picto::SlaveExperimentDriver::disableRendering()'],['../class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8',1,'Picto::StateUpdater::disableRendering()']]],
   ['disallowidduplication',['disallowIdDuplication',['../class_picto_1_1_design_config.html#aa974bbd3d6288f50264f6a3c932743da',1,'Picto::DesignConfig']]],
   ['discardoverlapingrewards',['discardOverlapingRewards',['../class_picto_1_1_reward_controller.html#a0ea32b937d64aeaf7928ee4b696d697b',1,'Picto::RewardController']]],
   ['disconnecthandler',['disconnectHandler',['../class_picto_1_1_command_channel.html#af5a2baf25d6c802938a27a22e6ad8a65',1,'Picto::CommandChannel']]],

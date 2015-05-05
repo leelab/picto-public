@@ -308,8 +308,8 @@ void TestViewer::setupUi()
 	container = new QWidget(operationLayout);
 	container->setLayout(stimulusLayout);
 	operationLayout->addWidget(container);
-
 	operationLayout->setStretchFactor(1, 10);
+
 	operationLayout->addWidget(rightTabs);
 	operationLayout->setStretchFactor(2, 3);
 

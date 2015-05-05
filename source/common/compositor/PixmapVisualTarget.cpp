@@ -133,7 +133,7 @@ void PixmapVisualTarget::drawNonExperimentText(QFont font, QColor color, QRect r
 QPoint PixmapVisualTarget::viewportPointToTargetPoint(QPoint viewportPoint)
 {
 	Q_ASSERT(frameSynchedZoom_ > 0);
-	float x = ((viewportPoint.x()-widthOffset_)*(float(width_)/targetWidth_)-(width_-(width_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;
+	float x = ((viewportPoint.x() - widthOffset_)*(float(width_) / targetWidth_) - (width_ - (width_*frameSynchedZoom_)) / 2.0) / frameSynchedZoom_;
 	float y = ((viewportPoint.y() - heightOffset_)*(float(height_) / targetHeight_) - (height_ - (height_*frameSynchedZoom_)) / 2.0) / frameSynchedZoom_;
 	return QPoint(x,y);
 }

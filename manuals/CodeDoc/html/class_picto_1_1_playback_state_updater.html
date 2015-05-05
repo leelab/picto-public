@@ -117,36 +117,6 @@ Inheritance diagram for Picto::PlaybackStateUpdater:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:ae6d0359b1df084e860faf31ccb059586"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6d0359b1df084e860faf31ccb059586"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#ae6d0359b1df084e860faf31ccb059586">startingRun</a> (QString taskName, QString runName)</td></tr>
-<tr class="memdesc:ae6d0359b1df084e860faf31ccb059586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new Run starts. taskName is the name of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> that will be run, runName is the name of this particular run as it appears in the Run Notes tab of the Workstation. <br /></td></tr>
-<tr class="separator:ae6d0359b1df084e860faf31ccb059586"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a445f152d2ffebcf29dc03ca0542feb76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a445f152d2ffebcf29dc03ca0542feb76"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a445f152d2ffebcf29dc03ca0542feb76">endingRun</a> ()</td></tr>
-<tr class="memdesc:a445f152d2ffebcf29dc03ca0542feb76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a run ends. <br /></td></tr>
-<tr class="separator:a445f152d2ffebcf29dc03ca0542feb76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accc166a761db822db7d709ecafbe5a86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accc166a761db822db7d709ecafbe5a86"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#accc166a761db822db7d709ecafbe5a86">propertyValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:accc166a761db822db7d709ecafbe5a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. <br /></td></tr>
-<tr class="separator:accc166a761db822db7d709ecafbe5a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d4e94e5171d165db822c5c5740c01ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d4e94e5171d165db822c5c5740c01ce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a8d4e94e5171d165db822c5c5740c01ce">propertyInitValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a8d4e94e5171d165db822c5c5740c01ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. <br /></td></tr>
-<tr class="separator:a8d4e94e5171d165db822c5c5740c01ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52282a7941555630754e7c2833222a76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52282a7941555630754e7c2833222a76"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a52282a7941555630754e7c2833222a76">transitionActivated</a> (int transId)</td></tr>
-<tr class="memdesc:a52282a7941555630754e7c2833222a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
-<tr class="separator:a52282a7941555630754e7c2833222a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88f03fadc5d5f8c5b488ccffd355e9c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88f03fadc5d5f8c5b488ccffd355e9c9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a88f03fadc5d5f8c5b488ccffd355e9c9">framePresented</a> (double time)</td></tr>
-<tr class="memdesc:a88f03fadc5d5f8c5b488ccffd355e9c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the display for this frame. <br /></td></tr>
-<tr class="separator:a88f03fadc5d5f8c5b488ccffd355e9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a143888735714ef4e38e96f6dc6190d8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a143888735714ef4e38e96f6dc6190d8b">rewardSupplied</a> (double time, int duration, int channel)</td></tr>
-<tr class="memdesc:a143888735714ef4e38e96f6dc6190d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a reward is triggered.  <a href="#a143888735714ef4e38e96f6dc6190d8b">More...</a><br /></td></tr>
-<tr class="separator:a143888735714ef4e38e96f6dc6190d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8507e9d1f7975a49b9d45632a71e306a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a8507e9d1f7975a49b9d45632a71e306a">signalChanged</a> (QString name, QStringList subChanNames, QVector&lt; float &gt; vals)</td></tr>
-<tr class="memdesc:a8507e9d1f7975a49b9d45632a71e306a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new signal data comes in.  <a href="#a8507e9d1f7975a49b9d45632a71e306a">More...</a><br /></td></tr>
-<tr class="separator:a8507e9d1f7975a49b9d45632a71e306a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa098ed4e64e19cf6c5927acca6bedd77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa098ed4e64e19cf6c5927acca6bedd77"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#aa098ed4e64e19cf6c5927acca6bedd77">loading</a> (bool isLoading)</td></tr>
 <tr class="memdesc:aa098ed4e64e19cf6c5927acca6bedd77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when Session file loading starts/stops. The input isLoading value indicates if this is a start or a stop. <br /></td></tr>
@@ -163,9 +133,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#af06ac849db666c605e1706960b12cd58">finishedPlayback</a> ()</td></tr>
 <tr class="memdesc:af06ac849db666c605e1706960b12cd58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when playback ends for the current run. <br /></td></tr>
 <tr class="separator:af06ac849db666c605e1706960b12cd58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa95cc3a7575a8b7f1604b48c46dbc8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c">disableRendering</a> (bool disable)</td></tr>
-<tr class="memdesc:afa95cc3a7575a8b7f1604b48c46dbc8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when rendering should be disabled/enabled.  <a href="#afa95cc3a7575a8b7f1604b48c46dbc8c">More...</a><br /></td></tr>
-<tr class="separator:afa95cc3a7575a8b7f1604b48c46dbc8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header signals_class_picto_1_1_state_updater"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_state_updater')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_state_updater.html">Picto::StateUpdater</a></td></tr>
 <tr class="memitem:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1590a017d6f7c51e8086a3fd7a2b25b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad1590a017d6f7c51e8086a3fd7a2b25b">startingRun</a> (QString taskName, QString runName)</td></tr>
@@ -295,7 +262,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a56e4a1070a723759509a3f34dca44dc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a56e4a1070a723759509a3f34dca44dc1">enableRendering</a> (bool en)</td></tr>
-<tr class="memdesc:a56e4a1070a723759509a3f34dca44dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input.  <a href="#a56e4a1070a723759509a3f34dca44dc1">More...</a><br /></td></tr>
+<tr class="memdesc:a56e4a1070a723759509a3f34dca44dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes the <a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input.  <a href="#a56e4a1070a723759509a3f34dca44dc1">More...</a><br /></td></tr>
 <tr class="separator:a56e4a1070a723759509a3f34dca44dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a732030574bda7ebfdf2658214c91485e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_playback_state_updater.html#a732030574bda7ebfdf2658214c91485e">suspendPlayback</a> ()</td></tr>
 <tr class="memdesc:a732030574bda7ebfdf2658214c91485e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used whenever playback needs to stop for some amount of time.  <a href="#a732030574bda7ebfdf2658214c91485e">More...</a><br /></td></tr>
@@ -373,33 +340,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 
 <p>Definition at line <a class="el" href="_playback_state_updater_8h_source.html#l00026">26</a> of file <a class="el" href="_playback_state_updater_8h_source.html">PlaybackStateUpdater.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="afa95cc3a7575a8b7f1604b48c46dbc8c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::PlaybackStateUpdater::disableRendering </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>disable</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emitted when rendering should be disabled/enabled. </p>
-<p>This is useful if we are skipping around in the run. In this case all signals will still be correctly emitted in the correct order and all data will be available on the data readers; however, the visual elements need not be displayed. </p>
-
-</div>
-</div>
 <a class="anchor" id="a56e4a1070a723759509a3f34dca44dc1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -422,8 +362,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 </table>
 </div><div class="memdoc">
 
-<p>Causes the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input. </p>
-<p>It is the responsibility of whoever connects to the <a class="el" href="class_picto_1_1_playback_state_updater.html#afa95cc3a7575a8b7f1604b48c46dbc8c" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to actually implement the rendering change. </p>
+<p>Causes the <a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to be emitted with an appropriate input. </p>
+<p>It is the responsibility of whoever connects to the <a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8" title="Emitted when rendering should be disabled/enabled. ">disableRendering()</a> signal to actually implement the rendering change. </p>
 
 <p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00283">283</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
 
@@ -506,49 +446,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 
 </div>
 </div>
-<a class="anchor" id="a143888735714ef4e38e96f6dc6190d8b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::PlaybackStateUpdater::rewardSupplied </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>duration</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emitted when a reward is triggered. </p>
-<p>time is the time when the reward starts, duration is its duration in ms, channel is the reward channel on which the reward was provided. </p>
-
-</div>
-</div>
 <a class="anchor" id="adc11cc6489dd7d46067c2e58bebb167a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -567,49 +464,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>lastMaxNeural_</b><
 <p>This function sets up this object to playback the input file. </p><dl class="section note"><dt>Note</dt><dd>This causes the <a class="el" href="class_picto_1_1_file_session_loader.html" title="A Component of the Picto Playback system that loads data from a Session file into a SessionState...">FileSessionLoader</a> to preload the file (ie. Load information about the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> Runs, Design, etc), but not load the file (load frame times, <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes, etc). Loading of the file data is done int <a class="el" href="class_picto_1_1_playback_state_updater.html#a074e3dabbfb0409cd9d85f9073183200" title="Loads the run at the input index of the Session, getting it ready for playback. ">loadRun()</a>. </dd></dl>
 
 <p>Definition at line <a class="el" href="_playback_state_updater_8cpp_source.html#l00105">105</a> of file <a class="el" href="_playback_state_updater_8cpp_source.html">PlaybackStateUpdater.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8507e9d1f7975a49b9d45632a71e306a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::PlaybackStateUpdater::signalChanged </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QStringList&#160;</td>
-          <td class="paramname"><em>subChanNames</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QVector&lt; float &gt;&#160;</td>
-          <td class="paramname"><em>vals</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emitted when new signal data comes in. </p>
-<p>name is the name of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> for which new data is available. subChanNames is a list of names of this SIgnalChannel's sub-channels. vals is a list of the new values. If subChanNames is x,y, vals will have data ordered like x1,y1,x2,y2,x3,y3,... </p><dl class="section note"><dt>Note</dt><dd>Unlike in the master, signal data only comes in once per frame, not once per <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> sample period. <a class="el" href="class_picto_1_1_playback_state_updater.html#a8507e9d1f7975a49b9d45632a71e306a" title="Emitted when new signal data comes in. ">signalChanged()</a> should be emitted with all of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> data since the previous frame after all <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value change and transition traversal signals have been emitted and before <a class="el" href="class_picto_1_1_playback_state_updater.html#a88f03fadc5d5f8c5b488ccffd355e9c9" title="Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the d...">framePresented()</a> is emitted. </dd></dl>
 
 </div>
 </div>

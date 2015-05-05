@@ -12,6 +12,9 @@
 
 
 namespace Picto {
+class VisualTarget;
+class VisualTargetHost;
+
 
 /*! \brief A signal channel for use with the mouse.
  *
@@ -50,6 +53,9 @@ private:
 	QWidget *widget_;
 	//! Tracks the timestamp of the last submitted simulated sample.
 	double lastTime_;
+
+	VisualTarget *visualTarget;
+	VisualTargetHost *visualTargetHost;
 
 };
 

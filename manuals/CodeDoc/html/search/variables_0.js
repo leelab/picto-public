@@ -8,6 +8,7 @@ var searchData=
   ['analysisdisplaystate',['analysisDisplayState',['../class_picto_1_1_task_config.html#afd57eaed181bedfe7c23402dfd3e773f',1,'Picto::TaskConfig::analysisDisplayState()'],['../class_view_selection_frame.html#aa0298a01cc8da6bc286b81c5ac20cf9c',1,'ViewSelectionFrame::analysisDisplayState()']]],
   ['analysisids_5f',['analysisIds_',['../struct_preloaded_session_data.html#a7f812ece03c96600fe57d16ea0e0bbe3',1,'PreloadedSessionData']]],
   ['analysisnames_5f',['analysisNames_',['../struct_preloaded_session_data.html#a364d1d51fc0403a62763c88dfa1c8c61',1,'PreloadedSessionData']]],
+  ['analysisselector_5f',['analysisSelector_',['../class_remote_viewer.html#aaebb9718512d65c5d53ef76435d171e1',1,'RemoteViewer']]],
   ['analysiswidgetmap',['analysisWidgetMap',['../class_picto_1_1_task_config.html#a47a91e618c7fa27ceca44daa36d360cf',1,'Picto::TaskConfig']]],
   ['assethash_5f',['assetHash_',['../class_asset_describer.html#a7a4357d99040ea29eb05a523b5bb44fb',1,'AssetDescriber']]],
   ['assetid_5f',['assetId_',['../class_picto_1_1_data_store.html#afd829fae7e10ab7f69d1e8da5b620bf2',1,'Picto::DataStore']]],

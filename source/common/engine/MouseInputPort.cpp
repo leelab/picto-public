@@ -6,7 +6,8 @@
 
 #include "MouseInputPort.h"
 #include "../timing/Timestamper.h"
-#include "../memleakdetect.h"
+#include "../compositor/VisualTarget.h"
+#include "../compositor/VisualTargetHost.h"
 #include "../memleakdetect.h"
 
 
@@ -17,10 +18,13 @@ namespace Picto {
  *	Typically, this would be the VisualTarget.
  */
 MouseInputPort::MouseInputPort(QWidget *widget)
-	: InputPort(),
-	  widget_(widget)
+	: InputPort(), widget_(widget), visualTarget(nullptr), visualTargetHost(nullptr)
 {
 	lastTime_ = -1;
+
+
+	visualTarget = qobject_cast<VisualTarget *>(widget);
+	visualTargetHost = qobject_cast<VisualTargetHost *>(widget);
 }
 
 /*! \brief Initializes the mouse port for sampling mouse data.
@@ -106,7 +110,18 @@ QPoint MouseInputPort::pollMouse()
 {
 	Timestamper stamper;
 	QPoint point = QCursor::pos();
-	return widget_->mapFromGlobal(point);
+	QPoint translated = widget_->mapFromGlobal(point);
+
+	if (visualTarget)
+	{
+		return visualTarget->viewportPointToTargetPoint(translated);
+	}
+	else if (visualTargetHost)
+	{
+		return visualTargetHost->viewportPointToTargetPoint(translated);
+	}
+	
+	return translated;
 }
 
 };

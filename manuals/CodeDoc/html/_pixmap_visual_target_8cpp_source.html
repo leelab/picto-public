@@ -220,7 +220,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">  133</a></span>&#160;QPoint <a class="code" href="struct_picto_1_1_pixmap_visual_target.html#a8f3cb13a38045e2730ac4da01990dd8a">PixmapVisualTarget::viewportPointToTargetPoint</a>(QPoint viewportPoint)</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;{</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    Q_ASSERT(frameSynchedZoom_ &gt; 0);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">float</span> x = ((viewportPoint.x()-widthOffset_)*(<span class="keywordtype">float</span>(width_)/targetWidth_)-(width_-(width_*frameSynchedZoom_))/2.0)/frameSynchedZoom_;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">float</span> x = ((viewportPoint.x() - widthOffset_)*(<span class="keywordtype">float</span>(width_) / targetWidth_) - (width_ - (width_*frameSynchedZoom_)) / 2.0) / frameSynchedZoom_;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordtype">float</span> y = ((viewportPoint.y() - heightOffset_)*(<span class="keywordtype">float</span>(height_) / targetHeight_) - (height_ - (height_*frameSynchedZoom_)) / 2.0) / frameSynchedZoom_;</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">return</span> QPoint(x,y);</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>

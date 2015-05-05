@@ -72,4 +72,15 @@ void VisualTargetHost::presented(double)
 	update();
 }
 
+const QPoint VisualTargetHost::viewportPointToTargetPoint(const QPoint point) const
+{
+	if (!target_.isNull())
+	{
+		return target_->viewportPointToTargetPoint(point);
+	}
+
+	return point;
+}
+
+
 }; //namespace Picto

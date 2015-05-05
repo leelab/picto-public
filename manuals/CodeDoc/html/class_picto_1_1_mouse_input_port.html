@@ -173,6 +173,12 @@ QWidget *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_mouse_input_port.html#a72739d3858f26828afc1a6090082aed2">lastTime_</a></td></tr>
 <tr class="memdesc:a72739d3858f26828afc1a6090082aed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks the timestamp of the last submitted simulated sample. <br /></td></tr>
 <tr class="separator:a72739d3858f26828afc1a6090082aed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af41812bf2186a73c3e3892c5d1af3a14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af41812bf2186a73c3e3892c5d1af3a14"></a>
+<a class="el" href="class_picto_1_1_visual_target.html">VisualTarget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>visualTarget</b></td></tr>
+<tr class="separator:af41812bf2186a73c3e3892c5d1af3a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654ea74bac42134c774d61554255230f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a654ea74bac42134c774d61554255230f"></a>
+<a class="el" href="class_picto_1_1_visual_target_host.html">VisualTargetHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>visualTargetHost</b></td></tr>
+<tr class="separator:a654ea74bac42134c774d61554255230f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -195,7 +201,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 <p>Although a mouse signal channel is completely useless in an experiment (unless your subject is capable of using a mouse), it is absolutely essential when testing an experiment. When <a class="el" href="class_picto_1_1_mouse_input_port.html#a67e15a3e712644d7a1bd70dcba94d818" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called, the channel polls the mouse and grabs the most recent coordinates. This could potentially cause us to miss very quick movements but since Picto currently calls <a class="el" href="class_picto_1_1_mouse_input_port.html#a67e15a3e712644d7a1bd70dcba94d818" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> once a frame, this hasn't been an issue. Since the polling timing is configured in the <a class="el" href="class_picto_1_1_input_port.html" title="Used to collect data from a single port that may handle multiple signals. ">InputPort</a> class, we simulate the correct number of samples when <a class="el" href="class_picto_1_1_mouse_input_port.html#a67e15a3e712644d7a1bd70dcba94d818" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> is called even though it is actually only read once. To do this, we calculate the time since the last call to <a class="el" href="class_picto_1_1_mouse_input_port.html#a67e15a3e712644d7a1bd70dcba94d818" title="Loads channelBuffers_ with data, returns the precise time when the data was actually read...">updateDataBuffer()</a> and divide by the configured sample period for the number of samples needed, then copy the mouse data that number of times and enter it into the data buffer. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_mouse_input_port_8h_source.html#l00032">32</a> of file <a class="el" href="_mouse_input_port_8h_source.html">MouseInputPort.h</a>.</p>
+<p>Definition at line <a class="el" href="_mouse_input_port_8h_source.html#l00035">35</a> of file <a class="el" href="_mouse_input_port_8h_source.html">MouseInputPort.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a598e2169686e062dbd04aa58b7488895"></a>
 <div class="memitem">
@@ -214,7 +220,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 <p>Constructs a new <a class="el" href="class_picto_1_1_mouse_input_port.html" title="A signal channel for use with the mouse. ">MouseInputPort</a>. </p>
 <p>The input widget is the widget within which the mouse coordinates returned by this function should be defined. Typically, this would be the <a class="el" href="class_picto_1_1_visual_target.html" title="The surface on which all graphics are rendered. ">VisualTarget</a>. </p>
 
-<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00019">19</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00020">20</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -245,7 +251,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 
 <p>Implements <a class="el" href="class_picto_1_1_input_port.html#aefd4ff8fcdb966e2d39c47d244ed6925">Picto::InputPort</a>.</p>
 
-<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00031">31</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00035">35</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -275,7 +281,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 
 <p>Implements <a class="el" href="class_picto_1_1_input_port.html#a0980bd23dd8c524d3e30394539b5850f">Picto::InputPort</a>.</p>
 
-<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00041">41</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00045">45</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -305,7 +311,7 @@ QHash&lt; int, QVector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" v
 
 <p>Implements <a class="el" href="class_picto_1_1_input_port.html#a885502b8712d339b918ac0c6ba418957">Picto::InputPort</a>.</p>
 
-<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00052">52</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_mouse_input_port_8cpp_source.html#l00056">56</a> of file <a class="el" href="_mouse_input_port_8cpp_source.html">MouseInputPort.cpp</a>.</p>
 
 </div>
 </div>

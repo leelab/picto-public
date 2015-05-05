@@ -91,7 +91,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_picto_1_1_remote_state_updater-members.html">List of all members</a>  </div>
@@ -120,71 +119,6 @@ Public Slots</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a747e9dc216e0ea820c60d3b00560580a">updateCurrUnitTime</a> (QString time)</td></tr>
 <tr class="memdesc:a747e9dc216e0ea820c60d3b00560580a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the lastTimeStateDataRequested_ if it's passed a more recent time. <br /></td></tr>
 <tr class="separator:a747e9dc216e0ea820c60d3b00560580a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
-Signals</h2></td></tr>
-<tr class="memitem:a42d155b768af1abb903eebd4bd84139a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a42d155b768af1abb903eebd4bd84139a">startingRun</a> (QString taskName, QString runName)</td></tr>
-<tr class="memdesc:a42d155b768af1abb903eebd4bd84139a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Never called.  <a href="#a42d155b768af1abb903eebd4bd84139a">More...</a><br /></td></tr>
-<tr class="separator:a42d155b768af1abb903eebd4bd84139a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15af514c65234a1837012ec884561505"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a15af514c65234a1837012ec884561505">endingRun</a> ()</td></tr>
-<tr class="memdesc:a15af514c65234a1837012ec884561505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Never called.  <a href="#a15af514c65234a1837012ec884561505">More...</a><br /></td></tr>
-<tr class="separator:a15af514c65234a1837012ec884561505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a130d471db538e01ec3a549b429772012"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a130d471db538e01ec3a549b429772012"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a130d471db538e01ec3a549b429772012">propertyValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a130d471db538e01ec3a549b429772012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. <br /></td></tr>
-<tr class="separator:a130d471db538e01ec3a549b429772012"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a928e83724f5aed13e45817c581dd4d16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a928e83724f5aed13e45817c581dd4d16"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a928e83724f5aed13e45817c581dd4d16">propertyInitValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a928e83724f5aed13e45817c581dd4d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. <br /></td></tr>
-<tr class="separator:a928e83724f5aed13e45817c581dd4d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86702871a23abf704f4954f40531a20e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86702871a23abf704f4954f40531a20e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a86702871a23abf704f4954f40531a20e">transitionActivated</a> (int transId)</td></tr>
-<tr class="memdesc:a86702871a23abf704f4954f40531a20e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
-<tr class="separator:a86702871a23abf704f4954f40531a20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ac8bb7890ae00972bfd16259dd33aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89ac8bb7890ae00972bfd16259dd33aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a89ac8bb7890ae00972bfd16259dd33aa">framePresented</a> (double time)</td></tr>
-<tr class="memdesc:a89ac8bb7890ae00972bfd16259dd33aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the display for this frame. <br /></td></tr>
-<tr class="separator:a89ac8bb7890ae00972bfd16259dd33aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a903965eb87c3ddd006ea391c724df25f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a903965eb87c3ddd006ea391c724df25f">rewardSupplied</a> (double time, int duration, int channel)</td></tr>
-<tr class="memdesc:a903965eb87c3ddd006ea391c724df25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a reward is triggered.  <a href="#a903965eb87c3ddd006ea391c724df25f">More...</a><br /></td></tr>
-<tr class="separator:a903965eb87c3ddd006ea391c724df25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6034fb211d601078c6c9c59b78e10496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_remote_state_updater.html#a6034fb211d601078c6c9c59b78e10496">signalChanged</a> (QString name, QStringList subChanNames, QVector&lt; float &gt; vals)</td></tr>
-<tr class="memdesc:a6034fb211d601078c6c9c59b78e10496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new signal data comes in.  <a href="#a6034fb211d601078c6c9c59b78e10496">More...</a><br /></td></tr>
-<tr class="separator:a6034fb211d601078c6c9c59b78e10496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_class_picto_1_1_state_updater"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_state_updater')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_state_updater.html">Picto::StateUpdater</a></td></tr>
-<tr class="memitem:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1590a017d6f7c51e8086a3fd7a2b25b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad1590a017d6f7c51e8086a3fd7a2b25b">startingRun</a> (QString taskName, QString runName)</td></tr>
-<tr class="memdesc:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new Run starts. taskName is the name of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> that will be run, runName is the name of this particular run as it appears in the Run Notes tab of the Workstation. <br /></td></tr>
-<tr class="separator:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab58fbf8e6a585e06b8dfe6dbf15415f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#aab58fbf8e6a585e06b8dfe6dbf15415f">endingRun</a> ()</td></tr>
-<tr class="memdesc:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a run ends. <br /></td></tr>
-<tr class="separator:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59e5c0981f0109047c3fbd5a3600d1ba"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a59e5c0981f0109047c3fbd5a3600d1ba">propertyValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. <br /></td></tr>
-<tr class="separator:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8845b2700917283f18792ba2fa32a877"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a8845b2700917283f18792ba2fa32a877">propertyInitValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. <br /></td></tr>
-<tr class="separator:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d2330aed87fb71711f4eb722c2b6b98"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a0d2330aed87fb71711f4eb722c2b6b98">transitionActivated</a> (int transId)</td></tr>
-<tr class="memdesc:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
-<tr class="separator:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc9841e4bb187c02f6cb81cad576f506"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#adc9841e4bb187c02f6cb81cad576f506">framePresented</a> (double time)</td></tr>
-<tr class="memdesc:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the display for this frame. <br /></td></tr>
-<tr class="separator:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad5ee865d12ecc835be806d4ed8146607">rewardSupplied</a> (double time, int duration, int channel)</td></tr>
-<tr class="memdesc:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a reward is triggered.  <a href="#ad5ee865d12ecc835be806d4ed8146607">More...</a><br /></td></tr>
-<tr class="separator:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#affd32e4d69b3b1d2b21c35f1f0159fb0">signalChanged</a> (QString name, QStringList subChanNames, QVector&lt; float &gt; vals)</td></tr>
-<tr class="memdesc:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new signal data comes in.  <a href="#affd32e4d69b3b1d2b21c35f1f0159fb0">More...</a><br /></td></tr>
-<tr class="separator:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8">disableRendering</a> (bool disable)</td></tr>
-<tr class="memdesc:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when rendering should be disabled/enabled.  <a href="#a6e1134167de2d8d6846f326b8b318bf8">More...</a><br /></td></tr>
-<tr class="separator:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -237,6 +171,43 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>lastTimeStateDataR
 <tr class="memitem:a0adbd0a7f9dedd9b030d790bea43c4f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0adbd0a7f9dedd9b030d790bea43c4f7"></a>
 QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_remote_state_x_m_l_handler.html">RemoteStateXMLHandler</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>xmlHandlers_</b></td></tr>
 <tr class="separator:a0adbd0a7f9dedd9b030d790bea43c4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header signals_class_picto_1_1_state_updater"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_state_updater')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_state_updater.html">Picto::StateUpdater</a></td></tr>
+<tr class="memitem:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1590a017d6f7c51e8086a3fd7a2b25b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad1590a017d6f7c51e8086a3fd7a2b25b">startingRun</a> (QString taskName, QString runName)</td></tr>
+<tr class="memdesc:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new Run starts. taskName is the name of the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> that will be run, runName is the name of this particular run as it appears in the Run Notes tab of the Workstation. <br /></td></tr>
+<tr class="separator:ad1590a017d6f7c51e8086a3fd7a2b25b inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab58fbf8e6a585e06b8dfe6dbf15415f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#aab58fbf8e6a585e06b8dfe6dbf15415f">endingRun</a> ()</td></tr>
+<tr class="memdesc:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a run ends. <br /></td></tr>
+<tr class="separator:aab58fbf8e6a585e06b8dfe6dbf15415f inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59e5c0981f0109047c3fbd5a3600d1ba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a59e5c0981f0109047c3fbd5a3600d1ba">propertyValueChanged</a> (int propId, QString value)</td></tr>
+<tr class="memdesc:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. <br /></td></tr>
+<tr class="separator:a59e5c0981f0109047c3fbd5a3600d1ba inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8845b2700917283f18792ba2fa32a877"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a8845b2700917283f18792ba2fa32a877">propertyInitValueChanged</a> (int propId, QString value)</td></tr>
+<tr class="memdesc:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. <br /></td></tr>
+<tr class="separator:a8845b2700917283f18792ba2fa32a877 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d2330aed87fb71711f4eb722c2b6b98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a0d2330aed87fb71711f4eb722c2b6b98">transitionActivated</a> (int transId)</td></tr>
+<tr class="memdesc:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
+<tr class="separator:a0d2330aed87fb71711f4eb722c2b6b98 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc9841e4bb187c02f6cb81cad576f506"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#adc9841e4bb187c02f6cb81cad576f506">framePresented</a> (double time)</td></tr>
+<tr class="memdesc:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the display for this frame. <br /></td></tr>
+<tr class="separator:adc9841e4bb187c02f6cb81cad576f506 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad5ee865d12ecc835be806d4ed8146607">rewardSupplied</a> (double time, int duration, int channel)</td></tr>
+<tr class="memdesc:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a reward is triggered.  <a href="#ad5ee865d12ecc835be806d4ed8146607">More...</a><br /></td></tr>
+<tr class="separator:ad5ee865d12ecc835be806d4ed8146607 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#affd32e4d69b3b1d2b21c35f1f0159fb0">signalChanged</a> (QString name, QStringList subChanNames, QVector&lt; float &gt; vals)</td></tr>
+<tr class="memdesc:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new signal data comes in.  <a href="#affd32e4d69b3b1d2b21c35f1f0159fb0">More...</a><br /></td></tr>
+<tr class="separator:affd32e4d69b3b1d2b21c35f1f0159fb0 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8">disableRendering</a> (bool disable)</td></tr>
+<tr class="memdesc:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when rendering should be disabled/enabled.  <a href="#a6e1134167de2d8d6846f326b8b318bf8">More...</a><br /></td></tr>
+<tr class="separator:a6e1134167de2d8d6846f326b8b318bf8 inherit signals_class_picto_1_1_state_updater"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> that gathers Session events from the Picto <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> in real time. </p>
@@ -272,32 +243,6 @@ QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_remote_
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a15af514c65234a1837012ec884561505"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::RemoteStateUpdater::endingRun </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Never called. </p>
-<dl class="section note"><dt>Note</dt><dd>The startingRun and endingRun signals are not yet being called by the <a class="el" href="class_picto_1_1_remote_state_updater.html" title="A StateUpdater that gathers Session events from the Picto Server in real time. ">RemoteStateUpdater</a> this is because its current design doesn't allow it to differentiate between a run that is starting and a run that it is joining in the middle. Similarly for an ending run, the current design doesn't know if the run ended or if the connection was lost or some data was missed due to a slow connection. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a425e1dd79379c413e0b3584e1a13ae7e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -315,129 +260,6 @@ QMap&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_remote_
 <p>This means setting the last data requested time back to zero. </p>
 
 <p>Definition at line <a class="el" href="_remote_state_updater_8cpp_source.html#l00030">30</a> of file <a class="el" href="_remote_state_updater_8cpp_source.html">RemoteStateUpdater.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a903965eb87c3ddd006ea391c724df25f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::RemoteStateUpdater::rewardSupplied </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>duration</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emitted when a reward is triggered. </p>
-<p>time is the time when the reward starts, duration is its duration in ms, channel is the reward channel on which the reward was provided. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6034fb211d601078c6c9c59b78e10496"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::RemoteStateUpdater::signalChanged </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QStringList&#160;</td>
-          <td class="paramname"><em>subChanNames</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QVector&lt; float &gt;&#160;</td>
-          <td class="paramname"><em>vals</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Emitted when new signal data comes in. </p>
-<p>name is the name of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> for which new data is available. subChanNames is a list of names of this SIgnalChannel's sub-channels. vals is a list of the new values. If subChanNames is x,y, vals will have data ordered like x1,y1,x2,y2,x3,y3,... </p><dl class="section note"><dt>Note</dt><dd>Unlike in the master, signal data only comes in once per frame, not once per <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> sample period. <a class="el" href="class_picto_1_1_remote_state_updater.html#a6034fb211d601078c6c9c59b78e10496" title="Emitted when new signal data comes in. ">signalChanged()</a> should be emitted with all of the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> data since the previous frame after all <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value change and transition traversal signals have been emitted and before <a class="el" href="class_picto_1_1_remote_state_updater.html#a89ac8bb7890ae00972bfd16259dd33aa" title="Emitted when a new frame is presented. time is the time at which the first phosphor appeared on the d...">framePresented()</a> is emitted. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a42d155b768af1abb903eebd4bd84139a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::RemoteStateUpdater::startingRun </td>
-          <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>taskName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>runName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Never called. </p>
-<dl class="section note"><dt>Note</dt><dd>The startingRun and endingRun signals are not yet being called by the <a class="el" href="class_picto_1_1_remote_state_updater.html" title="A StateUpdater that gathers Session events from the Picto Server in real time. ">RemoteStateUpdater</a> this is because its current design doesn't allow it to differentiate between a run that is starting and a run that it is joining in the middle. Similarly for an ending run, the current design doesn't know if the run ended or if the connection was lost or some data was missed due to a slow connection. </dd></dl>
 
 </div>
 </div>
