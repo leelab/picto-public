@@ -125,7 +125,7 @@ QSharedPointer<Asset> DesignRoot::createTask()
  */
 bool DesignRoot::removeAnalysis(int index)
 {
-	QSharedPointer<Asset> analysis = getAnalysis(index);
+	QSharedPointer<Analysis> analysis = getAnalysis(index).objectCast<Analysis>();
 	if(!analysis)
 		return false;
 	analysis->setDeleted();
@@ -397,3 +397,4 @@ void DesignRoot::designEdited()
 {
 	compiled_ = false;
 }
+

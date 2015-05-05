@@ -275,10 +275,10 @@ QComboBox *&#160;</td><td class="memItemRight" valign="bottom"><b>userType_</b><
 <tr class="memitem:a52dc53d061ccb5be00f031161b631b5b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52dc53d061ccb5be00f031161b631b5b"></a>
 <a class="el" href="class_output_widget_holder.html">OutputWidgetHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>outputWidgetHolder_</b></td></tr>
 <tr class="separator:a52dc53d061ccb5be00f031161b631b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75de6ab99acc32d7aa825d39b06f2d1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75de6ab99acc32d7aa825d39b06f2d1b"></a>
-<a class="el" href="class_view_selection_widget.html">ViewSelectionWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a75de6ab99acc32d7aa825d39b06f2d1b">viewSelectionWidget_</a></td></tr>
-<tr class="memdesc:a75de6ab99acc32d7aa825d39b06f2d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The widget that can rearrange the ViewWidgets in the Central View. <br /></td></tr>
-<tr class="separator:a75de6ab99acc32d7aa825d39b06f2d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d91ac52d00d43682ffa0b9e229d0406"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d91ac52d00d43682ffa0b9e229d0406"></a>
+<a class="el" href="class_view_selection_frame.html">ViewSelectionFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_test_viewer.html#a4d91ac52d00d43682ffa0b9e229d0406">viewSelectionFrame_</a></td></tr>
+<tr class="memdesc:a4d91ac52d00d43682ffa0b9e229d0406"><td class="mdescLeft">&#160;</td><td class="mdescRight">The widget that can rearrange the ViewWidgets in the Central View. <br /></td></tr>
+<tr class="separator:a4d91ac52d00d43682ffa0b9e229d0406"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31232e7f2db8f1e4d2381fcb63a4d5ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31232e7f2db8f1e4d2381fcb63a4d5ad"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>deiniting_</b></td></tr>
 <tr class="separator:a31232e7f2db8f1e4d2381fcb63a4d5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -416,7 +416,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Loads runtime Property initValues from a previous Session to replace those in the current Experiment. </p>
 <dl class="section warning"><dt>Warning</dt><dd>We haven't tested this in a while and it may not be working. Regardless, it might be good to do this differently and allow operators to save current Property configurations and restore them later. </dd></dl>
 
-<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00328">328</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00331">331</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +444,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the play button is pressed. Activates selected Analyses, disables the AnalysisSelectorWidget and sets up Live Data Readers for the active Analyses to use for the test. </p>
 <dl class="section note"><dt>Note</dt><dd>Live Data Readers are used by Analyses to access data over ranges of times. They are different from the Data Readers in played back Sessions in that they have no access to future data and in some cases their data is simulated (ie. LFP, since there is no neural system attached to the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>). </dd></dl>
 
-<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00357">357</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00360">360</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -501,7 +501,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly. </p>
 <dl class="section note"><dt>Note</dt><dd>The active user, Operator or Subject, determines which graphics are shown in the display depending on each graphics OperatorView/SubjectView Properties. </dd></dl>
 
-<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00522">522</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00525">525</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>

@@ -112,13 +112,14 @@ Inheritance diagram for Picto::OperatorPlot:</div>
   <img src="class_picto_1_1_operator_plot.png" usemap="#Picto::OperatorPlot_map" alt=""/>
   <map id="Picto::OperatorPlot_map" name="Picto::OperatorPlot_map">
 <area href="class_picto_1_1_data_view_element.html" title="A Base class for all Elements representing data that is output to the Observer while viewing an exper..." alt="Picto::DataViewElement" shape="rect" coords="184,392,358,416"/>
-<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="184,336,358,360"/>
-<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="184,280,358,304"/>
-<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="184,224,358,248"/>
-<area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="184,168,358,192"/>
-<area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="184,112,358,136"/>
-<area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="184,56,358,80"/>
-<area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="276,0,450,24"/>
+<area href="class_picto_1_1_container_element.html" title="A Base class for all Elements representing data that is to be handled by a StateMachineElementContain..." alt="Picto::ContainerElement" shape="rect" coords="92,336,266,360"/>
+<area href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to..." alt="Picto::AssociateElement" shape="rect" coords="276,336,450,360"/>
+<area href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects..." alt="Picto::ScriptableContainer" shape="rect" coords="92,280,266,304"/>
+<area href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. " alt="Picto::Scriptable" shape="rect" coords="92,224,266,248"/>
+<area href="class_picto_1_1_u_i_enabled.html" title="A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e..." alt="Picto::UIEnabled" shape="rect" coords="92,168,266,192"/>
+<area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="92,112,266,136"/>
+<area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="92,56,266,80"/>
+<area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="184,0,358,24"/>
 <area href="class_picto_1_1_bar_base.html" title="A plot populated in realtime during experiments or analysis. " alt="Picto::BarBase" shape="rect" coords="184,504,358,528"/>
 <area href="class_picto_1_1_bar_plot.html" title="A plot populated in realtime during experiments or analysis. " alt="Picto::BarPlot" shape="rect" coords="0,560,174,584"/>
 <area href="class_picto_1_1_histogram_plot.html" title="A plot populated in realtime during experiments or analysis. " alt="Picto::HistogramPlot" shape="rect" coords="184,560,358,584"/>
@@ -197,6 +198,15 @@ virtual const QString&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <tr class="memitem:a9a31bcdab5a2d875b557188c1168168c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a31bcdab5a2d875b557188c1168168c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>sendWidgetToTaskConfig</b> ()</td></tr>
 <tr class="separator:a9a31bcdab5a2d875b557188c1168168c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfd8004f000dc0434fd536b010a50a2f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">enteredScope</a> ()</td></tr>
+<tr class="memdesc:abfd8004f000dc0434fd536b010a50a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets this scriptable's data fields to their original values.  <a href="#abfd8004f000dc0434fd536b010a50a2f">More...</a><br /></td></tr>
+<tr class="separator:abfd8004f000dc0434fd536b010a50a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a061fd5ec58cafed35acfe8dcd84b50ff"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a061fd5ec58cafed35acfe8dcd84b50ff">scriptableContainerWasReinitialized</a> ()</td></tr>
+<tr class="memdesc:a061fd5ec58cafed35acfe8dcd84b50ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is reinitialized. Descendant classes extend this to run any code that needs to have access to all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects that will be accessible at runtime.  <a href="#a061fd5ec58cafed35acfe8dcd84b50ff">More...</a><br /></td></tr>
+<tr class="separator:a061fd5ec58cafed35acfe8dcd84b50ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32d224b04b11527f4045d34f7d2b58d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32d224b04b11527f4045d34f7d2b58d6"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>postLinkUpdate</b> ()</td></tr>
+<tr class="separator:a32d224b04b11527f4045d34f7d2b58d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
 <tr class="memitem:a29236d331a9dbff0d97c16205d0d342d inherit pub_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29236d331a9dbff0d97c16205d0d342d"></a>
 DataViewSize::ViewSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#a29236d331a9dbff0d97c16205d0d342d">getDefaultViewSize</a> () const </td></tr>
@@ -238,9 +248,6 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#adce0998e15121e926dc77624a40a436e">bindToScriptEngine</a> (QScriptEngine &amp;engine)</td></tr>
 <tr class="memdesc:adce0998e15121e926dc77624a40a436e inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds this <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> to the input QScriptEngine so that it can be accessed by any scripts running in that QScriptEngine. <br /></td></tr>
 <tr class="separator:adce0998e15121e926dc77624a40a436e inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#ad1945e93d9ebf6cb1f1b8d0a400b73c5">enteredScope</a> ()</td></tr>
-<tr class="memdesc:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets this scriptable's data fields to their original values.  <a href="#ad1945e93d9ebf6cb1f1b8d0a400b73c5">More...</a><br /></td></tr>
-<tr class="separator:ad1945e93d9ebf6cb1f1b8d0a400b73c5 inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f359a1dd735a8a66a5b6a8b76547f4a inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a8f359a1dd735a8a66a5b6a8b76547f4a">isUIEnabled</a> ()</td></tr>
 <tr class="separator:a8f359a1dd735a8a66a5b6a8b76547f4a inherit pub_methods_class_picto_1_1_scriptable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c73838685227f004a22adb18133a07a inherit pub_methods_class_picto_1_1_scriptable"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable.html#a4c73838685227f004a22adb18133a07a">getUIOrder</a> ()</td></tr>
@@ -303,6 +310,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ab7a53abb547d95df318bd9b47db1abf6">getGeneratedChildren</a> (QString tagName)</td></tr>
 <tr class="memdesc:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all child Assets that were generated under the input tagName XML tag / category.  <a href="#ab7a53abb547d95df318bd9b47db1abf6">More...</a><br /></td></tr>
 <tr class="separator:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0ec06347e864ac80430183a76d09aa1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#af0ec06347e864ac80430183a76d09aa1">killGeneratedChildren</a> (QString tagName, int index)</td></tr>
+<tr class="memdesc:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">An attempt to kill children on the spot. Use only when absolutely safe! <br /></td></tr>
+<tr class="separator:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a6f1853bb25faa31f63002d882e293173">getAssociateChildTags</a> (QUuid associateId)</td></tr>
 <tr class="memdesc:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all XML tags / categories under which <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children were added to this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> for the input <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> associateId.  <a href="#a6f1853bb25faa31f63002d882e293173">More...</a><br /></td></tr>
 <tr class="separator:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -468,6 +479,40 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:acbaf02a158b3440a16bc1a84ebaa4481 inherit pub_methods_class_picto_1_1_serializable"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_serializable.html#acbaf02a158b3440a16bc1a84ebaa4481">fromXml</a> (QString xmlText)</td></tr>
 <tr class="memdesc:acbaf02a158b3440a16bc1a84ebaa4481 inherit pub_methods_class_picto_1_1_serializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads this object from a descriptive xmlText XML QString.  <a href="#acbaf02a158b3440a16bc1a84ebaa4481">More...</a><br /></td></tr>
 <tr class="separator:acbaf02a158b3440a16bc1a84ebaa4481 inherit pub_methods_class_picto_1_1_serializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_picto_1_1_associate_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_associate_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_associate_element.html">Picto::AssociateElement</a></td></tr>
+<tr class="memitem:a14c5e420883077b0caff95e78e1d6b0e inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a14c5e420883077b0caff95e78e1d6b0e">AssociateElement</a> ()</td></tr>
+<tr class="memdesc:a14c5e420883077b0caff95e78e1d6b0e inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>.  <a href="#a14c5e420883077b0caff95e78e1d6b0e">More...</a><br /></td></tr>
+<tr class="separator:a14c5e420883077b0caff95e78e1d6b0e inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a314290803f960fefceae3b4f15ca0d inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a314290803f960fefceae3b4f15ca0d"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a5a314290803f960fefceae3b4f15ca0d">getParentPath</a> ()=0</td></tr>
+<tr class="memdesc:a5a314290803f960fefceae3b4f15ca0d inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Path of the Design element to which this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> is linked (this is handled by a child <a class="el" href="class_picto_1_1_associate_host_link.html" title="This is a simple object used to store data about the &quot;host Asset&quot; to which an AssociateElement links...">AssociateHostLink</a>). <br /></td></tr>
+<tr class="separator:a5a314290803f960fefceae3b4f15ca0d inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1fc2664524857690434268d23383e85 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1fc2664524857690434268d23383e85"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#aa1fc2664524857690434268d23383e85">getParentId</a> ()=0</td></tr>
+<tr class="memdesc:aa1fc2664524857690434268d23383e85 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> ID of the Design element to which this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> is linked (this is handled by a child <a class="el" href="class_picto_1_1_associate_host_link.html" title="This is a simple object used to store data about the &quot;host Asset&quot; to which an AssociateElement links...">AssociateHostLink</a>). <br /></td></tr>
+<tr class="separator:aa1fc2664524857690434268d23383e85 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ef5f864d782c1d07772cbb6d585dd11 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ef5f864d782c1d07772cbb6d585dd11"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a8ef5f864d782c1d07772cbb6d585dd11">linkToAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)=0</td></tr>
+<tr class="memdesc:a8ef5f864d782c1d07772cbb6d585dd11 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates and connects linked asset data fields for the input <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> (this is handled by a child <a class="el" href="class_picto_1_1_associate_host_link.html" title="This is a simple object used to store data about the &quot;host Asset&quot; to which an AssociateElement links...">AssociateHostLink</a>). <br /></td></tr>
+<tr class="separator:a8ef5f864d782c1d07772cbb6d585dd11 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475c2d61770f6bdb3d4f014a12ad370d inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512">AttachmentResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a475c2d61770f6bdb3d4f014a12ad370d">attachToLinkedAsset</a> (bool tryLinkingById)=0</td></tr>
+<tr class="memdesc:a475c2d61770f6bdb3d4f014a12ad370d inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to attach this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> as an Associate Child to the current linked asset (set in <a class="el" href="class_picto_1_1_associate_element.html#a8ef5f864d782c1d07772cbb6d585dd11" title="Updates and connects linked asset data fields for the input Asset (this is handled by a child Associa...">linkToAsset()</a>).  <a href="#a475c2d61770f6bdb3d4f014a12ad370d">More...</a><br /></td></tr>
+<tr class="separator:a475c2d61770f6bdb3d4f014a12ad370d inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0877bf5254cb6b54b2f77e148af46055 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0877bf5254cb6b54b2f77e148af46055"></a>
+virtual QUuid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a0877bf5254cb6b54b2f77e148af46055">getAssociateId</a> ()=0</td></tr>
+<tr class="memdesc:a0877bf5254cb6b54b2f77e148af46055 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Associate ID of this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>'s parent <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a>. <br /></td></tr>
+<tr class="separator:a0877bf5254cb6b54b2f77e148af46055 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bf7be74c1f07b6d003df169ad89518 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56bf7be74c1f07b6d003df169ad89518"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a56bf7be74c1f07b6d003df169ad89518">getInfoString</a> ()=0</td></tr>
+<tr class="memdesc:a56bf7be74c1f07b6d003df169ad89518 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string with this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>'s name, type and linked path. <br /></td></tr>
+<tr class="separator:a56bf7be74c1f07b6d003df169ad89518 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697601202b95b1a80d20feee238fd461 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a697601202b95b1a80d20feee238fd461"></a>
+virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a697601202b95b1a80d20feee238fd461">getLinkedAsset</a> ()=0</td></tr>
+<tr class="memdesc:a697601202b95b1a80d20feee238fd461 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> to which this <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> is linked. <br /></td></tr>
+<tr class="separator:a697601202b95b1a80d20feee238fd461 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a27017fa6d089ea68493f899d748e8b27">updateLinkPath</a> (QString oldPrefix, QString newPrefix)=0</td></tr>
+<tr class="memdesc:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the section at the beginning of the linked path which is input as oldPrefix to the input newPrefix value.  <a href="#a27017fa6d089ea68493f899d748e8b27">More...</a><br /></td></tr>
+<tr class="separator:a27017fa6d089ea68493f899d748e8b27 inherit pub_methods_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -499,6 +544,21 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>connectHandle
 <tr class="memitem:a78e751775e6b3891cf8372084f5e49f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e751775e6b3891cf8372084f5e49f8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>connectDataSignals</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt; plotHandler)</td></tr>
 <tr class="separator:a78e751775e6b3891cf8372084f5e49f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
+<tr class="memitem:afbded584169fdbf0c3419f60dbbe32dc inherit pro_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbded584169fdbf0c3419f60dbbe32dc"></a>
+virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#afbded584169fdbf0c3419f60dbbe32dc">defaultTagName</a> ()</td></tr>
+<tr class="memdesc:afbded584169fdbf0c3419f60dbbe32dc inherit pro_methods_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">A List used to keep track of the possible default sizes. <br /></td></tr>
+<tr class="separator:afbded584169fdbf0c3419f60dbbe32dc inherit pro_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88e786b0d3079db78a96098c57fdda6 inherit pro_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa88e786b0d3079db78a96098c57fdda6"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#aa88e786b0d3079db78a96098c57fdda6">canHaveScripts</a> ()</td></tr>
+<tr class="memdesc:aa88e786b0d3079db78a96098c57fdda6 inherit pro_methods_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> can potentially include scripts that would need access to the scripting engine. <br /></td></tr>
+<tr class="separator:aa88e786b0d3079db78a96098c57fdda6 inherit pro_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1810773bd142d173614d66b8b1457870 inherit pro_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#a1810773bd142d173614d66b8b1457870">hasScripts</a> ()</td></tr>
+<tr class="memdesc:a1810773bd142d173614d66b8b1457870 inherit pro_methods_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> has scripts that need access to the scripting engine.  <a href="#a1810773bd142d173614d66b8b1457870">More...</a><br /></td></tr>
+<tr class="separator:a1810773bd142d173614d66b8b1457870 inherit pro_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d27bfa9c53297465af4faa503d322c inherit pro_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top">virtual QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#a02d27bfa9c53297465af4faa503d322c">getScripts</a> ()</td></tr>
+<tr class="memdesc:a02d27bfa9c53297465af4faa503d322c inherit pro_methods_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible.  <a href="#a02d27bfa9c53297465af4faa503d322c">More...</a><br /></td></tr>
+<tr class="separator:a02d27bfa9c53297465af4faa503d322c inherit pro_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
 <tr class="memitem:af62f2d686d75a845715f30493ecab92f inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af62f2d686d75a845715f30493ecab92f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">runScript</a> (QString scriptName)</td></tr>
@@ -510,26 +570,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af9dc1888abfee873961d1d13ec34a1c1 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#af9dc1888abfee873961d1d13ec34a1c1">getReturnValueError</a> (QString scriptName, const QScriptValue &amp;returnValue)</td></tr>
 <tr class="memdesc:af9dc1888abfee873961d1d13ec34a1c1 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns an error string if the input returnValue is invalid or there was some other problem with the latest script that was run.  <a href="#af9dc1888abfee873961d1d13ec34a1c1">More...</a><br /></td></tr>
 <tr class="separator:af9dc1888abfee873961d1d13ec34a1c1 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5721f31da49f2e8df266e0a6c40317fe inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a5721f31da49f2e8df266e0a6c40317fe">defaultTagName</a> ()</td></tr>
-<tr class="memdesc:a5721f31da49f2e8df266e0a6c40317fe inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s default XML tag.  <a href="#a5721f31da49f2e8df266e0a6c40317fe">More...</a><br /></td></tr>
-<tr class="separator:a5721f31da49f2e8df266e0a6c40317fe inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47c2c19dcbe8bd7190b0d220f83cf045 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47c2c19dcbe8bd7190b0d220f83cf045"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a47c2c19dcbe8bd7190b0d220f83cf045">validateObject</a> (QSharedPointer&lt; QXmlStreamReader &gt; xmlStreamReader)</td></tr>
 <tr class="memdesc:a47c2c19dcbe8bd7190b0d220f83cf045 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_scriptable.html#ab6e2944c43a3b5d418bf7b251594386d" title="Verifies that, if the element has scripting elements, its name is valid for use in a script environme...">Scriptable::validateObject()</a> to check the syntax of this object's scripts and add a compilation error if any problems are found. <br /></td></tr>
 <tr class="separator:a47c2c19dcbe8bd7190b0d220f83cf045 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dd4cb7038c3775ca19071bec78b3b1b"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a1dd4cb7038c3775ca19071bec78b3b1b">canHaveScripts</a> ()</td></tr>
-<tr class="memdesc:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> can potentially include scripts that would need access to the scripting engine. <br /></td></tr>
-<tr class="separator:a1dd4cb7038c3775ca19071bec78b3b1b inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#acb933156df40af1820e623fa92d051a4">hasScripts</a> ()</td></tr>
-<tr class="memdesc:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> has scripts that need access to the scripting engine.  <a href="#acb933156df40af1820e623fa92d051a4">More...</a><br /></td></tr>
-<tr class="separator:acb933156df40af1820e623fa92d051a4 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a6476dc86309bfa82d6b02b04e7dba4cf">getScripts</a> ()</td></tr>
-<tr class="memdesc:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lookup table containing the names of Properties containing scripts indexed by the name by which those scripts will be accessible.  <a href="#a6476dc86309bfa82d6b02b04e7dba4cf">More...</a><br /></td></tr>
-<tr class="separator:a6476dc86309bfa82d6b02b04e7dba4cf inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#acabb0f86283aefd4e247f076b56504cd">scriptableContainerWasReinitialized</a> ()</td></tr>
-<tr class="memdesc:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is reinitialized. Descendant classes extend this to run any code that needs to have access to all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects that will be accessible at runtime.  <a href="#acabb0f86283aefd4e247f076b56504cd">More...</a><br /></td></tr>
-<tr class="separator:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7548d13aa3def42d192277e75206b74a inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7548d13aa3def42d192277e75206b74a"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a7548d13aa3def42d192277e75206b74a">executeSearchAlgorithm</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
 <tr class="memdesc:a7548d13aa3def42d192277e75206b74a inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_u_i_enabled.html#a97cb540bf9702a5af91a9eeddde39db9" title="Searches this UIEnabled object&#39;s name for the input searchRequest. ">Scriptable::executeSearchAlgorithm</a> to check for the input searchRequest in this object's scripts. <br /></td></tr>
@@ -596,14 +640,20 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a></td></tr>
 <tr class="memdesc:a32e89b6fdaa56f4ccf652c541d0ce766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a copy of the plot's title. <br /></td></tr>
 <tr class="separator:a32e89b6fdaa56f4ccf652c541d0ce766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4aaf97d1a9d30908a99658e84990b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c4aaf97d1a9d30908a99658e84990b5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_operator_plot.html#a6c4aaf97d1a9d30908a99658e84990b5">initialized_</a></td></tr>
+<tr class="memdesc:a6c4aaf97d1a9d30908a99658e84990b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag used to identify when the InitializationScript has run for a given <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a>. <br /></td></tr>
+<tr class="separator:a6c4aaf97d1a9d30908a99658e84990b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8c48a33f6f80244cf76bb619d22b286"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8c48a33f6f80244cf76bb619d22b286"></a>
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_pPlotHandler</b></td></tr>
 <tr class="separator:ad8c48a33f6f80244cf76bb619d22b286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
 <tr class="memitem:adf9d8bd65d619366f3f039e2d6880ecb inherit pro_attribs_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf9d8bd65d619366f3f039e2d6880ecb"></a>
-QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#adf9d8bd65d619366f3f039e2d6880ecb">sizeList_</a></td></tr>
-<tr class="memdesc:adf9d8bd65d619366f3f039e2d6880ecb inherit pro_attribs_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">A List used to keep track of the possible default sizes. <br /></td></tr>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>sizeList_</b></td></tr>
 <tr class="separator:adf9d8bd65d619366f3f039e2d6880ecb inherit pro_attribs_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ecc58baadc0b5987144746e2002bcfd inherit pro_attribs_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ecc58baadc0b5987144746e2002bcfd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dveNum_</b></td></tr>
+<tr class="separator:a1ecc58baadc0b5987144746e2002bcfd inherit pro_attribs_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
 <tr class="memitem:ab5c2f2b808f14d1722c77451dcc84a24 inherit pro_attribs_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5c2f2b808f14d1722c77451dcc84a24"></a>
 QSharedPointer&lt; QScriptEngine &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a></td></tr>
@@ -630,6 +680,13 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_class_picto_1_1_associate_element"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_picto_1_1_associate_element')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="class_picto_1_1_associate_element.html">Picto::AssociateElement</a></td></tr>
+<tr class="memitem:a4748629e8da6dae94a635082c340f512 inherit pub_types_class_picto_1_1_associate_element"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512">AttachmentResult</a> { <a class="el" href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512a5c79c7c2de09b1964905dbc0110a18d0">SUCCESS_BY_LINK</a>, 
+<a class="el" href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512a2f276070b9137fef8bec4b18bfe3774c">SUCCESS_BY_PATH</a>, 
+<a class="el" href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512ab99881ca4135841db0fde767429d3e42">FAIL</a>
+ }</td></tr>
+<tr class="memdesc:a4748629e8da6dae94a635082c340f512"><td class="mdescLeft">&#160;</td><td class="mdescRight">The result of a call to attachToLinkedAsset.  <a href="class_picto_1_1_associate_element.html#a4748629e8da6dae94a635082c340f512">More...</a><br /></td></tr>
+<tr class="separator:a4748629e8da6dae94a635082c340f512 inherit pub_types_class_picto_1_1_associate_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_data_store"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_data_store')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_data_store.html">Picto::DataStore</a></td></tr>
 <tr class="memitem:a98bb6ca0be073c2537c66b82242c26aa inherit pub_slots_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bb6ca0be073c2537c66b82242c26aa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a98bb6ca0be073c2537c66b82242c26aa">childEdited</a> ()</td></tr>
@@ -657,6 +714,37 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00022">22</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abfd8004f000dc0434fd536b010a50a2f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::OperatorPlot::enteredScope </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets this scriptable's data fields to their original values. </p>
+<p>Called when this <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> enters Picto Scope (ie. Control flow reaches its parent element).</p>
+<p>When a <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> enters scope, all of its <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> run values are reset to their init values. This function takes care of that by calling <a class="el" href="class_picto_1_1_scriptable.html#aecc995a7d64dfa796c2bc7fe53a90ca5" title="Copies initValues to runValues for all Properties in this element. ">restoreProperties()</a>. </p>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable.html#ad1945e93d9ebf6cb1f1b8d0a400b73c5">Picto::Scriptable</a>.</p>
+
+<p>Definition at line <a class="el" href="_operator_plot_8cpp_source.html#l00107">107</a> of file <a class="el" href="_operator_plot_8cpp_source.html">OperatorPlot.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a01a1bceea23c96b2e0ec3b668d7643b8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -686,6 +774,36 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Reimplemented in <a class="el" href="class_picto_1_1_bar_base.html#a1c5007887a8310b2cf3e1961a8d8162e">Picto::BarBase</a>, <a class="el" href="class_picto_1_1_sampling_bar_base.html#aa43c27480556676a1e98f064f8196984">Picto::SamplingBarBase</a>, <a class="el" href="class_picto_1_1_bar_plot.html#a8f8b40bfbe8e215b2844cc7f9e6a3c39">Picto::BarPlot</a>, <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a1a9630ae337f31f899efdcdde194b406">Picto::SamplingBarPlot</a>, <a class="el" href="class_picto_1_1_histogram_plot.html#a3d80b63333de0652ea5cb35e7f12f163">Picto::HistogramPlot</a>, and <a class="el" href="class_picto_1_1_sampling_histogram_plot.html#ae8fb5d0c961a33009899d9365a12ee9e">Picto::SamplingHistogramPlot</a>.</p>
 
 <p>Definition at line <a class="el" href="_operator_plot_8h_source.html#l00037">37</a> of file <a class="el" href="_operator_plot_8h_source.html">OperatorPlot.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a061fd5ec58cafed35acfe8dcd84b50ff"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Picto::OperatorPlot::scriptableContainerWasReinitialized </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is reinitialized. Descendant classes extend this to run any code that needs to have access to all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects that will be accessible at runtime. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_scriptable_container.html#ab437e6670e384f59a3b659e802d41361" title="Initializes scripting for this and all child ScriptableContainers. ">initScripting()</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#acabb0f86283aefd4e247f076b56504cd">Picto::ScriptableContainer</a>.</p>
+
+<p>Definition at line <a class="el" href="_operator_plot_8cpp_source.html#l00112">112</a> of file <a class="el" href="_operator_plot_8cpp_source.html">OperatorPlot.cpp</a>.</p>
 
 </div>
 </div>

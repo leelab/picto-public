@@ -28,7 +28,7 @@ void PropertyFrame::setTopLevelDataStore(QSharedPointer<DataStore> dataStore)
 	{
 		delete mainWidget_;
 	}
-	mainWidget_ = new QWidget();
+	mainWidget_ = new QWidget(this);
 	QVBoxLayout* layout = new QVBoxLayout();
 
 	pathMap_.clear();

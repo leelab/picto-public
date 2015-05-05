@@ -13,8 +13,8 @@
 using namespace Picto;
 
 /*!	\brief The RetentionPolicy dictates whether the widget should be deleted and removed when reset is called on the
- *	controlling ViewSelectionWidget.
- *	\sa ViewSelectionWidget::reset
+ *	controlling ViewSelectionFrame.
+ *	\sa ViewSelectionFrame::reset
  */
 enum DVW_RetentionPolicy
 {
@@ -24,7 +24,9 @@ enum DVW_RetentionPolicy
 };
 
 /*!	\brief A widget to contain objects meant to be displayed in the Experiment Viewer
- *  \details Details forthcoming
+ *  \details The DataViewWidget is a wrapper for a widget to be displayed in the DataViewOrganizer.  Ideally, these widgets
+ *	are resizeable and repositionable on a grid of views.  This wrapper class holds information about the widget's
+ *	display, and provides an interface for the DataViewOrganizer to interact with the display data.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

@@ -2,16 +2,16 @@
 #include <QLabel>
 #include <QGridLayout>
 
-#include "DataViewLayout.h"
-#include "ViewSelectionWidget.h"
+#include "DataViewOrganizer.h"
+#include "ViewSelectionFrame.h"
 
 #include "../../common/memleakdetect.h"
 
 using namespace Picto;
 
-/*! \brief Constructs a new DataViewLayout.
+/*! \brief Constructs a new DataViewOrganizer.
 */
-DataViewLayout::DataViewLayout()
+DataViewOrganizer::DataViewOrganizer()
 {
 	layout_ = new QGridLayout();
 
@@ -41,25 +41,25 @@ DataViewLayout::DataViewLayout()
 	layout_->setRowMinimumHeight(3, 100);
 }
 
-/*! \brief DataViewLayout destructor
+/*! \brief DataViewOrganizer destructor
 */
-DataViewLayout::~DataViewLayout()
+DataViewOrganizer::~DataViewOrganizer()
 {
 
 }
 
-/*! \brief A slot emitted by the ViewSelectionWidget to signal that the specified widget should be removed from the
+/*! \brief A slot emitted by the ViewSelectionFrame to signal that the specified widget should be removed from the
  *	layout.
  */
-void DataViewLayout::removeWidgetSlot(QWidget *pWidget)
+void DataViewOrganizer::removeWidgetSlot(QWidget *pWidget)
 {
 	layout_->removeWidget(pWidget);
 }
 
-/*! \brief A slot emitted by the ViewSelectionWidget to signal that the specified widget should be added to the
+/*! \brief A slot emitted by the ViewSelectionFrame to signal that the specified widget should be added to the
 *	layout at the specified position with the indiciated span.
 */
-void DataViewLayout::addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)
+void DataViewOrganizer::addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)
 {
 	//pWidget->setStyleSheet("border: 1px solid black");
 	layout_->addWidget(pWidget, x, y, size, size);

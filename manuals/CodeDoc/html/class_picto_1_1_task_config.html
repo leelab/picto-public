@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -113,6 +114,11 @@ Inheritance diagram for Picto::TaskConfig:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_task_config_1_1_display_widget_properties.html">DisplayWidgetProperties</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a3a93c472098747355c55e4d2af8dae64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a93c472098747355c55e4d2af8dae64"></a>
@@ -134,16 +140,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a6f3c52e84abe837cb4289262a97752eb">removeWidget</a> (QWidget *widget)</td></tr>
 <tr class="memdesc:a6f3c52e84abe837cb4289262a97752eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the passed widget from the widgetNameMap, as well all assets pointing to it from the widgetMap. <br /></td></tr>
 <tr class="separator:a6f3c52e84abe837cb4289262a97752eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17fc800d5f5a42b466bcc2fa9c59b282"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17fc800d5f5a42b466bcc2fa9c59b282"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a17fc800d5f5a42b466bcc2fa9c59b282">removeAsset</a> (<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *owningAsset)</td></tr>
-<tr class="memdesc:a17fc800d5f5a42b466bcc2fa9c59b282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the passed asset from the widgetMap, as well as its associated widget from the widgetNameMap. <br /></td></tr>
-<tr class="separator:a17fc800d5f5a42b466bcc2fa9c59b282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25d32a2117ef6d8c131d97d41f0ad4cc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a25d32a2117ef6d8c131d97d41f0ad4cc">reset</a> ()</td></tr>
 <tr class="memdesc:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears out all of this object's saved data. Returning it to its initial state. <br /></td></tr>
 <tr class="separator:a25d32a2117ef6d8c131d97d41f0ad4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5d0d8e28669afd7468775944d25d1d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5d0d8e28669afd7468775944d25d1d3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>requestUpdate</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#ab5d0d8e28669afd7468775944d25d1d3">requestUpdate</a> ()</td></tr>
+<tr class="memdesc:ab5d0d8e28669afd7468775944d25d1d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">An exposed public function that triggers the waiting assets. <br /></td></tr>
 <tr class="separator:ab5d0d8e28669afd7468775944d25d1d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3333d04513326f4d98b794e127e52f43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3333d04513326f4d98b794e127e52f43"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a3333d04513326f4d98b794e127e52f43">setUpdateSignalEnabled</a> (bool bEnabled=true)</td></tr>
@@ -160,35 +163,69 @@ const QList&lt; QString &gt;&#160;</td><td class="memItemRight" valign="bottom">
 <tr class="memitem:a52a60f1c01f0c52d3e19dbaaf1f6ef85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52a60f1c01f0c52d3e19dbaaf1f6ef85"></a>
 const QString&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> (QWidget *pWidget) const </td></tr>
 <tr class="separator:a52a60f1c01f0c52d3e19dbaaf1f6ef85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a997e4a621d538c89dcb86d8afc4d8e70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a997e4a621d538c89dcb86d8afc4d8e70"></a>
-<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getAsset</b> (QWidget *pWidget) const </td></tr>
-<tr class="separator:a997e4a621d538c89dcb86d8afc4d8e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a067e27f96788441452f2e8b1d9e401da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a067e27f96788441452f2e8b1d9e401da"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addObserver</b> (<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *newAsset)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a067e27f96788441452f2e8b1d9e401da">addObserver</a> (<a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *newAsset)</td></tr>
+<tr class="memdesc:a067e27f96788441452f2e8b1d9e401da"><td class="mdescLeft">&#160;</td><td class="mdescRight">An addition of an observer widget that is deferred until <a class="el" href="class_picto_1_1_task_config.html#a3f6527dad29e960f1480981b3c749975" title="Iterates over waiting assets and pings them for an update. ">addWaitingAssets()</a> is called. <br /></td></tr>
 <tr class="separator:a067e27f96788441452f2e8b1d9e401da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d667cbb09da5c826036f8055cbc1d03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d667cbb09da5c826036f8055cbc1d03"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a9d667cbb09da5c826036f8055cbc1d03">getPlotHandler</a> (QString plotPath)</td></tr>
+<tr class="memdesc:a9d667cbb09da5c826036f8055cbc1d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to hook up a ObserverPlot with its plothandler. <br /></td></tr>
+<tr class="separator:a9d667cbb09da5c826036f8055cbc1d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ad4ff30c0d45bbef94e67382169f6d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26ad4ff30c0d45bbef94e67382169f6d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a26ad4ff30c0d45bbef94e67382169f6d">setPlotHandler</a> (QString plotPath, QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt; handler)</td></tr>
+<tr class="memdesc:a26ad4ff30c0d45bbef94e67382169f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to store an ObserverPlot's plothandler for later recovery. <br /></td></tr>
+<tr class="separator:a26ad4ff30c0d45bbef94e67382169f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02748808208e643453e73e4d18643b7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02748808208e643453e73e4d18643b7b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a02748808208e643453e73e4d18643b7b">clearPlotHandlers</a> ()</td></tr>
+<tr class="memdesc:a02748808208e643453e73e4d18643b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all cached PlotHandlers. This can potentially trigger their deletion. <br /></td></tr>
+<tr class="separator:a02748808208e643453e73e4d18643b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb2387d1fb34dd3d6d6ddfd39c862b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cb2387d1fb34dd3d6d6ddfd39c862b9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a8cb2387d1fb34dd3d6d6ddfd39c862b9">notifyAnalysisSelection</a> (const QString &amp;name, bool selected)</td></tr>
+<tr class="memdesc:a8cb2387d1fb34dd3d6d6ddfd39c862b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives information about which analyses are currently active. <br /></td></tr>
+<tr class="separator:a8cb2387d1fb34dd3d6d6ddfd39c862b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad39d560c5fbd1ada9a865499c0f8f8b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad39d560c5fbd1ada9a865499c0f8f8b1"></a>
+const <a class="el" href="struct_picto_1_1_task_config_1_1_display_widget_properties.html">DisplayWidgetProperties</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getDisplayWidgetProperties</b> (QWidget *widget) const </td></tr>
+<tr class="separator:ad39d560c5fbd1ada9a865499c0f8f8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a3f6527dad29e960f1480981b3c749975"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f6527dad29e960f1480981b3c749975"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addWaitingAssets</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a3f6527dad29e960f1480981b3c749975">addWaitingAssets</a> ()</td></tr>
+<tr class="memdesc:a3f6527dad29e960f1480981b3c749975"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterates over waiting assets and pings them for an update. <br /></td></tr>
 <tr class="separator:a3f6527dad29e960f1480981b3c749975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab9b5e7f68870d7a5e81577024e6ccb19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9b5e7f68870d7a5e81577024e6ccb19"></a>
-QMap&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> *, QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>widgetMap</b></td></tr>
-<tr class="separator:ab9b5e7f68870d7a5e81577024e6ccb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a649c9845a68c50d8e0ec0eab7737af07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a649c9845a68c50d8e0ec0eab7737af07"></a>
-QMap&lt; QWidget *, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>widgetNameMap</b></td></tr>
+QMap&lt; QWidget *, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a649c9845a68c50d8e0ec0eab7737af07">widgetNameMap</a></td></tr>
+<tr class="memdesc:a649c9845a68c50d8e0ec0eab7737af07"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Map of widget pointers vs their names. DANGEROUS?!? <br /></td></tr>
 <tr class="separator:a649c9845a68c50d8e0ec0eab7737af07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47a91e618c7fa27ceca44daa36d360cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47a91e618c7fa27ceca44daa36d360cf"></a>
+QMultiMap&lt; QString, QWidget * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a47a91e618c7fa27ceca44daa36d360cf">analysisWidgetMap</a></td></tr>
+<tr class="memdesc:a47a91e618c7fa27ceca44daa36d360cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Multimap of analysis names vs its associated widgets. <br /></td></tr>
+<tr class="separator:a47a91e618c7fa27ceca44daa36d360cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd57eaed181bedfe7c23402dfd3e773f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd57eaed181bedfe7c23402dfd3e773f"></a>
+QMap&lt; QString, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#afd57eaed181bedfe7c23402dfd3e773f">analysisDisplayState</a></td></tr>
+<tr class="memdesc:afd57eaed181bedfe7c23402dfd3e773f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Dispaly states. <br /></td></tr>
+<tr class="separator:afd57eaed181bedfe7c23402dfd3e773f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d9a4931b94527cf44926fc02ef34935"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d9a4931b94527cf44926fc02ef34935"></a>
+QMap&lt; QWidget *, <a class="el" href="struct_picto_1_1_task_config_1_1_display_widget_properties.html">DisplayWidgetProperties</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>displayProperties</b></td></tr>
+<tr class="separator:a5d9a4931b94527cf44926fc02ef34935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0af5fa9a53c3ca2180d03ecf4261e17b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0af5fa9a53c3ca2180d03ecf4261e17b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateSignalEnabled_</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a0af5fa9a53c3ca2180d03ecf4261e17b">updateSignalEnabled_</a></td></tr>
+<tr class="memdesc:a0af5fa9a53c3ca2180d03ecf4261e17b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to enable/disable updates. <br /></td></tr>
 <tr class="separator:a0af5fa9a53c3ca2180d03ecf4261e17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea28f02f7b9806bbcb4cd9535afd706f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea28f02f7b9806bbcb4cd9535afd706f"></a>
-QList&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>waitingAssets</b></td></tr>
+QList&lt; <a class="el" href="class_picto_1_1_data_view_element.html">DataViewElement</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#aea28f02f7b9806bbcb4cd9535afd706f">waitingAssets</a></td></tr>
+<tr class="memdesc:aea28f02f7b9806bbcb4cd9535afd706f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A List of Assets waiting to be pinged for an update;. <br /></td></tr>
 <tr class="separator:aea28f02f7b9806bbcb4cd9535afd706f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c3ecbde15a48e4217ac20450743643e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c3ecbde15a48e4217ac20450743643e"></a>
+QHash&lt; QString, QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a9c3ecbde15a48e4217ac20450743643e">cachedHandlers_</a></td></tr>
+<tr class="memdesc:a9c3ecbde15a48e4217ac20450743643e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Hash of QSharedPointers to Plot Handlers, indexed by analysis path. <br /></td></tr>
+<tr class="separator:a9c3ecbde15a48e4217ac20450743643e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50e0bf0bf373239886eca5c3907ba1e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50e0bf0bf373239886eca5c3907ba1e9"></a>
-QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>mtxWaitingAssetProtector</b></td></tr>
+QMutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_task_config.html#a50e0bf0bf373239886eca5c3907ba1e9">mtxWaitingAssetProtector</a></td></tr>
+<tr class="memdesc:a50e0bf0bf373239886eca5c3907ba1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for protecting the List of Assets waiting to be pinged for an update. <br /></td></tr>
 <tr class="separator:a50e0bf0bf373239886eca5c3907ba1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -200,7 +237,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>mtxWaitingAssetProt
 <p>These and other general task configuration issues are handled by this class. Every Picto <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> holds a pointer to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of the task to which it is attached and elements needing to be accessed through the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> add themselves to the <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> object (which holds a weak pointer to them to avoid circular shared pointer issues). The <a class="el" href="class_picto_1_1_task_config.html" title="There are many operations and data elements that need to be associated with a task as a whole...">TaskConfig</a> of a particular <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> can be accessed using its <a class="el" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16" title="Returns a QSharedPointer to the TaskConfig managing this asset. ">Asset::getTaskConfig()</a> function. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_task_config_8h_source.html#l00032">32</a> of file <a class="el" href="_task_config_8h_source.html">TaskConfig.h</a>.</p>
+<p>Definition at line <a class="el" href="_task_config_8h_source.html#l00036">36</a> of file <a class="el" href="_task_config_8h_source.html">TaskConfig.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/storage/<a class="el" href="_task_config_8h_source.html">TaskConfig.h</a></li>
 <li>source/common/storage/<a class="el" href="_task_config_8cpp_source.html">TaskConfig.cpp</a></li>

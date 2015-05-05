@@ -1,17 +1,17 @@
 #include <QLabel>
 
-#include "ViewSelectionWidget.h"
+#include "ViewSelectionFrame.h"
 #include "DataViewWidget.h"
-#include "DataViewLayout.h"
+#include "DataViewOrganizer.h"
 #include "PlotViewWidget.h"
 
 #include "../../common/storage/TaskConfig.h"
 #include "../../common/memleakdetect.h"
 
 
-/*! \brief Constructs a new ViewSelectionWidget
+/*! \brief Constructs a new ViewSelectionFrame
 */
-ViewSelectionWidget::ViewSelectionWidget()
+ViewSelectionFrame::ViewSelectionFrame()
 	: nextIndex_(1)
 {
 	selectionLayout_ = new QGridLayout();
@@ -76,23 +76,23 @@ ViewSelectionWidget::ViewSelectionWidget()
 	setLayout(selectionLayout_);
 }
 
-/*! \brief ViewSelectionWidget destructor
+/*! \brief ViewSelectionFrame destructor
 */
-ViewSelectionWidget::~ViewSelectionWidget()
+ViewSelectionFrame::~ViewSelectionFrame()
 {
 
 }
 
 /*! \brief Callback when a new Plot is selected.
 */
-void ViewSelectionWidget::selectedPlotIndexChanged(int)
+void ViewSelectionFrame::selectedPlotIndexChanged(int)
 {
 	updateSizeAndPositionOptions();
 }
 
 /*! \brief Callback when a new Plot Size is selected.
 */
-void ViewSelectionWidget::selectedSizeIndexChanged(int)
+void ViewSelectionFrame::selectedSizeIndexChanged(int)
 {
 	//The current widget
 	DataViewWidget *pCurrentView = widgetIndexMap_[plotSelection_->currentData().toInt()];
@@ -120,7 +120,7 @@ void ViewSelectionWidget::selectedSizeIndexChanged(int)
 
 /*! \brief Callback helper when a checkbox is clicked.
 */
-void ViewSelectionWidget::checkClicked(bool)
+void ViewSelectionFrame::checkClicked(bool)
 {
 	QCheckBox *pCheck = (QCheckBox *)QObject::sender();
 	if (coordsMap.contains(pCheck))
@@ -129,11 +129,11 @@ void ViewSelectionWidget::checkClicked(bool)
 	}
 }
 
-/*! \brief Callback when a checkbox is clicked.  This updates the associated values about the position in the DataViewWidget,
- *	and the signal emitted removes and re-adds the widget to the connected DataViewLayout.  Finally, the current statuses of
- *	the Checkboxes and ComboBoxes are reset to their current values.
+/*! \brief Callback when a checkbox is clicked.  This updates the associated values about the position in the
+ *	DataViewWidget, and the signal emitted removes and re-adds the widget to the connected DataViewOrganizer.
+ *	Finally, the current statuses of the Checkboxes and ComboBoxes are reset to their current values.
  */
-void ViewSelectionWidget::checkboxChanged(bool bNewValue, int x, int y)
+void ViewSelectionFrame::checkboxChanged(bool bNewValue, int x, int y)
 {
 	//The current widget
 	DataViewWidget *pCurrentView = widgetIndexMap_[plotSelection_->currentData().toInt()];
@@ -163,15 +163,14 @@ void ViewSelectionWidget::checkboxChanged(bool bNewValue, int x, int y)
 }
 
 /*! \brief Adds a new DataViewWidget to the list of widgets to select from.
- *	\note the ViewSelectionWidget will be responsible for deleting the DataViewWidget, but the DataViewWidget will release
+ *	\note the ViewSelectionFrame will be responsible for deleting the DataViewWidget, but the DataViewWidget will release
  *	control of its owned widget prior to doing so.  Currently, all DataViewWidgets contain externally-managed widgets.
  *	This may create memory issues down the road.
  */
-void ViewSelectionWidget::registerView(DataViewWidget *pNewView)
+void ViewSelectionFrame::registerView(DataViewWidget *pNewView)
 {
 	Q_ASSERT(pNewView);
-	//IMPORTANT: FIGURE OUT HOW WE WILL BE MANAGING WIDGET MEMORY
-	//TO DO TODO !!!!!
+
 	if (!dataViewWidgets_.contains(pNewView))
 	{
 		dataViewWidgets_.push_back(pNewView);
@@ -182,11 +181,11 @@ void ViewSelectionWidget::registerView(DataViewWidget *pNewView)
 }
 
 /*! \brief Adds a new DataViewWidget to the list of widgets to select from.
- *	\note the ViewSelectionWidget will be responsible for deleting the DataViewWidget, but the DataViewWidget will release
+ *	\note the ViewSelectionFrame will be responsible for deleting the DataViewWidget, but the DataViewWidget will release
  *	control of its owned widget prior to doing so.  Currently, all DataViewWidgets contain externally-managed widgets.
  *	This may create memory issues down the road.
  */
-void ViewSelectionWidget::addContainer(QWidget *pNewView)
+void ViewSelectionFrame::addContainer(QWidget *pNewView)
 {
 	Q_ASSERT(pNewView);
 	
@@ -203,7 +202,7 @@ void ViewSelectionWidget::addContainer(QWidget *pNewView)
 
 /*! \brief Runs through widgets and updates the Size menu with the current option, as well as position checkboxes.
  */
-void ViewSelectionWidget::updateSizeAndPositionOptions()
+void ViewSelectionFrame::updateSizeAndPositionOptions()
 {
 	//Update size combobox to reflect current widget's size 
 	DataViewWidget *pCurrentView = nullptr;
@@ -294,7 +293,7 @@ void ViewSelectionWidget::updateSizeAndPositionOptions()
 
 /*! \brief Runs through widgets and checks to see if the new widget size is valid.
  */
-bool ViewSelectionWidget::isWidgetPosValid(DataViewWidget *pTestWidget, int testX, int testY)
+bool ViewSelectionFrame::isWidgetPosValid(DataViewWidget *pTestWidget, int testX, int testY)
 {
 	bool positionFull[VIEWGRIDWIDTH][VIEWGRIDHEIGHT] = { false };
 
@@ -339,28 +338,60 @@ bool ViewSelectionWidget::isWidgetPosValid(DataViewWidget *pTestWidget, int test
 	return true;
 }
 
-/*! \brief Connects the Signals of the ViewSelectionWidget with the Slots of the DataViewLayout.
+/*! \brief Connects the Signals of the ViewSelectionFrame with the Slots of the DataViewOrganizer.
  */
-void ViewSelectionWidget::connectToViewerLayout(DataViewLayout *pLayout)
+void ViewSelectionFrame::connectToViewerLayout(DataViewOrganizer *pLayout)
 {
 	connect(this, SIGNAL(widgetRemoved(QWidget*)), pLayout, SLOT(removeWidgetSlot(QWidget*)));
 	connect(this, SIGNAL(widgetAdded(QWidget*, int, int, DataViewSize::ViewSize)), pLayout, SLOT(addWidgetSlot(QWidget*, int, int, DataViewSize::ViewSize)));
 
 }
 
-/*! \brief Connects the Slots of the ViewSelectionWidget with the Signals of the TaskConfig.
+/*! \brief Connects the Slots of the ViewSelectionFrame with the Signals of the TaskConfig.
 */
-void ViewSelectionWidget::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig)
+void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig)
 {
+	if (currentTaskConfig_ == pTaskConfig)
+		return;
+
+	if (currentTaskConfig_)
+	{
+		disconnect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
+		disconnect(currentTaskConfig_.data(), SIGNAL(widgetRemovedFromMap(QWidget*)), this, SLOT(removeWidgetContainer(QWidget*)));
+	}
+
 	currentTaskConfig_ = pTaskConfig;
 	
 	connect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
 	connect(currentTaskConfig_.data(), SIGNAL(widgetRemovedFromMap(QWidget*)), this, SLOT(removeWidgetContainer(QWidget*)));
+
+	QStringList keys = analysisDisplayState.keys();
+	QList<bool> selections = analysisDisplayState.values();
+	for (int i = 0; i < keys.count(); i++)
+	{
+		currentTaskConfig_->notifyAnalysisSelection(keys[i], selections[i]);
+	}
 }
+
+//! Slot to receive information about which analyses are currently active.
+void ViewSelectionFrame::notifyAnalysisSelection(const QString &name, bool selected)
+{
+	if (analysisDisplayState.contains(name) && analysisDisplayState[name] == selected)
+		return;
+
+	analysisDisplayState[name] = selected;
+
+	if (currentTaskConfig_)
+	{
+		currentTaskConfig_->notifyAnalysisSelection(name, selected);
+	}
+
+}
+
 
 /*! \brief Update the container for the passed-in widget.  The title is queried from the TaskConfig.
 */
-void ViewSelectionWidget::updateWidgetContainer(QWidget *pWidget)
+void ViewSelectionFrame::updateWidgetContainer(QWidget *pWidget)
 {
 	if (viewContainerMap_.contains(pWidget))
 	{
@@ -372,7 +403,7 @@ void ViewSelectionWidget::updateWidgetContainer(QWidget *pWidget)
 
 /*! \brief Remove the container for the passed-in widget.
 */
-void ViewSelectionWidget::removeWidgetContainer(QWidget *pWidget)
+void ViewSelectionFrame::removeWidgetContainer(QWidget *pWidget)
 {
 	//TEST THIS CAREFULLY!
 	if (viewContainerMap_.contains(pWidget))
@@ -383,14 +414,14 @@ void ViewSelectionWidget::removeWidgetContainer(QWidget *pWidget)
 
 /*! \brief Add a new container for the passed-in widget.  The title is queried from the TaskConfig.
 */
-void ViewSelectionWidget::addWidgetContainer(QWidget *pWidget)
+void ViewSelectionFrame::addWidgetContainer(QWidget *pWidget)
 {
 	addContainer(pWidget);
 }
 
 /*! \brief Sets a default widget to be shown.
  */
-bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize)
+bool ViewSelectionFrame::setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize)
 {
 	Q_ASSERT(pDefaultView);
 
@@ -416,7 +447,7 @@ bool ViewSelectionWidget::setDefaultView(DataViewWidget *pDefaultView, int x, in
 
 /*! \brief Clears and reconstructs entire set of views.
  */
-void ViewSelectionWidget::rebuild()
+void ViewSelectionFrame::rebuild()
 {
 	clear();
 	currentTaskConfig_->requestUpdate();
@@ -431,7 +462,7 @@ void ViewSelectionWidget::rebuild()
 
 /*! \brief Clears all registered Widgets with a RetentionPolicy of Clear.
  */
-void ViewSelectionWidget::clear()
+void ViewSelectionFrame::clear()
 {
 	QMutableVectorIterator<DataViewWidget *> iter(dataViewWidgets_);
 	while (iter.hasNext())
@@ -439,6 +470,8 @@ void ViewSelectionWidget::clear()
 		//Clear all widgets whose RetentionPolicy is not DVW_RETAIN
 		if (iter.next()->getRetentionPolicy() != DVW_RETAIN)
 		{
+			//We pass false as bRemoveFromVector in order to allow us to call iter.remove().  Otherwise we would have
+			//	screwed up the iteration.
 			removeDataViewWidget(iter.value(), false);
 			iter.remove();
 		}
@@ -450,27 +483,26 @@ void ViewSelectionWidget::clear()
  *	\note Most of the complexity here is an attempt to keep a solid boundary between the libPicto base and the other
  *	projects which include it.  This is meant to expand to support other DataViewWidget types.
  */
-DataViewWidget *ViewSelectionWidget::createDataViewWidget(QWidget *pWidget)
+DataViewWidget *ViewSelectionFrame::createDataViewWidget(QWidget *pWidget)
 {
-	return new PlotViewWidget(currentTaskConfig_->getName(pWidget), pWidget, currentTaskConfig_->getAsset(pWidget));
+	DataViewWidget *newViewWidget = new PlotViewWidget(currentTaskConfig_->getName(pWidget), pWidget,currentTaskConfig_->getDisplayWidgetProperties(pWidget).defaultSize_);
+	newViewWidget->setName(currentTaskConfig_->getName(pWidget));
+	return newViewWidget;
 }
 
 /*! \brief Deletes all references to the passed-in widget.
 */
-void ViewSelectionWidget::removeDataViewWidget(DataViewWidget *pWidget, bool bRemoveFromVector)
+void ViewSelectionFrame::removeDataViewWidget(DataViewWidget *pWidget, bool bRemoveFromVector)
 {
 	if (pWidget->getDisplayed())
 	{
 		emit widgetRemoved(pWidget);
-		//This probably isn't necessary
-		//iter.next()->hide();
 	}
 
 	int findKey = widgetIndexMap_.key(pWidget);
 	if (findKey)
 	{
 		plotSelection_->removeItem(plotSelection_->findData(widgetIndexMap_.key(pWidget)));
-		plotSelection_->setCurrentIndex(0);
 		widgetIndexMap_.remove(findKey);
 	}
 

@@ -180,6 +180,7 @@ public:
 	void aboutToQuit();
 	void play(QList<QUuid> activeAnalyses,QStringList importAnalyses);
 	void pause(QList<QUuid> activeAnalyses = QList<QUuid>(),QStringList importAnalyses = QStringList());
+	QStringList precacheAnalysisNames(QSharedPointer<DesignRoot> import);
 
 public slots:
 	void stop();

@@ -229,59 +229,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">void</span> aboutToQuit();</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">void</span> play(QList&lt;QUuid&gt; activeAnalyses,QStringList importAnalyses);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">void</span> pause(QList&lt;QUuid&gt; activeAnalyses = QList&lt;QUuid&gt;(),QStringList importAnalyses = QStringList());</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">void</span> stop();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordtype">void</span> jumpToTime(<span class="keywordtype">double</span> time);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordtype">void</span> setRunSpeed(<span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">void</span> setUserToOperator();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">void</span> setUserToSubject();</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">void</span> enableLFPLoad(<span class="keywordtype">bool</span> enable);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">void</span> selectFile(QString filePath);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">void</span> selectRun(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;signals:</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordtype">void</span> sessionPreloaded(<a class="code" href="struct_preloaded_session_data.html">PreloadedSessionData</a> sessionData);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordtype">void</span> sessionPreloadFailed(QString error);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordtype">void</span> timeChanged(<span class="keywordtype">double</span> time);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordtype">void</span> loading(<span class="keywordtype">bool</span> isLoading);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordtype">void</span> percentLoaded(<span class="keywordtype">double</span> percent);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordtype">void</span> designRootChanged();</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordtype">void</span> statusChanged(<span class="keywordtype">int</span> status);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordtype">void</span> finishedPlayback();</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordtype">void</span> loadError(QString msg);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">void</span> taskChanged(QString taskName);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    QString activateAnalyses(QStringList analysisData);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    QTimer stateUpdateTimer_;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    QSharedPointer&lt;Picto::RenderingTarget&gt; renderingTarget_;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    QSharedPointer&lt;Picto::PixmapVisualTarget&gt; pixmapVisualTarget_;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    QSharedPointer&lt;Picto::Engine::PictoEngine&gt; engine_;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    QSharedPointer&lt;Picto::Experiment&gt; experiment_;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    QSharedPointer&lt;DesignRoot&gt; designRoot_;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    QSharedPointer&lt;PlaybackThread&gt; playbackThread_;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    QSharedPointer&lt;PlaybackStateUpdater&gt; playbackUpdater_;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    QSharedPointer&lt;SlaveExperimentDriver&gt; slaveExpDriver_;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    QVector&lt;QSharedPointer&lt;Picto::VirtualOutputSignalController&gt;&gt; outSigControllers_;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <a class="code" href="class_playback_controller_data.html">PlaybackControllerData</a> data_;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    QString filePath_;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    QString nextFilePath_;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordtype">int</span> currRun_;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">int</span> numImportedAnalyses_;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordtype">void</span> newRunLength(<span class="keywordtype">double</span> length);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordtype">void</span> setCurrTime(<span class="keywordtype">double</span> time);</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordtype">void</span> playbackEnded();</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordtype">void</span> setup();</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordtype">void</span> update();</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="comment">//void runExperiment();</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    </div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;};</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    QStringList precacheAnalysisNames(QSharedPointer&lt;DesignRoot&gt; <span class="keyword">import</span>);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordtype">void</span> stop();</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordtype">void</span> jumpToTime(<span class="keywordtype">double</span> time);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">void</span> setRunSpeed(<span class="keywordtype">double</span> value);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">void</span> setUserToOperator();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">void</span> setUserToSubject();</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">void</span> enableLFPLoad(<span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">void</span> selectFile(QString filePath);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">void</span> selectRun(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;signals:</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">void</span> sessionPreloaded(<a class="code" href="struct_preloaded_session_data.html">PreloadedSessionData</a> sessionData);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordtype">void</span> sessionPreloadFailed(QString error);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordtype">void</span> timeChanged(<span class="keywordtype">double</span> time);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">void</span> loading(<span class="keywordtype">bool</span> isLoading);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordtype">void</span> percentLoaded(<span class="keywordtype">double</span> percent);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordtype">void</span> designRootChanged();</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordtype">void</span> statusChanged(<span class="keywordtype">int</span> status);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordtype">void</span> finishedPlayback();</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordtype">void</span> loadError(QString msg);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">void</span> taskChanged(QString taskName);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    QString activateAnalyses(QStringList analysisData);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    QTimer stateUpdateTimer_;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    QSharedPointer&lt;Picto::RenderingTarget&gt; renderingTarget_;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    QSharedPointer&lt;Picto::PixmapVisualTarget&gt; pixmapVisualTarget_;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    QSharedPointer&lt;Picto::Engine::PictoEngine&gt; engine_;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    QSharedPointer&lt;Picto::Experiment&gt; experiment_;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    QSharedPointer&lt;DesignRoot&gt; designRoot_;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    QSharedPointer&lt;PlaybackThread&gt; playbackThread_;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    QSharedPointer&lt;PlaybackStateUpdater&gt; playbackUpdater_;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    QSharedPointer&lt;SlaveExperimentDriver&gt; slaveExpDriver_;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    QVector&lt;QSharedPointer&lt;Picto::VirtualOutputSignalController&gt;&gt; outSigControllers_;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="class_playback_controller_data.html">PlaybackControllerData</a> data_;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    QString filePath_;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    QString nextFilePath_;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordtype">int</span> currRun_;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordtype">int</span> numImportedAnalyses_;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    QHash&lt;QString, QUuid&gt; cachedAnalysis_;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    QHash&lt;QString, QString&gt; cachedAnalysisNames_;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordtype">void</span> newRunLength(<span class="keywordtype">double</span> length);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordtype">void</span> setCurrTime(<span class="keywordtype">double</span> time);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordtype">void</span> playbackEnded();</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordtype">void</span> setup();</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">void</span> update();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    <span class="comment">//void runExperiment();</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    </div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;};</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="struct_playback_command_html_a6965fdf688457819423c37d4b7369b8ead4a4d725f7138cf97400cdf452444118"><div class="ttname"><a href="struct_playback_command.html#a6965fdf688457819423c37d4b7369b8ead4a4d725f7138cf97400cdf452444118">PlaybackCommand::Stop</a></div><div class="ttdoc">This tells the PlaybackController to stop the current Run. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_controller_8h_source.html#l00039">PlaybackController.h:39</a></div></div>
 <div class="ttc" id="struct_playback_command_html_a6965fdf688457819423c37d4b7369b8ead7b5217b11b4d97d16b05d230bb1e6d3"><div class="ttname"><a href="struct_playback_command.html#a6965fdf688457819423c37d4b7369b8ead7b5217b11b4d97d16b05d230bb1e6d3">PlaybackCommand::PreLoad</a></div><div class="ttdoc">This tells the PlaybackController to preload a session file. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_controller_8h_source.html#l00031">PlaybackController.h:31</a></div></div>
 <div class="ttc" id="struct_preloaded_session_data_html_a91e7e96fca4da2f0195f9667b5b1ab2e"><div class="ttname"><a href="struct_preloaded_session_data.html#a91e7e96fca4da2f0195f9667b5b1ab2e">PreloadedSessionData::runs_</a></div><div class="ttdeci">QStringList runs_</div><div class="ttdoc">The names of the runs in the Session. </div><div class="ttdef"><b>Definition:</b> <a href="_playback_controller_8h_source.html#l00144">PlaybackController.h:144</a></div></div>

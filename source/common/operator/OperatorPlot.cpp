@@ -90,7 +90,7 @@ void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHa
 
 void OperatorPlot::initView()
 {
-	qDebug() << "\tOperatorPlot::initView Operator Plot (" << dveNum_ << ") Connected to Handler.";
+	//qDebug() << "\tOperatorPlot::initView Operator Plot (" << dveNum_ << ") Connected to Handler.";
 	connectDataSignals(m_pPlotHandler);
 	DataViewElement::initView();
 
@@ -111,6 +111,8 @@ void OperatorPlot::enteredScope()
 
 void OperatorPlot::scriptableContainerWasReinitialized()
 {
+	DataViewElement::scriptableContainerWasReinitialized();
+
 	if (!initialized_ && qsEngine_)
 	{
 		initialized_ = true;

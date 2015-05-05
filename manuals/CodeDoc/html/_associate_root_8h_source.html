@@ -114,7 +114,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root.html#a0064d1b0331ebf9d8264e9e08a945646">   46</a></span>&#160;    QUuid <a class="code" href="class_picto_1_1_associate_root.html#a0064d1b0331ebf9d8264e9e08a945646">getAssociateId</a>(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;AssociateId&quot;</span>).toUuid();};</div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root.html#a75434436456954826aee938c4a12f04e">   50</a></span>&#160;    QUuid <a class="code" href="class_picto_1_1_associate_root.html#a75434436456954826aee938c4a12f04e">getLinkedHostId</a>(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;LinkedHostId&quot;</span>).toUuid();};</div>
 <div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root.html#a4bbc35f5c153218b995fea7141731b0b">   54</a></span>&#160;    QString <a class="code" href="class_picto_1_1_associate_root.html#a4bbc35f5c153218b995fea7141731b0b">getLinkedHostName</a>(){<span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;LinkedHostName&quot;</span>).toString();};</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">bool</span> LinkToAsset(QSharedPointer&lt;Asset&gt; asset, QString&amp; feedback);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">bool</span> LinkToAsset(QSharedPointer&lt;Asset&gt; asset, QString&amp; feedback, <span class="keywordtype">bool</span> tempAsset = <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="class_picto_1_1_associate_root.html#a1ed46df9a3a433c39b7ff6466cc8bc6c">   60</a></span>&#160;    QSharedPointer&lt;Asset&gt; <a class="code" href="class_picto_1_1_associate_root.html#a1ed46df9a3a433c39b7ff6466cc8bc6c">getLinkedAsset</a>(){<span class="keywordflow">return</span> linkedAsset_;};</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QSharedPointer&lt;Asset&gt; getLinkableAsset();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
@@ -123,30 +123,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> validateObject(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> setLinkedAsset(QSharedPointer&lt;Asset&gt; asset);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> setLinkedAsset(QSharedPointer&lt;Asset&gt; asset, <span class="keywordtype">bool</span> tempAsset = <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> updateLinkedAssetProperties();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//Returns true if the input asset is directly linkable</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">bool</span> isLinkableAsset(QSharedPointer&lt;Asset&gt; asset);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QSharedPointer&lt;Property&gt; getLinkedHostNameProperty();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QSharedPointer&lt;Property&gt; getLinkedAssetHostIdProperty();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    QWeakPointer&lt;Asset&gt; linkedAsset_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    QSharedPointer&lt;AssetFactory&gt; variableFactory_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    QSharedPointer&lt;AssetFactory&gt; dataSourceFactory_;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    QSharedPointer&lt;AssetFactory&gt; outputFactory_;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QSharedPointer&lt;AssetFactory&gt; functionFactory_;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    QSharedPointer&lt;AssetFactory&gt; scriptFactory_;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> linkedAssetPropertyEdited(<a class="code" href="class_picto_1_1_property.html">Property</a>* changedProp,QVariant newValue);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> AssociateRootChildWasAdded(QSharedPointer&lt;Asset&gt; child);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> linkedAssetPropertyEdited(<a class="code" href="class_picto_1_1_property.html">Property</a>* changedProp,QVariant newValue);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> AssociateRootChildWasAdded(QSharedPointer&lt;Asset&gt; child);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_associate_root_html_a1ed46df9a3a433c39b7ff6466cc8bc6c"><div class="ttname"><a href="class_picto_1_1_associate_root.html#a1ed46df9a3a433c39b7ff6466cc8bc6c">Picto::AssociateRoot::getLinkedAsset</a></div><div class="ttdeci">QSharedPointer&lt; Asset &gt; getLinkedAsset()</div><div class="ttdoc">Returns the AssociateRootHost to which this object is linked as an Asset shared pointer. </div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_8h_source.html#l00060">AssociateRoot.h:60</a></div></div>
 <div class="ttc" id="class_picto_1_1_associate_root_html_a2e5c6a730c95a1e2b877eec83f7b8759"><div class="ttname"><a href="class_picto_1_1_associate_root.html#a2e5c6a730c95a1e2b877eec83f7b8759">Picto::AssociateRoot::friendlyTypeName</a></div><div class="ttdeci">virtual QString friendlyTypeName()</div><div class="ttdoc">Returns a friendly string identifying this type of Asset. </div><div class="ttdef"><b>Definition:</b> <a href="_associate_root_8h_source.html#l00042">AssociateRoot.h:42</a></div></div>

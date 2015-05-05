@@ -14,7 +14,7 @@
 #include "OutputWidgetHolder.h"
 #include "../../common/Designer/RunSelectorWidget.h"
 #include "../../common/Designer/AnalysisSelectorWidget.h"
-#include "../DataViewer/ViewSelectionWidget.h"
+#include "../DataViewer/ViewSelectionFrame.h"
 
 class QLabel;
 class QDoubleSpinBox;
@@ -95,7 +95,7 @@ private:
 
 	RecordingVisualTargetHost *visualTargetHost_;
 	QVector<QWidget *> outputSignalsWidgets_;
-	ViewSelectionWidget *viewSelectionWidget_;
+	ViewSelectionFrame *viewSelectionFrame_;
 
 	QList<PlayRunInfo> runQueue_;
 	PlayRunInfo latestRun_;
@@ -158,7 +158,6 @@ private slots:
 	void loadError(QString errorMsg);
 	void sessionPreloaded(PreloadedSessionData sessionData);
 	void taskChanged(QString newTask);
-	//void zoomChanged(int zoom);
 
 };
 

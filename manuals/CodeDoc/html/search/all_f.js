@@ -41,6 +41,5 @@ var searchData=
   ['outputwidgetholder',['OutputWidgetHolder',['../class_output_widget_holder.html',1,'']]],
   ['outside',['outside',['../class_picto_1_1_control_target.html#aec615efdebbbe2b0a5e4f31d5b4c44c5',1,'Picto::ControlTarget']]],
   ['outsigcontrollers_5f',['outSigControllers_',['../class_picto_1_1_engine_1_1_picto_engine.html#a07b37238fd676e382e91836677768b99',1,'Picto::Engine::PictoEngine']]],
-  ['overview',['overview',['../struct_asset_description.html#a8012b73caff741e24ef4b745dbe07fbd',1,'AssetDescription']]],
-  ['owningasset_5f',['owningAsset_',['../class_plot_view_widget.html#a25b3e6bc54b7b381bb553a3e3b780447',1,'PlotViewWidget']]]
+  ['overview',['overview',['../struct_asset_description.html#a8012b73caff741e24ef4b745dbe07fbd',1,'AssetDescription']]]
 ];

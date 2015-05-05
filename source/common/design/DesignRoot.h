@@ -85,7 +85,6 @@ public:
 	 *	\note This is currently used to inform the user that design contents were automatically upgraded.
 	 */
 	DesignMessage getLastWarning(){DesignMessage returnVal = lastWarning_;lastWarning_.name="";return returnVal;};
-
 signals:
 	/*! \brief Emitted when undo operations become available, or stop being available, according to the 'available'
 	 *	boolean parameter.

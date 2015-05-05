@@ -35,6 +35,7 @@ const QString BarPlot::getLabel(long bin) const
 //! Sets the name of the indicated bin.
 void BarPlot::setLabel(long bin, QString name)
 {
+	m_bBinsModified = true;
 	m_pAxisHandler->submitLabel(bin, name);
 }
 
@@ -43,7 +44,7 @@ void BarPlot::postDeserialize()
 {
 	BarBase::postDeserialize();
 
-	m_pAxisHandler = new BarAxisHandler(0, 1);
+	m_pAxisHandler = new BarAxisHandler(0, 0);
 }
 
 void BarPlot::initView()

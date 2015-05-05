@@ -20,7 +20,7 @@ class QAction;
 class QToolBar;
 class QComboBox;
 class QSlider;
-class ViewSelectionWidget;
+class ViewSelectionFrame;
 
 /*!	\brief	This allows designers to run the Experiment/Analysis that they are creating in a test
  *	environment for debugging.
@@ -106,7 +106,7 @@ private:
 	QComboBox *userType_;
 	OutputWidgetHolder* outputWidgetHolder_;
 	//! The widget that can rearrange the ViewWidgets in the Central View
-	ViewSelectionWidget *viewSelectionWidget_;
+	ViewSelectionFrame *viewSelectionFrame_;
 
 	bool deiniting_;
 	enum Status {Ending, Stopped, Running, Paused};

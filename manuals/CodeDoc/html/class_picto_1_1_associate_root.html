@@ -140,9 +140,9 @@ QUuid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#a4bbc35f5c153218b995fea7141731b0b">getLinkedHostName</a> ()</td></tr>
 <tr class="memdesc:a4bbc35f5c153218b995fea7141731b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> that this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> is linked to. If no <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> is linked, returns an empty name. <br /></td></tr>
 <tr class="separator:a4bbc35f5c153218b995fea7141731b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80d93af8ed349ac651be22eaf556d7c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#a80d93af8ed349ac651be22eaf556d7c8">LinkToAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset, QString &amp;feedback)</td></tr>
-<tr class="memdesc:a80d93af8ed349ac651be22eaf556d7c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>.  <a href="#a80d93af8ed349ac651be22eaf556d7c8">More...</a><br /></td></tr>
-<tr class="separator:a80d93af8ed349ac651be22eaf556d7c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bc0d47ce0480f791a55a13a178cd01c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#a6bc0d47ce0480f791a55a13a178cd01c">LinkToAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset, QString &amp;feedback, bool tempAsset=false)</td></tr>
+<tr class="memdesc:a6bc0d47ce0480f791a55a13a178cd01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>.  <a href="#a6bc0d47ce0480f791a55a13a178cd01c">More...</a><br /></td></tr>
+<tr class="separator:a6bc0d47ce0480f791a55a13a178cd01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ed46df9a3a433c39b7ff6466cc8bc6c"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#a1ed46df9a3a433c39b7ff6466cc8bc6c">getLinkedAsset</a> ()</td></tr>
 <tr class="memdesc:a1ed46df9a3a433c39b7ff6466cc8bc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> to which this object is linked as an <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> shared pointer.  <a href="#a1ed46df9a3a433c39b7ff6466cc8bc6c">More...</a><br /></td></tr>
 <tr class="separator:a1ed46df9a3a433c39b7ff6466cc8bc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,6 +206,10 @@ virtual QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memitem:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ab7a53abb547d95df318bd9b47db1abf6">getGeneratedChildren</a> (QString tagName)</td></tr>
 <tr class="memdesc:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all child Assets that were generated under the input tagName XML tag / category.  <a href="#ab7a53abb547d95df318bd9b47db1abf6">More...</a><br /></td></tr>
 <tr class="separator:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0ec06347e864ac80430183a76d09aa1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#af0ec06347e864ac80430183a76d09aa1">killGeneratedChildren</a> (QString tagName, int index)</td></tr>
+<tr class="memdesc:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">An attempt to kill children on the spot. Use only when absolutely safe! <br /></td></tr>
+<tr class="separator:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a6f1853bb25faa31f63002d882e293173">getAssociateChildTags</a> (QUuid associateId)</td></tr>
 <tr class="memdesc:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all XML tags / categories under which <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children were added to this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> for the input <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> associateId.  <a href="#a6f1853bb25faa31f63002d882e293173">More...</a><br /></td></tr>
 <tr class="separator:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -466,9 +470,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:aa6d615eea8966b932baa82de0eb8e41f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#aa6d615eea8966b932baa82de0eb8e41f">setLinkedAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
-<tr class="memdesc:aa6d615eea8966b932baa82de0eb8e41f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs operations necessary to link this object with the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> object.  <a href="#aa6d615eea8966b932baa82de0eb8e41f">More...</a><br /></td></tr>
-<tr class="separator:aa6d615eea8966b932baa82de0eb8e41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc70b66a3351b70e8fec0b48ccaa9f96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#abc70b66a3351b70e8fec0b48ccaa9f96">setLinkedAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset, bool tempAsset=false)</td></tr>
+<tr class="memdesc:abc70b66a3351b70e8fec0b48ccaa9f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs operations necessary to link this object with the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> object.  <a href="#abc70b66a3351b70e8fec0b48ccaa9f96">More...</a><br /></td></tr>
+<tr class="separator:abc70b66a3351b70e8fec0b48ccaa9f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a222f74091ee77befa4c5761103a2b7be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_associate_root.html#a222f74091ee77befa4c5761103a2b7be">updateLinkedAssetProperties</a> ()</td></tr>
 <tr class="memdesc:a222f74091ee77befa4c5761103a2b7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates this objects Properties to store the connection to the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> by calling <a class="el" href="class_picto_1_1_associate_root.html#a222f74091ee77befa4c5761103a2b7be" title="Updates this objects Properties to store the connection to the AssociateRootHost by calling updateLin...">updateLinkedAssetProperties()</a>.  <a href="#a222f74091ee77befa4c5761103a2b7be">More...</a><br /></td></tr>
 <tr class="separator:a222f74091ee77befa4c5761103a2b7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -490,21 +494,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:af593301403d1fd842169977fa6091f93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af593301403d1fd842169977fa6091f93"></a>
 QWeakPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>linkedAsset_</b></td></tr>
 <tr class="separator:af593301403d1fd842169977fa6091f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a7a84b7df2f982598f874a9c9969dcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a7a84b7df2f982598f874a9c9969dcf"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>variableFactory_</b></td></tr>
-<tr class="separator:a0a7a84b7df2f982598f874a9c9969dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1d2b1b21a938b74b84186fe884c4275"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1d2b1b21a938b74b84186fe884c4275"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dataSourceFactory_</b></td></tr>
-<tr class="separator:af1d2b1b21a938b74b84186fe884c4275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac44c3b021685015246423f5ce01c7bb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac44c3b021685015246423f5ce01c7bb4"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outputFactory_</b></td></tr>
-<tr class="separator:ac44c3b021685015246423f5ce01c7bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff6e5331debef8db3388a6b1ab827293"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff6e5331debef8db3388a6b1ab827293"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>functionFactory_</b></td></tr>
-<tr class="separator:aff6e5331debef8db3388a6b1ab827293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d7c3cf59a98d8c483e7cda3f4a8e8f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d7c3cf59a98d8c483e7cda3f4a8e8f5"></a>
-QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset_factory.html">AssetFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>scriptFactory_</b></td></tr>
-<tr class="separator:a8d7c3cf59a98d8c483e7cda3f4a8e8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -622,7 +611,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Called whenever a child is added to this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a>. Sets all of its descendant properties to Associate properties. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_data_store.html#a655139d741217c40a7654a0587af1325" title="Sets properties of this DataStore and all of its descendants as Associates. ">DataStore::setDescendantPropertiesAsAssociates()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00233">233</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00234">234</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -718,7 +707,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 </div>
 </div>
-<a class="anchor" id="a80d93af8ed349ac651be22eaf556d7c8"></a>
+<a class="anchor" id="a6bc0d47ce0480f791a55a13a178cd01c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -732,7 +721,13 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">QString &amp;&#160;</td>
-          <td class="paramname"><em>feedback</em>&#160;</td>
+          <td class="paramname"><em>feedback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>tempAsset</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -743,11 +738,11 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 </div><div class="memdoc">
 
 <p>Links this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>. </p>
-<p>Calls <a class="el" href="class_picto_1_1_associate_root.html#aa6d615eea8966b932baa82de0eb8e41f" title="Performs operations necessary to link this object with the input AssociateRootHost object...">setLinkedAsset()</a> to go through the details of linking this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to the input AssociateRootHost(). Also goes through all of this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a>'s children and attempts to link them to their corresponding Assets in the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s tree using saved "link asset ID" and "link asset path" data. Returns true on success, false if the linkage wasn't perfect. On false, the feedback input will be set to a message with more information. </p><dl class="section note"><dt>Note</dt><dd>This could use some debugging. Make sure, for example, that adding an <a class="el" href="class_picto_1_1_analysis_script_holder.html" title="A container for scripts that are used in an Analysis. ">AnalysisScriptHolder</a> to a <a class="el" href="class_picto_1_1_number_variable.html" title="A simple variable that is used for storing numeric values. ">NumberVariable</a> either won't work or at least won't break anything. Possibly fix these types of issues by overloading the <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>'s attachToLinkedAsset function for different types of classes depending on whether they can be loaded onto the wrong element. </dd>
+<p>Calls <a class="el" href="class_picto_1_1_associate_root.html#abc70b66a3351b70e8fec0b48ccaa9f96" title="Performs operations necessary to link this object with the input AssociateRootHost object...">setLinkedAsset()</a> to go through the details of linking this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> to the input AssociateRootHost(). Also goes through all of this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a>'s children and attempts to link them to their corresponding Assets in the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s tree using saved "link asset ID" and "link asset path" data. Returns true on success, false if the linkage wasn't perfect. On false, the feedback input will be set to a message with more information. </p><dl class="section note"><dt>Note</dt><dd>This could use some debugging. Make sure, for example, that adding an <a class="el" href="class_picto_1_1_analysis_script_holder.html" title="A container for scripts that are used in an Analysis. ">AnalysisScriptHolder</a> to a <a class="el" href="class_picto_1_1_number_variable.html" title="A simple variable that is used for storing numeric values. ">NumberVariable</a> either won't work or at least won't break anything. Possibly fix these types of issues by overloading the <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a>'s attachToLinkedAsset function for different types of classes depending on whether they can be loaded onto the wrong element. </dd>
 <dd>
-This function would be better named linkToHost() or something like that. It is called <a class="el" href="class_picto_1_1_associate_root.html#a80d93af8ed349ac651be22eaf556d7c8" title="Links this AssociateRoot to the input AssociateRootHost. ">LinkToAsset()</a> for historic reasons. </dd></dl>
+This function would be better named linkToHost() or something like that. It is called <a class="el" href="class_picto_1_1_associate_root.html#a6bc0d47ce0480f791a55a13a178cd01c" title="Links this AssociateRoot to the input AssociateRootHost. ">LinkToAsset()</a> for historic reasons. </dd></dl>
 
-<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00040">40</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00035">35</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -779,11 +774,11 @@ This function would be better named linkToHost() or something like that. It is c
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_analysis.html#a1495e960c7416afd2f443ae796ed0311">Picto::Analysis</a>, and <a class="el" href="class_picto_1_1_u_i_data.html#a5c9efa47c9f2e57d7c03a5a8f5169a98">Picto::UIData</a>.</p>
 
-<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00121">121</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00117">117</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa6d615eea8966b932baa82de0eb8e41f"></a>
+<a class="anchor" id="abc70b66a3351b70e8fec0b48ccaa9f96"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -794,8 +789,18 @@ This function would be better named linkToHost() or something like that. It is c
           <td class="memname">void Picto::AssociateRoot::setLinkedAsset </td>
           <td>(</td>
           <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td>
-          <td class="paramname"><em>asset</em></td><td>)</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>tempAsset</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -808,7 +813,7 @@ This function would be better named linkToHost() or something like that. It is c
 <p>Performs operations necessary to link this object with the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> object. </p>
 <p>Informs the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> that this <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> is linking to it. Connects the various signals and slots that need to be connnected. Updates this objects Properties to store the connection to the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> by calling <a class="el" href="class_picto_1_1_associate_root.html#a222f74091ee77befa4c5761103a2b7be" title="Updates this objects Properties to store the connection to the AssociateRootHost by calling updateLin...">updateLinkedAssetProperties()</a>. Sets the LinkedHostId and LinkedHostName properties to the input <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s information. </p>
 
-<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00143">143</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00139">139</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
 
 </div>
 </div>
@@ -836,7 +841,7 @@ This function would be better named linkToHost() or something like that. It is c
 <p>Updates this objects Properties to store the connection to the <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> by calling <a class="el" href="class_picto_1_1_associate_root.html#a222f74091ee77befa4c5761103a2b7be" title="Updates this objects Properties to store the connection to the AssociateRootHost by calling updateLin...">updateLinkedAssetProperties()</a>. </p>
 <p>Sets the LinkedHostId and LinkedHostName properties to the linked <a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a>'s information. </p>
 
-<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00178">178</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_associate_root_8cpp_source.html#l00179">179</a> of file <a class="el" href="_associate_root_8cpp_source.html">AssociateRoot.cpp</a>.</p>
 
 </div>
 </div>

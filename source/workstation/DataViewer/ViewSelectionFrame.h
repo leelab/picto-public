@@ -21,7 +21,7 @@ using namespace Picto;
 #define VIEWGRIDHEIGHT 4
 
 class DataViewWidget;
-class DataViewLayout;
+class DataViewOrganizer;
 
 
 /*!	\brief A struct to keep track of the location of widgets within the viewer.
@@ -43,17 +43,17 @@ struct WidgetCoords
 *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
 *	\date 2009-2015
 */
-class ViewSelectionWidget : public QFrame
+class ViewSelectionFrame : public QFrame
 {
 	Q_OBJECT
 public:
-	ViewSelectionWidget();
-	virtual ~ViewSelectionWidget();
+	ViewSelectionFrame();
+	virtual ~ViewSelectionFrame();
 
 	bool setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize);
 	void registerView(DataViewWidget *pNewView);
 	void addContainer(QWidget *pNewView);
-	void connectToViewerLayout(DataViewLayout *pLayout);
+	void connectToViewerLayout(DataViewOrganizer *pOrganizer);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
 	void rebuild();
@@ -71,6 +71,7 @@ public slots:
 	void updateWidgetContainer(QWidget *pWidget);
 	void removeWidgetContainer(QWidget *pWidget);
 	void addWidgetContainer(QWidget *pWidget);
+	void notifyAnalysisSelection(const QString &name, bool selected);
 
 private:
 	void updateSizeAndPositionOptions();
@@ -94,6 +95,8 @@ protected:
 	QMap<QWidget*, DataViewWidget*> viewContainerMap_;
 	//! The next widget index to pass out
 	int nextIndex_;
+	//! Current Analysis Dispaly states.  Map of Analysis Name vs current selection.
+	QMap<QString, bool> analysisDisplayState;
 
 private:
 	//! Organizational layout

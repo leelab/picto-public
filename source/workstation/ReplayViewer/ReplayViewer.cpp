@@ -32,7 +32,7 @@
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/playback/FileSessionLoader.h"
 
-#include "../DataViewer/DataViewLayout.h"
+#include "../DataViewer/DataViewOrganizer.h"
 #include "../DataViewer/DataViewWidget.h"
 
 
@@ -56,7 +56,8 @@ ReplayViewer::ReplayViewer(QWidget *parent) :
 void ReplayViewer::init()
 {
 	jumpDownRequested_ = false;
-	analysisSelector_->setDesignRootForImport(designRoot_);
+	QStringList importNames = playbackController_->precacheAnalysisNames(designRoot_);
+	analysisSelector_->setDesignRootForImport(designRoot_, importNames);
 	if(latestStatus_ == PlaybackControllerData::PreLoading || latestStatus_ == PlaybackControllerData::Stopped)
 		analysisSelector_->enableCheckboxes(true);
 	else
@@ -201,7 +202,7 @@ void ReplayViewer::setupUi()
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	
-	DataViewLayout *dataViewLayout = new DataViewLayout();
+	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
 	
 
 	//Set up the visual target host
@@ -210,7 +211,7 @@ void ReplayViewer::setupUi()
 	visualTargetHost_ = new RecordingVisualTargetHost();
 	visualTargetHost_->setVisualTarget(playbackController_->getVisualTarget());
 
-	stimulusLayout->addWidget(dataViewLayout);
+	stimulusLayout->addWidget(dataViewOrganizer);
 	connect(visualTargetHost_,SIGNAL(updateRecordingTime(double)),this,SLOT(setRecordTime(double)));
 
 	//Setup Output Signal Widgets
@@ -230,7 +231,9 @@ void ReplayViewer::setupUi()
 
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	analysisSelector_->setEnabled(false);
-	connect(analysisSelector_,SIGNAL(analysisWidgetChanged()),this,SLOT(analysisWidgetChanged()));
+	connect(analysisSelector_, SIGNAL(analysisWidgetChanged()), this, SLOT(analysisWidgetChanged()));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString, bool)),
+		this, SLOT(notifyAnalysisSelection(const QString, bool)));
 	connect(playbackController_.data(),SIGNAL(designRootChanged()),this,SLOT(designRootChanged()));
 	outputWidgetHolder_ = new OutputWidgetHolder();
 	analysisTabs->addTab(runs_,"Select Runs");
@@ -239,15 +242,19 @@ void ReplayViewer::setupUi()
 
 	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
-	viewSelectionWidget_ = new ViewSelectionWidget();
-	viewSelectionWidget_->registerView(taskView);
-	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
-	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
+	viewSelectionFrame_ = new ViewSelectionFrame();
+	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
+	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
+	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
+
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
+
 	QHBoxLayout *viewLayout = new QHBoxLayout();
 	viewLayout->setMargin(0);
 	viewLayout->setContentsMargins(0, 0, 0, 0);
-	viewLayout->addWidget(viewSelectionWidget_, 0, Qt::AlignCenter);
+	viewLayout->addWidget(viewSelectionFrame_, 0, Qt::AlignCenter);
 
 	QVBoxLayout *infoLayout = new QVBoxLayout();
 	infoLayout->addLayout(viewLayout);
@@ -264,12 +271,12 @@ void ReplayViewer::setupUi()
 	QWidget *container = nullptr;
 	QSplitter *operationLayout = new QSplitter(Qt::Horizontal);
 
-	container = new QWidget();
+	container = new QWidget(operationLayout);
 	container->setLayout(infoLayout);
 	operationLayout->addWidget(container);
 	operationLayout->setStretchFactor(0, 5);
 
-	container = new QWidget();
+	container = new QWidget(operationLayout);
 	container->setLayout(stimulusLayout);
 	operationLayout->addWidget(container);
 	operationLayout->setStretchFactor(1, 10);
@@ -319,10 +326,10 @@ QStringList ReplayViewer::getAnalysesToImport()
 {
 	QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
 	QStringList resultList;
-	for(int i=0;i<designRoot_->getNumAnalyses();i++)
+	for (int i = 0; i<designRoot_->getNumAnalyses(); i++)
 	{
 		//If this analysis is in our import list
-		if(importAnalysisIds.contains(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId()))
+		if (importAnalysisIds.contains(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId()))
 		{
 			//Try to export it.
 			QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
@@ -1077,7 +1084,7 @@ void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
 
 void ReplayViewer::taskChanged(QString newTask)
 {
-	viewSelectionWidget_->clear();
-	viewSelectionWidget_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
-	viewSelectionWidget_->rebuild();
+	viewSelectionFrame_->clear();
+	viewSelectionFrame_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
+	viewSelectionFrame_->rebuild();
 }

@@ -9,7 +9,7 @@ var searchData=
   ['datatype_5f',['dataType_',['../class_align_session_data.html#a0ba990a6ecab63b663c51958a36c17d5',1,'AlignSessionData']]],
   ['dataviewelementfactory_5f',['dataViewElementFactory_',['../class_picto_1_1_output_element_container.html#afc655ee436d36d7683360610634471aa',1,'Picto::OutputElementContainer']]],
   ['dataviewelements_5f',['dataViewElements_',['../class_picto_1_1_scene.html#a4b5b26eff4ebcb306a87e658b57a40ec',1,'Picto::Scene']]],
-  ['dataviewwidgets_5f',['dataViewWidgets_',['../class_view_selection_widget.html#a86a95ecf12a9da5e8421afcdd4f467fe',1,'ViewSelectionWidget']]],
+  ['dataviewwidgets_5f',['dataViewWidgets_',['../class_view_selection_frame.html#ac6e502a844503abc8376b8988a63d61c',1,'ViewSelectionFrame']]],
   ['deleteanalysisaction_5f',['deleteAnalysisAction_',['../class_picto_1_1_analysis_option_widget.html#ad12e7e5f67856a7f7e18707de315a0c9',1,'Picto::AnalysisOptionWidget']]],
   ['deletetaskaction_5f',['deleteTaskAction_',['../class_picto_1_1_analysis_option_widget.html#a4a761b372a6968ab727b221c6423567b',1,'Picto::AnalysisOptionWidget']]],
   ['descriptor_5f',['descriptor_',['../class_picto_1_1_input_data_unit_package.html#a94a46546d730aae3dea2ee87ccc4d2f8',1,'Picto::InputDataUnitPackage']]],

@@ -9,10 +9,10 @@ using namespace Picto;
 AnalysisSelectorWidget::AnalysisSelectorWidget(QWidget *parent) :
 	QWidget(parent)
 {
-	tabWidget_ = new QTabWidget();
-	analysesBox_ = new QWidget();
+	tabWidget_ = new QTabWidget(this);
+	analysesBox_ = new QWidget(tabWidget_);
 	
-	analysesForImportBox_ = new QWidget();
+	analysesForImportBox_ = new QWidget(tabWidget_);
 		
 	tabWidget_->addTab(analysesBox_,"Session");
 	tabWidget_->addTab(analysesForImportBox_,"Import");
@@ -32,19 +32,18 @@ void AnalysisSelectorWidget::clearLocalAnalyses()
 /*! \brief Adds the Analyses from the input DesignRoot to this widget for the input filePath.
  *	\details To show these Analyses in the widget, just call setCurrentFile() with the input filePath.
  */
-void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot)
+void AnalysisSelectorWidget::setLocalDesignRoot(const QString &filePath, QSharedPointer<DesignRoot> designRoot)
 {
 	if(designRoot.isNull() || filePath.isEmpty())
 	{	
 		return;
 	}
+
 	QList<AnalysisInfo> localAnalysisList;
-	for(int i=0;i<designRoot->getNumAnalyses();i++)
+	for (int i = 0; i<designRoot->getNumAnalyses(); i++)
 	{
-		localAnalysisList.append(
-			AnalysisInfo( designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId(),
-				designRoot->getAnalysis(i)->getName() )
-		);
+		QSharedPointer<Analysis> analysis = designRoot->getAnalysis(i).staticCast<Analysis>();
+		localAnalysisList.append(AnalysisInfo(analysis->getAssociateId(), analysis->getName()));
 	}
 	localAnalysisLookup_[filePath] = localAnalysisList;
 }
@@ -56,42 +55,41 @@ void AnalysisSelectorWidget::setLocalDesignRoot(QString filePath,QSharedPointer<
  *	just doing what we are doing here.  Storing that information in a fileName lookup table for
  *	display when setCurrentFIle() is called with the input fileName.
  */
-void AnalysisSelectorWidget::setLocalDesignAnalyses(QString filePath,QList<QUuid> analysisIds,QStringList analysisNames)
+void AnalysisSelectorWidget::setLocalDesignAnalyses(const QString &filePath, const QList<QUuid> &analysisIds, const QStringList &analysisNames)
 {
-	if(filePath.isEmpty())
+	if (filePath.isEmpty())
 	{	
 		return;
 	}
+
 	QList<AnalysisInfo> localAnalysisList;
-	for(int i=0;i<analysisIds.size();i++)
+	for (int i=0; i<analysisIds.size(); i++)
 	{
-		localAnalysisList.append(
-			AnalysisInfo(analysisIds[i],analysisNames[i]
-			)
-		);
+		localAnalysisList.append(AnalysisInfo(analysisIds[i], analysisNames[i]));
 	}
+
 	localAnalysisLookup_[filePath] = localAnalysisList;
 }
 
 /*! \brief Adds the Analyses from the input DesignRoot to this widget under the Import tab for possible import into
  *	another design file.
  */
-void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot)
+void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot, const QStringList &importNames)
 {
 	analysesForImport_.clear();
-	if(designRoot.isNull())
+
+	if (designRoot.isNull())
 	{	
 		updateAnalysesForImportList();
 		return;
 	}
-	for(int i=0;i<designRoot->getNumAnalyses();i++)
+
+	for (int i = 0; i<designRoot->getNumAnalyses(); i++)
 	{
-		analysesForImport_.append(
-			AnalysisInfo(	designRoot->getAnalysis(i).staticCast<Analysis>()->getAssociateId(),
-				designRoot->getAnalysis(i)->getName()
-			)
-		);
+		QSharedPointer<Analysis> tempAnalysis = designRoot->getAnalysis(i).staticCast<Analysis>();
+		analysesForImport_.append(AnalysisInfo(tempAnalysis->getAssociateId(), tempAnalysis->getName(), importNames[i]));
 	}
+
 	updateAnalysesForImportList();
 }
 
@@ -99,7 +97,7 @@ void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> d
  *	\details The Analyses for individual filepaths are entered by using setLocalDesignRoot() or 
  *	setLocalDesignAnalyses().
  */
-void AnalysisSelectorWidget::setCurrentFile(QString filePath)
+void AnalysisSelectorWidget::setCurrentFile(const QString &filePath)
 {
 	currFilePath_ = filePath;
 	updateLocalAnalysisList();
@@ -110,13 +108,14 @@ void AnalysisSelectorWidget::setCurrentFile(QString filePath)
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 {
 	QList<QUuid> returnVal;
-	if(currFilePath_.isEmpty() || !localAnalysisLookup_.contains(currFilePath_))
+	if (currFilePath_.isEmpty() || !localAnalysisLookup_.contains(currFilePath_))
 		return returnVal;
-	for(int i=0;i<localAnalysisLookup_[currFilePath_].size();i++)
+
+	for (int i = 0; i<localAnalysisLookup_[currFilePath_].size(); i++)
 	{
 		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesBox_->layout()->itemAt(i)->widget());
 		Q_ASSERT(button);
-		if(button->isChecked())
+		if (button->isChecked())
 		{
 			returnVal.append(localAnalysisLookup_[currFilePath_][i].id_);
 		}
@@ -129,11 +128,11 @@ QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIds()
 QList<QUuid> AnalysisSelectorWidget::getSelectedAnalysisIdsForImport()
 {
 	QList<QUuid> returnVal;
-	for(int i=0;i<analysesForImport_.size();i++)
+	for (int i = 0; i<analysesForImport_.size(); i++)
 	{
 		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesForImportBox_->layout()->itemAt(i)->widget());
 		Q_ASSERT(button);
-		if(button->isChecked())
+		if (button->isChecked())
 		{
 			returnVal.append(analysesForImport_[i].id_);
 		}
@@ -164,16 +163,17 @@ void AnalysisSelectorWidget::updateLocalAnalysisList()
 	//Remove all old buttons from layout.  We do this in a roundabout but simple way.  Moving a widget's
 	//layout to another widget and then destroying that widget destroys the layout and all the children that
 	//were attached to it.
-	if(analysesBox_->layout())
+	if (analysesBox_->layout())
 		QWidget().setLayout(analysesBox_->layout());
 	analysesBox_->setLayout(new QVBoxLayout());
 
 	//Add new buttons to layout
-	if(localAnalysisLookup_.contains(currFilePath_))
+	if (localAnalysisLookup_.contains(currFilePath_))
 	{
-		for(int i=0;i<localAnalysisLookup_[currFilePath_].size();i++)
+		for (int i = 0; i<localAnalysisLookup_[currFilePath_].size(); i++)
 		{
 			QCheckBox* analysisCheckbox(new QCheckBox(localAnalysisLookup_[currFilePath_][i].name_));
+			checkboxInfoHash[analysisCheckbox] = &localAnalysisLookup_[currFilePath_][i];
 			connect(analysisCheckbox,SIGNAL(clicked(bool)),this,SLOT(checkboxChanged(bool)));
 			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
 			qobject_cast<QVBoxLayout*>(analysesBox_->layout())->setStretch(i,0);
@@ -196,13 +196,15 @@ void AnalysisSelectorWidget::updateAnalysesForImportList()
 	analysesForImportBox_->setLayout(new QVBoxLayout());
 
 	//Add new buttons to layout
-	for(int i=0;i<analysesForImport_.size();i++)
+	for (int i = 0; i<analysesForImport_.size(); i++)
 	{
 		QCheckBox* analysisCheckbox(new QCheckBox(analysesForImport_[i].name_));
+		checkboxInfoHash[analysisCheckbox] = &analysesForImport_[i];
 		connect(analysisCheckbox,SIGNAL(clicked(bool)),this,SLOT(checkboxChanged(bool)));
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addWidget(analysisCheckbox,0,Qt::AlignTop);
 		qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->setStretch(i,0);
 	}
+
 	qobject_cast<QVBoxLayout*>(analysesForImportBox_->layout())->addStretch(1);
 	//Enable this tab if it contains any analyses
 	tabWidget_->setTabEnabled(1,analysesForImport_.size());
@@ -212,7 +214,17 @@ void AnalysisSelectorWidget::updateAnalysesForImportList()
 /*! \brief A slot that is emits the analysisWidgetChanged() signal whenever something happens to one of this widgets
  *	checkboxes.
  */
-void AnalysisSelectorWidget::checkboxChanged(bool)
+void AnalysisSelectorWidget::checkboxChanged(bool checked)
 {
 	emit analysisWidgetChanged();
+
+	QAbstractButton *sender = (QAbstractButton *)QObject::sender();
+	if (checkboxInfoHash.contains(sender))
+	{
+		emit notifyAnalysisSelection(checkboxInfoHash[sender]->assetName_, checked);
+	}
+	else
+	{
+		qDebug() << "AnalyissSelectorWidget::checkboxChanged Checkbox Sender not found!";
+	}
 }

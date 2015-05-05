@@ -5,6 +5,5 @@ var searchData=
   ['outputsignalfactory_5f',['outputSignalFactory_',['../class_picto_1_1_output_element_container.html#aa02bedb7261fba8620d923ab0113ae3b',1,'Picto::OutputElementContainer']]],
   ['outputsignals_5f',['outputSignals_',['../class_picto_1_1_scene.html#aedcf94b314329bc4b6aa2b3ee9eb3276',1,'Picto::Scene']]],
   ['outsigcontrollers_5f',['outSigControllers_',['../class_picto_1_1_engine_1_1_picto_engine.html#a07b37238fd676e382e91836677768b99',1,'Picto::Engine::PictoEngine']]],
-  ['overview',['overview',['../struct_asset_description.html#a8012b73caff741e24ef4b745dbe07fbd',1,'AssetDescription']]],
-  ['owningasset_5f',['owningAsset_',['../class_plot_view_widget.html#a25b3e6bc54b7b381bb553a3e3b780447',1,'PlotViewWidget']]]
+  ['overview',['overview',['../struct_asset_description.html#a8012b73caff741e24ef4b745dbe07fbd',1,'AssetDescription']]]
 ];

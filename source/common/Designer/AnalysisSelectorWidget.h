@@ -40,17 +40,20 @@ public:
 	AnalysisSelectorWidget(QWidget *parent = NULL);
 	virtual ~AnalysisSelectorWidget(){};
 	void clearLocalAnalyses();
-	void setLocalDesignRoot(QString filePath,QSharedPointer<DesignRoot> designRoot);
-	void setLocalDesignAnalyses(QString filePath,QList<QUuid> analysisIds,QStringList analysisNames);
-	void setDesignRootForImport(QSharedPointer<DesignRoot> designRoot);
-	void setCurrentFile(QString filePath);
+	void setLocalDesignRoot(const QString &filePath,QSharedPointer<DesignRoot> designRoot);
+	void setLocalDesignAnalyses(const QString &filePath, const QList<QUuid> &analysisIds, const QStringList &analysisNames);
+	void setDesignRootForImport(QSharedPointer<DesignRoot> designRoot, const QStringList &importNames);
+	void setCurrentFile(const QString &filePath);
 	QList<QUuid> getSelectedAnalysisIds();
 	QList<QUuid> getSelectedAnalysisIdsForImport();
 	void enableCheckboxes(bool enable);
 	bool hasSelectedIds();
 
 signals:
-	void analysisWidgetChanged();	//Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
+	//! Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
+	void analysisWidgetChanged();
+	//! Trigged to pass on current state of Analysis Selection to interested widgets
+	void notifyAnalysisSelection(const QString &name, bool selected);
 
 private:
 	QTabWidget* tabWidget_;
@@ -59,16 +62,25 @@ private:
 	//! Stores Analysis ID, Analysis Name pairs.
 	struct AnalysisInfo
 	{
-		AnalysisInfo(){id_ = QUuid();name_ = "";};
-		AnalysisInfo(QUuid id,QString name){id_ = id;name_ = name;};
+		//! Constructs an AnalysisInfo struct
+		AnalysisInfo(){ id_ = QUuid(); name_ = ""; assetName_ = ""; };
+		//! Constructs an AnalysisInfo struct
+		AnalysisInfo(const QUuid &id, const QString &name, const QString &assetName)
+			: id_(id), name_(name), assetName_(assetName) {};
+		//! Constructs an AnalysisInfo struct.  Stores the same string in name_ and assetName_.
+		AnalysisInfo(const QUuid &id, const QString &name)
+			: id_(id), name_(name), assetName_(name) {};
 		QUuid id_;
 		QString name_;
+		//! Holds the name of the root Analysis element, for associating checkboxes with TaskConfig's observer widgets
+		QString assetName_;
 	};
 	QHash<QString,QList<AnalysisInfo>> localAnalysisLookup_;
 	QList<AnalysisInfo> analysesForImport_;
 	QString currFilePath_;
 	void updateLocalAnalysisList();
 	void updateAnalysesForImportList();
+	QHash<QAbstractButton*, AnalysisInfo*> checkboxInfoHash;
 
 private slots:
 	void checkboxChanged(bool checked);

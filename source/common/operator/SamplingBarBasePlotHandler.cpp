@@ -22,19 +22,22 @@ SamplingBarBasePlotHandler::SamplingBarBasePlotHandler()
 
 void SamplingBarBasePlotHandler::initializeSampling()
 {
-	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
-	errorBar->setWidth(8);
-	errorBar->setPen(QColor(Qt::blue));
+	if (!m_pErrorBars)
+	{
+		QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
+		errorBar->setWidth(8);
+		errorBar->setPen(QColor(Qt::blue));
 
-	m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
-	m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
-	m_pErrorBars->setSymbol(errorBar);
-	m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
-	m_pErrorBars->setPen(Qt::white);
-	m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
+		m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
+		m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
+		m_pErrorBars->setSymbol(errorBar);
+		m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
+		m_pErrorBars->setPen(Qt::white);
+		m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
 
-	m_pErrorBars->attach(m_pPlot);
-	m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
+		m_pErrorBars->attach(m_pPlot);
+		m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
+	}
 }
 
 void SamplingBarBasePlotHandler::setErrorSamples(const QVector<QwtIntervalSample> &qvErrorSamples)

@@ -259,7 +259,7 @@ void ScriptableContainer::resetScriptableAnalysisValues()
 			{
 				if (tagChild->inherits("Picto::Scriptable"))
 				{
-					tagChild.staticCast<Scriptable>()->enteredScope();
+					tagChild.objectCast<Scriptable>()->enteredScope();
 				}
 			}
 		}

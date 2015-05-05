@@ -44,7 +44,6 @@ public:
 	void addObserverWidget(DataViewElement *owningAsset, QWidget *widget);
 
 	void removeWidget(QWidget *widget);
-	void removeAsset(DataViewElement *owningAsset);
 
 	void reset();
 
@@ -56,7 +55,6 @@ public:
 	const QList<QString> getNames() const;
 
 	const QString getName(QWidget *pWidget) const;
-	DataViewElement *getAsset(QWidget *pWidget) const;
 
 	void addObserver(DataViewElement *newAsset);
 
@@ -64,19 +62,37 @@ public:
 	void setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler);
 	void clearPlotHandlers();
 
+	void notifyAnalysisSelection(const QString &name, bool selected);
+
+public:
+	struct DisplayWidgetProperties
+	{
+		DisplayWidgetProperties()
+			: defaultSize_(DataViewSize::VIEW_SIZE_1x1){};
+
+		DisplayWidgetProperties(DataViewSize::ViewSize size)
+			: defaultSize_(size){};
+
+		DataViewSize::ViewSize defaultSize_;
+	};
+
+	const DisplayWidgetProperties &getDisplayWidgetProperties(QWidget *widget) const;
+
 signals:
-	/*! \brief A signal sent whenever a viewer widget is added to the Task.
-	*/
+	//! A signal sent whenever a viewer widget is added to the Task.
 	void widgetAddedToMap(QWidget *pWidget);
-	/*! \brief A signal sent whenever a viewer widget is removed from the Task.
-	*/
+	//! A signal sent whenever a viewer widget is removed from the Task.
 	void widgetRemovedFromMap(QWidget *pWidget);
 
 protected:
-	//! A Map of Asset pointers vs Widget Pointers.  DANGEROUS?!?
-	QMap<DataViewElement*, QWidget*> widgetMap;
 	//! A Map of widget pointers vs their names.  DANGEROUS?!?
 	QMap<QWidget*,QString> widgetNameMap;
+	//! A Multimap of analysis names vs its associated widgets.
+	QMultiMap<QString, QWidget*> analysisWidgetMap;
+	//! Current Analysis Dispaly states
+	QMap<QString, bool> analysisDisplayState;
+	QMap<QWidget*, DisplayWidgetProperties> displayProperties;
+
 	//! Flag to enable/disable updates
 	bool updateSignalEnabled_;
 	//! A List of Assets waiting to be pinged for an update;
@@ -86,10 +102,7 @@ protected:
 	//! Mutex for protecting the List of Assets waiting to be pinged for an update
 	QMutex mtxWaitingAssetProtector;
 
-	//! Iterates over waiting assets and pings them for an update
 	void addWaitingAssets();
-
-
 };
 
 }; //namespace Picto

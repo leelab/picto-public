@@ -35,7 +35,7 @@ void PropertyGroupWidget::addProperties(QString title, QVector<QSharedPointer<Pr
 	//If the main widget wasn't yet created, create it and set it up to recieve sub widgets
 	if(!mainWidget_)
 	{
-		mainWidget_ = new QWidget();
+		mainWidget_ = new QWidget(this);
 		layout_ = new QVBoxLayout();
 		mainWidget_->setLayout(layout_);
 		layout()->addWidget(mainWidget_);

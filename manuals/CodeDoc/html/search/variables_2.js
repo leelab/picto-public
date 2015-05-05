@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['cachedhandlers_5f',['cachedHandlers_',['../class_picto_1_1_task_config.html#a9c3ecbde15a48e4217ac20450743643e',1,'Picto::TaskConfig']]],
   ['casesensitive',['caseSensitive',['../struct_search_request.html#a62864a7f29e2878ed9c87dc063dbb982',1,'SearchRequest']]],
   ['centerval',['centerVal',['../struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html#a3c074999afdefc09f3b63985166bdac0',1,'Picto::DoubletSignalChannel::scaleFactors']]],
   ['changed',['changed',['../struct_picto_1_1_output_signal_controller_1_1_pin_data.html#a273a553e0e0242900b836e1a1a1b557b',1,'Picto::OutputSignalController::PinData']]],
@@ -19,7 +20,7 @@ var searchData=
   ['componenttype_5f',['componentType_',['../class_component_interface.html#a51568b32bb6fc35706054b57bc5725a3',1,'ComponentInterface']]],
   ['compositingsurfaces_5f',['compositingSurfaces_',['../struct_picto_1_1_visual_element.html#a47744977bc4e2b72555e2149a4015d36',1,'Picto::VisualElement']]],
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
-  ['coordsmap',['coordsMap',['../class_view_selection_widget.html#af12b0d5ac43203c4e78b413bc8e13254',1,'ViewSelectionWidget']]],
+  ['coordsmap',['coordsMap',['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
-  ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_widget.html#a64a3ef2225e36bde4fe8377b7ffa0541',1,'ViewSelectionWidget']]]
+  ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]]
 ];

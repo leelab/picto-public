@@ -89,7 +89,7 @@ var searchData=
   ['isvalid',['isValid',['../class_picto_1_1_analysis_file_output.html#a6cde0304b24655c8b0e4d8111de8f878',1,'Picto::AnalysisFileOutput::isValid()'],['../struct_picto_1_1_playback_index.html#a1771a73cc40e9fb0e0ae31e2080ff266',1,'Picto::PlaybackIndex::isValid()']]],
   ['isvisible',['isVisible',['../class_picto_1_1_property.html#a05079b688854054f32897067f937a261',1,'Picto::Property']]],
   ['iswellformed',['isWellFormed',['../struct_picto_1_1_protocol_command.html#aea9dc20cfbb8a0ee0d846eb5fe8cdd8f',1,'Picto::ProtocolCommand']]],
-  ['iswidgetposvalid',['isWidgetPosValid',['../class_view_selection_widget.html#ad7dc9dac8aadb7ed82fec1269b6d388e',1,'ViewSelectionWidget']]],
+  ['iswidgetposvalid',['isWidgetPosValid',['../class_view_selection_frame.html#a10ac1ea27148b9cc8edc33cc6e66f87f',1,'ViewSelectionFrame']]],
   ['itemchange',['itemChange',['../class_arrow.html#a6d9409982fc2ff7f44676c319c3016f2',1,'Arrow::itemChange()'],['../class_diagram_item.html#ada966349ddc26ea7b0c04f4f756d9fc3',1,'DiagramItem::itemChange()'],['../class_script_item.html#a828c7408cb2afaabd5a7c040207e7139',1,'ScriptItem::itemChange()']]],
   ['iteminserted',['itemInserted',['../class_diagram_scene.html#af831d659c3c3b3427a1376a738d27df1',1,'DiagramScene::itemInserted()'],['../class_editor_state.html#ad2d5531ffabffdc1db7e3e343f8ca8bf',1,'EditorState::itemInserted()']]],
   ['itemselected',['itemSelected',['../class_diagram_scene.html#aa0f1ec983181d9513829d99c0666e415',1,'DiagramScene::itemSelected()'],['../class_editor_state.html#a0404b2e2f2f10b818e71f12ec4b8e4cb',1,'EditorState::itemSelected()']]]

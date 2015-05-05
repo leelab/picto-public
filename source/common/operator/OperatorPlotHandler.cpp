@@ -34,10 +34,14 @@ OperatorPlotHandler::~OperatorPlotHandler()
 
 void OperatorPlotHandler::initializePlot(const QString &xTitle, const QString &yTitle)
 {
-	qDebug() << "\tOperatorPlotHandler (" << index << ") created QwtPlot";
-	m_pPlot = new QwtPlot(QwtText(m_tmpTitle));
+	if (!m_pPlot)
+	{
+		qDebug() << "\tOperatorPlotHandler (" << index << ") created QwtPlot";
+		m_pPlot = new QwtPlot(QwtText(m_tmpTitle));
 
-	m_pPlot->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+		m_pPlot->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	}
+
 
 	QwtPlotCanvas *pCanvas = new QwtPlotCanvas();
 	pCanvas->setPalette(Qt::gray);

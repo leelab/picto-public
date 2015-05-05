@@ -39,6 +39,7 @@ void BarBase::replot()
 	if (m_qhdCumulValue.isEmpty())
 	{
 		emit setSamplesSig(qvSamples);
+		_handleErrorFinal(qvError);
 
 		if (bNormalized)
 		{

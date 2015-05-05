@@ -120,7 +120,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//If the main widget wasn&#39;t yet created, create it and set it up to recieve sub widgets</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">if</span>(!mainWidget_)</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        mainWidget_ = <span class="keyword">new</span> QWidget();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        mainWidget_ = <span class="keyword">new</span> QWidget(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        layout_ = <span class="keyword">new</span> QVBoxLayout();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        mainWidget_-&gt;setLayout(layout_);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        layout()-&gt;addWidget(mainWidget_);</div>

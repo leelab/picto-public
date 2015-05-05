@@ -30,8 +30,8 @@ var searchData=
   ['rewardunit',['RewardUnit',['../class_picto_1_1_reward_unit.html',1,'Picto']]],
   ['riffheader',['RIFFHeader',['../struct_picto_1_1_r_i_f_f_header.html',1,'Picto']]],
   ['rundata',['RunData',['../struct_picto_1_1_file_session_loader_1_1_run_data.html',1,'Picto::FileSessionLoader']]],
-  ['runinfo',['RunInfo',['../struct_picto_1_1_run_notes_state_1_1_run_info.html',1,'Picto::RunNotesState']]],
   ['runinfo',['RunInfo',['../struct_picto_1_1_run_selector_widget_1_1_run_info.html',1,'Picto::RunSelectorWidget']]],
+  ['runinfo',['RunInfo',['../struct_picto_1_1_run_notes_state_1_1_run_info.html',1,'Picto::RunNotesState']]],
   ['runnotesreader',['RunNotesReader',['../class_picto_1_1_run_notes_reader.html',1,'Picto']]],
   ['runnotesstate',['RunNotesState',['../class_picto_1_1_run_notes_state.html',1,'Picto']]],
   ['runselectorwidget',['RunSelectorWidget',['../class_picto_1_1_run_selector_widget.html',1,'Picto']]]

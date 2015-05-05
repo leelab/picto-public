@@ -55,11 +55,14 @@ void BarBasePlotHandler::initializeHisto(bool bDisplayLegend, const QColor &barC
 {
 	qDebug() << "\tBarBasePlotHandler::initializePlot called in thread: " << QThread::currentThreadId();
 
-	m_pHistoPlotItem = new QwtPlotHistogram("Data");
-	m_pHistoPlotItem->setTitle("Data");
-	m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
-	m_pHistoPlotItem->setBrush(QBrush(Qt::red));
-	m_pHistoPlotItem->attach(m_pPlot);
+	if (!m_pHistoPlotItem)
+	{
+		m_pHistoPlotItem = new QwtPlotHistogram("Data");
+		m_pHistoPlotItem->setTitle("Data");
+		m_pHistoPlotItem->setStyle(QwtPlotHistogram::Columns);
+		m_pHistoPlotItem->setBrush(QBrush(Qt::red));
+		m_pHistoPlotItem->attach(m_pPlot);
+	}
 
 	m_pPlot->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
 

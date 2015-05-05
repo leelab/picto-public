@@ -25,7 +25,7 @@ void SamplingBarPlot::postDeserialize()
 {
 	SamplingBarBase::postDeserialize();
 
-	m_pAxisHandler = new BarAxisHandler(0, 1);
+	m_pAxisHandler = new BarAxisHandler(0, 0);
 }
 
 void SamplingBarPlot::initView()

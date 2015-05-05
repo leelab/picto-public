@@ -28,6 +28,7 @@ var searchData=
   ['normalizedscaledraw',['NormalizedScaleDraw',['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw']]],
   ['noteslostfocus',['notesLostFocus',['../class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e',1,'ElementNotesWidget']]],
   ['noteswereedited',['notesWereEdited',['../class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395',1,'ElementNotesWidget']]],
+  ['notifyanalysisselection',['notifyAnalysisSelection',['../class_picto_1_1_analysis_selector_widget.html#a982ec6ce3ee22ab260769047599ab565',1,'Picto::AnalysisSelectorWidget::notifyAnalysisSelection()'],['../class_picto_1_1_task_config.html#a8cb2387d1fb34dd3d6d6ddfd39c862b9',1,'Picto::TaskConfig::notifyAnalysisSelection()'],['../class_view_selection_frame.html#ab753b483e15053a8030f107620379eab',1,'ViewSelectionFrame::notifyAnalysisSelection()']]],
   ['numattributes',['numAttributes',['../class_picto_1_1_obsolete_asset.html#afde5b3db6920d338802d609fdce021be',1,'Picto::ObsoleteAsset']]],
   ['numbereditmode',['NumberEditMode',['../class_number_edit_mode.html#a637dbba420ed2d027df339f2bfb828aa',1,'NumberEditMode']]],
   ['numbervariable',['NumberVariable',['../class_picto_1_1_number_variable.html#a2e3e98c345b9c2bbee184c2606485b66',1,'Picto::NumberVariable']]],

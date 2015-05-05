@@ -1,5 +1,5 @@
 #include "DataViewWidget.h"
-#include "ViewSelectionWidget.h"
+#include "ViewSelectionFrame.h"
 
 #include "../../common/memleakdetect.h"
 

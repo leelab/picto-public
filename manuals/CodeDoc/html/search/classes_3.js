@@ -9,7 +9,7 @@ var searchData=
   ['datastore',['DataStore',['../class_picto_1_1_data_store.html',1,'Picto']]],
   ['dataunit',['DataUnit',['../class_picto_1_1_data_unit.html',1,'Picto']]],
   ['dataviewelement',['DataViewElement',['../class_picto_1_1_data_view_element.html',1,'Picto']]],
-  ['dataviewlayout',['DataViewLayout',['../class_data_view_layout.html',1,'']]],
+  ['datavieworganizer',['DataViewOrganizer',['../class_data_view_organizer.html',1,'']]],
   ['dataviewwidget',['DataViewWidget',['../class_data_view_widget.html',1,'']]],
   ['designconfig',['DesignConfig',['../class_picto_1_1_design_config.html',1,'Picto']]],
   ['designer',['Designer',['../class_designer.html',1,'']]],
@@ -40,6 +40,7 @@ var searchData=
   ['directorstopresponsehandler',['DirectorStopResponseHandler',['../struct_director_stop_response_handler.html',1,'']]],
   ['discovercommandhandler',['DiscoverCommandHandler',['../struct_picto_1_1_discover_command_handler.html',1,'Picto']]],
   ['displaymode',['DisplayMode',['../class_display_mode.html',1,'']]],
+  ['displaywidgetproperties',['DisplayWidgetProperties',['../struct_picto_1_1_task_config_1_1_display_widget_properties.html',1,'Picto::TaskConfig']]],
   ['doubleparameter',['DoubleParameter',['../class_picto_1_1_double_parameter.html',1,'Picto']]],
   ['doubletsignalchannel',['DoubletSignalChannel',['../class_picto_1_1_doublet_signal_channel.html',1,'Picto']]]
 ];

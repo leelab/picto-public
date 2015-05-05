@@ -267,6 +267,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QList&lt; QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#ab7a53abb547d95df318bd9b47db1abf6">getGeneratedChildren</a> (QString tagName)</td></tr>
 <tr class="memdesc:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all child Assets that were generated under the input tagName XML tag / category.  <a href="#ab7a53abb547d95df318bd9b47db1abf6">More...</a><br /></td></tr>
 <tr class="separator:ab7a53abb547d95df318bd9b47db1abf6 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0ec06347e864ac80430183a76d09aa1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#af0ec06347e864ac80430183a76d09aa1">killGeneratedChildren</a> (QString tagName, int index)</td></tr>
+<tr class="memdesc:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">An attempt to kill children on the spot. Use only when absolutely safe! <br /></td></tr>
+<tr class="separator:af0ec06347e864ac80430183a76d09aa1 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_store.html#a6f1853bb25faa31f63002d882e293173">getAssociateChildTags</a> (QUuid associateId)</td></tr>
 <tr class="memdesc:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of all XML tags / categories under which <a class="el" href="class_picto_1_1_associate_element.html" title="AssociateElements are the child elements of an AssociateRootHost. They have the capability to link to...">AssociateElement</a> children were added to this <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a> for the input <a class="el" href="class_picto_1_1_associate_root.html" title="AssociateRoot objects are the root of a tree with elements that connect to an AssociateRootHost objec...">AssociateRoot</a> associateId.  <a href="#a6f1853bb25faa31f63002d882e293173">More...</a><br /></td></tr>
 <tr class="separator:a6f1853bb25faa31f63002d882e293173 inherit pub_methods_class_picto_1_1_data_store"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -466,12 +470,6 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ad8efd27231553c08e289a3a81cce0f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element.html#ad8efd27231553c08e289a3a81cce0f4c">runExitScript</a> ()</td></tr>
 <tr class="memdesc:ad8efd27231553c08e289a3a81cce0f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s ExitScript.  <a href="#ad8efd27231553c08e289a3a81cce0f4c">More...</a><br /></td></tr>
 <tr class="separator:ad8efd27231553c08e289a3a81cce0f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96b73ee4c35ba485ed7626e50e8b6815"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element.html#a96b73ee4c35ba485ed7626e50e8b6815">runOperatorEntryScript</a> ()</td></tr>
-<tr class="memdesc:a96b73ee4c35ba485ed7626e50e8b6815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s OperatorEntryScript.  <a href="#a96b73ee4c35ba485ed7626e50e8b6815">More...</a><br /></td></tr>
-<tr class="separator:a96b73ee4c35ba485ed7626e50e8b6815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa9a07585318a140d5c87df233e394cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element.html#afa9a07585318a140d5c87df233e394cb">runOperatorExitScript</a> ()</td></tr>
-<tr class="memdesc:afa9a07585318a140d5c87df233e394cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s OperatorExitScript.  <a href="#afa9a07585318a140d5c87df233e394cb">More...</a><br /></td></tr>
-<tr class="separator:afa9a07585318a140d5c87df233e394cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f9987feb3fad2565c362496fb82cb77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f9987feb3fad2565c362496fb82cb77"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_machine_element.html#a6f9987feb3fad2565c362496fb82cb77">runAnalysisEntryScripts</a> ()</td></tr>
 <tr class="memdesc:a6f9987feb3fad2565c362496fb82cb77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs this any active AnalysisEntryScripts attached to this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>. <br /></td></tr>
@@ -748,7 +746,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#ab3e676a5138ce7f49ab924c98fe3d71e">Picto::ScriptableContainer</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_reward.html#a6a96e2e9cf2ad16ed5553adb9a72ca3e">Picto::Reward</a>, <a class="el" href="class_picto_1_1_state.html#a852150ca9027d53252cd0cefb04f3c1d">Picto::State</a>, <a class="el" href="class_picto_1_1_pause_point.html#ae574eb10c179e20038dad24dbc2bbc75">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state_machine_element_container.html#a3871cd6ce60975e5590d022fb83fc2b2">Picto::StateMachineElementContainer</a>, <a class="el" href="class_picto_1_1_state_machine.html#aaa9075f394c70230044f2051c6d04c38">Picto::StateMachine</a>, <a class="el" href="class_picto_1_1_switch_element.html#a8541f08fab2a26c8ee4edce5a9abe3f1">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_output_element_container.html#aeb790e110381366623cda30e484eba89">Picto::OutputElementContainer</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_state.html#a852150ca9027d53252cd0cefb04f3c1d">Picto::State</a>, <a class="el" href="class_picto_1_1_reward.html#a6a96e2e9cf2ad16ed5553adb9a72ca3e">Picto::Reward</a>, <a class="el" href="class_picto_1_1_pause_point.html#ae574eb10c179e20038dad24dbc2bbc75">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state_machine_element_container.html#a3871cd6ce60975e5590d022fb83fc2b2">Picto::StateMachineElementContainer</a>, <a class="el" href="class_picto_1_1_state_machine.html#aaa9075f394c70230044f2051c6d04c38">Picto::StateMachine</a>, <a class="el" href="class_picto_1_1_switch_element.html#a8541f08fab2a26c8ee4edce5a9abe3f1">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_output_element_container.html#aeb790e110381366623cda30e484eba89">Picto::OutputElementContainer</a>.</p>
 
 <p>Definition at line <a class="el" href="_state_machine_element_8h_source.html#l00072">72</a> of file <a class="el" href="_state_machine_element_8h_source.html">StateMachineElement.h</a>.</p>
 
@@ -782,7 +780,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_state.html#a5cfa78b269e1da7a66b26fa13427c5e3">Picto::State</a>, and <a class="el" href="class_picto_1_1_switch_element.html#ada1e29453548af292d1fb1b6db02b64e">Picto::SwitchElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00152">152</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00125">125</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -814,7 +812,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_state.html#a3f93984faa13013b77ee0fc677e206ea">Picto::State</a>, <a class="el" href="class_picto_1_1_state_machine.html#adc8ccc0e0a7c8ab66fb33485b1a3cc30">Picto::StateMachine</a>, and <a class="el" href="class_picto_1_1_switch_element.html#a922a7a3a109d7d64dd51456a4c180995">Picto::SwitchElement</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00061">61</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00059">59</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -846,7 +844,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented in <a class="el" href="class_picto_1_1_pause_point.html#ad0934a59b009d24126005cab68edb641">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state.html#a8e789d2395df4d047a278f3c09716468">Picto::State</a>, <a class="el" href="class_picto_1_1_reward.html#a4c2d4714bba0e99537fa9438b7acc9c0">Picto::Reward</a>, <a class="el" href="class_picto_1_1_state_machine_element_container.html#a5c4e35f0ef8d92e8518d86741211abc9">Picto::StateMachineElementContainer</a>, <a class="el" href="class_picto_1_1_state_machine.html#a3b28ab6e5310ea16c2dbb19d6e071f80">Picto::StateMachine</a>, <a class="el" href="class_picto_1_1_switch_element.html#a7b8c8d832b705b234f18badcf1ec31bb">Picto::SwitchElement</a>, <a class="el" href="class_picto_1_1_output_element_container.html#a0aa8ba5d35859292b2f3365f99c242c3">Picto::OutputElementContainer</a>, and <a class="el" href="class_picto_1_1_machine_container.html#a36591811c50d2086866100c246d751d0">Picto::MachineContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00039">39</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00037">37</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -875,7 +873,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Called when control flow reaches this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> to trigger its internal execution logic. </p>
 <p>The returned value is the name of the <a class="el" href="class_picto_1_1_result.html" title="A Result is the control flow exit point from every element of a Picto StateMachine. ">Result</a> of the <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s execution logic. </p>
 
-<p>Implemented in <a class="el" href="class_picto_1_1_reward.html#a2b250d60f1d51b31360f5a7c8f4c5eec">Picto::Reward</a>, <a class="el" href="class_picto_1_1_pause_point.html#a49239efcd1862ce035d4ff2f0ea02be1">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state.html#abd02d3ab244f4ff544e916b577c97213">Picto::State</a>, <a class="el" href="class_picto_1_1_switch_element.html#aebeedb240401d632a95305b049245969">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_state_machine.html#ae627a569715e852af85cff71d5e64e1e">Picto::StateMachine</a>.</p>
+<p>Implemented in <a class="el" href="class_picto_1_1_reward.html#a2b250d60f1d51b31360f5a7c8f4c5eec">Picto::Reward</a>, <a class="el" href="class_picto_1_1_state.html#abd02d3ab244f4ff544e916b577c97213">Picto::State</a>, <a class="el" href="class_picto_1_1_pause_point.html#a49239efcd1862ce035d4ff2f0ea02be1">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_switch_element.html#aebeedb240401d632a95305b049245969">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_state_machine.html#ae627a569715e852af85cff71d5e64e1e">Picto::StateMachine</a>.</p>
 
 </div>
 </div>
@@ -903,7 +901,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s EntryScript. </p>
 <p>If there is an attached AnalysisEntryScript (in the case of the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>), it is run before the regular EntryScript. </p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00074">74</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00070">70</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -931,63 +929,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s ExitScript. </p>
 <p>If there is an attached AnalysisExitScript (in the case of the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>), it is run after the regular ExitScript. </p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00086">86</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a96b73ee4c35ba485ed7626e50e8b6815"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::StateMachineElement::runOperatorEntryScript </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s OperatorEntryScript. </p>
-<p>These scripts are run on SlaveExperimentDrivers to update the operator's view. </p>
-
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00099">99</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afa9a07585318a140d5c87df233e394cb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::StateMachineElement::runOperatorExitScript </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Runs this <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a>'s OperatorExitScript. </p>
-<p>These scripts are run on SlaveExperimentDrivers to update the operator's view. </p>
-
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00110">110</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00082">82</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -1016,9 +958,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>In any <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> where experimental time passes (currently <a class="el" href="class_picto_1_1_state.html" title="The StateMachineElement that handles rendering of graphical, audio and signal elements and responding...">State</a> and <a class="el" href="class_picto_1_1_pause_point.html" title="A PausePoint is the place where execution is suspended when the operator presses pause during an Expe...">PausePoint</a>) this function causes the latest frame to be rendered. In other StateMachineElements it doesn't do anything. </p>
 <p>This is used by the <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> to render frames whenever it sees that control flow remains in a particular state during the course of a frame presentation. </p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_pause_point.html#a3b9b0fa544881a6c8ecfaad5424248f7">Picto::PausePoint</a>, and <a class="el" href="class_picto_1_1_state.html#a6daa792c1055a50bef88729ba46ece64">Picto::State</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_state.html#a6daa792c1055a50bef88729ba46ece64">Picto::State</a>, and <a class="el" href="class_picto_1_1_pause_point.html#a3b9b0fa544881a6c8ecfaad5424248f7">Picto::PausePoint</a>.</p>
 
-<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00034">34</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_state_machine_element_8cpp_source.html#l00032">32</a> of file <a class="el" href="_state_machine_element_8cpp_source.html">StateMachineElement.cpp</a>.</p>
 
 </div>
 </div>
@@ -1047,7 +989,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>This function comes from back before we were using the <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a>. </p>
 <p>Since the <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> handles changing of <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values and transitioning control flow based on what happened in the Master experiment, and <a class="el" href="class_picto_1_1_state_machine_element.html#ab993f13815701b3dc47a7f50985d29bf" title="In any StateMachineElement where experimental time passes (currently State and PausePoint) this funct...">slaveRenderFrame()</a> handles the rendering component, the <a class="el" href="class_picto_1_1_state_machine_element.html#a0dbfefa77a60c323a285626bf6057c2b" title="This function comes from back before we were using the SlaveExperimentDriver. ">slaveRun()</a> function itself is pretty much obsolete at this point. It should probably be removed, but since some classes use it to perform various minor operations, we will need to assure that they are moved to more appropriate functions first. </p>
 
-<p>Implemented in <a class="el" href="class_picto_1_1_reward.html#a22c9f49f9f942011a175798753c9995f">Picto::Reward</a>, <a class="el" href="class_picto_1_1_pause_point.html#ac062ab9f8b338924ee0312793ed5fc4f">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_state.html#a853ee2b157c1c7ae8fee0898891d430c">Picto::State</a>, <a class="el" href="class_picto_1_1_switch_element.html#a7e1271d534baafee851628f3f366211e">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_state_machine.html#a6af8e4f88e7ea89a85e415e5c2a117fb">Picto::StateMachine</a>.</p>
+<p>Implemented in <a class="el" href="class_picto_1_1_reward.html#a22c9f49f9f942011a175798753c9995f">Picto::Reward</a>, <a class="el" href="class_picto_1_1_state.html#a853ee2b157c1c7ae8fee0898891d430c">Picto::State</a>, <a class="el" href="class_picto_1_1_pause_point.html#ac062ab9f8b338924ee0312793ed5fc4f">Picto::PausePoint</a>, <a class="el" href="class_picto_1_1_switch_element.html#a7e1271d534baafee851628f3f366211e">Picto::SwitchElement</a>, and <a class="el" href="class_picto_1_1_state_machine.html#a6af8e4f88e7ea89a85e415e5c2a117fb">Picto::StateMachine</a>.</p>
 
 </div>
 </div>

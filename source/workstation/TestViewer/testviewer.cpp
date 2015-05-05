@@ -27,9 +27,9 @@
 #include "../../common/engine/MouseInputPort.h"
 #include "../../common/parameter/OperatorClickParameter.h"
 
-#include "../DataViewer/DataViewLayout.h"
+#include "../DataViewer/DataViewOrganizer.h"
 #include "../DataViewer/DataViewWidget.h"
-#include "../DataViewer/ViewSelectionWidget.h"
+#include "../DataViewer/ViewSelectionFrame.h"
 
 #include "../../common/memleakdetect.h"
 
@@ -257,12 +257,12 @@ void TestViewer::setupUi()
 	toolbarLayout->addWidget(testToolbar_);
 	toolbarLayout->addStretch();
 
-	DataViewLayout *dataViewLayout = new DataViewLayout();
+	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
 
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->setContentsMargins(0, 0, 0, 0);
 	stimulusLayout->setMargin(0);
-	stimulusLayout->addWidget(dataViewLayout);
+	stimulusLayout->addWidget(dataViewOrganizer);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
@@ -281,28 +281,31 @@ void TestViewer::setupUi()
 
 	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
-	viewSelectionWidget_ = new ViewSelectionWidget();
-	viewSelectionWidget_->registerView(taskView);
-	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
-	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
+	viewSelectionFrame_ = new ViewSelectionFrame();
+	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
+	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
+	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
+
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
 
 	QVBoxLayout *leftToolFrame = new QVBoxLayout;
-	leftToolFrame->addWidget(viewSelectionWidget_, 0);
+	leftToolFrame->addWidget(viewSelectionFrame_, 0);
 	leftToolFrame->addWidget(propertyFrame_, 1);
 	leftToolFrame->setContentsMargins(0, 11, 0, 0);
 	leftToolFrame->setSizeConstraint(QLayout::SetMinAndMaxSize);
 	leftToolFrame->setAlignment(Qt::AlignTop);
 
 	QSplitter *operationLayout = new QSplitter(Qt::Horizontal);
-	QWidget *container = new QWidget();
+	QWidget *container = new QWidget(operationLayout);
 	container->setLayout(leftToolFrame);
 	container->sizePolicy().setHorizontalStretch(QSizePolicy::Maximum);
 	operationLayout->addWidget(container);
 	operationLayout->setStretchFactor(0, 0);
 	operationLayout->setCollapsible(0, true);
 
-	container = new QWidget();
+	container = new QWidget(operationLayout);
 	container->setLayout(stimulusLayout);
 	operationLayout->addWidget(container);
 
@@ -496,9 +499,9 @@ void TestViewer::taskListIndexChanged(int)
 	if(!task)
 		return;
 
-	viewSelectionWidget_->clear();
-	viewSelectionWidget_->connectToTaskConfig(task->getTaskConfig());
-	viewSelectionWidget_->rebuild();
+	viewSelectionFrame_->clear();
+	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
+	viewSelectionFrame_->rebuild();
 
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 	loadPropsAction_->setEnabled(true);

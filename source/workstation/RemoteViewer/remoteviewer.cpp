@@ -41,9 +41,9 @@
 #include "../../common/storage/directordata.h"
 #include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/designer/propertyframe.h"
-#include "../DataViewer/ViewSelectionWidget.h"
+#include "../DataViewer/ViewSelectionFrame.h"
 #include "../DataViewer/DataViewWidget.h"
-#include "../DataViewer/DataViewLayout.h"
+#include "../DataViewer/DataViewOrganizer.h"
 
 #include "../../common/memleakdetect.h"
 using namespace Picto;
@@ -1017,18 +1017,18 @@ void RemoteViewer::setupUi()
 	
 	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
-	DataViewLayout *dataViewLayout = new DataViewLayout();
+	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
 
-	viewSelectionWidget_ = new ViewSelectionWidget();
-	viewSelectionWidget_->registerView(taskView);
-	viewSelectionWidget_->connectToViewerLayout(dataViewLayout);
-	viewSelectionWidget_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
-	viewSelectionWidget_->setStyleSheet("ViewSelectionWidget { border: 1px solid gray }");
+	viewSelectionFrame_ = new ViewSelectionFrame();
+	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
+	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
+	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
 
 	QVBoxLayout *leftPane = new QVBoxLayout;
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
-	leftPane->addWidget(viewSelectionWidget_,0);
+	leftPane->addWidget(viewSelectionFrame_,0);
 	leftPane->addWidget(propertyFrame_,1, Qt::AlignTop);
 	leftPane->setContentsMargins(0, 11, 0, 0);
 	leftPane->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -1036,14 +1036,14 @@ void RemoteViewer::setupUi()
 	QVBoxLayout *stimulusLayout = new QVBoxLayout;
 	stimulusLayout->setContentsMargins(0, 0, 0, 0);
 	stimulusLayout->setMargin(0);
-	stimulusLayout->addWidget(dataViewLayout);
+	stimulusLayout->addWidget(dataViewOrganizer);
 
 	foreach(QSharedPointer<Picto::VirtualOutputSignalController> cont,outSigControllers_)
 	{
 		outputSignalsWidgets_.push_back(new OutputSignalWidget(cont));
 		stimulusLayout->addWidget(outputSignalsWidgets_.back());
 	}
-	QWidget *stimulusWidget = new QWidget();
+	QWidget *stimulusWidget = new QWidget(this);
 	stimulusWidget->setLayout(stimulusLayout);
 
 	mainTabbedFrame_ = new QTabWidget(this);
@@ -2082,9 +2082,9 @@ void RemoteViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
-	viewSelectionWidget_->clear();
-	viewSelectionWidget_->connectToTaskConfig(task->getTaskConfig());
-	viewSelectionWidget_->rebuild();
+	viewSelectionFrame_->clear();
+	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
+	viewSelectionFrame_->rebuild();
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
 }
 
@@ -2140,7 +2140,7 @@ void RemoteViewer::currTaskChanged(QString task)
 		}
 	}
 
-	viewSelectionWidget_->clear();
-	viewSelectionWidget_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
-	viewSelectionWidget_->rebuild();
+	viewSelectionFrame_->clear();
+	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
+	viewSelectionFrame_->rebuild();
 }

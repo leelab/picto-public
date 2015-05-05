@@ -41,7 +41,6 @@ public:
 	virtual void setTitle(const QString &newTitle);
 	virtual const QString getTitle() const;
 
-
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 

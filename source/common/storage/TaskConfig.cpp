@@ -14,24 +14,24 @@ TaskConfig::TaskConfig()
 	reset();
 }
 
-/*! \brief Clears out all of this object's saved data.  Returning it to its initial state.
-	*/
+//! Clears out all of this object's saved data.  Returning it to its initial state.
 void TaskConfig::reset()
 {
 	QMutexLocker locker(&mtxWaitingAssetProtector);
 
-	widgetMap.clear();
 	widgetNameMap.clear();
 	waitingAssets.clear();
 
 	updateSignalEnabled_ = true;
 }
 
+//! An exposed public function that triggers the waiting assets.
 void TaskConfig::requestUpdate()
 {
 	addWaitingAssets();
 }
 
+//! Iterates over waiting assets and pings them for an update
 void TaskConfig::addWaitingAssets()
 {
 	QMutexLocker locker(&mtxWaitingAssetProtector);
@@ -44,19 +44,16 @@ void TaskConfig::addWaitingAssets()
 	waitingAssets.clear();
 }
 
+//! An addition of an observer widget that is deferred until addWaitingAssets() is called.
 void TaskConfig::addObserver(DataViewElement *newAsset)
 {
 	QMutexLocker locker(&mtxWaitingAssetProtector);
 
-	if (widgetMap.contains(newAsset) || waitingAssets.contains(newAsset))
-	{
-		qDebug() << "Asset already added to TaskConfig";
-		return;
-	}
-
 	waitingAssets.push_back(newAsset);
 }
 
+/*! \brief Used to hook up a ObserverPlot with its plothandler.
+ */
 QSharedPointer<OperatorPlotHandler> TaskConfig::getPlotHandler(QString plotPath)
 {
 	if (cachedHandlers_.contains(plotPath))
@@ -67,11 +64,15 @@ QSharedPointer<OperatorPlotHandler> TaskConfig::getPlotHandler(QString plotPath)
 	return QSharedPointer<OperatorPlotHandler>();
 }
 
+/*! \brief Used to store an ObserverPlot's plothandler for later recovery.
+ */
 void TaskConfig::setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler)
 {
 	cachedHandlers_[plotPath] = handler;
 }
 
+/*! \brief Clears all cached PlotHandlers.  This can potentially trigger their deletion.
+ */
 void TaskConfig::clearPlotHandlers()
 {
 	cachedHandlers_.clear();
@@ -82,20 +83,51 @@ void TaskConfig::clearPlotHandlers()
 void TaskConfig::addObserverWidget(DataViewElement *owningAsset, QWidget *widget)
 {
 	Q_ASSERT(widget != nullptr);
-	if (!widgetMap.contains(owningAsset))
-	{
-		widgetMap[owningAsset] = widget;
-	}
-	else
-	{
-		qDebug() << "Same Asset added twice to TaskConfig";
-	}
 
 	widgetNameMap[widget] = owningAsset->getTitle();
+	QString analysisName = owningAsset->getParentAsset()->getName();
+	analysisWidgetMap.insert(analysisName, widget);
+	qDebug() << "Added widget for Analysis:" << analysisName;
+	displayProperties.insert(widget, std::move(DisplayWidgetProperties(owningAsset->getDefaultViewSize())));
 
-	if (updateSignalEnabled_)
+	if (!analysisDisplayState.contains(analysisName))
+	{
+		analysisDisplayState[analysisName] = false;
+	}
+	
+	if (updateSignalEnabled_ && analysisDisplayState[analysisName])
 	{
 		emit widgetAddedToMap(widget);
+	}
+	
+}
+
+//! Receives information about which analyses are currently active.
+void TaskConfig::notifyAnalysisSelection(const QString &name, bool selected)
+{
+	if (analysisDisplayState.contains(name) && analysisDisplayState[name] == selected)
+		return;
+
+	analysisDisplayState[name] = selected;
+	qDebug() << "Notified of Analysis:" << name;
+
+	if (analysisWidgetMap.contains(name))
+	{
+		QList<QWidget*> widgets = analysisWidgetMap.values(name);
+		if (selected)
+		{
+			foreach(QWidget *widget, widgets)
+			{
+				emit widgetAddedToMap(widget);
+			}
+		}
+		else
+		{
+			foreach(QWidget *widget, widgets)
+			{
+				emit widgetRemovedFromMap(widget);
+			}
+		}
 	}
 }
 
@@ -110,38 +142,15 @@ void TaskConfig::removeWidget(QWidget *widget)
 			emit widgetRemovedFromMap(widget);
 		}
 
-		//Remove the naem from the name map
+		//Remove from analysisWidgetMap, everywhere it appears
+		QList<QString> keys = analysisWidgetMap.keys(widget);
+		foreach(QString key, keys)
+		{
+			analysisWidgetMap.remove(key, widget);
+		}
+
+		//Remove the name from the name map
 		widgetNameMap.remove(widget);
-
-		//Iterate over widgetsMap and find elements that point to the widget we want to remove
-		for (auto it = widgetMap.begin(); it != widgetMap.end();)
-		{
-			if (it.value() == widget)
-			{
-				widgetMap.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
-	}
-}
-
-/*! \brief Removes the passed asset from the widgetMap, as well as its associated widget from the widgetNameMap.
- */
-void TaskConfig::removeAsset(DataViewElement *owningAsset)
-{
-	if (widgetMap.contains(owningAsset))
-	{
-		if (updateSignalEnabled_)
-		{
-			emit widgetRemovedFromMap(widgetMap[owningAsset]);
-		}
-
-		widgetNameMap.remove(widgetMap[owningAsset]);
-		widgetMap.remove(owningAsset);
-
 	}
 }
 
@@ -157,7 +166,17 @@ void TaskConfig::setUpdateSignalEnabled(bool bEnabled)
 */
 const QList<QWidget *> TaskConfig::getWidgets() const
 {
-	return widgetNameMap.keys();
+	QList<QWidget*> activeWidgets;
+
+	foreach(QString name, analysisDisplayState.keys())
+	{
+		if (analysisDisplayState[name])
+		{
+			activeWidgets.append(analysisWidgetMap.values(name));
+		}
+	}
+
+	return activeWidgets;
 }
 
 /*! \brief Returns a QList of the names of the current View Widgets.
@@ -177,9 +196,14 @@ const QString TaskConfig::getName(QWidget *pWidget) const
 	return QString("");
 }
 
-DataViewElement *TaskConfig::getAsset(QWidget *pWidget) const
+const TaskConfig::DisplayWidgetProperties &TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
 {
-	return widgetMap.key(pWidget);
+	if (displayProperties.contains(widget))
+	{
+		return displayProperties[widget];
+	}
+
+	return DisplayWidgetProperties(DataViewSize::VIEW_SIZE_1x1);
 }
 
 }

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>Picto: source/workstation/DataViewer/DataViewLayout.cpp Source File</title>
+<title>Picto: source/workstation/DataViewer/DataViewOrganizer.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,21 +88,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">DataViewLayout.cpp</div>  </div>
+<div class="title">DataViewOrganizer.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;QPalette&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;QGridLayout&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;DataViewLayout.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;ViewSelectionWidget.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;DataViewOrganizer.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;ViewSelectionFrame.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../../common/memleakdetect.h&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_data_view_layout.html#a1a661df6f737f7f171285f79c2ca88db">   14</a></span>&#160;<a class="code" href="class_data_view_layout.html#a1a661df6f737f7f171285f79c2ca88db">DataViewLayout::DataViewLayout</a>()</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_data_view_organizer.html#ad5dfca0d67f7d04c9df6f94c62e49314">   14</a></span>&#160;<a class="code" href="class_data_view_organizer.html#ad5dfca0d67f7d04c9df6f94c62e49314">DataViewOrganizer::DataViewOrganizer</a>()</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    layout_ = <span class="keyword">new</span> QGridLayout();</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
@@ -132,26 +132,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    layout_-&gt;setRowMinimumHeight(3, 100);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_data_view_layout.html#afe53ff9d17da94103b9a857ce8b198b4">   46</a></span>&#160;<a class="code" href="class_data_view_layout.html#afe53ff9d17da94103b9a857ce8b198b4">DataViewLayout::~DataViewLayout</a>()</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_data_view_organizer.html#a6437782a7537404e68bfa5053a4b2a02">   46</a></span>&#160;<a class="code" href="class_data_view_organizer.html#a6437782a7537404e68bfa5053a4b2a02">DataViewOrganizer::~DataViewOrganizer</a>()</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_data_view_layout.html#af60855ea2a990fb7f9861181ff2452f1">   54</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_data_view_layout.html#af60855ea2a990fb7f9861181ff2452f1">DataViewLayout::removeWidgetSlot</a>(QWidget *pWidget)</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_data_view_organizer.html#acd36bd0a60986c1677cb783c2cacf5e3">   54</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_data_view_organizer.html#acd36bd0a60986c1677cb783c2cacf5e3">DataViewOrganizer::removeWidgetSlot</a>(QWidget *pWidget)</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    layout_-&gt;removeWidget(pWidget);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_data_view_layout.html#ad6c069320bc1a5407dd37b366af632b4">   62</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_data_view_layout.html#ad6c069320bc1a5407dd37b366af632b4">DataViewLayout::addWidgetSlot</a>(QWidget *pWidget, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, DataViewSize::ViewSize size)</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_data_view_organizer.html#a510d4323bd5114604b82f5b1e46810dc">   62</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_data_view_organizer.html#a510d4323bd5114604b82f5b1e46810dc">DataViewOrganizer::addWidgetSlot</a>(QWidget *pWidget, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, DataViewSize::ViewSize size)</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">//pWidget-&gt;setStyleSheet(&quot;border: 1px solid black&quot;);</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    layout_-&gt;addWidget(pWidget, x, y, size, size);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="ttc" id="class_data_view_layout_html_af60855ea2a990fb7f9861181ff2452f1"><div class="ttname"><a href="class_data_view_layout.html#af60855ea2a990fb7f9861181ff2452f1">DataViewLayout::removeWidgetSlot</a></div><div class="ttdeci">void removeWidgetSlot(QWidget *pWidget)</div><div class="ttdoc">A slot emitted by the ViewSelectionWidget to signal that the specified widget should be removed from ...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_layout_8cpp_source.html#l00054">DataViewLayout.cpp:54</a></div></div>
-<div class="ttc" id="class_data_view_layout_html_a1a661df6f737f7f171285f79c2ca88db"><div class="ttname"><a href="class_data_view_layout.html#a1a661df6f737f7f171285f79c2ca88db">DataViewLayout::DataViewLayout</a></div><div class="ttdeci">DataViewLayout()</div><div class="ttdoc">Constructs a new DataViewLayout. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_layout_8cpp_source.html#l00014">DataViewLayout.cpp:14</a></div></div>
-<div class="ttc" id="class_data_view_layout_html_afe53ff9d17da94103b9a857ce8b198b4"><div class="ttname"><a href="class_data_view_layout.html#afe53ff9d17da94103b9a857ce8b198b4">DataViewLayout::~DataViewLayout</a></div><div class="ttdeci">virtual ~DataViewLayout()</div><div class="ttdoc">DataViewLayout destructor. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_layout_8cpp_source.html#l00046">DataViewLayout.cpp:46</a></div></div>
-<div class="ttc" id="class_data_view_layout_html_ad6c069320bc1a5407dd37b366af632b4"><div class="ttname"><a href="class_data_view_layout.html#ad6c069320bc1a5407dd37b366af632b4">DataViewLayout::addWidgetSlot</a></div><div class="ttdeci">void addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)</div><div class="ttdoc">A slot emitted by the ViewSelectionWidget to signal that the specified widget should be added to the ...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_layout_8cpp_source.html#l00062">DataViewLayout.cpp:62</a></div></div>
+<div class="ttc" id="class_data_view_organizer_html_a6437782a7537404e68bfa5053a4b2a02"><div class="ttname"><a href="class_data_view_organizer.html#a6437782a7537404e68bfa5053a4b2a02">DataViewOrganizer::~DataViewOrganizer</a></div><div class="ttdeci">virtual ~DataViewOrganizer()</div><div class="ttdoc">DataViewOrganizer destructor. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_organizer_8cpp_source.html#l00046">DataViewOrganizer.cpp:46</a></div></div>
+<div class="ttc" id="class_data_view_organizer_html_acd36bd0a60986c1677cb783c2cacf5e3"><div class="ttname"><a href="class_data_view_organizer.html#acd36bd0a60986c1677cb783c2cacf5e3">DataViewOrganizer::removeWidgetSlot</a></div><div class="ttdeci">void removeWidgetSlot(QWidget *pWidget)</div><div class="ttdoc">A slot emitted by the ViewSelectionFrame to signal that the specified widget should be removed from t...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_organizer_8cpp_source.html#l00054">DataViewOrganizer.cpp:54</a></div></div>
+<div class="ttc" id="class_data_view_organizer_html_ad5dfca0d67f7d04c9df6f94c62e49314"><div class="ttname"><a href="class_data_view_organizer.html#ad5dfca0d67f7d04c9df6f94c62e49314">DataViewOrganizer::DataViewOrganizer</a></div><div class="ttdeci">DataViewOrganizer()</div><div class="ttdoc">Constructs a new DataViewOrganizer. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_organizer_8cpp_source.html#l00014">DataViewOrganizer.cpp:14</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
+<div class="ttc" id="class_data_view_organizer_html_a510d4323bd5114604b82f5b1e46810dc"><div class="ttname"><a href="class_data_view_organizer.html#a510d4323bd5114604b82f5b1e46810dc">DataViewOrganizer::addWidgetSlot</a></div><div class="ttdeci">void addWidgetSlot(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size)</div><div class="ttdoc">A slot emitted by the ViewSelectionFrame to signal that the specified widget should be added to the l...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_organizer_8cpp_source.html#l00062">DataViewOrganizer.cpp:62</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

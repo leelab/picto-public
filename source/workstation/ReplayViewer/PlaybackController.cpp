@@ -60,6 +60,30 @@ QString PlaybackController::preLoadSessions(QStringList filenames)
 	return "";
 }
 
+//! Creates names for potentially imported Analyses so that the TaskConfig can idenfify them before they are first run.
+QStringList PlaybackController::precacheAnalysisNames(QSharedPointer<DesignRoot> import)
+{
+	Q_ASSERT(import);
+	QStringList resultList;
+
+	for (int i = 0; i<import->getNumAnalyses(); i++)
+	{
+		//Try to export it.
+		QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
+		QString exportText = exportImport->exportToText((QList<QSharedPointer<Asset>>() << import->getExperiment()),
+			dynamic_cast<AssociateRootHost*>(import->getAnalysis(i).data()));
+
+		if (!cachedAnalysisNames_.contains(exportText))
+		{
+			//Create a new name and cache it.
+			cachedAnalysisNames_[exportText] = QUuid::createUuid().toString();
+		}
+		resultList << cachedAnalysisNames_[exportText];
+	}
+
+	return resultList;
+}
+
 /*! \brief Activates the input Analyses in the Experiment so that Analysis will occur during playback.
  *	@param analysisData This can either be a list of exported analysis strings or a list of Analysis
  *		AssocateIDs.  If the list includes exported analysis strings, the analyses will be imported
@@ -94,12 +118,12 @@ QString PlaybackController::activateAnalyses(QStringList analysisData)
 		{
 			//Append AnalysisId and remove from import list if it's cached
 			importedAnalysisIds.append(cachedAnalysis_[*itrImportAnalysis]);
-			importAnalyses.erase(itrImportAnalysis++);
+			itrImportAnalysis = importAnalyses.erase(itrImportAnalysis);
 		}
 		else
 		{
 			//Continue if it's not cached
-			itrImportAnalysis++;
+			++itrImportAnalysis;
 		}
 
 	}
@@ -324,7 +348,7 @@ void PlaybackController::pause(QList<QUuid> activeAnalyses,QStringList importAna
 {
 	QStringList analysisList;
 	foreach(QUuid analysisId,activeAnalyses)
-	analysisList.append(analysisId.toString());
+		analysisList.append(analysisId.toString());
 	data_.pushCommand(PlaybackCommand(PlaybackCommand::Pause,analysisList+importAnalyses));
 }
 
@@ -622,6 +646,9 @@ void PlaybackController::update()
 					//Design root point to the experiment too.
 					designRoot_.clear();
 
+					//Clear the hashtables for cached analyses
+					cachedAnalysis_.clear();
+
 #if defined WIN32 || defined WINCE
 					//Since we're creating lots of giant data structures on the heap, we found that there were some heap
 					//	fragmentation issues.  ie.  'new' commands would start to fail wbile creating analysis data
@@ -712,6 +739,8 @@ void PlaybackController::update()
 				//during the initScripting may fail, so we put this in a try catch block.
 				try
 				{
+					//Hack to reinit scripting - new Analyses weren't being initialized.
+					emit designRoot_->getExperiment().staticCast<Experiment>()->nameEdited();
 					if(!designRoot_->getExperiment().staticCast<Experiment>()->initScripting(false))
 					{
 						emit loadError("Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.");
