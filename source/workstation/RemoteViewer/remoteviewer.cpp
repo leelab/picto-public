@@ -93,7 +93,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	isAuthorized_(false),
 	propertyFrame_(NULL),
 	myDesignRoot_(new DesignRoot()),
-	awaitingRejoin_(RejoinStatus::None)
+	awaitingRejoin_(RejoinStatus::None),
+	numImportedAnalyses_(0)
 {
 	setupServerChannel();
 	setupEngine();
@@ -2385,8 +2386,7 @@ QString RemoteViewer::activateAnalyses(QStringList analysisData)
 	}
 
 	activeExperiment_->getDesignConfig()->setActiveAnalysisIds(localAnalyses + importedAnalysisIds);
-	emit activeExperiment_->nameEdited();
-	if (!activeExperiment_->initScripting(false))
+	if (!activeExperiment_->deepReinitScripting(false))
 	{
 		awaitingRejoin_ = RejoinStatus::None;
 		return "Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.";

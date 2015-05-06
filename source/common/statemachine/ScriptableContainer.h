@@ -65,6 +65,8 @@ public:
 	virtual QString getInfo();
 	virtual void ClearAssociateChildren(QUuid associateId);
 
+	bool deepReinitScripting(bool enableDebugging);
+
 protected:
 	void runScript(QString scriptName);
 	void runScript(QString scriptName, QScriptValue& scriptReturnVal);
@@ -94,6 +96,8 @@ protected:
 	 */
 	virtual void scriptableContainerWasReinitialized(){};
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
+
+	void deepDeinitScripting();
 
 	/*! \brief Contains a shared pointer to the QScriptEngine
 	 */

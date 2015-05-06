@@ -739,9 +739,7 @@ void PlaybackController::update()
 				//during the initScripting may fail, so we put this in a try catch block.
 				try
 				{
-					//Hack to reinit scripting - new Analyses weren't being initialized.
-					emit designRoot_->getExperiment().staticCast<Experiment>()->nameEdited();
-					if(!designRoot_->getExperiment().staticCast<Experiment>()->initScripting(false))
+					if (!designRoot_->getExperiment().staticCast<Experiment>()->deepReinitScripting(false))
 					{
 						emit loadError("Failed to initialize the loaded session.  This may result from RAM issues when running batch analysis.  Try analyzing this run by itself.");
 						data_.setNextStatus(PlaybackControllerData::Stopped);

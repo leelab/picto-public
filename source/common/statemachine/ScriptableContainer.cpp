@@ -63,11 +63,15 @@ void ScriptableContainer::addScriptable(QWeakPointer<Scriptable> scriptable)
 				unboundScriptables_.push_back(scriptable);
 			}
 			else
+			{
 				scriptables_.push_back(scriptable);
+			}
 		}
 	}
 	else
+	{
 		scriptables_.push_back(scriptable);
+	}
 
 	//If we added a new scriptable, scripting is no longer properly initialized.
 	scriptingInitialized_ = false;
@@ -596,4 +600,20 @@ QScriptValue ScriptableContainer::checkScriptResults(QScriptContext *context, QS
 	context->throwError(resultError);
 	return returnVal;
 }
+
+bool ScriptableContainer::deepReinitScripting(bool enableDebugging)
+{
+	deepDeinitScripting();
+	return initScripting(enableDebugging);
+}
+
+void ScriptableContainer::deepDeinitScripting()
+{
+	deinitScripting();
+	foreach(QSharedPointer<ScriptableContainer> child, scriptableContainers_)
+	{
+		child->deepDeinitScripting();
+	}
+}
+
 }; //namespace Picto
