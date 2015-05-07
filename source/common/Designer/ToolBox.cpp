@@ -16,6 +16,8 @@ Toolbox::Toolbox(QSharedPointer<EditorState> editorState,QWidget *parent) :
 	setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
 	connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)),
 		this, SLOT(setAsset(QSharedPointer<Asset>)));
+	connect(editorState_.data(), SIGNAL(releaseEditorMemory()),
+		this, SLOT(clearAssets()));
 }
 
 /*! \brief Updates the contents of the Toolbox so that they will be appropriate for editing the input asset.
@@ -34,7 +36,7 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	if(currIndex < 0)
 		currIndex = 0;
 	
-	//Renive previous items
+	//Remove previous items
 	while(count() > 0)
 	{
 		removeItem(0);
@@ -71,6 +73,18 @@ void Toolbox::setAsset(QSharedPointer<Asset> asset)
 	if(currIndex > count())
 		currIndex = 0;
 	setCurrentIndex(currIndex);
+}
+
+//! Clears the assets we are holding that prevent the Designer from freeing up its memory.  Need to reinit before using.
+void Toolbox::clearAssets()
+{
+	while (count() > 0)
+	{
+		removeItem(0);
+		delete toolGroups_.takeFirst();
+	}
+
+	setCurrentIndex(0);
 }
 
 /*! \brief Creates a ToolGroup according to the input specifications and adds it to this Toolbox.

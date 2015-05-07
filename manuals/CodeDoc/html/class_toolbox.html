@@ -114,6 +114,10 @@ Public Slots</h2></td></tr>
 <tr class="memitem:a444228bc72b75db264783bb43062d328"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_toolbox.html#a444228bc72b75db264783bb43062d328">setAsset</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
 <tr class="memdesc:a444228bc72b75db264783bb43062d328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the contents of the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> so that they will be appropriate for editing the input asset.  <a href="#a444228bc72b75db264783bb43062d328">More...</a><br /></td></tr>
 <tr class="separator:a444228bc72b75db264783bb43062d328"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90bb42d022de35fea7dbfb95881c266"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af90bb42d022de35fea7dbfb95881c266"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_toolbox.html#af90bb42d022de35fea7dbfb95881c266">clearAssets</a> ()</td></tr>
+<tr class="memdesc:af90bb42d022de35fea7dbfb95881c266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the assets we are holding that prevent the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> from freeing up its memory. Need to reinit before using. <br /></td></tr>
+<tr class="separator:af90bb42d022de35fea7dbfb95881c266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -217,7 +221,7 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Creates a <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> according to the input specifications and adds it to this <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
 <p>Currently we are only using <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> objects. tagFilters and windowAsset are passed into the <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> constructor. groupName is added as a label to a maximizable/minimizable bar that is used to display/hide each <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p>
 
-<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00081">81</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00095">95</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -246,7 +250,7 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Updates the contents of the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> so that they will be appropriate for editing the input asset. </p>
 <p>This function pretty much just chooses which kind of <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> objects will need to be added based on the design mode (Analysis or Experimental). It adds the ToolGroups using <a class="el" href="class_toolbox.html#a2b83dd6880a2c48aee5209fa0e3f09a1" title="Creates a ToolGroup according to the input specifications and adds it to this Toolbox. ">addToolGroup()</a>. </p>
 
-<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00026">26</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00028">28</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
 
 </div>
 </div>

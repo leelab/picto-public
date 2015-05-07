@@ -3,7 +3,7 @@
 #include <QMenuBar>
 #include <QDialog>
 
-#include "stateeditviewer.h"
+#include "StateEditViewer.h"
 #include "../../common/memleakdetect.h"
 /*! \brief The interval at which automatic backups are saved.*/
 #define AUTOSAVEINTERVALMS 30000	//auto save every 30 seconds

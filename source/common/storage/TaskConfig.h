@@ -76,7 +76,7 @@ public:
 		DataViewSize::ViewSize defaultSize_;
 	};
 
-	const DisplayWidgetProperties &getDisplayWidgetProperties(QWidget *widget) const;
+	const DisplayWidgetProperties getDisplayWidgetProperties(QWidget *widget) const;
 
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.

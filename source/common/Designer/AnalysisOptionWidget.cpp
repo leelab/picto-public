@@ -57,7 +57,8 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 
 	QHBoxLayout* taskSelect(new QHBoxLayout());
 	taskSelect->addWidget(taskBox_);
-	//connect(editorState.data(), SIGNAL(taskAdded()), this, SLOT(updateTaskList()));
+
+	connect(editorState.data(), SIGNAL(releaseEditorMemory()), this, SLOT(clearAssets()));
 
 	QVBoxLayout* taskSelectionLayout = new QVBoxLayout();
 	taskSelectionLayout->addLayout(taskLabel);
@@ -549,6 +550,13 @@ void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
 		taskBox_->setItemText(taskBox_->currentIndex(), name);
 	}
 
+}
+
+//! Clear out our shared pointers so the editor can be free of its chaffe.
+void AnalysisOptionWidget::clearAssets()
+{
+	selectedAnalysis_ = QSharedPointer<Analysis>();
+	selectedTask_ = QSharedPointer<Task>();
 }
 
 }; //namespace Picto

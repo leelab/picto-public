@@ -28,7 +28,8 @@ DiagramScene::DiagramScene(QSharedPointer<EditorState> editorState, QMenu *itemC
 	editorState_ = editorState;
 	connect(editorState_.data(), SIGNAL(windowAssetChanged(QSharedPointer<Asset>)), this, SLOT(setSceneAsset(QSharedPointer<Asset>)));
 	connect(editorState_.data(), SIGNAL(lineColorChanged(QColor)), this, SLOT(setLineColor(QColor)));
-    myItemMenu = itemContextMenu;
+	connect(editorState.data(), SIGNAL(releaseEditorMemory()), this, SLOT(clearAssets()));
+	myItemMenu = itemContextMenu;
 	sceneMenu_ = sceneContextMenu;
 	diagItemFactory_ = QSharedPointer<DiagramItemFactory>(new DiagramItemFactory(editorState,myItemMenu,this));
     line = 0;
@@ -53,9 +54,10 @@ void DiagramScene::setLineColor(const QColor &)
     }
 }
 
-/*! \brief Creates an Arrow to represent the input transition from the source DiagramItem to the dest DiagramItem and adds it to the scene.
- *	\details If the input transition is NULL, a new transition object will be created and added as a child of the current Window Asset as 
- *	well.
+/*! \brief Creates an Arrow to represent the input transition from the source DiagramItem to the dest DiagramItem and adds
+ *	it to the scene.
+ *	\details If the input transition is NULL, a new transition object will be created and added as a child of the current
+ *	Window Asset as well.
  */
 QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramItem* dest, QSharedPointer<Asset> transition)
 {
@@ -66,8 +68,10 @@ QGraphicsLineItem* DiagramScene::insertTransition(DiagramItem* source, DiagramIt
 		arrow = Arrow::Create(editorState_, transition.staticCast<Transition>(),source,dest,myItemMenu,NULL);
 	if(!arrow)
 		return NULL;
-    arrow->setColor(editorState_->getLineColor());	//This is currently always black, but who knows, maybe we'll want this configurable someday for some reason.
-    addItem(arrow); //Don't need to add it cause its already parented by this
+	//This is currently always black, but who knows, maybe we'll want this configurable someday for some reason.
+    arrow->setColor(editorState_->getLineColor());
+	//Don't need to add it cause its already parented by this
+    addItem(arrow); 
     arrow->updatePosition();
 	if(transition.isNull())
 		editorState_->setLastActionUndoable();
@@ -87,7 +91,8 @@ DiagramItem* DiagramScene::insertDiagramItem(QSharedPointer<Asset> asset,QPointF
 	addItem(item);
 	if(item->pos() == QPointF())
 	{
-		QPointF newPos = pos+QPointF(0.5*item->boundingRect().width(),0);//Put it at the input position plus a small left buffer
+		//Put it at the input position plus a small left buffer
+		QPointF newPos = pos+QPointF(0.5*item->boundingRect().width(),0);
 		item->setPos(newPos);
 		if(asset->inherits("Picto::UIEnabled"))
 			asset.staticCast<UIEnabled>()->setPos(newPos.toPoint());
@@ -147,6 +152,14 @@ QRectF DiagramScene::getDefaultZoomRect()
 	return returnVal;
 }
 
+//! Clears the assets we are holding that prevent the Designer from freeing up its memory.  Need to reinit before using.
+void DiagramScene::clearAssets()
+{
+	clear();
+	startBar_ = nullptr;
+	newItemIndex_ = 1;
+}
+
 /*! \brief Sets the current scene asset (ie. The asset who's canvas we are looking at) to the input.
  *	\details This function is called when the EditorState object's windowAssetChanged() signal is called.
  *	What we refer to here as the SceneAsset, is referred to everywhere else as the WindowAsset.  The 
@@ -156,7 +169,7 @@ QRectF DiagramScene::getDefaultZoomRect()
  *	the asset was loaded into the current window using EditorState::setWindowItemsLoaded().
  */
 void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
-{					
+{
 	QSharedPointer<DataStore> dataStore(asset.staticCast<DataStore>());
 
 	clear();
@@ -287,7 +300,9 @@ void DiagramScene::setSceneAsset(QSharedPointer<Asset> asset)
 	editorState_->setWindowItemsLoaded();
 }
 
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you
+ *	want to keep it for reference.
+ */
 void DiagramScene::editorLostFocus(DiagramTextItem *item)
 {
     QTextCursor cursor = item->textCursor();
@@ -323,7 +338,13 @@ void DiagramScene::deleteSelectedItems()
 			if(dataStore->searchRecursivelyForQuery(searchRequest))
 			{
 				//There are hidden analyses, verify delete
-				int result = QMessageBox::question(NULL,"Delete Hidden Analysis Elements?","This delete operation will cause elements from inactive Analyses to be deleted.  Continue?",QMessageBox::Yes | QMessageBox::No,QMessageBox::No);
+				int result = QMessageBox::question(
+					NULL,
+					"Delete Hidden Analysis Elements?",
+					"This delete operation will cause elements from inactive Analyses to be deleted.  Continue?",
+					QMessageBox::Yes | QMessageBox::No,
+					QMessageBox::No);
+
 				switch(result)
 				{
 				case QMessageBox::No:
@@ -394,9 +415,9 @@ void DiagramScene::copySelectedItems()
 }
 
 /*! \brief Imports AnalysisElements that were just exported into the currently selected Asset.
- *	\details Shows a warning and returns if no Assets or more than one Asset are selected.
- *	Warnings will also be displayed by the Copier object if there are other problems with the
- *	import.  For more information see Copier::paste().
+ *	\details Shows a warning and returns if no Assets or more than one Asset are selected. Warnings will also be displayed
+ *	by the Copier object if there are other problems with the import.
+ *	\sa Copier::paste().
  */
 void DiagramScene::analysisImportSelectedItem()
 {
@@ -425,9 +446,11 @@ void DiagramScene::analysisExportSelectedItem()
 	copier_->copy(getSelectedAssets(),true);
 }
 
-/*! \brief Pastes any Assets whose data was stored in the Clipboard (this should have been done by copySelectedItems()) into the current Window Asset.
- *	\details When pasteItems() was initiated from a contextMenuEvent(), the copied Asset's DiagramItems are pasted at the position where the user created the
- *	context menu.  Otherwise, they are pasted to the right side of the currently visible DiagramItems.
+/*! \brief Pastes any Assets whose data was stored in the Clipboard (this should have been done by copySelectedItems())
+ *	into the current Window Asset.
+ *	\details When pasteItems() was initiated from a contextMenuEvent(), the copied Asset's DiagramItems are pasted at the
+ *	position where the user created the context menu.  Otherwise, they are pasted to the right side of the currently
+ *	visible DiagramItems.
  */
 void DiagramScene::pasteItems()
 {
@@ -474,9 +497,9 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 }
 
 /*! \brief Extends the QGraphicsScene::mouseMoveEvent() as part of the DiagramScene's context aware tools logic.
- *	\details This function allows the designer to continue drawing a Transition Arrow after they started doing this in the mousePressEvent().
- *	The DiagramScene knows if the designer is in the midst of drawing an Arrow by looking for the EditorState::DrawLine
- *	mode.  It also handles other context aware issues like changing the EditorState::EditMode
+ *	\details This function allows the designer to continue drawing a Transition Arrow after they started doing this in the
+ *	mousePressEvent().  The DiagramScene knows if the designer is in the midst of drawing an Arrow by looking for the
+ *	EditorState::DrawLine mode.  It also handles other context aware issues like changing the EditorState::EditMode
  *	depending on the current mouse position.
  *	\sa EditorState::getEditMode()
  */ 
@@ -700,7 +723,9 @@ QSharedPointer<Asset> DiagramScene::createNewAsset()
 	return newAsset;
 }
 
-/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you want to keep it for reference.*/
+/*! \brief This function is never used and left over from the QtToolkit sample.  It should probably be removed unless you
+ *	want to keep it for reference.
+ */
 bool DiagramScene::isItemChange(int type)
 {
     foreach (QGraphicsItem *item, selectedItems()) {

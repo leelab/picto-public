@@ -165,6 +165,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ac20a26572d858576503acda7d7c7231f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#ac20a26572d858576503acda7d7c7231f">windowItemsLoaded</a> ()</td></tr>
 <tr class="memdesc:ac20a26572d858576503acda7d7c7231f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when all of the items in the current design window (ie. All of the DiagramItems and Arrows) have been successfully loaded.  <a href="#ac20a26572d858576503acda7d7c7231f">More...</a><br /></td></tr>
 <tr class="separator:ac20a26572d858576503acda7d7c7231f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6453ac09b7eb5632feb51b91b481242"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6453ac09b7eb5632feb51b91b481242"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#ab6453ac09b7eb5632feb51b91b481242">releaseEditorMemory</a> ()</td></tr>
+<tr class="memdesc:ab6453ac09b7eb5632feb51b91b481242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when deinitializing the Editor, in order to allow full deletion of Experiment and Analysis trees. <br /></td></tr>
+<tr class="separator:ab6453ac09b7eb5632feb51b91b481242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ab4806896be67c7b57ae53f9f02147a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#a8ab4806896be67c7b57ae53f9f02147a">windowAssetChanged</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt; asset)</td></tr>
 <tr class="memdesc:a8ab4806896be67c7b57ae53f9f02147a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the Window Asset changes.  <a href="#a8ab4806896be67c7b57ae53f9f02147a">More...</a><br /></td></tr>
 <tr class="separator:a8ab4806896be67c7b57ae53f9f02147a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,6 +248,8 @@ QGraphicsItem *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <tr class="memitem:a5ea7b318475acaacb392831ba147bc8b"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="struct_search_request.html">SearchRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#a5ea7b318475acaacb392831ba147bc8b">getSearchRequests</a> ()</td></tr>
 <tr class="memdesc:a5ea7b318475acaacb392831ba147bc8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of the current <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> objects. All searchable elements in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> should be serching for these.  <a href="#a5ea7b318475acaacb392831ba147bc8b">More...</a><br /></td></tr>
 <tr class="separator:a5ea7b318475acaacb392831ba147bc8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a287f2f4e3c4ec43ac6443beef76060"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#a1a287f2f4e3c4ec43ac6443beef76060">deinitEditor</a> ()</td></tr>
+<tr class="separator:a1a287f2f4e3c4ec43ac6443beef76060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa14e5b1cc9e0cf0221359c7ea8df382a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_state.html#aa14e5b1cc9e0cf0221359c7ea8df382a">setInsertionItem</a> (QString className=&quot;&quot;, QString friendlyName=&quot;&quot;, QString category=&quot;&quot;, QString type=&quot;&quot;, QPixmap pixmap=QPixmap())</td></tr>
 <tr class="memdesc:aa14e5b1cc9e0cf0221359c7ea8df382a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current insertion item that will be added to the Window Asset if the user clicks in the canvas.  <a href="#aa14e5b1cc9e0cf0221359c7ea8df382a">More...</a><br /></td></tr>
 <tr class="separator:aa14e5b1cc9e0cf0221359c7ea8df382a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -466,6 +472,24 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
   </dd>
 </dl>
 <p>If the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> is switching to Experiment only mode, this signal will be emitted with an empty shared pointer. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1a287f2f4e3c4ec43ac6443beef76060"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EditorState::deinitEditor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is called to clear out the shared pointers that are preventing the experiment from being deleted. The <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> will have to be reinitialized before it can be used, meaning this should just be called when leaving the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
+
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00279">279</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -713,7 +737,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call this function to cause the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> window to be reloaded. </p>
 <p>This function clears the insertion item, then emits the <a class="el" href="class_editor_state.html#a8ab4806896be67c7b57ae53f9f02147a" title="Emitted when the Window Asset changes. ">windowAssetChanged()</a> signal with the current Window Asset and then emits <a class="el" href="class_editor_state.html#acb38bf1c35a2cfd18857f932c211acc9" title="Emitted when the Designer&#39;s currently selected Asset changes. ">selectedAssetChanged()</a> with the current selected Asset. This has the effect of telling all widgets connected to these signals to reload themselves. </p><dl class="section note"><dt>Note</dt><dd>This function does not appear to be in use right now. If you decide to use it, it is probably worth testing to make sure it does the job correctly. </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00246">246</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00250">250</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -734,7 +758,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call this function to request a search for the input searchRequest. </p>
 <p>When called, the <a class="el" href="class_editor_state.html#adfc61d63511d2f06084a13d58e746fae" title="Emitted when a new search is requested. ">searchRequested()</a> signal is emitted. All searchable elements in the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> should respond to that signal by searching for all active searchRequests returned from <a class="el" href="class_editor_state.html#a5ea7b318475acaacb392831ba147bc8b" title="Returns a list of the current SearchRequest objects. All searchable elements in the Designer should b...">getSearchRequests()</a>. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00260">260</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00264">264</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -883,7 +907,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Sets the current <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28" title="The current Editing mode defining the effects of user interaction. ">EditorState::EditMode</a> to the input <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28" title="The current Editing mode defining the effects of user interaction. ">EditorState::EditMode</a>. </p>
 <p>When called, this function emits the <a class="el" href="class_editor_state.html#ac654abb4fb812ab6c010eb91ca25ecf2" title="Emitted when the EditorState::EditMode changes to a new value. mode is the current EditorState::EditM...">editModeChanged()</a> signal with the new <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28" title="The current Editing mode defining the effects of user interaction. ">EditorState::EditMode</a>. </p>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00091">91</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00093">93</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -932,7 +956,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Sets the current insertion item that will be added to the Window Asset if the user clicks in the canvas. </p>
 <p>className is the name of the Asset's class, friendlyName is the friendlyName for the Asset's class that is shown in the UI. Category and type are the name of the XML tag and its type property value used to store this Asset within the WindowAsset's XML tag. pixmap is the Asset's icon which can replace the mouse icon to show the designer what type of Asset they are about to create before they click. This function emits the <a class="el" href="class_editor_state.html#a9649a61472cb32012334d945339ca11f" title="Emitted when the insertion item selected in the Toolbox changes. ">insertionItemChanged()</a> signal. </p><dl class="section note"><dt>Note</dt><dd>When this function is called, the <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28" title="The current Editing mode defining the effects of user interaction. ">EditorState::EditMode</a> is changed from <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16" title="In this mode, the user can select items in the Designer canvas. Their properties will appear in the P...">EditorState::Select</a> to <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a3fbf76edee5b880159781851f7f3196d" title="In this mode, the user can press the mouse button in the Designer canvas to insert the Asset type sel...">EditorState::PlaceItem</a> or the opposite depending if the input value is an insertable item or empty data (indicating that there is no current insertable item). </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00122">122</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00124">124</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -960,7 +984,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call this function to inform the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> that the latest group of actions since the last call to this function should be undoable as a single unit. </p>
 <p>This emits the <a class="el" href="class_editor_state.html#a3246c06c7cf7caba24c8eb2597ec5780" title="Emitted when the latest group of actions since the last time this signal was emitted should be consid...">undoableActionPerformed()</a> signal when called. </p>
 
-<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00188">188</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00192">192</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
 
 </div>
 </div>
@@ -989,7 +1013,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Sets the line color currently being used by the Picto <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>. </p>
 <dl class="section note"><dt>Note</dt><dd>Currently used for Transition Arrows only. </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00172">172</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00176">176</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +1034,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Sets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s currently selected Asset to the input object. </p>
 <p>This function emits <a class="el" href="class_editor_state.html#acb38bf1c35a2cfd18857f932c211acc9" title="Emitted when the Designer&#39;s currently selected Asset changes. ">selectedAssetChanged()</a> </p>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00192">192</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00196">196</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -1031,7 +1055,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Sets the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a>'s currently selected <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> or <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> to the input object. </p>
 <p>Internally, this function checks the input item's type and calls <a class="el" href="class_editor_state.html#a1a3d4da1b215113cc85bbc546e7d2845" title="Sets the Designer&#39;s currently selected Asset to the input object. ">setSelectedAsset()</a> with an appropriate input. If the input item is an <a class="el" href="class_asset_item.html" title="A DiagramItem used to display DataStores.... it should probably have been called DataStoreItem. ">AssetItem</a> or a sub-graphic, it calls <a class="el" href="class_editor_state.html#a1a3d4da1b215113cc85bbc546e7d2845" title="Sets the Designer&#39;s currently selected Asset to the input object. ">setSelectedAsset()</a> with the referenced Asset. If it is anything else, it calls <a class="el" href="class_editor_state.html#a1a3d4da1b215113cc85bbc546e7d2845" title="Sets the Designer&#39;s currently selected Asset to the input object. ">setSelectedAsset()</a> with the current Window Asset. This function emits the <a class="el" href="class_editor_state.html#a0404b2e2f2f10b818e71f12ec4b8e4cb" title="Emitted when the Designer&#39;s currently selected DiagramItem changes. ">itemSelected()</a> or <a class="el" href="class_editor_state.html#afef0aacb8483fa542087051f87ef8385" title="Emitted when the Designer&#39;s currently selected DiagramItem changes to an ArrowPortItem. ">arrowPortSelected()</a> signals as appropriate. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_editor_state.html#a1a3d4da1b215113cc85bbc546e7d2845" title="Sets the Designer&#39;s currently selected Asset to the input object. ">setSelectedAsset()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00207">207</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00211">211</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -1092,7 +1116,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>If undoable is true, an undo point will be set after changing the window asset (so that undo after a window change will bring you back to the previous window and undo after a window change and other action will keep you in the same window).</p>
 <p>This function will emit the <a class="el" href="class_editor_state.html#a8ab4806896be67c7b57ae53f9f02147a" title="Emitted when the Window Asset changes. ">windowAssetChanged()</a> signal if the input Asset is a valid Window Asset. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a7bb1ee2787b4a6c8081480fe09e481af" title="Tells the DesignRoot which asset is currently open in the Designer so that this information can be sa...">Designer::setOpenAsset()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00142">142</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00144">144</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -1120,7 +1144,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call this to inform the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> that all of the items in the current design window (ie. All of the DiagramItems and Arrows) have been successfully loaded. </p>
 <p>This emits the <a class="el" href="class_editor_state.html#ac20a26572d858576503acda7d7c7231f" title="Emitted when all of the items in the current design window (ie. All of the DiagramItems and Arrows) h...">windowItemsLoaded()</a> signal when called. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#a2ff8ccaa20060c09d3b6b2cba22a7d79" title="Sets the current scene asset (ie. The asset who&#39;s canvas we are looking at) to the input...">DiagramScene::setSceneAsset()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00181">181</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00185">185</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
 
 </div>
 </div>
@@ -1149,7 +1173,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call this to set the zoom level of the canvas to the input value. </p>
 <p>The input zoom will be limited to the range (.3,2). When called, this function emits <a class="el" href="class_editor_state.html#af5b7818287993dcab74199b4f71593e3" title="Emitted when the zoom value for the canvas has changed. zoom is the new zoom value. ">zoomChanged()</a> with the new zoom value. The zoom value is essentially a constant by which the size of each object will be multiplied. </p><dl class="section note"><dt>Note</dt><dd>Don't confuse this zoom's functionality with the zoom used in the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a> and <a class="el" href="class_remote_viewer.html" title="This allows Operators to view and control a remotely running Experimental Session. ">RemoteViewer</a> windows to zoom in and out of a running experiment. That zoom is defined differently from this one. </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00103">103</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8cpp_source.html#l00105">105</a> of file <a class="el" href="_editor_state_8cpp_source.html">EditorState.cpp</a>.</p>
 
 </div>
 </div>
@@ -1177,7 +1201,7 @@ QHash&lt; int, <a class="el" href="struct_search_request.html">SearchRequest</a>
 <p>Call to inform the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> that this experiment needs to be reloaded from XML. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026" title="Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...">Designer::resetExperiment()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00193">193</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
+<p>Definition at line <a class="el" href="_editor_state_8h_source.html#l00197">197</a> of file <a class="el" href="_editor_state_8h_source.html">EditorState.h</a>.</p>
 
 </div>
 </div>

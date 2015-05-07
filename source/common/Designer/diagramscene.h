@@ -57,6 +57,9 @@ public slots:
 	void analysisExportSelectedItem();
 	void pasteItems();
 
+private slots:
+	void clearAssets();
+
 signals:
 	/*! \brief Emitted every time that a DiagramItem is created and inserted into the DiagramScene.
 	 *	@param item is the newly created DiagramItem.

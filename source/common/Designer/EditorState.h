@@ -88,6 +88,8 @@ public:
 	QGraphicsItem *getSelectedItem(){return selectedItem_;};
 	QList<SearchRequest> getSearchRequests();
 
+	void deinitEditor();
+
 signals:
 	/*! \brief Emitted when the EditorState::EditMode changes to a new value.  mode is the current EditorState::EditMode.
 	 */
@@ -115,6 +117,8 @@ signals:
 	 *	\sa DiagramScene::setSceneAsset()
 	 */
 	void windowItemsLoaded();
+	//! Emitted when deinitializing the Editor, in order to allow full deletion of Experiment and Analysis trees.
+	void releaseEditorMemory();
 	/*! \brief Emitted when the Window Asset changes.
 	 *	@param asset is the new Window Asset.
 	 *	\sa setWindowAsset()

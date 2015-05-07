@@ -39,6 +39,7 @@ public:
 
 public slots:
    void setAsset(QSharedPointer<Asset> asset);
+   void clearAssets();
 
 private:
 	void addToolGroup(QStringList tagFilters,QString groupName,QSharedPointer<Asset> windowAsset);

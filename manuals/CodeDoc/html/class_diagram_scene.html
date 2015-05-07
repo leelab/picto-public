@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-slots">Private Slots</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_diagram_scene-members.html">List of all members</a>  </div>
@@ -188,6 +189,13 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:adfe114873fac1d13077a1c72deb58a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captures the position at which the designer right clicked for a ContextMenu in order to use it as the paste position should the designer choose the paste action.  <a href="#adfe114873fac1d13077a1c72deb58a1c">More...</a><br /></td></tr>
 <tr class="separator:adfe114873fac1d13077a1c72deb58a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
+Private Slots</h2></td></tr>
+<tr class="memitem:a2bac797c22d2899bc2a958ce4beaf7bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bac797c22d2899bc2a958ce4beaf7bd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a2bac797c22d2899bc2a958ce4beaf7bd">clearAssets</a> ()</td></tr>
+<tr class="memdesc:a2bac797c22d2899bc2a958ce4beaf7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the assets we are holding that prevent the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> from freeing up its memory. Need to reinit before using. <br /></td></tr>
+<tr class="separator:a2bac797c22d2899bc2a958ce4beaf7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a7fefccde08545b0a1e5d1a0e036d217a"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_asset.html">Asset</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_diagram_scene.html#a7fefccde08545b0a1e5d1a0e036d217a">createNewAsset</a> ()</td></tr>
@@ -282,7 +290,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Exports all AnalysisElements from the selected items. </p>
 <p>Exported text is stored in the computer's clipboard for importing. This function uses the <a class="el" href="class_copier.html#a48f1c6d5c6f49438f7c7b870b3151490" title="Copies experimental or analysis assets from the input assets list depending on the copyAnalysis input...">Copier::copy()</a> function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_copier.html#a48f1c6d5c6f49438f7c7b870b3151490" title="Copies experimental or analysis assets from the input assets list depending on the copyAnalysis input...">Copier::copy()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00423">423</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00444">444</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,9 +316,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 </div><div class="memdoc">
 
 <p>Imports AnalysisElements that were just exported into the currently selected Asset. </p>
-<p>Shows a warning and returns if no Assets or more than one Asset are selected. Warnings will also be displayed by the <a class="el" href="class_copier.html" title="Uses the AssetExportImporter to implement copy/paste functionality within a Picto design...">Copier</a> object if there are other problems with the import. For more information see <a class="el" href="class_copier.html#a6a6988c2aac1c00888200f9f1c63e0c4" title="Pastes the assets currently stored as text in the clipboard into the input pasteParent at the input p...">Copier::paste()</a>. </p>
+<p>Shows a warning and returns if no Assets or more than one Asset are selected. Warnings will also be displayed by the <a class="el" href="class_copier.html" title="Uses the AssetExportImporter to implement copy/paste functionality within a Picto design...">Copier</a> object if there are other problems with the import. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_copier.html#a6a6988c2aac1c00888200f9f1c63e0c4" title="Pastes the assets currently stored as text in the clipboard into the input pasteParent at the input p...">Copier::paste()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00401">401</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00422">422</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -371,7 +379,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Captures the position at which the designer right clicked for a ContextMenu in order to use it as the paste position should the designer choose the paste action. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#ade8b52a60feaa793d0903362384554d5" title="Pastes any Assets whose data was stored in the Clipboard (this should have been done by copySelectedI...">pasteItems()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00643">643</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00666">666</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -400,7 +408,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <dl class="section note"><dt>Note</dt><dd>Transitions are not copied even if they are selected. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#a3fe9ac3c8687b44bb5ffddc0b888cbfd" title="Returns a list of Asset objects referenced by the currently selected DiagramItems. ">getSelectedAssets()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00391">391</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00412">412</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -428,7 +436,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Creates a new Asset based on the currently selected Asset type in the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_diagram_scene.html#a361512439a7cf2bcd0388c78eb1bb301" title="Extends the QGraphicsScene::mouseReleaseEvent() for placing new DiagramItems and finishing the Transi...">mouseReleaseEvent()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00659">659</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00682">682</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -456,7 +464,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Deletes all currently selected DiagramItems and Arrows along with their referenced Asset and Transition objects. </p>
 <p>If a deletion actually took place, this function calls <a class="el" href="class_editor_state.html#a171f60df7de30e116e02eae6e8653143" title="Call to inform the EditorState that this experiment needs to be reloaded from XML. ">EditorState::triggerExperimentReset()</a> to cause the design to be reloaded from XML thereby removing deleted elements and reloading this scene with the correct diagrams. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_designer.html#a7e2f40ef01fc309032a9c0cd9ef68026" title="Resets the associated DesignRoot from its XML code and then resets the Designer to function with the ...">Designer::resetExperiment()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00309">309</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00324">324</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -476,7 +484,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Returns a QRectF that contains all items in this scene except the start bar. </p>
 <p>If we didn't have the start bar, we could just used itemsBoundingRect(), but we do, so we use this </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00103">103</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00108">108</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -507,7 +515,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Creates a diagram item for the input Asset according to its type and adds it to the scene. </p>
 <p>If the input Asset already has an attached UIElement including its position, that position will be used to position it, otherwise it will be positioned based on the input pos value. After the <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> is added <a class="el" href="class_diagram_scene.html#af831d659c3c3b3427a1376a738d27df1" title="Emitted every time that a DiagramItem is created and inserted into the DiagramScene. ">itemInserted()</a> is emitted and the <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> is returned from the function. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00082">82</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00086">86</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -544,7 +552,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Creates an <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> to represent the input transition from the source <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> to the dest <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> and adds it to the scene. </p>
 <p>If the input transition is NULL, a new transition object will be created and added as a child of the current Window Asset as well. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00060">60</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00062">62</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +645,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Extends the QGraphicsScene::keyPressEvent() for moving the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> between <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd" title="In this mode, the user can rotate the mouse wheel to zoom the Designer canvas and press the mouse but...">EditorState::Navigate</a> and <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a>:Select mode. </p>
 <p>We use the Shift key state to transition between <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16" title="In this mode, the user can select items in the Designer canvas. Their properties will appear in the P...">EditorState::Select</a> mode and <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd" title="In this mode, the user can rotate the mouse wheel to zoom the Designer canvas and press the mouse but...">EditorState::Navigate</a> mode. In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer to drag the canvas position. In <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16" title="In this mode, the user can select items in the Designer canvas. Their properties will appear in the P...">EditorState::Select</a> mode, clicking on a <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> causes it to be selected. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00607">607</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00630">630</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -666,7 +674,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Extends the QGraphicsScene::keyReleaseEvent() for moving the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> between <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd" title="In this mode, the user can rotate the mouse wheel to zoom the Designer canvas and press the mouse but...">EditorState::Navigate</a> and <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a>:Select mode. </p>
 <p>We use the Shift key state to transition between <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16" title="In this mode, the user can select items in the Designer canvas. Their properties will appear in the P...">EditorState::Select</a> mode and <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a3ba8f119a9df84447a32145998ec62dd" title="In this mode, the user can rotate the mouse wheel to zoom the Designer canvas and press the mouse but...">EditorState::Navigate</a> mode. In Navigate mode, the mouse wheel adjusts the current canvas zoom and clicking the mouse allows the designer to drag the canvas position. In <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a0f056b27d234a6fad009db51c9f0ca16" title="In this mode, the user can select items in the Designer canvas. Their properties will appear in the P...">EditorState::Select</a> mode, clicking on a <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> causes it to be selected. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00626">626</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00649">649</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -695,7 +703,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Extends the QGraphicsScene::mouseMoveEvent() as part of the <a class="el" href="class_diagram_scene.html" title="The QGraphicsScene shown in the Designer&#39;s central widget to display the children of the current elem...">DiagramScene</a>'s context aware tools logic. </p>
 <p>This function allows the designer to continue drawing a Transition <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> after they started doing this in the <a class="el" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73" title="Extends the QGraphicsScene::mousePressEvent() to allow the designer to start drawing a Transition Arr...">mousePressEvent()</a>. The <a class="el" href="class_diagram_scene.html" title="The QGraphicsScene shown in the Designer&#39;s central widget to display the children of the current elem...">DiagramScene</a> knows if the designer is in the midst of drawing an <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> by looking for the <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28a575ea0fbd4fa6f8baa98a8f9817acb79" title="In this mode, while the mouse button is pressed, moving the mouse will continue drawing a Transition ...">EditorState::DrawLine</a> mode. It also handles other context aware issues like changing the <a class="el" href="class_editor_state.html#a30123e595784b2228edc2a0c2b46ab28" title="The current Editing mode defining the effects of user interaction. ">EditorState::EditMode</a> depending on the current mouse position. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_editor_state.html#adc415e8403fef1a8888c995201a54d5b" title="Returns the current EditorState::EditMode. ">EditorState::getEditMode()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00483">483</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00506">506</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -724,7 +732,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Extends the QGraphicsScene::mousePressEvent() to allow the designer to start drawing a Transition <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a>. </p>
 <p>The designer can draw a Transition <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> when the <a class="el" href="class_editor_state.html#adc415e8403fef1a8888c995201a54d5b" title="Returns the current EditorState::EditMode. ">EditorState::getEditMode()</a> is the EditorState::InserLine mode which occurs when the mouse hovers over a result bar hanging off of a StateMachineElement. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00459">459</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00482">482</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -753,7 +761,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Extends the QGraphicsScene::mouseReleaseEvent() for placing new DiagramItems and finishing the Transition <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> creation process. </p>
 <p>The designer's release of the mouse is the event trigger for consructing DiagramItems that were selected in the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> as well as adding Transitions for Arrows that were started during a <a class="el" href="class_diagram_scene.html#a56249136dab559afa4f840a5c92acf73" title="Extends the QGraphicsScene::mousePressEvent() to allow the designer to start drawing a Transition Arr...">mousePressEvent()</a>. This logic is handled here. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00518">518</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00541">541</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -781,7 +789,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Pastes any Assets whose data was stored in the Clipboard (this should have been done by <a class="el" href="class_diagram_scene.html#ac38f698fcd6dca66acf8df321aa82d45" title="Uses a Copier object to copy the Asset objects referenced by all selected DiagramItems. ">copySelectedItems()</a>) into the current Window Asset. </p>
 <p>When <a class="el" href="class_diagram_scene.html#ade8b52a60feaa793d0903362384554d5" title="Pastes any Assets whose data was stored in the Clipboard (this should have been done by copySelectedI...">pasteItems()</a> was initiated from a <a class="el" href="class_diagram_scene.html#adfe114873fac1d13077a1c72deb58a1c" title="Captures the position at which the designer right clicked for a ContextMenu in order to use it as the...">contextMenuEvent()</a>, the copied Asset's DiagramItems are pasted at the position where the user created the context menu. Otherwise, they are pasted to the right side of the currently visible DiagramItems. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00432">432</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00455">455</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>
@@ -810,7 +818,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mouseOverScene_</b></
 <p>Sets the current scene asset (ie. The asset who's canvas we are looking at) to the input. </p>
 <p>This function is called when the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> object's windowAssetChanged() signal is called. What we refer to here as the SceneAsset, is referred to everywhere else as the WindowAsset. The function goes through all of the input asset's children, creates <a class="el" href="class_diagram_item.html" title="This is the base class for all graphical elements in the Picto Designer apart from transition arrows...">DiagramItem</a> objects for them using <a class="el" href="class_diagram_scene.html#adf0f92ac89ed29358b2a2f7b4b479877" title="Creates a diagram item for the input Asset according to its type and adds it to the scene...">insertDiagramItem()</a>, adds the necessary transition <a class="el" href="class_arrow.html" title="An arrow diagram that represents a transition in the Experimental Design&#39;s StateMachine. ">Arrow</a> objects using <a class="el" href="class_diagram_scene.html#aa8b98aea4192297641cb2347106fa31d" title="Creates an Arrow to represent the input transition from the source DiagramItem to the dest DiagramIte...">insertTransition()</a> adds the necessary <a class="el" href="class_analysis_item.html" title="An AssetItem used to represent Analysis elements. ">AnalysisItem</a> objects using <a class="el" href="class_diagram_scene.html#adf0f92ac89ed29358b2a2f7b4b479877" title="Creates a diagram item for the input Asset according to its type and adds it to the scene...">insertDiagramItem()</a>, then tells the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> that the asset was loaded into the current window using <a class="el" href="class_editor_state.html#acdada8168fd8de85fa44c38ffe621b31" title="Call this to inform the EditorState that all of the items in the current design window (ie...">EditorState::setWindowItemsLoaded()</a>. </p>
 
-<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00158">158</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
+<p>Definition at line <a class="el" href="diagramscene_8cpp_source.html#l00171">171</a> of file <a class="el" href="diagramscene_8cpp_source.html">diagramscene.cpp</a>.</p>
 
 </div>
 </div>

@@ -8,7 +8,7 @@
 #include "testviewer/testviewer.h"
 #include "remoteviewer/remoteviewer.h"
 #include "replayviewer/replayviewer.h"
-#include "statemachineeditor/stateeditviewer.h"
+#include "StateMachineEditor/StateEditViewer.h"
 #include "../common/update/updatedownloader.h"
 #ifdef _WIN32
 #include "Shlobj.h"

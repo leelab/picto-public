@@ -43,6 +43,9 @@ public slots:
 
 	void updateLists(bool bQuietly);
 
+	void clearAssets();
+
+
 private:
 	//! The current design's EditorState
 	QSharedPointer<EditorState> editorState_;

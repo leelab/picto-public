@@ -154,7 +154,7 @@ void Designer::activate(bool enable)
 		//If we keep an asset selected, this viewer can have unexpected effects even though it is not active.
 		//For example, an unexpected path leading from property value changes through the property browser back to
 		//a different part of the propery could be active if we didn't do this
-		editorState_->setSelectedAsset(QSharedPointer<Asset>());
+		editorState_->deinitEditor();
 	}
 	setEnabled(enable);
 }

@@ -232,8 +232,6 @@ void ReplayViewer::setupUi()
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	analysisSelector_->setEnabled(false);
 	connect(analysisSelector_, SIGNAL(analysisWidgetChanged()), this, SLOT(analysisWidgetChanged()));
-	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString, bool)),
-		this, SLOT(notifyAnalysisSelection(const QString, bool)));
 	connect(playbackController_.data(),SIGNAL(designRootChanged()),this,SLOT(designRootChanged()));
 	outputWidgetHolder_ = new OutputWidgetHolder();
 	analysisTabs->addTab(runs_,"Select Runs");

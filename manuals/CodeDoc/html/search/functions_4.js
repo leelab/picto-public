@@ -14,6 +14,7 @@ var searchData=
   ['defineresultfactorytype',['defineResultFactoryType',['../class_picto_1_1_result_container.html#a88c10f5402ea12abbab92e51af6f1f47',1,'Picto::ResultContainer']]],
   ['deinit',['deinit',['../class_remote_viewer.html#a5a3b67136d8aaaa3a6fdbb6d9b3f519e',1,'RemoteViewer::deinit()'],['../class_replay_viewer.html#a3daf977fab46e49282cc2f9359cf9480',1,'ReplayViewer::deinit()'],['../class_state_edit_viewer.html#a839c2ae2ce9eba0d96df26cd8ee711dd',1,'StateEditViewer::deinit()'],['../class_test_viewer.html#aa585afc2e81af645c57e31d2fe8e4d9f',1,'TestViewer::deinit()'],['../class_viewer.html#ae36f82194449083e10825229a9e22fdf',1,'Viewer::deinit()']]],
   ['deinitcomplete',['deinitComplete',['../class_viewer.html#aa8f10afad8094330d363080b275daaeb',1,'Viewer']]],
+  ['deiniteditor',['deinitEditor',['../class_editor_state.html#a1a287f2f4e3c4ec43ac6443beef76060',1,'EditorState']]],
   ['deinitialize',['deinitialize',['../class_neural_data_viewer.html#a5c15d9ad0b15991124e03c9f6ad21fcf',1,'NeuralDataViewer']]],
   ['deinitscripting',['deinitScripting',['../class_picto_1_1_scriptable_container.html#a5b1b005ee234fbdede6a326f04beb6fe',1,'Picto::ScriptableContainer::deinitScripting()'],['../class_picto_1_1_scriptable_container.html#ad2af0b0b6378e96193a7f315206e4722',1,'Picto::ScriptableContainer::deinitScripting(Property *prop, QVariant value)']]],
   ['deletecurrenttask',['deleteCurrentTask',['../class_picto_1_1_analysis_option_widget.html#a1799324c7a846226d0bbe54186f210e0',1,'Picto::AnalysisOptionWidget']]],

@@ -196,7 +196,7 @@ const QString TaskConfig::getName(QWidget *pWidget) const
 	return QString("");
 }
 
-const TaskConfig::DisplayWidgetProperties &TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
+const TaskConfig::DisplayWidgetProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
 {
 	if (displayProperties.contains(widget))
 	{

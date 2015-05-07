@@ -33,10 +33,10 @@ QList<SearchRequest> EditorState::getSearchRequests()
  *	\details The top level asset is the Asset whose children will be visible when the Designer won't let us navigate any
  *	further up the design tree.  Currently, this is set by the Designer to be the Experiment Asset.
  */
-void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
+void EditorState::setTopLevelAsset(QSharedPointer<Asset> topLevelAsset)
 {
 	topAsset_ = topLevelAsset;
-	Q_ASSERT(!topAsset_.isNull());
+	Q_ASSERT(topAsset_);
 	setCurrentAnalysis(QSharedPointer<Analysis>());
 	//setWindowAsset(topAsset_);
 }
@@ -52,8 +52,10 @@ void EditorState::setTopLevelAsset(QSharedPointer<Picto::Asset> topLevelAsset)
  */
 bool EditorState::setCurrentAnalysis(QSharedPointer<Analysis> currAnalysis)
 {
-	if(!topAsset_)
+	if (!topAsset_)
+	{
 		return false;
+	}
 	//Run through this function even if the current analysis hasn't changed, because
 	//the current analysis in the designConfig may have been changed and this will 
 	//reset it.
@@ -141,8 +143,10 @@ void EditorState::setInsertionItem(QString className, QString friendlyName, QStr
  */
 void EditorState::setWindowAsset(QSharedPointer<Asset> asset,bool undoable)
 {
-	if(asset.isNull())
+	if (!asset)
+	{
 		return;
+	}
 	Q_ASSERT(!asset.objectCast<DataStore>().isNull());
 	Q_ASSERT(!asset.objectCast<UIEnabled>().isNull());
 	QSharedPointer<UIEnabled> uiEnabled = asset.objectCast<UIEnabled>();
@@ -266,4 +270,20 @@ void EditorState::requestSearch(SearchRequest searchRequest)
 
 	searchRequests_[searchRequest.getGroupTypeIndex()] = searchRequest;
 	emit searchRequested(searchRequest);
+}
+
+/*!	This function is called to clear out the shared pointers that are preventing the experiment from being deleted.
+ *	The EditorState will have to be reinitialized before it can be used, meaning this should just be called when leaving
+ *	the Designer.
+ */
+void EditorState::deinitEditor()
+{
+	selectedAsset_ = QSharedPointer<Asset>();
+	windowAsset_ = QSharedPointer<Asset>();
+	topAsset_ = QSharedPointer<Asset>();
+	currAnalysis_ = QSharedPointer<Analysis>();
+
+	emit selectedAssetChanged(selectedAsset_);
+
+	emit releaseEditorMemory();
 }

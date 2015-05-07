@@ -29,6 +29,7 @@ var searchData=
   ['refreshedfromxml',['refreshedFromXml',['../class_picto_1_1_design_root.html#a64bd2edd0eeed3f8b31d954c0f220fe0',1,'Picto::DesignRoot']]],
   ['refreshfromxml',['refreshFromXml',['../class_picto_1_1_design_root.html#a3fed86206f2accefe56685239e5ff391',1,'Picto::DesignRoot']]],
   ['registerview',['registerView',['../class_view_selection_frame.html#ad8da7e73ea2205f210d0499a871f0bde',1,'ViewSelectionFrame']]],
+  ['releaseeditormemory',['releaseEditorMemory',['../class_editor_state.html#ab6453ac09b7eb5632feb51b91b481242',1,'EditorState']]],
   ['reloadwindow',['reloadWindow',['../class_editor_state.html#adc666c4228c6282f14399e454e832bba',1,'EditorState']]],
   ['remainingcontentlength',['remainingContentLength',['../struct_picto_1_1_protocol_command.html#a07a24ecf2a32fd9530c8f34cc27fecfb',1,'Picto::ProtocolCommand']]],
   ['remotestateupdater',['RemoteStateUpdater',['../class_picto_1_1_remote_state_updater.html#a349658dd465ee16e00d5d68ad245aae1',1,'Picto::RemoteStateUpdater']]],
