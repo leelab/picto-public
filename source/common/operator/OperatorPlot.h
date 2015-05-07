@@ -47,7 +47,7 @@ public:
 	virtual void sendWidgetToTaskConfig();
 	virtual void enteredScope();
 
-	virtual void scriptableContainerWasReinitialized();
+	virtual void scriptableContainerCustomInitialization();
 
 	virtual void postLinkUpdate();
 

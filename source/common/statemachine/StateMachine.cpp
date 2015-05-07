@@ -328,6 +328,8 @@ bool StateMachine::hasScripts()
 	return false;
 }
 
+
+//! Hides the name editing field in the Property editor for this StateMachine. Just to be used on top-level StateMachines.
 void StateMachine::hideName()
 {
 	propertyContainer_->getProperty("Name")->setVisible(false);

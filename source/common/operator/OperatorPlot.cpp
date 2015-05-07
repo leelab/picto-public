@@ -37,8 +37,6 @@ void OperatorPlot::draw()
 void OperatorPlot::postDeserialize()
 {
 	DataViewElement::postDeserialize();
-
-	initialized_ = false;
 }
 
 void OperatorPlot::postLinkUpdate()
@@ -107,15 +105,25 @@ void OperatorPlot::sendWidgetToTaskConfig()
 void OperatorPlot::enteredScope()
 {
 	reset();
+
+	qDebug() << "OperatorPlot::enteredScope() (" << dveNum_ << ") Custom Initialization Attempted.";
+	if (qsEngine_)
+	{
+		qDebug() << "\tOperatorPlot::enteredScope() (" << dveNum_ << ") Custom Initialization Successful.";
+		QScriptValue returnVal(false);
+		runScript(getName().simplified().remove(' '), returnVal);
+	}
 }
 
-void OperatorPlot::scriptableContainerWasReinitialized()
+void OperatorPlot::scriptableContainerCustomInitialization()
 {
-	DataViewElement::scriptableContainerWasReinitialized();
+	DataViewElement::scriptableContainerCustomInitialization();
 
-	if (!initialized_ && qsEngine_)
+	qDebug() << "OperatorPlot (" << dveNum_ << ") Custom Initialization Attempted.";
+
+	if (qsEngine_)
 	{
-		initialized_ = true;
+		qDebug() << "\tOperatorPlot (" << dveNum_ << ") Custom Initialization Successful.";
 		QScriptValue returnVal(false);
 		runScript(getName().simplified().remove(' '), returnVal);
 	}

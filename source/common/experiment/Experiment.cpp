@@ -88,7 +88,7 @@ void Experiment::addTask(QSharedPointer<Task> task)
 
 /*! \brief Returns a list of this Experiment's Task names.
  */
-QStringList Experiment::getTaskNames()
+QStringList Experiment::getTaskNames() const
 {
 	QStringList taskList;
 	foreach(QSharedPointer<Task> task, tasks_)
@@ -101,7 +101,7 @@ QStringList Experiment::getTaskNames()
 /*! \brief Returns the Task object with the input taskName.
  *	\details If no Task with the input taskName is found, returns an empty shared pointer.
  */
-QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
+QSharedPointer<Task> Experiment::getTaskByName(QString taskName) const
 {
 	QSharedPointer<Task> returnVal;
 	if(tasks_.isEmpty())
@@ -118,6 +118,35 @@ QSharedPointer<Task> Experiment::getTaskByName(QString taskName)
 		}
 	}
 	return returnVal;
+}
+
+//! Returns the Task corresponding the the input assetId, or null.
+QSharedPointer<Task> Experiment::getTaskByAssetId(int assetId) const
+{
+	QSharedPointer<Task> returnVal;
+	if (tasks_.isEmpty())
+		return returnVal;
+	//search through tasks_ for a matching task!
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		if (task->getAssetId() == assetId)
+		{
+			returnVal = task;
+			break;
+		}
+	}
+	return returnVal;
+}
+
+//! Returns a list of assetIds corresponding to the Tasks.
+QList<int> Experiment::getTaskAssetIds() const
+{
+	QList<int> taskList;
+	foreach(QSharedPointer<Task> task, tasks_)
+	{
+		taskList.append(task->getAssetId());
+	}
+	return taskList;
 }
 
 /*! \brief Runs the Task with the input taskName starting with the initial transition in its top level StateMachine.

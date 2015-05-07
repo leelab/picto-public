@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QDebug>
 
 #include "RemoteStateUpdater.h"
 #include "RemoteStateXMLHandler.h"
@@ -70,6 +71,7 @@ bool RemoteStateUpdater::updateState()
 		return false;
 	
 	QByteArray xmlFragment = response->getContent();
+	qDebug() << "New Server Data:" << xmlFragment;
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
 	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");

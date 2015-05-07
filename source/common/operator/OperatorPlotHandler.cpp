@@ -27,7 +27,7 @@ OperatorPlotHandler::~OperatorPlotHandler()
 	qDebug() << "Delete OperatorPlot (" << index << ")";
 	if (m_pPlot && !m_pPlot->parent())
 	{
-		qDebug() << "\tManually Delete OperatorPlot::m_pPlot";
+		qDebug() << "\tManually Deleted OperatorPlot::m_pPlot";
 		m_pPlot->deleteLater();
 	}
 }

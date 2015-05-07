@@ -20,8 +20,8 @@ QStringList GetFileCommandHandler::fileNames_;
 QList<QByteArray> GetFileCommandHandler::files_;
 
 /*! \brief Constructs a GetFileCommandHandler.
- *	\details When the GetFileCommandHandler is constructed, all files in the run directory are compressed and added to a list.
- *	When GETFILE commands come in, these files can be downloaded.
+ *	\details When the GetFileCommandHandler is constructed, all files in the run directory are compressed and added to a
+ *	list.  When GETFILE commands come in, these files can be downloaded.
  */
 GetFileCommandHandler::GetFileCommandHandler()
 {

@@ -108,8 +108,11 @@ public:
 	void addTask(QSharedPointer<Task> task);
 	bool runTask(QString taskName);
 
-	QStringList getTaskNames();
-	QSharedPointer<Task> getTaskByName(QString taskName);
+	QStringList getTaskNames() const;
+	QSharedPointer<Task> getTaskByName(QString taskName) const;
+
+	QList<int> getTaskAssetIds() const;
+	QSharedPointer<Task> getTaskByAssetId(int assetId) const;
 
 	virtual bool hasEditableDescendants(){return true;};
 	virtual QString friendlyTypeName(){return "Experiment";};

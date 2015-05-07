@@ -17,10 +17,12 @@ GetDataCommandHandler::GetDataCommandHandler()
 {
 }
 
-/*! \brief Parses the input ProtocolCommand to check its syntax, responds with either current state data, the latest Neural Data or the latest Session Data 
- *	depending on the value befpre the colon in the command (CurrenState, LatestNeural, or SessionData).  In the case of CurrentState and LatestNeural, the 
- *	returned data includes everything after the time written after the colon in the command.  adds ENDSESSION pending directives to the SessionInfo object handling the input Session and responds 
- *	with a simple okResponse or other response depending on whether something was wrong with the request.
+/*! \brief Parses the input ProtocolCommand to check its syntax, responds with either current state data, the latest
+ *	Neural Data or the latest Session Data depending on the value before the colon in the command
+ *	(CurrentState, LatestNeural, or SessionData).  In the case of CurrentState and LatestNeural, the returned data
+ *	includes everything after the time written after the colon in the command.  Adds ENDSESSION pending directives to the
+ *	SessionInfo object handling the input Session and responds with a simple okResponse or other response depending on
+ *	whether something was wrong with the request.
  */
 QSharedPointer<Picto::ProtocolResponse> GetDataCommandHandler::processCommand(QSharedPointer<Picto::ProtocolCommand> command)
 {

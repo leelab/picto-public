@@ -53,8 +53,6 @@ BarBasePlotHandler::BarBasePlotHandler()
 
 void BarBasePlotHandler::initializeHisto(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType)
 {
-	qDebug() << "\tBarBasePlotHandler::initializePlot called in thread: " << QThread::currentThreadId();
-
 	if (!m_pHistoPlotItem)
 	{
 		m_pHistoPlotItem = new QwtPlotHistogram("Data");

@@ -212,6 +212,9 @@ bool ScriptableContainer::initScripting(bool enableDebugging)
 		child->initScripting(debuggingEnabled_);
 	}
 	scriptingInitialized_ = true;
+
+	scriptableContainerCustomInitialization();
+
 	return true;
 }
 

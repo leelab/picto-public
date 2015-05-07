@@ -371,12 +371,15 @@ void AnalysisOptionWidget::updateTaskList()
 	{
 		taskBox_->clear();
 
-		QStringList tasks = pExperiment->getTaskNames();
+		const QStringList tasks = pExperiment->getTaskNames();
+		const QList<int> taskAssetIds = pExperiment->getTaskAssetIds();
+
 
 		for (int i = 0; i < tasks.count(); i++)
 		{
 			const QString &taskName = tasks[i];
-			taskBox_->addItem(taskName);
+			const int assetId = taskAssetIds[i];
+			taskBox_->addItem(taskName, assetId);
 
 			if (selectedTask_ && selectedTask_->getName() == taskName)
 			{
@@ -413,6 +416,7 @@ void AnalysisOptionWidget::addTask()
 	updateTaskList();
 
 	//Select name of new analysis for editing
+	taskBox_->setFocus();
 	taskBox_->lineEdit()->selectAll();
 }
 
@@ -524,9 +528,9 @@ void AnalysisOptionWidget::selectedTaskIndexChanged(int selectedIndex)
 		taskBox_->setEditable(true);
 		deleteTaskAction_->setEnabled(true);
 
-		QString name = taskBox_->itemText(selectedIndex);
+		int assetId = taskBox_->itemData(selectedIndex).toInt();
 
-		QSharedPointer<Task> newTask = designRoot_->getExperiment().objectCast<Experiment>()->getTaskByName(name);
+		QSharedPointer<Task> newTask = designRoot_->getExperiment().objectCast<Experiment>()->getTaskByAssetId(assetId);
 
 		//Update the current selected task
 		setSelectedTask(newTask);
@@ -544,7 +548,8 @@ void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
 		return;
 
 	QSharedPointer<Experiment> pExperiment = designRoot_->getExperiment().objectCast<Experiment>();
-	if (pExperiment && name != pExperiment->getTaskNames()[taskBox_->currentIndex()])
+	
+	if (pExperiment && name != pExperiment->getTaskByAssetId(taskBox_->currentData().toInt())->getName())
 	{
 		selectedTask_->rename(name);
 		taskBox_->setItemText(taskBox_->currentIndex(), name);

@@ -1,4 +1,6 @@
 
+#include <QDebug>
+
 #include "../../common/storage/BehavioralDataUnitPackage.h"
 #include "../../common/storage/InputDataUnitPackage.h"
 #include "../../common/storage/RewardDataUnit.h"
@@ -83,6 +85,7 @@ StateDataUnitHandler::StateDataUnitHandler(RemoteStateUpdater *pParent)
 void StateDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 {
 	stateUnit_->fromXml(xmlReader);
+	qDebug() << "Received Transition ID:" << stateUnit_->getTransitionID();
 	emit transitionActivated(stateUnit_->getTransitionID());
 }
 

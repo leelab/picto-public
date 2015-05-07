@@ -164,7 +164,6 @@ void BarBase::initView()
 {
 	OperatorPlot::initView();
 
-	qDebug() << "\tBarBase::initView requested by: " << dveNum_;
 	emit initializeHistoSig(
 		propertyContainer_->getPropertyValue("DisplayLegend").toBool(),
 		getColor(),

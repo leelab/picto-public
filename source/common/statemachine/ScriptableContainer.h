@@ -95,6 +95,7 @@ protected:
 	 *	\sa initScripting()
 	 */
 	virtual void scriptableContainerWasReinitialized(){};
+	virtual void scriptableContainerCustomInitialization(){};
 	virtual bool executeSearchAlgorithm(SearchRequest searchRequest);
 
 	void deepDeinitScripting();
