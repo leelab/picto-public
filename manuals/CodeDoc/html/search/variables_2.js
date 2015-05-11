@@ -22,5 +22,6 @@ var searchData=
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
   ['coordsmap',['coordsMap',['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
+  ['currentqueue_5f',['currentQueue_',['../class_picto_1_1_slave_event_queue.html#ac0dff76f7b0c2b6b7e682744ef3b6ce0',1,'Picto::SlaveEventQueue']]],
   ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]]
 ];

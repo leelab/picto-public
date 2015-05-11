@@ -35,6 +35,7 @@ var searchData=
   ['enddatawrite',['endDataWrite',['../class_session_data.html#aae9d3e70ed86c81f56f5c063d1a2ff2f',1,'SessionData::endDataWrite()'],['../class_stored_session_data.html#a9b226228a31f0721eb58a593f6293aa2',1,'StoredSessionData::endDataWrite()']]],
   ['enddatawriteandunlock',['endDataWriteAndUnlock',['../class_session_data.html#a68d1c762666e6b372eb95325def3c523',1,'SessionData']]],
   ['endingrun',['endingRun',['../class_picto_1_1_state_updater.html#aab58fbf8e6a585e06b8dfe6dbf15415f',1,'Picto::StateUpdater']]],
+  ['endinsertionevent',['endInsertionEvent',['../class_picto_1_1_state_updater.html#ad7c8b2db023067662ac7e25d0fcd3e33',1,'Picto::StateUpdater']]],
   ['enditem',['endItem',['../class_arrow.html#a363d170cfcc7db0472843a93de7e86d4',1,'Arrow']]],
   ['endsession',['endSession',['../class_connection_manager.html#ad70ceceadb24b53fc7bf9c04526dcbf5',1,'ConnectionManager::endSession()'],['../class_session_info.html#ae647cb4d792607c866654e8c908014e1',1,'SessionInfo::endSession()'],['../class_remote_viewer.html#a1a9f240aa21b60bcba8ce05e04e4917c',1,'RemoteViewer::endSession()']]],
   ['endsessionresponsehandler',['EndSessionResponseHandler',['../struct_picto_1_1_end_session_response_handler.html#a795194cba7e1bfe70b09b890736e8c5e',1,'Picto::EndSessionResponseHandler']]],

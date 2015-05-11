@@ -116,12 +116,12 @@ Inheritance diagram for Picto::PropertyDataUnitHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a2478e55ab770d4448b3f0eafa76d97b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_data_unit_handler.html#a2478e55ab770d4448b3f0eafa76d97b4">propertyValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:a2478e55ab770d4448b3f0eafa76d97b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value.  <a href="#a2478e55ab770d4448b3f0eafa76d97b4">More...</a><br /></td></tr>
-<tr class="separator:a2478e55ab770d4448b3f0eafa76d97b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdcbe87938d1d5b2df009f28011d5542"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_data_unit_handler.html#acdcbe87938d1d5b2df009f28011d5542">propertyInitValueChanged</a> (int propId, QString value)</td></tr>
-<tr class="memdesc:acdcbe87938d1d5b2df009f28011d5542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value.  <a href="#acdcbe87938d1d5b2df009f28011d5542">More...</a><br /></td></tr>
-<tr class="separator:acdcbe87938d1d5b2df009f28011d5542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f0fd0943ad9ac6cb169b289f308699a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_data_unit_handler.html#a6f0fd0943ad9ac6cb169b289f308699a">propertyValueChanged</a> (qulonglong dataId, int propId, QString value)</td></tr>
+<tr class="memdesc:a6f0fd0943ad9ac6cb169b289f308699a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value.  <a href="#a6f0fd0943ad9ac6cb169b289f308699a">More...</a><br /></td></tr>
+<tr class="separator:a6f0fd0943ad9ac6cb169b289f308699a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d3f8c3f12de31e7354889e3d15111ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_property_data_unit_handler.html#a3d3f8c3f12de31e7354889e3d15111ae">propertyInitValueChanged</a> (qulonglong dataId, int propId, QString value)</td></tr>
+<tr class="memdesc:a3d3f8c3f12de31e7354889e3d15111ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value.  <a href="#a3d3f8c3f12de31e7354889e3d15111ae">More...</a><br /></td></tr>
+<tr class="separator:a3d3f8c3f12de31e7354889e3d15111ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -164,7 +164,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit.html">
 
 <p>Definition at line <a class="el" href="_remote_state_x_m_l_handler_8h_source.html#l00050">50</a> of file <a class="el" href="_remote_state_x_m_l_handler_8h_source.html">RemoteStateXMLHandler.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="acdcbe87938d1d5b2df009f28011d5542"></a>
+<a class="anchor" id="a3d3f8c3f12de31e7354889e3d15111ae"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -174,6 +174,12 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit.html">
         <tr>
           <td class="memname">void Picto::PropertyDataUnitHandler::propertyInitValueChanged </td>
           <td>(</td>
+          <td class="paramtype">qulonglong&#160;</td>
+          <td class="paramname"><em>dataId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>propId</em>, </td>
         </tr>
@@ -197,11 +203,11 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit.html">
 </div><div class="memdoc">
 
 <p>Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#a8845b2700917283f18792ba2fa32a877" title="Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValu...">RemoteStateUpdater::propertyInitValueChanged</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#a5962970bd60c716a44caf5d995ae529a" title="Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValu...">RemoteStateUpdater::propertyInitValueChanged</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a2478e55ab770d4448b3f0eafa76d97b4"></a>
+<a class="anchor" id="a6f0fd0943ad9ac6cb169b289f308699a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -211,6 +217,12 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit.html">
         <tr>
           <td class="memname">void Picto::PropertyDataUnitHandler::propertyValueChanged </td>
           <td>(</td>
+          <td class="paramtype">qulonglong&#160;</td>
+          <td class="paramname"><em>dataId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>propId</em>, </td>
         </tr>
@@ -234,7 +246,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_property_data_unit.html">
 </div><div class="memdoc">
 
 <p>Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#a59e5c0981f0109047c3fbd5a3600d1ba" title="Emitted when a Property value changes for a Property with an AssetId of propId and a new value of val...">RemoteStateUpdater::propertyValueChanged</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#a6677f4c9c4c52a341a0cb4ce96f139b1" title="Emitted when a Property value changes for a Property with an AssetId of propId and a new value of val...">RemoteStateUpdater::propertyValueChanged</a> </dd></dl>
 
 </div>
 </div>

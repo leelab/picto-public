@@ -64,12 +64,12 @@ signals:
 	/*!	\brief Emitted when a Property value changes for a Property with an AssetId of propId and a new value of value.
 	 *	\sa RemoteStateUpdater::propertyValueChanged
 	 */
-	void propertyValueChanged(int propId, QString value);
+	void propertyValueChanged(qulonglong dataId, int propId, QString value);
 	/*!	\brief Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValue of
 	 *	value.
 	 *	\sa RemoteStateUpdater::propertyInitValueChanged
 	 */
-	void propertyInitValueChanged(int propId, QString value);
+	void propertyInitValueChanged(qulonglong dataId, int propId, QString value);
 protected:
 	//! A local DataUnit to avoid unnecessary allocations.
 	QSharedPointer<PropertyDataUnit> propUnit_;
@@ -153,7 +153,7 @@ signals:
 	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
 	 *	\sa RemoteStateUpdater::transitionActivated
 	 */
-	void transitionActivated(int transId);
+	void transitionActivated(qulonglong dataId, int transId);
 protected:
 	//! A local DataUnit to avoid unnecessary allocations.
 	QSharedPointer<StateDataUnit> stateUnit_;

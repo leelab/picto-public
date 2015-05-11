@@ -116,9 +116,9 @@ Inheritance diagram for Picto::StateDataUnitHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:ac29987fa4353ed5f59dbc36e77ed34bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_data_unit_handler.html#ac29987fa4353ed5f59dbc36e77ed34bd">transitionActivated</a> (int transId)</td></tr>
-<tr class="memdesc:ac29987fa4353ed5f59dbc36e77ed34bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed.  <a href="#ac29987fa4353ed5f59dbc36e77ed34bd">More...</a><br /></td></tr>
-<tr class="separator:ac29987fa4353ed5f59dbc36e77ed34bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212f0ed6a8fc9e2ffef4b85a5c2d7adc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_data_unit_handler.html#a212f0ed6a8fc9e2ffef4b85a5c2d7adc">transitionActivated</a> (qulonglong dataId, int transId)</td></tr>
+<tr class="memdesc:a212f0ed6a8fc9e2ffef4b85a5c2d7adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed.  <a href="#a212f0ed6a8fc9e2ffef4b85a5c2d7adc">More...</a><br /></td></tr>
+<tr class="separator:a212f0ed6a8fc9e2ffef4b85a5c2d7adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -161,7 +161,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_data_unit.html">Sta
 
 <p>Definition at line <a class="el" href="_remote_state_x_m_l_handler_8h_source.html#l00139">139</a> of file <a class="el" href="_remote_state_x_m_l_handler_8h_source.html">RemoteStateXMLHandler.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac29987fa4353ed5f59dbc36e77ed34bd"></a>
+<a class="anchor" id="a212f0ed6a8fc9e2ffef4b85a5c2d7adc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -171,9 +171,19 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_data_unit.html">Sta
         <tr>
           <td class="memname">void Picto::StateDataUnitHandler::transitionActivated </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>transId</em></td><td>)</td>
+          <td class="paramtype">qulonglong&#160;</td>
+          <td class="paramname"><em>dataId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>transId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -184,7 +194,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_state_data_unit.html">Sta
 </div><div class="memdoc">
 
 <p>Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#a0d2330aed87fb71711f4eb722c2b6b98" title="Emitted when a Transition with AssetId of transId is traversed. ">RemoteStateUpdater::transitionActivated</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_state_updater.html#ad2c1fbdbd34d8ae9400f0681ea33df40" title="Emitted when a Transition with AssetId of transId is traversed. ">RemoteStateUpdater::transitionActivated</a> </dd></dl>
 
 </div>
 </div>

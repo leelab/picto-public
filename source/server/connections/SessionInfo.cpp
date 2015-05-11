@@ -8,6 +8,7 @@
 #include <QStringList>
 #include <QSqlRecord>
 
+#include "SessionInfoDefines.h"
 #include "SessionInfo.h"
 #include "ConnectionManager.h"
 #include "../../common/storage/DesignConfig.h"
@@ -15,19 +16,6 @@
 #include "SerialSessionData.h"
 #include "../../common/memleakdetect.h"
 
-#define FRAME_STATE_VAR_ID -1
-#define TRANSITION_STATE_VAR_ID -2
-#define REWARD_STATE_VAR_ID -3
-#define MAX_SIG_CHAN_VAR_ID -12
-#define PROP_INIT_START_VAR_ID (INT_MAX/2)
-#define NEURAL_DATA_BUFFER_SECS 60
-#define BEHAV_MATCHED_COLUMN 4
-#define NEURAL_MATCHED_COLUMN 3
-#define BEHAV_TIMESTAMP_COLUMN 1
-#define NEURAL_TIMESTAMP_COLUMN 1
-#define BEHAV_EVENT_CODE_COLUMN 2
-#define NEURAL_EVENT_CODE_COLUMN 2
-#define DISK_WRITE_FRAC_COEFF 10.0
 //This turns on and off the authorized user permission setup on SessionInfo
 //#define NO_AUTH_REQUIRED
 QMap<QUuid,QWeakPointer<SessionInfo>> SessionInfo::loadedSessions_;
@@ -747,7 +735,10 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 		dataPoint = data->takeFirstDataPoint();
 		if(dataPoint->initValue_)
 		{
-			setStateVariable(dataPoint->getDataID(),PROP_INIT_START_VAR_ID+dataPoint->index_,dataPoint->toXml());
+			setStateVariable(dataPoint->getDataID(),
+				PROP_INIT_START_VAR_ID + MAX_RETAIN_PROPERTY_DATA * dataPoint->index_,
+				dataPoint->toXml());
+
 			cachedDirectorSessionData_->insertData(INIT_PROPERTIES_TYPE,dataPoint->getDataID(),QVariantList()
 																	<< dataPoint->getDataID()
 																	<< dataPoint->index_
@@ -756,7 +747,10 @@ void SessionInfo::insertPropertyData(QSharedPointer<Picto::PropertyDataUnitPacka
 		}
 		else
 		{
-			setStateVariable(dataPoint->getDataID(),dataPoint->index_,dataPoint->toXml());
+			setStateVariable(dataPoint->getDataID(),
+				MAX_RETAIN_PROPERTY_DATA * dataPoint->index_,
+				dataPoint->toXml());
+
 			cachedDirectorSessionData_->insertData(PROPERTIES_TYPE,dataPoint->getDataID(),QVariantList()
 																	<< dataPoint->getDataID()
 																	<< dataPoint->index_

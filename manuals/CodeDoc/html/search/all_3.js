@@ -179,6 +179,7 @@ var searchData=
   ['currchannel',['currChannel',['../class_neural_data_viewer.html#ab1134a17a37625f981f297daf6d3233b',1,'NeuralDataViewer']]],
   ['currentanalysischanged',['currentAnalysisChanged',['../class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88',1,'Designer::currentAnalysisChanged()'],['../class_editor_state.html#a50e0836cdfe1d8272171575b2f33a918',1,'EditorState::currentAnalysisChanged()'],['../class_experiment_item.html#ad059190b7458ecb348cf78652edea0c0',1,'ExperimentItem::currentAnalysisChanged()']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
+  ['currentqueue_5f',['currentQueue_',['../class_picto_1_1_slave_event_queue.html#ac0dff76f7b0c2b6b7e682744ef3b6ce0',1,'Picto::SlaveEventQueue']]],
   ['currentsessiondata',['CurrentSessionData',['../class_current_session_data.html',1,'CurrentSessionData'],['../class_current_session_data.html#af78242fa37935fad3fe1445ac93ba7c1',1,'CurrentSessionData::CurrentSessionData()']]],
   ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]],
   ['currentzoom',['currentZoom',['../class_viewer_window.html#a7822f8f05e33f4f403d042dd55e3cd52',1,'ViewerWindow']]],
@@ -186,7 +187,7 @@ var searchData=
   ['currrunname',['currRunName',['../class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1',1,'Picto::FileSessionLoader']]],
   ['currtaskchanged',['currTaskChanged',['../class_remote_viewer.html#af8fbd9bbf8ddebc82789765c2e888925',1,'RemoteViewer']]],
   ['currunit',['currUnit',['../class_neural_data_viewer.html#a17ce9132f1eacd87868566ac7c40bb62',1,'NeuralDataViewer']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
   ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
   ['customvertex',['CUSTOMVERTEX',['../struct_picto_1_1_d3_d_visual_target_1_1_c_u_s_t_o_m_v_e_r_t_e_x.html',1,'Picto::D3DVisualTarget']]]
 ];

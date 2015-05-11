@@ -23,13 +23,24 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	connect(updater_.data(),SIGNAL(startingRun(QString,QString)),this,SLOT(masterRunStarting(QString,QString)));
 	connect(updater_.data(),SIGNAL(endingRun()),this,SLOT(masterRunEnding()));
 
-	connect(updater_.data(),SIGNAL(propertyValueChanged(int, QString)),this,SLOT(masterPropertyValueChanged(int, QString)));
-	connect(updater_.data(),SIGNAL(propertyInitValueChanged(int, QString)),this,SLOT(masterPropertyInitValueChanged(int, QString)));
-	connect(updater_.data(),SIGNAL(transitionActivated(int)),this,SLOT(masterTransitionActivated(int)));
+	//Version With DataId
+	connect(updater_.data(), SIGNAL(propertyValueChanged(qulonglong, int, QString)), this, SLOT(masterPropertyValueChanged(qulonglong, int, QString)));
+	connect(updater_.data(), SIGNAL(propertyInitValueChanged(qulonglong, int, QString)), this, SLOT(masterPropertyInitValueChanged(qulonglong, int, QString)));
+	connect(updater_.data(), SIGNAL(transitionActivated(qulonglong, int)), this, SLOT(masterTransitionActivated(qulonglong, int)));
+
+	//Version Without DataId
+	connect(updater_.data(), SIGNAL(propertyValueChanged(int, QString)), this, SLOT(masterPropertyValueChanged(int, QString)));
+	connect(updater_.data(), SIGNAL(propertyInitValueChanged(int, QString)), this, SLOT(masterPropertyInitValueChanged(int, QString)));
+	connect(updater_.data(), SIGNAL(transitionActivated(int)), this, SLOT(masterTransitionActivated(int)));
+
 	connect(updater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
 	connect(updater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
 	connect(updater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
 	connect(updater_.data(),SIGNAL(disableRendering(bool)),this,SLOT(disableRendering(bool)));
+
+	//Special RemoteStateUpdater signals
+	connect(updater_.data(), SIGNAL(beginInsertionEvent()), this, SLOT(masterBeganInsertion()));
+	connect(updater_.data(), SIGNAL(endInsertionEvent()), this, SLOT(masterEndedInsertion()));
 
 	//Put the various data sources into the design config for access from analysis parameters
 	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
@@ -194,22 +205,46 @@ void SlaveExperimentDriver::masterRunEnding()
 
 /*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.
  */
+void SlaveExperimentDriver::masterPropertyValueChanged(qulonglong dataId, int propId, QString value)
+{
+	eventQueue_.addPropChange(dataId, propId, value);
+}
+
+/*! \brief Called when a Property initValue changes in the master.  Adds a corresponding event to the event queue.
+ */
+void SlaveExperimentDriver::masterPropertyInitValueChanged(qulonglong dataId, int propId, QString value)
+{
+	eventQueue_.addInitPropChange(dataId, propId,value);
+}
+
+/*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.
+ */
+void SlaveExperimentDriver::masterTransitionActivated(qulonglong dataId, int transId)
+{
+	eventQueue_.addTransActivation(dataId, transId);
+}
+
+/*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.
+ */
 void SlaveExperimentDriver::masterPropertyValueChanged(int propId, QString value)
 {
-	eventQueue_.addPropChange(propId,value);
+	eventQueue_.addPropChange(0, propId, value);
 }
+
 /*! \brief Called when a Property initValue changes in the master.  Adds a corresponding event to the event queue.
  */
 void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString value)
 {
-	eventQueue_.addInitPropChange(propId,value);
+	eventQueue_.addInitPropChange(0, propId,value);
 }
+
 /*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.
  */
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
-	eventQueue_.addTransActivation(transId);
+	eventQueue_.addTransActivation(0, transId);
 }
+
 /*! \brief Called when a frame is presented in the master.  Goes through event queue handling events one by one.  Updates
  *	FrameResolutionTimer objects, renders the frame and calls the current AnalysisFrameScript.
  */
@@ -276,3 +311,14 @@ void SlaveExperimentDriver::disableRendering(bool disable)
 		renderFrame();
 }
 
+//! Freeze updates and retain new states until endInsertion is called.
+void SlaveExperimentDriver::masterBeganInsertion()
+{
+	eventQueue_.beginInsertion();
+}
+
+//! Tell the eventQueue_ to take the retained new states, sort them on Order, insert them, and unfreeze updates.
+void SlaveExperimentDriver::masterEndedInsertion()
+{
+	eventQueue_.endInsertion();
+}

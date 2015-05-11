@@ -54,13 +54,32 @@ signals:
 	void startingRun(QString taskName,QString runName);
 	/*! \brief Emitted when a run ends.*/
 	void endingRun();
-	//triggered when values change
-	/*!\brief Emitted when a Property value changes for a Property with an AssetId of propId and a new value of value.*/
+
+	//With DataId
+	/*!\brief Emitted when a Property value changes for a Property with an AssetId of propId and a new value of value.
+	 */
+	void propertyValueChanged(qulonglong dataId, int propId, QString value);
+	/*!\brief Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValue of
+	 *	value.
+	 */
+	void propertyInitValueChanged(qulonglong dataId, int propId, QString value);
+	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
+	 */
+	void transitionActivated(qulonglong dataId, int transId);
+
+	//Without DataId
+	/*!\brief Emitted when a Property value changes for a Property with an AssetId of propId and a new value of value.
+	*/
 	void propertyValueChanged(int propId, QString value);
-	/*!\brief Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValue of value.*/
+	/*!\brief Emitted when a Property initValue changes for a Property with an AssetId of propId and a new initValue of
+	*	value.
+	*/
 	void propertyInitValueChanged(int propId, QString value);
-	/*! \brief Emitted when a Transition with AssetId of transId is traversed.*/
+	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
+	*/
 	void transitionActivated(int transId);
+
+
 	/*! \brief Emitted when a new frame is presented.  time is the time at which the first phosphor appeared on the display for this frame.*/
 	void framePresented(double time);
 	/*! \brief Emitted when a reward is triggered.  
@@ -81,6 +100,16 @@ signals:
 	 *	order and all data will be available on the data readers; however, the visual elements need not be displayed.
 	 */
 	void disableRendering(bool disable);
+	/*! \brief Called to freeze the updater in order to insert events that will need to be sorted.
+	 *	\details This is only used by the RemoteStateUpdater in order to ensure the proper ordering of transitions and
+	 *	property changes.
+	 */
+	void beginInsertionEvent();
+	/*! \brief Called to unfreeze the updater and kick off sorting on inserted events.
+	*	\details This is only used by the RemoteStateUpdater in order to ensure the proper ordering of transitions and
+	*	property changes.
+	*/
+	void endInsertionEvent();
 };
 
 

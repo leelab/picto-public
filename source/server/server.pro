@@ -31,6 +31,7 @@ HEADERS += $$(PICTO_TREE)/source/server/connections/ConnectionManager.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/ConnectionManager.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/SessionData.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/SessionData.cpp
+HEADERS += $$(PICTO_TREE)/source/server/connections/SessionInfoDefines.h
 HEADERS += $$(PICTO_TREE)/source/server/connections/SessionInfo.h
 SOURCES += $$(PICTO_TREE)/source/server/connections/SessionInfo.cpp
 HEADERS += $$(PICTO_TREE)/source/server/connections/CurrentSessionData.h

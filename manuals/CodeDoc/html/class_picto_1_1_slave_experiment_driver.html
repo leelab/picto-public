@@ -147,6 +147,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a9f8f714f1cc830684c96076db3370cfc">masterTransitionActivated</a> (int transId)</td></tr>
 <tr class="memdesc:a9f8f714f1cc830684c96076db3370cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when executions traverses a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> in the master. Adds a corresponding event to the event queue. <br /></td></tr>
 <tr class="separator:a9f8f714f1cc830684c96076db3370cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e4e8cdd8fec1e497aa12933f5ecbf45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e4e8cdd8fec1e497aa12933f5ecbf45"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a6e4e8cdd8fec1e497aa12933f5ecbf45">masterPropertyValueChanged</a> (qulonglong dataId, int propId, QString value)</td></tr>
+<tr class="memdesc:a6e4e8cdd8fec1e497aa12933f5ecbf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes in the master. Adds a corresponding event to the event queue. <br /></td></tr>
+<tr class="separator:a6e4e8cdd8fec1e497aa12933f5ecbf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add60edd3a1ce2f123796425ee12f939f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add60edd3a1ce2f123796425ee12f939f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#add60edd3a1ce2f123796425ee12f939f">masterPropertyInitValueChanged</a> (qulonglong dataId, int propId, QString value)</td></tr>
+<tr class="memdesc:add60edd3a1ce2f123796425ee12f939f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes in the master. Adds a corresponding event to the event queue. <br /></td></tr>
+<tr class="separator:add60edd3a1ce2f123796425ee12f939f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235a0c542e208d694f6159a8353ce866"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a235a0c542e208d694f6159a8353ce866"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a235a0c542e208d694f6159a8353ce866">masterTransitionActivated</a> (qulonglong dataId, int transId)</td></tr>
+<tr class="memdesc:a235a0c542e208d694f6159a8353ce866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when executions traverses a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> in the master. Adds a corresponding event to the event queue. <br /></td></tr>
+<tr class="separator:a235a0c542e208d694f6159a8353ce866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2992f9837fa3956368623c6d3c568ba0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2992f9837fa3956368623c6d3c568ba0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a2992f9837fa3956368623c6d3c568ba0">masterFramePresented</a> (double time)</td></tr>
 <tr class="memdesc:a2992f9837fa3956368623c6d3c568ba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a frame is presented in the master. Goes through event queue handling events one by one. Updates FrameResolutionTimer objects, renders the frame and calls the current AnalysisFrameScript. <br /></td></tr>
@@ -161,6 +173,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a2c899b105a18e22ad37e6cf42ae370fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a2c899b105a18e22ad37e6cf42ae370fd">disableRendering</a> (bool disable)</td></tr>
 <tr class="memdesc:a2c899b105a18e22ad37e6cf42ae370fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables/Enables rendering of frames to the <a class="el" href="struct_picto_1_1_rendering_target.html" title="This is a top level container acting as a single location to access all of the various objects that a...">RenderingTarget</a>.  <a href="#a2c899b105a18e22ad37e6cf42ae370fd">More...</a><br /></td></tr>
 <tr class="separator:a2c899b105a18e22ad37e6cf42ae370fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a531c9ca7e737dd73acceebfda4e2fdfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a531c9ca7e737dd73acceebfda4e2fdfb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#a531c9ca7e737dd73acceebfda4e2fdfb">masterBeganInsertion</a> ()</td></tr>
+<tr class="memdesc:a531c9ca7e737dd73acceebfda4e2fdfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Freeze updates and retain new states until endInsertion is called. <br /></td></tr>
+<tr class="separator:a531c9ca7e737dd73acceebfda4e2fdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0869589882cf0880910b11cb0a436d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0869589882cf0880910b11cb0a436d6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_slave_experiment_driver.html#af0869589882cf0880910b11cb0a436d6">masterEndedInsertion</a> ()</td></tr>
+<tr class="memdesc:af0869589882cf0880910b11cb0a436d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tell the eventQueue_ to take the retained new states, sort them on Order, insert them, and unfreeze updates. <br /></td></tr>
+<tr class="separator:af0869589882cf0880910b11cb0a436d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -263,7 +283,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Disables/Enables rendering of frames to the <a class="el" href="struct_picto_1_1_rendering_target.html" title="This is a top level container acting as a single location to access all of the various objects that a...">RenderingTarget</a>. </p>
 <p>This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to actually see every frame on screen. Even though the frames aren't rendered, however, all other logic operates exactly the same whether rendering is enabled or disabled. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00271">271</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00306">306</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -292,7 +312,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Handles the appropriate response to each input <a class="el" href="class_picto_1_1_slave_event.html" title="Holds information about an experimental state change event. Used by SlaveExperimentDriver. ">SlaveEvent</a>. </p>
 <p>When a PROP_VAL_CHANGE or INIT_PROP_VAL_CHANGE comes in, we change the value of our local <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a>. When a TRANS_ACTIVATED comes in, we move control to the appropriate <a class="el" href="class_picto_1_1_state_machine_element.html" title="A StateMachineElement is any element that can be part of the control flow in a StateMachine. ">StateMachineElement</a> and call whatever <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> scripts need to be called in the process. </p><dl class="section note"><dt>Note</dt><dd>Rather than handling each different type of event as it comes in from the <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a>, we queue them up at handle each frame all at once. This gives us the flexibility to know all data about the frame before it is actually presented to the display. It should be noted, however, that we are not taking advantage of this capability to any significant extent at this point. </dd></dl>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00080">80</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00091">91</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +351,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Called when a new Run starts. Handles various initializations that need to occur at the beginning of a new run. </p>
 <p>As part of this function, the <a class="el" href="class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1" title="Emitted when the currently running task changes. currTask is the name of the new Task. ">taskChanged()</a> signal is emitted. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00160">160</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00171">171</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +396,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Called when a list of ne signal values comes in from the master. Adds the values to the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523" title="Adds a single input value to the input subchannel from an outside source. ">SignalChannel::insertValue()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00255">255</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00290">290</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +424,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Renders the current frame by calling <a class="el" href="class_picto_1_1_state.html#a6daa792c1055a50bef88729ba46ece64" title="Handles rendering of the latest frame to the display while this State is active and when the Experime...">State::slaveRenderFrame()</a>. </p>
 <p>Note that in slave mode, the Picto <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> is working with the Qt Event loop which is why we are calling slaveRenderFrame from an outside class. In master experiment execution, the experiment is one giant loop of code that doesn't make use of the Qt Event loop. In that case frame rendering is handled as part of running a State/PausePoint. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00052">52</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00063">63</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>

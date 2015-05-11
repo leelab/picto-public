@@ -611,7 +611,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 </dl>
 <p>Apart from the actual object construction, this function handles variable initialization by using <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. It also calls <a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4" title="Creates all SessionData object necessary for storing Session data in this SessionInfo object...">LoadBaseSessionDatabase()</a> to create neccessary <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects and <a class="el" href="class_session_info.html#a5200cc74d891c7372b7daa57bc8ec367" title="Sets up the SessionData objects created in LoadBaseSessionDatabase(). In the case where this is a pre...">SetupBaseSessionDatabase()</a> to setup those objects. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00122">122</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00110">110</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +640,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Constructs a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object based on the contents of an old timed out Sqlite Session file at the input databaseFilePath. </p>
 <p>Apart from the actual object construction, this function handles variable initialization by using <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. It also calls <a class="el" href="class_session_info.html#a36a6b049e80d3d41f7ad86ec5658afc4" title="Creates all SessionData object necessary for storing Session data in this SessionInfo object...">LoadBaseSessionDatabase()</a> to create neccessary <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects and <a class="el" href="class_session_info.html#a5200cc74d891c7372b7daa57bc8ec367" title="Sets up the SessionData objects created in LoadBaseSessionDatabase(). In the case where this is a pre...">SetupBaseSessionDatabase()</a> to setup those objects. Once all of the <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects are setup, this constructor extracts all data from the Sqlite session file that needs to be in RAM (using a <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> object) and enters it into the relevant variables and <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> objects. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00166">166</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00154">154</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -672,7 +672,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Adds the input observerId to the list of authorized ids if the correct password is input. </p>
 <p>Returns true if the password was correct and the observer is authorized now </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00467">467</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00455">455</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -701,7 +701,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Adds the Workstation with the input Uuid to the authorized observer list. </p>
 <p>This means that Workstation will be able to use commands to change the Session state and not just watch what is happening in the Session. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01504">1504</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01498">1498</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -731,7 +731,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Whenever this function is called, it checks which behavioral and neural alignment events have not yet been matched, then goes through and attempts to make the match. When a match is found, <a class="el" href="class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457" title="Updates the coefficients when a new set of matching timestamps is found. ">AlignmentTool::updateCoefficients()</a> is used to improve the precision of the alignment parameters using a least squares algorithm.</p>
 <p>When realignAll is set to true, all alignment events from the entire session are rematched and the least squares timestamp alignment parameters are recalculated. This takes care of possible losses in precision that may arise if there is a connection problem and some alignment events arrive out of order during the Session. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01233">1233</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01227">1227</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -752,7 +752,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Sets the type of component to which other component types' timestamps should be aligned. If this is not called, component timestamps will not be aligned. </p>
 <p>Currently, the input should always be "DIRECTOR". </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00378">378</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00366">366</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -825,7 +825,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00046">46</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00034">34</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -853,7 +853,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>Builds all table indeces that have been set in <a class="el" href="class_stored_session_data.html" title="Handles long term storage of session data in an SQL file. ">StoredSessionData</a> to improve Session read query speed. </p>
 <p>This should be done only at the end of a session since extra unnecessary indeces slow down data write speed in SQL significantly. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01418">1418</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01412">1412</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -883,7 +883,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <p>If a session is removed from the openSessions list by the <a class="el" href="class_connection_manager.html" title="Keeps track of all active Components (Director/Proxy) as well as all active and recently timed out Se...">ConnectionManager</a> but still hasn't been deleted since something with a shared pointer is stuck in a long operation, we want to make sure that nothing else reopens the session from file before the loaded session actually gets deleted. To do this, we maintain a loadedSessions_ list that contains QWeakPointers to all currently loaded sessions. When LoadSession is called, this list is checked first and if a session is found with the input sessionID, the weak reference is converted to a regular shared pointer and returned. Viola! No duplicate copies of sessions.</p>
 <p>This function takes care of actually removing the <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> weak pointer from the list when the last <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> strong smart pointer is cleared. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_session_info.html#a1f3c535a8c90e32cc0ec38caf2d0f42c" title="Loads the Session with the input sessionId and the Sqlite Session file at the input databaseFilePath ...">LoadSession()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00090">90</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00078">78</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -908,7 +908,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 <li>Flush all final cached data to the Sqlite file (<a class="el" href="class_session_info.html#af4106254bbe6282aae6e79e3b92ece2b" title="Dumps the RAM cached data into the file based Session database. ">flushCache()</a>). </li>
 </ul>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00420">420</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00408">408</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -940,7 +940,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionManager</b
 The time at which the flush starts and ends are also carefully marked for use with <a class="el" href="class_session_info.html#a5ed2bbb223d5a377502bf6b41f383c07" title="Returns whether the last data written from the input source preceded the beginning of the latest flus...">lastDataPrecededFlush()</a> and <a class="el" href="class_session_info.html#ad92d5a3911badfa2278b0082c31a826b" title="Returns whether the last data written from the input source followed the end of the latest flush of R...">lastDataFollowedFlush()</a> which are necessary to be sure we tell the Picto components exactly which data has been written to disk in this multi-threaded environment.</dd></dl>
 <p>Returns true on success or false if nothing happened. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00545">545</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00533">533</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -961,7 +961,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <dl class="section note"><dt>Note</dt><dd>If <a class="el" href="class_session_info.html#a7a6a1c43babe1d1771e76123c24f0933" title="After this function is called, hasActiveComponents will return false. ">ignoreComponents()</a> has been called, this will always return false. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_session_info.html#acc27036c722407afba5bf30965084fbb" title="Called periodically to update the stored information about the Session&#39;s Components in the Session da...">UpdateComponentActivity()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00340">340</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00328">328</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -982,7 +982,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Inserts a NeuralDataUnit record into the <a class="el" href="class_cached_session_data.html" title="Stores session data in RAM for quick access until it is saved to disk. ">CachedSessionData</a> and the record of the current Session state. The <a class="el" href="class_cached_session_data.html" title="Stores session data in RAM for quick access until it is saved to disk. ">CachedSessionData</a> will later be flushed to disk in <a class="el" href="class_session_info.html#af4106254bbe6282aae6e79e3b92ece2b" title="Dumps the RAM cached data into the file based Session database. ">flushCache()</a>. </p>
 <p>Use the alignment tool to fit the time </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00605">605</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00593">593</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1005,7 +1005,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>The authorized observers list contains all observers who are authorized at the higher permission level. However, there is a special case. If the list contains a null Uuid, then all observers (including those using null IDs) are considered to be at the authorized level.</p>
 <dl class="section warning"><dt>Warning</dt><dd>This is by no means a secure method of assigning permissions. Since all network communication is unencrypted, it would be trivial to intercept a valid observer ID, and then append it to spoofed commands. The password is also not encrypted on the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a> or Workstation. If you want real security, you'll need to rewrite this. </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00454">454</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00442">442</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1044,7 +1044,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Creates all <a class="el" href="class_session_data.html" title="The base class or objects that stores session data. ">SessionData</a> object necessary for storing Session data in this <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object. </p>
 <p>The name of this function is historical and should probably be changed to something more suitable. Alternatively, this can all just be moved to <a class="el" href="class_session_info.html#a027150fa0846fb216bf40d1636984c6a" title="Initializes all SessionInfo member variables for a new SessionInfo object. ">InitializeVariables()</a>. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01069">1069</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01063">1063</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1083,7 +1083,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Loads the Session with the input sessionId and the Sqlite Session file at the input databaseFilePath and returns it. </p>
 <p>Internally, if the <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object for this session is already loaded, the function just returns it. If it isn't loaded, a new <a class="el" href="class_session_info.html" title="Manages data for a single Session. Stores data needed for Session monitoring in RAM and Session data ...">SessionInfo</a> object is created and all of the data from the Sqlite Session file is loaded into that object. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00061">61</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00049">49</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1103,7 +1103,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Returns the Directive that should be sent to the Component with the input componentId.</p>
 <p>Internally, there is a queue of pending directives. This function removes the first one from the queue and returns it. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00391">391</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00379">379</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1124,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Returns a serialized version of all Neural data since the input time. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_session_info.html#af61711671c1a39e7cc6b817f98cbe33a" title="Returns a serialized version of all State Variables that have changed since the input time...">selectStateVariables()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00984">984</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00978">978</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1144,7 +1144,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Returns the latest SessionDataPackage for this Session in XML serial form. </p>
 <p>The SessionDataPackage includes data about all Task Runs that have occured in this Session. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01014">1014</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01008">1008</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1165,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Returns a serialized version of all State Variables that have changed since the input time. </p>
 <p>We use a single table to track the latest state of all variables pertinant to running a picto workstation. Using this table, we can assure requests for the latest picto state will have constant runtime independant of the previous runtime of the current experiment. New variable values always update existing values with the same id if their timestamp is greater than that of their predecessor. Calling selectStateVariables will return a string that can be sent to a workstation. This string contains all of the stateVariables that have changed after (not including) the input time. The format of the returned variables is just the serialization that the director used when sending them to the server. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00972">972</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00966">966</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1211,7 +1211,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>The buffer stays NEURAL_DATA_BUFFER_SECS long, and if the input data has a timestamp of more than NEURAL_DATA_BUFFER_SECS from the beginning of the buffer, values from the beginning are removed accordingly.</p>
 <p>This buffer is used to send neural data to Picto Workstations monitoring the current session so that the neural data can be displayed to the operator. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01448">1448</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01442">1442</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1256,7 +1256,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Adds a new Picto current state variable to a list that will be added to a <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object for the purpose of updating the Picto Workstation with the current experimental state. The list's data is copied to the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object in <a class="el" href="class_session_info.html#ab636ab4b5a116c25071e14186033bf30" title="Adds all of the experimental state variables from setStateVariable() to the CurrentSessionData object...">updateCurrentStateTable()</a>. </p>
 <p>We use a single <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object to track the latest state of all variables needed to run a remote session on a Picto Workstation. Using this object, we can assure requests for the latest Picto state will have constant runtime independant of how long the the current experiment has been running. New variable values always update existing values with the same id if their timestamp is greater than that of their predecessor, such that the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object always contains the most up to date picture of the current Experimental state. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01432">1432</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01426">1426</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1276,7 +1276,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>Called periodically to update the stored information about the Session's Components in the Session database. </p>
 <p>If the component is still attached to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>, it is set as either Active or Inactive in this Session depending on whether it reports that it is attached to the current Session or to some other Session. </p>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00310">310</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l00298">298</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -1306,7 +1306,7 @@ The time at which the flush starts and ends are also carefully marked for use wi
 <p>We don't just do this when the values come in so that we can always be sure that all of the data for a given time is in the <a class="el" href="class_current_session_data.html" title="Stores all of the current values for each piece of session data defining the current Experimental sta...">CurrentSessionData</a> object when a Workstation requests it. Otherwise, the Workstation might miss some data if it requests data for a certain time, misses some of the final data for that time because it hasn't come in yet and then requests data for AFTER that first time later, such that the missed data is never read.</p>
 <p>updateTime is the time of the latest state variable to be read. </p><dl class="section note"><dt>Note</dt><dd>We should look into why updateTime can't just be read from the currestStateQuery_ list. </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01480">1480</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_session_info_8cpp_source.html#l01474">1474</a> of file <a class="el" href="_session_info_8cpp_source.html">SessionInfo.cpp</a>.</p>
 
 </div>
 </div>

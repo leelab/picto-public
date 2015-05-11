@@ -62,10 +62,18 @@ private slots:
 	void masterPropertyValueChanged(int propId, QString value);
 	void masterPropertyInitValueChanged(int propId, QString value);
 	void masterTransitionActivated(int transId);
+
+	void masterPropertyValueChanged(qulonglong dataId, int propId, QString value);
+	void masterPropertyInitValueChanged(qulonglong dataId, int propId, QString value);
+	void masterTransitionActivated(qulonglong dataId, int transId);
+
 	void masterFramePresented(double time);
 	void masterRewardSupplied(double time,int duration,int channel);
 	void masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void disableRendering(bool disable);
+
+	void masterBeganInsertion();
+	void masterEndedInsertion();
 };
 
 

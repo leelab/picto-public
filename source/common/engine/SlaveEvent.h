@@ -28,12 +28,30 @@ public:
 	SlaveEvent();
 	~SlaveEvent(){};
 
-	void setAsProp(const int& assetId, const QString& val);
-	void setAsInitProp(const int& assetId, const QString& val);
-	void setAsTrans(const int& assetId);
-	EventType type;								//!< The type of event that occured.
-	int id;										//!< The Asset ID of the Property whose value/initValue changed or of the Transition that was traversed.
-	QString value;								//!< For Property events, the new value of the value/initValue.
+	SlaveEvent &operator= (const SlaveEvent &other)
+	{
+		if (this != &other)
+		{
+			type = other.type;
+			id = other.id;
+			value = other.value;
+			dataId = other.dataId;
+		}
+		return *this;
+	}
+
+	void setAsProp(const qulonglong& dataId, const int& assetId, const QString& val);
+	void setAsInitProp(const qulonglong& dataId, const int& assetId, const QString& val);
+	void setAsTrans(const qulonglong& dataId, const int& assetId);
+
+	//! The type of event that occured.
+	EventType type;
+	//! The Asset ID of the Property whose value/initValue changed or of the Transition that was traversed.
+	int id;
+	//! For Property events, the new value of the value/initValue.
+	QString value;
+	//! For tracking the dataId, which reveals ordering - Only used for sorting subets of data from Remote Viewing
+	qulonglong dataId;
 };
 
 

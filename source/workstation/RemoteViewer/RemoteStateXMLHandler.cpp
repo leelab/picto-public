@@ -18,8 +18,8 @@ using namespace Picto;
 PropertyDataUnitHandler::PropertyDataUnitHandler(RemoteStateUpdater *pParent)
 {
 	propUnit_ = QSharedPointer<PropertyDataUnit>(new PropertyDataUnit());
-	connect(this, SIGNAL(propertyValueChanged(int, QString)), pParent, SIGNAL(propertyValueChanged(int, QString)));
-	connect(this, SIGNAL(propertyInitValueChanged(int, QString)), pParent, SIGNAL(propertyInitValueChanged(int, QString)));
+	connect(this, SIGNAL(propertyValueChanged(qulonglong, int, QString)), pParent, SIGNAL(propertyValueChanged(qulonglong, int, QString)));
+	connect(this, SIGNAL(propertyInitValueChanged(qulonglong, int, QString)), pParent, SIGNAL(propertyInitValueChanged(qulonglong, int, QString)));
 }
 
 void PropertyDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
@@ -27,11 +27,11 @@ void PropertyDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 	propUnit_->fromXml(xmlReader);
 	if (propUnit_->initValue_)
 	{
-		emit propertyInitValueChanged(propUnit_->index_, propUnit_->value_);
+		emit propertyInitValueChanged(propUnit_->getDataID(), propUnit_->index_, propUnit_->value_);
 	}
 	else
 	{
-		emit propertyValueChanged(propUnit_->index_, propUnit_->value_);
+		emit propertyValueChanged(propUnit_->getDataID(), propUnit_->index_, propUnit_->value_);
 	}
 }
 
@@ -79,14 +79,14 @@ void InputDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 StateDataUnitHandler::StateDataUnitHandler(RemoteStateUpdater *pParent)
 {
 	stateUnit_ = QSharedPointer<StateDataUnit>(new StateDataUnit());
-	connect(this, SIGNAL(transitionActivated(int)), pParent, SIGNAL(transitionActivated(int)));
+	connect(this, SIGNAL(transitionActivated(qulonglong, int)), pParent, SIGNAL(transitionActivated(qulonglong, int)));
 }
 
 void StateDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 {
 	stateUnit_->fromXml(xmlReader);
 	qDebug() << "Received Transition ID:" << stateUnit_->getTransitionID();
-	emit transitionActivated(stateUnit_->getTransitionID());
+	emit transitionActivated(stateUnit_->getDataID(), stateUnit_->getTransitionID());
 }
 
 

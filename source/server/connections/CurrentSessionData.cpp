@@ -1,13 +1,17 @@
 #include <QMutexLocker>
 #include <QTime>
+#include <QDebug>
+
 #include "CurrentSessionData.h"
+#include "SessionInfoDefines.h"
 
 /*! \brief Constructs a CurrentSessionData object for the input dataType.
  */
-CurrentSessionData::CurrentSessionData(int dataType) :
-dataType_(dataType)
+CurrentSessionData::CurrentSessionData(int dataType)
+	: dataType_(dataType)
 {
 	dataByTime_.clear();
+	lastOffset_.clear();
 }
 CurrentSessionData::~CurrentSessionData()
 {
@@ -58,27 +62,74 @@ void CurrentSessionData::writeData(int, QVariantList data)
 	Q_ASSERT(data.size() == 4);
 	int dataId = data[0].toInt();
 	int variableType = data[1].toInt();
+	int dataBin = variableType;
 	double timestamp = data[2].toDouble();
 	int oldDataId = 0;
 	double oldTimestamp = 0;
-	if(dataMap_.contains(variableType))
+	bool bAppend = false;
+
+	//For StateTransition Data, we use a Ringbuffer of size MAX_RETAIN_TRANSITION_INFO, but we need to append the data
+	//	when we submit data of the same timestamp, or the data will be reordered across the boundary.
+	if (variableType == TRANSITION_STATE_VAR_ID)
 	{
-		oldDataId = dataMap_[variableType][0].toInt();
-		oldTimestamp = dataMap_[variableType][2].toDouble();
+		dataBin = variableType + lastOffset_[variableType];
+		if (dataMap_.contains(dataBin) && dataMap_[dataBin][2].toDouble() == timestamp)
+		{
+			bAppend = true;
+		}
+		else
+		{
+			lastOffset_[variableType] = (lastOffset_[variableType] + 1) % MAX_RETAIN_TRANSITION_INFO;
+			dataBin = variableType + lastOffset_[variableType];
+		}
 	}
-	if(oldDataId > dataId)
+	else if (variableType >= 0) //Asset Property
+	{
+		//If variableType >= 0, then it's an Asset Property, so we need to use the MAX_RETAIN_PROPERTY_DATA
+		dataBin = variableType + lastOffset_[variableType];
+		if (dataMap_.contains(dataBin) && dataMap_[dataBin][2].toDouble() == timestamp)
+		{
+			bAppend = true;
+		}
+		else
+		{
+			lastOffset_[variableType] = (lastOffset_[variableType] + 1) % MAX_RETAIN_PROPERTY_DATA;
+			dataBin = variableType + lastOffset_[variableType];
+		}
+	}
+
+	if (dataMap_.contains(dataBin))
+	{
+		oldDataId = dataMap_[dataBin][0].toInt();
+		oldTimestamp = dataMap_[dataBin][2].toDouble();
+	}
+
+	if (oldDataId > dataId && !bAppend)
+	{
 		return;
+	}
+
 	if(oldTimestamp > timestamp)
 		return;
-	//qDebug(data[3].toString().toLatin1() + "\n");
-	dataMap_[variableType] = data;
-	if(dataByTime_.contains(oldTimestamp) && dataByTime_[oldTimestamp].contains(variableType))
+
+	//If this has the same timestamp as the last chunk, we need to append the data to maintain the same ordering.
+	//	If we don't, then the data will be reordered across the ring buffer's boundary
+	if (bAppend)
 	{
-		dataByTime_[oldTimestamp].remove(variableType);
+		dataMap_[dataBin][3] = dataMap_[dataBin][3].toString() + data[3].toString();
+	}
+	else
+	{
+		dataMap_[dataBin] = data;
+	}
+
+	if (!bAppend && dataByTime_.contains(oldTimestamp) && dataByTime_[oldTimestamp].contains(dataBin))
+	{
+		dataByTime_[oldTimestamp].remove(dataBin);
 		if(dataByTime_[oldTimestamp].isEmpty())
 			dataByTime_.remove(oldTimestamp);
 	}
-	dataByTime_[timestamp][variableType] = variableType;
+	dataByTime_[timestamp][dataBin] = variableType;
 }
 
 /*! \brief Implements SessionData::readDataTypes() to return only the single data type that
@@ -126,4 +177,5 @@ QList<QVariantList> CurrentSessionData::readData(int dataType,QVariant condition
 void CurrentSessionData::eraseEverything()
 {
 	dataMap_.clear();
+	lastOffset_.clear();
 }

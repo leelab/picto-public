@@ -125,20 +125,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;signals:</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> startingRun(QString taskName,QString runName);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> endingRun();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//triggered when values change</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> propertyValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> propertyInitValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> transitionActivated(<span class="keywordtype">int</span> transId);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> framePresented(<span class="keywordtype">double</span> time);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> rewardSupplied(<span class="keywordtype">double</span> time,<span class="keywordtype">int</span> duration,<span class="keywordtype">int</span> channel);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> signalChanged(QString name,QStringList subChanNames,QVector&lt;float&gt; vals);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> disableRendering(<span class="keywordtype">bool</span> disable);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//With DataId</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> propertyValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> propertyInitValueChanged(qulonglong dataId, <span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> transitionActivated(qulonglong dataId, <span class="keywordtype">int</span> transId);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//Without DataId</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> propertyValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> propertyInitValueChanged(<span class="keywordtype">int</span> propId, QString value);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> transitionActivated(<span class="keywordtype">int</span> transId);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> framePresented(<span class="keywordtype">double</span> time);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> rewardSupplied(<span class="keywordtype">double</span> time,<span class="keywordtype">int</span> duration,<span class="keywordtype">int</span> channel);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">void</span> signalChanged(QString name,QStringList subChanNames,QVector&lt;float&gt; vals);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">void</span> disableRendering(<span class="keywordtype">bool</span> disable);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">void</span> beginInsertionEvent();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">void</span> endInsertionEvent();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_state_updater_html"><div class="ttname"><a href="class_picto_1_1_state_updater.html">Picto::StateUpdater</a></div><div class="ttdoc">An interface class for objects that update the Picto State from some external source. </div><div class="ttdef"><b>Definition:</b> <a href="_state_updater_8h_source.html#l00024">StateUpdater.h:24</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>

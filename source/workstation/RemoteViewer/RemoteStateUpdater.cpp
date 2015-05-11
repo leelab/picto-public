@@ -71,7 +71,6 @@ bool RemoteStateUpdater::updateState()
 		return false;
 	
 	QByteArray xmlFragment = response->getContent();
-	qDebug() << "New Server Data:" << xmlFragment;
 	QSharedPointer<QXmlStreamReader> xmlReader(new QXmlStreamReader(xmlFragment));
 
 	while(!xmlReader->atEnd() && xmlReader->readNext() && xmlReader->name() != "Data");
@@ -80,6 +79,7 @@ bool RemoteStateUpdater::updateState()
 		return false;
 
 	xmlReader->readNext();
+	emit beginInsertionEvent();
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
 		QString name = xmlReader->name().toString();
@@ -93,6 +93,8 @@ bool RemoteStateUpdater::updateState()
 		}
 		xmlReader->readNext();
 	}
+
+	emit endInsertionEvent();
 
 	return true;
 }

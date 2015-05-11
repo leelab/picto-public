@@ -177,13 +177,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6cfd77559307223a8121a6a016b489c2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a6cfd77559307223a8121a6a016b489c2">runTask</a> (QString taskName)</td></tr>
 <tr class="memdesc:a6cfd77559307223a8121a6a016b489c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> with the input taskName starting with the initial transition in its top level <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>.  <a href="#a6cfd77559307223a8121a6a016b489c2">More...</a><br /></td></tr>
 <tr class="separator:a6cfd77559307223a8121a6a016b489c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a094a9739d52a077a80a67b77f0579ba8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a094a9739d52a077a80a67b77f0579ba8"></a>
-QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a094a9739d52a077a80a67b77f0579ba8">getTaskNames</a> ()</td></tr>
-<tr class="memdesc:a094a9739d52a077a80a67b77f0579ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> names. <br /></td></tr>
-<tr class="separator:a094a9739d52a077a80a67b77f0579ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af79bc0fccd19fd675bf9c9492d95501e"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_task.html">Task</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#af79bc0fccd19fd675bf9c9492d95501e">getTaskByName</a> (QString taskName)</td></tr>
-<tr class="memdesc:af79bc0fccd19fd675bf9c9492d95501e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object with the input taskName.  <a href="#af79bc0fccd19fd675bf9c9492d95501e">More...</a><br /></td></tr>
-<tr class="separator:af79bc0fccd19fd675bf9c9492d95501e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c769dd036f85bf6b6c867e185056a25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c769dd036f85bf6b6c867e185056a25"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a7c769dd036f85bf6b6c867e185056a25">getTaskNames</a> () const </td></tr>
+<tr class="memdesc:a7c769dd036f85bf6b6c867e185056a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> names. <br /></td></tr>
+<tr class="separator:a7c769dd036f85bf6b6c867e185056a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa8568bee4e33478a5fe753c3721ad4"><td class="memItemLeft" align="right" valign="top">QSharedPointer&lt; <a class="el" href="class_picto_1_1_task.html">Task</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a5aa8568bee4e33478a5fe753c3721ad4">getTaskByName</a> (QString taskName) const </td></tr>
+<tr class="memdesc:a5aa8568bee4e33478a5fe753c3721ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> object with the input taskName.  <a href="#a5aa8568bee4e33478a5fe753c3721ad4">More...</a><br /></td></tr>
+<tr class="separator:a5aa8568bee4e33478a5fe753c3721ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a970f4f49eb3b92fba974944547a6ca32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a970f4f49eb3b92fba974944547a6ca32"></a>
+QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a970f4f49eb3b92fba974944547a6ca32">getTaskAssetIds</a> () const </td></tr>
+<tr class="memdesc:a970f4f49eb3b92fba974944547a6ca32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of assetIds corresponding to the Tasks. <br /></td></tr>
+<tr class="separator:a970f4f49eb3b92fba974944547a6ca32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d21797ea8da432af89edd40cb5666d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3d21797ea8da432af89edd40cb5666d"></a>
+QSharedPointer&lt; <a class="el" href="class_picto_1_1_task.html">Task</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#ad3d21797ea8da432af89edd40cb5666d">getTaskByAssetId</a> (int assetId) const </td></tr>
+<tr class="memdesc:ad3d21797ea8da432af89edd40cb5666d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> corresponding the the input assetId, or null. <br /></td></tr>
+<tr class="separator:ad3d21797ea8da432af89edd40cb5666d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90ea1002f6952278bdce9cc74bf9bc31"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_experiment.html#a90ea1002f6952278bdce9cc74bf9bc31">hasEditableDescendants</a> ()</td></tr>
 <tr class="memdesc:a90ea1002f6952278bdce9cc74bf9bc31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this object can or does have child objects that are editable.  <a href="#a90ea1002f6952278bdce9cc74bf9bc31">More...</a><br /></td></tr>
 <tr class="separator:a90ea1002f6952278bdce9cc74bf9bc31"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -531,6 +539,9 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#acabb0f86283aefd4e247f076b56504cd">scriptableContainerWasReinitialized</a> ()</td></tr>
 <tr class="memdesc:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the <a class="el" href="class_picto_1_1_scriptable_container.html" title="A base class for all classes that need to be able to call scripts on in-scope Scriptable objects...">ScriptableContainer</a> is reinitialized. Descendant classes extend this to run any code that needs to have access to all <a class="el" href="class_picto_1_1_scriptable.html" title="A base class for classes that can be used in scripts. ">Scriptable</a> objects that will be accessible at runtime.  <a href="#acabb0f86283aefd4e247f076b56504cd">More...</a><br /></td></tr>
 <tr class="separator:acabb0f86283aefd4e247f076b56504cd inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a62657fab85ffefdd6798d65e4cf88 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27a62657fab85ffefdd6798d65e4cf88"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptableContainerCustomInitialization</b> ()</td></tr>
+<tr class="separator:a27a62657fab85ffefdd6798d65e4cf88 inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7548d13aa3def42d192277e75206b74a inherit pro_methods_class_picto_1_1_scriptable_container"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7548d13aa3def42d192277e75206b74a"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_scriptable_container.html#a7548d13aa3def42d192277e75206b74a">executeSearchAlgorithm</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
 <tr class="memdesc:a7548d13aa3def42d192277e75206b74a inherit pro_methods_class_picto_1_1_scriptable_container"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends <a class="el" href="class_picto_1_1_u_i_enabled.html#a97cb540bf9702a5af91a9eeddde39db9" title="Searches this UIEnabled object&#39;s name for the input searchRequest. ">Scriptable::executeSearchAlgorithm</a> to check for the input searchRequest in this object's scripts. <br /></td></tr>
@@ -784,7 +795,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Used to change this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a>'s hostId whenever something about it or a descendant is edited. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_associate_root_host.html" title="An AssociateRootHost object&#39;s tree can be linked to by an AssociateRoot object&#39;s tree. Elements in the AssociateRoot tree connect to elements in the AssociateRootHost tree and provide additional information about them that does not affect their basic functionality. ">AssociateRootHost</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00179">179</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00182">182</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -814,7 +825,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a5721f31da49f2e8df266e0a6c40317fe">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00120">120</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00123">123</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -844,7 +855,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#ab3e676a5138ce7f49ab924c98fe3d71e">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00115">115</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00118">118</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -879,7 +890,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 </div>
 </div>
-<a class="anchor" id="af79bc0fccd19fd675bf9c9492d95501e"></a>
+<a class="anchor" id="a5aa8568bee4e33478a5fe753c3721ad4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -888,7 +899,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
           <td>(</td>
           <td class="paramtype">QString&#160;</td>
           <td class="paramname"><em>taskName</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -924,7 +935,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Gets the input signal's xGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00150">150</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00153">153</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -952,7 +963,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Gets the input signal's xOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for ...">xOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00134">134</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00137">137</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -980,7 +991,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's xySignalShear. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a46cb8ba580d801935254ab8c7d684c0b" title="Sets/gets the shear factor that will be used to shear x as a function of y. ">xySignalShear</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00166">166</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00169">169</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1008,7 +1019,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Gets the input signal's yGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00158">158</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00161">161</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1036,7 +1047,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Gets the input signal's yOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for ...">yOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00142">142</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00145">145</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1066,7 +1077,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_u_i_enabled.html#aa9146adb2bb548fd5763be8d7a6f97d1">Picto::UIEnabled</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00114">114</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00117">117</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1096,7 +1107,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable_container.html#a37082e622412b266560c0cfcd8ee757c">Picto::ScriptableContainer</a>.</p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00177">177</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00206">206</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1117,7 +1128,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Runs the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> with the input taskName starting with the initial transition in its top level <a class="el" href="class_picto_1_1_state_machine.html" title="A container for a State Machine defined by StateMachineElement objects connected by Transitions...">StateMachine</a>. </p>
 <p>This function blocks until the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> is done running, then returns true. If it returns false, the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> could not be found, or an <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html" title="Runs a Picto Experiment. ">Engine::PictoEngine</a> was not yet addded to this <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> using <a class="el" href="class_picto_1_1_experiment.html#a567673ce1a500a661712458086612005" title="Sets the Engine::PictoEngine that will be used in running this Experiment to the input object...">setEngine()</a>. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00127">127</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00156">156</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
@@ -1198,7 +1209,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's xGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#acd2fd30373eb8c9050be4de8541a1576" title="Sets/gets the gain by which the input signal value plus xOffset will be scaled for the xPosition...">xGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00146">146</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00149">149</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1227,7 +1238,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's xOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a0c8a2615fdcb36dc6ff76c572b718750" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by xGain) for ...">xOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00130">130</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00133">133</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1256,7 +1267,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's xySignalShear. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a46cb8ba580d801935254ab8c7d684c0b" title="Sets/gets the shear factor that will be used to shear x as a function of y. ">xySignalShear</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00162">162</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00165">165</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1285,7 +1296,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's yGain. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a9200e0644a2c450dad16aaa59864fcf9" title="Sets/gets the gain by which the input signal value plus yOffset will be scaled for the yPosition...">yGain</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00154">154</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00157">157</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1314,7 +1325,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Sets the input signal's yOffset. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_experiment.html#a26e13838e01181ba7504742f4034336f" title="Sets/gets the offset that will be added to the input signal value before it is scaled (by yGain) for ...">yOffset</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00138">138</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8h_source.html#l00141">141</a> of file <a class="el" href="_experiment_8h_source.html">Experiment.h</a>.</p>
 
 </div>
 </div>
@@ -1353,7 +1364,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Updates the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a> calibration coefficients SignalChannel::setCalibrationCoefficients() and SignalChannel::setShear() based on the current calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values. </p>
 <p>This is called whenever the calibration <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values change. </p>
 
-<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00241">241</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_experiment_8cpp_source.html#l00270">270</a> of file <a class="el" href="_experiment_8cpp_source.html">Experiment.cpp</a>.</p>
 
 </div>
 </div>
