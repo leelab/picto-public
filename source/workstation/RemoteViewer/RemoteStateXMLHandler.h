@@ -153,7 +153,8 @@ signals:
 	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
 	 *	\sa RemoteStateUpdater::transitionActivated
 	 */
-	void transitionActivated(qulonglong dataId, int transId);
+	void transitionActivated(qulonglong dataId, int transId, bool remoteRunSignal);
+	void prepareToProcessQueue();
 protected:
 	//! A local DataUnit to avoid unnecessary allocations.
 	QSharedPointer<StateDataUnit> stateUnit_;

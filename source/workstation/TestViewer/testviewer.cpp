@@ -59,6 +59,8 @@ void TestViewer::init()
 	designRoot_->refreshFromXml();
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	viewSelectionFrame_->clear();
+
 	deiniting_ = false;
 	designRoot_->enableRunMode(true);
 	QSharedPointer<DesignRoot> myDesignRoot = designRoot_;
@@ -279,16 +281,16 @@ void TestViewer::setupUi()
 	rightTabs->addTab(analysisSelector_,"Select Analyses");
 	rightTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
-
 	viewSelectionFrame_ = new ViewSelectionFrame();
-	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->setVisualTargetHost(visualTargetHost_);
 	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
-	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
 
-	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
-		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool, bool)));
+
+	connect(analysisSelector_, SIGNAL(clearAnalysisSelection(bool)),
+		viewSelectionFrame_, SLOT(clearAnalysisSelection(bool)));
 
 	QVBoxLayout *leftToolFrame = new QVBoxLayout;
 	leftToolFrame->addWidget(viewSelectionFrame_, 0);
@@ -499,7 +501,7 @@ void TestViewer::taskListIndexChanged(int)
 	if(!task)
 		return;
 
-	viewSelectionFrame_->clear();
+	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 

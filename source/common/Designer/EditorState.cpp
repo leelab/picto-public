@@ -283,7 +283,7 @@ void EditorState::deinitEditor()
 	topAsset_ = QSharedPointer<Asset>();
 	currAnalysis_ = QSharedPointer<Analysis>();
 
-	emit selectedAssetChanged(selectedAsset_);
+	//emit selectedAssetChanged(selectedAsset_);
 
 	emit releaseEditorMemory();
 }

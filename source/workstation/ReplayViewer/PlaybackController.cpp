@@ -1,6 +1,8 @@
 #include <QMutexLocker>
 #include <QSharedPointer>
 
+#include <qwt_samples.h>
+
 #include "PlaybackController.h"
 
 #include "../../common/compositor/RenderingTarget.h"
@@ -9,6 +11,7 @@
 #include "../../common/iodevices/NullEventCodeGenerator.h"
 #include "../../common/engine/XYSignalChannel.h"
 #include "../../common/engine/MouseInputPort.h"
+#include "../../common/operator/BarAxisHandler.h"
 #include "../../common/parameter/OperatorClickParameter.h"
 #include "../../common/compositor/OutputSignalWidget.h"
 #include "../../common/statemachine/Scene.h"
@@ -37,6 +40,14 @@ PlaybackController::PlaybackController()
 
 	//This allows preloaded session data to be used in signal and slots
 	qRegisterMetaType<PreloadedSessionData>();
+
+	//Allows for the threaded playback
+	qRegisterMetaType<QList<double>>("QList<double>");
+	qRegisterMetaType<QVector<QwtIntervalSample>>("QVector<QwtIntervalSample>");
+	qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>");
+	qRegisterMetaType<QSharedPointer<TaskConfig>>("QSharedPointer<TaskConfig>");
+	qRegisterMetaType<QSharedPointer<OperatorPlotHandler>>("QSharedPointer<OperatorPlotHandler>");
+	qRegisterMetaType<BarAxisHandler*>("BarAxisHandler*");
 
 	playbackThread_ = QSharedPointer<PlaybackThread>(new PlaybackThread());
 	connect(playbackThread_.data(),SIGNAL(init()),this,SLOT(setup()));

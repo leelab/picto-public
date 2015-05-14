@@ -5,6 +5,7 @@
 #include "../statemachine/scriptablecontainer.h"
 #include "../statemachine/UIEnabled.h"
 #include "../property/PropertyContainer.h"
+#include "../operator/DataViewSpecs.h"
 #include "../statemachine/StateMachine.h"
 #include "../engine/PictoEngine.h"
 
@@ -42,11 +43,13 @@ public:
 	virtual QString friendlyTypeName(){return "Task";};
 	virtual QString getUIGroup(){return "State Machine Elements";};
 	void setTaskNumber(int num);
-	/*! \brief Returns a pointer to the top level StateMachine contained in this Task.
-	*/
+	//! Returns a pointer to the top level StateMachine contained in this Task.
 	QSharedPointer<StateMachine> getStateMachine(){return stateMachine_;};
 
 	void rename(const QString &newName);
+
+	//! Get the default view size for the Task
+	DataViewSize::ViewSize getDefaultViewSize() const;
 
 protected:
 	virtual QString defaultTagName(){return "Task";};
@@ -61,6 +64,8 @@ private:
 	QSharedPointer<StateMachine> stateMachine_;
 	int taskNumber_;
 	QSharedPointer<Transition> initTransition_;
+
+	QStringList sizeList_;
 };
 
 

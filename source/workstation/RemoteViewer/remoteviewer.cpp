@@ -94,7 +94,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	propertyFrame_(NULL),
 	myDesignRoot_(new DesignRoot()),
 	awaitingRejoin_(RejoinStatus::None),
-	numImportedAnalyses_(0)
+	numImportedAnalyses_(0),
+	lastExpHash_(0)
 {
 	setupServerChannel();
 	setupEngine();
@@ -320,25 +321,7 @@ void RemoteViewer::runState()
 		{
 			stateTrigger_ = JoinSessionRequest;
 		}
-		else if (awaitingRejoin_ == RejoinStatus::RequestingRejoinSignal)
-		{
-			awaitingRejoin_ = RejoinStatus::AwaitingRejoinSignal;
-			QString tmp = activateAnalyses(analysesToBeActivated_);
-			analysesToBeActivated_.clear();
-			if (!tmp.isEmpty())
-			{
-				awaitingRejoin_ = RejoinStatus::None;
-				QMessageBox::warning(this, tr("Picto"),
-					QString("There was a problem with importing the selected analyses: ") + tmp,
-					QMessageBox::Ok);
-			}
-			else
-			{
-				awaitingRejoin_ = RejoinStatus::AwaitingRejoin;
-			}
-		}
-		else if ((awaitingRejoin_ == RejoinStatus::None || awaitingRejoin_ == RejoinStatus::AwaitingInitialConnect ) &&
-			connectAction_->isChecked())
+		else if (connectAction_->isChecked())
 		{
 			if(remoteStatus == Idle)
 				stateTrigger_ = StartSessionRequest;
@@ -350,28 +333,27 @@ void RemoteViewer::runState()
 		activeExpName_->setText(myDesignRoot_->getDesignName()); //In case operator loads new file
 		if(joinSession())
 		{
-			if(remoteStatus == Running)
+			if (remoteStatus == Running)
+			{
+				if (slaveExpDriver_) slaveExpDriver_->pause(false);
 				stateTrigger_ = SessionRunning;
-			else if(remoteStatus == Paused)
+			}
+			else if (remoteStatus == Paused)
+			{
+				if (slaveExpDriver_) slaveExpDriver_->pause(true);
 				stateTrigger_ = SessionPaused;
+			}
 			else
+			{
 				stateTrigger_ = SessionStopped;
-
+			}
 		}
 
-		if (awaitingRejoin_ == RejoinStatus::AwaitingInitialConnect)
-		{
-			awaitingRejoin_ = RejoinStatus::AwaitingDisconnect;
-		}
-		else
-		{
-			awaitingRejoin_ = RejoinStatus::None;
-		}
+		awaitingRejoin_ = RejoinStatus::None;
 
 		if(remoteStatus < Stopped)
 		{
 			disjoinSession();
-			awaitingRejoin_ = RejoinStatus::None;
 			stateTrigger_ = DisjoinSessionRequest;
 		}
 		break;
@@ -389,10 +371,16 @@ void RemoteViewer::runState()
 			pixmapVisualTarget_->setZoom(zoomValue_);
 			renderingTarget_->showSplash();
 		}
-		if(remoteStatus == Paused)
+		if (remoteStatus == Paused)
+		{
+			if (slaveExpDriver_) slaveExpDriver_->pause(true);
 			stateTrigger_ = SessionPaused;
-		if(remoteStatus == Running)
+		}
+		if (remoteStatus == Running)
+		{
+			if (slaveExpDriver_) slaveExpDriver_->pause(false);
 			stateTrigger_ = SessionRunning;
+		}
 		if(!connectAction_->isChecked())
 		{
 			if(shouldEndSession())
@@ -405,7 +393,7 @@ void RemoteViewer::runState()
 		}
 		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
 		{
-			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			awaitingRejoin_ = RejoinStatus::AwaitingRejoin;
 			disjoinSession();
 			stateTrigger_ = RejoinSessionRequest;
 		}
@@ -427,13 +415,18 @@ void RemoteViewer::runState()
 			zoomChanged_ = false;
 			Scene::setZoom(zoomValue_);
 		}
-		if(remoteStatus == Running)
+		if (remoteStatus == Running)
+		{
+			if (slaveExpDriver_) slaveExpDriver_->pause(false);
 			stateTrigger_ = SessionRunning;
+		}
 		//If the engine isn't running for some reason, or the director stopped, go to the stopped state.  In the case
 		//	where the director is still running but our engine stopped, the stop state will just restart the engine and
 		//	send us back here.
-		if(remoteStatus == Stopped)
+		if (remoteStatus == Stopped)
+		{
 			stateTrigger_ = SessionStopped;
+		}
 		if(!connectAction_->isChecked() || ((remoteStatus < Stopped) && (remoteStatus > NotFound)))
 		{
 			disjoinSession();
@@ -441,7 +434,7 @@ void RemoteViewer::runState()
 		}
 		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
 		{
-			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			awaitingRejoin_ = RejoinStatus::AwaitingRejoin;
 			disjoinSession();
 			stateTrigger_ = RejoinSessionRequest;
 		}
@@ -460,8 +453,11 @@ void RemoteViewer::runState()
 			zoomChanged_ = false;
 			Scene::setZoom(zoomValue_);
 		}
-		if(remoteStatus == Paused)
+		if (remoteStatus == Paused)
+		{
+			if (slaveExpDriver_) slaveExpDriver_->pause(true);
 			stateTrigger_ = SessionPaused;
+		}
 		//If the engine isn't running for some reason, or the director stopped, go to the stopped state.  In the case
 		//	where the director is still running but our engine stopped, the stop state will just restart the engine and
 		//	send us back here.
@@ -474,7 +470,7 @@ void RemoteViewer::runState()
 		}
 		if (awaitingRejoin_ == RejoinStatus::AwaitingDisconnect)
 		{
-			awaitingRejoin_ = RejoinStatus::RequestingRejoinSignal;
+			awaitingRejoin_ = RejoinStatus::AwaitingRejoin;
 			disjoinSession();
 			stateTrigger_ = RejoinSessionRequest;
 		}
@@ -860,7 +856,6 @@ void RemoteViewer::init()
 	//This timer makes sure that we don't read in old reward duration data just after setting a new value.
 	rewardDurChangeTimer_.restart();
 
-
 	analysisSelector_->setDesignRootForImport(designRoot_, precacheAnalysisNames(designRoot_));
 }
 
@@ -872,6 +867,7 @@ void RemoteViewer::deinit()
 {
 	//Stop the timers so that our state update functions won't get called anymore.
 	stateUpdateTimer_->stop();
+	viewSelectionFrame_->clearPlotHandlers();
 	emit deinitComplete();
 }
 
@@ -1080,16 +1076,14 @@ void RemoteViewer::setupUi()
 	zoomLayout->addWidget(new QLabel("Zoom: ", this));
 	zoomLayout->addWidget(zoomSlider_);
 	zoomLayout->addWidget(zoomPercentage_);
-	
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
 	DataViewOrganizer *dataViewOrganizer = new DataViewOrganizer();
 
 	viewSelectionFrame_ = new ViewSelectionFrame();
-	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->setVisualTargetHost(visualTargetHost_);
 	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
-	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
+	viewSelectionFrame_->rebuild();
 
 	QWidget *pContainer = new QWidget(this);
 	QVBoxLayout *leftPane = new QVBoxLayout(pContainer);
@@ -1124,10 +1118,13 @@ void RemoteViewer::setupUi()
 
 	analysisSelector_ = new Picto::AnalysisSelectorWidget();
 	analysisSelector_->layout()->setContentsMargins(0, 0, 0, 0);;
-	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
-		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
-	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
-		this, SLOT(notifyAnalysisSelection(const QString&, bool)));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool, bool)));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool, bool)),
+		this, SLOT(notifyAnalysisSelection(const QString&, bool, bool)));
+
+	connect(analysisSelector_, SIGNAL(clearAnalysisSelection(bool)),
+		viewSelectionFrame_, SLOT(clearAnalysisSelection(bool)));
 	
 	QSplitter *operationLayout = new QSplitter;
 	pContainer->sizePolicy().setHorizontalStretch(QSizePolicy::Maximum);
@@ -1935,18 +1932,48 @@ bool RemoteViewer::joinSession()
 	if(sessionId_.isNull() || (remoteSessionId != sessionId_))
 	{
 		sessionId_ = remoteSessionId;
-		//Extract the design/experiment xml
-		activeDesignRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
-		if(!activeDesignRoot_->resetDesignRoot(QString(content)))
+
+		//Only reload the experiment if it's actually different.
+		uint tempExpHash = qHash(content);
+		if (lastExpHash_ != tempExpHash)
 		{
-			setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"),true);
-			return false;
+			lastExpHash_ = tempExpHash;
+
+			//We're loading a new experiment, so clear our analysis Cache
+			cachedAnalysis_.clear();
+
+			//Extract the design/experiment xml
+			activeDesignRoot_ = QSharedPointer<DesignRoot>(new DesignRoot());
+			if (!activeDesignRoot_->resetDesignRoot(QString(content)))
+			{
+				setStatus(tr("Unable to deserialize Experiment returned by JOINSESSION"), true);
+				return false;
+			}
+
+			activeDesignRoot_->enableRunMode(true);
+			activeExperiment_ = activeDesignRoot_->getExperiment().staticCast<Experiment>();
+
+			analysisSelector_->setLocalDesignRoot(activeExperiment_->getName(), activeDesignRoot_);
+			analysisSelector_->setCurrentFile(activeExperiment_->getName());
+
+			analysesCurrentlyActive_ = QStringList();
 		}
-		activeDesignRoot_->enableRunMode(true);
-		activeExperiment_ = activeDesignRoot_->getExperiment().staticCast<Experiment>();
-		analysisSelector_->setLocalDesignRoot(activeExperiment_->getName(), activeDesignRoot_);
-		analysisSelector_->setCurrentFile(activeExperiment_->getName());
 	}
+
+	if (analysesCurrentlyActive_ != analysisSelector_->getSelectedAnalysisNames())
+	{
+		awaitingRejoin_ = RejoinStatus::None;
+		QString tmp = activateAnalyses(getAnalyses(false));
+		analysesCurrentlyActive_ = analysisSelector_->getSelectedAnalysisNames();
+		if (!tmp.isEmpty())
+		{
+			activeDesignRoot_->resetDesignRoot(QString(content));
+			QMessageBox::warning(this, tr("Picto"),
+				QString("There was a problem with importing the selected analyses: ") + tmp,
+				QMessageBox::Ok);
+		}
+	}
+
 	activeExperiment_->setEngine(engine_);
 	updater_->initForNewSession();
 	slaveExpDriver_ = QSharedPointer<SlaveExperimentDriver>(new SlaveExperimentDriver(activeExperiment_,updater_));
@@ -2169,7 +2196,7 @@ void RemoteViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
-	viewSelectionFrame_->clear();
+	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
@@ -2227,7 +2254,7 @@ void RemoteViewer::currTaskChanged(QString task)
 		}
 	}
 
-	viewSelectionFrame_->clear();
+	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 }
@@ -2354,6 +2381,11 @@ QString RemoteViewer::activateAnalyses(QStringList analysisData)
 		QSharedPointer<Asset> newUIData = newAnalysis->getParentAsset().staticCast<DataStore>()->createChildAsset("UIData", QString(), QString());
 		QString feedback;
 		newUIData.staticCast<AssociateRoot>()->LinkToAsset(newAnalysis, feedback);
+		if (!feedback.isEmpty())
+		{
+			qDebug() << "Analysis Import:" << feedback;
+		}
+
 		Q_ASSERT(newAnalysis);
 
 		//Lets try to import the analysis contents into our new analysis from the exportText.
@@ -2397,18 +2429,29 @@ QString RemoteViewer::activateAnalyses(QStringList analysisData)
 }
 
 /*! \brief Returns the exported designs of all selected Analyses that should be imported
-*	into the Session file's design.
-*/
-QStringList RemoteViewer::getAnalysesToImport()
+ *	into the Session file's design.
+ */
+QStringList RemoteViewer::getAnalyses(bool bSkipLocal)
 {
-	QList<QUuid> importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
 	QStringList resultList;
+	QList<QUuid> importAnalysisIds;
+
+	if (!bSkipLocal)
+	{
+		importAnalysisIds = analysisSelector_->getSelectedAnalysisIds();
+		foreach(QUuid analysisID, importAnalysisIds)
+		{
+			resultList.append(analysisID.toString());
+		}
+	}
+
+	importAnalysisIds = analysisSelector_->getSelectedAnalysisIdsForImport();
 	for (int i = 0; i<designRoot_->getNumAnalyses(); i++)
 	{
-		//If this analysis is in our import list
+		//If this analysis is in our designRoot (from where we import analyses)
 		if (importAnalysisIds.contains(designRoot_->getAnalysis(i).staticCast<Analysis>()->getAssociateId()))
 		{
-			//Try to export it.
+			//Try to export it, to later import it to our download of the task running on the Director
 			QSharedPointer<AssetExportImport> exportImport(new AssetExportImport());
 			QString exportText = exportImport->exportToText((QList<QSharedPointer<Asset>>() << designRoot_->getExperiment())
 				, dynamic_cast<AssociateRootHost*>(designRoot_->getAnalysis(i).data()));
@@ -2419,18 +2462,19 @@ QStringList RemoteViewer::getAnalysesToImport()
 }
 
 
-void RemoteViewer::notifyAnalysisSelection(const QString&, bool)
+void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 {
-	QStringList analysisList;
-	QList<QUuid> localList = analysisSelector_->getSelectedAnalysisIds();
-	foreach(QUuid analysisID, localList)
-	{
-		analysisList.append(analysisID.toString());
-	}
+	QStringList analysesToBeActivated = analysisSelector_->getSelectedAnalysisNames();
 
-	analysesToBeActivated_ = analysisList + getAnalysesToImport();
-	if (currState_ == StoppedSession || currState_ == RunningSession || currState_ == PausedSession)
-		awaitingRejoin_ = RejoinStatus::AwaitingDisconnect;
+	bool reload = analysesCurrentlyActive_ != analysesToBeActivated;
+
+	if (reload)
+	{
+		if (currState_ == StoppedSession || currState_ == RunningSession || currState_ == PausedSession)
+			awaitingRejoin_ = RejoinStatus::AwaitingDisconnect;
+	}
 	else
-		awaitingRejoin_ = RejoinStatus::AwaitingInitialConnect;
+	{
+		awaitingRejoin_ = RejoinStatus::None;
+	}
 }

@@ -18,6 +18,7 @@ PropertyBrowser::PropertyBrowser(QSharedPointer<EditorState> editorState,QWidget
         this, SLOT(assetSelected(QSharedPointer<Asset>)));
 	connect(editorState_.data(), SIGNAL(arrowPortSelected(QSharedPointer<Asset>)),
         this, SLOT(arrowPortSelected(QSharedPointer<Asset>)));
+	connect(editorState_.data(), SIGNAL(releaseEditorMemory()), this, SLOT(clearAssets()));
 
 	propGroupWidget_ = new PropertyGroupWidget(false,editorState);
 	QVBoxLayout* myLayout = new QVBoxLayout();
@@ -156,4 +157,10 @@ void PropertyBrowser::arrowPortSelected(QSharedPointer<Asset> asset)
 	propGroupWidget_->clear();
 	propGroupWidget_->addProperties(dataStore->getName(),propVec);
 	setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+}
+
+//! Called to release Designer assets so it may be cleaned up.  Will need to be reinitialized before use.
+void PropertyBrowser::clearAssets()
+{
+	propGroupWidget_->clear();
 }

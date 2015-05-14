@@ -39,6 +39,7 @@ private:
 private slots:
 	void propertyEdited(QSharedPointer<Property> prop,QVariant val);
 	void arrowPortSelected(QSharedPointer<Asset> asset);
+	void clearAssets();
 };
 
 #endif

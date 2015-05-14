@@ -316,7 +316,7 @@ bool DesignRoot::isModified()
 	if (designUndoStack_.isEmpty())
 	{
 		return false;
-}
+	}
 	return lastSaveVersion_ != designUndoStack_[undoStateOffset_];
 }
 /*! \brief Sets the latest version of the design as unmodified
@@ -329,7 +329,7 @@ void DesignRoot::setUnmodified()
 	while (designUndoStack_.size() > 1)
 	{
 		designUndoStack_.pop_back();
-}
+	}
 	*/
 }
 /*! \brief Returns an xml serialized version of this experiment

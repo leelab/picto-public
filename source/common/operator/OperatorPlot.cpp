@@ -43,16 +43,24 @@ void OperatorPlot::postLinkUpdate()
 {
 	DataViewElement::postLinkUpdate();
 
-	m_pPlotHandler = getTaskConfig()->getPlotHandler(getPath());
+	getTaskConfig()->requestPlotHandler(selfPtr().objectCast<OperatorPlot>().toWeakRef(), getPath());
+	
+}
+
+void OperatorPlot::receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	m_pPlotHandler = plotHandler;
 
 	if (m_pPlotHandler.isNull())
 	{
 		m_pPlotHandler = getNewHandler();
 		m_pPlotHandler->moveToThread(QApplication::instance()->thread());
-		getTaskConfig()->setPlotHandler(getPath(), m_pPlotHandler);
+		getTaskConfig()->cachePlotHandler(m_pPlotHandler, getPath());
 	}
 
 	connectHandler(m_pPlotHandler);
+	getTaskConfig()->addObserver(this);
+
 }
 
 void OperatorPlot::setTitle(const QString &newTitle)
@@ -73,7 +81,6 @@ QSharedPointer<OperatorPlotHandler> OperatorPlot::getNewHandler()
 
 void OperatorPlot::connectHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
 {
-	qRegisterMetaType<QSharedPointer<TaskConfig>>("QSharedPointer<TaskConfig>");
 	connect(this, SIGNAL(connectToTaskConfigSig(QSharedPointer<TaskConfig>)),
 		plotHandler.data(), SLOT(connectToTaskConfig(QSharedPointer<TaskConfig>)));
 }

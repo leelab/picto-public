@@ -8,7 +8,7 @@
 /*! \brief Constructs a CurrentSessionData object for the input dataType.
  */
 CurrentSessionData::CurrentSessionData(int dataType)
-	: dataType_(dataType)
+	: dataType_(dataType), capTime_(0)
 {
 	dataByTime_.clear();
 	lastOffset_.clear();
@@ -68,6 +68,8 @@ void CurrentSessionData::writeData(int, QVariantList data)
 	double oldTimestamp = 0;
 	bool bAppend = false;
 
+	bool newCap = false;
+
 	//For StateTransition Data, we use a Ringbuffer of size MAX_RETAIN_TRANSITION_INFO, but we need to append the data
 	//	when we submit data of the same timestamp, or the data will be reordered across the boundary.
 	if (variableType == TRANSITION_STATE_VAR_ID)
@@ -81,7 +83,14 @@ void CurrentSessionData::writeData(int, QVariantList data)
 		{
 			lastOffset_[variableType] = (lastOffset_[variableType] + 1) % MAX_RETAIN_TRANSITION_INFO;
 			dataBin = variableType + lastOffset_[variableType];
+			transitionsByTime_[timestamp] = dataBin;
 		}
+
+	}
+	else if (variableType == FRAME_STATE_VAR_ID)
+	{
+		lastOffset_[variableType] = (lastOffset_[variableType] + 1) % MAX_RETAIN_FRAME_DATA;
+		dataBin = variableType + lastOffset_[variableType];
 	}
 	else if (variableType >= 0) //Asset Property
 	{
@@ -95,6 +104,16 @@ void CurrentSessionData::writeData(int, QVariantList data)
 		{
 			lastOffset_[variableType] = (lastOffset_[variableType] + 1) % MAX_RETAIN_PROPERTY_DATA;
 			dataBin = variableType + lastOffset_[variableType];
+
+			int oldestRemainingBin = variableType + ((lastOffset_[variableType] + 1) % MAX_RETAIN_PROPERTY_DATA);
+			if (dataMap_.contains(oldestRemainingBin))
+			{
+				if (dataMap_[oldestRemainingBin][2].toDouble() > capTime_)
+				{
+					capTime_ = dataMap_[oldestRemainingBin][2].toDouble();
+					newCap = true;
+				}
+			}
 		}
 	}
 
@@ -130,6 +149,32 @@ void CurrentSessionData::writeData(int, QVariantList data)
 			dataByTime_.remove(oldTimestamp);
 	}
 	dataByTime_[timestamp][dataBin] = variableType;
+
+	//Cull all transitions, after the first, that are below the newCapTime
+	if (newCap)
+	{
+		auto iter = transitionsByTime_.lowerBound(capTime_);
+
+		//Go to the first bin Before the cutoff time.
+		if (iter != transitionsByTime_.begin())
+		{
+			iter--;
+		}
+		qDebug() << "New Cap:" << capTime_;
+		//Leave the first bin intact
+		while (iter != transitionsByTime_.begin())
+		{
+			iter--;
+			qDebug() << "Clearing out transition from:" << iter.key();
+			dataMap_.remove(*iter);
+			dataByTime_[iter.key()].remove(*iter);
+
+			if (dataByTime_[iter.key()].isEmpty())
+				dataByTime_.remove(iter.key());
+
+			iter = transitionsByTime_.erase(iter);
+		}
+	}
 }
 
 /*! \brief Implements SessionData::readDataTypes() to return only the single data type that
@@ -170,6 +215,12 @@ QList<QVariantList> CurrentSessionData::readData(int dataType,QVariant condition
 			}
 			iter = dataByTime_.erase(iter);
 		}
+
+		auto transIter = transitionsByTime_.upperBound(condition.toDouble());
+		for (QMap<double, int>::Iterator iter = transIter; iter != transitionsByTime_.end();)
+		{
+			iter = transitionsByTime_.erase(iter);
+		}
 	}
 	return returnList;
 }
@@ -177,5 +228,8 @@ QList<QVariantList> CurrentSessionData::readData(int dataType,QVariant condition
 void CurrentSessionData::eraseEverything()
 {
 	dataMap_.clear();
+	dataByTime_.clear();
 	lastOffset_.clear();
+	transitionsByTime_.clear();
+	capTime_ = 0.0;
 }

@@ -13,8 +13,10 @@ namespace Picto {
  *	\details Automatically adds a required StateMachine object to the Task.
  */
 Task::Task() 
+	: taskNumber_(0)
 {
-	taskNumber_ = 0;
+	sizeList_ << "1x1" << "2x2" << "3x3" << "4x4";
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "DefaultTaskViewSize", 1, "enumNames", sizeList_);
 	AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 }
@@ -193,6 +195,9 @@ void Task::preDeserialize()
  */
 void Task::postDeserialize()
 {
+	//Pass the default view size to the TaskConfig
+	getTaskConfig()->setTaskViewSize(getDefaultViewSize());
+
 	ScriptableContainer::postDeserialize();
 	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
 	if(!stateMachines.isEmpty())
@@ -219,6 +224,12 @@ void Task::rename(const QString &newName)
 	{
 		stateMachine_->setName(newName);
 	}
+}
+
+DataViewSize::ViewSize Task::getDefaultViewSize() const
+{
+	//We add one to the value because ViewSizes are enumerated from 1 for ease of size-calculation.
+	return (DataViewSize::ViewSize)(propertyContainer_->getPropertyValue("DefaultTaskViewSize").toInt() + 1);
 }
 
 }; //namespace Picto

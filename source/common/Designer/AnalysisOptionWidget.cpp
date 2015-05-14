@@ -46,13 +46,23 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	addTaskAction_->setEnabled(true);
 	connect(addTaskAction_, SIGNAL(triggered()), this, SLOT(addTask()));
 
+	editTaskAction_ = new QAction(QIcon(":/icons/newanalysis.svg"), tr("Edit Task"), this);
+	editTaskAction_->setStatusTip(tr("Edit Task"));
+	editTaskAction_->setEnabled(true);
+	connect(editTaskAction_, SIGNAL(triggered()), this, SLOT(editTask()));
+
 	QToolButton* addTaskButton = new QToolButton();
 	addTaskButton->setDefaultAction(addTaskAction_);
 	addTaskButton->setAutoRaise(true);
 
+	QToolButton* editTaskButton = new QToolButton();
+	editTaskButton->setDefaultAction(editTaskAction_);
+	editTaskButton->setAutoRaise(true);
+
 	QHBoxLayout* taskLabel(new QHBoxLayout());
 	taskLabel->addWidget(new QLabel("Task"));
 	taskLabel->addWidget(addTaskButton);
+	taskLabel->addWidget(editTaskButton);
 	taskLabel->addWidget(deleteTaskButton);
 
 	QHBoxLayout* taskSelect(new QHBoxLayout());
@@ -418,6 +428,15 @@ void AnalysisOptionWidget::addTask()
 	//Select name of new analysis for editing
 	taskBox_->setFocus();
 	taskBox_->lineEdit()->selectAll();
+}
+
+/*! \brief Bound to AnalysisOptionWidget::editTaskAction_, it sets the task as the selectedAsset
+ */
+void AnalysisOptionWidget::editTask()
+{
+	if (!isEnabled())
+		return;
+	editorState_->setSelectedAsset(selectedTask_);
 }
 
 /*! \brief Bound to AnalysisOptionWidget::deleteTaskAction_, it deletes the current task

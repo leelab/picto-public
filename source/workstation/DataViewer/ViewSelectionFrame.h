@@ -22,6 +22,7 @@ using namespace Picto;
 
 class DataViewWidget;
 class DataViewOrganizer;
+class Picto::OperatorPlotHandler;
 
 
 /*!	\brief A struct to keep track of the location of widgets within the viewer.
@@ -50,28 +51,34 @@ public:
 	ViewSelectionFrame();
 	virtual ~ViewSelectionFrame();
 
-	bool setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize);
 	void registerView(DataViewWidget *pNewView);
 	void addContainer(QWidget *pNewView);
 	void connectToViewerLayout(DataViewOrganizer *pOrganizer);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
+	void setVisualTargetHost(QWidget *pWidget);
 
 	void rebuild();
 	void clear();
 
 signals:
-	/*! \brief A signal broadcast when a widget is to be removed from the connected ViewSelectionLayout.
-	 */
+	//! A signal broadcast when a widget is to be removed from the connected ViewSelectionLayout.
 	void widgetRemoved(QWidget *pWidget);
-	/*! \brief A signal broadcast when a widget is added to the connected ViewSelectionLayout.
-	*/
+	//! A signal broadcast when a widget is added to the connected ViewSelectionLayout.
 	void widgetAdded(QWidget *pWidget, int x, int y, DataViewSize::ViewSize size);
+
+	//! Message used to send the cached plotHandler (or a null pointer) back to the TaskConfig, for OperatorPlots
+	void returnPlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
+	//! Message used to indicate to TaskConfig when the manager is ready to receive 
+	void managerConnectionEstablished(bool connected);
 
 public slots:
 	void updateWidgetContainer(QWidget *pWidget);
 	void removeWidgetContainer(QWidget *pWidget);
 	void addWidgetContainer(QWidget *pWidget);
-	void notifyAnalysisSelection(const QString &name, bool selected);
+	void notifyAnalysisSelection(const QString &name, bool selected, bool local);
+	void clearAnalysisSelection(bool local);
+
+	void clearPlotHandlers();
 
 private:
 	void updateSizeAndPositionOptions();
@@ -84,7 +91,9 @@ private slots:
 	void selectedPlotIndexChanged(int selectedIndex);
 	void selectedSizeIndexChanged(int selectedIndex);
 	void checkClicked(bool);
-	bool isWidgetPosValid(DataViewWidget *pWidget, int testX, int testY);
+
+	void plotHandlerRequested(const QString plotPath);
+	void cachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
 
 protected:
 	//! A Vector holding all registered DataViewWidgets
@@ -95,10 +104,15 @@ protected:
 	QMap<QWidget*, DataViewWidget*> viewContainerMap_;
 	//! The next widget index to pass out
 	int nextIndex_;
-	//! Current Analysis Dispaly states.  Map of Analysis Name vs current selection.
-	QMap<QString, bool> analysisDisplayState;
+	//! Current Local Analysis Dispaly states.  Map of Analysis Name vs current selection.
+	QMap<QString, bool> localAnalysisDisplayState;
+	//! Current ImportedAnalysis Dispaly states.  Map of Analysis Name vs current selection.
+	QMap<QString, bool> importedAnalysisDisplayState;
 
 private:
+	bool isWidgetPosValid(DataViewWidget *pWidget, int testX, int testY);
+	void addTargetHost();
+
 	//! Organizational layout
 	QGridLayout* selectionLayout_;
 	//! Combobox containing all Plots available for the current task
@@ -107,12 +121,27 @@ private:
 	QComboBox *sizeSelection_;
 	//! A shared pointer to the current task's TaskConfig object.  Used for message-passing and connecting.
 	QSharedPointer<TaskConfig> currentTaskConfig_;
+	//! A pointer to the visualTargetHost displaying our task
+	QWidget *pVisualTargetHost_;
 
 	//! A two-index array of all Position Checkboxes by their grid location
 	QCheckBox *positionCheckBoxes_[VIEWGRIDWIDTH][VIEWGRIDHEIGHT];
 	//! A Map of Checkboxes to their grid coordinates.  This way we don't need to subclass CheckBox or search the array.
 	QMap<QObject*, QSharedPointer<WidgetCoords>> coordsMap;
 
+	//! A Hash of QSharedPointers to Plot Handlers, indexed by analysis path
+	QHash<QString, QSharedPointer<OperatorPlotHandler>> cachedHandlers_;
+
+	struct ViewComponents{
+		ViewComponents() : size_(DataViewSize::VIEW_SIZE_1x1), x_(0), y_(0) {};
+		ViewComponents(DataViewSize::ViewSize size, int x, int y) : size_(size), x_(x), y_(y) {};
+		DataViewSize::ViewSize size_;
+		int x_;
+		int y_;
+	};
+
+	//! A Hash for restoring formerly displayed widgets.  Do not use pointers.
+	QHash<QWidget*, ViewComponents> cachedViewSetup_;
 };
 
 #endif

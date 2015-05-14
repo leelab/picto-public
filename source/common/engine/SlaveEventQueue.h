@@ -25,12 +25,11 @@ public:
 	void reset();
 	void addPropChange(const qulonglong& dataId, const int& assetId, const QString& val);
 	void addInitPropChange(const qulonglong& dataId, const int& assetId, const QString& val);
-	void addTransActivation(const qulonglong& dataId, const int& assetId);
+	void addTransActivation(const qulonglong& dataId, const int& assetId, bool remoteRunSignal);
 
 	SlaveEvent takeFirstEvent();
 
-	void beginInsertion();
-	void endInsertion();
+	void prepareEvents();
 
 private:
 	int getNextAddLoc();
@@ -41,10 +40,6 @@ private:
 
 	int frozenEndLoc_;
 	QVector<SlaveEvent> frozenQueue_;
-
-	//! A pointer to the current queue to add elements to.
-	QVector<SlaveEvent> *currentQueue_;
-	bool frozen_;
 };
 
 

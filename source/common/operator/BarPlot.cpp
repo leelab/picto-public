@@ -65,7 +65,6 @@ void BarPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler
 
 	QSharedPointer<BarPlotPlotHandler> barPlotHandler = plotHandler.objectCast<BarPlotPlotHandler>();
 
-	qRegisterMetaType<BarAxisHandler*>("BarAxisHandlerP");
 	connect(this, SIGNAL(initializeBarPlotSig(BarAxisHandler *)),
 		barPlotHandler.data(), SLOT(initializeBarPlot(BarAxisHandler *)));
 }

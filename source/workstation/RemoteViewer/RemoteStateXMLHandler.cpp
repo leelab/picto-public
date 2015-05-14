@@ -79,14 +79,28 @@ void InputDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 StateDataUnitHandler::StateDataUnitHandler(RemoteStateUpdater *pParent)
 {
 	stateUnit_ = QSharedPointer<StateDataUnit>(new StateDataUnit());
-	connect(this, SIGNAL(transitionActivated(qulonglong, int)), pParent, SIGNAL(transitionActivated(qulonglong, int)));
+	connect(this, SIGNAL(transitionActivated(qulonglong, int, bool)),
+		pParent, SIGNAL(transitionActivated(qulonglong, int, bool)));
+	connect(this, SIGNAL(prepareToProcessQueue()),
+		pParent, SLOT(prepareToProcessQueue()));
 }
 
 void StateDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 {
 	stateUnit_->fromXml(xmlReader);
-	qDebug() << "Received Transition ID:" << stateUnit_->getTransitionID();
-	emit transitionActivated(stateUnit_->getDataID(), stateUnit_->getTransitionID());
+	qDebug() << "Transition received:" << stateUnit_->getTransitionID();
+	bool runSignal = false;
+	if (stateUnit_->getTransitionID() < 0)
+	{
+		runSignal = true;
+	}
+	else if (stateUnit_->getTransitionID() == 0)
+	{
+		runSignal = true;
+		emit prepareToProcessQueue();
+	}
+
+	emit transitionActivated(stateUnit_->getDataID(), stateUnit_->getTransitionID(), runSignal);
 }
 
 

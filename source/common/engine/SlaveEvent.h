@@ -42,7 +42,7 @@ public:
 
 	void setAsProp(const qulonglong& dataId, const int& assetId, const QString& val);
 	void setAsInitProp(const qulonglong& dataId, const int& assetId, const QString& val);
-	void setAsTrans(const qulonglong& dataId, const int& assetId);
+	void setAsTrans(const qulonglong& dataId, const int& assetId, bool remoteRunSignal);
 
 	//! The type of event that occured.
 	EventType type;

@@ -48,12 +48,17 @@ public:
 	QList<QUuid> getSelectedAnalysisIdsForImport();
 	void enableCheckboxes(bool enable);
 	bool hasSelectedIds();
+	QStringList getSelectedLocalAnalysisNames();
+	QStringList getSelectedImportAnalysisNames();
+	QStringList getSelectedAnalysisNames();
 
 signals:
 	//! Triggered whenever the widget changes (ie.  Something clicked, buttons removed, added, etc)
 	void analysisWidgetChanged();
 	//! Trigged to pass on current state of Analysis Selection to interested widgets
-	void notifyAnalysisSelection(const QString &name, bool selected);
+	void notifyAnalysisSelection(const QString &name, bool selected, bool local);
+	//! Signal to anyone who caches selectedAnalyses to clear their list
+	void clearAnalysisSelection(bool local);
 
 private:
 	QTabWidget* tabWidget_;

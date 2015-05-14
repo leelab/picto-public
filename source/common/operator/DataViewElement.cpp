@@ -48,7 +48,6 @@ void DataViewElement::postLinkUpdate()
 	if (!getLinkedAsset().isNull())
 	{
 		setTaskConfig(getLinkedAsset()->getTaskConfig());
-		getTaskConfig()->addObserver(this);
 	}
 	else
 	{

@@ -238,16 +238,18 @@ void ReplayViewer::setupUi()
 	analysisTabs->addTab(analysisSelector_,"Select Analyses");
 	analysisTabs->addTab(outputWidgetHolder_,"Analysis Output");
 
-	DataViewWidget *taskView = new DataViewWidget("Task", visualTargetHost_, DVW_RETAIN);
 
 	viewSelectionFrame_ = new ViewSelectionFrame();
-	viewSelectionFrame_->registerView(taskView);
+	viewSelectionFrame_->setVisualTargetHost(visualTargetHost_);
 	viewSelectionFrame_->connectToViewerLayout(dataViewOrganizer);
-	viewSelectionFrame_->setDefaultView(taskView, 0, 0, DataViewSize::VIEW_SIZE_3x3);
 	viewSelectionFrame_->setStyleSheet("ViewSelectionFrame { border: 1px solid gray }");
+	viewSelectionFrame_->rebuild();
 
-	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool)),
-		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool)));
+	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool, bool)),
+		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool, bool)));
+
+	connect(analysisSelector_, SIGNAL(clearAnalysisSelection(bool)),
+		viewSelectionFrame_, SLOT(clearAnalysisSelection(bool)));
 
 	QHBoxLayout *viewLayout = new QHBoxLayout();
 	viewLayout->setMargin(0);
@@ -1082,7 +1084,7 @@ void ReplayViewer::sessionPreloaded(PreloadedSessionData sessionData)
 
 void ReplayViewer::taskChanged(QString newTask)
 {
-	viewSelectionFrame_->clear();
+	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(playbackController_->getDesignRoot()->getExperiment().objectCast<Experiment>()->getTaskByName(newTask)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 }

@@ -14,6 +14,7 @@
 namespace Picto {
 class DataViewElement;
 class OperatorPlotHandler;
+class OperatorPlot;
 /*! \brief There are many operations and data elements that need to be associated with a task as a whole, accessible by
  *	all elements of the task and with access to all elements of the task.  Objects of the TaskConfig class handle
  *	these types of operations and store this type of data.  This is a lower-scoped analog to the DesignConfig class, and
@@ -58,8 +59,8 @@ public:
 
 	void addObserver(DataViewElement *newAsset);
 
-	QSharedPointer<OperatorPlotHandler> getPlotHandler(QString plotPath);
-	void setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler);
+	void requestPlotHandler(QWeakPointer<OperatorPlot> plot, const QString plotPath);
+	void cachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath );
 	void clearPlotHandlers();
 
 	void notifyAnalysisSelection(const QString &name, bool selected);
@@ -78,11 +79,27 @@ public:
 
 	const DisplayWidgetProperties getDisplayWidgetProperties(QWidget *widget) const;
 
+	//! Used to set the size of the TaskDisplay for the ViewSelectionFrame
+	void setTaskViewSize(DataViewSize::ViewSize size) { taskViewProperties_.defaultSize_ = size; };
+	//! Used to get the size of the TaskDisplay for the ViewSelectionFrame
+	DataViewSize::ViewSize getTaskViewSize() { return taskViewProperties_.defaultSize_; };
+
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.
 	void widgetAddedToMap(QWidget *pWidget);
 	//! A signal sent whenever a viewer widget is removed from the Task.
 	void widgetRemovedFromMap(QWidget *pWidget);
+
+	//! A signal requesting a cahced plotHandler from the manager, if they exist.
+	void plotHandlerRequested(const QString plotPath);
+	//! A signal to the manager of the plotHandlers to cache a new plotHandler
+	void requestCachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
+	//! A signal to the manager of the plotHandlers to clear cached plotHandlers
+	void requestClearPlotHandlers();
+
+public slots:
+	void receivePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath);
+	void managerConnectionEstablished(bool connected);
 
 protected:
 	//! A Map of widget pointers vs their names.  DANGEROUS?!?
@@ -91,18 +108,30 @@ protected:
 	QMultiMap<QString, QWidget*> analysisWidgetMap;
 	//! Current Analysis Dispaly states
 	QMap<QString, bool> analysisDisplayState;
+	//! Holds onto the view properties of passed in DataViewAssets.
 	QMap<QWidget*, DisplayWidgetProperties> displayProperties;
+
+	//! Holds onto the Task's default view size.
+	DisplayWidgetProperties taskViewProperties_;
 
 	//! Flag to enable/disable updates
 	bool updateSignalEnabled_;
 	//! A List of Assets waiting to be pinged for an update;
 	QList<DataViewElement*> waitingAssets;
-	//! A Hash of QSharedPointers to Plot Handlers, indexed by analysis path
-	QHash<QString, QSharedPointer<OperatorPlotHandler>> cachedHandlers_;
 	//! Mutex for protecting the List of Assets waiting to be pinged for an update
 	QMutex mtxWaitingAssetProtector;
 
+	//! A map of operatorPlots that have requested PlotHandlers but haven't received a reply
+	QMap<QString, QWeakPointer<OperatorPlot>> waitingOperatorPlots_;
+
 	void addWaitingAssets();
+
+	enum ConnectionStatus {
+		Unconnected = 0,
+		Connected,
+		ConnectionEnded,
+		CONNECTION_STATUS_MAX
+	} managerConnectionStatus_;
 };
 
 }; //namespace Picto

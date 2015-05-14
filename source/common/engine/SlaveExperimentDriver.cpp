@@ -9,7 +9,8 @@ using namespace Picto;
  *	instance of the Picto Director or simply a session file being played back in the Playback viewer.  Data provided
  *	from the updater is sent into the exp Experiment and rendered on screen.
  */
-SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSharedPointer<StateUpdater> updater)
+SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp, QSharedPointer<StateUpdater> updater)
+	: paused_(false)
 {
 	experiment_ = exp;
 	updater_ = updater;
@@ -20,27 +21,38 @@ SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSha
 	experiment_->initScripting(false);
 	renderingEnabled_ = true;
 
-	connect(updater_.data(),SIGNAL(startingRun(QString,QString)),this,SLOT(masterRunStarting(QString,QString)));
-	connect(updater_.data(),SIGNAL(endingRun()),this,SLOT(masterRunEnding()));
+	connect(updater_.data(), SIGNAL(startingRun(QString, QString)),
+		this, SLOT(masterRunStarting(QString, QString)));
+	connect(updater_.data(), SIGNAL(endingRun()),
+		this, SLOT(masterRunEnding()));
+
+	connect(updater_.data(), SIGNAL(processQueue()),
+		this, SLOT(handleEvents()));
 
 	//Version With DataId
-	connect(updater_.data(), SIGNAL(propertyValueChanged(qulonglong, int, QString)), this, SLOT(masterPropertyValueChanged(qulonglong, int, QString)));
-	connect(updater_.data(), SIGNAL(propertyInitValueChanged(qulonglong, int, QString)), this, SLOT(masterPropertyInitValueChanged(qulonglong, int, QString)));
-	connect(updater_.data(), SIGNAL(transitionActivated(qulonglong, int)), this, SLOT(masterTransitionActivated(qulonglong, int)));
+	connect(updater_.data(), SIGNAL(propertyValueChanged(qulonglong, int, QString)),
+		this, SLOT(masterPropertyValueChanged(qulonglong, int, QString)));
+	connect(updater_.data(), SIGNAL(propertyInitValueChanged(qulonglong, int, QString)),
+		this, SLOT(masterPropertyInitValueChanged(qulonglong, int, QString)));
+	connect(updater_.data(), SIGNAL(transitionActivated(qulonglong, int, bool)),
+		this, SLOT(masterTransitionActivated(qulonglong, int, bool)));
 
 	//Version Without DataId
-	connect(updater_.data(), SIGNAL(propertyValueChanged(int, QString)), this, SLOT(masterPropertyValueChanged(int, QString)));
-	connect(updater_.data(), SIGNAL(propertyInitValueChanged(int, QString)), this, SLOT(masterPropertyInitValueChanged(int, QString)));
-	connect(updater_.data(), SIGNAL(transitionActivated(int)), this, SLOT(masterTransitionActivated(int)));
+	connect(updater_.data(), SIGNAL(propertyValueChanged(int, QString)),
+		this, SLOT(masterPropertyValueChanged(int, QString)));
+	connect(updater_.data(), SIGNAL(propertyInitValueChanged(int, QString)),
+		this, SLOT(masterPropertyInitValueChanged(int, QString)));
+	connect(updater_.data(), SIGNAL(transitionActivated(int)),
+		this, SLOT(masterTransitionActivated(int)));
 
-	connect(updater_.data(),SIGNAL(framePresented(double)),this,SLOT(masterFramePresented(double)));
-	connect(updater_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SLOT(masterRewardSupplied(double,int,int)));
-	connect(updater_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SLOT(masterSignalChanged(QString,QStringList,QVector<float>)));
-	connect(updater_.data(),SIGNAL(disableRendering(bool)),this,SLOT(disableRendering(bool)));
-
-	//Special RemoteStateUpdater signals
-	connect(updater_.data(), SIGNAL(beginInsertionEvent()), this, SLOT(masterBeganInsertion()));
-	connect(updater_.data(), SIGNAL(endInsertionEvent()), this, SLOT(masterEndedInsertion()));
+	connect(updater_.data(), SIGNAL(framePresented(double)),
+		this, SLOT(masterFramePresented(double)));
+	connect(updater_.data(), SIGNAL(rewardSupplied(double, int, int)),
+		this, SLOT(masterRewardSupplied(double, int, int)));
+	connect(updater_.data(), SIGNAL(signalChanged(QString, QStringList, QVector<float>)),
+		this, SLOT(masterSignalChanged(QString, QStringList, QVector<float>)));
+	connect(updater_.data(), SIGNAL(disableRendering(bool)),
+		this, SLOT(disableRendering(bool)));
 
 	//Put the various data sources into the design config for access from analysis parameters
 	experiment_->getDesignConfig()->setFrameReader(updater_->getFrameReader());
@@ -112,8 +124,15 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			if(!asset || !asset->inherits("Picto::Transition"))
 			{
 				Q_ASSERT(!asset);
+				if (!event.value.isEmpty())
+				{
+					qDebug() << "RemoteRun Ending";
+					remoteRunEnding();
+				}
 				return;
 			}
+
+
 			QSharedPointer<Transition> trans = asset.staticCast<Transition>();
 	
 			//As soon as a transition comes in and it has a source result, we set that transition's source's latest
@@ -141,6 +160,14 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 			if(!destAsset || !destAsset->inherits("Picto::StateMachineElement"))
 			{
 				Q_ASSERT(!destAsset || destAsset->inherits("Picto::Result"));
+				if (event.id < 0 && !event.value.isEmpty())
+				{
+					QString currTask = "";
+					if (trans->getParentAsset())
+						currTask = trans->getParentAsset()->getName();
+					qDebug() << "RemoteRun Starting:" << currTask;
+					remoteRunStarting(currTask);
+				}
 				return;
 			}
 			//If we got here, we transitioned to a StateMachineElement.  
@@ -188,6 +215,7 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 	top->resetScriptableAnalysisValues();
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
+	paused_ = false;
 }
 
 /*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
@@ -201,6 +229,42 @@ void SlaveExperimentDriver::masterRunEnding()
 	top->runAnalysisExitScripts();
 	designConfig_->markRunEnd();
 	eventQueue_.reset();
+	paused_ = false;
+}
+
+//! Called when starting a Remote run.  Runs only a subset of the initialization that masterRunStarting runs.
+void SlaveExperimentDriver::remoteRunStarting(QString taskName)
+{
+	currElement_.clear();
+	if (taskName != currTask_)
+	{
+		currTask_ = taskName;
+		emit taskChanged(currTask_);
+	}
+	//Tell the design config about the new run
+	QDateTime dateTime = QDateTime::currentDateTime();
+	designConfig_->markRunStart(taskName + "_" + dateTime.toString("yyyy_MM_dd__hh_mm_ss"));
+
+	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
+
+	//Reset Analysis elements to initial states on Top
+	top->resetScriptableAnalysisValues();
+	//Run AnalysisEntryScript on Top
+	top->runAnalysisEntryScripts();
+	paused_ = false;
+}
+
+//! Called when ending a Remote run.  Runs only a subset of the initialization that masterRunEnding runs.
+void SlaveExperimentDriver::remoteRunEnding()
+{
+	//This could happen if the task never actually started before it was stopped.
+	if (currTask_.isEmpty())
+		return;
+	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
+	//Run AnalysisExitScripts on Top
+	top->runAnalysisExitScripts();
+	designConfig_->markRunEnd();
+	paused_ = false;
 }
 
 /*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.
@@ -219,9 +283,9 @@ void SlaveExperimentDriver::masterPropertyInitValueChanged(qulonglong dataId, in
 
 /*! \brief Called when executions traverses a Transition in the master.  Adds a corresponding event to the event queue.
  */
-void SlaveExperimentDriver::masterTransitionActivated(qulonglong dataId, int transId)
+void SlaveExperimentDriver::masterTransitionActivated(qulonglong dataId, int transId, bool remoteRunSignal)
 {
-	eventQueue_.addTransActivation(dataId, transId);
+	eventQueue_.addTransActivation(dataId, transId, remoteRunSignal);
 }
 
 /*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.
@@ -242,7 +306,7 @@ void SlaveExperimentDriver::masterPropertyInitValueChanged(int propId, QString v
  */
 void SlaveExperimentDriver::masterTransitionActivated(int transId)
 {
-	eventQueue_.addTransActivation(0, transId);
+	eventQueue_.addTransActivation(0, transId, false);
 }
 
 /*! \brief Called when a frame is presented in the master.  Goes through event queue handling events one by one.  Updates
@@ -259,11 +323,7 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 	//	take effect at the time of the frame that follows them.  Note that this matters in analysis because times of
 	//	behavioral events can be compared to times of separately timed signals (eye position, neural data, etc).
 	//	See FrameResolutionTimer for more info.
-	SlaveEvent event;
-	while((event = eventQueue_.takeFirstEvent()).type != SlaveEvent::INVALID)
-	{
-		handleEvent(event);
-	}
+	handleEvents();
 	//Render frame
 	renderFrame();
 	
@@ -272,11 +332,27 @@ void SlaveExperimentDriver::masterFramePresented(double time)
 
 	//----------  Run the analysis frame scripts ---------------------------------------
 	QSharedPointer<State> currState = currElement_.dynamicCast<State>();	
-	if(currState)
+	if (currState && !paused_)
 	{
 		currState->runAnalysisFrameScripts();
 	}
 }
+
+/*! \brief Called whenever queued events should be processed.  First it unlocks and sorts the new additions, then
+ *	it processes them.
+ */
+void SlaveExperimentDriver::handleEvents()
+{
+	//Move events to main queue and sort.
+	eventQueue_.prepareEvents();
+
+	SlaveEvent event;
+	while ((event = eventQueue_.takeFirstEvent()).type != SlaveEvent::INVALID)
+	{
+		handleEvent(event);
+	}
+}
+
 /*! \brief Called when a reward is supplied in the master.  Adds a corresponding reward to the PictoEngine to be supplied
  *	when the next frame is rendered.
  */
@@ -311,14 +387,8 @@ void SlaveExperimentDriver::disableRendering(bool disable)
 		renderFrame();
 }
 
-//! Freeze updates and retain new states until endInsertion is called.
-void SlaveExperimentDriver::masterBeganInsertion()
+//! Pauses the execution of the Analysis Frame scripts - called by the owning viewer
+void SlaveExperimentDriver::pause(bool paused)
 {
-	eventQueue_.beginInsertion();
-}
-
-//! Tell the eventQueue_ to take the retained new states, sort them on Order, insert them, and unfreeze updates.
-void SlaveExperimentDriver::masterEndedInsertion()
-{
-	eventQueue_.endInsertion();
+	paused_ = paused;
 }

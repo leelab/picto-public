@@ -27,6 +27,7 @@ void AnalysisSelectorWidget::clearLocalAnalyses()
 	localAnalysisLookup_.clear();
 	currFilePath_ = "";
 	updateLocalAnalysisList();
+	emit clearAnalysisSelection(true);
 }
 
 /*! \brief Adds the Analyses from the input DesignRoot to this widget for the input filePath.
@@ -46,6 +47,7 @@ void AnalysisSelectorWidget::setLocalDesignRoot(const QString &filePath, QShared
 		localAnalysisList.append(AnalysisInfo(analysis->getAssociateId(), analysis->getName()));
 	}
 	localAnalysisLookup_[filePath] = localAnalysisList;
+	emit clearAnalysisSelection(true);
 }
 
 /*! \brief Like setLocalDesignRoot, except the Analyses are added directly for the input filePath.
@@ -69,6 +71,7 @@ void AnalysisSelectorWidget::setLocalDesignAnalyses(const QString &filePath, con
 	}
 
 	localAnalysisLookup_[filePath] = localAnalysisList;
+	emit clearAnalysisSelection(true);
 }
 
 /*! \brief Adds the Analyses from the input DesignRoot to this widget under the Import tab for possible import into
@@ -77,6 +80,7 @@ void AnalysisSelectorWidget::setLocalDesignAnalyses(const QString &filePath, con
 void AnalysisSelectorWidget::setDesignRootForImport(QSharedPointer<DesignRoot> designRoot, const QStringList &importNames)
 {
 	analysesForImport_.clear();
+	emit clearAnalysisSelection(false);
 
 	if (designRoot.isNull())
 	{	
@@ -221,10 +225,57 @@ void AnalysisSelectorWidget::checkboxChanged(bool checked)
 	QAbstractButton *sender = (QAbstractButton *)QObject::sender();
 	if (checkboxInfoHash.contains(sender))
 	{
-		emit notifyAnalysisSelection(checkboxInfoHash[sender]->assetName_, checked);
+		//The assetName and name will only match if the analysis is Local
+		emit notifyAnalysisSelection(checkboxInfoHash[sender]->assetName_,
+			checked,
+			checkboxInfoHash[sender]->assetName_ == checkboxInfoHash[sender]->name_);
 	}
 	else
 	{
 		qDebug() << "AnalyissSelectorWidget::checkboxChanged Checkbox Sender not found!";
 	}
+}
+
+//! Returns the names of active analyses (Imported analyses use a cached QUuid as their name).
+QStringList AnalysisSelectorWidget::getSelectedAnalysisNames()
+{
+	return getSelectedLocalAnalysisNames() + getSelectedImportAnalysisNames();
+}
+
+//! Returns the names of active analyses (Imported analyses use a cached QUuid as their name).
+QStringList AnalysisSelectorWidget::getSelectedLocalAnalysisNames()
+{
+	QStringList returnVal;
+	if (currFilePath_.isEmpty() || !localAnalysisLookup_.contains(currFilePath_))
+		return returnVal;
+
+	for (int i = 0; i<localAnalysisLookup_[currFilePath_].size(); i++)
+	{
+		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesBox_->layout()->itemAt(i)->widget());
+		Q_ASSERT(button);
+		if (button->isChecked())
+		{
+			returnVal.append(localAnalysisLookup_[currFilePath_][i].assetName_);
+		}
+	}
+
+	return returnVal;
+}
+
+//! Returns the names of active analyses (Imported analyses use a cached QUuid as their name).
+QStringList AnalysisSelectorWidget::getSelectedImportAnalysisNames()
+{
+	QStringList returnVal;
+
+	for (int i = 0; i<analysesForImport_.size(); i++)
+	{
+		QAbstractButton* button = qobject_cast<QAbstractButton*>(analysesForImportBox_->layout()->itemAt(i)->widget());
+		Q_ASSERT(button);
+		if (button->isChecked())
+		{
+			returnVal.append(analysesForImport_[i].assetName_);
+		}
+	}
+
+	return returnVal;
 }

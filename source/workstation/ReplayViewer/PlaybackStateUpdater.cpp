@@ -106,9 +106,34 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 {
 	stop();
 	currRunIndex_ = -1;
+
+	/*
+	//Clean up old connections to eliminate warnings
+	if (sessionState_)
+	{
+		disconnect(sessionState_.data(), SIGNAL(propertyChanged(int, QString)));
+		disconnect(sessionState_.data(), SIGNAL(propertyInitValueChanged(int, QString)));
+		disconnect(sessionState_.data(), SIGNAL(transitionActivated(int)));
+		disconnect(sessionState_.data(), SIGNAL(framePresented(double)));
+		disconnect(sessionState_.data(), SIGNAL(rewardSupplied(double, int, int)));
+		disconnect(sessionState_.data(), SIGNAL(signalChanged(QString, QStringList, QVector<float>)));
+	}
+
+	if (fileSessionLoader_)
+	{
+		disconnect(fileSessionLoader_.data(), SIGNAL(percentLoaded(double)));
+	}
+
+	if (sessionPlayer_)
+	{
+		disconnect(sessionPlayer_.data(), SIGNAL(reachedEnd()));
+		disconnect(sessionPlayer_.data(), SIGNAL(loading(bool)));
+		disconnect(sessionPlayer_.data(), SIGNAL(startingRun(QString, QString)));
+	}
+	*/
+
+
 	sessionState_ = QSharedPointer<SessionState>(new SessionState(enableLfp_));
-	//if(fileSessionLoader_)
-	//	fileSessionLoader_->unload();
 	fileSessionLoader_ = QSharedPointer<FileSessionLoader>(new FileSessionLoader(sessionState_));
 	sessionPlayer_ = QSharedPointer<SessionPlayer>(new SessionPlayer(sessionState_,fileSessionLoader_));
 
@@ -117,12 +142,11 @@ bool PlaybackStateUpdater::setFile(QString filePath)
 	connect(sessionState_.data(),SIGNAL(transitionActivated(int)),this,SIGNAL(transitionActivated(int)));
 	connect(sessionState_.data(),SIGNAL(framePresented(double)),this,SIGNAL(framePresented(double)));
 	connect(sessionState_.data(),SIGNAL(rewardSupplied(double,int,int)),this,SIGNAL(rewardSupplied(double,int,int)));
-	connect(sessionState_.data(),SIGNAL(signalChanged(QString,QStringList,QVector<float>)),this,SIGNAL(signalChanged(QString,QStringList,QVector<float>)));
+	connect(sessionState_.data(), SIGNAL(signalChanged(QString, QStringList, QVector<float>)), this, SIGNAL(signalChanged(QString, QStringList, QVector<float>)));
 	connect(sessionPlayer_.data(),SIGNAL(reachedEnd()),this,SLOT(reachedEnd()));
 	connect(sessionPlayer_.data(),SIGNAL(loading(bool)),this,SIGNAL(loading(bool)));
 	connect(sessionPlayer_.data(),SIGNAL(startingRun(QString,QString)),this,SIGNAL(startingRun(QString,QString)));
-	connect(fileSessionLoader_.data(),SIGNAL(percentLoaded(double)),this,SIGNAL(percentLoaded(double)));
-
+	connect(fileSessionLoader_.data(), SIGNAL(percentLoaded(double)), this, SIGNAL(percentLoaded(double)));
 
 	//Load session file to file loader
 	if(!fileSessionLoader_->setFile(filePath))

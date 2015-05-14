@@ -253,26 +253,26 @@ private:
 	//Stolen from PlaybackController.  Should push into a common, base class in order to reduce duplication
 	QStringList precacheAnalysisNames(QSharedPointer<DesignRoot> import);
 	QString activateAnalyses(QStringList analysisData);
-	QStringList getAnalysesToImport();
+	QStringList getAnalyses(bool bSkipLocal = false);
 
 	QHash<QString, QString> cachedAnalysisNames_;
 	QHash<QString, QUuid> cachedAnalysis_;
+	uint lastExpHash_;
+
 	int numImportedAnalyses_;
 
 	enum RejoinStatus
 	{
 		None = 0,
 		AwaitingDisconnect,
-		RequestingRejoinSignal,
-		AwaitingRejoinSignal,
-		AwaitingInitialConnect,
 		AwaitingRejoin
 
 	} awaitingRejoin_;
-	QStringList analysesToBeActivated_;
+
+	QStringList analysesCurrentlyActive_;
 
 private slots:
-	void notifyAnalysisSelection(const QString&, bool);
+	void notifyAnalysisSelection(const QString&, bool, bool);
 
 private slots:
 	void taskListIndexChanged(int index);

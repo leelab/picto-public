@@ -2,6 +2,7 @@
 
 #include "TaskConfig.h"
 #include "../operator/DataViewElement.h"
+#include "../operator/OperatorPlot.h"
 
 #include "../memleakdetect.h"
 
@@ -9,7 +10,7 @@ namespace Picto
 {
 
 TaskConfig::TaskConfig()
-	:updateSignalEnabled_(true)
+	: updateSignalEnabled_(true), managerConnectionStatus_(Unconnected)
 {
 	reset();
 }
@@ -49,33 +50,130 @@ void TaskConfig::addObserver(DataViewElement *newAsset)
 {
 	QMutexLocker locker(&mtxWaitingAssetProtector);
 
-	waitingAssets.push_back(newAsset);
-}
-
-/*! \brief Used to hook up a ObserverPlot with its plothandler.
- */
-QSharedPointer<OperatorPlotHandler> TaskConfig::getPlotHandler(QString plotPath)
-{
-	if (cachedHandlers_.contains(plotPath))
+	switch (managerConnectionStatus_)
 	{
-		return cachedHandlers_[plotPath];
+	case ConnectionStatus::Unconnected:
+		waitingAssets.push_back(newAsset);
+		break;
+	case ConnectionStatus::Connected:
+		newAsset->sendWidgetToTaskConfig();
+		break;
+	case ConnectionStatus::ConnectionEnded:
+		qDebug() << "Tried to add DataViewElement to a dead TaskConfig (addObserver)";
+		break;
+	default:
+		qDebug() << "Unrecognized ConnectionStatus (addObserver)";
 	}
-
-	return QSharedPointer<OperatorPlotHandler>();
 }
 
-/*! \brief Used to store an ObserverPlot's plothandler for later recovery.
- */
-void TaskConfig::setPlotHandler(QString plotPath, QSharedPointer<OperatorPlotHandler> handler)
+//! Send a message to store an ObserverPlot's plothandler for later recovery.
+void TaskConfig::cachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath)
 {
-	cachedHandlers_[plotPath] = handler;
+	switch (managerConnectionStatus_)
+	{
+	case ConnectionStatus::Unconnected:
+		qDebug() << "Tried to cache a PlotHandler when not connected.";
+		break;
+	case ConnectionStatus::Connected:
+		emit requestCachePlotHandler(handler, plotPath);
+		break;
+	case ConnectionStatus::ConnectionEnded:
+		qDebug() << "Tried to cache a PlotHandler with a dead TaskConfig (cachePlotHandler)";
+		break;
+	default:
+		qDebug() << "Unrecognized ConnectionStatus (cachePlotHandler)";
+	}
 }
 
 /*! \brief Clears all cached PlotHandlers.  This can potentially trigger their deletion.
  */
 void TaskConfig::clearPlotHandlers()
 {
-	cachedHandlers_.clear();
+	if (managerConnectionStatus_ == ConnectionStatus::Connected)
+		emit requestClearPlotHandlers();
+}
+
+//! OperatorPlots call this function to get their cached PlotHandler, if there is one.
+void TaskConfig::requestPlotHandler(QWeakPointer<OperatorPlot> plot, const QString plotPath)
+{
+	waitingOperatorPlots_[plotPath] = plot;
+
+	switch (managerConnectionStatus_)
+	{
+	case ConnectionStatus::Unconnected:
+		break;
+	case ConnectionStatus::Connected:
+		emit plotHandlerRequested(plotPath);
+		break;
+	case ConnectionStatus::ConnectionEnded:
+		qDebug() << "Tried to request from a dead TaskConfig (requestPlotHandler)";
+		break;
+	default:
+		qDebug() << "Unrecognized ConnectionStatus (requestPlotHandler)";
+	}
+
+}
+
+//! Response from manager of PlotHandlers bearing either the handler, or a null pointer
+void TaskConfig::receivePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath)
+{
+	if (waitingOperatorPlots_.contains(plotPath) && !waitingOperatorPlots_[plotPath].isNull())
+	{
+		waitingOperatorPlots_[plotPath].toStrongRef()->receivePlotHandler(handler);
+		waitingOperatorPlots_.remove(plotPath);
+	}
+}
+
+//! Signal sent when a PlotHandler manager connects and disconnects
+void TaskConfig::managerConnectionEstablished(bool connected)
+{
+	bool justConnected = false;
+	switch (managerConnectionStatus_)
+	{
+	case ConnectionStatus::Unconnected:
+		if (connected)
+		{
+			managerConnectionStatus_ = ConnectionStatus::Connected;
+			justConnected = true;
+		}
+		else
+		{
+			qDebug() << "Tried to break connection when No Connection enabled.";
+		}
+		break;
+	case ConnectionStatus::Connected:
+		if (connected)
+		{
+			qDebug() << "Tried to open connection when already enabled.";
+		}
+		else
+		{
+			managerConnectionStatus_ = ConnectionStatus::ConnectionEnded;
+		}
+		break;
+	case ConnectionStatus::ConnectionEnded:
+		qDebug() << "Tried to modify ended connection with connected =" << connected;
+		break;
+	default:
+		qDebug() << "Unrecognized ConnectionStatus (managerConnectionEstablished)";
+	}
+
+	if (justConnected)
+	{
+		QStringList plotPaths = waitingOperatorPlots_.keys();
+		foreach(QString plotPath, plotPaths)
+		{
+			if (!waitingOperatorPlots_[plotPath].isNull())
+			{
+				emit plotHandlerRequested(plotPath);
+			}
+			else
+			{
+				waitingOperatorPlots_.remove(plotPath);
+			}
+		}
+	}
+
 }
 
 /*! \brief Adds the passed in ObserverWidget to the TaskConfig.

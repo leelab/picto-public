@@ -62,6 +62,8 @@ private:
 	QAction* deleteAnalysisAction_;
 	//! Action that gets called when the AddTask button is pressed
 	QAction* addTaskAction_;
+	//! Action that gets called when the EditTask button is pressed
+	QAction* editTaskAction_;
 	//! Action that gets called when the DeleteTask button is pressed
 	QAction* deleteTaskAction_;
 	//! The QComboBox that holds the Analyses that are available
@@ -85,6 +87,7 @@ private slots:
 	void selectedTaskTextChanged(const QString&);
 
 	void addTask();
+	void editTask();
 	void deleteCurrentTask();
 };
 };

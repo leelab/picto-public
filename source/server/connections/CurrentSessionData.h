@@ -49,6 +49,8 @@ private:
 	QMap<double,QMap<int,int>> dataByTime_;
 	int dataType_;
 	QMap<int,int> lastOffset_;
+	QMap<double, int> transitionsByTime_;
+	double capTime_;
 };
 
 #endif

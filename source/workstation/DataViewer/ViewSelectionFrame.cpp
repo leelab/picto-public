@@ -12,7 +12,7 @@
 /*! \brief Constructs a new ViewSelectionFrame
 */
 ViewSelectionFrame::ViewSelectionFrame()
-	: nextIndex_(1)
+	: nextIndex_(1), pVisualTargetHost_(nullptr)
 {
 	selectionLayout_ = new QGridLayout();
 	selectionLayout_->addWidget(new QLabel("View Selection"),0,0,1,4, Qt::AlignCenter);
@@ -95,7 +95,17 @@ void ViewSelectionFrame::selectedPlotIndexChanged(int)
 void ViewSelectionFrame::selectedSizeIndexChanged(int)
 {
 	//The current widget
-	DataViewWidget *pCurrentView = widgetIndexMap_[plotSelection_->currentData().toInt()];
+	DataViewWidget *pCurrentView = nullptr;
+
+	if (widgetIndexMap_.contains(plotSelection_->currentData().toInt()))
+	{
+		pCurrentView = widgetIndexMap_[plotSelection_->currentData().toInt()];
+	}
+
+	if (!pCurrentView)
+	{
+		return;
+	}
 
 	pCurrentView->setCurrentSize((DataViewSize::ViewSize)sizeSelection_->currentData().toInt());
 
@@ -197,6 +207,22 @@ void ViewSelectionFrame::addContainer(QWidget *pNewView)
 		widgetIndexMap_[nextIndex_] = pNewViewContainer;
 		plotSelection_->addItem(pNewViewContainer->getName(), nextIndex_);
 		++nextIndex_;
+
+		if (cachedViewSetup_.contains(pNewView))
+		{
+			//Set the properties on the DataViewWidget
+			pNewViewContainer->setPosition(cachedViewSetup_[pNewView].x_, cachedViewSetup_[pNewView].y_);
+			pNewViewContainer->setCurrentSize(cachedViewSetup_[pNewView].size_);
+			pNewViewContainer->setDisplayed(true);
+
+			emit widgetAdded(pNewViewContainer,
+				cachedViewSetup_[pNewView].x_,
+				cachedViewSetup_[pNewView].y_,
+				cachedViewSetup_[pNewView].size_);
+
+			cachedViewSetup_.remove(pNewView);
+			updateSizeAndPositionOptions();
+		}
 	}
 }
 
@@ -348,7 +374,7 @@ void ViewSelectionFrame::connectToViewerLayout(DataViewOrganizer *pLayout)
 }
 
 /*! \brief Connects the Slots of the ViewSelectionFrame with the Signals of the TaskConfig.
-*/
+ */
 void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig)
 {
 	if (currentTaskConfig_ == pTaskConfig)
@@ -356,17 +382,48 @@ void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCon
 
 	if (currentTaskConfig_)
 	{
+		emit managerConnectionEstablished(false);
+
 		disconnect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
 		disconnect(currentTaskConfig_.data(), SIGNAL(widgetRemovedFromMap(QWidget*)), this, SLOT(removeWidgetContainer(QWidget*)));
+		disconnect(currentTaskConfig_.data(), SIGNAL(plotHandlerRequested(const QString)),
+			this, SLOT(plotHandlerRequested(const QString)));
+		disconnect(currentTaskConfig_.data(), SIGNAL(requestCachePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)),
+			this, SLOT(cachePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)));
+		disconnect(currentTaskConfig_.data(), SIGNAL(requestClearPlotHandlers()),
+			this, SLOT(clearPlotHandlers()));
+		disconnect(this, SIGNAL(returnPlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)),
+			currentTaskConfig_.data(), SLOT(receivePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)));
+		disconnect(this, SIGNAL(managerConnectionEstablished(bool)),
+			currentTaskConfig_.data(), SLOT(managerConnectionEstablished(bool)));
 	}
 
 	currentTaskConfig_ = pTaskConfig;
 	
 	connect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
 	connect(currentTaskConfig_.data(), SIGNAL(widgetRemovedFromMap(QWidget*)), this, SLOT(removeWidgetContainer(QWidget*)));
+	connect(currentTaskConfig_.data(), SIGNAL(plotHandlerRequested(const QString)),
+		this, SLOT(plotHandlerRequested(const QString)));
+	connect(currentTaskConfig_.data(), SIGNAL(requestCachePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)),
+		this, SLOT(cachePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)));
+	connect(currentTaskConfig_.data(), SIGNAL(requestClearPlotHandlers()),
+		this, SLOT(clearPlotHandlers()));
+	connect(this, SIGNAL(returnPlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)),
+		currentTaskConfig_.data(), SLOT(receivePlotHandler(QSharedPointer<OperatorPlotHandler>, const QString)));
+	connect(this, SIGNAL(managerConnectionEstablished(bool)),
+		currentTaskConfig_.data(), SLOT(managerConnectionEstablished(bool)));
 
-	QStringList keys = analysisDisplayState.keys();
-	QList<bool> selections = analysisDisplayState.values();
+	emit managerConnectionEstablished(true);
+
+	QStringList keys = localAnalysisDisplayState.keys();
+	QList<bool> selections = localAnalysisDisplayState.values();
+	for (int i = 0; i < keys.count(); i++)
+	{
+		currentTaskConfig_->notifyAnalysisSelection(keys[i], selections[i]);
+	}
+
+	keys = importedAnalysisDisplayState.keys();
+	selections = importedAnalysisDisplayState.values();
 	for (int i = 0; i < keys.count(); i++)
 	{
 		currentTaskConfig_->notifyAnalysisSelection(keys[i], selections[i]);
@@ -374,23 +431,48 @@ void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCon
 }
 
 //! Slot to receive information about which analyses are currently active.
-void ViewSelectionFrame::notifyAnalysisSelection(const QString &name, bool selected)
+void ViewSelectionFrame::notifyAnalysisSelection(const QString &name, bool selected, bool local)
 {
-	if (analysisDisplayState.contains(name) && analysisDisplayState[name] == selected)
+	QMap<QString, bool> *currentMap = nullptr;
+
+	if (local)
+	{
+		currentMap = &localAnalysisDisplayState;
+	}
+	else
+	{
+		currentMap = &importedAnalysisDisplayState;
+	}
+
+	if (currentMap->contains(name) && (*currentMap)[name] == selected)
 		return;
 
-	analysisDisplayState[name] = selected;
+	(*currentMap)[name] = selected;
 
 	if (currentTaskConfig_)
 	{
 		currentTaskConfig_->notifyAnalysisSelection(name, selected);
 	}
 
+	updateSizeAndPositionOptions();
+}
+
+//! Signal from AnalysisSelector to clear a subset of our cached analysis display states
+void ViewSelectionFrame::clearAnalysisSelection(bool local)
+{
+	if (local)
+	{
+		localAnalysisDisplayState.clear();
+	}
+	else
+	{
+		importedAnalysisDisplayState.clear();
+	}
 }
 
 
 /*! \brief Update the container for the passed-in widget.  The title is queried from the TaskConfig.
-*/
+ */
 void ViewSelectionFrame::updateWidgetContainer(QWidget *pWidget)
 {
 	if (viewContainerMap_.contains(pWidget))
@@ -402,10 +484,9 @@ void ViewSelectionFrame::updateWidgetContainer(QWidget *pWidget)
 }
 
 /*! \brief Remove the container for the passed-in widget.
-*/
+ */
 void ViewSelectionFrame::removeWidgetContainer(QWidget *pWidget)
 {
-	//TEST THIS CAREFULLY!
 	if (viewContainerMap_.contains(pWidget))
 	{
 		removeDataViewWidget(viewContainerMap_[pWidget]);
@@ -413,50 +494,53 @@ void ViewSelectionFrame::removeWidgetContainer(QWidget *pWidget)
 }
 
 /*! \brief Add a new container for the passed-in widget.  The title is queried from the TaskConfig.
-*/
+ */
 void ViewSelectionFrame::addWidgetContainer(QWidget *pWidget)
 {
 	addContainer(pWidget);
 }
 
-/*! \brief Sets a default widget to be shown.
- */
-bool ViewSelectionFrame::setDefaultView(DataViewWidget *pDefaultView, int x, int y, DataViewSize::ViewSize eSize)
+void ViewSelectionFrame::setVisualTargetHost(QWidget *pTarget)
 {
-	Q_ASSERT(pDefaultView);
-
-	//Register the view if it's not already
-	registerView(pDefaultView);
-	pDefaultView->setCurrentSize(eSize);
-
-	//Return false if we can't set the view
-	if (!isWidgetPosValid(pDefaultView, x, y))
-	{
-		return false;
-	}
-
-	pDefaultView->setPosition(x, y);
-	pDefaultView->setDisplayed(true);
-	emit(widgetRemoved(pDefaultView));
-	emit(widgetAdded(pDefaultView, x, y, pDefaultView->getCurrentSize()));
-
-	updateSizeAndPositionOptions();
-
-	return true;
+	pVisualTargetHost_ = pTarget;
 }
 
 /*! \brief Clears and reconstructs entire set of views.
  */
 void ViewSelectionFrame::rebuild()
 {
-	clear();
-	currentTaskConfig_->requestUpdate();
+	cachedViewSetup_.clear();
 
-	QList<QWidget*> newWidgets = currentTaskConfig_->getWidgets();
+	QList<QWidget*> widgets = viewContainerMap_.keys();
+	QList<DataViewWidget*> viewWidgets = viewContainerMap_.values();
 
-	foreach(QWidget* pWidget, newWidgets)
+	for (int i = 0; i < widgets.count(); i++)
 	{
-		addWidgetContainer(pWidget);
+		if (viewWidgets[i]->getDisplayed())
+		{
+			int x, y;
+			viewWidgets[i]->getPosition(x, y);
+			cachedViewSetup_[widgets[i]] = std::move(ViewComponents(viewWidgets[i]->getCurrentSize(), x, y));
+		}
+	}
+
+	clear();
+
+	if (pVisualTargetHost_)
+	{
+		addContainer(pVisualTargetHost_);
+	}
+
+	if (currentTaskConfig_)
+	{
+		currentTaskConfig_->requestUpdate();
+
+		QList<QWidget*> newWidgets = currentTaskConfig_->getWidgets();
+
+		foreach(QWidget* pWidget, newWidgets)
+		{
+			addContainer(pWidget);
+		}
 	}
 }
 
@@ -485,18 +569,34 @@ void ViewSelectionFrame::clear()
  */
 DataViewWidget *ViewSelectionFrame::createDataViewWidget(QWidget *pWidget)
 {
-	DataViewWidget *newViewWidget = new PlotViewWidget(currentTaskConfig_->getName(pWidget), pWidget,currentTaskConfig_->getDisplayWidgetProperties(pWidget).defaultSize_);
-	newViewWidget->setName(currentTaskConfig_->getName(pWidget));
+	DataViewWidget *newViewWidget = nullptr;
+	if (pWidget == pVisualTargetHost_)
+	{
+		newViewWidget = new DataViewWidget("Task", pWidget);
+		DataViewSize::ViewSize size = DataViewSize::VIEW_SIZE_3x3;
+		if (currentTaskConfig_)
+		{
+			size = currentTaskConfig_->getTaskViewSize();
+		}
+
+		cachedViewSetup_[pWidget] = std::move(ViewComponents(size, 0, 0));
+	}
+	else
+	{
+		newViewWidget = new PlotViewWidget(currentTaskConfig_->getName(pWidget), pWidget, currentTaskConfig_->getDisplayWidgetProperties(pWidget).defaultSize_);
+		newViewWidget->setName(currentTaskConfig_->getName(pWidget));
+	}
+
 	return newViewWidget;
 }
 
-/*! \brief Deletes all references to the passed-in widget.
-*/
+//! Deletes all references to the passed-in widget.
 void ViewSelectionFrame::removeDataViewWidget(DataViewWidget *pWidget, bool bRemoveFromVector)
 {
 	if (pWidget->getDisplayed())
 	{
 		emit widgetRemoved(pWidget);
+		updateSizeAndPositionOptions();
 	}
 
 	int findKey = widgetIndexMap_.key(pWidget);
@@ -519,4 +619,29 @@ void ViewSelectionFrame::removeDataViewWidget(DataViewWidget *pWidget, bool bRem
 
 
 	delete pWidget;
+}
+
+//! Incoming signal from TaskConfig, indicating an OperatorPlot has requested its PlotHandler
+void ViewSelectionFrame::plotHandlerRequested(const QString plotPath)
+{
+	if (cachedHandlers_.contains(plotPath))
+	{
+		emit returnPlotHandler(cachedHandlers_[plotPath], plotPath);
+	}
+	else
+	{
+		emit returnPlotHandler(QSharedPointer<OperatorPlotHandler>(), plotPath);
+	}
+}
+
+//! Incoming signal from TaskConfig, indicating an OperatorPlot has created a new PlotHandler
+void ViewSelectionFrame::cachePlotHandler(QSharedPointer<OperatorPlotHandler> handler, const QString plotPath)
+{
+	cachedHandlers_[plotPath] = handler;
+}
+
+//! Incoming signal from TaskConfig, incidating the PlotHandler Cache should be cleared
+void ViewSelectionFrame::clearPlotHandlers()
+{
+	cachedHandlers_.clear();
 }

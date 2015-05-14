@@ -12,7 +12,7 @@ using namespace Picto;
  *	@param serverChan The CommandChannel on which this object will request the latest data from the Server.
  */
 RemoteStateUpdater::RemoteStateUpdater(CommandChannel *serverChan)
-: serverChan_(serverChan)
+	: serverChan_(serverChan), sendProcessQueueSignal_(false)
 {
 	Q_ASSERT(serverChan_);
 	initForNewSession();
@@ -79,7 +79,7 @@ bool RemoteStateUpdater::updateState()
 		return false;
 
 	xmlReader->readNext();
-	emit beginInsertionEvent();
+
 	while(!xmlReader->isEndElement() && xmlReader->name() != "Data" && !xmlReader->atEnd())
 	{
 		QString name = xmlReader->name().toString();
@@ -94,7 +94,12 @@ bool RemoteStateUpdater::updateState()
 		xmlReader->readNext();
 	}
 
-	emit endInsertionEvent();
+	if (sendProcessQueueSignal_)
+	{
+		sendProcessQueueSignal_ = false;
+
+		emit processQueue();
+	}
 
 	return true;
 }
@@ -105,4 +110,9 @@ void RemoteStateUpdater::updateCurrUnitTime(QString time)
 	{
 		lastTimeStateDataRequested_ = time;
 	}
+}
+
+void RemoteStateUpdater::prepareToProcessQueue()
+{
+	sendProcessQueueSignal_ = true;
 }

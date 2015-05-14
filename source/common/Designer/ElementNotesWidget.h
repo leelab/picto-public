@@ -36,6 +36,7 @@ private slots:
 	void notesWereEdited();
 	void searchRequested(SearchRequest searchRequest);
 	void notesLostFocus();
+	void clearAssets();
 };
 
 #endif

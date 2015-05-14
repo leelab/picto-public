@@ -51,6 +51,8 @@ public:
 
 	virtual void postLinkUpdate();
 
+	virtual void receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler);
+
 signals:
 	void initializePlotSig(const QString &xTitle, const QString &yTitle);
 	void setTitleSig(const QString &title);

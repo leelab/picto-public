@@ -273,10 +273,6 @@ void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler
 
 	QSharedPointer<BarBasePlotHandler> barPlotHandler = plotHandler.objectCast<BarBasePlotHandler>();
 
-	qRegisterMetaType<QList<double>>("QList<double>");
-	qRegisterMetaType<QVector<QwtIntervalSample>>("QVector<QwtIntervalSample>");
-	qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>");
-
 	connect(this, SIGNAL(initializeHistoSig(bool, const QColor&, const QColor&, int)),
 		barPlotHandler.data(), SLOT(initializeHisto(bool, const QColor&, const QColor&, int)));
 	connect(this, SIGNAL(handleXLabelsSig(long,long)),

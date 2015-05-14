@@ -46,13 +46,16 @@ public:
 	virtual QSharedPointer<SignalReader> getSignalReader(QString name){return QSharedPointer<SignalReader>();};
 
 public slots:
-	/*! \brief Updates the lastTimeStateDataRequested_ if it's passed a more recent time.
-	 */
+	//! Updates the lastTimeStateDataRequested_ if it's passed a more recent time.
 	void updateCurrUnitTime(QString time);
+	//! Prepares the RemoteStateUpdater to submit a processQueue signal after processing data
+	void prepareToProcessQueue();
+
 private:
 	CommandChannel *serverChan_;
 	QString lastTimeStateDataRequested_;
 	QMap<QString, QSharedPointer<RemoteStateXMLHandler>> xmlHandlers_;
+	bool sendProcessQueueSignal_;
 };
 
 

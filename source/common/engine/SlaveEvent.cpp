@@ -27,9 +27,14 @@ void SlaveEvent::setAsInitProp(const qulonglong& data, const int& assetId, const
 	dataId = data;
 }
 /*! \brief Sets SlaveEvent data fields for a TRANS_ACTIVATED event.*/
-void SlaveEvent::setAsTrans(const qulonglong& data, const int& assetId)
+void SlaveEvent::setAsTrans(const qulonglong& data, const int& assetId, bool remoteRunSignal)
 {
 	type = TRANS_ACTIVATED;
 	id = assetId;
 	dataId = data;
+	//Kind of a hack, but we can use the extra data element to store whether this needs to call the remoteRun functions.
+	if (remoteRunSignal)
+		value = "1";
+	else
+		value.clear();
 }

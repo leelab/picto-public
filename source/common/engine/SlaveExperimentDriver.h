@@ -35,6 +35,8 @@ class SlaveExperimentDriver : public QObject
 public:
 	SlaveExperimentDriver(QSharedPointer<Experiment> exp,QSharedPointer<StateUpdater> updater);
 	virtual ~SlaveExperimentDriver(){};
+
+	void pause(bool paused);
 signals:
 	/*! \brief Emitted when the currently running task changes.  currTask is the name of the new Task.
 	*	\details This can happen suddently sometimes even when it doesn't make sense in the StateMachine control flow.
@@ -47,6 +49,13 @@ signals:
 private:
 	void renderFrame();
 	void handleEvent(SlaveEvent& event);
+
+	void remoteRunStarting(QString taskName);
+	void remoteRunEnding();
+
+	//! This is how a remoteUpdater would pause the execution of Analysis Scripts.  Replay works differently.
+	bool paused_;
+
 	QSharedPointer<Experiment> experiment_;
 	QSharedPointer<StateUpdater> updater_;
 	QSharedPointer<DesignConfig> designConfig_;
@@ -55,6 +64,7 @@ private:
 	QTime frameTimer_;
 	bool renderingEnabled_;
 	QString currTask_;
+
 private slots:
 	void masterRunStarting(QString taskName,QString runName);
 	void masterRunEnding();
@@ -65,15 +75,14 @@ private slots:
 
 	void masterPropertyValueChanged(qulonglong dataId, int propId, QString value);
 	void masterPropertyInitValueChanged(qulonglong dataId, int propId, QString value);
-	void masterTransitionActivated(qulonglong dataId, int transId);
+	void masterTransitionActivated(qulonglong dataId, int transId, bool remoteRunSignal);
 
 	void masterFramePresented(double time);
 	void masterRewardSupplied(double time,int duration,int channel);
 	void masterSignalChanged(QString name,QStringList subChanNames,QVector<float> vals);
 	void disableRendering(bool disable);
 
-	void masterBeganInsertion();
-	void masterEndedInsertion();
+	void handleEvents();
 };
 
 

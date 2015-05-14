@@ -65,7 +65,7 @@ signals:
 	void propertyInitValueChanged(qulonglong dataId, int propId, QString value);
 	/*! \brief Emitted when a Transition with AssetId of transId is traversed.
 	 */
-	void transitionActivated(qulonglong dataId, int transId);
+	void transitionActivated(qulonglong dataId, int transId, bool remoteRunSignal);
 
 	//Without DataId
 	/*!\brief Emitted when a Property value changes for a Property with an AssetId of propId and a new value of value.
@@ -100,16 +100,8 @@ signals:
 	 *	order and all data will be available on the data readers; however, the visual elements need not be displayed.
 	 */
 	void disableRendering(bool disable);
-	/*! \brief Called to freeze the updater in order to insert events that will need to be sorted.
-	 *	\details This is only used by the RemoteStateUpdater in order to ensure the proper ordering of transitions and
-	 *	property changes.
-	 */
-	void beginInsertionEvent();
-	/*! \brief Called to unfreeze the updater and kick off sorting on inserted events.
-	*	\details This is only used by the RemoteStateUpdater in order to ensure the proper ordering of transitions and
-	*	property changes.
-	*/
-	void endInsertionEvent();
+	//! A signal sent to the SlaveExperimentDriver to indicate a manual processing of the event queue is necessary.
+	void processQueue();
 };
 
 

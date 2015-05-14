@@ -7,7 +7,6 @@
 using namespace Picto;
 
 SlaveEventQueue::SlaveEventQueue()
-	: frozen_(false), currentQueue_(&eventQueue_)
 {
 	reset();
 }
@@ -24,8 +23,6 @@ void SlaveEventQueue::reset()
 	frozenEndLoc_ = 0;
 	frozenQueue_.clear();
 	frozenQueue_.insert(0, 10, SlaveEvent());
-
-	currentQueue_ = &eventQueue_;
 }
 
 /*! \brief Adds a SlaveEvent::PROP_VAL_CHANGE event to the SlaveEventQueue indicating that the Property with the input
@@ -33,21 +30,21 @@ void SlaveEventQueue::reset()
  */
 void SlaveEventQueue::addPropChange(const qulonglong& dataId, const int& assetId, const QString& val)
 {
-	(*currentQueue_)[getNextAddLoc()].setAsProp(dataId, assetId, val);
+	frozenQueue_[getNextFrozenLoc()].setAsProp(dataId, assetId, val);
 }
 /*! \brief Adds a SlaveEvent::INIT_PROP_VAL_CHANGE change event to the SlaveEventQueue indicating that the Property with
  *	the input assetid changed its initValue to the input val.
  */
 void SlaveEventQueue::addInitPropChange(const qulonglong& dataId, const int& assetId, const QString& val)
 {
-	(*currentQueue_)[getNextAddLoc()].setAsInitProp(dataId, assetId, val);
+	frozenQueue_[getNextFrozenLoc()].setAsInitProp(dataId, assetId, val);
 }
 /*! \brief Adds a SlaveEvent::TRANS_ACTIVATED activation event to the SlaveEventQueue indicating that the Transition with
  *	the input assetId was traversed.
  */
-void SlaveEventQueue::addTransActivation(const qulonglong& dataId, const int& assetId)
+void SlaveEventQueue::addTransActivation(const qulonglong& dataId, const int& assetId, bool remoteRunSignal)
 {
-	(*currentQueue_)[getNextAddLoc()].setAsTrans(dataId, assetId);
+	frozenQueue_[getNextFrozenLoc()].setAsTrans(dataId, assetId, remoteRunSignal);
 }
 
 /*! \brief Removes and returns the first SlaveEvent from the SlaveEventQueue.
@@ -67,9 +64,6 @@ SlaveEvent SlaveEventQueue::takeFirstEvent()
  */
 int SlaveEventQueue::getNextAddLoc()
 {
-	if (frozen_)
-		return getNextFrozenLoc();
-
 	//Move endLoc_ to the next available position, looping to the beginning if necessary
 	int nextLoc = endLoc_ + 1;
 	if(nextLoc >= eventQueue_.size())
@@ -102,39 +96,13 @@ int SlaveEventQueue::getNextFrozenLoc()
 	return returnVal;
 }
 
-void SlaveEventQueue::beginInsertion()
+void SlaveEventQueue::prepareEvents()
 {
-	frozen_ = true;
-	currentQueue_ = &frozenQueue_;
-}
-
-void SlaveEventQueue::endInsertion()
-{
-	frozen_ = false;
-	currentQueue_ = &eventQueue_;
-
-	//TEST ELEMENTS
-	qDebug() << "Testing Frozen elements - Before Sort";
-	for (int i = 0; i < frozenEndLoc_; i++)
-	{
-		qDebug() << "DataId:" << frozenQueue_[i].dataId;
-	}
-
-
 	//Sort FrozenQueue
 	std::sort(frozenQueue_.begin(), frozenQueue_.begin() + frozenEndLoc_, [](const SlaveEvent &a, const SlaveEvent &b)
 	{
 		return a.dataId < b.dataId;
 	});
-
-
-	//TEST ELEMENTS
-	qDebug() << "Testing Frozen elements - After Sort";
-	for (int i = 0; i < frozenEndLoc_; i++)
-	{
-		qDebug() << "DataId:" << frozenQueue_[i].dataId;
-	}
-
 
 	//Add FrozenQueue elements to eventQueue_
 	for (int i = 0; i < frozenEndLoc_; i++)

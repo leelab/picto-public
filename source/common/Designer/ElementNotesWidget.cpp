@@ -24,6 +24,7 @@ ElementNotesWidget::ElementNotesWidget(QSharedPointer<EditorState> editorState, 
 	layout()->addWidget(notesEditor_);
 
 	connect(editorState_.data(), SIGNAL(selectedAssetChanged(QSharedPointer<Asset>)),this,SLOT(selectedAssetChanged(QSharedPointer<Asset>)));
+	connect(editorState_.data(), SIGNAL(releaseEditorMemory()), this, SLOT(clearAssets()));
 	connect(notesEditor_, SIGNAL(textChanged()),this, SLOT(notesWereEdited()));
 	//Set up search
 	connect(editorState_.data(),SIGNAL(searchRequested(SearchRequest)),this,SLOT(searchRequested(SearchRequest)));
@@ -102,4 +103,10 @@ void ElementNotesWidget::notesLostFocus()
 		return;
 	needsUndo_ = false;
 	editorState_->undoableActionPerformed();
+}
+
+//! Called to release Designer assets so it may be cleaned up.  Will need to be reinitialized before use.
+void ElementNotesWidget::clearAssets()
+{
+	selectedAsset_ = QSharedPointer<Asset>();
 }
