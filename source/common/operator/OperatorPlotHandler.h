@@ -36,6 +36,9 @@ public slots:
 	void setTitle(const QString &title);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
+	void exportPlot(int type, const QString fileName);
+	void requestExport(ExportType::ExportType type);
+
 protected:
 	QwtPlot *m_pPlot;
 	QString m_tmpTitle;

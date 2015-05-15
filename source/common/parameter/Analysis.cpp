@@ -7,6 +7,7 @@
 #include "AnalysisVariableMap.h"
 #include "AnalysisVariableList.h"
 #include "AnalysisFileOutput.h"
+#include "AnalysisPlotOutput.h"
 #include "AnalysisTimer.h"
 #include "AnalysisFrameData.h"
 #include "AnalysisLfpData.h"
@@ -68,7 +69,9 @@ Analysis::Analysis()
 
 	AddDefinableObjectFactory("AnalysisOutput",outputFactory_);
 	outputFactory_->addAssetType("File",
-		QSharedPointer<AssetFactory>(new AssetFactory(0,-1,AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalysisFileOutput::Create))));
+	outputFactory_->addAssetType("Plot",
+		QSharedPointer<AssetFactory>(new AssetFactory(0, -1, AssetFactory::NewAssetFnPtr(AnalysisPlotOutput::Create))));
 
 	AddDefinableObjectFactory("AnalysisFunction",functionFactory_);
 	functionFactory_->addAssetType("",

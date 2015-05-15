@@ -127,10 +127,14 @@ Signals</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a7df7ae71a49a04bcfeea9592bbad578a">analysisWidgetChanged</a> ()</td></tr>
 <tr class="memdesc:a7df7ae71a49a04bcfeea9592bbad578a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered whenever the widget changes (ie. Something clicked, buttons removed, added, etc) <br /></td></tr>
 <tr class="separator:a7df7ae71a49a04bcfeea9592bbad578a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a982ec6ce3ee22ab260769047599ab565"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982ec6ce3ee22ab260769047599ab565"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a982ec6ce3ee22ab260769047599ab565">notifyAnalysisSelection</a> (const QString &amp;name, bool selected)</td></tr>
-<tr class="memdesc:a982ec6ce3ee22ab260769047599ab565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigged to pass on current state of <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Selection to interested widgets. <br /></td></tr>
-<tr class="separator:a982ec6ce3ee22ab260769047599ab565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bf6f43e197b19f25258f020b239c654"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bf6f43e197b19f25258f020b239c654"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a7bf6f43e197b19f25258f020b239c654">notifyAnalysisSelection</a> (const QString &amp;name, bool selected, bool local)</td></tr>
+<tr class="memdesc:a7bf6f43e197b19f25258f020b239c654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigged to pass on current state of <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Selection to interested widgets. <br /></td></tr>
+<tr class="separator:a7bf6f43e197b19f25258f020b239c654"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add65d79fb36033d7ffd09f8d7335004f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add65d79fb36033d7ffd09f8d7335004f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#add65d79fb36033d7ffd09f8d7335004f">clearAnalysisSelection</a> (bool local)</td></tr>
+<tr class="memdesc:add65d79fb36033d7ffd09f8d7335004f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal to anyone who caches selectedAnalyses to clear their list. <br /></td></tr>
+<tr class="separator:add65d79fb36033d7ffd09f8d7335004f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -170,6 +174,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a17a534c12c588843e10ef03c8f99f030">hasSelectedIds</a> ()</td></tr>
 <tr class="memdesc:a17a534c12c588843e10ef03c8f99f030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if something in the widget has been selected. <br /></td></tr>
 <tr class="separator:a17a534c12c588843e10ef03c8f99f030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640f2f600d58caddc11ff7d0d5f953c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a640f2f600d58caddc11ff7d0d5f953c4"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a640f2f600d58caddc11ff7d0d5f953c4">getSelectedLocalAnalysisNames</a> ()</td></tr>
+<tr class="memdesc:a640f2f600d58caddc11ff7d0d5f953c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the names of active analyses (Imported analyses use a cached QUuid as their name). <br /></td></tr>
+<tr class="separator:a640f2f600d58caddc11ff7d0d5f953c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af239e7fced4b4fcbc8fa9773cedd77b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af239e7fced4b4fcbc8fa9773cedd77b4"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#af239e7fced4b4fcbc8fa9773cedd77b4">getSelectedImportAnalysisNames</a> ()</td></tr>
+<tr class="memdesc:af239e7fced4b4fcbc8fa9773cedd77b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the names of active analyses (Imported analyses use a cached QUuid as their name). <br /></td></tr>
+<tr class="separator:af239e7fced4b4fcbc8fa9773cedd77b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d399a0072b7655b5831a6be3ed4eaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73d399a0072b7655b5831a6be3ed4eaa"></a>
+QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_selector_widget.html#a73d399a0072b7655b5831a6be3ed4eaa">getSelectedAnalysisNames</a> ()</td></tr>
+<tr class="memdesc:a73d399a0072b7655b5831a6be3ed4eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the names of active analyses (Imported analyses use a cached QUuid as their name). <br /></td></tr>
+<tr class="separator:a73d399a0072b7655b5831a6be3ed4eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
 Private Slots</h2></td></tr>
@@ -237,7 +253,7 @@ QHash&lt; QAbstractButton *, <a class="el" href="struct_picto_1_1_analysis_selec
 <p>Set the path of the design or session file current being used to display local Analyses for that file. </p>
 <p>The Analyses for individual filepaths are entered by using <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a798dc3dba80033e7f38bf7d0fe4bd76c" title="Adds the Analyses from the input DesignRoot to this widget for the input filePath. ">setLocalDesignRoot()</a> or <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a947af62386b9f2990a022cf3f540ff69" title="Like setLocalDesignRoot, except the Analyses are added directly for the input filePath. ">setLocalDesignAnalyses()</a>. </p>
 
-<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00100">100</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00104">104</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -274,7 +290,7 @@ QHash&lt; QAbstractButton *, <a class="el" href="struct_picto_1_1_analysis_selec
 <p>Like setLocalDesignRoot, except the Analyses are added directly for the input filePath. </p>
 <p>In this function, the input analysisIds and analysisNames strings are matched up, line by line to build up the local analysis display in the widget. Essentially, <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a798dc3dba80033e7f38bf7d0fe4bd76c" title="Adds the Analyses from the input DesignRoot to this widget for the input filePath. ">setLocalDesignRoot()</a> is just extracting analysisIds and analysisNames automatically from its input <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> and then just doing what we are doing here. Storing that information in a fileName lookup table for display when setCurrentFIle() is called with the input fileName. </p>
 
-<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00058">58</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00060">60</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -305,7 +321,7 @@ QHash&lt; QAbstractButton *, <a class="el" href="struct_picto_1_1_analysis_selec
 <p>Adds the Analyses from the input <a class="el" href="class_picto_1_1_design_root.html" title="The root of the Experiment/Analysis Design tree passed between different UI Viewers. ">DesignRoot</a> to this widget for the input filePath. </p>
 <p>To show these Analyses in the widget, just call <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a2e447935cf31eae4e94e9a792fadcdc5" title="Set the path of the design or session file current being used to display local Analyses for that file...">setCurrentFile()</a> with the input filePath. </p>
 
-<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00035">35</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00036">36</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,7 +349,7 @@ QHash&lt; QAbstractButton *, <a class="el" href="struct_picto_1_1_analysis_selec
 <p>Updates the contents displayed in the import analysis tab based on the latest changes to the widget. </p>
 <p>This is called internally to update the widget when things like <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a57e0acddf79519a36a3e1e4c3e62344c" title="Adds the Analyses from the input DesignRoot to this widget under the Import tab for possible import i...">setDesignRootForImport()</a> getting called happen. </p>
 
-<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00191">191</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00195">195</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -361,7 +377,7 @@ QHash&lt; QAbstractButton *, <a class="el" href="struct_picto_1_1_analysis_selec
 <p>Updates the contents displayed in the local analysis tab based on the latest changes to the widget. </p>
 <p>This is called internally to update the widget when things like <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a2e447935cf31eae4e94e9a792fadcdc5" title="Set the path of the design or session file current being used to display local Analyses for that file...">setCurrentFile()</a> getting called happen. </p>
 
-<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00161">161</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_selector_widget_8cpp_source.html#l00165">165</a> of file <a class="el" href="_analysis_selector_widget_8cpp_source.html">AnalysisSelectorWidget.cpp</a>.</p>
 
 </div>
 </div>

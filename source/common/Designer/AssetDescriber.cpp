@@ -1019,6 +1019,13 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("writeText(text)","Writes the input text string to the end of the file.");
 	curr->addSFunc("writeBinary(csvData,csvTypes)","Writes data out to file as binary values (ie. short, int, double). csvData is a string with values separated by commas.  csvTypes is a string with value types separated by commas.  Valid types are short, int, long, float, double.  If more values appear in csvData than there are types in csvTypes, the last type will be used for all remaining values.  (ex. [AnalysisFileOutputName].writeBinary('1.23,726374,2,0','float,int,short,short');");
 
+
+	curr = addDescription("AnalysisPlotOutput");
+	curr->setInherits(getAssetDescription("AnalysisOutput"));
+	curr->setOverview("Used to write analysis plots to a file.  This can be in several formats.  The output file will be saved to the location chosen by the operator after pressing save in the Test Viewer/Replay Viewer Analysis Output widget.");
+	curr->addProp("FileType", "The format of the file to be used.");
+	curr->addSFunc("exportPlot()", "Renders the plot to file.");
+
 	//Operator Elements
 	curr = addDescription("OperatorPlot");
 	curr->setInherits(getAssetDescription("DataViewElement"));

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['visualtargettype',['VisualTargetType',['../class_hardware_setup.html#a69c004a7774626593182bda8c88c1005',1,'HardwareSetup']]]
+  ['usertype',['UserType',['../struct_playback_command.html#a63cad2fec38e9515df367a1575fcf6ff',1,'PlaybackCommand']]]
 ];

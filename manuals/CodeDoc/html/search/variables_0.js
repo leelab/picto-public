@@ -5,7 +5,7 @@ var searchData=
   ['addanalysisaction_5f',['addAnalysisAction_',['../class_picto_1_1_analysis_option_widget.html#a1e922ca8b2a53c53352823aefb410d5a',1,'Picto::AnalysisOptionWidget']]],
   ['addtaskaction_5f',['addTaskAction_',['../class_picto_1_1_analysis_option_widget.html#a0f8fe9c31a3484495e1545c0f0279c56',1,'Picto::AnalysisOptionWidget']]],
   ['aligntotype_5f',['alignToType_',['../class_session_info.html#acba867ab513484d54573c4d80e332df5',1,'SessionInfo']]],
-  ['analysisdisplaystate',['analysisDisplayState',['../class_picto_1_1_task_config.html#afd57eaed181bedfe7c23402dfd3e773f',1,'Picto::TaskConfig::analysisDisplayState()'],['../class_view_selection_frame.html#aa0298a01cc8da6bc286b81c5ac20cf9c',1,'ViewSelectionFrame::analysisDisplayState()']]],
+  ['analysisdisplaystate',['analysisDisplayState',['../class_picto_1_1_task_config.html#afd57eaed181bedfe7c23402dfd3e773f',1,'Picto::TaskConfig']]],
   ['analysisids_5f',['analysisIds_',['../struct_preloaded_session_data.html#a7f812ece03c96600fe57d16ea0e0bbe3',1,'PreloadedSessionData']]],
   ['analysisnames_5f',['analysisNames_',['../struct_preloaded_session_data.html#a364d1d51fc0403a62763c88dfa1c8c61',1,'PreloadedSessionData']]],
   ['analysisselector_5f',['analysisSelector_',['../class_remote_viewer.html#aaebb9718512d65c5d53ef76435d171e1',1,'RemoteViewer']]],

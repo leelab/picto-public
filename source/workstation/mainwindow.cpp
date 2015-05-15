@@ -460,10 +460,12 @@ void MainWindow::aboutPicto()
 {
 	QStringList releaseNoteList;
 	//List release notes
-	releaseNoteList.append("First pass implementation of user-generated plot support.");
+	releaseNoteList.append("First pass implementation of user-generated plots.");
 	
 	releaseNoteList.append("Added scaling to the task viewer.");
-	releaseNoteList.append("Added support for cusomizeable views in Remote Viewer, Test Viewer, and Replay Viewer.");
+	releaseNoteList.append("Added cusomizable views in Remote Viewer, Test Viewer, and Replay Viewer.");
+	releaseNoteList.append("Added the ability to run analysis scripts in Remote Views.");
+	releaseNoteList.append("Modified how users navigate between and add tasks to experiments.");
 
 	//Format release notes:
 	QString releaseNotes;

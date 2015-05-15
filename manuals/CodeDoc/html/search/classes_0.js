@@ -22,6 +22,7 @@ var searchData=
   ['analysisoutput',['AnalysisOutput',['../class_picto_1_1_analysis_output.html',1,'Picto']]],
   ['analysisoutputwidget',['AnalysisOutputWidget',['../class_picto_1_1_analysis_output_widget.html',1,'Picto']]],
   ['analysisoutputwidgetcontainer',['AnalysisOutputWidgetContainer',['../class_picto_1_1_analysis_output_widget_container.html',1,'Picto']]],
+  ['analysisplotoutput',['AnalysisPlotOutput',['../class_picto_1_1_analysis_plot_output.html',1,'Picto']]],
   ['analysisrewarddata',['AnalysisRewardData',['../class_picto_1_1_analysis_reward_data.html',1,'Picto']]],
   ['analysisrunnotesdata',['AnalysisRunNotesData',['../class_picto_1_1_analysis_run_notes_data.html',1,'Picto']]],
   ['analysisscriptholder',['AnalysisScriptHolder',['../class_picto_1_1_analysis_script_holder.html',1,'Picto']]],

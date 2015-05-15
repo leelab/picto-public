@@ -12,6 +12,7 @@ var searchData=
   ['operatorclickparameter',['OperatorClickParameter',['../class_picto_1_1_operator_click_parameter.html#aedc45dcafa2ca8155be7753903bf6522',1,'Picto::OperatorClickParameter']]],
   ['operatorinfographic',['OperatorInfoGraphic',['../class_picto_1_1_operator_info_graphic.html#a2f0f650831ef7f5be1c7f29a33ec25dd',1,'Picto::OperatorInfoGraphic']]],
   ['operatorisuser',['operatorIsUser',['../class_picto_1_1_engine_1_1_picto_engine.html#a9a7d7c0f1f10b7b1efdc0a9456c4dcf7',1,'Picto::Engine::PictoEngine']]],
+  ['operatorplotnameedited',['operatorPlotNameEdited',['../class_picto_1_1_analysis_plot_output.html#a86dfe636ac7cfcaf5b1fb6b3f56cb950',1,'Picto::AnalysisPlotOutput']]],
   ['outputsignal',['OutputSignal',['../struct_picto_1_1_output_signal.html#ad30bf5beee68cd41bdc4edf0c75bdbfd',1,'Picto::OutputSignal']]],
   ['outputsignalchanged',['outputSignalChanged',['../class_picto_1_1_output_signal_widget.html#ac684eafed9e2c523dea7dab6764055c3',1,'Picto::OutputSignalWidget']]],
   ['outputsignalcontroller',['OutputSignalController',['../class_picto_1_1_output_signal_controller.html#abc833bb04f16765d7955c8171de246a7',1,'Picto::OutputSignalController']]],

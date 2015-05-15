@@ -123,7 +123,8 @@ Inheritance diagram for Picto::AnalysisOutput:</div>
 <area href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. " alt="Picto::DataStore" shape="rect" coords="81,112,233,136"/>
 <area href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. " alt="Picto::Asset" shape="rect" coords="81,56,233,80"/>
 <area href="class_picto_1_1_serializable.html" title="The top level class of the Picto Design class hierarchy, and the Picto network transferrable data hie..." alt="Picto::Serializable" shape="rect" coords="162,0,314,24"/>
-<area href="class_picto_1_1_analysis_file_output.html" title="A simple AnalysisOutput object used for writing text or binary data to files. " alt="Picto::AnalysisFileOutput" shape="rect" coords="162,448,314,472"/>
+<area href="class_picto_1_1_analysis_file_output.html" title="A simple AnalysisOutput object used for writing text or binary data to files. " alt="Picto::AnalysisFileOutput" shape="rect" coords="81,448,233,472"/>
+<area href="class_picto_1_1_analysis_plot_output.html" title="An AnalysisOutput object used for writing Plots to file. " alt="Picto::AnalysisPlotOutput" shape="rect" coords="243,448,395,472"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -702,7 +703,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Creates a widget that displays this <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> object's contents and returns it. </p>
 <dl class="section warning"><dt>Warning</dt><dd>This function may be called from a thread that this <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> is not in. The widget itself might also be accessed from a thread that the <a class="el" href="class_picto_1_1_analysis_output.html" title="AnalysisOutput objects are the endpoint of Analysis data. Any data captured and manipulated in the An...">AnalysisOutput</a> is not in. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_file_output.html#a8343710e6b67612ed0d44dc3c97fc01f">Picto::AnalysisFileOutput</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_file_output.html#a8343710e6b67612ed0d44dc3c97fc01f">Picto::AnalysisFileOutput</a>, and <a class="el" href="class_picto_1_1_analysis_plot_output.html#abed7d23161c6143b6f9528b983bfa6dd">Picto::AnalysisPlotOutput</a>.</p>
 
 <p>Definition at line <a class="el" href="_analysis_output_8h_source.html#l00076">76</a> of file <a class="el" href="_analysis_output_8h_source.html">AnalysisOutput.h</a>.</p>
 
@@ -958,7 +959,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_analysis_variable.html#a1c211501a9805870703207eb9b305bc1">Picto::AnalysisVariable</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_file_output.html#a1f03bef9d6e5395471475d685f1e918c">Picto::AnalysisFileOutput</a>.</p>
+<p>Reimplemented in <a class="el" href="class_picto_1_1_analysis_file_output.html#a1f03bef9d6e5395471475d685f1e918c">Picto::AnalysisFileOutput</a>, and <a class="el" href="class_picto_1_1_analysis_plot_output.html#a9737a43a93ac443730a51086254e3b21">Picto::AnalysisPlotOutput</a>.</p>
 
 <p>Definition at line <a class="el" href="_analysis_output_8cpp_source.html#l00104">104</a> of file <a class="el" href="_analysis_output_8cpp_source.html">AnalysisOutput.cpp</a>.</p>
 

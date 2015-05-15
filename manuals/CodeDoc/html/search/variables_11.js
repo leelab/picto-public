@@ -4,6 +4,7 @@ var searchData=
   ['taskbox_5f',['taskBox_',['../class_picto_1_1_analysis_option_widget.html#a7b8ad00059ed9468b07f9324c3c2f343',1,'Picto::AnalysisOptionWidget']]],
   ['taskconfig_5f',['taskConfig_',['../class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a',1,'Picto::Asset']]],
   ['taskrunning_5f',['taskRunning_',['../class_picto_1_1_input_port.html#a0dc85c94cb5927fc32187a41c99443a5',1,'Picto::InputPort']]],
+  ['taskviewproperties_5f',['taskViewProperties_',['../class_picto_1_1_task_config.html#aa7910965702c5e4a421579edfb523fe2',1,'Picto::TaskConfig']]],
   ['time',['time',['../class_picto_1_1_frame_data_unit.html#aa219e2d7d4fe5eda0e96ba38d2ac9bdf',1,'Picto::FrameDataUnit']]],
   ['time_5f',['time_',['../class_picto_1_1_input_data_unit_package.html#a8053923dd4ce55d2c2ff24bf5dd81290',1,'Picto::InputDataUnitPackage']]],
   ['transitions_5f',['transitions_',['../class_picto_1_1_machine_container.html#a396a1b9e009a6482ef73971c36ca3582',1,'Picto::MachineContainer']]],

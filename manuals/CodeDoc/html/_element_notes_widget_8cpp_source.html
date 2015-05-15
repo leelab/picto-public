@@ -112,81 +112,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    layout()-&gt;addWidget(notesEditor_);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    connect(editorState_.data(), SIGNAL(<a class="code" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt;)));</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    connect(notesEditor_, SIGNAL(textChanged()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">notesWereEdited</a>()));</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="comment">//Set up search</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a>)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a>)));</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">//Set up undoable action trigger</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    connect(notesEditor_,SIGNAL(focusOut()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">notesLostFocus</a>()));</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;ElementNotesWidget::~ElementNotesWidget()</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">ElementNotesWidget::selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt; asset)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">if</span>(asset &amp;&amp; !asset-&gt;inherits(<span class="stringliteral">&quot;Picto::UIEnabled&quot;</span>))</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    changingAsset_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    selectedAsset_ = asset;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span>(selectedAsset_.isNull())</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        notesEditor_-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        notesEditor_-&gt;setPlainText(asset.staticCast&lt;<a class="code" href="class_picto_1_1_u_i_enabled.html">UIEnabled</a>&gt;()-&gt;<a class="code" href="class_picto_1_1_u_i_enabled.html#a633ba2f43657af31ab75dde4ee57bee0">getNotes</a>());</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    changingAsset_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">ElementNotesWidget::notesWereEdited</a>()</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//Don&#39;t do anything if the reason for the change was that we&#39;re changing the selected asset</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span>(changingAsset_ || selectedAsset_.isNull())</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">//Just in case the search is considered a text change for some reason, we make this function reentrant</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span>(inNotesWereEdited_)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    inNotesWereEdited_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//Set the new notes to the asset</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    Q_ASSERT(selectedAsset_-&gt;inherits(<span class="stringliteral">&quot;Picto::UIEnabled&quot;</span>));</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    selectedAsset_.staticCast&lt;<a class="code" href="class_picto_1_1_u_i_enabled.html">UIEnabled</a>&gt;()-&gt;setNotes(notesEditor_-&gt;toPlainText());</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//Redo search in case the new edit leads to a highlight change</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">foreach</span>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest,editorState_-&gt;getSearchRequests())</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(searchRequest);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">//Since something happened, the system will need an undo.</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    needsUndo_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    inNotesWereEdited_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">   85</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">ElementNotesWidget::searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordflow">if</span>(searchRequest.<a class="code" href="struct_search_request.html#a40c275baf144a747bc660a22ba9713cf">type</a> != SearchRequest::STRING)</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    notesEditor_-&gt;<a class="code" href="class_searchable_text_edit.html#af3053215da37605c82911b7088717abc">search</a>(searchRequest,QColor(255,0,0,100));</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">   99</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">ElementNotesWidget::notesLostFocus</a>()</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">if</span>(!needsUndo_)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    needsUndo_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    editorState_-&gt;undoableActionPerformed();</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-<div class="ttc" id="class_element_notes_widget_html_add3c4da041e58d2fbd206a657bab2dfa"><div class="ttname"><a href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">ElementNotesWidget::searchRequested</a></div><div class="ttdeci">void searchRequested(SearchRequest searchRequest)</div><div class="ttdoc">Performs the input SearchRequest on the underlying SearchableTextEdit. </div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00085">ElementNotesWidget.cpp:85</a></div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    connect(editorState_.data(), SIGNAL(releaseEditorMemory()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_element_notes_widget.html#aa22e3b767c12b47373188c333be9accf">clearAssets</a>()));</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    connect(notesEditor_, SIGNAL(textChanged()),<span class="keyword">this</span>, SLOT(<a class="code" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">notesWereEdited</a>()));</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">//Set up search</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    connect(editorState_.data(),SIGNAL(<a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a>)),<span class="keyword">this</span>,SLOT(<a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a>)));</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">//Set up undoable action trigger</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    connect(notesEditor_,SIGNAL(focusOut()),<span class="keyword">this</span>,SLOT(<a class="code" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">notesLostFocus</a>()));</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;ElementNotesWidget::~ElementNotesWidget()</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">ElementNotesWidget::selectedAssetChanged</a>(QSharedPointer&lt;Asset&gt; asset)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span>(asset &amp;&amp; !asset-&gt;inherits(<span class="stringliteral">&quot;Picto::UIEnabled&quot;</span>))</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    changingAsset_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    selectedAsset_ = asset;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span>(selectedAsset_.isNull())</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        notesEditor_-&gt;setText(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        notesEditor_-&gt;setPlainText(asset.staticCast&lt;<a class="code" href="class_picto_1_1_u_i_enabled.html">UIEnabled</a>&gt;()-&gt;<a class="code" href="class_picto_1_1_u_i_enabled.html#a633ba2f43657af31ab75dde4ee57bee0">getNotes</a>());</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    changingAsset_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">ElementNotesWidget::notesWereEdited</a>()</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">//Don&#39;t do anything if the reason for the change was that we&#39;re changing the selected asset</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(changingAsset_ || selectedAsset_.isNull())</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">//Just in case the search is considered a text change for some reason, we make this function reentrant</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(inNotesWereEdited_)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    inNotesWereEdited_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//Set the new notes to the asset</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    Q_ASSERT(selectedAsset_-&gt;inherits(<span class="stringliteral">&quot;Picto::UIEnabled&quot;</span>));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    selectedAsset_.staticCast&lt;<a class="code" href="class_picto_1_1_u_i_enabled.html">UIEnabled</a>&gt;()-&gt;setNotes(notesEditor_-&gt;toPlainText());</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//Redo search in case the new edit leads to a highlight change</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">foreach</span>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest,editorState_-&gt;getSearchRequests())</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">searchRequested</a>(searchRequest);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">//Since something happened, the system will need an undo.</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    needsUndo_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    inNotesWereEdited_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">   86</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">ElementNotesWidget::searchRequested</a>(<a class="code" href="struct_search_request.html">SearchRequest</a> searchRequest)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">if</span>(searchRequest.<a class="code" href="struct_search_request.html#a40c275baf144a747bc660a22ba9713cf">type</a> != SearchRequest::STRING)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    notesEditor_-&gt;<a class="code" href="class_searchable_text_edit.html#af3053215da37605c82911b7088717abc">search</a>(searchRequest,QColor(255,0,0,100));</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">  100</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">ElementNotesWidget::notesLostFocus</a>()</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span>(!needsUndo_)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    needsUndo_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    editorState_-&gt;undoableActionPerformed();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="class_element_notes_widget.html#aa22e3b767c12b47373188c333be9accf">  109</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_element_notes_widget.html#aa22e3b767c12b47373188c333be9accf">ElementNotesWidget::clearAssets</a>()</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;{</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    selectedAsset_ = QSharedPointer&lt;Asset&gt;();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="ttc" id="class_element_notes_widget_html_add3c4da041e58d2fbd206a657bab2dfa"><div class="ttname"><a href="class_element_notes_widget.html#add3c4da041e58d2fbd206a657bab2dfa">ElementNotesWidget::searchRequested</a></div><div class="ttdeci">void searchRequested(SearchRequest searchRequest)</div><div class="ttdoc">Performs the input SearchRequest on the underlying SearchableTextEdit. </div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00086">ElementNotesWidget.cpp:86</a></div></div>
 <div class="ttc" id="class_picto_1_1_u_i_enabled_html_a633ba2f43657af31ab75dde4ee57bee0"><div class="ttname"><a href="class_picto_1_1_u_i_enabled.html#a633ba2f43657af31ab75dde4ee57bee0">Picto::UIEnabled::getNotes</a></div><div class="ttdeci">QString getNotes()</div><div class="ttdoc">Gets the design notes for this object that appear in the Design window. </div><div class="ttdef"><b>Definition:</b> <a href="_u_i_enabled_8cpp_source.html#l00065">UIEnabled.cpp:65</a></div></div>
 <div class="ttc" id="struct_search_request_html_a40c275baf144a747bc660a22ba9713cf"><div class="ttname"><a href="struct_search_request.html#a40c275baf144a747bc660a22ba9713cf">SearchRequest::type</a></div><div class="ttdeci">SearchType type</div><div class="ttdoc">The SearchType to use for this search. </div><div class="ttdef"><b>Definition:</b> <a href="_search_request_8h_source.html#l00035">SearchRequest.h:35</a></div></div>
-<div class="ttc" id="class_element_notes_widget_html_a6ece32f759018b5a30c74b581f18ff6e"><div class="ttname"><a href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">ElementNotesWidget::notesLostFocus</a></div><div class="ttdeci">void notesLostFocus()</div><div class="ttdoc">Called when the underlying SearchableTextEdit looses focus to tell the EditorState that an undoable a...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00099">ElementNotesWidget.cpp:99</a></div></div>
+<div class="ttc" id="class_element_notes_widget_html_a6ece32f759018b5a30c74b581f18ff6e"><div class="ttname"><a href="class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e">ElementNotesWidget::notesLostFocus</a></div><div class="ttdeci">void notesLostFocus()</div><div class="ttdoc">Called when the underlying SearchableTextEdit looses focus to tell the EditorState that an undoable a...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00100">ElementNotesWidget.cpp:100</a></div></div>
 <div class="ttc" id="class_element_notes_widget_html_a6d32294df9e2171fc0eca9cc3b0bc588"><div class="ttname"><a href="class_element_notes_widget.html#a6d32294df9e2171fc0eca9cc3b0bc588">ElementNotesWidget::ElementNotesWidget</a></div><div class="ttdeci">ElementNotesWidget(QSharedPointer&lt; EditorState &gt; editorState=QSharedPointer&lt; EditorState &gt;(), QWidget *parent=0)</div><div class="ttdoc">Constructs a new ElementNotesWidget. </div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00014">ElementNotesWidget.cpp:14</a></div></div>
-<div class="ttc" id="class_element_notes_widget_html_a58db9d17279d4f70ee594339378841e4"><div class="ttname"><a href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">ElementNotesWidget::selectedAssetChanged</a></div><div class="ttdeci">void selectedAssetChanged(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Called when the Designer&#39;s selected Asset changes to update the contents of this widget with that Ass...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00042">ElementNotesWidget.cpp:42</a></div></div>
+<div class="ttc" id="class_element_notes_widget_html_a58db9d17279d4f70ee594339378841e4"><div class="ttname"><a href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">ElementNotesWidget::selectedAssetChanged</a></div><div class="ttdeci">void selectedAssetChanged(QSharedPointer&lt; Asset &gt; asset)</div><div class="ttdoc">Called when the Designer&#39;s selected Asset changes to update the contents of this widget with that Ass...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00043">ElementNotesWidget.cpp:43</a></div></div>
 <div class="ttc" id="class_picto_1_1_u_i_enabled_html"><div class="ttname"><a href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></div><div class="ttdoc">A DataStore that can appear on the PictoDesigner canvas and that provides an option to show runtime e...</div><div class="ttdef"><b>Definition:</b> <a href="_u_i_enabled_8h_source.html#l00025">UIEnabled.h:25</a></div></div>
 <div class="ttc" id="struct_search_request_html"><div class="ttname"><a href="struct_search_request.html">SearchRequest</a></div><div class="ttdoc">Defines a request for a search. </div><div class="ttdef"><b>Definition:</b> <a href="_search_request_8h_source.html#l00013">SearchRequest.h:13</a></div></div>
 <div class="ttc" id="class_searchable_text_edit_html"><div class="ttname"><a href="class_searchable_text_edit.html">SearchableTextEdit</a></div><div class="ttdoc">A QTextEdit that is searchable by using a SearchRequest object. </div><div class="ttdef"><b>Definition:</b> <a href="_searchable_text_edit_8h_source.html#l00018">SearchableTextEdit.h:18</a></div></div>
+<div class="ttc" id="class_element_notes_widget_html_aa22e3b767c12b47373188c333be9accf"><div class="ttname"><a href="class_element_notes_widget.html#aa22e3b767c12b47373188c333be9accf">ElementNotesWidget::clearAssets</a></div><div class="ttdeci">void clearAssets()</div><div class="ttdoc">Called to release Designer assets so it may be cleaned up. Will need to be reinitialized before use...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00109">ElementNotesWidget.cpp:109</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_element_notes_widget_html_a59d183f704d2bee07a789e7803e9e395"><div class="ttname"><a href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">ElementNotesWidget::notesWereEdited</a></div><div class="ttdeci">void notesWereEdited()</div><div class="ttdoc">Called when the text in the underlying SearchableTextEdit changes to updated the stored notes in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00058">ElementNotesWidget.cpp:58</a></div></div>
+<div class="ttc" id="class_element_notes_widget_html_a59d183f704d2bee07a789e7803e9e395"><div class="ttname"><a href="class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395">ElementNotesWidget::notesWereEdited</a></div><div class="ttdeci">void notesWereEdited()</div><div class="ttdoc">Called when the text in the underlying SearchableTextEdit changes to updated the stored notes in the ...</div><div class="ttdef"><b>Definition:</b> <a href="_element_notes_widget_8cpp_source.html#l00059">ElementNotesWidget.cpp:59</a></div></div>
 <div class="ttc" id="class_searchable_text_edit_html_af3053215da37605c82911b7088717abc"><div class="ttname"><a href="class_searchable_text_edit.html#af3053215da37605c82911b7088717abc">SearchableTextEdit::search</a></div><div class="ttdeci">void search(SearchRequest searchRequest, QColor highlightColor)</div><div class="ttdoc">Searches the QTextEdit for the input SearchRequest. If found, strings matching the SearchRequest are ...</div><div class="ttdef"><b>Definition:</b> <a href="_searchable_text_edit_8cpp_source.html#l00029">SearchableTextEdit.cpp:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

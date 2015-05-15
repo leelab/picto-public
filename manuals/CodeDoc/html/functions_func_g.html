@@ -195,10 +195,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getAnalyses()
 : <a class="el" href="class_picto_1_1_picto_data.html#a2019b9aceb8ef5a478a21af3aa2b8cf4">Picto::PictoData</a>
+, <a class="el" href="class_remote_viewer.html#a174111419207e06c6c4896da54ea152f">RemoteViewer</a>
 </li>
 <li>getAnalysesToImport()
-: <a class="el" href="class_remote_viewer.html#ab2ccc6fb63a3fb7379a2de3bf682499a">RemoteViewer</a>
-, <a class="el" href="class_replay_viewer.html#a0e3ea51bdda8f273c4886d76d4723b21">ReplayViewer</a>
+: <a class="el" href="class_replay_viewer.html#a0e3ea51bdda8f273c4886d76d4723b21">ReplayViewer</a>
 </li>
 <li>getAnalysis()
 : <a class="el" href="class_picto_1_1_design_root.html#a9a890862b928fa11267489541e381585">Picto::DesignRoot</a>
@@ -504,6 +504,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getDefaultViewSize()
 : <a class="el" href="class_picto_1_1_data_view_element.html#a29236d331a9dbff0d97c16205d0d342d">Picto::DataViewElement</a>
+, <a class="el" href="class_picto_1_1_task.html#aee3c06ec2f6d232be8c566bac286205c">Picto::Task</a>
 </li>
 <li>getDefaultZoomRect()
 : <a class="el" href="class_diagram_scene.html#ada3bc85f1770830b379ffc70d5aeb60d">DiagramScene</a>
@@ -649,6 +650,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_director_status_manager.html#a0dcb0e210becf04a832b35f0f3eb5247">DirectorStatusManager</a>
 , <a class="el" href="class_picto_1_1_design_root.html#a4b69e2bd671f36df8bdd903b664c7471">Picto::DesignRoot</a>
 , <a class="el" href="class_picto_1_1_picto_data.html#a586cc4820a47b2cc0ab0a0c5a3273e06">Picto::PictoData</a>
+</li>
+<li>getExportType()
+: <a class="el" href="class_picto_1_1_analysis_plot_output.html#ad3c7a2995edc340e1cd13c2b4127cd36">Picto::AnalysisPlotOutput</a>
 </li>
 <li>getFields()
 : <a class="el" href="class_picto_1_1_operator_info_graphic.html#a33811e677b4b434d45d35145a6acb523">Picto::OperatorInfoGraphic</a>
@@ -1313,9 +1317,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getPlaybackSpeed()
 : <a class="el" href="class_picto_1_1_playback_state_updater.html#afe7d1dbdaf982ace73af524477636881">Picto::PlaybackStateUpdater</a>
 </li>
-<li>getPlotHandler()
-: <a class="el" href="class_picto_1_1_task_config.html#a9d667cbb09da5c826036f8055cbc1d03">Picto::TaskConfig</a>
-</li>
 <li>getPlugin()
 : <a class="el" href="class_proxy_status_manager.html#aae67ce985e975f6a7ad31428fc761365">ProxyStatusManager</a>
 </li>
@@ -1657,6 +1658,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getSelectedAnalysisIdsForImport()
 : <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a7ee81957d535d561f13916e24b07a116">Picto::AnalysisSelectorWidget</a>
 </li>
+<li>getSelectedAnalysisNames()
+: <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a73d399a0072b7655b5831a6be3ed4eaa">Picto::AnalysisSelectorWidget</a>
+</li>
 <li>getSelectedAsset()
 : <a class="el" href="class_editor_state.html#a73361dfdbd2d8883a420cc8f2f9b934b">EditorState</a>
 </li>
@@ -1672,11 +1676,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getSelectedFilePaths()
 : <a class="el" href="class_picto_1_1_run_selector_widget.html#a0f13db4de2d89a0f0946739c83b4946a">Picto::RunSelectorWidget</a>
 </li>
+<li>getSelectedImportAnalysisNames()
+: <a class="el" href="class_picto_1_1_analysis_selector_widget.html#af239e7fced4b4fcbc8fa9773cedd77b4">Picto::AnalysisSelectorWidget</a>
+</li>
 <li>getSelectedItem()
 : <a class="el" href="class_editor_state.html#acf9f71ae95321e69934d76ee87b79980">EditorState</a>
 </li>
 <li>getSelectedLocalAnalyses()
 : <a class="el" href="class_replay_viewer.html#a3f43d89ffb1a4e0c29e947d996c93a36">ReplayViewer</a>
+</li>
+<li>getSelectedLocalAnalysisNames()
+: <a class="el" href="class_picto_1_1_analysis_selector_widget.html#a640f2f600d58caddc11ff7d0d5f953c4">Picto::AnalysisSelectorWidget</a>
 </li>
 <li>getSelectedPlayRunInfo()
 : <a class="el" href="class_replay_viewer.html#a72a5cac99cfb40acff47d245c911c53f">ReplayViewer</a>
@@ -1863,6 +1873,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getTaskRunByRunId()
 : <a class="el" href="class_picto_1_1_session_data_package.html#a972dbe6aa4287a0a845f33bb7748fb61">Picto::SessionDataPackage</a>
+</li>
+<li>getTaskViewSize()
+: <a class="el" href="class_picto_1_1_task_config.html#a068f6902af16f67f710b1203967f53c9">Picto::TaskConfig</a>
 </li>
 <li>getTemporalFactor()
 : <a class="el" href="class_picto_1_1_alignment_info.html#af78883e4a6f087a6be6b05a5b608b9f9">Picto::AlignmentInfo</a>
@@ -2256,7 +2269,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getValuesUntil()
 : <a class="el" href="class_picto_1_1_analysis_lfp_data.html#a5bfcc3a704d1e31485ac85f8a13861bf">Picto::AnalysisLfpData</a>
-, <a class="el" href="class_picto_1_1_analysis_signal_data.html#adb0f20fab12d57483f45dd4e7a3ec261">Picto::AnalysisSignalData</a>
+, <a class="el" href="class_picto_1_1_analysis_signal_data.html#a2e4b921b2946722b7926d90a108d38eb">Picto::AnalysisSignalData</a>
 , <a class="el" href="class_picto_1_1_lfp_reader.html#af87044267aefc42bf205d54dff096144">Picto::LfpReader</a>
 , <a class="el" href="class_picto_1_1_lfp_state.html#a3f37b279a3fcc62ba348ed29000d24ed">Picto::LfpState</a>
 , <a class="el" href="class_picto_1_1_live_lfp_reader.html#a62252bcd22e61191d7ca25c030fe0657">Picto::LiveLfpReader</a>

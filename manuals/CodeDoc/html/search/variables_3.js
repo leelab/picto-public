@@ -17,5 +17,6 @@ var searchData=
   ['designconfig_5f',['designConfig_',['../class_picto_1_1_asset.html#a70fb85473984a1c8dc2f9a9079364f73',1,'Picto::Asset']]],
   ['designroot_5f',['designRoot_',['../class_picto_1_1_analysis_option_widget.html#aa0c2d4ff8990abe571b5fc7241253fc9',1,'Picto::AnalysisOptionWidget']]],
   ['designundostack_5f',['designUndoStack_',['../class_picto_1_1_design_root.html#aa8bc3678e73bc753c5b23efb5afe9e2f',1,'Picto::DesignRoot']]],
-  ['devicesamprate_5f',['deviceSampRate_',['../class_picto_1_1_input_port.html#ab903e1969d02f8ec9f7644b302b224c1',1,'Picto::InputPort']]]
+  ['devicesamprate_5f',['deviceSampRate_',['../class_picto_1_1_input_port.html#ab903e1969d02f8ec9f7644b302b224c1',1,'Picto::InputPort']]],
+  ['displayproperties',['displayProperties',['../class_picto_1_1_task_config.html#a5d9a4931b94527cf44926fc02ef34935',1,'Picto::TaskConfig']]]
 ];

@@ -15,20 +15,16 @@ DataViewElement::DataViewElement()
 
 	static int index = 0;
 	dveNum_ = index++;
-	qDebug() << "DataViewElement (" << dveNum_ << ") created.";
 }
 
 DataViewElement::~DataViewElement()
 {
-	qDebug() << "DataViewElement (" << dveNum_ << ") deleted.";
 }
 
 void DataViewElement::postDeserialize()
 {
 	ContainerElement::postDeserialize();
 	setTitle(propertyContainer_->getPropertyValue("ViewTitle").toString());
-
-	qDebug() << "DataViewElement (" << dveNum_ << ") deserialized.";
 }
 
 DataViewSize::ViewSize DataViewElement::getDefaultViewSize() const
@@ -44,16 +40,10 @@ void DataViewElement::initView()
 
 void DataViewElement::postLinkUpdate()
 {
-	qDebug() << "DataViewElement (" << dveNum_ << ") linking.";
 	if (!getLinkedAsset().isNull())
 	{
 		setTaskConfig(getLinkedAsset()->getTaskConfig());
 	}
-	else
-	{
-		qDebug() << "Unsuccessful.";
-	}
-
 }
 
 bool DataViewElement::hasScripts()

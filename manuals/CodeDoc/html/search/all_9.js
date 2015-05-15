@@ -23,6 +23,7 @@ var searchData=
   ['import_5fsucceeded_5fwith_5fwarnings',['IMPORT_SUCCEEDED_WITH_WARNINGS',['../class_asset_export_import.html#aca4cd77d57caadb60bc50edc33ca3d9ea1e2b2370e45bb6dfde584f190eb49d4f',1,'AssetExportImport']]],
   ['importanalysis',['importAnalysis',['../class_picto_1_1_design_root.html#a6ebe8fd54e6e044f0d08b8be41ffdb6b',1,'Picto::DesignRoot']]],
   ['importchildasset',['importChildAsset',['../class_picto_1_1_data_store.html#a883e407e794dbca85b9891dd6abf0277',1,'Picto::DataStore']]],
+  ['importedanalysisdisplaystate',['importedAnalysisDisplayState',['../class_view_selection_frame.html#a407fb4d5e9e867bea3b7b24063fd02e4',1,'ViewSelectionFrame']]],
   ['importfromtext',['importFromText',['../class_asset_export_import.html#ac05d9fb6c66ad9a103eaef364f96dd77',1,'AssetExportImport']]],
   ['incomingconnection',['incomingConnection',['../class_server.html#a3952d37b7bc53a4377f411d9ccaa9d62',1,'Server']]],
   ['incomingresponseswaiting',['incomingResponsesWaiting',['../class_picto_1_1_command_channel.html#a2178a704ecbacc3cc4b68af6949326d9',1,'Picto::CommandChannel']]],

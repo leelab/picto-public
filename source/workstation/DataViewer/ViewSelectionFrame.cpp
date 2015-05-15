@@ -208,19 +208,22 @@ void ViewSelectionFrame::addContainer(QWidget *pNewView)
 		plotSelection_->addItem(pNewViewContainer->getName(), nextIndex_);
 		++nextIndex_;
 
-		if (cachedViewSetup_.contains(pNewView))
+		const int iConfigIndex = configIndex(currentTaskConfig_);
+		if (cachedViewSetup_[iConfigIndex].contains(pNewView))
 		{
 			//Set the properties on the DataViewWidget
-			pNewViewContainer->setPosition(cachedViewSetup_[pNewView].x_, cachedViewSetup_[pNewView].y_);
-			pNewViewContainer->setCurrentSize(cachedViewSetup_[pNewView].size_);
+			pNewViewContainer->setPosition(
+				cachedViewSetup_[iConfigIndex][pNewView].x_,
+				cachedViewSetup_[iConfigIndex][pNewView].y_);
+			pNewViewContainer->setCurrentSize(cachedViewSetup_[iConfigIndex][pNewView].size_);
 			pNewViewContainer->setDisplayed(true);
 
 			emit widgetAdded(pNewViewContainer,
-				cachedViewSetup_[pNewView].x_,
-				cachedViewSetup_[pNewView].y_,
-				cachedViewSetup_[pNewView].size_);
+				cachedViewSetup_[iConfigIndex][pNewView].x_,
+				cachedViewSetup_[iConfigIndex][pNewView].y_,
+				cachedViewSetup_[iConfigIndex][pNewView].size_);
 
-			cachedViewSetup_.remove(pNewView);
+			cachedViewSetup_[iConfigIndex].remove(pNewView);
 			updateSizeAndPositionOptions();
 		}
 	}
@@ -397,7 +400,7 @@ void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCon
 		disconnect(this, SIGNAL(managerConnectionEstablished(bool)),
 			currentTaskConfig_.data(), SLOT(managerConnectionEstablished(bool)));
 	}
-
+	lastTaskConfig_ = currentTaskConfig_.toWeakRef();
 	currentTaskConfig_ = pTaskConfig;
 	
 	connect(currentTaskConfig_.data(), SIGNAL(widgetAddedToMap(QWidget*)), this, SLOT(addWidgetContainer(QWidget*)));
@@ -427,6 +430,20 @@ void ViewSelectionFrame::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCon
 	for (int i = 0; i < keys.count(); i++)
 	{
 		currentTaskConfig_->notifyAnalysisSelection(keys[i], selections[i]);
+	}
+
+	QList<QWeakPointer<TaskConfig>>::iterator iter = cachedConfigList_.begin();
+	while (iter != cachedConfigList_.end())
+	{
+		if ((*iter).isNull())
+		{
+			cachedViewSetup_.removeAt(cachedConfigList_.indexOf(*iter));
+			iter = cachedConfigList_.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
 	}
 }
 
@@ -509,20 +526,26 @@ void ViewSelectionFrame::setVisualTargetHost(QWidget *pTarget)
  */
 void ViewSelectionFrame::rebuild()
 {
-	cachedViewSetup_.clear();
-
-	QList<QWidget*> widgets = viewContainerMap_.keys();
-	QList<DataViewWidget*> viewWidgets = viewContainerMap_.values();
-
-	for (int i = 0; i < widgets.count(); i++)
+	if (!lastTaskConfig_.isNull())
 	{
-		if (viewWidgets[i]->getDisplayed())
+		const int iConfigIndex = configIndex(lastTaskConfig_);
+		cachedViewSetup_[iConfigIndex].clear();
+
+		QList<QWidget*> widgets = viewContainerMap_.keys();
+		QList<DataViewWidget*> viewWidgets = viewContainerMap_.values();
+
+		for (int i = 0; i < widgets.count(); i++)
 		{
-			int x, y;
-			viewWidgets[i]->getPosition(x, y);
-			cachedViewSetup_[widgets[i]] = std::move(ViewComponents(viewWidgets[i]->getCurrentSize(), x, y));
+			if (viewWidgets[i]->getDisplayed())
+			{
+				int x, y;
+				viewWidgets[i]->getPosition(x, y);
+				cachedViewSetup_[iConfigIndex][widgets[i]] = std::move(ViewComponents(viewWidgets[i]->getCurrentSize(), x, y));
+			}
 		}
 	}
+
+	lastTaskConfig_ = currentTaskConfig_;
 
 	clear();
 
@@ -573,13 +596,18 @@ DataViewWidget *ViewSelectionFrame::createDataViewWidget(QWidget *pWidget)
 	if (pWidget == pVisualTargetHost_)
 	{
 		newViewWidget = new DataViewWidget("Task", pWidget);
-		DataViewSize::ViewSize size = DataViewSize::VIEW_SIZE_3x3;
+		DataViewSize::ViewSize size = DataViewSize::VIEW_SIZE_4x4;
 		if (currentTaskConfig_)
 		{
 			size = currentTaskConfig_->getTaskViewSize();
 		}
 
-		cachedViewSetup_[pWidget] = std::move(ViewComponents(size, 0, 0));
+		int iConfigIndex = configIndex(currentTaskConfig_);
+
+		if (!cachedViewSetup_[iConfigIndex].contains(pWidget))
+		{
+			cachedViewSetup_[iConfigIndex][pWidget] = std::move(ViewComponents(size, 0, 0));
+		}
 	}
 	else
 	{
@@ -644,4 +672,14 @@ void ViewSelectionFrame::cachePlotHandler(QSharedPointer<OperatorPlotHandler> ha
 void ViewSelectionFrame::clearPlotHandlers()
 {
 	cachedHandlers_.clear();
+}
+
+int ViewSelectionFrame::configIndex(QWeakPointer<TaskConfig> referenceConfig)
+{
+	if (!cachedConfigList_.contains(referenceConfig))
+	{
+		cachedConfigList_ << referenceConfig;
+		cachedViewSetup_ << QHash<QWidget*, ViewComponents>();
+	}
+	return cachedConfigList_.indexOf(referenceConfig);
 }

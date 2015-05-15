@@ -43,8 +43,10 @@ void OperatorPlot::postLinkUpdate()
 {
 	DataViewElement::postLinkUpdate();
 
-	getTaskConfig()->requestPlotHandler(selfPtr().objectCast<OperatorPlot>().toWeakRef(), getPath());
-	
+	if (getTaskConfig())
+	{
+		getTaskConfig()->requestPlotHandler(selfPtr().objectCast<OperatorPlot>().toWeakRef(), getPath());
+	}
 }
 
 void OperatorPlot::receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
@@ -91,11 +93,12 @@ void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHa
 		plotHandler.data(), SLOT(setTitle(const QString&)));
 	connect(this, SIGNAL(initializePlotSig(const QString&, const QString&)),
 		plotHandler.data(), SLOT(initializePlot(const QString&, const QString&)));
+	connect(this, SIGNAL(exportPlot(int, const QString)),
+		plotHandler.data(), SLOT(exportPlot(int, const QString)));
 }
 
 void OperatorPlot::initView()
 {
-	//qDebug() << "\tOperatorPlot::initView Operator Plot (" << dveNum_ << ") Connected to Handler.";
 	connectDataSignals(m_pPlotHandler);
 	DataViewElement::initView();
 
@@ -113,10 +116,8 @@ void OperatorPlot::enteredScope()
 {
 	reset();
 
-	qDebug() << "OperatorPlot::enteredScope() (" << dveNum_ << ") Custom Initialization Attempted.";
 	if (qsEngine_)
 	{
-		qDebug() << "\tOperatorPlot::enteredScope() (" << dveNum_ << ") Custom Initialization Successful.";
 		QScriptValue returnVal(false);
 		runScript(getName().simplified().remove(' '), returnVal);
 	}
@@ -126,11 +127,8 @@ void OperatorPlot::scriptableContainerCustomInitialization()
 {
 	DataViewElement::scriptableContainerCustomInitialization();
 
-	qDebug() << "OperatorPlot (" << dveNum_ << ") Custom Initialization Attempted.";
-
 	if (qsEngine_)
 	{
-		qDebug() << "\tOperatorPlot (" << dveNum_ << ") Custom Initialization Successful.";
 		QScriptValue returnVal(false);
 		runScript(getName().simplified().remove(' '), returnVal);
 	}

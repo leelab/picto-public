@@ -7,5 +7,6 @@ var searchData=
   ['lastviewsize_5f',['lastViewSize_',['../class_data_view_widget.html#a89ae598e00e86cc7a796a7248fbdbc8e',1,'DataViewWidget']]],
   ['latestframeoffsettimes_5f',['latestFrameOffsetTimes_',['../class_picto_1_1_input_port.html#a018e100737a3ff84db00e568456b6f42',1,'Picto::InputPort']]],
   ['layout_5f',['layout_',['../class_data_view_widget.html#ab75a49c41121e87663a02d6ca9a6ff67',1,'DataViewWidget']]],
+  ['localanalysisdisplaystate',['localAnalysisDisplayState',['../class_view_selection_frame.html#a3d54bca7e046dfa4594a7b3548218987',1,'ViewSelectionFrame']]],
   ['lockfile_5f',['lockFile_',['../class_picto_1_1_analysis_output.html#a92f59f26f9e3fb8c2da26c0d64ea5802',1,'Picto::AnalysisOutput']]]
 ];

@@ -1090,7 +1090,7 @@ void RemoteViewer::setupUi()
 	leftPane->addLayout(activeExpLayout);
 	leftPane->addLayout(zoomLayout);
 	leftPane->addWidget(viewSelectionFrame_,0);
-	leftPane->addWidget(propertyFrame_,1, Qt::AlignTop);
+	leftPane->addWidget(propertyFrame_,1);
 	leftPane->setContentsMargins(0, 11, 0, 0);
 	leftPane->setSizeConstraint(QLayout::SetMinAndMaxSize);
 	pContainer->setLayout(leftPane);

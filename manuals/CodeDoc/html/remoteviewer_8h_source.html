@@ -322,26 +322,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="comment">//Stolen from PlaybackController.  Should push into a common, base class in order to reduce duplication</span></div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    QStringList precacheAnalysisNames(QSharedPointer&lt;DesignRoot&gt; <span class="keyword">import</span>);</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    QString activateAnalyses(QStringList analysisData);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    QStringList getAnalysesToImport();</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    QStringList getAnalyses(<span class="keywordtype">bool</span> bSkipLocal = <span class="keyword">false</span>);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    QHash&lt;QString, QString&gt; cachedAnalysisNames_;</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    QHash&lt;QString, QUuid&gt; cachedAnalysis_;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordtype">int</span> numImportedAnalyses_;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    uint lastExpHash_;</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keyword">enum</span> RejoinStatus</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    {</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        None = 0,</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        AwaitingDisconnect,</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        RequestingRejoinSignal,</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        AwaitingRejoinSignal,</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        AwaitingInitialConnect,</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        AwaitingRejoin</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    } awaitingRejoin_;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    QStringList analysesToBeActivated_;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordtype">int</span> numImportedAnalyses_;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">enum</span> RejoinStatus</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        None = 0,</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        AwaitingDisconnect,</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        AwaitingRejoin</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    } awaitingRejoin_;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    QStringList analysesCurrentlyActive_;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordtype">void</span> notifyAnalysisSelection(<span class="keyword">const</span> QString&amp;, <span class="keywordtype">bool</span>);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keywordtype">void</span> notifyAnalysisSelection(<span class="keyword">const</span> QString&amp;, <span class="keywordtype">bool</span>, <span class="keywordtype">bool</span>);</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="keyword">private</span> slots:</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordtype">void</span> taskListIndexChanged(<span class="keywordtype">int</span> index);</div>
@@ -352,7 +352,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_task_run_viewer_html"><div class="ttname"><a href="class_task_run_viewer.html">TaskRunViewer</a></div><div class="ttdoc">A viewer that displays data about the Task Runs from the current session and allows the operator to e...</div><div class="ttdef"><b>Definition:</b> <a href="_task_run_viewer_8h_source.html#l00024">TaskRunViewer.h:24</a></div></div>
-<div class="ttc" id="class_view_selection_frame_html"><div class="ttname"><a href="class_view_selection_frame.html">ViewSelectionFrame</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_frame_8h_source.html#l00046">ViewSelectionFrame.h:46</a></div></div>
+<div class="ttc" id="class_view_selection_frame_html"><div class="ttname"><a href="class_view_selection_frame.html">ViewSelectionFrame</a></div><div class="ttdoc">A widget to contain objects meant to be displayed in the Experiment Viewer. </div><div class="ttdef"><b>Definition:</b> <a href="_view_selection_frame_8h_source.html#l00047">ViewSelectionFrame.h:47</a></div></div>
 <div class="ttc" id="class_remote_viewer_html_a628aac6c471c656cce3fc92bb4d167f8"><div class="ttname"><a href="class_remote_viewer.html#a628aac6c471c656cce3fc92bb4d167f8">RemoteViewer::rewardChannel_</a></div><div class="ttdeci">int rewardChannel_</div><div class="ttdoc">Channel used for issuing manual rewards. </div><div class="ttdef"><b>Definition:</b> <a href="remoteviewer_8h_source.html#l00236">remoteviewer.h:236</a></div></div>
 <div class="ttc" id="class_remote_viewer_html_af88f51b513ba8798bd10cdeb83ff7447"><div class="ttname"><a href="class_remote_viewer.html#af88f51b513ba8798bd10cdeb83ff7447">RemoteViewer::viewSelectionFrame_</a></div><div class="ttdeci">ViewSelectionFrame * viewSelectionFrame_</div><div class="ttdoc">The widget that can rearrange the ViewWidgets in the Central View. </div><div class="ttdef"><b>Definition:</b> <a href="remoteviewer_8h_source.html#l00193">remoteviewer.h:193</a></div></div>
 <div class="ttc" id="class_remote_viewer_html_a12ac0e7540d023038609763e5e46e7cc"><div class="ttname"><a href="class_remote_viewer.html#a12ac0e7540d023038609763e5e46e7cc">RemoteViewer::visualTargetHost_</a></div><div class="ttdeci">Picto::VisualTargetHost * visualTargetHost_</div><div class="ttdoc">Holds and renders the Task view. </div><div class="ttdef"><b>Definition:</b> <a href="remoteviewer_8h_source.html#l00191">remoteviewer.h:191</a></div></div>

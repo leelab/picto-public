@@ -154,12 +154,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QSharedPointer&lt;BarPlotPlotHandler&gt; barPlotHandler = plotHandler.objectCast&lt;BarPlotPlotHandler&gt;();</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    qRegisterMetaType&lt;BarAxisHandler*&gt;(<span class="stringliteral">&quot;BarAxisHandlerP&quot;</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(initializeBarPlotSig(BarAxisHandler *)),</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        barPlotHandler.data(), SLOT(initializeBarPlot(BarAxisHandler *)));</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(initializeBarPlotSig(BarAxisHandler *)),</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        barPlotHandler.data(), SLOT(initializeBarPlot(BarAxisHandler *)));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="ttc" id="class_picto_1_1_bar_plot_html_a1a941633d49ca10c36be9295935308fd"><div class="ttname"><a href="class_picto_1_1_bar_plot.html#a1a941633d49ca10c36be9295935308fd">Picto::BarPlot::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">Registers plot with the Task object, so the task can pass on the information to various UI elements...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_plot_8cpp_source.html#l00043">BarPlot.cpp:43</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_plot_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_bar_plot_plot_handler.html">Picto::BarPlotPlotHandler</a></div><div class="ttdoc">A base class for manufacturing Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_plot_plot_handler_8h_source.html#l00025">BarPlotPlotHandler.h:25</a></div></div>
 <div class="ttc" id="class_picto_1_1_bar_base_html_aad85f4aeca60ac7a7a5bbad8d5e83eca"><div class="ttname"><a href="class_picto_1_1_bar_base.html#aad85f4aeca60ac7a7a5bbad8d5e83eca">Picto::BarBase::m_bBinsModified</a></div><div class="ttdeci">bool m_bBinsModified</div><div class="ttdoc">Flag to update the bins. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00104">BarBase.h:104</a></div></div>

@@ -15,7 +15,10 @@ DataViewWidget::DataViewWidget(const QString cqsName, QWidget *pqwWidget, DVW_Re
 	layout_->setMargin(0);
 
 	myLabel_ = new QLabel(cqsName);
-	layout_->addWidget(myLabel_, 0, 0);
+	QFont font("Times", 14);
+	font.setBold(true);
+	myLabel_->setFont(font);
+	layout_->addWidget(myLabel_, 0, 0, Qt::AlignHCenter);
 	layout_->addWidget(myViewWidget_, 1, 0);
 
 	layout_->setRowStretch(0, 0);

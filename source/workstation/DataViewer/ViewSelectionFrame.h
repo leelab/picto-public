@@ -141,7 +141,11 @@ private:
 	};
 
 	//! A Hash for restoring formerly displayed widgets.  Do not use pointers.
-	QHash<QWidget*, ViewComponents> cachedViewSetup_;
+	QList<QWeakPointer<TaskConfig>> cachedConfigList_;
+	QList<QHash<QWidget*, ViewComponents>> cachedViewSetup_;
+	QWeakPointer<TaskConfig> lastTaskConfig_;
+
+	int configIndex(QWeakPointer<TaskConfig> referenceConfig);
 };
 
 #endif

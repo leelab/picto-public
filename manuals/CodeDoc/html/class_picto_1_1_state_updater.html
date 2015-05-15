@@ -131,10 +131,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a5962970bd60c716a44caf5d995ae529a">propertyInitValueChanged</a> (qulonglong dataId, int propId, QString value)</td></tr>
 <tr class="memdesc:a5962970bd60c716a44caf5d995ae529a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> initValue changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new initValue of value. <br /></td></tr>
 <tr class="separator:a5962970bd60c716a44caf5d995ae529a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2c1fbdbd34d8ae9400f0681ea33df40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2c1fbdbd34d8ae9400f0681ea33df40"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad2c1fbdbd34d8ae9400f0681ea33df40">transitionActivated</a> (qulonglong dataId, int transId)</td></tr>
-<tr class="memdesc:ad2c1fbdbd34d8ae9400f0681ea33df40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
-<tr class="separator:ad2c1fbdbd34d8ae9400f0681ea33df40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac25b75a043a9f244f0bcbe5b78b4ebc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac25b75a043a9f244f0bcbe5b78b4ebc1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ac25b75a043a9f244f0bcbe5b78b4ebc1">transitionActivated</a> (qulonglong dataId, int transId, bool remoteRunSignal)</td></tr>
+<tr class="memdesc:ac25b75a043a9f244f0bcbe5b78b4ebc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_transition.html" title="A transition between two StateMachineElements. ">Transition</a> with AssetId of transId is traversed. <br /></td></tr>
+<tr class="separator:ac25b75a043a9f244f0bcbe5b78b4ebc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59e5c0981f0109047c3fbd5a3600d1ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59e5c0981f0109047c3fbd5a3600d1ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a59e5c0981f0109047c3fbd5a3600d1ba">propertyValueChanged</a> (int propId, QString value)</td></tr>
 <tr class="memdesc:a59e5c0981f0109047c3fbd5a3600d1ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> value changes for a <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with an AssetId of propId and a new value of value. <br /></td></tr>
@@ -160,12 +160,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6e1134167de2d8d6846f326b8b318bf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a6e1134167de2d8d6846f326b8b318bf8">disableRendering</a> (bool disable)</td></tr>
 <tr class="memdesc:a6e1134167de2d8d6846f326b8b318bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when rendering should be disabled/enabled.  <a href="#a6e1134167de2d8d6846f326b8b318bf8">More...</a><br /></td></tr>
 <tr class="separator:a6e1134167de2d8d6846f326b8b318bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04ef3acc93396978e742201b02ab632c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a04ef3acc93396978e742201b02ab632c">beginInsertionEvent</a> ()</td></tr>
-<tr class="memdesc:a04ef3acc93396978e742201b02ab632c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to freeze the updater in order to insert events that will need to be sorted.  <a href="#a04ef3acc93396978e742201b02ab632c">More...</a><br /></td></tr>
-<tr class="separator:a04ef3acc93396978e742201b02ab632c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7c8b2db023067662ac7e25d0fcd3e33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#ad7c8b2db023067662ac7e25d0fcd3e33">endInsertionEvent</a> ()</td></tr>
-<tr class="memdesc:ad7c8b2db023067662ac7e25d0fcd3e33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to unfreeze the updater and kick off sorting on inserted events.  <a href="#ad7c8b2db023067662ac7e25d0fcd3e33">More...</a><br /></td></tr>
-<tr class="separator:ad7c8b2db023067662ac7e25d0fcd3e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0851f4f34b06e0533cac3245dfde5a27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0851f4f34b06e0533cac3245dfde5a27"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_state_updater.html#a0851f4f34b06e0533cac3245dfde5a27">processQueue</a> ()</td></tr>
+<tr class="memdesc:a0851f4f34b06e0533cac3245dfde5a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">A signal sent to the <a class="el" href="class_picto_1_1_slave_experiment_driver.html" title="Connects a StateUpdater to an Experiment to drive an Experiment in slave mode. ">SlaveExperimentDriver</a> to indicate a manual processing of the event queue is necessary. <br /></td></tr>
+<tr class="separator:a0851f4f34b06e0533cac3245dfde5a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -208,32 +206,6 @@ virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_reader.htm
 
 <p>Definition at line <a class="el" href="_state_updater_8h_source.html#l00024">24</a> of file <a class="el" href="_state_updater_8h_source.html">StateUpdater.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a04ef3acc93396978e742201b02ab632c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::StateUpdater::beginInsertionEvent </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called to freeze the updater in order to insert events that will need to be sorted. </p>
-<p>This is only used by the <a class="el" href="class_picto_1_1_remote_state_updater.html" title="A StateUpdater that gathers Session events from the Picto Server in real time. ">RemoteStateUpdater</a> in order to ensure the proper ordering of transitions and property changes. </p>
-
-</div>
-</div>
 <a class="anchor" id="a6e1134167de2d8d6846f326b8b318bf8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -258,32 +230,6 @@ virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_signal_reader.htm
 
 <p>Emitted when rendering should be disabled/enabled. </p>
 <p>This is useful if we are skipping around in the run. In this case all signals will still be correctly emitted in the correct order and all data will be available on the data readers; however, the visual elements need not be displayed. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad7c8b2db023067662ac7e25d0fcd3e33"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Picto::StateUpdater::endInsertionEvent </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called to unfreeze the updater and kick off sorting on inserted events. </p>
-<p>This is only used by the <a class="el" href="class_picto_1_1_remote_state_updater.html" title="A StateUpdater that gathers Session events from the Picto Server in real time. ">RemoteStateUpdater</a> in order to ensure the proper ordering of transitions and property changes. </p>
 
 </div>
 </div>

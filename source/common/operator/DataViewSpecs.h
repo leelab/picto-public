@@ -4,6 +4,7 @@
 #include "../common.h"
 
 namespace Picto {
+	//!	Namespace for the enumeration of the various sizes Views can take.
 namespace DataViewSize {
 	//!	Enumeration of the various sizes Views can take.
 	enum ViewSize : int
@@ -16,6 +17,7 @@ namespace DataViewSize {
 	};
 }; //namespace DataViewSize
 
+//!	Namespace for the enumeration of the various forms columns can have.
 namespace ColumnType {
 	//!	Enumeration of the various forms columns can have.
 	enum ColumnType : int
@@ -28,6 +30,7 @@ namespace ColumnType {
 	};
 }; //namespace ColumnType
 
+//!	Namespace for the enumeration of the widgets to request from the QwtFactory
 namespace QwtFactoryRequest {
 	/*! \brief Enumeration of the various widgets to request from the QwtFactory
 	 *	\note We have to use a factory to construct our widgets so they belong to the UI thread
@@ -35,9 +38,23 @@ namespace QwtFactoryRequest {
 	enum QwtWidgetType : int
 	{
 		QWT_HISTOGRAM_PLOT = 0,		//!< A QwtPlotHistogram object
-		QWT_WIDGET_MAX
+		QWT_WIDGET_MAX				//!< An invalid value
 	};
 }; //namespace QwtFactoryRequest
+
+//!	Namespace for the enumeration of the various formats that are supported by the export function
+namespace ExportType{
+	//!	Enumeration of the various formats that are supported by the export function
+	enum ExportType : int
+	{
+		EXPORT_PDF = 0,			//!< Export to PDF
+		EXPORT_POSTSCRIPT,		//!< Export to PostScript
+		EXPORT_PNG,				//!< Export to PNG
+		EXPORT_BMP,				//!< Export to BMP
+		EXPORT_MAX				//!< An invalid value
+	};
+
+}; //namespace ExportType
 
 }; //namespace Picto
 

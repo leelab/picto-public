@@ -152,7 +152,15 @@ void TaskConfig::managerConnectionEstablished(bool connected)
 		}
 		break;
 	case ConnectionStatus::ConnectionEnded:
-		qDebug() << "Tried to modify ended connection with connected =" << connected;
+		if (connected)
+		{
+			//Reconnected
+			managerConnectionStatus_ = ConnectionStatus::Connected;
+		}
+		else
+		{
+			qDebug() << "Tried to modify ended connection with connected =" << connected;
+		}
 		break;
 	default:
 		qDebug() << "Unrecognized ConnectionStatus (managerConnectionEstablished)";
@@ -185,7 +193,6 @@ void TaskConfig::addObserverWidget(DataViewElement *owningAsset, QWidget *widget
 	widgetNameMap[widget] = owningAsset->getTitle();
 	QString analysisName = owningAsset->getParentAsset()->getName();
 	analysisWidgetMap.insert(analysisName, widget);
-	qDebug() << "Added widget for Analysis:" << analysisName;
 	displayProperties.insert(widget, std::move(DisplayWidgetProperties(owningAsset->getDefaultViewSize())));
 
 	if (!analysisDisplayState.contains(analysisName))
@@ -207,7 +214,6 @@ void TaskConfig::notifyAnalysisSelection(const QString &name, bool selected)
 		return;
 
 	analysisDisplayState[name] = selected;
-	qDebug() << "Notified of Analysis:" << name;
 
 	if (analysisWidgetMap.contains(name))
 	{

@@ -46,7 +46,7 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	addTaskAction_->setEnabled(true);
 	connect(addTaskAction_, SIGNAL(triggered()), this, SLOT(addTask()));
 
-	editTaskAction_ = new QAction(QIcon(":/icons/newanalysis.svg"), tr("Edit Task"), this);
+	editTaskAction_ = new QAction(QIcon(":/icons/settings.png"), tr("Edit Task"), this);
 	editTaskAction_->setStatusTip(tr("Edit Task"));
 	editTaskAction_->setEnabled(true);
 	connect(editTaskAction_, SIGNAL(triggered()), this, SLOT(editTask()));
@@ -496,7 +496,17 @@ void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
 	{
 		if (!task.isNull() && !task->getStateMachine().isNull())
 		{
-			designRoot_->setOpenAsset(task->getStateMachine());
+			QSharedPointer<Asset> openAsset = designRoot_->getOpenAsset();
+			QSharedPointer<Asset> parent = openAsset ? openAsset->getParentAsset() : QSharedPointer<Asset>();
+			while (parent && !parent->inherits("Picto::Task"))
+			{
+				parent = parent->getParentAsset();
+			}
+
+			if (task != parent)
+			{
+				designRoot_->setOpenAsset(task->getStateMachine());
+			}
 		}
 		return;
 	}

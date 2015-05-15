@@ -140,6 +140,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setTitleSig</b> (cons
 <tr class="memitem:afb7b6f12b8f077eb80a7ee9d307c207e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb7b6f12b8f077eb80a7ee9d307c207e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>connectToTaskConfigSig</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt; pTaskConfig)</td></tr>
 <tr class="separator:afb7b6f12b8f077eb80a7ee9d307c207e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad1905685c687ec5bfa784bd4f6b84e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ad1905685c687ec5bfa784bd4f6b84e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>exportPlot</b> (<a class="el" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a> <a class="el" href="class_picto_1_1_operator_plot.html#ac1f29ece413584cdbb520cc8b9c24730">type</a>, const QString fileName)</td></tr>
+<tr class="separator:a5ad1905685c687ec5bfa784bd4f6b84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header signals_class_picto_1_1_u_i_enabled"><td colspan="2" onclick="javascript:toggleInherit('signals_class_picto_1_1_u_i_enabled')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="class_picto_1_1_u_i_enabled.html">Picto::UIEnabled</a></td></tr>
 <tr class="memitem:a323aef51f96a9a8a6102e768add07226 inherit signals_class_picto_1_1_u_i_enabled"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a323aef51f96a9a8a6102e768add07226"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_u_i_enabled.html#a323aef51f96a9a8a6102e768add07226">nameEdited</a> ()</td></tr>
@@ -207,9 +210,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>scriptableCon
 <tr class="memitem:a32d224b04b11527f4045d34f7d2b58d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32d224b04b11527f4045d34f7d2b58d6"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>postLinkUpdate</b> ()</td></tr>
 <tr class="separator:a32d224b04b11527f4045d34f7d2b58d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab993f9805158f7299afca1c9a2b0b129"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab993f9805158f7299afca1c9a2b0b129"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>receivePlotHandler</b> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt; plotHandler)</td></tr>
+<tr class="separator:ab993f9805158f7299afca1c9a2b0b129"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_data_view_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_data_view_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_data_view_element.html">Picto::DataViewElement</a></td></tr>
 <tr class="memitem:a29236d331a9dbff0d97c16205d0d342d inherit pub_methods_class_picto_1_1_data_view_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29236d331a9dbff0d97c16205d0d342d"></a>
-DataViewSize::ViewSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#a29236d331a9dbff0d97c16205d0d342d">getDefaultViewSize</a> () const </td></tr>
+<a class="el" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089">DataViewSize::ViewSize</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_data_view_element.html#a29236d331a9dbff0d97c16205d0d342d">getDefaultViewSize</a> () const </td></tr>
 <tr class="memdesc:a29236d331a9dbff0d97c16205d0d342d inherit pub_methods_class_picto_1_1_data_view_element"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default view size for this element. <br /></td></tr>
 <tr class="separator:a29236d331a9dbff0d97c16205d0d342d inherit pub_methods_class_picto_1_1_data_view_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_scriptable_container"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_scriptable_container')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_scriptable_container.html">Picto::ScriptableContainer</a></td></tr>
@@ -750,7 +756,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_scriptable.html#ad1945e93d9ebf6cb1f1b8d0a400b73c5">Picto::Scriptable</a>.</p>
 
-<p>Definition at line <a class="el" href="_operator_plot_8cpp_source.html#l00105">105</a> of file <a class="el" href="_operator_plot_8cpp_source.html">OperatorPlot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_operator_plot_8cpp_source.html#l00113">113</a> of file <a class="el" href="_operator_plot_8cpp_source.html">OperatorPlot.cpp</a>.</p>
 
 </div>
 </div>

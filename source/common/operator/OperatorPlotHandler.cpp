@@ -9,6 +9,7 @@
 
 #include <qwt_plot_histogram.h>
 #include <qwt_plot_canvas.h>
+#include <qwt_plot_renderer.h>
 
 using namespace Picto;
 
@@ -18,16 +19,12 @@ OperatorPlotHandler::OperatorPlotHandler()
 {
 	static int count = 0;
 	index = count++;
-
-	qDebug() << "OperatorPlotHandler (" << index << ") created";
 }
 
 OperatorPlotHandler::~OperatorPlotHandler()
 {
-	qDebug() << "Delete OperatorPlot (" << index << ")";
 	if (m_pPlot && !m_pPlot->parent())
 	{
-		qDebug() << "\tManually Deleted OperatorPlot::m_pPlot";
 		m_pPlot->deleteLater();
 	}
 }
@@ -36,7 +33,6 @@ void OperatorPlotHandler::initializePlot(const QString &xTitle, const QString &y
 {
 	if (!m_pPlot)
 	{
-		qDebug() << "\tOperatorPlotHandler (" << index << ") created QwtPlot";
 		m_pPlot = new QwtPlot(QwtText(m_tmpTitle));
 
 		m_pPlot->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -68,5 +64,67 @@ void OperatorPlotHandler::setTitle(const QString &title)
 	else
 	{
 		m_tmpTitle = title;
+	}
+}
+
+
+void OperatorPlotHandler::exportPlot(int type, const QString fileName)
+{
+	ExportType::ExportType exportType = (ExportType::ExportType) type;
+	if (m_pPlot)
+	{
+		QString typeName = "";
+		switch (exportType)
+		{
+		case ExportType::EXPORT_PDF:
+			typeName = "pdf";
+			break;
+		case ExportType::EXPORT_PNG:
+			typeName = "png";
+			break;
+		case ExportType::EXPORT_BMP:
+			typeName = "bmp";
+			break;
+		case ExportType::EXPORT_POSTSCRIPT:
+			typeName = "ps";
+			break;
+		default:
+			qDebug() << "Unexpected Export Type";
+			return;
+		}
+		
+
+		QwtPlotRenderer renderer;
+		renderer.renderDocument(m_pPlot, fileName, typeName, m_pPlot->size());
+	}
+}
+
+void OperatorPlotHandler::requestExport(ExportType::ExportType type)
+{
+	if (m_pPlot)
+	{
+		QString filename = m_tmpTitle;
+		switch (type)
+		{
+		case ExportType::EXPORT_PDF:
+			filename += ".pdf";
+			break;
+		case ExportType::EXPORT_PNG:
+			filename += ".png";
+			break;
+		case ExportType::EXPORT_BMP:
+			filename += ".bmp";
+			break;
+		case ExportType::EXPORT_POSTSCRIPT:
+			filename += ".ps";
+			break;
+		default:
+			qDebug() << "Unexpected Export Type";
+			return;
+		}
+
+
+		QwtPlotRenderer renderer;
+		renderer.exportTo(m_pPlot, filename);
 	}
 }

@@ -16,7 +16,7 @@ Task::Task()
 	: taskNumber_(0)
 {
 	sizeList_ << "1x1" << "2x2" << "3x3" << "4x4";
-	AddDefinableProperty(PropertyContainer::enumTypeId(), "DefaultTaskViewSize", 1, "enumNames", sizeList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "DefaultTaskViewSize", 3, "enumNames", sizeList_);
 	AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 }
