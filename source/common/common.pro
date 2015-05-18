@@ -258,6 +258,8 @@ HEADERS += $$(PICTO_TREE)/source/common/operator/SamplingBarBasePlotHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/SamplingBarBasePlotHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/SamplingBarPlotPlotHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/SamplingBarPlotPlotHandler.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/PSTHPlot.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/PSTHPlot.cpp
 
 HEADERS += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.h
 SOURCES += $$(PICTO_TREE)/source/common/network/ServerDiscoverer.cpp
