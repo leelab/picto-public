@@ -7,6 +7,7 @@ namespace Picto {
 const QString PSTHPlot::type = "PSTH Plot";
 
 PSTHPlot::PSTHPlot()
+	: currentRecordingState_(RecordingState::NotRecording)
 {
 
 	QStringList alignList;
@@ -27,30 +28,54 @@ QSharedPointer<OperatorPlotHandler> PSTHPlot::getNewHandler()
 	return SamplingBarBase::getNewHandler();
 }
 
-
-void PSTHPlot::beginTrial()
-{
-
-}
-
-void PSTHPlot::endTrial()
-{
-
-}
-
 void PSTHPlot::beginRecordingWindow()
 {
+	if (currentRecordingState_ != NotRecording)
+	{
+		clearAccumulatedData();
+	}
 
+	currentRecordingState_ = RecordingState::RecordingBegan;
+
+	if (getAlignType() == AlignType::ALIGN_BEGIN)
+	{
+		alignEvent();
+	}
 }
 
 void PSTHPlot::endRecordingWindow()
 {
+	if (getAlignType() == AlignType::ALIGN_END)
+	{
+		alignEvent();
+	}
 
+	submitAccumulatedData();
+	currentRecordingState_ = RecordingState::NotRecording;
+	clearAccumulatedData();
 }
 
 void PSTHPlot::alignEvent()
 {
+	if (currentRecordingState_ == RecordingState::RecordingBegan)
+	{
+		currentRecordingState_ = RecordingState::AlignOccurred;
+	}
+}
 
+void PSTHPlot::clearAccumulatedData()
+{
+
+}
+
+void PSTHPlot::submitAccumulatedData()
+{
+
+}
+
+AlignType::AlignType PSTHPlot::getAlignType() const
+{
+	return (AlignType::AlignType)(propertyContainer_->getPropertyValue("AlignData").toInt());
 }
 
 }; //namespace Picto

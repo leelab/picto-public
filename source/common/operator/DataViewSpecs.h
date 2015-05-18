@@ -56,6 +56,19 @@ namespace ExportType{
 
 }; //namespace ExportType
 
+//!	Namespace for the enumeration of the various Align Methods that Rasters and PSTHs can use
+namespace AlignType{
+	//!	Enumeration of the various Align Methods that Rasters and PSTHs can use
+	enum AlignType : int
+	{
+		ALIGN_BEGIN = 0,			//!< Align to Beginning of Window
+		ALIGN_FLAG,					//!< Align to Flag
+		ALIGN_END,					//!< Align to End of Window
+		ALIGN_MAX					//!< An invalid value
+	};
+
+}; //namespace ExportType
+
 }; //namespace Picto
 
 #endif

@@ -30,9 +30,9 @@ public:
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
+	AlignType::AlignType getAlignType() const;
+
 public slots:
-	void beginTrial();
-	void endTrial();
 	void beginRecordingWindow();
 	void endRecordingWindow();
 	void alignEvent();
@@ -40,6 +40,16 @@ public slots:
 
 protected:
 	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
+
+	enum RecordingState : int
+	{
+		NotRecording = 0,
+		RecordingBegan,
+		AlignOccurred
+	} currentRecordingState_;
+
+	void clearAccumulatedData();
+	void submitAccumulatedData();
 };
 
 
