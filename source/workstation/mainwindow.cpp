@@ -543,7 +543,7 @@ bool MainWindow::saveFile(const QString filename)
 		AutoSaver::getSingleton()->removeFileUntilNextChange();
 		
 		setCurrentFile(filename);
-		changeMode(currViewer_);
+		//changeMode(currViewer_);
 		designRoot_->setUnmodified();
 		return true;
 	}

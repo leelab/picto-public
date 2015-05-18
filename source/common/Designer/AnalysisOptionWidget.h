@@ -53,8 +53,12 @@ private:
 	QSharedPointer<DesignRoot> designRoot_;
 	//! The currently selected Analysis Asset
 	QSharedPointer<Analysis> selectedAnalysis_;
+	//! The currently selected Analysis Asset
+	QUuid selectedAnalysisId_;
 	//! The currently selected Task Asset
 	QSharedPointer<Task> selectedTask_;
+	//! The AssetId of the most recently selected task
+	int selectedTaskId_;
 
 	//! Action that gets called when the AddAnalysis button is pressed
 	QAction* addAnalysisAction_;

@@ -19,7 +19,9 @@ AnalysisOptionWidget::AnalysisOptionWidget(QSharedPointer<EditorState> editorSta
 	updatingList_(false),
 	ignoreSelectBoxEvents_(false),
 	selectedTask_(nullptr),
-	updateLocker_(0)
+	updateLocker_(0),
+	selectedTaskId_(0),
+	selectedAnalysisId_()
 {
 	QGroupBox* groupBox = new QGroupBox("Edit Mode");
 
@@ -147,6 +149,7 @@ void AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)
 	if(analysisId == QUuid())
 	{
 		selectAnalysisBox_->setCurrentIndex(0);
+		selectedAnalysisId_ = QUuid();
 	}
 	else
 	{
@@ -156,6 +159,7 @@ void AnalysisOptionWidget::setSelectedAnalysis(QUuid analysisId)
 			if (selectAnalysisBox_->itemData(i).toUuid() == analysisId)
 			{
 				selectAnalysisBox_->setCurrentIndex(i);
+				selectedAnalysisId_ = analysisId;
 				break;
 			}
 		}
@@ -204,8 +208,10 @@ void AnalysisOptionWidget::updateAnalysisList()
 	ignoreSelectBoxEvents_ = true;
 
 	QUuid lastAnalysisId;
-	if(selectedAnalysis_)
+	if (selectedAnalysis_)
 		lastAnalysisId = selectedAnalysis_->getAssociateId();
+	else
+		lastAnalysisId = selectedAnalysisId_;
 	int newSelectionIndex = 0;
 	selectAnalysisBox_->clear();
 	selectAnalysisBox_->addItem("None");
@@ -288,6 +294,7 @@ void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 
 		//Update the current selected analysis
 		selectedAnalysis_ = designRoot_->getAnalysis(selectedIndex-1).staticCast<Analysis>();
+		selectedAnalysisId_ = selectedAnalysis_->getAssociateId();
 	}
 	if(selectedAnalysis_ != lastCurrAnalysis)
 	{
@@ -391,7 +398,7 @@ void AnalysisOptionWidget::updateTaskList()
 			const int assetId = taskAssetIds[i];
 			taskBox_->addItem(taskName, assetId);
 
-			if (selectedTask_ && selectedTask_->getName() == taskName)
+			if (selectedTaskId_ == assetId)
 			{
 				currentIndex = i;
 			}
@@ -490,6 +497,7 @@ void AnalysisOptionWidget::setSelectedTask(QSharedPointer<Task> task)
 		return;
 
 	selectedTask_ = task;
+	selectedTaskId_ = task->getAssetId();
 
 	//If the recursive lock int updateLocker_ indicates, don't call setWindowAsset
 	if (updateLocker_ > 0)
@@ -583,7 +591,6 @@ void AnalysisOptionWidget::selectedTaskTextChanged(const QString& name)
 		selectedTask_->rename(name);
 		taskBox_->setItemText(taskBox_->currentIndex(), name);
 	}
-
 }
 
 //! Clear out our shared pointers so the editor can be free of its chaffe.
