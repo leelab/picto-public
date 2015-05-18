@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>Picto: source/common/operator/HistogramPlot.h Source File</title>
+<title>Picto: source/common/operator/PSTHPlot.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,57 +88,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">HistogramPlot.h</div>  </div>
+<div class="title">PSTHPlot.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _HISTOGRAM_PLOT_H_</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _HISTOGRAM_PLOT_H_</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _PSTH_PLOT_H_</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _PSTH_PLOT_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../common.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;BarBase.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;SamplingHistogramPlot.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> HistogramPlot : <span class="keyword">public</span> BarBase</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> PSTHPlot : <span class="keyword">public</span> SamplingHistogramPlot</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_picto_1_1_histogram_plot.html">   18</a></span>&#160;class <a class="code" href="class_picto_1_1_histogram_plot.html">HistogramPlot</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_bar_base.html">BarBase</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_picto_1_1_p_s_t_h_plot.html">   18</a></span>&#160;class <a class="code" href="class_picto_1_1_p_s_t_h_plot.html">PSTHPlot</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_sampling_histogram_plot.html">SamplingHistogramPlot</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    Q_OBJECT</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="class_picto_1_1_histogram_plot.html">HistogramPlot</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_histogram_plot.html">HistogramPlot</a>(){};</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="class_picto_1_1_p_s_t_h_plot.html">PSTHPlot</a>();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_p_s_t_h_plot.html">PSTHPlot</a>(){};</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">static</span> QSharedPointer&lt;Asset&gt; Create();</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_picto_1_1_histogram_plot.html#ae1bcb52fa6d7b5bdf8dce60ec13f529b">   28</a></span>&#160;    <span class="keyword">virtual</span> QString friendlyTypeName(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;Histogram Plot&quot;</span>;};</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_picto_1_1_p_s_t_h_plot.html#a44a2e771cd7fba2897d249cda7cf7dbb">   28</a></span>&#160;    <span class="keyword">virtual</span> QString friendlyTypeName(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;PSTH Plot&quot;</span>;};</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> QString type;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> adjustValue(<span class="keywordtype">double</span> bin, <span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> setValue(<span class="keywordtype">double</span> bin, <span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">double</span> getValue(<span class="keywordtype">double</span> bin);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> dropBin(<span class="keywordtype">double</span> bin);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> beginTrial();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> endTrial();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> beginRecordingWindow();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> endRecordingWindow();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> alignEvent();</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_picto_1_1_histogram_plot.html#a066010248dfefa953b54ed2c12afa0cd">   42</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_histogram_plot.html#a066010248dfefa953b54ed2c12afa0cd">getBinSize</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;BinSize&quot;</span>).toDouble(); };</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_picto_1_1_histogram_plot.html#a155db581bcd27a8e739aa0f115124534">   44</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_histogram_plot.html#a155db581bcd27a8e739aa0f115124534">getBinSpacing</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> 0.0; };</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;OperatorPlotHandler&gt; getNewHandler();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;OperatorPlotHandler&gt; getNewHandler();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="class_picto_1_1_histogram_plot_html"><div class="ttname"><a href="class_picto_1_1_histogram_plot.html">Picto::HistogramPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_histogram_plot_8h_source.html#l00018">HistogramPlot.h:18</a></div></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_histogram_plot_html_a066010248dfefa953b54ed2c12afa0cd"><div class="ttname"><a href="class_picto_1_1_histogram_plot.html#a066010248dfefa953b54ed2c12afa0cd">Picto::HistogramPlot::getBinSize</a></div><div class="ttdeci">virtual double getBinSize() const </div><div class="ttdoc">Returns the current Bin Size. </div><div class="ttdef"><b>Definition:</b> <a href="_histogram_plot_8h_source.html#l00042">HistogramPlot.h:42</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html"><div class="ttname"><a href="class_picto_1_1_bar_base.html">Picto::BarBase</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00024">BarBase.h:24</a></div></div>
-<div class="ttc" id="class_picto_1_1_histogram_plot_html_a155db581bcd27a8e739aa0f115124534"><div class="ttname"><a href="class_picto_1_1_histogram_plot.html#a155db581bcd27a8e739aa0f115124534">Picto::HistogramPlot::getBinSpacing</a></div><div class="ttdeci">virtual double getBinSpacing() const </div><div class="ttdoc">Returns the current Bin Spacing. </div><div class="ttdef"><b>Definition:</b> <a href="_histogram_plot_8h_source.html#l00044">HistogramPlot.h:44</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_histogram_plot_html"><div class="ttname"><a href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_histogram_plot_8h_source.html#l00018">SamplingHistogramPlot.h:18</a></div></div>
+<div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html">Picto::PSTHPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis, using collected Neural Data...</div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8h_source.html#l00018">PSTHPlot.h:18</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

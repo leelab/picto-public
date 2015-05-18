@@ -360,7 +360,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called just before hiding the viewer. </p>
 <p>This function stops the current Task Run and clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a>. It is important that it clears the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> because otherwise an unexpected signal-&gt;slot-&gt;signal-&gt;... path leading from Property value changes through the <a class="el" href="class_property_frame.html" title="Displays a list of widgets for RuntimeEditable Properties to be used for updating Property initValues...">PropertyFrame</a> back to a different part of the Property value would be active. This would lead to unexpected behavior in the StateMachineEditor. We also handle stopping the Experiment in a kind of round about way. Due to the fact that we don't yet run Experiments from a Qt Event loop and we need to just process events internally now and then, if an Experiment is running, this function will have been called from some QCoreApplication::processEvents() call internal to the Experiment. In that case, calling stop() here will not actually stop the Experiment until somewhere way up the call stack. If we were to directly emit deinitCompleted() here, we would be telling the next viewer that it can take the focus before this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s Experiment actually stopped running. Instead, we connect the <a class="el" href="class_test_playback_controller.html" title="The TestPlaybackController handles the play(), pause(), stop() interface to an Experiment. ">TestPlaybackController</a>'s <a class="el" href="class_test_viewer.html#af08053308084236f0451b7410ed609e8" title="This is called when the TestPlaybackController reports that a Task is stopped. It changes various asp...">stopped()</a> signal to our <a class="el" href="class_test_viewer.html#af08053308084236f0451b7410ed609e8" title="This is called when the TestPlaybackController reports that a Task is stopped. It changes various asp...">stopped()</a> slot which emits deinitCompleted(). By doing things this way, we are sure that when the next <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> takes focus, this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>'s test Run will actually be fully stopped and done. </p>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00123">123</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00123">123</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -388,7 +388,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called just before displaying the viewer. </p>
 <p>This function prepares the DesignRoot and the various UI components for a test run. </p><dl class="section note"><dt>Note</dt><dd>Sometimes while working on an experiment, if we change something and don't reopen the experiment we have found that the experimental run doesn't work right. To prevent this, we are simply reseting the Experiment from xml whenever this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> is opened and init is called. At some point, we should probably go through and debug this issue. </dd></dl>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00053">53</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00053">53</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -416,7 +416,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Loads runtime Property initValues from a previous Session to replace those in the current Experiment. </p>
 <dl class="section warning"><dt>Warning</dt><dd>We haven't tested this in a while and it may not be working. Regardless, it might be good to do this differently and allow operators to save current Property configurations and restore them later. </dd></dl>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00334">334</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00334">334</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +444,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the play button is pressed. Activates selected Analyses, disables the AnalysisSelectorWidget and sets up Live Data Readers for the active Analyses to use for the test. </p>
 <dl class="section note"><dt>Note</dt><dd>Live Data Readers are used by Analyses to access data over ranges of times. They are different from the Data Readers in played back Sessions in that they have no access to future data and in some cases their data is simulated (ie. LFP, since there is no neural system attached to the <a class="el" href="class_test_viewer.html" title="This allows designers to run the Experiment/Analysis that they are creating in a test environment for...">TestViewer</a>). </dd></dl>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00363">363</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00363">363</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -472,7 +472,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Sets up the user interface portions of the GUI. </p>
 <p>play/pause/stop actions and toolbar </p>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00208">208</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00208">208</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -501,13 +501,13 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_root.html">DesignR
 <p>Called when the User Type dropdown value changes. Changes the user type in the <a class="el" href="class_playback_controller.html" title="The top level object that controls Session playback using the PlaybackStateUpdater and SlaveExperimen...">PlaybackController</a> accordingly. </p>
 <dl class="section note"><dt>Note</dt><dd>The active user, Operator or Subject, determines which graphics are shown in the display depending on each graphics OperatorView/SubjectView Properties. </dd></dl>
 
-<p>Definition at line <a class="el" href="_test_viewer_8cpp_source.html#l00528">528</a> of file <a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="testviewer_8cpp_source.html#l00528">528</a> of file <a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/workstation/TestViewer/<a class="el" href="testviewer_8h_source.html">testviewer.h</a></li>
-<li>source/workstation/TestViewer/<a class="el" href="_test_viewer_8cpp_source.html">TestViewer.cpp</a></li>
+<li>source/workstation/TestViewer/<a class="el" href="testviewer_8cpp_source.html">testviewer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -102,70 +102,70 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> SamplingBarBase : <span class="keyword">public</span> BarBase</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html">   22</a></span>&#160;class <a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_bar_base.html">BarBase</a></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a>();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a>(){};</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a610916ecbdab34e53f2f1bc1a9469528">   33</a></span>&#160;    <span class="keyword">virtual</span> QString friendlyTypeName(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;Sampling Bar Base&quot;</span>;};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> QString type;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;signals:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> initializeSamplingSig();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> initView();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> _getSampleValue(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">   48</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">_handleErrorInitial</a>(QVector&lt;QwtIntervalSample&gt;&amp;) {};</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _handleErrorValue(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> &amp;rdRangeMax, QVector&lt;QwtIntervalSample&gt; &amp;qvError);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _handleErrorFinal(QVector&lt;QwtIntervalSample&gt; &amp;qvError);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _createBin(<span class="keywordtype">long</span> bin);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _destroyBin(<span class="keywordtype">long</span> bin);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> _submitValue(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> _setSamples(<span class="keywordtype">long</span> bin, <span class="keywordtype">long</span> samples);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">long</span> _getSamples(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> _setValueSquared(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">double</span> _getValueSquared(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;OperatorPlotHandler&gt; getNewHandler();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> connectDataSignals(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#addb16fe891f61d6312118cc77fe92659">   67</a></span>&#160;    <span class="keywordtype">bool</span> _getDisplayErrBar()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;DisplayStdErr&quot;</span>).toBool(); };</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    QHash&lt;long, double&gt; m_qhdCumulValSq;</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">   72</a></span>&#160;    QHash&lt;long, long&gt; <a class="code" href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">m_qhlCumulNum</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">   75</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">m_bLastErrorBarState</a>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> SamplingBarBase : <span class="keyword">public</span> BarBase</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html">   21</a></span>&#160;class <a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a> : <span class="keyword">public</span> <a class="code" href="class_picto_1_1_bar_base.html">BarBase</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_sampling_bar_base.html">SamplingBarBase</a>(){};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> draw();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a610916ecbdab34e53f2f1bc1a9469528">   32</a></span>&#160;    <span class="keyword">virtual</span> QString friendlyTypeName(){<span class="keywordflow">return</span> <span class="stringliteral">&quot;Sampling Bar Base&quot;</span>;};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> QString type;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;signals:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> initializeSamplingSig();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> postDeserialize();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> initView();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> _getSampleValue(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">   47</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">_handleErrorInitial</a>(QVector&lt;QwtIntervalSample&gt;&amp;) {};</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _handleErrorValue(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> &amp;rdRangeMax, QVector&lt;QwtIntervalSample&gt; &amp;qvError);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _handleErrorFinal(QVector&lt;QwtIntervalSample&gt; &amp;qvError);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _createBin(<span class="keywordtype">long</span> bin);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _destroyBin(<span class="keywordtype">long</span> bin);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> _submitValue(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> _setSamples(<span class="keywordtype">long</span> bin, <span class="keywordtype">long</span> samples);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">long</span> _getSamples(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> _setValueSquared(<span class="keywordtype">long</span> bin, <span class="keywordtype">double</span> value);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">double</span> _getValueSquared(<span class="keywordtype">long</span> bin) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;OperatorPlotHandler&gt; getNewHandler();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> connectDataSignals(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#addb16fe891f61d6312118cc77fe92659">   66</a></span>&#160;    <span class="keywordtype">bool</span> _getDisplayErrBar()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> propertyContainer_-&gt;getPropertyValue(<span class="stringliteral">&quot;DisplayStdErr&quot;</span>).toBool(); };</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QHash&lt;long, double&gt; m_qhdCumulValSq;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">   71</a></span>&#160;    QHash&lt;long, long&gt; <a class="code" href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">m_qhlCumulNum</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">   74</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">m_bLastErrorBarState</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_base_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00022">SamplingBarBase.h:22</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_ac858b52991842b6c75039255bf9d3497"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">Picto::SamplingBarBase::m_qhlCumulNum</a></div><div class="ttdeci">QHash&lt; long, long &gt; m_qhlCumulNum</div><div class="ttdoc">The cumulative binwise-total of the number of submitted values. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00072">SamplingBarBase.h:72</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_html"><div class="ttname"><a href="class_picto_1_1_bar_base.html">Picto::BarBase</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00025">BarBase.h:25</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_a67ead9e952c71222b7fc618169904db3"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">Picto::SamplingBarBase::m_bLastErrorBarState</a></div><div class="ttdeci">bool m_bLastErrorBarState</div><div class="ttdoc">Last status of ShowErrorBars, used for updating plot on change. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00075">SamplingBarBase.h:75</a></div></div>
-<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_a36768e75027e8b2eb63660be2a441569"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">Picto::SamplingBarBase::_handleErrorInitial</a></div><div class="ttdeci">virtual void _handleErrorInitial(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called start of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00048">SamplingBarBase.h:48</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_base_html"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00021">SamplingBarBase.h:21</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_ac858b52991842b6c75039255bf9d3497"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#ac858b52991842b6c75039255bf9d3497">Picto::SamplingBarBase::m_qhlCumulNum</a></div><div class="ttdeci">QHash&lt; long, long &gt; m_qhlCumulNum</div><div class="ttdoc">The cumulative binwise-total of the number of submitted values. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00071">SamplingBarBase.h:71</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_html"><div class="ttname"><a href="class_picto_1_1_bar_base.html">Picto::BarBase</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_8h_source.html#l00024">BarBase.h:24</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_a67ead9e952c71222b7fc618169904db3"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3">Picto::SamplingBarBase::m_bLastErrorBarState</a></div><div class="ttdeci">bool m_bLastErrorBarState</div><div class="ttdoc">Last status of ShowErrorBars, used for updating plot on change. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00074">SamplingBarBase.h:74</a></div></div>
+<div class="ttc" id="class_picto_1_1_sampling_bar_base_html_a36768e75027e8b2eb63660be2a441569"><div class="ttname"><a href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">Picto::SamplingBarBase::_handleErrorInitial</a></div><div class="ttdeci">virtual void _handleErrorInitial(QVector&lt; QwtIntervalSample &gt; &amp;)</div><div class="ttdoc">Optional error calculation for future children. Called start of replot. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_bar_base_8h_source.html#l00047">SamplingBarBase.h:47</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>A <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> widget containing groups of buttons that have some affect on activity in the designer.  
  <a href="class_toolbox.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_toolbox_8h_source.html">Toolbox.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_tool_box_8h_source.html">ToolBox.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Toolbox:</div>
 <div class="dyncontent">
@@ -146,7 +146,7 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Most of the more complicated work needed by the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> is happening in the <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> and its sub-classes. The <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> itself pretty much just collects ToolGroups, and lays them out in a <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> framework. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_toolbox_8h_source.html#l00032">32</a> of file <a class="el" href="_toolbox_8h_source.html">Toolbox.h</a>.</p>
+<p>Definition at line <a class="el" href="_tool_box_8h_source.html#l00032">32</a> of file <a class="el" href="_tool_box_8h_source.html">ToolBox.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7402c6a6bbae6967d79b3a3502f00942"></a>
 <div class="memitem">
@@ -175,7 +175,7 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Constructs a new <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
 <p>editorState is used to detect when the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> Window Asset changes and whether the <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> is operating in Experimental or Analysis mode so that the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> can update the available tools accordingly. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_editor_state.html#a8ab4806896be67c7b57ae53f9f02147a" title="Emitted when the Window Asset changes. ">EditorState::windowAssetChanged()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00012">12</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_tool_box_8cpp_source.html#l00012">12</a> of file <a class="el" href="_tool_box_8cpp_source.html">ToolBox.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +221,7 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Creates a <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> according to the input specifications and adds it to this <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a>. </p>
 <p>Currently we are only using <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> objects. tagFilters and windowAsset are passed into the <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a> constructor. groupName is added as a label to a maximizable/minimizable bar that is used to display/hide each <a class="el" href="class_asset_tool_group.html" title="A ToolGroup with buttons representing Asset objects that can be added to the Designer as children of ...">AssetToolGroup</a>. </p>
 
-<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00095">95</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_tool_box_8cpp_source.html#l00095">95</a> of file <a class="el" href="_tool_box_8cpp_source.html">ToolBox.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,13 +250,13 @@ QSharedPointer&lt; <a class="el" href="class_editor_state.html">EditorState</a> 
 <p>Updates the contents of the <a class="el" href="class_toolbox.html" title="A Toolbox widget containing groups of buttons that have some affect on activity in the designer...">Toolbox</a> so that they will be appropriate for editing the input asset. </p>
 <p>This function pretty much just chooses which kind of <a class="el" href="class_tool_group.html" title="A group of buttons of a particular type that have some affect on activity in the designer. ">ToolGroup</a> objects will need to be added based on the design mode (Analysis or Experimental). It adds the ToolGroups using <a class="el" href="class_toolbox.html#a2b83dd6880a2c48aee5209fa0e3f09a1" title="Creates a ToolGroup according to the input specifications and adds it to this Toolbox. ">addToolGroup()</a>. </p>
 
-<p>Definition at line <a class="el" href="_toolbox_8cpp_source.html#l00028">28</a> of file <a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_tool_box_8cpp_source.html#l00028">28</a> of file <a class="el" href="_tool_box_8cpp_source.html">ToolBox.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>source/common/Designer/<a class="el" href="_toolbox_8h_source.html">Toolbox.h</a></li>
-<li>source/common/Designer/<a class="el" href="_toolbox_8cpp_source.html">Toolbox.cpp</a></li>
+<li>source/common/Designer/<a class="el" href="_tool_box_8h_source.html">ToolBox.h</a></li>
+<li>source/common/Designer/<a class="el" href="_tool_box_8cpp_source.html">ToolBox.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
