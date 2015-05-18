@@ -31,6 +31,7 @@ QT_END_NAMESPACE
 
 
 class ViewSelectionFrame;
+class OutputWidgetHolder;
 namespace Picto {
 	class AnalysisSelectorWidget;
 }
@@ -217,6 +218,7 @@ private:
 	QLabel *statusBar_;
 	NeuralDataViewer* neuralDataViewer_;
 	TaskRunViewer* currentRunViewer_;
+	OutputWidgetHolder *outputWidgetHolder_;
 	QVector<QWidget *> outputSignalsWidgets_;
 
 	QTimer *updateTimer_;
@@ -273,11 +275,10 @@ private:
 
 private slots:
 	void notifyAnalysisSelection(const QString&, bool, bool);
-
-private slots:
 	void taskListIndexChanged(int index);
 	bool assureChannelConnections();
 	void currTaskChanged(QString task);
+	void runStarted(QUuid runId);
 
 };
 

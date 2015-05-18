@@ -65,6 +65,8 @@ private:
 	bool renderingEnabled_;
 	QString currTask_;
 
+	bool initialized_;
+
 private slots:
 	void masterRunStarting(QString taskName,QString runName);
 	void masterRunEnding();

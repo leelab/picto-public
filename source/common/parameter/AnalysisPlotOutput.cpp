@@ -12,6 +12,8 @@
 
 namespace Picto {
 
+QHash<QString, int> AnalysisPlotOutput::filenameMap_;
+
 /*! \brief Creates a new AnalysisPlotOutput object.
  *	\details 
  *		- Adds a FileType list property to hold the type of the file.
@@ -22,7 +24,10 @@ AnalysisPlotOutput::AnalysisPlotOutput()
 	AddDefinableProperty("OperatorPlot", "");
 
 	exportTypeList_ << "PDF" << "PostScript" << "PNG" << "BMP";
-	AddDefinableProperty(PropertyContainer::enumTypeId(), "FileType", 0, "enumNames", exportTypeList_);
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "FileType", 2, "enumNames", exportTypeList_);
+
+	exportSizeList_ << "Small" << "Medium" << "Large" << "Huge";
+	AddDefinableProperty(PropertyContainer::enumTypeId(), "ExportSize", 0, "enumNames", exportSizeList_);
 }
 
 /*! \brief Creates a new AnalysisPlotOutput and returns a shared Asset pointer to it.*/
@@ -104,6 +109,17 @@ void AnalysisPlotOutput::setupFile()
 	}
 
 	fileName_ = outputDir + "/" + getRunName() + "/" + getRunName() + "." + fileName;
+	
+	if (filenameMap_.contains(fileName_))
+	{
+		int version = filenameMap_[fileName_]++;
+
+		fileName_ = outputDir + "/" + getRunName() + "/" + getRunName() + "." + QString("%1").arg(version).rightJustified(2,'0') + "." + fileName;
+	}
+	else
+	{
+		filenameMap_[fileName_] = 1;
+	}
 
 	valid_ = true;
 }
@@ -119,7 +135,7 @@ void AnalysisPlotOutput::exportPlot()
 	if (!valid_)
 		setupFile();
 
-	emit operatorPlot_->exportPlot((int)getExportType(), fileName_);
+	emit operatorPlot_->exportPlot((int)getExportType(), (int)getExportSize(), fileName_);
 }
 
 
@@ -128,6 +144,10 @@ ExportType::ExportType AnalysisPlotOutput::getExportType() const
 	return (ExportType::ExportType)(propertyContainer_->getPropertyValue("FileType").toInt());
 }
 
+DataViewSize::ViewSize AnalysisPlotOutput::getExportSize() const
+{
+	return (DataViewSize::ViewSize)(propertyContainer_->getPropertyValue("ExportSize").toInt() + 1);
+}
 
 /*! \brief Connects this object to its attached OperatorPlot
  */
@@ -162,6 +182,12 @@ void AnalysisPlotOutput::linkToPlot()
 			}
 		}
 	}
+}
+
+void AnalysisPlotOutput::finishUp()
+{
+	valid_ = false;
+	filenameMap_.clear();
 }
 
 }; //namespace Picto

@@ -136,6 +136,7 @@ var searchData=
   ['geterrors',['getErrors',['../class_picto_1_1_serializable.html#a9b14c771646820d10e082d351cd4cf50',1,'Picto::Serializable']]],
   ['getexclusivemode',['getExclusiveMode',['../class_picto_1_1_engine_1_1_picto_engine.html#a046e3d64216d1a8ce55ed52f37b776fa',1,'Picto::Engine::PictoEngine']]],
   ['getexperiment',['getExperiment',['../class_picto_1_1_design_root.html#a4b69e2bd671f36df8bdd903b664c7471',1,'Picto::DesignRoot::getExperiment()'],['../class_picto_1_1_picto_data.html#a586cc4820a47b2cc0ab0a0c5a3273e06',1,'Picto::PictoData::getExperiment()'],['../class_director_status_manager.html#a0dcb0e210becf04a832b35f0f3eb5247',1,'DirectorStatusManager::getExperiment()']]],
+  ['getexportsize',['getExportSize',['../class_picto_1_1_analysis_plot_output.html#ae985c76b5e9461201d6621e72e2923d0',1,'Picto::AnalysisPlotOutput']]],
   ['getexporttype',['getExportType',['../class_picto_1_1_analysis_plot_output.html#ad3c7a2995edc340e1cd13c2b4127cd36',1,'Picto::AnalysisPlotOutput']]],
   ['getfields',['getFields',['../class_picto_1_1_operator_info_graphic.html#a33811e677b4b434d45d35145a6acb523',1,'Picto::OperatorInfoGraphic']]],
   ['getfieldvalue',['getFieldValue',['../struct_picto_1_1_protocol_command.html#abb55d5c9068111e39e367f54d09f7cf1',1,'Picto::ProtocolCommand::getFieldValue()'],['../struct_picto_1_1_protocol_response.html#acb1dcfcf369c0c22466d2983450bc0c4',1,'Picto::ProtocolResponse::getFieldValue()']]],

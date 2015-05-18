@@ -93,8 +93,8 @@ void OperatorPlot::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHa
 		plotHandler.data(), SLOT(setTitle(const QString&)));
 	connect(this, SIGNAL(initializePlotSig(const QString&, const QString&)),
 		plotHandler.data(), SLOT(initializePlot(const QString&, const QString&)));
-	connect(this, SIGNAL(exportPlot(int, const QString)),
-		plotHandler.data(), SLOT(exportPlot(int, const QString)));
+	connect(this, SIGNAL(exportPlot(int, int, const QString)),
+		plotHandler.data(), SLOT(exportPlot(int, int, const QString)));
 }
 
 void OperatorPlot::initView()

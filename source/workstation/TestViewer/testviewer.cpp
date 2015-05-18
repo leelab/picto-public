@@ -97,6 +97,7 @@ void TestViewer::init()
 		connect(testController_.data(),SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 	engine_->setFrameTimerFactory(experiment_->getDesignConfig()->getFrameTimerFactory());
+	viewSelectionFrame_->clearAnalysisSelection(true);
 	generateComboBox();
 	analysisSelector_->setLocalDesignRoot(designRoot_->getExperiment()->getName(),designRoot_);
 	analysisSelector_->setCurrentFile(designRoot_->getExperiment()->getName());

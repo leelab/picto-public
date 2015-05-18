@@ -52,8 +52,8 @@ protected:
 	virtual bool validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
 	virtual AnalysisOutputWidget* createWidget();
-protected slots:
-	void finishUp();
+
+	virtual void finishUp();
 
 private:
 	void openFile();

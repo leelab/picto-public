@@ -68,11 +68,11 @@ void OperatorPlotHandler::setTitle(const QString &title)
 }
 
 
-void OperatorPlotHandler::exportPlot(int type, const QString fileName)
+void OperatorPlotHandler::exportPlot(int type, int size, const QString fileName)
 {
-	ExportType::ExportType exportType = (ExportType::ExportType) type;
 	if (m_pPlot)
 	{
+		ExportType::ExportType exportType = (ExportType::ExportType) type;
 		QString typeName = "";
 		switch (exportType)
 		{
@@ -92,10 +92,32 @@ void OperatorPlotHandler::exportPlot(int type, const QString fileName)
 			qDebug() << "Unexpected Export Type";
 			return;
 		}
+
+		DataViewSize::ViewSize exportSize = (DataViewSize::ViewSize) size;
+		QSizeF renderSize;
+
+		switch (exportSize)
+		{
+		case DataViewSize::VIEW_SIZE_1x1:
+			renderSize = QSizeF(80, 60);
+			break;
+		case DataViewSize::VIEW_SIZE_2x2:
+			renderSize = QSizeF(160, 120);
+			break;
+		case DataViewSize::VIEW_SIZE_3x3:
+			renderSize = QSizeF(240, 180);
+			break;
+		case DataViewSize::VIEW_SIZE_4x4:
+			renderSize = QSizeF(320, 240);
+			break;
+		default:
+			renderSize = m_pPlot->size() * 0.264583333;
+			break;
+		}
 		
 
 		QwtPlotRenderer renderer;
-		renderer.renderDocument(m_pPlot, fileName, typeName, m_pPlot->size());
+		renderer.renderDocument(m_pPlot, fileName, typeName, renderSize);
 	}
 }
 

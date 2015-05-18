@@ -44,17 +44,22 @@ protected:
 
 	virtual AnalysisOutputWidget* createWidget();
 
+	virtual void finishUp();
+
 private slots:
 	void operatorPlotNameEdited();
 
 private:
 	//! Returns the chosen export type
 	ExportType::ExportType getExportType() const;
+
+	//! Returns the chosen export size
+	DataViewSize::ViewSize getExportSize() const;
+
 	void setupFile();
 
 	void linkToPlot();
 
-	QStringList typeList_; 
 	bool valid_;
 
 	QString fileName_;
@@ -63,6 +68,11 @@ private:
 
 	//! Holds the names of the various export types
 	QStringList exportTypeList_;
+	//! Holds the names of the various export sizes
+	QStringList exportSizeList_;
+
+	//! A map tracking used filenames.
+	static QHash<QString, int> filenameMap_;
 };
 
 

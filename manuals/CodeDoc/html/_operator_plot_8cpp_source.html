@@ -133,101 +133,102 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    DataViewElement::postLinkUpdate();</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;requestPlotHandler(<a class="code" href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">selfPtr</a>().objectCast&lt;OperatorPlot&gt;().toWeakRef(), <a class="code" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a>());</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> OperatorPlot::receivePlotHandler(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    m_pPlotHandler = plotHandler;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span> (m_pPlotHandler.isNull())</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        m_pPlotHandler = getNewHandler();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        m_pPlotHandler-&gt;moveToThread(QApplication::instance()-&gt;thread());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;cachePlotHandler(m_pPlotHandler, <a class="code" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a>());</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    connectHandler(m_pPlotHandler);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;addObserver(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>())</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;requestPlotHandler(<a class="code" href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">selfPtr</a>().objectCast&lt;OperatorPlot&gt;().toWeakRef(), <a class="code" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a>());</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> OperatorPlot::receivePlotHandler(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    m_pPlotHandler = plotHandler;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span> (m_pPlotHandler.isNull())</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        m_pPlotHandler = getNewHandler();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        m_pPlotHandler-&gt;moveToThread(QApplication::instance()-&gt;thread());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;cachePlotHandler(m_pPlotHandler, <a class="code" href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">getPath</a>());</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    connectHandler(m_pPlotHandler);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>()-&gt;addObserver(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">   66</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">OperatorPlot::setTitle</a>(<span class="keyword">const</span> QString &amp;newTitle)</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    emit setTitleSig(newTitle);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a> = newTitle;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">   72</a></span>&#160;<span class="keyword">const</span> QString <a class="code" href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">OperatorPlot::getTitle</a>()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;QSharedPointer&lt;OperatorPlotHandler&gt; OperatorPlot::getNewHandler()</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;OperatorPlotHandler&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a>());</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keywordtype">void</span> OperatorPlot::connectHandler(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(connectToTaskConfigSig(QSharedPointer&lt;TaskConfig&gt;)),</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        plotHandler.data(), SLOT(connectToTaskConfig(QSharedPointer&lt;TaskConfig&gt;)));</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">void</span> OperatorPlot::connectDataSignals(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(setTitleSig(<span class="keyword">const</span> QString&amp;)),</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        plotHandler.data(), SLOT(<a class="code" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">setTitle</a>(<span class="keyword">const</span> QString&amp;)));</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(initializePlotSig(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;)),</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        plotHandler.data(), SLOT(initializePlot(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;)));</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(exportPlot(<a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a>, <span class="keyword">const</span> QString)),</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        plotHandler.data(), SLOT(exportPlot(<a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a>, <span class="keyword">const</span> QString)));</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">   98</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">OperatorPlot::initView</a>()</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    connectDataSignals(m_pPlotHandler);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="class_picto_1_1_data_view_element.html#ae5e4365e7eaaf06c62f11da2ef0994e4">DataViewElement::initView</a>();</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    emit initializePlotSig(<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;XTitle&quot;</span>).toString(),</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;YTitle&quot;</span>).toString());</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> OperatorPlot::sendWidgetToTaskConfig()</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">initView</a>();</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    emit connectToTaskConfigSig(<a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>());</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">  113</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">OperatorPlot::enteredScope</a>()</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;{</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a3675e88e8366f47e9b938cab5d5bdda6">reset</a>();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a>)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        QScriptValue returnVal(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <a class="code" href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">runScript</a>(<a class="code" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a>().simplified().<span class="keyword">remove</span>(<span class="charliteral">&#39; &#39;</span>), returnVal);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keywordtype">void</span> OperatorPlot::scriptableContainerCustomInitialization()</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;{</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    DataViewElement::scriptableContainerCustomInitialization();</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a>)</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        QScriptValue returnVal(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <a class="code" href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">runScript</a>(<a class="code" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a>().simplified().<span class="keyword">remove</span>(<span class="charliteral">&#39; &#39;</span>), returnVal);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">Picto::ExportType::ExportType</a></div><div class="ttdeci">ExportType</div><div class="ttdoc">Enumeration of the various formats that are supported by the export function. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00048">DataViewSpecs.h:48</a></div></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">   68</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">OperatorPlot::setTitle</a>(<span class="keyword">const</span> QString &amp;newTitle)</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    emit setTitleSig(newTitle);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a> = newTitle;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">   74</a></span>&#160;<span class="keyword">const</span> QString <a class="code" href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">OperatorPlot::getTitle</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">m_title</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;QSharedPointer&lt;OperatorPlotHandler&gt; OperatorPlot::getNewHandler()</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;OperatorPlotHandler&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a>());</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span> OperatorPlot::connectHandler(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(connectToTaskConfigSig(QSharedPointer&lt;TaskConfig&gt;)),</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        plotHandler.data(), SLOT(connectToTaskConfig(QSharedPointer&lt;TaskConfig&gt;)));</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> OperatorPlot::connectDataSignals(QSharedPointer&lt;OperatorPlotHandler&gt; plotHandler)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(setTitleSig(<span class="keyword">const</span> QString&amp;)),</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        plotHandler.data(), SLOT(<a class="code" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">setTitle</a>(<span class="keyword">const</span> QString&amp;)));</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(initializePlotSig(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;)),</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        plotHandler.data(), SLOT(initializePlot(<span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QString&amp;)));</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(exportPlot(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> QString)),</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        plotHandler.data(), SLOT(exportPlot(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> QString)));</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">  100</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">OperatorPlot::initView</a>()</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    connectDataSignals(m_pPlotHandler);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="class_picto_1_1_data_view_element.html#ae5e4365e7eaaf06c62f11da2ef0994e4">DataViewElement::initView</a>();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    emit initializePlotSig(<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;XTitle&quot;</span>).toString(),</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;YTitle&quot;</span>).toString());</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">void</span> OperatorPlot::sendWidgetToTaskConfig()</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;{</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">initView</a>();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    emit connectToTaskConfigSig(<a class="code" href="class_picto_1_1_asset.html#a28b907c0b7e4786062592b1f4674ad16">getTaskConfig</a>());</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">  115</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">OperatorPlot::enteredScope</a>()</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot.html#a3675e88e8366f47e9b938cab5d5bdda6">reset</a>();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a>)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        QScriptValue returnVal(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <a class="code" href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">runScript</a>(<a class="code" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a>().simplified().<span class="keyword">remove</span>(<span class="charliteral">&#39; &#39;</span>), returnVal);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">void</span> OperatorPlot::scriptableContainerCustomInitialization()</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;{</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    DataViewElement::scriptableContainerCustomInitialization();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_scriptable_container.html#ab5c2f2b808f14d1722c77451dcc84a24">qsEngine_</a>)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        QScriptValue returnVal(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <a class="code" href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">runScript</a>(<a class="code" href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">getName</a>().simplified().<span class="keyword">remove</span>(<span class="charliteral">&#39; &#39;</span>), returnVal);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}; <span class="comment">//namespace Picto</span></div>
 <div class="ttc" id="class_picto_1_1_data_store_html_af50c0cd3df239ba86be9edc72ded3ccf"><div class="ttname"><a href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">Picto::DataStore::propertyContainer_</a></div><div class="ttdeci">QSharedPointer&lt; PropertyContainer &gt; propertyContainer_</div><div class="ttdoc">The property container managing this DataStore&#39;s properties. </div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8h_source.html#l00200">DataStore.h:200</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_a980167a9f480779712f2d94f48841bec"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a980167a9f480779712f2d94f48841bec">Picto::OperatorPlot::replot</a></div><div class="ttdeci">virtual void replot()=0</div><div class="ttdoc">Reconstructs elements of underlying plot. </div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_a7fa85cad563e502bf1febe10eba7ea87"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">Picto::OperatorPlot::setTitle</a></div><div class="ttdeci">virtual void setTitle(const QString &amp;newTitle)</div><div class="ttdoc">Abstract method for setting the title of the DataViewElement. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00066">OperatorPlot.cpp:66</a></div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_abfd8004f000dc0434fd536b010a50a2f"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">Picto::OperatorPlot::enteredScope</a></div><div class="ttdeci">virtual void enteredScope()</div><div class="ttdoc">Resets this scriptable&#39;s data fields to their original values. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00113">OperatorPlot.cpp:113</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_a7fa85cad563e502bf1febe10eba7ea87"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">Picto::OperatorPlot::setTitle</a></div><div class="ttdeci">virtual void setTitle(const QString &amp;newTitle)</div><div class="ttdoc">Abstract method for setting the title of the DataViewElement. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00068">OperatorPlot.cpp:68</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_abfd8004f000dc0434fd536b010a50a2f"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#abfd8004f000dc0434fd536b010a50a2f">Picto::OperatorPlot::enteredScope</a></div><div class="ttdeci">virtual void enteredScope()</div><div class="ttdoc">Resets this scriptable&#39;s data fields to their original values. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00115">OperatorPlot.cpp:115</a></div></div>
 <div class="ttc" id="class_picto_1_1_asset_html_a310a0e5ffab1adff37039f27b998684a"><div class="ttname"><a href="class_picto_1_1_asset.html#a310a0e5ffab1adff37039f27b998684a">Picto::Asset::getPath</a></div><div class="ttdeci">QString getPath()</div><div class="ttdoc">Returns the "::" separated path to this Asset in the Asset tree. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_8cpp_source.html#l00146">Asset.cpp:146</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_affc1d3936367b03d08d2131ba6a7a027"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027">Picto::OperatorPlot::m_bDataChanged</a></div><div class="ttdeci">bool m_bDataChanged</div><div class="ttdoc">Flag for when the plot need to be recalculated. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00076">OperatorPlot.h:76</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_view_element_html_a48ce1adccf6eef5b089d121ff6581e50"><div class="ttname"><a href="class_picto_1_1_data_view_element.html#a48ce1adccf6eef5b089d121ff6581e50">Picto::DataViewElement::postDeserialize</a></div><div class="ttdeci">virtual void postDeserialize()</div><div class="ttdoc">This function is called in fromXml() after successful deserialization and is used to initialize the A...</div><div class="ttdef"><b>Definition:</b> <a href="_data_view_element_8cpp_source.html#l00024">DataViewElement.cpp:24</a></div></div>
@@ -236,8 +237,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_picto_1_1_u_i_enabled_html_a98007f02abd55321577ef5db5460caba"><div class="ttname"><a href="class_picto_1_1_u_i_enabled.html#a98007f02abd55321577ef5db5460caba">Picto::UIEnabled::getName</a></div><div class="ttdeci">virtual QString getName()</div><div class="ttdoc">Returns the name of this asset. </div><div class="ttdef"><b>Definition:</b> <a href="_u_i_enabled_8h_source.html#l00035">UIEnabled.h:35</a></div></div>
 <div class="ttc" id="class_picto_1_1_scriptable_container_html_af62f2d686d75a845715f30493ecab92f"><div class="ttname"><a href="class_picto_1_1_scriptable_container.html#af62f2d686d75a845715f30493ecab92f">Picto::ScriptableContainer::runScript</a></div><div class="ttdeci">void runScript(QString scriptName)</div><div class="ttdoc">Used instead of runScript(QString,QScriptValue &) when no return value is needed. ...</div><div class="ttdef"><b>Definition:</b> <a href="_scriptable_container_8cpp_source.html#l00378">ScriptableContainer.cpp:378</a></div></div>
 <div class="ttc" id="class_picto_1_1_asset_html_ac6727fc4ef394103880e570c4b40d091"><div class="ttname"><a href="class_picto_1_1_asset.html#ac6727fc4ef394103880e570c4b40d091">Picto::Asset::selfPtr</a></div><div class="ttdeci">QSharedPointer&lt; Asset &gt; selfPtr()</div><div class="ttdoc">Returns a QSharedPointer to this Asset. </div><div class="ttdef"><b>Definition:</b> <a href="_asset_8h_source.html#l00182">Asset.h:182</a></div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_a3bb90aec4da7e1b5f6aef771e716eb8f"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">Picto::OperatorPlot::initView</a></div><div class="ttdeci">virtual void initView()</div><div class="ttdoc">Used to initialize the associated View widget. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00098">OperatorPlot.cpp:98</a></div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_html_a31798daa775a742d89f8862842135968"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">Picto::OperatorPlot::getTitle</a></div><div class="ttdeci">virtual const QString getTitle() const </div><div class="ttdoc">Abstract method for getting the title of the DataViewElement. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00072">OperatorPlot.cpp:72</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_a3bb90aec4da7e1b5f6aef771e716eb8f"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a3bb90aec4da7e1b5f6aef771e716eb8f">Picto::OperatorPlot::initView</a></div><div class="ttdeci">virtual void initView()</div><div class="ttdoc">Used to initialize the associated View widget. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00100">OperatorPlot.cpp:100</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_html_a31798daa775a742d89f8862842135968"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a31798daa775a742d89f8862842135968">Picto::OperatorPlot::getTitle</a></div><div class="ttdeci">virtual const QString getTitle() const </div><div class="ttdoc">Abstract method for getting the title of the DataViewElement. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8cpp_source.html#l00074">OperatorPlot.cpp:74</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_operator_plot_handler.html">Picto::OperatorPlotHandler</a></div><div class="ttdoc">A base class for manufacturing Widgets. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_handler_8h_source.html#l00025">OperatorPlotHandler.h:25</a></div></div>
 <div class="ttc" id="class_picto_1_1_data_store_html_aa26b8b2191fa50b0f963b1d94a6e3407"><div class="ttname"><a href="class_picto_1_1_data_store.html#aa26b8b2191fa50b0f963b1d94a6e3407">Picto::DataStore::AddDefinableProperty</a></div><div class="ttdeci">void AddDefinableProperty(QString tagName, QVariant defaultValue)</div><div class="ttdoc">Adds a required property to this DataStore with the input name and defaultValue of type defined by th...</div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8cpp_source.html#l00531">DataStore.cpp:531</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_html_a32e89b6fdaa56f4ccf652c541d0ce766"><div class="ttname"><a href="class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766">Picto::OperatorPlot::m_title</a></div><div class="ttdeci">QString m_title</div><div class="ttdoc">Holds a copy of the plot&#39;s title. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_8h_source.html#l00078">OperatorPlot.h:78</a></div></div>

@@ -46,6 +46,8 @@
 #include "../../common/designer/UIHelper.h"
 #include "../../common/designer/AnalysisSelectorWidget.h"
 
+#include "../ReplayViewer/OutputWidgetHolder.h"
+
 #include "../DataViewer/ViewSelectionFrame.h"
 #include "../DataViewer/DataViewWidget.h"
 #include "../DataViewer/DataViewOrganizer.h"
@@ -84,8 +86,8 @@ using namespace Picto;
  *	\details Sets up the RemoteViewer UI. Initializes variables.  Gets the workstation ID from the Workstation's .config
  *	file.
  */
-RemoteViewer::RemoteViewer(QWidget *parent) :
-	Viewer(parent),
+RemoteViewer::RemoteViewer(QWidget *parent)
+	: Viewer(parent),
 	serverChannel_(0),
 	activeExperiment_(0),
 	activeDesignRoot_(0),
@@ -95,7 +97,8 @@ RemoteViewer::RemoteViewer(QWidget *parent) :
 	myDesignRoot_(new DesignRoot()),
 	awaitingRejoin_(RejoinStatus::None),
 	numImportedAnalyses_(0),
-	lastExpHash_(0)
+	lastExpHash_(0),
+	outputWidgetHolder_(nullptr)
 {
 	setupServerChannel();
 	setupEngine();
@@ -231,6 +234,7 @@ void RemoteViewer::updateState()
 			nextState = PausedSession;
 			break;
 		case SessionRunning:
+			//outputWidgetHolder_->newRunStarted(QUuid());
 			nextState = RunningSession;
 			break;
 		}
@@ -1116,7 +1120,9 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->setTabEnabled(1,false);
 	mainTabbedFrame_->layout()->setContentsMargins(0, 0, 0, 0);
 
-	analysisSelector_ = new Picto::AnalysisSelectorWidget();
+	QTabWidget *analysisTabs = new QTabWidget();
+
+	analysisSelector_ = new Picto::AnalysisSelectorWidget(analysisTabs);
 	analysisSelector_->layout()->setContentsMargins(0, 0, 0, 0);;
 	connect(analysisSelector_, SIGNAL(notifyAnalysisSelection(const QString&, bool, bool)),
 		viewSelectionFrame_, SLOT(notifyAnalysisSelection(const QString&, bool, bool)));
@@ -1125,7 +1131,12 @@ void RemoteViewer::setupUi()
 
 	connect(analysisSelector_, SIGNAL(clearAnalysisSelection(bool)),
 		viewSelectionFrame_, SLOT(clearAnalysisSelection(bool)));
-	
+
+	outputWidgetHolder_ = new OutputWidgetHolder(analysisTabs);
+
+	analysisTabs->addTab(analysisSelector_, "Select Analyses");
+	analysisTabs->addTab(outputWidgetHolder_, "Analysis Output");
+
 	QSplitter *operationLayout = new QSplitter;
 	pContainer->sizePolicy().setHorizontalStretch(QSizePolicy::Maximum);
 	operationLayout->addWidget(pContainer);
@@ -1135,7 +1146,7 @@ void RemoteViewer::setupUi()
 	operationLayout->addWidget(mainTabbedFrame_);
 	operationLayout->setStretchFactor(1, 10);
 
-	operationLayout->addWidget(analysisSelector_);
+	operationLayout->addWidget(analysisTabs);
 	operationLayout->setStretchFactor(2, 3);
 
 	Picto::UIHelper::addSplitterLine(operationLayout->handle(1), 200);
@@ -1953,6 +1964,8 @@ bool RemoteViewer::joinSession()
 			activeDesignRoot_->enableRunMode(true);
 			activeExperiment_ = activeDesignRoot_->getExperiment().staticCast<Experiment>();
 
+			connect(activeExperiment_->getDesignConfig().data(), SIGNAL(runStarted(QUuid)), this, SLOT(runStarted(QUuid)));
+
 			analysisSelector_->setLocalDesignRoot(activeExperiment_->getName(), activeDesignRoot_);
 			analysisSelector_->setCurrentFile(activeExperiment_->getName());
 
@@ -2477,4 +2490,13 @@ void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 	{
 		awaitingRejoin_ = RejoinStatus::None;
 	}
+}
+
+
+
+/*! \brief Called when the run with the input runId starts.  Calls OutputWidgetHolder::newRunStarted().
+ */
+void RemoteViewer::runStarted(QUuid runId)
+{
+	outputWidgetHolder_->newRunStarted(runId);
 }

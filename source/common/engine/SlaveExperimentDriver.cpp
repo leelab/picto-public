@@ -10,7 +10,7 @@ using namespace Picto;
  *	from the updater is sent into the exp Experiment and rendered on screen.
  */
 SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp, QSharedPointer<StateUpdater> updater)
-	: paused_(false)
+	: paused_(false), initialized_(false)
 {
 	experiment_ = exp;
 	updater_ = updater;
@@ -102,6 +102,21 @@ void SlaveExperimentDriver::renderFrame()
 */
 void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 {
+	//These conditions should only fulfilled when joining an experiment mid-session
+	if (!initialized_ && !(event.id < 0 && event.type == SlaveEvent::TRANS_ACTIVATED))
+	{
+		QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
+		while (asset && !asset->inherits("Picto::Task"))
+		{
+			asset = asset->getParentAsset();
+		}
+
+		if (asset)
+		{
+			remoteRunStarting(asset->getName());
+		}
+	}
+
 	switch(event.type)
 	{
 	case SlaveEvent::PROP_VAL_CHANGE:
@@ -126,7 +141,6 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 				Q_ASSERT(!asset);
 				if (!event.value.isEmpty())
 				{
-					qDebug() << "RemoteRun Ending";
 					remoteRunEnding();
 				}
 				return;
@@ -165,7 +179,6 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 					QString currTask = "";
 					if (trans->getParentAsset())
 						currTask = trans->getParentAsset()->getName();
-					qDebug() << "RemoteRun Starting:" << currTask;
 					remoteRunStarting(currTask);
 				}
 				return;
@@ -216,6 +229,7 @@ void SlaveExperimentDriver::masterRunStarting(QString taskName,QString runName)
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
 	paused_ = false;
+	initialized_ = true;
 }
 
 /*! \brief Called when the current Run ends.  Handles various deinitializations that need to occur at the end of a run.
@@ -230,6 +244,7 @@ void SlaveExperimentDriver::masterRunEnding()
 	designConfig_->markRunEnd();
 	eventQueue_.reset();
 	paused_ = false;
+	initialized_ = false;
 }
 
 //! Called when starting a Remote run.  Runs only a subset of the initialization that masterRunStarting runs.
@@ -246,12 +261,13 @@ void SlaveExperimentDriver::remoteRunStarting(QString taskName)
 	designConfig_->markRunStart(taskName + "_" + dateTime.toString("yyyy_MM_dd__hh_mm_ss"));
 
 	QSharedPointer<StateMachine> top = experiment_->getTaskByName(currTask_)->getStateMachine();
-
+	Q_ASSERT(top);
 	//Reset Analysis elements to initial states on Top
 	top->resetScriptableAnalysisValues();
 	//Run AnalysisEntryScript on Top
 	top->runAnalysisEntryScripts();
 	paused_ = false;
+	initialized_ = true;
 }
 
 //! Called when ending a Remote run.  Runs only a subset of the initialization that masterRunEnding runs.
@@ -265,6 +281,7 @@ void SlaveExperimentDriver::remoteRunEnding()
 	top->runAnalysisExitScripts();
 	designConfig_->markRunEnd();
 	paused_ = false;
+	initialized_ = false;
 }
 
 /*! \brief Called when a Property value changes in the master.  Adds a corresponding event to the event queue.

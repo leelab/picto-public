@@ -88,7 +88,6 @@ StateDataUnitHandler::StateDataUnitHandler(RemoteStateUpdater *pParent)
 void StateDataUnitHandler::handle(QSharedPointer<QXmlStreamReader> xmlReader)
 {
 	stateUnit_->fromXml(xmlReader);
-	qDebug() << "Transition received:" << stateUnit_->getTransitionID();
 	bool runSignal = false;
 	if (stateUnit_->getTransitionID() < 0)
 	{

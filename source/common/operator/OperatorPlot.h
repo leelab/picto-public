@@ -57,7 +57,7 @@ signals:
 	void initializePlotSig(const QString &xTitle, const QString &yTitle);
 	void setTitleSig(const QString &title);
 	void connectToTaskConfigSig(QSharedPointer<TaskConfig> pTaskConfig);
-	void exportPlot(int type, const QString fileName);
+	void exportPlot(int type, int size, const QString fileName);
 
 protected:
 	virtual void postDeserialize();

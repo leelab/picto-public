@@ -229,6 +229,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>renderingEnabled_</b>
 <tr class="memitem:a9ec7611af02ee6232d0f5b8ddf8ef632"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ec7611af02ee6232d0f5b8ddf8ef632"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td></tr>
 <tr class="separator:a9ec7611af02ee6232d0f5b8ddf8ef632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815062d1958f22e39ba70c5fc59f4e6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a815062d1958f22e39ba70c5fc59f4e6f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>initialized_</b></td></tr>
+<tr class="separator:a815062d1958f22e39ba70c5fc59f4e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects a <a class="el" href="class_picto_1_1_state_updater.html" title="An interface class for objects that update the Picto State from some external source. ">StateUpdater</a> to an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> to drive an <a class="el" href="class_picto_1_1_experiment.html" title="The Experiment object contains the complete definition of an Experiment for running in the Director...">Experiment</a> in slave mode. </p>
@@ -295,7 +298,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Disables/Enables rendering of frames to the <a class="el" href="struct_picto_1_1_rendering_target.html" title="This is a top level container acting as a single location to access all of the various objects that a...">RenderingTarget</a>. </p>
 <p>This is useful for cases when we are fast forwarding or skipping around in session playback and don't need to actually see every frame on screen. Even though the frames aren't rendered, however, all other logic operates exactly the same whether rendering is enabled or disabled. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00382">382</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00399">399</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -363,7 +366,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Called when a new Run starts. Handles various initializations that need to occur at the beginning of a new run. </p>
 <p>As part of this function, the <a class="el" href="class_picto_1_1_slave_experiment_driver.html#a9a9bf3a5ed00d009eb31019315a7b5a1" title="Emitted when the currently running task changes. currTask is the name of the new Task. ">taskChanged()</a> signal is emitted. </p>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00198">198</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00211">211</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +411,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>currTask_</b></td>
 <p>Called when a list of ne signal values comes in from the master. Adds the values to the <a class="el" href="class_picto_1_1_signal_channel.html" title="SignalChannel is a base class for signalChannel objects. These objects are used for collecting signal...">SignalChannel</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_signal_channel.html#adafa510c5afd2ef630777181d0fac523" title="Adds a single input value to the input subchannel from an outside source. ">SignalChannel::insertValue()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00366">366</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_slave_experiment_driver_8cpp_source.html#l00383">383</a> of file <a class="el" href="_slave_experiment_driver_8cpp_source.html">SlaveExperimentDriver.cpp</a>.</p>
 
 </div>
 </div>
