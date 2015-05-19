@@ -27,7 +27,7 @@ ScriptWidget::ScriptWidget(QtVariantPropertyManager* manager, QtProperty* proper
 
 	//Set text value to widget.
 	connect(textEdit_, SIGNAL(textChanged()),this, SLOT(textChangeDetected()));
-	textEdit_->setText(text);
+	textEdit_->setPlainText(text);
 	scriptChangedSinceSync_ = false;
 
 	if (!editorState_.isNull())

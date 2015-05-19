@@ -17,6 +17,7 @@ var searchData=
   ['scriptsyntaxhighlighter',['ScriptSyntaxHighlighter',['../class_picto_1_1_script_syntax_highlighter.html',1,'Picto']]],
   ['scripttextedit',['ScriptTextEdit',['../class_script_text_edit.html',1,'']]],
   ['scriptwidget',['ScriptWidget',['../class_script_widget.html',1,'']]],
+  ['searchableplaintextedit',['SearchablePlainTextEdit',['../class_searchable_plain_text_edit.html',1,'']]],
   ['searchabletextedit',['SearchableTextEdit',['../class_searchable_text_edit.html',1,'']]],
   ['searchrequest',['SearchRequest',['../struct_search_request.html',1,'']]],
   ['serializable',['Serializable',['../class_picto_1_1_serializable.html',1,'Picto']]],

@@ -9,6 +9,7 @@ var searchData=
   ['lfpreader',['LfpReader',['../class_picto_1_1_lfp_reader.html',1,'Picto']]],
   ['lfpstate',['LfpState',['../class_picto_1_1_lfp_state.html',1,'Picto']]],
   ['linegraphic',['LineGraphic',['../class_picto_1_1_line_graphic.html',1,'Picto']]],
+  ['linenumberarea',['LineNumberArea',['../class_line_number_area.html',1,'']]],
   ['listproperty',['ListProperty',['../class_picto_1_1_list_property.html',1,'Picto']]],
   ['liveframereader',['LiveFrameReader',['../class_picto_1_1_live_frame_reader.html',1,'Picto']]],
   ['livelfpreader',['LiveLfpReader',['../class_picto_1_1_live_lfp_reader.html',1,'Picto']]],

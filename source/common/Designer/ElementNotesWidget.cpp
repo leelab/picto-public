@@ -46,10 +46,14 @@ void ElementNotesWidget::selectedAssetChanged(QSharedPointer<Asset> asset)
 		return;
 	changingAsset_ = true;
 	selectedAsset_ = asset;
-	if(selectedAsset_.isNull())
+	if (selectedAsset_.isNull())
+	{
 		notesEditor_->setText("");
+	}
 	else
-		notesEditor_->setPlainText(asset.staticCast<UIEnabled>()->getNotes());
+	{
+		notesEditor_->setText(asset.staticCast<UIEnabled>()->getNotes());
+	}
 	changingAsset_ = false;
 }
 

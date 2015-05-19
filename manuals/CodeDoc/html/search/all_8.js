@@ -32,6 +32,7 @@ var searchData=
   ['hidedefaulttitle',['hideDefaultTitle',['../class_data_view_widget.html#ad19fe407b0e8fea7e91723d53ad12e68',1,'DataViewWidget']]],
   ['hidename',['hideName',['../class_picto_1_1_state_machine.html#aa107ce101deecf6031c38c60687aa157',1,'Picto::StateMachine']]],
   ['highlightbygroup_5f',['highlightByGroup_',['../class_level_up_button.html#ad01bbfc5b74c602aefc6e98f183fa377',1,'LevelUpButton']]],
+  ['highlightcurrentline',['highlightCurrentLine',['../class_script_text_edit.html#ab187e49ca14efa8784b2767f09c046c7',1,'ScriptTextEdit']]],
   ['highlightdata',['HighlightData',['../class_highlight_data.html',1,'']]],
   ['highlightnamechars',['highlightNameChars',['../class_diagram_item.html#a6253ca849602d6f7487f2a33851f2fcc',1,'DiagramItem']]],
   ['histogramplot',['HistogramPlot',['../class_picto_1_1_histogram_plot.html',1,'Picto']]],
