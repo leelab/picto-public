@@ -116,9 +116,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> QString type;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> beginTrial();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> endTrial();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621">AlignType::AlignType</a> getAlignType() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span> slots:</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> beginRecordingWindow();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> endRecordingWindow();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> alignEvent();</div>
@@ -126,13 +126,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> QSharedPointer&lt;OperatorPlotHandler&gt; getNewHandler();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">enum</span> RecordingState : <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        NotRecording = 0,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        RecordingBegan,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        AlignOccurred</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    } currentRecordingState_;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> clearAccumulatedData();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> submitAccumulatedData();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_align_type_html_a467790e75d25207ac90641f76c4db621"><div class="ttname"><a href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621">Picto::AlignType::AlignType</a></div><div class="ttdeci">AlignType</div><div class="ttdoc">Enumeration of the various Align Methods that Rasters and PSTHs can use. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00062">DataViewSpecs.h:62</a></div></div>
 <div class="ttc" id="class_picto_1_1_sampling_histogram_plot_html"><div class="ttname"><a href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis. </div><div class="ttdef"><b>Definition:</b> <a href="_sampling_histogram_plot_8h_source.html#l00018">SamplingHistogramPlot.h:18</a></div></div>
 <div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html">Picto::PSTHPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis, using collected Neural Data...</div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8h_source.html#l00018">PSTHPlot.h:18</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>

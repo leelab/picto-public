@@ -171,7 +171,7 @@ var searchData=
   ['createnewasset',['createNewAsset',['../class_diagram_scene.html#a7fefccde08545b0a1e5d1a0e036d217a',1,'DiagramScene']]],
   ['createnormalizedscale',['createNormalizedScale',['../class_picto_1_1_bar_base.html#aa694173c6eef4763e3896ce06947d9f8',1,'Picto::BarBase']]],
   ['createscene',['createScene',['../class_picto_1_1_scene.html#a26d9a1e0c272cdbaf9d6c61125be1700',1,'Picto::Scene']]],
-  ['createsession',['CreateSession',['../class_session_info.html#ab22e776e9d2e6047d8759a8e2d884fa4',1,'SessionInfo::CreateSession()'],['../class_connection_manager.html#aa0e821de2a8b6578a121ba64e999b7e5',1,'ConnectionManager::createSession()']]],
+  ['createsession',['createSession',['../class_connection_manager.html#aa0e821de2a8b6578a121ba64e999b7e5',1,'ConnectionManager::createSession()'],['../class_session_info.html#ab22e776e9d2e6047d8759a8e2d884fa4',1,'SessionInfo::CreateSession()']]],
   ['createsessionindeces',['createSessionIndeces',['../class_session_info.html#ae676db5c0a83833c9031768d06abfb0f',1,'SessionInfo']]],
   ['createsound',['createSound',['../class_picto_1_1_audio_file_parameter.html#a1628a85040b6f01dacaa5420453bae79',1,'Picto::AudioFileParameter::createSound()'],['../class_picto_1_1_preloaded_sound.html#ae242a5728bce44d1ac6bfcac2b958f81',1,'Picto::PreloadedSound::createSound()']]],
   ['createstatuslights',['createStatusLights',['../class_proxy_main_window.html#a330a7ac644b67fc540e35063445ba1d5',1,'ProxyMainWindow']]],

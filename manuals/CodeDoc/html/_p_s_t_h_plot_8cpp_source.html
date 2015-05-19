@@ -100,54 +100,82 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">const</span> QString <a class="code" href="class_picto_1_1_p_s_t_h_plot.html#a44a2e771cd7fba2897d249cda7cf7dbb">PSTHPlot::type</a> = <span class="stringliteral">&quot;PSTH Plot&quot;</span>;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;PSTHPlot::PSTHPlot()</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    QStringList alignList;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    alignList &lt;&lt; <span class="stringliteral">&quot;BeginWindow&quot;</span> &lt;&lt; <span class="stringliteral">&quot;AlignEvent&quot;</span> &lt;&lt; <span class="stringliteral">&quot;EndWindow&quot;</span>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_picto_1_1_data_store.html#aa26b8b2191fa50b0f963b1d94a6e3407">AddDefinableProperty</a>(<a class="code" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">PropertyContainer::enumTypeId</a>(), <span class="stringliteral">&quot;AlignData&quot;</span>, 0, <span class="stringliteral">&quot;enumNames&quot;</span>, alignList);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">   19</a></span>&#160;QSharedPointer&lt;Asset&gt; <a class="code" href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">PSTHPlot::Create</a>()</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;Asset&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_p_s_t_h_plot.html">PSTHPlot</a>());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;QSharedPointer&lt;OperatorPlotHandler&gt; PSTHPlot::getNewHandler()</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">//Histogram does not need to add any features to the base class yet</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">return</span> SamplingBarBase::getNewHandler();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    : currentRecordingState_(RecordingState::NotRecording)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    QStringList alignList;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    alignList &lt;&lt; <span class="stringliteral">&quot;BeginWindow&quot;</span> &lt;&lt; <span class="stringliteral">&quot;AlignEvent&quot;</span> &lt;&lt; <span class="stringliteral">&quot;EndWindow&quot;</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    AddDefinableProperty(<a class="code" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">PropertyContainer::enumTypeId</a>(), <span class="stringliteral">&quot;AlignData&quot;</span>, 0, <span class="stringliteral">&quot;enumNames&quot;</span>, alignList);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">   20</a></span>&#160;QSharedPointer&lt;Asset&gt; <a class="code" href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">PSTHPlot::Create</a>()</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">return</span> QSharedPointer&lt;Asset&gt;(<span class="keyword">new</span> <a class="code" href="class_picto_1_1_p_s_t_h_plot.html">PSTHPlot</a>());</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;QSharedPointer&lt;OperatorPlotHandler&gt; PSTHPlot::getNewHandler()</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="comment">//Histogram does not need to add any features to the base class yet</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">return</span> SamplingBarBase::getNewHandler();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> PSTHPlot::beginTrial()</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> PSTHPlot::beginRecordingWindow()</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> PSTHPlot::endTrial()</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> PSTHPlot::beginRecordingWindow()</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span> (currentRecordingState_ != NotRecording)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        clearAccumulatedData();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    currentRecordingState_ = RecordingState::RecordingBegan;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">if</span> (getAlignType() == <a class="code" href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621a6f7ae7e4977e845dd25e7bd8bd729193">AlignType::ALIGN_BEGIN</a>)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        alignEvent();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> PSTHPlot::endRecordingWindow()</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> PSTHPlot::alignEvent()</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">if</span> (getAlignType() == <a class="code" href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621a5a9396c01644c52efa2b5478fd438d1c">AlignType::ALIGN_END</a>)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        alignEvent();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    submitAccumulatedData();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    currentRecordingState_ = RecordingState::NotRecording;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    clearAccumulatedData();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> PSTHPlot::alignEvent()</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (currentRecordingState_ == RecordingState::RecordingBegan)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        currentRecordingState_ = RecordingState::AlignOccurred;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> PSTHPlot::clearAccumulatedData()</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> PSTHPlot::submitAccumulatedData()</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<a class="code" href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621">AlignType::AlignType</a> PSTHPlot::getAlignType()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621">AlignType::AlignType</a>)(<a class="code" href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">propertyContainer_</a>-&gt;getPropertyValue(<span class="stringliteral">&quot;AlignData&quot;</span>).toInt());</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="ttc" id="class_picto_1_1_data_store_html_af50c0cd3df239ba86be9edc72ded3ccf"><div class="ttname"><a href="class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf">Picto::DataStore::propertyContainer_</a></div><div class="ttdeci">QSharedPointer&lt; PropertyContainer &gt; propertyContainer_</div><div class="ttdoc">The property container managing this DataStore&#39;s properties. </div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8h_source.html#l00200">DataStore.h:200</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_af9d2775a07e882dc28967b0eadabf5c9"><div class="ttname"><a href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">Picto::PropertyContainer::enumTypeId</a></div><div class="ttdeci">static int enumTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00078">PropertyContainer.cpp:78</a></div></div>
-<div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html_a68010b86a649b6ccc8cb9931441d37dc"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">Picto::PSTHPlot::Create</a></div><div class="ttdeci">static QSharedPointer&lt; Asset &gt; Create()</div><div class="ttdoc">Constructs and returns a shared pointer to a new SamplingHistogramPlot. </div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8cpp_source.html#l00019">PSTHPlot.cpp:19</a></div></div>
-<div class="ttc" id="class_picto_1_1_data_store_html_aa26b8b2191fa50b0f963b1d94a6e3407"><div class="ttname"><a href="class_picto_1_1_data_store.html#aa26b8b2191fa50b0f963b1d94a6e3407">Picto::DataStore::AddDefinableProperty</a></div><div class="ttdeci">void AddDefinableProperty(QString tagName, QVariant defaultValue)</div><div class="ttdoc">Adds a required property to this DataStore with the input name and defaultValue of type defined by th...</div><div class="ttdef"><b>Definition:</b> <a href="_data_store_8cpp_source.html#l00531">DataStore.cpp:531</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_align_type_html_a467790e75d25207ac90641f76c4db621"><div class="ttname"><a href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621">Picto::AlignType::AlignType</a></div><div class="ttdeci">AlignType</div><div class="ttdoc">Enumeration of the various Align Methods that Rasters and PSTHs can use. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00062">DataViewSpecs.h:62</a></div></div>
+<div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html_a68010b86a649b6ccc8cb9931441d37dc"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html#a68010b86a649b6ccc8cb9931441d37dc">Picto::PSTHPlot::Create</a></div><div class="ttdeci">static QSharedPointer&lt; Asset &gt; Create()</div><div class="ttdoc">Constructs and returns a shared pointer to a new SamplingHistogramPlot. </div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8cpp_source.html#l00020">PSTHPlot.cpp:20</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_align_type_html_a467790e75d25207ac90641f76c4db621a5a9396c01644c52efa2b5478fd438d1c"><div class="ttname"><a href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621a5a9396c01644c52efa2b5478fd438d1c">Picto::AlignType::ALIGN_END</a></div><div class="ttdoc">Align to End of Window. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00066">DataViewSpecs.h:66</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_align_type_html_a467790e75d25207ac90641f76c4db621a6f7ae7e4977e845dd25e7bd8bd729193"><div class="ttname"><a href="namespace_picto_1_1_align_type.html#a467790e75d25207ac90641f76c4db621a6f7ae7e4977e845dd25e7bd8bd729193">Picto::AlignType::ALIGN_BEGIN</a></div><div class="ttdoc">Align to Beginning of Window. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00064">DataViewSpecs.h:64</a></div></div>
 <div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html">Picto::PSTHPlot</a></div><div class="ttdoc">A plot populated in realtime during experiments or analysis, using collected Neural Data...</div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8h_source.html#l00018">PSTHPlot.h:18</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 <div class="ttc" id="class_picto_1_1_p_s_t_h_plot_html_a44a2e771cd7fba2897d249cda7cf7dbb"><div class="ttname"><a href="class_picto_1_1_p_s_t_h_plot.html#a44a2e771cd7fba2897d249cda7cf7dbb">Picto::PSTHPlot::type</a></div><div class="ttdeci">static const QString type</div><div class="ttdoc">An Asset-identifying string used with AssetFactory::addAssetType. </div><div class="ttdef"><b>Definition:</b> <a href="_p_s_t_h_plot_8h_source.html#l00028">PSTHPlot.h:28</a></div></div>

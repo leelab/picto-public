@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['aligntype',['AlignType',['../namespace_picto_1_1_align_type.html',1,'Picto']]],
   ['columntype',['ColumnType',['../namespace_picto_1_1_column_type.html',1,'Picto']]],
   ['contentencodingtype',['ContentEncodingType',['../namespace_picto_1_1_content_encoding_type.html',1,'Picto']]],
   ['dataviewsize',['DataViewSize',['../namespace_picto_1_1_data_view_size.html',1,'Picto']]],

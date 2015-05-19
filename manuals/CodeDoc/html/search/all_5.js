@@ -73,7 +73,7 @@ var searchData=
   ['errors_5f',['errors_',['../class_picto_1_1_serializable.html#a30c25fbf611c36b3337eb98481916c51',1,'Picto::Serializable']]],
   ['errorstring',['errorString',['../class_picto_1_1_multiplatform_sound.html#a439672057dc19e9b8f9f2648cc31c01d',1,'Picto::MultiplatformSound::errorString()'],['../class_picto_1_1_preloaded_sound.html#a4681726539ed0e4f493860d487ef3f59',1,'Picto::PreloadedSound::errorString()'],['../class_picto_1_1_win_sound.html#a8af6f5b842c004d350ff77247d931c14',1,'Picto::WinSound::errorString()']]],
   ['escapepressed',['escapePressed',['../class_picto_1_1_visual_target.html#a4d88819d03209b34ffdae2cc736b5066',1,'Picto::VisualTarget::escapePressed()'],['../class_picto_1_1_engine_1_1_picto_engine.html#ad45f2ecdd6895db562c1ada2931821a3',1,'Picto::Engine::PictoEngine::escapePressed()']]],
-  ['event',['event',['../class_searchable_text_edit.html#a6acd591f685268d3897feeb7fbd7e579',1,'SearchableTextEdit']]],
+  ['event',['event',['../class_searchable_plain_text_edit.html#ad7e98800e946558acc753a8ae195679f',1,'SearchablePlainTextEdit::event()'],['../class_searchable_text_edit.html#a6acd591f685268d3897feeb7fbd7e579',1,'SearchableTextEdit::event()']]],
   ['eventcodegenerator',['EventCodeGenerator',['../class_picto_1_1_event_code_generator.html',1,'Picto']]],
   ['eventcodegeneratortype',['EventCodeGeneratorType',['../class_hardware_setup.html#a5577404a1cb597cc0d78bc56c9acac00',1,'HardwareSetup']]],
   ['eventdetails',['EventDetails',['../struct_tdt_plugin_1_1_event_details.html',1,'TdtPlugin']]],

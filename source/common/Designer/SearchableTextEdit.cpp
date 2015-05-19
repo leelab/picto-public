@@ -1,12 +1,13 @@
 #include <QtGui>
 #include <QStyleOption>
 #include <QApplication>
+
 #include "SearchableTextEdit.h"
 #include "../../common/memleakdetect.h"
 
 /*! \brief Constructs a SearchableTextEdit with the input parent.
- *	\details If singleLine is set true, the text edit will contain one
- *	line, otherwise it will be a regular scrollable QTextEdit.
+ *	\details If singleLine is set true, the text edit will contain one line, otherwise it will be a regular scrollable
+ *	QPlainTextEdit.
  */
 SearchableTextEdit::SearchableTextEdit(bool singleLine,QWidget *parent) :
 QTextEdit(parent),
@@ -23,7 +24,7 @@ singleLine_(singleLine)
 	}
 }
 
-/*! \brief Searches the QTextEdit for the input SearchRequest.  If found, strings matching the SearchRequest are
+/*! \brief Searches the QPlainTextEdit for the input SearchRequest.  If found, strings matching the SearchRequest are
  *	highlighted with the input highlightColor.
  */
 void SearchableTextEdit::search(SearchRequest searchRequest, QColor highlightColor)
@@ -52,9 +53,9 @@ void SearchableTextEdit::search(SearchRequest searchRequest, QColor highlightCol
 	setTextCursor(startingPos);
 }
 
-/*! \brief This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed
- *	with singleLine.
- *	\details The code that turns a QTextEdit into a QLineEdit is from
+/*! \brief This extends QPlainTextEdit::sizeHint to make the QPlainTextEdit act like a QLineEdit in case this object was
+ *	constructed with singleLine.
+ *	\details The code that turns a QPlainTextEdit into a QLineEdit is from
  *	http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
  */
 QSize SearchableTextEdit::sizeHint() const
@@ -69,8 +70,10 @@ QSize SearchableTextEdit::sizeHint() const
 	return (style()->sizeFromContents(QStyle::CT_LineEdit, &opt, QSize(w, h).expandedTo(QApplication::globalStrut()), this));
 }
 
-/*! \brief This extends QTextEdit::keyPressEvent to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.
- *	\details The code that turns a QTextEdit into a QLineEdit is from http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
+/*! \brief This extends QPlainTextEdit::keyPressEvent to make the QPlainTextEdit act like a QLineEdit in case this object
+ *	was constructed with singleLine.
+ *	\details The code that turns a QPlainTextEdit into a QLineEdit is from
+ *	http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit
  */
 void SearchableTextEdit::keyPressEvent(QKeyEvent * e)
 {
@@ -80,7 +83,7 @@ void SearchableTextEdit::keyPressEvent(QKeyEvent * e)
 		QTextEdit::keyPressEvent(e);
 }
 
-/*! \brief This extends QTextEdit::event to disable tooltips. */
+/*! \brief This extends QPlainTextEdit::event to disable tooltips. */
 bool SearchableTextEdit::event(QEvent* e)
 {
 	//Don't show tooltips.
@@ -89,7 +92,9 @@ bool SearchableTextEdit::event(QEvent* e)
 	return QTextEdit::event(e);
 }
 
-/*! \brief This extends QTextEdit::focusOutEvent() so that we can emit focusOut() as a signal whenever the QTextEdit loses focus.*/
+/*! \brief This extends QPlainTextEdit::focusOutEvent() so that we can emit focusOut() as a signal whenever the
+ *	QPlainTextEdit loses focus.
+ */
 void SearchableTextEdit::focusOutEvent(QFocusEvent *e)
 {
 	QTextEdit::focusOutEvent(e);

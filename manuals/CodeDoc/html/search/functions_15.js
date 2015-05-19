@@ -33,6 +33,8 @@ var searchData=
   ['updateinitpropertyvalue',['updateInitPropertyValue',['../class_picto_1_1_property_table.html#a10a2fd7b9371799b2fe0934dc24e186e',1,'Picto::PropertyTable']]],
   ['updatelabel',['updateLabel',['../class_diagram_item.html#af251fdd26525f48e3c494d92a45e8fc6',1,'DiagramItem']]],
   ['updatelcd',['updateLCD',['../class_display_mode.html#a2ebabc8a9ccbdea91a7b10cf65c6a8f3',1,'DisplayMode::updateLCD()'],['../class_menu.html#ae31aac661b1be50022bb6ef105330573',1,'Menu::updateLCD()'],['../class_phidgets.html#a671c347d2ee668a37ac15dbb5f592d00',1,'Phidgets::updateLCD()']]],
+  ['updatelinenumberarea',['updateLineNumberArea',['../class_script_text_edit.html#ae9e3f7b972f8b953181f9c9f533e0d7e',1,'ScriptTextEdit']]],
+  ['updatelinenumberareawidth',['updateLineNumberAreaWidth',['../class_script_text_edit.html#a9a64520c6bd00ad17d35b06ccb217a89',1,'ScriptTextEdit']]],
   ['updatelinkedassetproperties',['updateLinkedAssetProperties',['../class_picto_1_1_associate_host_link.html#aa972b385d6ccb6ce3266b95ea6d0c815',1,'Picto::AssociateHostLink::updateLinkedAssetProperties()'],['../class_picto_1_1_associate_root.html#a222f74091ee77befa4c5761103a2b7be',1,'Picto::AssociateRoot::updateLinkedAssetProperties()']]],
   ['updatelinkpath',['updateLinkPath',['../class_picto_1_1_associate_element.html#a27017fa6d089ea68493f899d748e8b27',1,'Picto::AssociateElement::updateLinkPath()'],['../class_picto_1_1_associate_host_link.html#ae94465275b4dc05bfd3752e9c5cd8d54',1,'Picto::AssociateHostLink::updateLinkPath()']]],
   ['updatelists',['updateLists',['../class_picto_1_1_analysis_option_widget.html#a4b2480e79e35c698d974e459d34444b9',1,'Picto::AnalysisOptionWidget']]],
