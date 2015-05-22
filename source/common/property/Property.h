@@ -1,7 +1,6 @@
 #ifndef _PROPERTY_H_
 #define _PROPERTY_H_
 
-#include <QtVariantProperty.h>
 #include <QVariant>
 #include <QString>
 #include <QMap>

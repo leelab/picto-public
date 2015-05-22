@@ -15,8 +15,8 @@ namespace Picto {
 Task::Task() 
 	: taskNumber_(0)
 {
-	sizeList_ << "1x1" << "2x2" << "3x3" << "4x4";
-	AddDefinableProperty(PropertyContainer::enumTypeId(), "DefaultTaskViewSize", 3, "enumNames", sizeList_);
+	AddDefinableProperty(PropertyContainer::viewPropertyTypeId(), "TaskViewPosition",
+		QVariant::fromValue(ViewProperties(DataViewSize::VIEW_SIZE_4x4, 0, 0)));
 	AddDefinableObjectFactory("StateMachine",
 		QSharedPointer<AssetFactory>(new AssetFactory(1,1,AssetFactory::NewAssetFnPtr(StateMachine::Create))));
 }
@@ -196,7 +196,7 @@ void Task::preDeserialize()
 void Task::postDeserialize()
 {
 	//Pass the default view size to the TaskConfig
-	getTaskConfig()->setTaskViewSize(getDefaultViewSize());
+	getTaskConfig()->setTaskViewProperties(getDefaultViewProperties());
 
 	ScriptableContainer::postDeserialize();
 	QList<QSharedPointer<Asset>> stateMachines = getGeneratedChildren("StateMachine");
@@ -226,10 +226,10 @@ void Task::rename(const QString &newName)
 	}
 }
 
-DataViewSize::ViewSize Task::getDefaultViewSize() const
+ViewProperties Task::getDefaultViewProperties() const
 {
 	//We add one to the value because ViewSizes are enumerated from 1 for ease of size-calculation.
-	return (DataViewSize::ViewSize)(propertyContainer_->getPropertyValue("DefaultTaskViewSize").toInt() + 1);
+	return propertyContainer_->getPropertyValue("TaskViewPosition").value<ViewProperties>();
 }
 
 }; //namespace Picto

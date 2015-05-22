@@ -40,7 +40,6 @@ var searchData=
   ['directorstopresponsehandler',['DirectorStopResponseHandler',['../struct_director_stop_response_handler.html',1,'']]],
   ['discovercommandhandler',['DiscoverCommandHandler',['../struct_picto_1_1_discover_command_handler.html',1,'Picto']]],
   ['displaymode',['DisplayMode',['../class_display_mode.html',1,'']]],
-  ['displaywidgetproperties',['DisplayWidgetProperties',['../struct_picto_1_1_task_config_1_1_display_widget_properties.html',1,'Picto::TaskConfig']]],
   ['doubleparameter',['DoubleParameter',['../class_picto_1_1_double_parameter.html',1,'Picto']]],
   ['doubletsignalchannel',['DoubletSignalChannel',['../class_picto_1_1_doublet_signal_channel.html',1,'Picto']]]
 ];

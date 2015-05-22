@@ -361,8 +361,7 @@ if(assistedCalibration.value)
         <UIOrder id="385">0</UIOrder>
       <Transition id="573"><Destination id="575">PresentSingleStimulus</Destination><Source id="576"/><SourceResult id="577"/><DId id="326">20</DId><SId id="327">0</SId></Transition><VisualElement type="Text Graphic" id="633"><Color id="634">255,170,0,255</Color><Layer id="636">0</Layer><Name id="637">assistFeedback</Name><OperatorView id="638">true</OperatorView><Position id="639">0,0</Position><SubjectView id="640">false</SubjectView><Text id="641"/><UIEnabled id="642">false</UIEnabled><UIOrder id="646">0</UIOrder><Visible id="647">true</Visible><Size id="334">200,60</Size></VisualElement><Transition id="33"><DId id="34">20</DId><Destination id="37">PresentSingleStimulus</Destination><SId id="38">20</SId><SRId id="39">127</SRId><Source id="41">PresentSingleStimulus</Source><SourceResult id="47">StimulusPresented</SourceResult></Transition></StateMachine>
       
-      <Name id="389">EyeCalibration</Name>
-    <DefaultTaskViewSize id="129">4x4</DefaultTaskViewSize></Task>
+      <Name id="389">EyeCalibration</Name></Task>
 
 
 <XGain id="394">1</XGain>

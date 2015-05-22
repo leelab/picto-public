@@ -1,11 +1,10 @@
-#include <QtVariantProperty.h>
-#include <QtPropertyBrowser.h>
 #include "PropertyContainer.h"
 #include "ColorProperty.h"
 #include "PointProperty.h"
 #include "SizeProperty.h"
 #include "ListProperty.h"
 #include "MapProperty.h"
+#include "ViewProperty.h"
 #include "../memleakdetect.h"
 
 using namespace Picto;
@@ -80,6 +79,18 @@ int PropertyContainer::enumTypeId()
 	return EnumProperty::typeId();
 }
 
+
+
+/*! \brief Returns the type Id to be used when creating EnumProperty objects with addProperty().
+ *	\details This is needed specifically for the EnumProperty since the other Property objects Ids are
+ *	based on the QVariant::type values.
+ */
+int PropertyContainer::viewPropertyTypeId()
+{
+	return ViewProperty::typeId();
+}
+
+
 /*! \brief Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the input _value, then returns it.
  */
 QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _identifier, QVariant _value)
@@ -91,6 +102,10 @@ QSharedPointer<Property> PropertyContainer::addProperty(int _type, QString _iden
 	QSharedPointer<Property> newProperty;
 	if(_type == enumTypeId())
 		newProperty = QSharedPointer<Property>( new EnumProperty(_identifier,_value) );
+	else if (_type == viewPropertyTypeId())
+	{
+		newProperty = QSharedPointer<Property>(new ViewProperty(_identifier, _value));
+	}
 	else
 	{
 		switch(_type)
@@ -188,24 +203,7 @@ void PropertyContainer::setPropertiesAsAssociates(bool toAssociate)
 */
 void PropertyContainer::clear()
 {
-
 	properties_.clear();
-	//containerGroupItem_.clear();
-	//containerGroupItem_.clear();
-	//propManager_->clear();
-
-	////We just cleared out the group item.  Restore it.
-	//QtVariantProperty *item = propManager_->addProperty(QtVariantPropertyManager::groupTypeId(),
-	//													  containerName_);
-	//Q_ASSERT(item);
-	//containerGroupItem_ = QSharedPointer<Property>( new Property(item,propManager_.data()) );
-
-	//connect(propManager_.data(),
-	//	    SIGNAL(valueChanged(QtProperty *, const QVariant &)),
-	//	    this,
-	//		SLOT(slotPropertyManagerValueChanged(QtProperty *, const QVariant &))
-	//		);
-
 }
 
 /*! \brief Returns the value of the Property with the input _identifier name.

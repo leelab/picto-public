@@ -6,8 +6,6 @@
 #include <QButtonGroup>
 #include <QTabWidget>
 
-#include "qtpropertymanager.h"
-#include "qtvariantproperty.h"
 #include "SyntaxErrorBox.h"
 #include "AboutElementBox.h"
 #include "AnalysisOptionWidget.h"

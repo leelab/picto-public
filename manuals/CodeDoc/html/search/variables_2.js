@@ -21,7 +21,7 @@ var searchData=
   ['componenttype_5f',['componentType_',['../class_component_interface.html#a51568b32bb6fc35706054b57bc5725a3',1,'ComponentInterface']]],
   ['compositingsurfaces_5f',['compositingSurfaces_',['../struct_picto_1_1_visual_element.html#a47744977bc4e2b72555e2149a4015d36',1,'Picto::VisualElement']]],
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
-  ['coordsmap',['coordsMap',['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame']]],
+  ['coordsmap',['coordsMap',['../class_view_position_widget.html#a3fbf6cb7437418402576ac82a786867c',1,'ViewPositionWidget::coordsMap()'],['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame::coordsMap()']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
   ['currenttaskconfig_5f',['currentTaskConfig_',['../class_view_selection_frame.html#abd6bb55e0fe1faca33336ffccca2ad42',1,'ViewSelectionFrame']]]
 ];

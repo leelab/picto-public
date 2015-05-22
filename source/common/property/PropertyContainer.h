@@ -1,7 +1,5 @@
 #ifndef _PROPERTYCONTAINER_H_
 #define _PROPERTYCONTAINER_H_
-#include <QtVariantProperty.h>
-#include <QtPropertyBrowser.h>
 #include <QString>
 #include <QSharedPointer>
 
@@ -44,6 +42,7 @@ public:
 	virtual ~PropertyContainer(){};
 	void copyProperties(QSharedPointer<PropertyContainer> container2);
 	static int enumTypeId();
+	static int viewPropertyTypeId();
 	QSharedPointer<Property> addProperty(int _type, QString _identifier, QVariant _value);
 	QVariant getPropertyValue(QString _identifier, int index=0);
 	QString getPropertyName(QString _identifier, int index=0);

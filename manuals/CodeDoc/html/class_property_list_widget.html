@@ -143,6 +143,9 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a18aa3269c70b749bba066e7631120e56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_list_widget.html#a18aa3269c70b749bba066e7631120e56">addScriptProperty</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; prop, QtVariantPropertyManager *manager, QtAbstractPropertyBrowser *browser)</td></tr>
 <tr class="memdesc:a18aa3269c70b749bba066e7631120e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Works like <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> except that ScriptProperties come with a button that allows them to be opened or closed so as to save space in the UI.  <a href="#a18aa3269c70b749bba066e7631120e56">More...</a><br /></td></tr>
 <tr class="separator:a18aa3269c70b749bba066e7631120e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a746d14faf8ce3ac20919a2ac4c3de9a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_property_list_widget.html#a746d14faf8ce3ac20919a2ac4c3de9a1">addPositionProperty</a> (QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt; prop, QtVariantPropertyManager *manager, QtAbstractPropertyBrowser *browser)</td></tr>
+<tr class="memdesc:a746d14faf8ce3ac20919a2ac4c3de9a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Works like <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> except that ScriptProperties come with a button that allows them to be opened or closed so as to save space in the UI.  <a href="#a746d14faf8ce3ac20919a2ac4c3de9a1">More...</a><br /></td></tr>
+<tr class="separator:a746d14faf8ce3ac20919a2ac4c3de9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -164,9 +167,9 @@ QHash&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> *, QPa
 <tr class="memitem:ae3bb74a3f644f582f68063d9ffc32fd5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3bb74a3f644f582f68063d9ffc32fd5"></a>
 QtAbstractPropertyBrowser *&#160;</td><td class="memItemRight" valign="bottom"><b>browser_</b></td></tr>
 <tr class="separator:ae3bb74a3f644f582f68063d9ffc32fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2db8e0b22786388b4ed11994446274a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2db8e0b22786388b4ed11994446274a"></a>
-QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>propManager_</b></td></tr>
-<tr class="separator:aa2db8e0b22786388b4ed11994446274a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4decb981e1f3eda95e337b1058ba4f34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4decb981e1f3eda95e337b1058ba4f34"></a>
+<a class="el" href="class_property_manager.html">PropertyManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>propManager_</b></td></tr>
+<tr class="separator:a4decb981e1f3eda95e337b1058ba4f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This Widget represents a list of Properties. It creates widgets for these Properties and connects the widgets and Properties together such that changing the value in one changes the value in the other. </p>
@@ -174,7 +177,7 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>To prepare yourself for all of the complicated patchwork of code necessary to get the QtPropertyBrowser to work with Picto, try taking a deep breath and reading up at: <a href="http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html">http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html</a> </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8h_source.html#l00033">33</a> of file <a class="el" href="_property_list_widget_8h_source.html">PropertyListWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8h_source.html#l00031">31</a> of file <a class="el" href="_property_list_widget_8h_source.html">PropertyListWidget.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a071afdff6fd9c0b1afd546b34b43a820"></a>
 <div class="memitem">
@@ -209,11 +212,56 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>Constructs a new <a class="el" href="class_property_list_widget.html" title="This Widget represents a list of Properties. It creates widgets for these Properties and connects the...">PropertyListWidget</a>. </p>
 <p>trackInitVals indicates whether Property widgets created for this <a class="el" href="class_property_list_widget.html" title="This Widget represents a list of Properties. It creates widgets for these Properties and connects the...">PropertyListWidget</a> should set/show init values for the input Properties or if they should set/show saveValues for the input Properties. editorState is passed into the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> constructor. We connect the <a class="el" href="class_property_editor_factory.html#af08e17ed7bfc43dee7cbce5ed9e00e7f" title="Emitted when the prop Property&#39;s value was edited. val is the value which should now be set to it...">PropertyEditorFactory::propertyEdited()</a> signal to <a class="el" href="class_property_list_widget.html#a94e29b0c70b15d35bf33c40d87fa178d" title="Called whenever the PropertyEditorFactory reports that the value in the widget for the input Property...">propertyWasEdited()</a> so that we can update Property values when their widget's values are updated. </p>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00016">16</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00020">20</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a746d14faf8ce3ac20919a2ac4c3de9a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PropertyListWidget::addPositionProperty </td>
+          <td>(</td>
+          <td class="paramtype">QSharedPointer&lt; <a class="el" href="class_picto_1_1_property.html">Property</a> &gt;&#160;</td>
+          <td class="paramname"><em>prop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QtVariantPropertyManager *&#160;</td>
+          <td class="paramname"><em>manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QtAbstractPropertyBrowser *&#160;</td>
+          <td class="paramname"><em>browser</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Works like <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> except that ScriptProperties come with a button that allows them to be opened or closed so as to save space in the UI. </p>
+<p>To implement the open/close button we just create a group QtVariantProperty in the QtVariantPropertyManager and then add the QtVariantProperty representing the script as a sub-QtVariantProperty of that group QtVariantProperty. This causes the property to appear "within" a button when we add the group to the browser. </p><dl class="section note"><dt>Note</dt><dd>This is probably very difficult to understand if you haven't read the documentation for <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> yet. </dd></dl>
+
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00133">133</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a975fb5c361cb0791dcfd120764e3c74e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -241,7 +289,7 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>Creates widgets for the input Properties and displays them. </p>
 <p>This function separates out regular Property objects from Script Property objects. The details of actually creating the approriate widgets and displaying them are handled by <a class="el" href="class_property_list_widget.html#a18aa3269c70b749bba066e7631120e56" title="Works like addProperty() except that ScriptProperties come with a button that allows them to be opene...">addScriptProperty()</a> and <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a>. </p>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00051">51</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00056">56</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -284,12 +332,12 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 </div><div class="memdoc">
 
 <p>Uses the QtPropertyBrowser infrastructure with the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> to create a widget tailored to the input Property and display it. </p>
-<p>Since we called </p><div class="fragment"><div class="line">browser_-&gt;setFactoryForManager(&amp;propManager_, &amp;propertyFactory_); </div>
+<p>Since we called </p><div class="fragment"><div class="line">browser_-&gt;setFactoryForManager(propManager_, &amp;propertyFactory_); </div>
 </div><!-- fragment --><p> in the constructor, QtVariantProperties created by the input manager will have their widgets created by our <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> and displayed in the browser when we call </p><div class="fragment"><div class="line">browser-&gt;addProperty(item); </div>
-</div><!-- fragment --><p>. In this function, we first use the input manager to create a QtVariantProperty for the input Property, then set its value to the current value of the Property and add it to the browser. This causes the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> to create a widget of the appropraite type for the QtVariantProperty. We then connect the input Properties Property::valueChanged() or Property::initValueChanged() signal (according to trackInitVals) to <a class="el" href="class_property_list_widget.html#ab0dae09354f8ad807d8eb32ed301294f" title="Called when a Property was edited. Sets the new value of the Property to the corresponding QtVariantP...">propertyWasEditedExternally()</a>. This allows us to update the QtVariantProperty value whenever the Property value changes so that our widget values will always be up to date. In the opposite direction, just before creating each widget in the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a>, we call <a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">PropertyEditorFactory::setNextProperty()</a>. This allows it to track which QtVariantProperty is connected to which Picto Property. Since we connected the <a class="el" href="class_property_editor_factory.html#af08e17ed7bfc43dee7cbce5ed9e00e7f" title="Emitted when the prop Property&#39;s value was edited. val is the value which should now be set to it...">PropertyEditorFactory::propertyEdited()</a> signal to <a class="el" href="class_property_list_widget.html#a94e29b0c70b15d35bf33c40d87fa178d" title="Called whenever the PropertyEditorFactory reports that the value in the widget for the input Property...">propertyWasEdited()</a> in the constructor, whenever the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> detects that a widget value for a particular Propery was edited, we will find out about it and can the change the Property value accordingly in that function. This all seems very convoluded, but doing things this way allows us to make use of the QtPropertyBrowser system which gives us a lot of nice automatically generated widget functionality for free. Someday when someone has time we should probably just implement all of this ourselves and get rid of the complexity. </p><dl class="section note"><dt>Note</dt><dd>There is another possible source of confusion here which is that when we are not using trackInitVals_ we set/get the Property value and not the Property saveValue. This has to do with the fact that when set Properties into runMode, value() references the Property's runValue but when it isn't in runMode value() references the Property's saveValue. For more detail see Property. </dd></dl>
+</div><!-- fragment --><p>. In this function, we first use the input manager to create a QtVariantProperty for the input Property, then set its value to the current value of the Property and add it to the browser. This causes the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> to create a widget of the appropraite type for the QtVariantProperty. We then connect the input Properties Property::valueChanged() or Property::initValueChanged() signal (according to trackInitVals) to <a class="el" href="class_property_list_widget.html#ab0dae09354f8ad807d8eb32ed301294f" title="Called when a Property was edited. Sets the new value of the Property to the corresponding QtVariantP...">propertyWasEditedExternally()</a>. This allows us to update the QtVariantProperty value whenever the Property value changes so that our widget values will always be up to date. In the opposite direction, just before creating each widget in the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a>, we call <a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">PropertyEditorFactory::setNextProperty()</a>. This allows it to track which QtVariantProperty is connected to which Picto Property. Since we connected the <a class="el" href="class_property_editor_factory.html#af08e17ed7bfc43dee7cbce5ed9e00e7f" title="Emitted when the prop Property&#39;s value was edited. val is the value which should now be set to it...">PropertyEditorFactory::propertyEdited()</a> signal to <a class="el" href="class_property_list_widget.html#a94e29b0c70b15d35bf33c40d87fa178d" title="Called whenever the PropertyEditorFactory reports that the value in the widget for the input Property...">propertyWasEdited()</a> in the constructor, whenever the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> detects that a widget value for a particular Property was edited, we will find out about it and can the change the Property value accordingly in that function. This all seems very convoluted, but doing things this way allows us to make use of the QtPropertyBrowser system which gives us a lot of nice automatically generated widget functionality for free. Someday when someone has time we should probably just implement all of this ourselves and get rid of the complexity. </p><dl class="section note"><dt>Note</dt><dd>There is another possible source of confusion here which is that when we are not using trackInitVals_ we set/get the Property value and not the Property saveValue. This has to do with the fact that when set Properties into runMode, value() references the Property's runValue but when it isn't in runMode value() references the Property's saveValue. For more detail see Property. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html#setFactoryForManager">http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html#setFactoryForManager</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00095">95</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00104">104</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -334,7 +382,7 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>Works like <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> except that ScriptProperties come with a button that allows them to be opened or closed so as to save space in the UI. </p>
 <p>To implement the open/close button we just create a group QtVariantProperty in the QtVariantPropertyManager and then add the QtVariantProperty representing the script as a sub-QtVariantProperty of that group QtVariantProperty. This causes the property to appear "within" a button when we add the group to the browser. </p><dl class="section note"><dt>Note</dt><dd>This is probably very difficult to understand if you haven't read the documentation for <a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> yet. </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00124">124</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00164">164</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -373,7 +421,7 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>Called whenever the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> reports that the value in the widget for the input Property changed. Sets the new value to the input Property. </p>
 <dl class="section note"><dt>Note</dt><dd>To actually call the function that sets the value into the input Property, we use QMetaObject::invokeMethod() instead of calling the Property::setValue() or Property::setInitValue() methods directly. This is so that we won't encounter any multithreaded write issues. By using this method, if the properties are in another thread, the function call will be scheduled to run in that thread's event loop automatically. If the property is in the current thread, the function will be called immediately. This is one of the few places where the UI thread and an experiment that might possibly be in a separate thread need to communicate. In the end, I'm not sure that this was absolutely necessary since we show the <a class="el" href="class_property_list_widget.html" title="This Widget represents a list of Properties. It creates widgets for these Properties and connects the...">PropertyListWidget</a> in the Test <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> and Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> and only in the Playback <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> is the experiment running a separate thread; however, we may want to put things into different threads in the remote viewer and test viewer in the future (although, we would probably be better off adjusting the experimental run paradigm to be based on the Qt event loop). </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00161">161</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00201">201</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +460,7 @@ QtVariantPropertyManager&#160;</td><td class="memItemRight" valign="bottom"><b>p
 <p>Called when a Property was edited. Sets the new value of the Property to the corresponding QtVariantProperty whose value is driving the Property's Widget. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_property_list_widget.html#a27715c757fb30e994d8ae78ca0e5d5bc" title="Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored ...">addProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00181">181</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_list_widget_8cpp_source.html#l00221">221</a> of file <a class="el" href="_property_list_widget_8cpp_source.html">PropertyListWidget.cpp</a>.</p>
 
 </div>
 </div>

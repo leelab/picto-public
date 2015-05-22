@@ -1,6 +1,10 @@
 #include <QtWidgets>
 #include <QMetaObject>
 #include <QSpacerItem>
+#include <QVBoxLayout>
+#include <qtbuttonpropertybrowser.h>
+#include <QtPropertyBrowser.h>
+
 #include "PropertyListWidget.h"
 #include "../../common/storage/datastore.h"
 #include "../../common/memleakdetect.h"
@@ -20,6 +24,7 @@ using namespace Picto;
 	trackInitVals_(trackInitVals),
 	browser_(new QtButtonPropertyBrowser(this))
 {
+	propManager_ = new PropertyManager(this);
 	connect(&propertyFactory_, SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
         this, SLOT(propertyWasEdited(QSharedPointer<Property>,QVariant)));
 	setLayout(new QVBoxLayout());
@@ -33,14 +38,14 @@ using namespace Picto;
 	// QtVariantProperties in the input property manager will have their widgets created by the input property factory
 	// and displayed in the browser_.
 	//See http://docs.huihoo.com/qt/solutions/4/qtpropertybrowser/qtabstractpropertybrowser.html#setFactoryForManager
-	browser_->setFactoryForManager(&propManager_, &propertyFactory_);
+	browser_->setFactoryForManager((QtVariantPropertyManager*)propManager_, &propertyFactory_);
 }
 
 PropertyListWidget::~PropertyListWidget()
 {
-	browser_->unsetFactoryForManager(&propManager_);
+	browser_->unsetFactoryForManager(propManager_);
 	browser_->clear();
-	propManager_.clear();
+	propManager_->clear();
 	propertyFactory_.clear();
 }
 
@@ -55,11 +60,15 @@ void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Pro
 	{
 		QString propName = prop->getName();
 		bool scriptProp = (propName == "EntryScript" || propName == "FrameScript" || propName == "ExitScript"
-			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript");
-		if(scriptProp)
-			addScriptProperty(prop,&propManager_,browser_);
+			|| propName == "AnalysisEntryScript" || propName == "AnalysisFrameScript" || propName == "AnalysisExitScript"
+			|| propName == "InitializationScript");
+		bool positionEditor = (propName == "DefaultPosition" || propName == "TaskViewPosition");
+		if (scriptProp)
+			addScriptProperty(prop, propManager_, browser_);
+		else if (positionEditor)
+			addPositionProperty(prop, propManager_, browser_);
 		else
-			addProperty(prop,&propManager_,browser_);
+			addProperty(prop, propManager_, browser_);
 	}
 
 	//Show the changes
@@ -69,7 +78,7 @@ void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Pro
 /*! \brief Uses the QtPropertyBrowser infrastructure with the PropertyEditorFactory to create a widget tailored to the
  *	input Property and display it.
  *	\details Since we called
- *	\code browser_->setFactoryForManager(&propManager_, &propertyFactory_); \endcode
+ *	\code browser_->setFactoryForManager(propManager_, &propertyFactory_); \endcode
  *	in the constructor, QtVariantProperties created by the input manager will have their widgets created by our
  *	PropertyEditorFactory and displayed in the browser when we call
  *	\code browser->addProperty(item); \endcode.
@@ -82,8 +91,8 @@ void PropertyListWidget::addProperties(QString title, QVector<QSharedPointer<Pro
  *	widget in the PropertyEditorFactory, we call PropertyEditorFactory::setNextProperty().  This allows it to track which
  *	QtVariantProperty is connected to which Picto Property.  Since we connected the PropertyEditorFactory::propertyEdited()
  *	signal to propertyWasEdited() in the constructor, whenever the PropertyEditorFactory detects that a widget value for a
- *	particular Propery was edited, we will find out about it and can the change the Property value accordingly in that
- *	function. This all seems very convoluded, but doing things this way allows us to make use of the QtPropertyBrowser
+ *	particular Property was edited, we will find out about it and can the change the Property value accordingly in that
+ *	function. This all seems very convoluted, but doing things this way allows us to make use of the QtPropertyBrowser
  *	system which gives us a lot of nice automatically generated widget functionality for free.  Someday when someone has
  *	time we should probably just implement all of this ourselves and get rid of the complexity.
  *	\note There is another possible source of confusion here which is that when we are not using trackInitVals_ we
@@ -96,7 +105,7 @@ void PropertyListWidget::addProperty(QSharedPointer<Property> prop,QtVariantProp
 {
 	int propertyType = prop->type();
 	if(propertyType == PropertyContainer::enumTypeId())
-		propertyType = QtVariantPropertyManager::enumTypeId();
+		propertyType = PropertyManager::enumTypeId();
 	QString propName = prop->getName();
 	QtVariantProperty *item = NULL;
 	item = manager->addProperty(propertyType,prop->getName());
@@ -112,6 +121,37 @@ void PropertyListWidget::addProperty(QSharedPointer<Property> prop,QtVariantProp
 	else
 		connect(prop.data(),SIGNAL(valueChanged(Property*,QVariant)),this,SLOT(propertyWasEditedExternally(Property*,QVariant)));
 	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*,QSharedPointer<Property>>(item,prop);
+}
+
+/*! \brief Works like addProperty() except that ScriptProperties come with a button that allows them to be opened or
+*	closed so as to save space in the UI.
+*	\details To implement the open/close button we just create a group QtVariantProperty in the QtVariantPropertyManager
+*	and then add the QtVariantProperty representing the script as a sub-QtVariantProperty of that group QtVariantProperty.
+*	This causes the property to appear "within" a button when we add the group to the browser.
+*	\note This is probably very difficult to understand if you haven't read the documentation for addProperty() yet.
+*/
+void PropertyListWidget::addPositionProperty(QSharedPointer<Property> prop, QtVariantPropertyManager* manager, QtAbstractPropertyBrowser* browser)
+{
+	QtVariantProperty *groupItem = NULL;
+	QtVariantProperty *item = NULL;
+	groupItem = manager->addProperty(QtVariantPropertyManager::groupTypeId(), prop->getName());
+
+	int propertyType = prop->type();
+	if (propertyType == PropertyContainer::viewPropertyTypeId())
+		propertyType = PropertyManager::viewPropertyTypeId();
+
+	item = manager->addProperty(propertyType, "PositionEditor");
+	groupItem->insertSubProperty(item, 0);
+	item->setValue(trackInitVals_ ? prop->initValue() : prop->value());
+	propertyFactory_.setNextProperty(prop);
+	browser->addProperty(groupItem);
+
+	if (trackInitVals_)
+		connect(prop.data(), SIGNAL(initValueChanged(Property*, QVariant)), this, SLOT(propertyWasEditedExternally(Property*, QVariant)));
+	else
+		connect(prop.data(), SIGNAL(valueChanged(Property*, QVariant)), this, SLOT(propertyWasEditedExternally(Property*, QVariant)));
+	propToQtPropHash_[prop.data()] = QPair<QtVariantProperty*, QSharedPointer<Property>>(item, prop);
+
 }
 
 /*! \brief Works like addProperty() except that ScriptProperties come with a button that allows them to be opened or

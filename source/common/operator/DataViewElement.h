@@ -56,6 +56,7 @@ public:
 
 	//! Get the default view size for this element
 	DataViewSize::ViewSize getDefaultViewSize() const;
+	ViewProperties getDefaultViewProperties() const;
 
 	virtual void postLinkUpdate();
 

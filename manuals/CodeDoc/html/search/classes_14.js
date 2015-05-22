@@ -1,12 +1,14 @@
 var searchData=
 [
-  ['variable',['Variable',['../struct_session_info_1_1_variable.html',1,'SessionInfo']]],
   ['variable',['Variable',['../class_picto_1_1_variable.html',1,'Picto']]],
+  ['variable',['Variable',['../struct_session_info_1_1_variable.html',1,'SessionInfo']]],
   ['variablelist',['VariableList',['../class_picto_1_1_variable_list.html',1,'Picto']]],
   ['variablemap',['VariableMap',['../class_picto_1_1_variable_map.html',1,'Picto']]],
-  ['viewcomponents',['ViewComponents',['../struct_view_selection_frame_1_1_view_components.html',1,'ViewSelectionFrame']]],
   ['viewer',['Viewer',['../class_viewer.html',1,'']]],
   ['viewerwindow',['ViewerWindow',['../class_viewer_window.html',1,'']]],
+  ['viewpositionwidget',['ViewPositionWidget',['../class_view_position_widget.html',1,'']]],
+  ['viewproperties',['ViewProperties',['../class_picto_1_1_view_properties.html',1,'Picto']]],
+  ['viewproperty',['ViewProperty',['../class_picto_1_1_view_property.html',1,'Picto']]],
   ['viewselectionframe',['ViewSelectionFrame',['../class_view_selection_frame.html',1,'']]],
   ['virtualdeviceplugin',['VirtualDevicePlugin',['../class_virtual_device_plugin.html',1,'']]],
   ['virtualevent',['VirtualEvent',['../struct_virtual_event.html',1,'']]],

@@ -49,7 +49,7 @@ public:
 	void rename(const QString &newName);
 
 	//! Get the default view size for the Task
-	DataViewSize::ViewSize getDefaultViewSize() const;
+	ViewProperties getDefaultViewProperties() const;
 
 protected:
 	virtual QString defaultTagName(){return "Task";};
@@ -64,8 +64,6 @@ private:
 	QSharedPointer<StateMachine> stateMachine_;
 	int taskNumber_;
 	QSharedPointer<Transition> initTransition_;
-
-	QStringList sizeList_;
 };
 
 

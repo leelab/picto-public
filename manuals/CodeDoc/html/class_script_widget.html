@@ -90,7 +90,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-slots">Private Slots</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_script_widget-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -144,18 +143,12 @@ QSize&#160;</td><td class="memItemRight" valign="bottom"><b>sizeHint</b> () cons
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-slots"></a>
 Private Slots</h2></td></tr>
 <tr class="memitem:aecac1954b0be0d4f7ec6fe54d879c024"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_widget.html#aecac1954b0be0d4f7ec6fe54d879c024">textChangeDetected</a> ()</td></tr>
-<tr class="memdesc:aecac1954b0be0d4f7ec6fe54d879c024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a>'s text changes. Updates the underlying QtProperty value accordinly and emits the <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> signal.  <a href="#aecac1954b0be0d4f7ec6fe54d879c024">More...</a><br /></td></tr>
+<tr class="memdesc:aecac1954b0be0d4f7ec6fe54d879c024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a>'s text changes. Updates the underlying QtProperty value accordingly and emits the <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> signal.  <a href="#aecac1954b0be0d4f7ec6fe54d879c024">More...</a><br /></td></tr>
 <tr class="separator:aecac1954b0be0d4f7ec6fe54d879c024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a132ed857bf63d706ed164c3a807b1482"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a132ed857bf63d706ed164c3a807b1482"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_script_widget.html#a132ed857bf63d706ed164c3a807b1482">searchRequested</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest)</td></tr>
 <tr class="memdesc:a132ed857bf63d706ed164c3a807b1482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a new <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> is initiated in the <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> to check the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a> for the search string. <br /></td></tr>
 <tr class="separator:a132ed857bf63d706ed164c3a807b1482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:ae8895b77cb16ab737871e0f6ef973c52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8895b77cb16ab737871e0f6ef973c52"></a>
-QToolButton *&#160;</td><td class="memItemRight" valign="bottom"><b>createButton</b> ()</td></tr>
-<tr class="separator:ae8895b77cb16ab737871e0f6ef973c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -265,7 +258,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>scriptChangedSinceSyn
 </table>
 </div><div class="memdoc">
 
-<p>Called when the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a>'s text changes. Updates the underlying QtProperty value accordinly and emits the <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> signal. </p>
+<p>Called when the underlying <a class="el" href="class_script_text_edit.html" title="A Text Editor widget for Picto scripts. ">ScriptTextEdit</a>'s text changes. Updates the underlying QtProperty value accordingly and emits the <a class="el" href="class_script_widget.html#a87b0b6c6b19655367ad8888d8198e353" title="Emitted whenever the ScriptWidget&#39;s text is changed. text is the widget&#39;s new text. ">textEdited()</a> signal. </p>
 <p>Search is also updated in case the latest change led to a search string match appearing/disappearing. </p>
 
 <p>Definition at line <a class="el" href="_script_widget_8cpp_source.html#l00053">53</a> of file <a class="el" href="_script_widget_8cpp_source.html">ScriptWidget.cpp</a>.</p>

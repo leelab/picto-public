@@ -15,29 +15,10 @@
 
 using namespace Picto;
 
-//! The Number of view slots horizontally on the Data View Tab
-#define VIEWGRIDWIDTH 4
-//! The Number of view slots vertically on the Data View Tab
-#define VIEWGRIDHEIGHT 4
-
 class DataViewWidget;
 class DataViewOrganizer;
 class Picto::OperatorPlotHandler;
 
-
-/*!	\brief A struct to keep track of the location of widgets within the viewer.
-*/
-struct WidgetCoords
-{
-	//! Construct a new WidgetCoords struct.
-	WidgetCoords(int x, int y)
-	{
-		x_ = x;
-		y_ = y;
-	}
-	int x_;		//!< X grid coordinate
-	int y_;		//!< Y grid coordinate
-};
 
 /*!	\brief A widget to contain objects meant to be displayed in the Experiment Viewer
 *	\details Details forthcoming
@@ -52,7 +33,8 @@ public:
 	virtual ~ViewSelectionFrame();
 
 	void registerView(DataViewWidget *pNewView);
-	void addContainer(QWidget *pNewView);
+	void addContainer(QWidget *pNewView, bool signal = true);
+	void tryDefault(QWidget *pNewView);
 	void connectToViewerLayout(DataViewOrganizer *pOrganizer);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 	void setVisualTargetHost(QWidget *pWidget);
@@ -132,17 +114,9 @@ private:
 	//! A Hash of QSharedPointers to Plot Handlers, indexed by analysis path
 	QHash<QString, QSharedPointer<OperatorPlotHandler>> cachedHandlers_;
 
-	struct ViewComponents{
-		ViewComponents() : size_(DataViewSize::VIEW_SIZE_1x1), x_(0), y_(0) {};
-		ViewComponents(DataViewSize::ViewSize size, int x, int y) : size_(size), x_(x), y_(y) {};
-		DataViewSize::ViewSize size_;
-		int x_;
-		int y_;
-	};
-
 	//! A Hash for restoring formerly displayed widgets.  Do not use pointers.
 	QList<QWeakPointer<TaskConfig>> cachedConfigList_;
-	QList<QHash<QWidget*, ViewComponents>> cachedViewSetup_;
+	QList<QHash<QWidget*, ViewProperties>> cachedViewSetup_;
 	QWeakPointer<TaskConfig> lastTaskConfig_;
 
 	int configIndex(QWeakPointer<TaskConfig> referenceConfig);

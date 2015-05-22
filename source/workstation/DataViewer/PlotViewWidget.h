@@ -17,7 +17,7 @@ class PlotViewWidget : public DataViewWidget
 {
 	Q_OBJECT
 public:
-	PlotViewWidget(const QString cqsName, QWidget *pqwWidget, DataViewSize::ViewSize defaultSize);
+	PlotViewWidget(const QString cqsName, QWidget *pqwWidget, const ViewProperties defaultViewProperties);
 	virtual ~PlotViewWidget();
 };
 

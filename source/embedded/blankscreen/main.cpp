@@ -15,12 +15,7 @@
 #include <QSharedPointer>
 #include <QFile>
 #include <QHBoxLayout>
-#include <QtPropertyBrowser.h>
-#include <QtVariantProperty.h>
-#include <QtGroupBoxPropertyBrowser.h>
-#include <qtbuttonPropertyBrowser.h>
 #include <QPainter>
-//#include <QtVariantProperty.h>
 
 #ifdef WINCE
 #include <winbase.h>

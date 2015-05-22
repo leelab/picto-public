@@ -7,10 +7,10 @@ namespace Picto
 DataViewElement::DataViewElement()
 {
 	EXP_LINK_FACTORY_CREATION;
-	
+
 	AddDefinableProperty(QVariant::String, "ViewTitle", "View Element");
-	sizeList_ << "1x1" << "2x2" << "3x3" << "4x4";
-	AddDefinableProperty(PropertyContainer::enumTypeId(), "DefaultSize", 0, "enumNames", sizeList_);
+	AddDefinableProperty(PropertyContainer::viewPropertyTypeId(), "DefaultPosition",
+		QVariant::fromValue(ViewProperties(DataViewSize::VIEW_SIZE_1x1, -1, -1)));
 	AddDefinableProperty(QVariant::String, "InitializationScript", "");
 
 	static int index = 0;
@@ -30,7 +30,13 @@ void DataViewElement::postDeserialize()
 DataViewSize::ViewSize DataViewElement::getDefaultViewSize() const
 {
 	//We add one to the value because ViewSizes are enumerated from 1 for ease of size-calculation.
-	return (DataViewSize::ViewSize)(propertyContainer_->getPropertyValue("DefaultSize").toInt() + 1);
+	ViewProperties vc = propertyContainer_->getPropertyValue("DefaultPosition").value<ViewProperties>();
+	return vc.size_;
+}
+
+ViewProperties DataViewElement::getDefaultViewProperties() const
+{
+	return propertyContainer_->getPropertyValue("DefaultPosition").value<ViewProperties>();
 }
 
 void DataViewElement::initView()
