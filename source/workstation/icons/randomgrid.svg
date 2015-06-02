@@ -10,9 +10,6 @@
       <stop stop-color="#ff0000" stop-opacity="0.996094" offset="0"/>
       <stop stop-color="#640000" stop-opacity="0.996094" offset="1"/>
     </linearGradient>
-    <pattern height="100" width="100" y="0" x="0" patternUnits="userSpaceOnUse" id="gridpattern">
-      <image height="100" width="100" y="0" x="0"/>
-    </pattern>
     <linearGradient y2="1" x2="1" id="svg_3">
       <stop offset="0" stop-opacity="0.996094" stop-color="#0000ff"/>
       <stop offset="1" stop-opacity="0.996094" stop-color="#000064"/>

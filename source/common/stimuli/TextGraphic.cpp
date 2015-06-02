@@ -31,6 +31,13 @@ TextGraphic::TextGraphic(QPoint position, QRect dimensions, QColor color, QStrin
 void TextGraphic::draw()
 {
 	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
+
+	//Don't waste our time (or fill up our debug output) if nothing will be drawn
+	if (dimensions.width() == 0 || dimensions.height() == 0 || !dimensions.isValid())
+	{
+		return;
+	}
+
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);

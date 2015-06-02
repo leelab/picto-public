@@ -30,6 +30,12 @@ void OperatorInfoGraphic::draw()
 	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
+	//Don't waste our time (or fill up our debug output) if nothing will be drawn
+	if (dimensions.width() == 0 || dimensions.height() == 0 || !dimensions.isValid())
+	{
+		return;
+	}
+
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	image.fill(0);
 	QPainter p(&image);
