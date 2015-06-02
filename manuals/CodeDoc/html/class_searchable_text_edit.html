@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A QPlainTextEdit that is searchable by using a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> object.  
+<p>A QTextEdit that is searchable by using a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> object.  
  <a href="class_searchable_text_edit.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_searchable_text_edit_8h_source.html">SearchableTextEdit.h</a>&gt;</code></p>
@@ -121,28 +121,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>focusOut</b> ()</td><
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae77d9e73a636cc0c65d699a4d63125ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#ae77d9e73a636cc0c65d699a4d63125ee">SearchableTextEdit</a> (bool singleLine=false, QWidget *parent=NULL)</td></tr>
-<tr class="memdesc:ae77d9e73a636cc0c65d699a4d63125ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_searchable_text_edit.html" title="A QPlainTextEdit that is searchable by using a SearchRequest object. ">SearchableTextEdit</a> with the input parent.  <a href="#ae77d9e73a636cc0c65d699a4d63125ee">More...</a><br /></td></tr>
+<tr class="memdesc:ae77d9e73a636cc0c65d699a4d63125ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="class_searchable_text_edit.html" title="A QTextEdit that is searchable by using a SearchRequest object. ">SearchableTextEdit</a> with the input parent.  <a href="#ae77d9e73a636cc0c65d699a4d63125ee">More...</a><br /></td></tr>
 <tr class="separator:ae77d9e73a636cc0c65d699a4d63125ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3053215da37605c82911b7088717abc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3053215da37605c82911b7088717abc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#af3053215da37605c82911b7088717abc">search</a> (<a class="el" href="struct_search_request.html">SearchRequest</a> searchRequest, QColor highlightColor)</td></tr>
-<tr class="memdesc:af3053215da37605c82911b7088717abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches the QPlainTextEdit for the input <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a>. If found, strings matching the <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> are highlighted with the input highlightColor. <br /></td></tr>
+<tr class="memdesc:af3053215da37605c82911b7088717abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches the QTextEdit for the input <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a>. If found, strings matching the <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> are highlighted with the input highlightColor. <br /></td></tr>
 <tr class="separator:af3053215da37605c82911b7088717abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a730cb5990923f01bd5144038b633aca2"><td class="memItemLeft" align="right" valign="top">QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#a730cb5990923f01bd5144038b633aca2">sizeHint</a> () const </td></tr>
-<tr class="memdesc:a730cb5990923f01bd5144038b633aca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QPlainTextEdit::sizeHint to make the QPlainTextEdit act like a QLineEdit in case this object was constructed with singleLine.  <a href="#a730cb5990923f01bd5144038b633aca2">More...</a><br /></td></tr>
+<tr class="memdesc:a730cb5990923f01bd5144038b633aca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.  <a href="#a730cb5990923f01bd5144038b633aca2">More...</a><br /></td></tr>
 <tr class="separator:a730cb5990923f01bd5144038b633aca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aedeebdabab6c6865ca8aaa1429967b2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#aedeebdabab6c6865ca8aaa1429967b2a">keyPressEvent</a> (QKeyEvent *e)</td></tr>
-<tr class="memdesc:aedeebdabab6c6865ca8aaa1429967b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QPlainTextEdit::keyPressEvent to make the QPlainTextEdit act like a QLineEdit in case this object was constructed with singleLine.  <a href="#aedeebdabab6c6865ca8aaa1429967b2a">More...</a><br /></td></tr>
+<tr class="memdesc:aedeebdabab6c6865ca8aaa1429967b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QTextEdit::keyPressEvent to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine.  <a href="#aedeebdabab6c6865ca8aaa1429967b2a">More...</a><br /></td></tr>
 <tr class="separator:aedeebdabab6c6865ca8aaa1429967b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6acd591f685268d3897feeb7fbd7e579"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6acd591f685268d3897feeb7fbd7e579"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#a6acd591f685268d3897feeb7fbd7e579">event</a> (QEvent *e)</td></tr>
-<tr class="memdesc:a6acd591f685268d3897feeb7fbd7e579"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QPlainTextEdit::event to disable tooltips. <br /></td></tr>
+<tr class="memdesc:a6acd591f685268d3897feeb7fbd7e579"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QTextEdit::event to disable tooltips. <br /></td></tr>
 <tr class="separator:a6acd591f685268d3897feeb7fbd7e579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8622cfa9536e40d76cfb1fb84f7ffc7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8622cfa9536e40d76cfb1fb84f7ffc7c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_searchable_text_edit.html#a8622cfa9536e40d76cfb1fb84f7ffc7c">focusOutEvent</a> (QFocusEvent *e)</td></tr>
-<tr class="memdesc:a8622cfa9536e40d76cfb1fb84f7ffc7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QPlainTextEdit::focusOutEvent() so that we can emit focusOut() as a signal whenever the QPlainTextEdit loses focus. <br /></td></tr>
+<tr class="memdesc:a8622cfa9536e40d76cfb1fb84f7ffc7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This extends QTextEdit::focusOutEvent() so that we can emit focusOut() as a signal whenever the QTextEdit loses focus. <br /></td></tr>
 <tr class="separator:a8622cfa9536e40d76cfb1fb84f7ffc7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -152,8 +152,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td><
 <tr class="separator:a45e3f6cd4819227467fe216252cb48c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A QPlainTextEdit that is searchable by using a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> object. </p>
-<p>When a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> is found in this QPlainTextEdit, the strings that are found will be highlighted. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
+<div class="textblock"><p>A QTextEdit that is searchable by using a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> object. </p>
+<p>When a <a class="el" href="struct_search_request.html" title="Defines a request for a search. ">SearchRequest</a> is found in this QTextEdit, the strings that are found will be highlighted. </p><dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
 <p>Definition at line <a class="el" href="_searchable_text_edit_8h_source.html#l00017">17</a> of file <a class="el" href="_searchable_text_edit_8h_source.html">SearchableTextEdit.h</a>.</p>
@@ -182,7 +182,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td><
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a <a class="el" href="class_searchable_text_edit.html" title="A QPlainTextEdit that is searchable by using a SearchRequest object. ">SearchableTextEdit</a> with the input parent. </p>
+<p>Constructs a <a class="el" href="class_searchable_text_edit.html" title="A QTextEdit that is searchable by using a SearchRequest object. ">SearchableTextEdit</a> with the input parent. </p>
 <p>If singleLine is set true, the text edit will contain one line, otherwise it will be a regular scrollable QPlainTextEdit. </p>
 
 <p>Definition at line <a class="el" href="_searchable_text_edit_8cpp_source.html#l00012">12</a> of file <a class="el" href="_searchable_text_edit_8cpp_source.html">SearchableTextEdit.cpp</a>.</p>
@@ -212,8 +212,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td><
 </table>
 </div><div class="memdoc">
 
-<p>This extends QPlainTextEdit::keyPressEvent to make the QPlainTextEdit act like a QLineEdit in case this object was constructed with singleLine. </p>
-<p>The code that turns a QPlainTextEdit into a QLineEdit is from <a href="http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit">http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit</a> </p>
+<p>This extends QTextEdit::keyPressEvent to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine. </p>
+<p>The code that turns a QTextEdit into a QLineEdit is from <a href="http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit">http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit</a> </p>
 
 <p>Definition at line <a class="el" href="_searchable_text_edit_8cpp_source.html#l00078">78</a> of file <a class="el" href="_searchable_text_edit_8cpp_source.html">SearchableTextEdit.cpp</a>.</p>
 
@@ -232,8 +232,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>singleLine_</b></td><
       </table>
 </div><div class="memdoc">
 
-<p>This extends QPlainTextEdit::sizeHint to make the QPlainTextEdit act like a QLineEdit in case this object was constructed with singleLine. </p>
-<p>The code that turns a QPlainTextEdit into a QLineEdit is from <a href="http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit">http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit</a> </p>
+<p>This extends QTextEdit::sizeHint to make the QTextEdit act like a QLineEdit in case this object was constructed with singleLine. </p>
+<p>The code that turns a QTextEdit into a QLineEdit is from <a href="http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit">http://qt-project.org/faq/answer/how_can_i_create_a_one-line_qtextedit</a> </p>
 
 <p>Definition at line <a class="el" href="_searchable_text_edit_8cpp_source.html#l00061">61</a> of file <a class="el" href="_searchable_text_edit_8cpp_source.html">SearchableTextEdit.cpp</a>.</p>
 

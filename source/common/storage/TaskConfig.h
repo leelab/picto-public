@@ -66,23 +66,12 @@ public:
 	void notifyAnalysisSelection(const QString &name, bool selected);
 
 public:
-	struct DisplayWidgetProperties
-	{
-		DisplayWidgetProperties()
-			: defaultSize_(DataViewSize::VIEW_SIZE_1x1){};
-
-		DisplayWidgetProperties(DataViewSize::ViewSize size)
-			: defaultSize_(size){};
-
-		DataViewSize::ViewSize defaultSize_;
-	};
-
-	const DisplayWidgetProperties getDisplayWidgetProperties(QWidget *widget) const;
+	const ViewProperties getDisplayWidgetProperties(QWidget *widget) const;
 
 	//! Used to set the size of the TaskDisplay for the ViewSelectionFrame
-	void setTaskViewSize(DataViewSize::ViewSize size) { taskViewProperties_.defaultSize_ = size; };
+	void setTaskViewProperties(const ViewProperties props) { taskViewProperties_ = props; };
 	//! Used to get the size of the TaskDisplay for the ViewSelectionFrame
-	DataViewSize::ViewSize getTaskViewSize() { return taskViewProperties_.defaultSize_; };
+	const ViewProperties getTaskViewProperties() const { return taskViewProperties_; };
 
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.
@@ -109,10 +98,10 @@ protected:
 	//! Current Analysis Dispaly states
 	QMap<QString, bool> analysisDisplayState;
 	//! Holds onto the view properties of passed in DataViewAssets.
-	QMap<QWidget*, DisplayWidgetProperties> displayProperties;
+	QMap<QWidget*, ViewProperties> displayProperties;
 
 	//! Holds onto the Task's default view size.
-	DisplayWidgetProperties taskViewProperties_;
+	ViewProperties taskViewProperties_;
 
 	//! Flag to enable/disable updates
 	bool updateSignalEnabled_;

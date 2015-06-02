@@ -9,8 +9,8 @@ class QWidget;
 class QtProperty;
 QT_END_NAMESPACE
 
-/*! \brief A QPlainTextEdit that is searchable by using a SearchRequest object.
- *	\details When a SearchRequest is found in this QPlainTextEdit, the strings that are found will be highlighted.
+/*! \brief A QTextEdit that is searchable by using a SearchRequest object.
+ *	\details When a SearchRequest is found in this QTextEdit, the strings that are found will be highlighted.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

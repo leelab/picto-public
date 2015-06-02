@@ -43,7 +43,7 @@ var searchData=
   ['plotchannelchanged',['plotChannelChanged',['../class_neural_data_viewer.html#ab45cc2341a23cdb35cff6fc3d8a73b6e',1,'NeuralDataViewer']]],
   ['plothandlerrequested',['plotHandlerRequested',['../class_picto_1_1_task_config.html#a6809e70e0472060ad0230d473c4fe65b',1,'Picto::TaskConfig::plotHandlerRequested()'],['../class_view_selection_frame.html#a820f621e6058ba222e0385042ca13d95',1,'ViewSelectionFrame::plotHandlerRequested()']]],
   ['plotunitchanged',['plotUnitChanged',['../class_neural_data_viewer.html#ad486c730a3f854e8431b109e48b80197',1,'NeuralDataViewer']]],
-  ['plotviewwidget',['PlotViewWidget',['../class_plot_view_widget.html#a5c4b9ef329fa65f2806a0fca74ec37fc',1,'PlotViewWidget']]],
+  ['plotviewwidget',['PlotViewWidget',['../class_plot_view_widget.html#af9a1d8f0e78a4960eef4739e8ecc78b4',1,'PlotViewWidget']]],
   ['pluginindexchanged',['pluginIndexChanged',['../class_proxy_main_window.html#aee8554b4f91811182faacabecf2ace0c',1,'ProxyMainWindow']]],
   ['pointproperty',['PointProperty',['../class_picto_1_1_point_property.html#aa4f0c98d51374dde6d8ed1ee159a3a00',1,'Picto::PointProperty']]],
   ['pollmouse',['pollMouse',['../class_picto_1_1_mouse_input_port.html#a250af436e195d613e93e8b520a883483',1,'Picto::MouseInputPort']]],
@@ -98,5 +98,6 @@ var searchData=
   ['proxystatus',['proxyStatus',['../class_remote_viewer.html#a55c233e04518e7e76f3f356205fb28c4',1,'RemoteViewer']]],
   ['proxystatusmanager',['ProxyStatusManager',['../class_proxy_status_manager.html#ab95427d41862a5f2600d56d0c71ab1a9',1,'ProxyStatusManager']]],
   ['pseudorandomintparameter',['PseudorandomIntParameter',['../class_picto_1_1_pseudorandom_int_parameter.html#af274287253d96fd956226765de22335a',1,'Picto::PseudorandomIntParameter']]],
+  ['pushchange',['pushChange',['../class_view_position_widget.html#a0fb5d9cbe51902b7fa88d1bb95effb22',1,'ViewPositionWidget']]],
   ['pushcommand',['pushCommand',['../class_playback_controller_data.html#a2d95d7188e28b625d5c3039fbc0060d3',1,'PlaybackControllerData']]]
 ];

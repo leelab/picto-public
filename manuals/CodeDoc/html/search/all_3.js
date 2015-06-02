@@ -144,7 +144,7 @@ var searchData=
   ['convertsampleperiodtoneuraltimebase',['convertSamplePeriodToNeuralTimebase',['../class_alignment_tool.html#ae34b218ef3e8558d03d679251a935b00',1,'AlignmentTool']]],
   ['converttobehavioraltimebase',['convertToBehavioralTimebase',['../class_alignment_tool.html#ae9caea7d9dbaf480b6545df6634c6e10',1,'AlignmentTool']]],
   ['converttoneuraltimebase',['convertToNeuralTimebase',['../class_alignment_tool.html#ae3896af2cf346ba9d090896be7bb5feb',1,'AlignmentTool']]],
-  ['coordsmap',['coordsMap',['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame']]],
+  ['coordsmap',['coordsMap',['../class_view_position_widget.html#a3fbf6cb7437418402576ac82a786867c',1,'ViewPositionWidget::coordsMap()'],['../class_view_selection_frame.html#a016a669acfbbac43c98984bcbfc15e05',1,'ViewSelectionFrame::coordsMap()']]],
   ['copier',['Copier',['../class_copier.html',1,'']]],
   ['copy',['copy',['../class_copier.html#a48f1c6d5c6f49438f7c7b870b3151490',1,'Copier']]],
   ['copydataprivate',['copyDataPrivate',['../class_session_data.html#abdfa6349376276e2f38598399089c74a',1,'SessionData']]],

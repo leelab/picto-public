@@ -311,8 +311,7 @@ void Designer::checkSyntax()
 */
 void Designer::createActions()
 {
-	undoAction = new QAction(QIcon(""),
-                                tr("&Undo"), this);
+	undoAction = new QAction(QIcon(""), tr("&Undo"), this);
     undoAction->setShortcut(tr("Ctrl+Z"));
     undoAction->setStatusTip(tr("Undo last action"));
 

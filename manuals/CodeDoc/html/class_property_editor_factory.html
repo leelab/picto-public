@@ -193,7 +193,7 @@ QHash&lt; QtVariantPropertyManager *, bool &gt;&#160;</td><td class="memItemRigh
 <p>Constructs a new <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a>. </p>
 <p>The <a class="el" href="class_editor_state.html" title="The EditorState stores the current state of the Designer and provides multiple signals that widgets t...">EditorState</a> is needed in the constructor of searchable widgets as well as in order to detect whether there is an active analysis so that non-analysis Properties can be set as read-only. </p>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00022">22</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00023">23</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,7 +239,7 @@ QHash&lt; QtVariantPropertyManager *, bool &gt;&#160;</td><td class="memItemRigh
 <p>Creates an editor widget for the input QtProperty that was created by the input manager. </p>
 <p>This function extends the QtVariantEditorFactory::createEditor() function to generate some specific widgets needed for Picto, configure generated widgets for the current <a class="el" href="class_designer.html" title="A Graphical State Machine Integrated Development Environment for creating Picto Experiments and Analy...">Designer</a> mode, and store which Picto Property objects are related to which QtProperty objects. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">setNextProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00055">55</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00056">56</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -315,7 +315,7 @@ QHash&lt; QtVariantPropertyManager *, bool &gt;&#160;</td><td class="memItemRigh
 <p>Called whenever a QtProperty value changes. Looks up the Property represented by this QtProperty and emits propertyEdited with that Property and the value to which is should be changed. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_property_editor_factory.html#ad20c4ac65214aebae5d340042b32231e" title="Sets the next Property who&#39;s QtProperties will be requested in create editor. ">setNextProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00157">157</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00164">164</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +336,7 @@ QHash&lt; QtVariantPropertyManager *, bool &gt;&#160;</td><td class="memItemRigh
 <p>Sets the next Property who's QtProperties will be requested in create editor. </p>
 <p>This should be called just before callind a QtPropertyBrowser's addProperty function. It tells this object which Property the next QtProperty is associated with, allowing the <a class="el" href="class_property_editor_factory.html" title="Extends the QtVariantEditorFactory to create extra widgets needed by the Picto Designer and track the...">PropertyEditorFactory</a> to look up that Property when QtProperty values are edited by widgets so that the Property can be included in the <a class="el" href="class_property_editor_factory.html#af08e17ed7bfc43dee7cbce5ed9e00e7f" title="Emitted when the prop Property&#39;s value was edited. val is the value which should now be set to it...">propertyEdited()</a> signal. </p>
 
-<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00035">35</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_editor_factory_8cpp_source.html#l00036">36</a> of file <a class="el" href="_property_editor_factory_8cpp_source.html">PropertyEditorFactory.cpp</a>.</p>
 
 </div>
 </div>

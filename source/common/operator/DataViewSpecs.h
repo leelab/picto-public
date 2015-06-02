@@ -1,7 +1,14 @@
 #ifndef _DATA_VIEW_SPECS_H_
 #define _DATA_VIEW_SPECS_H_
 
+#include <QMetaType>
+
 #include "../common.h"
+
+//! The Number of view slots horizontally on the Data View Tab
+#define VIEWGRIDWIDTH 4
+//! The Number of view slots vertically on the Data View Tab
+#define VIEWGRIDHEIGHT 4
 
 namespace Picto {
 	//!	Namespace for the enumeration of the various sizes Views can take.
@@ -55,6 +62,27 @@ namespace ExportType{
 	};
 
 }; //namespace ExportType
+//!	A struct to keep track of the location of widgets within the viewer.
+struct WidgetCoords
+{
+	//! Construct a new WidgetCoords struct.
+	WidgetCoords(int x, int y)
+	{
+		x_ = x;
+		y_ = y;
+	}
+	int x_;		//!< X grid coordinate
+	int y_;		//!< Y grid coordinate
+};
+
+class ViewProperties{
+public:
+	ViewProperties() : size_(DataViewSize::VIEW_SIZE_1x1), x_(0), y_(0) {};
+	ViewProperties(DataViewSize::ViewSize size, int x, int y) : size_(size), x_(x), y_(y) {};
+	DataViewSize::ViewSize size_;
+	int x_;
+	int y_;
+};
 
 //!	Namespace for the enumeration of the various Align Methods that Rasters and PSTHs can use
 namespace AlignType{
@@ -69,6 +97,9 @@ namespace AlignType{
 
 }; //namespace ExportType
 
+
 }; //namespace Picto
+
+Q_DECLARE_METATYPE(Picto::ViewProperties);
 
 #endif

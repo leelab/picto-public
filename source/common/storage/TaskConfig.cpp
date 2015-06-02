@@ -193,7 +193,7 @@ void TaskConfig::addObserverWidget(DataViewElement *owningAsset, QWidget *widget
 	widgetNameMap[widget] = owningAsset->getTitle();
 	QString analysisName = owningAsset->getParentAsset()->getName();
 	analysisWidgetMap.insert(analysisName, widget);
-	displayProperties.insert(widget, std::move(DisplayWidgetProperties(owningAsset->getDefaultViewSize())));
+	displayProperties.insert(widget, std::move(ViewProperties(owningAsset->getDefaultViewProperties())));
 
 	if (!analysisDisplayState.contains(analysisName))
 	{
@@ -300,14 +300,14 @@ const QString TaskConfig::getName(QWidget *pWidget) const
 	return QString("");
 }
 
-const TaskConfig::DisplayWidgetProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
+const ViewProperties TaskConfig::getDisplayWidgetProperties(QWidget *widget) const
 {
 	if (displayProperties.contains(widget))
 	{
 		return displayProperties[widget];
 	}
 
-	return DisplayWidgetProperties(DataViewSize::VIEW_SIZE_1x1);
+	return ViewProperties();
 }
 
 }

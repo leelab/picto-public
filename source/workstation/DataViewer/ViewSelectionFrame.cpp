@@ -195,7 +195,7 @@ void ViewSelectionFrame::registerView(DataViewWidget *pNewView)
  *	control of its owned widget prior to doing so.  Currently, all DataViewWidgets contain externally-managed widgets.
  *	This may create memory issues down the road.
  */
-void ViewSelectionFrame::addContainer(QWidget *pNewView)
+void ViewSelectionFrame::addContainer(QWidget *pNewView, bool signal)
 {
 	Q_ASSERT(pNewView);
 	
@@ -225,6 +225,34 @@ void ViewSelectionFrame::addContainer(QWidget *pNewView)
 
 			cachedViewSetup_[iConfigIndex].remove(pNewView);
 			updateSizeAndPositionOptions();
+		}
+		else if (signal)
+		{
+			tryDefault(pNewView);
+		}
+	}
+}
+
+void ViewSelectionFrame::tryDefault(QWidget *pNewView)
+{
+	DataViewWidget *pViewContainer = viewContainerMap_[pNewView];
+
+	if (!pViewContainer->getDisplayed())
+	{
+		int x, y;
+		pViewContainer->getPosition(x, y);
+		if (x > -1 && y > -1)
+		{
+			if (isWidgetPosValid(pViewContainer, x, y))
+			{
+				pViewContainer->setDisplayed(true);
+				emit widgetAdded(pViewContainer, x, y, pViewContainer->getCurrentSize());
+				updateSizeAndPositionOptions();
+			}
+			else
+			{
+				pViewContainer->setPosition(0, 0);
+			}
 		}
 	}
 }
@@ -540,7 +568,7 @@ void ViewSelectionFrame::rebuild()
 			{
 				int x, y;
 				viewWidgets[i]->getPosition(x, y);
-				cachedViewSetup_[iConfigIndex][widgets[i]] = std::move(ViewComponents(viewWidgets[i]->getCurrentSize(), x, y));
+				cachedViewSetup_[iConfigIndex][widgets[i]] = std::move(ViewProperties(viewWidgets[i]->getCurrentSize(), x, y));
 			}
 		}
 	}
@@ -551,7 +579,7 @@ void ViewSelectionFrame::rebuild()
 
 	if (pVisualTargetHost_)
 	{
-		addContainer(pVisualTargetHost_);
+		addContainer(pVisualTargetHost_, false);
 	}
 
 	if (currentTaskConfig_)
@@ -562,7 +590,12 @@ void ViewSelectionFrame::rebuild()
 
 		foreach(QWidget* pWidget, newWidgets)
 		{
-			addContainer(pWidget);
+			addContainer(pWidget, false);
+		}
+
+		foreach(QWidget* pWidget, newWidgets)
+		{
+			tryDefault(pWidget);
 		}
 	}
 }
@@ -596,22 +629,25 @@ DataViewWidget *ViewSelectionFrame::createDataViewWidget(QWidget *pWidget)
 	if (pWidget == pVisualTargetHost_)
 	{
 		newViewWidget = new DataViewWidget("Task", pWidget);
-		DataViewSize::ViewSize size = DataViewSize::VIEW_SIZE_4x4;
+		ViewProperties props(DataViewSize::VIEW_SIZE_4x4,0,0);
 		if (currentTaskConfig_)
 		{
-			size = currentTaskConfig_->getTaskViewSize();
+			props = currentTaskConfig_->getTaskViewProperties();
 		}
 
 		int iConfigIndex = configIndex(currentTaskConfig_);
 
 		if (!cachedViewSetup_[iConfigIndex].contains(pWidget))
 		{
-			cachedViewSetup_[iConfigIndex][pWidget] = std::move(ViewComponents(size, 0, 0));
+			cachedViewSetup_[iConfigIndex][pWidget] = std::move(props);
 		}
 	}
 	else
 	{
-		newViewWidget = new PlotViewWidget(currentTaskConfig_->getName(pWidget), pWidget, currentTaskConfig_->getDisplayWidgetProperties(pWidget).defaultSize_);
+		newViewWidget = new PlotViewWidget(currentTaskConfig_->getName(pWidget),
+			pWidget,
+			currentTaskConfig_->getDisplayWidgetProperties(pWidget));
+
 		newViewWidget->setName(currentTaskConfig_->getName(pWidget));
 	}
 
@@ -679,7 +715,7 @@ int ViewSelectionFrame::configIndex(QWeakPointer<TaskConfig> referenceConfig)
 	if (!cachedConfigList_.contains(referenceConfig))
 	{
 		cachedConfigList_ << referenceConfig;
-		cachedViewSetup_ << QHash<QWidget*, ViewComponents>();
+		cachedViewSetup_ << QHash<QWidget*, ViewProperties>();
 	}
 	return cachedConfigList_.indexOf(referenceConfig);
 }

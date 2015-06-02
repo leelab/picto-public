@@ -382,13 +382,12 @@ bool DataStore::deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamRea
 }
 
 /*! \brief Returns true if this asset and all of its children have valid syntax.
- *	\details Calls validateTree on all immediate children, then all Associate Children,
- *	then calls ValidateObject() on this DataStore.  If any of them return a false
- *	value for valid syntax, this function returns false, otherwise it returns true.
- *	\note Regardless of what this function returns, all children, associate children
- *	and this object will have their validity checked such that we can expect all of them
- *	to report errors that can be read from Serializable::getErrors().  Validation doesn't
- *	stop after the first error.
+ *	\details Calls validateTree on all immediate children, then all Associate Children, then calls ValidateObject() on this
+ *	DataStore.  If any of them return a false value for valid syntax, this function returns false, otherwise it returns
+ *	true.
+ *	\note Regardless of what this function returns, all children, associate children and this object will have their
+ *	validity checked such that we can expect all of them to report errors that can be read from Serializable::getErrors().
+ *	Validation doesn't stop after the first error.
  */
 bool DataStore::validateTree()
 {
@@ -416,12 +415,14 @@ bool DataStore::validateTree()
 	return returnVal;
 }
 
-/*! \brief Emits the deleted() signal when called to inform interested parties that this asset needs to be removed from the design.  Calls setDeleted() on all children and associate children as well.
- *	\details Since internally we connect deleted() to receivedDeletedSignal(), it also causes our deleted_ flag to be set so
- *	that this object itself will know if it has been deleted_.
- *	\note Currently in Picto, in order to delete an asset we just set it as deleted, then when the time comes for serialization,
- *	we don't serialize out any of the "delete marked" assets.  Doing things this way helps us maintain a general order and structure in
- *	xml design files from one serialization to the next to aid in comparison of different versions of a design file.
+/*! \brief Emits the deleted() signal when called to inform interested parties that this asset needs to be removed from
+ *	the design.  Calls setDeleted() on all children and associate children as well.
+ *	\details Since internally we connect deleted() to receivedDeletedSignal(), it also causes our deleted_ flag to be set
+ *	so that this object itself will know if it has been deleted_.
+ *	\note Currently in Picto, in order to delete an asset we just set it as deleted, then when the time comes for
+ *	serialization, we don't serialize out any of the "delete marked" assets.  Doing things this way helps us maintain a
+ *	general order and structure in xml design files from one serialization to the next to aid in comparison of different
+ *	versions of a design file.
  *	\attention Probably for the sake of future proofing, instead of directly emitting deleted(), this function should call
  *	Asset::setDeleted() and let it do it.  I am not changing this now, but you probably should.
  * \sa serializeAsXml()
@@ -518,7 +519,7 @@ bool DataStore::validateObject(QSharedPointer<QXmlStreamReader> xmlStreamReader)
 
 /*! \brief In theory this just initializes all properties to default values.  In practice it just calls
  *	initializeToDefaults() to initialize the entire DataStore to its default values.
-*/
+ */
 void DataStore::initializePropertiesToDefaults()
 {
 	initializeToDefault();
@@ -555,24 +556,21 @@ void DataStore::AddDefinableProperty(
 }
 
 /*! \brief Sets property generation rules for a property with the input type and tagName to this DataStore 
- *	\details type distinguishes the type of property (ie. QVarant::Int, QVariant::Bool, QVariant::String), 
- *	tagName is the name of this property, defaultValue is the value
- *	that the property recieves automatically on generation, attributeMap is a map of attributes that will be
- *	provided to the generated property (some properties require this like EnumProperty require this),
- *	minNumOfThisType is the required number of properties of this kind (we can be sure that at least
- *	this number of properties of this kind will be generated), maxNumOfThisType is the maximum allowable
- *	number of properties of this type.
- *	Typically, a DataStore calls some variant of AddDefinableProperty() severral times in its constructor 
- *	to define the types of properties that it will include.  The order in which AddDefinableProperty() is
- *	called defines the order in which properties will appear in the UI.
- *	\note Internally, this function uses AddDefinableObjectFactory() to add a PropertyFactory to this
- *	data store, so you can look at that function for more detail.
- *	\attention In practice, we never use more than one property of a particular type, tagName combination.
- *	In fact, if we ever used the same tagName for more than one property, it would probably cause a lot 
- *	of things to break since we sometimes use property paths to identify properties, and adding two 
- *	properties of the same name would cause two properties to have the same path.  The point is that this
- *	function provides generality that should not actually be used.  Possibly we should just get rid of 
- *  this generalization and remove the maxNumOfThisType parameter.
+ *	\details type distinguishes the type of property (ie. QVarant::Int, QVariant::Bool, QVariant::String), tagName is the
+ *	name of this property, defaultValue is the value that the property recieves automatically on generation, attributeMap
+ *	is a map of attributes that will be provided to the generated property (some properties require this like EnumProperty
+ *	require this), minNumOfThisType is the required number of properties of this kind (we can be sure that at least this
+ *	number of properties of this kind will be generated), maxNumOfThisType is the maximum allowable number of properties
+ *	of this type.  Typically, a DataStore calls some variant of AddDefinableProperty() severral times in its constructor
+ *	to define the types of properties that it will include.  The order in which AddDefinableProperty() is called defines
+ *	the order in which properties will appear in the UI.
+ *	\note Internally, this function uses AddDefinableObjectFactory() to add a PropertyFactory to this data store, so you
+ *	can look at that function for more detail.
+ *	\attention In practice, we never use more than one property of a particular type, tagName combination.  In fact, if we
+ *	ever used the same tagName for more than one property, it would probably cause a lot of things to break since we
+ *	sometimes use property paths to identify properties, and adding two properties of the same name would cause two
+ *	properties to have the same path.  The point is that this function provides generality that should not actually be
+ *	used.  Possibly we should just get rid of this generalization and remove the maxNumOfThisType parameter.
  *	\sa AddDefinableObjectFactory(), PropertyFactory
  */
 void DataStore::AddDefinableProperty(
@@ -712,8 +710,7 @@ bool DataStore::AddAssociateChild(QUuid associateId, QString parentPath, QString
 }
 
 /*! \brief Adds the input child Asset to this DataStore as an AssociateElement child under the tagName category for the
- *	AssociateRoot
- *	with the input associateId.
+ *	AssociateRoot with the input associateId.
  *	\details The child is added to a lookup table of lookup tables, under its associateId and tagName.  Its 
  *	AssociateElement::linkToAsset() function is called to link it to this DataStore, its edited() signal is connected
  *	to our associateChildEdited() slot, and childAddedAfterDeserialize() is emitted to let interested parties know what

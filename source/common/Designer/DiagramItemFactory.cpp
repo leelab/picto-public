@@ -182,6 +182,7 @@ DiagramItem* DiagramItemFactory::create(QSharedPointer<Asset> asset)
 /*! \brief Returns the QIcon used for the input type of UITemplate.*/
 QIcon DiagramItemFactory::getIcon(QString uITemplate)
 {
+	//qDebug() << "Entering" << "\t" << uITemplate;
 	Q_ASSERT_X(iconDefs_.contains(uITemplate),"DiagramItemFactory::getIconDef","Unknown UI Template requested.");
 	return QIcon(iconDefs_[uITemplate].fileName_);
 }

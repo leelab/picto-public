@@ -103,6 +103,12 @@ void RandomlyFilledGridGraphic::draw()
 
 	QRect dimensions = QRect(QPoint(),propertyContainer_->getPropertyValue("Size").toSize());
 
+	//If there is nothign to paint, just return
+	if (dimensions.width() == 0 || dimensions.height() == 0 || !dimensions.isValid())
+	{
+		return;
+	}
+
 	QImage image(dimensions.width(),dimensions.height(),QImage::Format_ARGB32);
 	posOffset_ = QPoint(dimensions.width()/2.0,dimensions.height()/2.0);
 	image.fill(backgroundColor.rgba());

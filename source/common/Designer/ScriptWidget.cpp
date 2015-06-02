@@ -46,7 +46,7 @@ void ScriptWidget::setReadOnly(bool readOnly)
 	textEdit_->setReadOnly(readOnly);
 }
 
-/*! \brief Called when the underlying ScriptTextEdit's text changes.  Updates the underlying QtProperty value accordinly
+/*! \brief Called when the underlying ScriptTextEdit's text changes.  Updates the underlying QtProperty value accordingly
  *	and emits the textEdited() signal.
  *	\details Search is also updated in case the latest change led to a search string match appearing/disappearing.
  */

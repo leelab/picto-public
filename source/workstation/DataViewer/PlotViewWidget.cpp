@@ -11,10 +11,11 @@ using namespace Picto;
 
 /*! \brief Constructs a new DataViewWidget with the specified name and containing the passed Widget
  */
-PlotViewWidget::PlotViewWidget(const QString cqsName, QWidget *pqwWidget, DataViewSize::ViewSize defaultSize)
+PlotViewWidget::PlotViewWidget(const QString cqsName, QWidget *pqwWidget, const ViewProperties defaultViewProperties)
 	: DataViewWidget(cqsName, pqwWidget, DVW_CLEAR)
 {
-	setCurrentSize(defaultSize);
+	setCurrentSize(defaultViewProperties.size_);
+	setPosition(defaultViewProperties.x_, defaultViewProperties.y_);
 	hideDefaultTitle();
 }
 

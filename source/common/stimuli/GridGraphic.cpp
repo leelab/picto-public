@@ -28,6 +28,12 @@ void GridGraphic::draw()
 
 	QColor color = propertyContainer_->getPropertyValue("Color").value<QColor>();
 
+	//Don't waste our time (or fill up our debug output) if nothing will be drawn
+	if (dims.width() == 0 || dims.height() == 0 || !dims.isValid())
+	{
+		return;
+	}
+
 	QImage image(dims.width(),dims.height(),QImage::Format_ARGB32);
 	posOffset_ = QPoint(dims.width()/2.0,dims.height()/2.0);
 	image.fill(0);
@@ -51,9 +57,7 @@ void GridGraphic::draw()
 	}
 	p.end();
 	image_ = image;
-
-	//updateCompositingSurfaces();
-
+	
 	shouldUpdateCompositingSurfaces_ = true;
 }
 

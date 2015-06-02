@@ -5,6 +5,7 @@
 #include "../parameter/AssociateElement.h"
 #include "ScriptWidget.h"
 #include "FileSelectWidget.h"
+#include "ViewPositionWidget.h"
 #include "../../common/memleakdetect.h"
 using namespace Picto;
 
@@ -91,7 +92,7 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	}
 
 	QWidget* resultWidget = NULL;
-	if((propName == "") || (propName == "Script") || (propName == "InitializationScript"))
+	if((propName == "") || (propName == "Script"))
 	{
 		Q_ASSERT(editorState_);
 		resultWidget = new ScriptWidget(manager,property,editorState_,false,parent);
@@ -106,6 +107,12 @@ QWidget* PropertyEditorFactory::createEditor (QtVariantPropertyManager* manager,
 	{
 		Q_ASSERT(editorState_);
 		resultWidget = new ScriptWidget(manager,property,editorState_,true,parent);
+	}
+	else if (propName == "PositionEditor")
+	{
+		Q_ASSERT(editorState_);
+		property->setPropertyName("");
+		resultWidget = new ViewPositionWidget(manager, property, editorState_, parent);
 	}
 	else if(propName == "FileName")
 	{

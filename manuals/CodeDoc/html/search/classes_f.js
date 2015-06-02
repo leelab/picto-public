@@ -49,6 +49,7 @@ var searchData=
   ['propertyframe',['PropertyFrame',['../class_property_frame.html',1,'']]],
   ['propertygroupwidget',['PropertyGroupWidget',['../class_property_group_widget.html',1,'']]],
   ['propertylistwidget',['PropertyListWidget',['../class_property_list_widget.html',1,'']]],
+  ['propertymanager',['PropertyManager',['../class_property_manager.html',1,'']]],
   ['propertystate',['PropertyState',['../class_picto_1_1_property_state.html',1,'Picto']]],
   ['propertytable',['PropertyTable',['../class_picto_1_1_property_table.html',1,'Picto']]],
   ['propinfo',['PropInfo',['../struct_picto_1_1_prop_info.html',1,'Picto']]],

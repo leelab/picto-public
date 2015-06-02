@@ -93,62 +93,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _PROPERTYCONTAINER_H_</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _PROPERTYCONTAINER_H_</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;QtVariantProperty.h&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QtPropertyBrowser.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QSharedPointer&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;EnumProperty.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../common.h&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QSharedPointer&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;EnumProperty.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../common.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Property.h&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Property.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">class </span>Property;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> PropertyContainer : <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html">   37</a></span>&#160;class <a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a> : <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">static</span> QSharedPointer&lt;PropertyContainer&gt; create(QString _containerName);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a>(){};</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> copyProperties(QSharedPointer&lt;PropertyContainer&gt; container2);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> enumTypeId();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QSharedPointer&lt;Property&gt; addProperty(<span class="keywordtype">int</span> _type, QString _identifier, QVariant _value);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QVariant getPropertyValue(QString _identifier, <span class="keywordtype">int</span> index=0);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QString getPropertyName(QString _identifier, <span class="keywordtype">int</span> index=0);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QSharedPointer&lt;Property&gt; setPropertyValue(QString _identifier, QVariant _value, <span class="keywordtype">int</span> index=0);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> setPropertiesToInitValues();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> setContainerName(QString _containerName);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QString getContainerName();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    QStringList getPropertyList();</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">   60</a></span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; <a class="code" href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">getProperties</a>(){<span class="keywordflow">return</span> properties_;};</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QList&lt;QSharedPointer&lt;Property&gt;&gt; getRuntimeProperties();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QSharedPointer&lt;Property&gt; getProperty(QString _identifier,<span class="keywordtype">int</span> index=0);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> setPropertiesAsAssociates(<span class="keywordtype">bool</span> toAssociate);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> clear();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;signals:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> propertyValueChanged(<a class="code" href="class_picto_1_1_property.html">Property</a>* prop,QVariant);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a>(QString _containerName);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; properties_;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    QString containerName_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">class </span>Property;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#if defined WIN32 || defined WINCE</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span><a class="code" href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a> PropertyContainer : <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html">   35</a></span>&#160;class <a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a> : <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> QSharedPointer&lt;PropertyContainer&gt; create(QString _containerName);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a>(){};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> copyProperties(QSharedPointer&lt;PropertyContainer&gt; container2);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> enumTypeId();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> viewPropertyTypeId();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QSharedPointer&lt;Property&gt; addProperty(<span class="keywordtype">int</span> _type, QString _identifier, QVariant _value);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QVariant getPropertyValue(QString _identifier, <span class="keywordtype">int</span> index=0);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QString getPropertyName(QString _identifier, <span class="keywordtype">int</span> index=0);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QSharedPointer&lt;Property&gt; setPropertyValue(QString _identifier, QVariant _value, <span class="keywordtype">int</span> index=0);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> setPropertiesToInitValues();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> setContainerName(QString _containerName);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    QString getContainerName();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    QStringList getPropertyList();</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">   59</a></span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; <a class="code" href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">getProperties</a>(){<span class="keywordflow">return</span> properties_;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QList&lt;QSharedPointer&lt;Property&gt;&gt; getRuntimeProperties();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QSharedPointer&lt;Property&gt; getProperty(QString _identifier,<span class="keywordtype">int</span> index=0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> setPropertiesAsAssociates(<span class="keywordtype">bool</span> toAssociate);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;signals:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> propertyValueChanged(<a class="code" href="class_picto_1_1_property.html">Property</a>* prop,QVariant);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="class_picto_1_1_property_container.html">PropertyContainer</a>(QString _containerName);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; properties_;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QString containerName_;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}; <span class="comment">//namespace Picto</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html"><div class="ttname"><a href="class_picto_1_1_property_container.html">Picto::PropertyContainer</a></div><div class="ttdoc">A container that groups together a set of Property objects. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8h_source.html#l00037">PropertyContainer.h:37</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_html"><div class="ttname"><a href="class_picto_1_1_property.html">Picto::Property</a></div><div class="ttdoc">Describes the property of a DataStore. </div><div class="ttdef"><b>Definition:</b> <a href="_property_8h_source.html#l00044">Property.h:44</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_aab57cfef3562a467b7fdac0ec8ff57a0"><div class="ttname"><a href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">Picto::PropertyContainer::getProperties</a></div><div class="ttdeci">QHash&lt; QString, QVector&lt; QSharedPointer&lt; Property &gt; &gt; &gt; getProperties()</div><div class="ttdoc">Returns a lookup table with all of the contained Property objects indexed by their names...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8h_source.html#l00060">PropertyContainer.h:60</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html"><div class="ttname"><a href="class_picto_1_1_property_container.html">Picto::PropertyContainer</a></div><div class="ttdoc">A container that groups together a set of Property objects. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8h_source.html#l00035">PropertyContainer.h:35</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_html"><div class="ttname"><a href="class_picto_1_1_property.html">Picto::Property</a></div><div class="ttdoc">Describes the property of a DataStore. </div><div class="ttdef"><b>Definition:</b> <a href="_property_8h_source.html#l00043">Property.h:43</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_aab57cfef3562a467b7fdac0ec8ff57a0"><div class="ttname"><a href="class_picto_1_1_property_container.html#aab57cfef3562a467b7fdac0ec8ff57a0">Picto::PropertyContainer::getProperties</a></div><div class="ttdeci">QHash&lt; QString, QVector&lt; QSharedPointer&lt; Property &gt; &gt; &gt; getProperties()</div><div class="ttdoc">Returns a lookup table with all of the contained Property objects indexed by their names...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8h_source.html#l00059">PropertyContainer.h:59</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

@@ -6,7 +6,7 @@ var searchData=
   ['wheelevent',['wheelEvent',['../class_viewer_window.html#adf9ad10474494224ee894bf82b5dd046',1,'ViewerWindow']]],
   ['widgetadded',['widgetAdded',['../class_view_selection_frame.html#a08a74a3e4ea54147ea943e710344dad8',1,'ViewSelectionFrame']]],
   ['widgetaddedtomap',['widgetAddedToMap',['../class_picto_1_1_task_config.html#a3a93c472098747355c55e4d2af8dae64',1,'Picto::TaskConfig']]],
-  ['widgetcoords',['WidgetCoords',['../struct_widget_coords.html#ad0f0cff1663b8c552d6c645704d446b9',1,'WidgetCoords']]],
+  ['widgetcoords',['WidgetCoords',['../struct_picto_1_1_widget_coords.html#a8d7fab05544ececbcee9aa5250e56c48',1,'Picto::WidgetCoords']]],
   ['widgetisvalid',['widgetIsValid',['../class_picto_1_1_analysis_output.html#a459b96a480c7f6a4ae4fd63960f07b63',1,'Picto::AnalysisOutput::widgetIsValid()'],['../class_picto_1_1_analysis_output_widget_container.html#a92d7901bd7f01b7eefd066d3faa7091b',1,'Picto::AnalysisOutputWidgetContainer::widgetIsValid()']]],
   ['widgetremoved',['widgetRemoved',['../class_view_selection_frame.html#a549f574f00e7603bbd4c04daeb53047f',1,'ViewSelectionFrame']]],
   ['widgetremovedfrommap',['widgetRemovedFromMap',['../class_picto_1_1_task_config.html#af344d6d5d6130b8e9430b5383189be00',1,'Picto::TaskConfig']]],
