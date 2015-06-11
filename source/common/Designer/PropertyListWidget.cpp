@@ -22,7 +22,8 @@ using namespace Picto;
 	mainWidget_(NULL),
 	propertyFactory_(editorState),
 	trackInitVals_(trackInitVals),
-	browser_(new QtButtonPropertyBrowser(this))
+	browser_(new QtButtonPropertyBrowser(this)),
+	externalEdit_(false)
 {
 	propManager_ = new PropertyManager(this);
 	connect(&propertyFactory_, SIGNAL(propertyEdited(QSharedPointer<Property>,QVariant)),
@@ -211,7 +212,11 @@ void PropertyListWidget::propertyWasEdited(QSharedPointer<Property> prop,QVarian
 		QMetaObject::invokeMethod(prop.data(),"setInitValue",Q_ARG(QVariant,val));
 	else
 		QMetaObject::invokeMethod(prop.data(),"setValue",Q_ARG(QVariant,val));
-	emit propertyEdited(prop,val);
+
+	if (!externalEdit_)
+	{
+		emit propertyEdited(prop, val);
+	}
 }
 
 /*! \brief Called when a Property was edited.  Sets the new value of the Property to the corresponding QtVariantProperty
@@ -224,5 +229,7 @@ void PropertyListWidget::propertyWasEditedExternally(Property* prop,QVariant val
 	QtVariantProperty *qtProp = propToQtPropHash_.value(prop).first;
 	Q_ASSERT(browser_);
 	browser_->setCurrentItem(NULL);
+	externalEdit_ = true;
 	qtProp->setValue(val);
+	externalEdit_ = false;
 }

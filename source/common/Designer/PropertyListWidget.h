@@ -52,6 +52,7 @@ private:
 	PropertyEditorFactory propertyFactory_;
 	QtAbstractPropertyBrowser* browser_;
 	PropertyManager *propManager_;
+	bool externalEdit_;
 private slots:
 	void propertyWasEdited(QSharedPointer<Property> prop,QVariant val);
 	void propertyWasEditedExternally(Property* prop,QVariant val);
