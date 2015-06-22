@@ -9,22 +9,20 @@
 namespace Picto {
 
 /*!	\brief An AnalysisDataSource for gathering spike data.
- *	\details This object can be used to query spike times, channels, units and waveforms
- *	as well as metadata (the sample period of the spike acquisition system).
+ *	\details This object can be used to query spike times, channels, units and waveforms as well as metadata
+ *	(the sample period of the spike acquisition system).
  *	
- *	A spike's channel is the electrode number on which is was detected.  The unit is the
- *	index of the spike detection filter being used on that electrode for cases where
- *	multiple spikes are detected on one electrode.
+ *	A spike's channel is the electrode number on which is was detected.  The unit is the index of the spike detection
+ *	filter being used on that electrode for cases where multiple spikes are detected on one electrode.
  *	
- *	\note For test runs in the testviewer, the data returned from this object will necessarily
- *	be fake sample data.  For consistency's sake, any functions requesting 
- *	future data will return meaningless values.
+ *	\note For test runs in the testviewer, the data returned from this object will necessarily be fake sample data.
+ *	For consistency's sake, any functions requesting future data will return meaningless values.
  *	\note This class uses a SpikeReader as its main data source.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
 #if defined WIN32 || defined WINCE
-	class PICTOLIB_API AnalysisSpikeData : public AnalysisDataSource
+class PICTOLIB_API AnalysisSpikeData : public AnalysisDataSource
 #else
 class AnalysisSpikeData : public AnalysisDataSource
 #endif

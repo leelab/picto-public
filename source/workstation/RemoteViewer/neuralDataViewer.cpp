@@ -37,10 +37,10 @@
 #include <QLineEdit>
 #include <QtConcurrentRun>
 
+#include "../../common/memleakdetect.h"
 #include <qwt_series_data.h>
 #include <qwt_legend.h>
 
-#include "../../common/memleakdetect.h"
 using namespace Picto;
 
 /*! \brief The number of seconds shown on the X Axis in the plots.*/

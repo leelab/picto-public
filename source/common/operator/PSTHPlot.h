@@ -30,13 +30,11 @@ public:
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
-	AlignType::AlignType getAlignType() const;
+	double getPreFlagWindow() const;
+	double getPostFlagWindow() const;
 
 public slots:
-	void beginRecordingWindow();
-	void endRecordingWindow();
 	void alignEvent();
-
 
 protected:
 	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
