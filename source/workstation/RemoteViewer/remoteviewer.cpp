@@ -1269,6 +1269,7 @@ void RemoteViewer::parameterMessageReady(QSharedPointer<Property> changedProp)
 	QString name = changedProp->getName();
 	if(changedProp->getAssetId()<0)
 		return;
+
 	sendTaskCommand(QString("parameter:%1").arg(QString::number(changedProp->getAssetId())),changedProp->initValToUserString());
 }
 

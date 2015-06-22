@@ -286,6 +286,7 @@ void AnalysisOptionWidget::selectedIndexChanged(int selectedIndex)
 
 		//Erase the current selected analysis pointer
 		selectedAnalysis_.clear();
+		selectedAnalysisId_ = QUuid();
 	}
 	else
 	{
