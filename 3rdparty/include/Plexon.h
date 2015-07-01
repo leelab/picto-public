@@ -200,7 +200,20 @@ extern "C" void     WINAPI PL_GetTimeStampStructuresEx(int* pnmax,
                                                     int* polllow);
 
 
-
+// PL_GetTimeStampStructuresEx2 - get recent timestamp structures
+// In: 
+//      *pnmax  - maximum number of timestamp structures to transfer
+//      includeContinuous - if zero, only spike and external event data is returned
+// Out:
+//      *pnmax - actual number of timestamp structures transferred
+//      events - array of PL_Event structures filled with new data
+// Effect: 
+//      Copies the timestamp structures that the server transferred to MMF since
+//          any of the PL_GetTimeStamp* or PL_GetWave* was called last time
+extern "C" void     WINAPI PL_GetTimeStampStructuresEx2(int* pnmax, 
+                                                        PL_Event* events,
+                                                        int includeContinuous);
+                                                        
 
 // PL_GetWaveFormStructures - get recent waveform structures
 // In: 
@@ -306,6 +319,13 @@ extern "C" void     WINAPI PL_GetLongWaveFormStructuresEx2(int* pnmax, PL_WaveLo
 extern "C" void		WINAPI PL_SendUserEvent(int channel);
 
 
+// PL_SendUserEventWord - send an external strobed-word user event to the server. 
+// In:
+//		w -- strobed event word value
+// Effect: 
+//		Same as PL_SendUserEvent, except that a strobed event with a user-specified
+//    strobed-word value is sent.
+extern "C" void		WINAPI PL_SendUserEventWord(WORD w);
 
 
 // "get" commands
@@ -341,6 +361,8 @@ extern "C" int      WINAPI PL_GetPollingInterval();
 extern "C" int      WINAPI PL_GetNIDAQNumChannels();
 extern "C" void     WINAPI PL_EnableExtLevelStartStop(int enable);
 extern "C" int      WINAPI PL_IsNidaqServer();
+extern "C" int      WINAPI PL_GetNIDAQBitsPerSample();
+extern "C" int      WINAPI PL_IsNIDAQmx();
 
 extern "C" void     WINAPI PL_GetName(int ch1x, char* name);
 extern "C" void     WINAPI PL_GetEventName(int ch1x, char* name);
@@ -373,7 +395,16 @@ extern "C" void     WINAPI PL_GetWFRate(int* t);
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#define LATEST_PLX_FILE_VERSION 106
+#define LATEST_PLX_FILE_VERSION 107
+
+#define PLX_HDR_LAST_SPIKE_CHAN     128     // max spike channel number with counts in TSCounts and WFCounts arrays
+#define PLX_HDR_LAST_UNIT           4       // max unit number supported by PL_FileHeader information
+
+#define PLX_HDR_LAST_EVENT_CHAN     299     // max digital event number that will be counted in EVCounts
+
+#define PLX_HDR_FIRST_CONT_CHAN_IDX 300     // index in EVCounts for analog channel 0
+#define PLX_HDR_LAST_CONT_CHAN      211     // max (0-based) analog channel number that has counts in EVCounts, starting at [300]
+
 
 // file header (is followed by the channel descriptors)
 struct  PL_FileHeader 
@@ -421,9 +452,13 @@ struct  PL_FileHeader
     
     
     // Counters for the number of timestamps and waveforms in each channel and unit.
-    // Note that even though there may be more than 4 units on any channel, these arrays only record the counts for the 
-    // first 4 units in each channel.
-    // Channel numbers are 1-based - array entry at [0] is unused
+    // Note that even though there may be more than 4 (MAX_HDR_COUNTS_UNITS) units on any 
+    // channel, these arrays only record the counts for the first 4 units in each channel.
+    // Likewise, starting with .plx file format version 107, there may be more than 128 
+    // (MAX_HDR_COUNTS_SPIKE_CHANS) spike channels, but these arrays only record the  
+    // counts for the first 128 channels.
+    // Channel and unit numbers are 1-based - channel entries at [0] and [129] are 
+    // unused, and unit entries at [0] are unused.
     int     TSCounts[130][5]; // number of timestamps[channel][unit]
     int     WFCounts[130][5]; // number of waveforms[channel][unit]
 
@@ -453,9 +488,9 @@ struct PL_ChanHeader
     short   Boxes[5][2][4]; // the boxes used in boxes sorting
     int     SortBeg;        // beginning of the sorting window to use in template sorting (width defined by SortWidth)
     char    Comment[128];   // Version >=105
-    unsigned char SrcId;    // Version >=106, Plexus Source ID for this channel
+    unsigned char SrcId;    // Version >=106, Omniplex Source ID for this channel
     unsigned char reserved; // Version >=106
-    unsigned short ChanId;  // Version >=106, Plexus Channel ID within the Source for this channel
+    unsigned short ChanId;  // Version >=106, Omniplex Channel ID within the Source for this channel
     int     Padding[10];
 };
 
@@ -464,9 +499,9 @@ struct PL_EventHeader
     char    Name[32];       // name given to this event
     int     Channel;        // event number, 1-based
     char    Comment[128];   // Version >=105
-    unsigned char SrcId;    // Version >=106, Plexus Source ID for this channel
+    unsigned char SrcId;    // Version >=106, Omniplex Source ID for this channel
     unsigned char reserved; // Version >=106
-    unsigned short ChanId;  // Version >=106, Plexus Channel ID within the Source for this channel
+    unsigned short ChanId;  // Version >=106, Omniplex Channel ID within the Source for this channel
     int     Padding[32];
 };
 
@@ -485,9 +520,9 @@ struct PL_SlowChannelHeader
     int     SpikeChannel;
 
     char    Comment[128];   // Version >=105
-    unsigned char SrcId;    // Version >=106, Plexus Source ID for this channel
+    unsigned char SrcId;    // Version >=106, Omniplex Source ID for this channel
     unsigned char reserved; // Version >=106
-    unsigned short ChanId;  // Version >=106, Plexus Channel ID within the Source for this channel
+    unsigned short ChanId;  // Version >=106, Omniplex Channel ID within the Source for this channel
     int     Padding[27];
 };
 
