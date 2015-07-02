@@ -15,6 +15,8 @@ namespace Picto {
 class DataViewElement;
 class OperatorPlotHandler;
 class OperatorPlot;
+class NeuralDataListener;
+class NeuralDataUnit;
 /*! \brief There are many operations and data elements that need to be associated with a task as a whole, accessible by
  *	all elements of the task and with access to all elements of the task.  Objects of the TaskConfig class handle
  *	these types of operations and store this type of data.  This is a lower-scoped analog to the DesignConfig class, and
@@ -73,6 +75,10 @@ public:
 	//! Used to get the size of the TaskDisplay for the ViewSelectionFrame
 	const ViewProperties getTaskViewProperties() const { return taskViewProperties_; };
 
+	void addNeuralDataListener(QWeakPointer<NeuralDataListener> plot);
+	void notifyNeuralDataListeners(const NeuralDataUnit &neuralData);
+	void notifyBehavioralTime(double time);
+
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.
 	void widgetAddedToMap(QWidget *pWidget);
@@ -112,6 +118,9 @@ protected:
 
 	//! A map of operatorPlots that have requested PlotHandlers but haven't received a reply
 	QMap<QString, QWeakPointer<OperatorPlot>> waitingOperatorPlots_;
+
+	//! A list of registered NeuralDataListeners
+	QList<QWeakPointer<NeuralDataListener>> neuralDataListeners_;
 
 	void addWaitingAssets();
 

@@ -279,6 +279,7 @@ private slots:
 	bool assureChannelConnections();
 	void currTaskChanged(QString task);
 	void runStarted(QUuid runId);
+	void updateBehavioralTime(double time);
 
 };
 

@@ -7,14 +7,15 @@ namespace Picto {
 const QString PSTHPlot::type = "PSTH Plot";
 
 PSTHPlot::PSTHPlot()
-	: currentRecordingState_(RecordingState::NotRecording)
+	: lastNeuralTime_(0.0)
 {
-
 	AddDefinableProperty(QVariant::Double, "PreFlagWindow", 400);
 	AddDefinableProperty(QVariant::Double, "PostFlagWindow", 400);
+	AddDefinableProperty(QVariant::Int, "Channel", 0);
+	AddDefinableProperty(QVariant::Int, "Unit", 0);
 }
 
-/*!	\brief Constructs and returns a shared pointer to a new SamplingHistogramPlot
+/*!	\brief Constructs and returns a shared pointer to a new PSTHPlot
  */
 QSharedPointer<Asset> PSTHPlot::Create()
 {
@@ -23,35 +24,192 @@ QSharedPointer<Asset> PSTHPlot::Create()
 
 QSharedPointer<OperatorPlotHandler> PSTHPlot::getNewHandler()
 {
-	//Histogram does not need to add any features to the base class yet
+	//PSTHPlot does not need to add any features to the base class yet
 	return SamplingBarBase::getNewHandler();
+}
+
+void PSTHPlot::receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
+{
+	SamplingHistogramPlot::receivePlotHandler(plotHandler);
+
+	QSharedPointer<PSTHPlot> mySharedPointer = selfPtr().objectCast<PSTHPlot>();
+	QSharedPointer<NeuralDataListener> neuralSharedPointer = mySharedPointer.staticCast<NeuralDataListener>();
+	QWeakPointer<NeuralDataListener> neuralWeakPointer = neuralSharedPointer.toWeakRef();
+
+
+	getTaskConfig()->addNeuralDataListener(neuralWeakPointer);
 }
 
 
 void PSTHPlot::alignEvent()
 {
-
+	activeScans_.push_back(std::move(ActiveScan(behavTime_, getBinSize(), getPreFlagWindow(), getPostFlagWindow())));
+	for (int chan = 0; chan < spikeData_.size(); chan++)
+	{
+		for (int unit = 0; unit < spikeData_[chan].size(); unit++)
+		{
+			foreach(double spikeTime, spikeData_[chan][unit].d)
+			{
+				activeScans_.back().addSpike(chan, unit, spikeTime);
+			}
+		}
+	}
 }
 
 void PSTHPlot::clearAccumulatedData()
 {
-
+	activeScans_.clear();
+	spikeData_.clear();
 }
 
-void PSTHPlot::submitAccumulatedData()
+void PSTHPlot::submitScan(const ActiveScan &scan)
 {
+	const int channel = getChannel();
+	const int unit = getUnit();
+	if (scan.spikes_.size() > channel && scan.spikes_[channel].size() > unit)
+	{
+		for (int bin = 0; bin < scan.binNum_; bin++)
+		{
+			submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), scan.spikes_[channel][unit][bin]);
+		}
+	}
 
 }
 
-
+//! Convenience function to get the preFlagWindow property.
 double PSTHPlot::getPreFlagWindow() const
 {
 	return propertyContainer_->getPropertyValue("PreFlagWindow").toDouble();
 }
 
+//! Convenience function to get the postFlagWindow property.
 double PSTHPlot::getPostFlagWindow() const
 {
 	return propertyContainer_->getPropertyValue("PostFlagWindow").toDouble();
+}
+
+//! Convenience function to get the Channel property.
+int PSTHPlot::getChannel() const
+{
+	return propertyContainer_->getPropertyValue("Channel").toInt();
+}
+
+//! Convenience function to get the Unit property.
+int PSTHPlot::getUnit() const
+{
+	return propertyContainer_->getPropertyValue("Unit").toInt();
+}
+
+void PSTHPlot::setBehavioralTime(double time)
+{
+	NeuralDataListener::setBehavioralTime(time);
+
+	static int counter = 0;
+	counter++;
+	if (counter > 10)
+	{
+		counter = 0;
+		qDebug() << "Behavioral Time:\t\t" << time;
+	}
+}
+
+/*! \brief Updates spikeData_ with the new spike and culls data older than the PreFlagWindow.
+ *	\note This implementation began as a copy from NeuralDataView::addSpikeData.  
+ */
+void PSTHPlot::addSpikeData(const NeuralDataUnit &data)
+{
+	static int counter = 0;
+	counter++;
+	if (counter > 50)
+	{
+		counter = 0;
+		qDebug() << "Neural Data Fitted Time:\t" << data.getFittedtime();
+	}
+
+	//Update the last Neural time
+	if (data.getFittedtime() > lastNeuralTime_)
+	{
+		lastNeuralTime_ = data.getFittedtime();
+	}
+
+	//If there aren't enough curves slots yet, make the slots
+	while (spikeData_.size() <= data.getChannel())
+	{
+		spikeData_.push_back(QVector<DataList>());
+	}
+	while (spikeData_[data.getChannel()].size() <= data.getUnit())
+	{
+		spikeData_[data.getChannel()].push_back(DataList());
+	}
+	if (!spikeData_[data.getChannel()][data.getUnit()].exists)
+	{
+		spikeData_[data.getChannel()][data.getUnit()].exists = true;
+	}
+
+	spikeData_[data.getChannel()][data.getUnit()].d.push_back(data.getFittedtime());
+
+	//Find the behavTime_ - preflagwindow(converted to seconds)
+	double retainMin = behavTime_ - 0.001 * getPreFlagWindow();
+
+	QLinkedList<double>::iterator it;
+	for (it = spikeData_[data.getChannel()][data.getUnit()].d.begin();
+		it != spikeData_[data.getChannel()][data.getUnit()].d.end();
+		it++)
+	{
+		if (*it >= retainMin)
+		{
+			break;
+		}
+	}
+	spikeData_[data.getChannel()][data.getUnit()].d.erase(spikeData_[data.getChannel()][data.getUnit()].d.begin(), it);
+
+	for (QList<ActiveScan>::iterator i = activeScans_.begin(); i != activeScans_.end();)
+	{
+		if (i->scanEndTime_ < data.getFittedtime())
+		{
+			submitScan(*i);
+
+			i = activeScans_.erase(i);
+		}
+		else
+		{
+			i->addSpike(data.getChannel(), data.getUnit(), data.getFittedtime());
+			++i;
+		}
+	}
+}
+
+PSTHPlot::ActiveScan::ActiveScan(double flagTime, double binSize, double preWindow, double postWindow)
+	: flagTime_(flagTime), binSize_(binSize), scanEndTime_(0.0), scanStartTime_(0.0), binNum_(0)
+{
+	if (binSize_ <= 0.0)
+		return;
+	scanStartTime_ = flagTime_ - 0.001 * preWindow;
+	scanEndTime_ = flagTime_ + 0.001 * postWindow;
+
+	binNum_ = int((0.001 * (preWindow + postWindow)) / binSize_) + 1;
+}
+
+void PSTHPlot::ActiveScan::addSpike(int channel, int unit, double time)
+{
+	if (time > scanEndTime_ || time < scanStartTime_)
+	{
+		return;
+	}
+
+	while (spikes_.size() <= channel)
+	{
+		spikes_.push_back(QVector<QVector<int>>());
+	}
+	while (spikes_[channel].size() <= unit)
+	{
+		spikes_[channel].push_back(QVector<int>());
+		spikes_[channel].back().resize(binNum_);
+	}
+
+	int bin = int((time - scanStartTime_) / binSize_);
+	++spikes_[channel][unit][bin];
+
 }
 
 }; //namespace Picto

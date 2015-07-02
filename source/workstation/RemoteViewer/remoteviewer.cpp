@@ -1061,6 +1061,7 @@ void RemoteViewer::setupUi()
 	//----------Plots---------------
 	neuralDataViewer_ = new NeuralDataViewer(engine_);
 	connect(updater_.data(),SIGNAL(framePresented(double)),neuralDataViewer_,SLOT(setBehavioralTime(double)));
+	connect(updater_.data(), SIGNAL(framePresented(double)), this, SLOT(updateBehavioralTime(double)));
 
 	//--------Run Info--------------
 	currentRunViewer_ = new TaskRunViewer();
@@ -1521,6 +1522,13 @@ void RemoteViewer::updateNeuralData()
 			NeuralDataUnit unit;
 			unit.fromXml(xmlReader);
 			neuralDataViewer_->addSpikeData(unit);
+
+			QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+			if (task && task->getTaskConfig())
+			{
+				task->getTaskConfig()->notifyNeuralDataListeners(unit);
+			}
+
 			hadData = true;
 		}
 		xmlReader->readNext();
@@ -2210,7 +2218,7 @@ void RemoteViewer::taskListIndexChanged(int)
 	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
 	if(!task)
 		return;
-	//viewSelectionFrame_->clear();
+
 	viewSelectionFrame_->connectToTaskConfig(task->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 	qobject_cast<PropertyFrame*>(propertyFrame_)->setTopLevelDataStore(task.staticCast<DataStore>());
@@ -2268,11 +2276,9 @@ void RemoteViewer::currTaskChanged(QString task)
 		}
 	}
 
-	//viewSelectionFrame_->clear();
 	viewSelectionFrame_->connectToTaskConfig(experiment_->getTaskByName(task)->getTaskConfig());
 	viewSelectionFrame_->rebuild();
 }
-
 
 //! Creates names for potentially imported Analyses so that the TaskConfig can idenfify them before they are first run.
 QStringList RemoteViewer::precacheAnalysisNames(QSharedPointer<DesignRoot> import)
@@ -2475,7 +2481,8 @@ QStringList RemoteViewer::getAnalyses(bool bSkipLocal)
 	return resultList;
 }
 
-
+/*! \brief Slot to change the current status when the current analyses are changed.
+ */
 void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 {
 	QStringList analysesToBeActivated = analysisSelector_->getSelectedAnalysisNames();
@@ -2493,11 +2500,23 @@ void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 	}
 }
 
-
-
 /*! \brief Called when the run with the input runId starts.  Calls OutputWidgetHolder::newRunStarted().
  */
 void RemoteViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
+}
+
+/*! \brief Slot to distribute BehavioralTime updates to the currently active TaskConfig.
+ */
+void RemoteViewer::updateBehavioralTime(double time)
+{
+	if (!activeExperiment_)
+		return;
+
+	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
+	if (task && task->getTaskConfig())
+	{
+		task->getTaskConfig()->notifyBehavioralTime(time);
+	}
 }

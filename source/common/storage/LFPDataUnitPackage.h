@@ -42,44 +42,51 @@ public:
 	virtual bool serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWriter);
 	virtual bool deserializeFromXml(QSharedPointer<QXmlStreamReader> xmlStreamReader);
 
-	/*! \brief Sets the lfp channel whose data is stored in this object.*/
+	/*! \brief Sets the lfp channel whose data is stored in this object.
+	 */
 	void setChannel(int channel){channel_ = channel;};
 	/*! \brief Sets the least squares correlation coefficient describing the quality of the neural to behavioral alignment
 	 *	estimate.
 	 */
 	void setCorrelation(double correlation){correlation_ = correlation;}
-	/*! \brief Sets the time at which the first LFP sample stored here occured (not yet aligned to behavioral timestream).*/
+	/*! \brief Sets the time at which the first LFP sample stored here occured.
+	 *	\note Not yet aligned to behavioral timestream.
+	 */
 	void setTimestamp(double timestamp){timestamp_ = QString::number(timestamp,'e',14);};
-	/*! \brief Sets the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.*/
+	//! Sets the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.
 	void setFittedTimestamp(double timestamp){fittedTimestamp_ = QString::number(timestamp,'e',14);};
-	/*! \brief Sets the time per LFP sample in the neural timestream (not yet aligned to behavioral timestream).*/
+	//!	Sets the time per LFP sample in the neural timestream (not yet aligned to behavioral timestream).
 	void setResolution(double resolution){resolution_ = resolution;};
-	/*! \brief Sets the time per LFP sample as aligned to the behavioral timestream.*/
+	//!	Sets the time per LFP sample as aligned to the behavioral timestream.
 	void setFittedResolution(double fittedresolution){fittedResolution_ = fittedresolution;};
 	void appendData(const float* adPotentialReadings, int numVals);
 	void appendData(float adPotentialReading);
-	/*! \brief Returns the number of LFP samples stored in this object.*/
-	int numSamples(){return numSamples_;};
 
-	/*! \brief Returns the least squares correlation coefficient describing the quality of the neural to behavioral alignment
-	 *	estimate.
+	//!	Returns the number of LFP samples stored in this object.
+	int numSamples() const { return numSamples_; };
+	//! Returns the lfp channel whose data is stored in this object.
+	int getChannel() const { return channel_; };
+	/*! \brief Returns the least squares correlation coefficient describing the quality of the neural to behavioral
+	 *	alignment estimate.
 	 */
-	double getCorrelation(){return correlation_;}
-	/*! \brief Returns the time at which the first LFP sample stored here occured (not yet aligned to behavioral timestream).*/
-	QString getTimestamp(){return timestamp_;};
-	/*! \brief Returns the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.*/
-	QString getFittedTimestamp(){return fittedTimestamp_;};
-	/*! \brief Returns the time per LFP sample in the neural timestream (not yet aligned to behavioral timestream).*/
-	double getResolution(){return resolution_;};
-	/*! \brief Returns the time per LFP sample as aligned to the behavioral timestream.*/
-	double getFittedResolution(){return fittedResolution_;};
-	/*! \brief Returns the list of Local Field Potentials as a single string with values separated by spaces.*/
-	QString getPotentials(){return potentials_.join(" ");};
-	QByteArray getPotentialsAsByteArray();
-	QLinkedList<QPointF> getAlignedDataAsLinkedList();
+	double getCorrelation() const {return correlation_;}
+	/*! \brief Returns the time at which the first LFP sample stored here occured.
+	 *	\note Not yet aligned to behavioral timestream.
+	 */
+	QString getTimestamp() const {return timestamp_;};
+	//! Returns the time at which the first LFP sample stored here occured as aligned to the behavioral timestream.
+	QString getFittedTimestamp() const {return fittedTimestamp_;};
+	/*! \brief Returns the time per LFP sample in the neural timestream.
+	 *	\note Not yet aligned to behavioral timestream.
+	 */
+	double getResolution() const {return resolution_;};
+	//!	Returns the time per LFP sample as aligned to the behavioral timestream.
+	double getFittedResolution() const {return fittedResolution_;};
+	//! Returns the list of Local Field Potentials as a single string with values separated by spaces.
+	QString getPotentials() const {return potentials_.join(" ");};
+	QByteArray getPotentialsAsByteArray() const;
+	QLinkedList<QPointF> getAlignedDataAsLinkedList() const;
 	void setPotentialsFromByteArray(QByteArray potentials);
-	/*! \brief Returns the lfp channel whose data is stored in this object.*/
-	int getChannel(){return channel_;};
 
 private:
 	int channel_;

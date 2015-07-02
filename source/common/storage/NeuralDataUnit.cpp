@@ -28,7 +28,7 @@ bool NeuralDataUnit::serializeAsXml(QSharedPointer<QXmlStreamWriter> xmlStreamWr
 	xmlStreamWriter->writeTextElement("c",QString("%1").arg(getChannel()));
 	xmlStreamWriter->writeTextElement("u",QString("%1").arg(getUnit()));
 	xmlStreamWriter->writeTextElement("r",QString("%1").arg(getResolution(),0,'e',14));
-	xmlStreamWriter->writeTextElement("w",getWaveformAsString());		
+	xmlStreamWriter->writeTextElement("w",getWaveformAsString());
 	xmlStreamWriter->writeEndElement();
 	return true;
 }
@@ -102,13 +102,13 @@ void NeuralDataUnit::setWaveformFromString(QString waveform)
 }
 
 /*! \brief Gets the stored spike waveform as a string formatted like "X X X X " where each X is a floating point number.*/
-QString NeuralDataUnit::getWaveformAsString()
+QString NeuralDataUnit::getWaveformAsString() const
 {
 	return waveform_.join(" ");
 }
 
 /*! \brief Gets the stored spike waveform as a QByteArray.*/
-QByteArray NeuralDataUnit::getWaveformAsByteArray()
+QByteArray NeuralDataUnit::getWaveformAsByteArray() const
 {
 	float* pots = new float[waveform_.size()];
 	for(int i=0;i<waveform_.size();i++)

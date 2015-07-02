@@ -119,7 +119,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> serializeDataID(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> deserializeDataID(QSharedPointer&lt;QXmlStreamReader&gt; xmlStreamReader);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    qulonglong getDataID();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    qulonglong getDataID() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_picto_1_1_data_unit.html#ab26ae35496fca14aeb25d476f1e52e11">   45</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_data_unit.html#ab26ae35496fca14aeb25d476f1e52e11">setDataID</a>(qulonglong dataid){dataID_ = dataid;};</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> resetDataIDGenerator();</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> serializeAsXml(QSharedPointer&lt;QXmlStreamWriter&gt; xmlStreamWriter) = 0;</div>

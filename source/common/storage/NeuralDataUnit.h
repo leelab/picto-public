@@ -48,21 +48,21 @@ public:
 	void setWaveformFromString(QString waveform);
 
 	/*! \brief Returns the time at which the spike occured (not yet aligned to behavioral timestream).*/
-	double getTimestamp(){return timestamp_;}
+	double getTimestamp() const {return timestamp_;}
 	/*! \brief Returns the time at which the spike occured as aligned to the behavioral timestream.*/
-	double getFittedtime(){return fittedtime_;}
+	double getFittedtime() const {return fittedtime_;}
 	/*! \brief Returns the least squares correlation coefficient describing the quality of the neural to behavioral alignment
 	 *	estimate.
 	 */
-	double getCorrelation(){return correlation_;}
+	double getCorrelation() const {return correlation_;}
 	/*! \brief Returns the channel on which the spike occured.*/
-	int getChannel(){return channel_;}
+	int getChannel() const {return channel_;}
 	/*! \brief Returns the unit on which the spike occured.*/
-	int getUnit(){return unit_;}
+	int getUnit() const {return unit_;}
 	/*! \brief Returns the time per spike waveform sample.*/
-	double getResolution(){return resolution_;};
-	QString getWaveformAsString();
-	QByteArray getWaveformAsByteArray();
+	double getResolution() const {return resolution_;};
+	QString getWaveformAsString() const;
+	QByteArray getWaveformAsByteArray() const;
 	void setWaveformFromByteArray(QByteArray waveform);
 
 private:

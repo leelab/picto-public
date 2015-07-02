@@ -58,15 +58,21 @@ void VirtualDevicePlugin::CreateEventSources()
 	//-----------------------------------------------------------------------------------------------
 
 	//Heavy Standard Recording--------------------------------------------------------------------
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001,1,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001,1,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.06, 0.001,3,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.08, 0.001,4,0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001,1,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001,1,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.06, 0.001,3,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.08, 0.001,4,0)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,2)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,3)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,4)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001,5)));
+	//--------------------------------------------------------------------------------------------
+
+	//Standard Recording--------------------------------------------------------------------
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 1, 0)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001, 1)));
 	//--------------------------------------------------------------------------------------------
 }
 

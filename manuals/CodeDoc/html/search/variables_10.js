@@ -32,6 +32,7 @@ var searchData=
   ['singleton_5f',['singleton_',['../class_picto_1_1_auto_saver.html#a587765d50aec742f9ab70b86d64c69e5',1,'Picto::AutoSaver']]],
   ['sizeselection_5f',['sizeSelection_',['../class_view_selection_frame.html#a05483b276d824d495572b49201dcdbb7',1,'ViewSelectionFrame']]],
   ['soundstomix_5f',['soundsToMix_',['../class_picto_1_1_p_c_m_aural_target.html#ab1b523beaeb8d7d749299da102904b8e',1,'Picto::PCMAuralTarget']]],
+  ['spikedata_5f',['spikeData_',['../class_picto_1_1_p_s_t_h_plot.html#a5686404b3ca1868ea26e4ab77a54aaf0',1,'Picto::PSTHPlot']]],
   ['startframe_5f',['startFrame_',['../struct_picto_1_1_file_session_loader_1_1_run_data.html#ac2523539bffa43cf2ee22a5d6fe6ae08',1,'Picto::FileSessionLoader::RunData::startFrame_()'],['../class_picto_1_1_task_run_data_unit.html#a0ec6bd0bf2409e317caf57f32c6170b7',1,'Picto::TaskRunDataUnit::startFrame_()']]],
   ['starttime_5f',['startTime_',['../struct_picto_1_1_file_session_loader_1_1_run_data.html#af1e2fa8297c653cd42a95a63328bb079',1,'Picto::FileSessionLoader::RunData::startTime_()'],['../class_virtual_event_source.html#acf410036e06368adbcf1bfd0772c79bf',1,'VirtualEventSource::startTime_()']]],
   ['stateid_5f',['stateId_',['../class_picto_1_1_frame_data_unit.html#aed29a29a44838925c814797d3ea02316',1,'Picto::FrameDataUnit']]],

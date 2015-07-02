@@ -28,7 +28,8 @@ var searchData=
   ['normalizedscaledraw',['NormalizedScaleDraw',['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw']]],
   ['noteslostfocus',['notesLostFocus',['../class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e',1,'ElementNotesWidget']]],
   ['noteswereedited',['notesWereEdited',['../class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395',1,'ElementNotesWidget']]],
-  ['notifyanalysisselection',['notifyAnalysisSelection',['../class_picto_1_1_analysis_selector_widget.html#a7bf6f43e197b19f25258f020b239c654',1,'Picto::AnalysisSelectorWidget::notifyAnalysisSelection()'],['../class_picto_1_1_task_config.html#a8cb2387d1fb34dd3d6d6ddfd39c862b9',1,'Picto::TaskConfig::notifyAnalysisSelection()'],['../class_view_selection_frame.html#ace0ab5b2586ad5956a2fbde30edd56df',1,'ViewSelectionFrame::notifyAnalysisSelection()']]],
+  ['notifyanalysisselection',['notifyAnalysisSelection',['../class_picto_1_1_analysis_selector_widget.html#a7bf6f43e197b19f25258f020b239c654',1,'Picto::AnalysisSelectorWidget::notifyAnalysisSelection()'],['../class_picto_1_1_task_config.html#a8cb2387d1fb34dd3d6d6ddfd39c862b9',1,'Picto::TaskConfig::notifyAnalysisSelection()'],['../class_view_selection_frame.html#ace0ab5b2586ad5956a2fbde30edd56df',1,'ViewSelectionFrame::notifyAnalysisSelection()'],['../class_remote_viewer.html#aed4c13541a7d3976729e430e928f43cf',1,'RemoteViewer::notifyAnalysisSelection()']]],
+  ['notifyneuraldatalisteners',['notifyNeuralDataListeners',['../class_picto_1_1_task_config.html#a5f7df2412a9c090d6c696817d0ccd12c',1,'Picto::TaskConfig']]],
   ['numattributes',['numAttributes',['../class_picto_1_1_obsolete_asset.html#afde5b3db6920d338802d609fdce021be',1,'Picto::ObsoleteAsset']]],
   ['numbereditmode',['NumberEditMode',['../class_number_edit_mode.html#a637dbba420ed2d027df339f2bfb828aa',1,'NumberEditMode']]],
   ['numbervariable',['NumberVariable',['../class_picto_1_1_number_variable.html#a2e3e98c345b9c2bbee184c2606485b66',1,'Picto::NumberVariable']]],
@@ -36,5 +37,5 @@ var searchData=
   ['numericparameter',['NumericParameter',['../class_picto_1_1_numeric_parameter.html#a8115bd2ffae7f9a5b2db777ad606eee1',1,'Picto::NumericParameter']]],
   ['numincomingresponses',['numIncomingResponses',['../class_picto_1_1_command_channel.html#a1fa109c33aeb66291ba15979378fa0d5',1,'Picto::CommandChannel']]],
   ['numpins',['numPins',['../class_picto_1_1_virtual_output_signal_controller.html#adbc819a869db5cdb7874741042fc0145',1,'Picto::VirtualOutputSignalController']]],
-  ['numsamples',['numSamples',['../class_picto_1_1_l_f_p_data_unit_package.html#a682bf39fd107ae51faaa9584374295b6',1,'Picto::LFPDataUnitPackage']]]
+  ['numsamples',['numSamples',['../class_picto_1_1_l_f_p_data_unit_package.html#af7374a2ebbf903c5fcf76d136090e885',1,'Picto::LFPDataUnitPackage']]]
 ];

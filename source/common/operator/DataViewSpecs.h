@@ -84,6 +84,7 @@ public:
 	int y_;
 };
 
+
 }; //namespace Picto
 
 Q_DECLARE_METATYPE(Picto::ViewProperties);

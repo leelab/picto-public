@@ -120,6 +120,7 @@ var searchData=
   ['componentupdatecommandhandler',['ComponentUpdateCommandHandler',['../struct_component_update_command_handler.html',1,'']]],
   ['compositingsurface',['CompositingSurface',['../struct_picto_1_1_compositing_surface.html',1,'Picto']]],
   ['compositingsurfaces_5f',['compositingSurfaces_',['../struct_picto_1_1_visual_element.html#a47744977bc4e2b72555e2149a4015d36',1,'Picto::VisualElement']]],
+  ['configindex',['configIndex',['../class_view_selection_frame.html#afa8e3af7b56e9feab0ebe792175a50a7',1,'ViewSelectionFrame']]],
   ['conman_5f',['conMan_',['../class_connection_manager.html#ace292afdeb91489451efcf3405c839c9',1,'ConnectionManager']]],
   ['connectactions',['connectActions',['../class_designer.html#a2f74c1265458425a581bc9ad305cf4c1',1,'Designer']]],
   ['connectattemptfailed',['connectAttemptFailed',['../class_picto_1_1_command_channel.html#aed1770263e417f2334d9dc598695af69',1,'Picto::CommandChannel']]],
@@ -185,7 +186,7 @@ var searchData=
   ['createwidget',['createWidget',['../class_picto_1_1_analysis_file_output.html#a8343710e6b67612ed0d44dc3c97fc01f',1,'Picto::AnalysisFileOutput::createWidget()'],['../class_picto_1_1_analysis_output.html#ab3e5bc668e8b25860fecdabe877dc1b9',1,'Picto::AnalysisOutput::createWidget()'],['../class_picto_1_1_analysis_plot_output.html#abed7d23161c6143b6f9528b983bfa6dd',1,'Picto::AnalysisPlotOutput::createWidget()']]],
   ['createwinsound',['createWinSound',['../class_picto_1_1_win_sound.html#af0d832621f432aa8b0259320ff8ec844',1,'Picto::WinSound']]],
   ['cullanalysis',['cullAnalysis',['../class_picto_1_1_design_root.html#a26de589ea386f09ac19b3e0c4bc0b8c0',1,'Picto::DesignRoot']]],
-  ['currchannel',['currChannel',['../class_neural_data_viewer.html#ab1134a17a37625f981f297daf6d3233b',1,'NeuralDataViewer']]],
+  ['currchannel',['currChannel',['../class_neural_data_viewer.html#acb71493fd2f5f7e530af0f5eb2895c53',1,'NeuralDataViewer']]],
   ['currentanalysischanged',['currentAnalysisChanged',['../class_designer.html#ae4d4fb46ee86ed57711f7ffd3d8a7d88',1,'Designer::currentAnalysisChanged()'],['../class_editor_state.html#a50e0836cdfe1d8272171575b2f33a918',1,'EditorState::currentAnalysisChanged()'],['../class_experiment_item.html#ad059190b7458ecb348cf78652edea0c0',1,'ExperimentItem::currentAnalysisChanged()']]],
   ['currentlydisplayed_5f',['currentlyDisplayed_',['../class_data_view_widget.html#ac0ea1f778c67ffb26718164535b0ca42',1,'DataViewWidget']]],
   ['currentsessiondata',['CurrentSessionData',['../class_current_session_data.html',1,'CurrentSessionData'],['../class_current_session_data.html#af78242fa37935fad3fe1445ac93ba7c1',1,'CurrentSessionData::CurrentSessionData()']]],
@@ -194,8 +195,8 @@ var searchData=
   ['currrunduration',['currRunDuration',['../class_picto_1_1_file_session_loader.html#a6c36543d4bde4e441eaf1367e6305574',1,'Picto::FileSessionLoader']]],
   ['currrunname',['currRunName',['../class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1',1,'Picto::FileSessionLoader']]],
   ['currtaskchanged',['currTaskChanged',['../class_remote_viewer.html#af8fbd9bbf8ddebc82789765c2e888925',1,'RemoteViewer']]],
-  ['currunit',['currUnit',['../class_neural_data_viewer.html#a17ce9132f1eacd87868566ac7c40bb62',1,'NeuralDataViewer']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
+  ['currunit',['currUnit',['../class_neural_data_viewer.html#ad4fb93f4ddb7f2da1774bd9520c50fcd',1,'NeuralDataViewer']]],
   ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
   ['customvertex',['CUSTOMVERTEX',['../struct_picto_1_1_d3_d_visual_target_1_1_c_u_s_t_o_m_v_e_r_t_e_x.html',1,'Picto::D3DVisualTarget']]]
 ];

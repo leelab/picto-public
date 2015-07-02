@@ -62,7 +62,7 @@ NeuralDataViewer::~NeuralDataViewer()
 }
 
 /*! \brief Initializes NeuralDataViewer variables.
-*/
+ */
 void NeuralDataViewer::initialize()
 {
 	//Reset latestNeuralDataId_ so we'll start getting new data from the first that's available
@@ -78,7 +78,8 @@ void NeuralDataViewer::initialize()
 	behavTime_ = 0;
 }
 
-/*! \brief Deallocates memory used by the NeuralDataViewer.  This is useful for when the UI goes to a State where the NeuralDataViewer is not active.
+/*! \brief Deallocates memory used by the NeuralDataViewer.  This is useful for when the UI goes to a State where the
+ *	NeuralDataViewer is not active.
  */
 void NeuralDataViewer::deinitialize()
 {
@@ -103,20 +104,16 @@ void NeuralDataViewer::deinitialize()
 }
 
 /*! \brief Adds the LFP data from the input LFPDataUnitPackage to the NeuralDataViewer.
- *	\note This function does not actually cause anything to be redrawn.  It sets
- *	a lfpPlotNeedsUpdate_ flag in case the new data is on the channel being displayed.
- *	replot() needs to be called to actually redraw the plot on screen.  That function looks at
- *	the lfpPlotNeedsUpdate_ flag to decide whether to add the new data to the displayed LFP
- *	plot.
+ *	\note This function does not actually cause anything to be redrawn.  It sets a lfpPlotNeedsUpdate_ flag in case the
+ *	new data is on the channel being displayed.  replot() needs to be called to actually redraw the plot on screen.
+ *	That function looks at the lfpPlotNeedsUpdate_ flag to decide whether to add the new data to the displayed LFP plot.
  */
-void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
+void NeuralDataViewer::addLFPData(const LFPDataUnitPackage &data)
 {
-	//We set the latestNeuralDataId_ to whatever came in regardless
-	//of whether its greater than the last one.  This is because the
-	//dataids may not be in order.  The LFP dataid would have been
-	//generated when the lfp object was first created even though it
-	//contains data from 500ms later.  Also, if the server goes down and
-	//restarts, data may come in out of order.
+	//We set the latestNeuralDataId_ to whatever came in regardless of whether its greater than the last one.  This is
+	//	because the dataids may not be in order.  The LFP dataid would have been generated when the lfp object was first
+	//	created even though it contains data from 500ms later.  Also, if the server goes down and restarts, data may come
+	//	in out of order.
 	latestNeuralDataId_ = data.getDataID();
 	
 	//If there aren't enough data lists yet, make the lists
@@ -150,13 +147,12 @@ void NeuralDataViewer::addLFPData(LFPDataUnitPackage &data)
 }
 
 /*! \brief Adds the Spike data from the input NeuralDataUnit to the NeuralDataViewer.
- *	\note This function does not actually cause anything to be redrawn.  It sets
- *	a spikePlotNeedsUpdate_ flag in case the new data is on the channel/unit being displayed.
- *	replot() needs to be called to actually redraw the plot on screen.  That function looks at
- *	the spikePlotNeedsUpdate_ flag to decide whether to add the new data to the displayed spike
+ *	\note This function does not actually cause anything to be redrawn.  It sets a spikePlotNeedsUpdate_ flag in case the
+ *	new data is on the channel/unit being displayed.  replot() needs to be called to actually redraw the plot on screen.
+ *	That function looks at the spikePlotNeedsUpdate_ flag to decide whether to add the new data to the displayed spike
  *	plot.
  */
-void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
+void NeuralDataViewer::addSpikeData(const NeuralDataUnit &data)
 {
 	latestNeuralDataId_ = data.getDataID();
 
@@ -197,8 +193,8 @@ void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 }
 
 /*! \brief Updates the spike and lfp plots for the latest times and any new data that has arrived.
- *	\details This takes care of things like moving the red current time bar and restarting the 
- *	plot if the current time has reached the right side of the window.
+ *	\details This takes care of things like moving the red current time bar and restarting the plot if the current time
+ *	has reached the right side of the window.
  */
 void NeuralDataViewer::replot()
 {
@@ -325,11 +321,13 @@ void NeuralDataViewer::replot()
 	if(spikePlotNeedsUpdate_)
 	{
 		int spikePlotSize = 0;
-		if((currChannel() >=0) 
-			&& (currChannel() < spikePlotData_.size()) 
-			&& (currUnit()>=0) 
-			&& (currUnit()<spikePlotData_[currChannel()].size()))
+		if ((currChannel() >= 0) &&
+			(currChannel() < spikePlotData_.size()) &&
+			(currUnit() >= 0) &&
+			(currUnit() < spikePlotData_[currChannel()].size()))
+		{
 			spikePlotSize = spikePlotData_[currChannel()][currUnit()].d.size();
+		}
 		
 		QwtPointSeriesData* pointData;
 		QVector<QPointF> dataPoints;
@@ -364,14 +362,14 @@ void NeuralDataViewer::replot()
 
 /*! \brief Returns the channel of the neural data currently being displayed.
  */
-int NeuralDataViewer::currChannel()
+int NeuralDataViewer::currChannel() const
 {
 	return channelBox_->itemData(channelBox_->currentIndex()).toInt();
 }
 
 /*! \brief Returns the unit of the spike data currently being displayed.
  */
-int NeuralDataViewer::currUnit()
+int NeuralDataViewer::currUnit() const
 {
 	return unitBox_->itemData(unitBox_->currentIndex()).toInt();
 }
@@ -509,8 +507,7 @@ void NeuralDataViewer::plotChannelChanged(int)
 		unitBox_->addItem(QString("Unit %1").arg(unit),unit);
 	}
 
-	//This will take care of resetting the spike plot for the
-	//case where channel changes but unit index doesn't change.
+	//This will take care of resetting the spike plot for the case where channel changes but unit index doesn't change.
 	plotUnitChanged(unitBox_->currentIndex());
 	lfpPlotNeedsUpdate_ = true;
 	replot();

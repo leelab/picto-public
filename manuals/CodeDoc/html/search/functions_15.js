@@ -12,6 +12,7 @@ var searchData=
   ['updateanimation',['updateAnimation',['../class_picto_1_1_cursor_graphic.html#a57de42c02ab434f5594b04c214753327',1,'Picto::CursorGraphic::updateAnimation()'],['../class_picto_1_1_randomly_filled_grid_graphic.html#a0a4553545d058cd58a8eae97e6bc5c9f',1,'Picto::RandomlyFilledGridGraphic::updateAnimation()'],['../struct_picto_1_1_visual_element.html#a598c8f6e33c58b85b80197e3743b0e91',1,'Picto::VisualElement::updateAnimation()']]],
   ['updateapps',['updateApps',['../class_update_downloader.html#a076198e9e5bb0c1180fcbdd0548ef590',1,'UpdateDownloader']]],
   ['updatearrowportdimensions',['updateArrowPortDimensions',['../class_wireable_item.html#acc8e2ae0869e7923884eb1dd92304690',1,'WireableItem']]],
+  ['updatebehavioraltime',['updateBehavioralTime',['../class_remote_viewer.html#af1a7f7a029f1e1ed93da4f0230a1cfb6',1,'RemoteViewer']]],
   ['updatecoefficients',['updateCoefficients',['../class_alignment_tool.html#a2c7eadcedb53d5e7f282168c8da3d457',1,'AlignmentTool']]],
   ['updatecombobox',['updateComboBox',['../class_task_run_viewer.html#af7d3d044c210a3dad0993f72da4a5fe4',1,'TaskRunViewer']]],
   ['updatecomponent',['updateComponent',['../class_connection_manager.html#ab4d8f848dd065a478a6123f8d400c712',1,'ConnectionManager']]],
