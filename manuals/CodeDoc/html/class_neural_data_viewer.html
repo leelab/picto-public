@@ -120,7 +120,7 @@ Classes</h2></td></tr>
 Public Slots</h2></td></tr>
 <tr class="memitem:a2ca4a819f8149a661a30bb1fe64f455c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ca4a819f8149a661a30bb1fe64f455c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_neural_data_viewer.html#a2ca4a819f8149a661a30bb1fe64f455c">setBehavioralTime</a> (double time)</td></tr>
-<tr class="memdesc:a2ca4a819f8149a661a30bb1fe64f455c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current time for this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. Time is according to the behaioral time stream. <br /></td></tr>
+<tr class="memdesc:a2ca4a819f8149a661a30bb1fe64f455c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current time for this <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a>. Time is according to the behavioral time stream. <br /></td></tr>
 <tr class="separator:a2ca4a819f8149a661a30bb1fe64f455c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -250,7 +250,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A widget used to display live lfp and spike data in the Workstation's Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> during an experimental session. </p>
 <p>This widget displays two plots, one for lfp data and the other for spike data. The data displayed on the plot is set using two drop downs to select the currently displayed channel and unit (for the spike window). The dropdowns contain all channel/unit combinations for which data has been added to the viewer. Beyond the actual plotted data, the plots themselves include a vertical red line representing the current experimental time. The line moves across the plot and the plot is cleared and redrawn from the beginning whenever the current time reaches the end of the plot.</p>
-<p>The Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> takes care of updating the widget by calling addLPFData() and <a class="el" href="class_neural_data_viewer.html#ab1e672e37e9902a1053996be1e60949f" title="Adds the Spike data from the input NeuralDataUnit to the NeuralDataViewer. ">addSpikeData()</a> to add the latest neural data to arrive from the PictoServer. It calls <a class="el" href="class_neural_data_viewer.html#a2ca4a819f8149a661a30bb1fe64f455c" title="Sets the current time for this Viewer. Time is according to the behaioral time stream. ">setBehavioralTime()</a> and <a class="el" href="class_neural_data_viewer.html#a4157c87495c85be09e6450f94642efd0" title="Updates the spike and lfp plots for the latest times and any new data that has arrived. ">replot()</a> frequently to update the plot to the latest Experimental time.</p>
+<p>The Remote <a class="el" href="class_viewer.html" title="A Viewer is a base class for panels in the Workstation that are used to handle some clearly defined j...">Viewer</a> takes care of updating the widget by calling addLPFData() and <a class="el" href="class_neural_data_viewer.html#ab1e672e37e9902a1053996be1e60949f" title="Adds the Spike data from the input NeuralDataUnit to the NeuralDataViewer. ">addSpikeData()</a> to add the latest neural data to arrive from the PictoServer. It calls <a class="el" href="class_neural_data_viewer.html#a2ca4a819f8149a661a30bb1fe64f455c" title="Sets the current time for this Viewer. Time is according to the behavioral time stream. ">setBehavioralTime()</a> and <a class="el" href="class_neural_data_viewer.html#a4157c87495c85be09e6450f94642efd0" title="Updates the spike and lfp plots for the latest times and any new data that has arrived. ">replot()</a> frequently to update the plot to the latest Experimental time.</p>
 <dl class="section note"><dt>Note</dt><dd>You will notice that the LFP data lags behind the red bar and jumps up in half second jumps. The half second jump is a function of our buffering a half second of LFP data on the Proxy before sending it to the <a class="el" href="class_server.html" title="The Server object managing the actual incoming connections and ServerThread generation for the PictoS...">Server</a>. The lag is a function of the Neural Data Acquisition system being used since some only make their data available with a noticeable lag. In particular, we have noticed that the TDT system seems to have a lag of a few seconds. The Plexon system has a lower lag. </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
@@ -356,7 +356,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td>
 <p>Called when the currently selected plot channel (from the drop down) changes. </p>
 <p>This causes the units dropdown to be updated with units available in this channel and causes the plots to be redrawn for the new channel. </p>
 
-<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00493">493</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00510">510</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +385,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td>
 <p>Called when the currently selected unit (from the drop down) changes. </p>
 <p>This causes the spike plot to be redrawn for the new unit selection. </p>
 
-<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00522">522</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00539">539</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +405,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td>
 <p>Updates the spike and lfp plots for the latest times and any new data that has arrived. </p>
 <p>This takes care of things like moving the red current time bar and restarting the plot if the current time has reached the right side of the window. </p>
 
-<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00203">203</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="neural_data_viewer_8cpp_source.html#l00212">212</a> of file <a class="el" href="neural_data_viewer_8cpp_source.html">neuralDataViewer.cpp</a>.</p>
 
 </div>
 </div>

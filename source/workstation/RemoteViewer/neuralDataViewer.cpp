@@ -160,6 +160,15 @@ void NeuralDataViewer::addSpikeData(NeuralDataUnit &data)
 {
 	latestNeuralDataId_ = data.getDataID();
 
+	/*
+	static int count = 0;
+	if (++count > 50)
+	{
+		count = 0;
+		qDebug() << "Fitted Time:\t" << data.getFittedtime();
+	}
+	*/
+
 	//If there aren't enough curves slots yet, make the slots
 	while(spikePlotData_.size() <= data.getChannel())
 	{
@@ -376,10 +385,18 @@ int NeuralDataViewer::currUnit()
 	return unitBox_->itemData(unitBox_->currentIndex()).toInt();
 }
 
-/*! \brief Sets the current time for this Viewer.  Time is according to the behaioral time stream.
+/*! \brief Sets the current time for this Viewer.  Time is according to the behavioral time stream.
 */
 void NeuralDataViewer::setBehavioralTime(double time)
 {
+	/*
+	static int count = 0;
+	if (++count > 10)
+	{
+		count = 0;
+		qDebug() << "Behavioral Time:\t" << time;
+	}
+	*/
 	behavTime_ = time;
 }
 
