@@ -7,7 +7,7 @@
  * pointer that will be used to get/set the current rewardController index.
  */
 RewardControllerMode::RewardControllerMode(FrontPanelInfo *panelInfo) :
-NumberEditMode(1,1,"Controller","",1,1),
+NumberEditMode(4,1,"Controller","",1,1),
 panelInfo_(panelInfo)
 {
 }
