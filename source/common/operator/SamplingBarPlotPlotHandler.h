@@ -14,8 +14,7 @@ namespace Picto {
 
 class BarAxisHandler;
 
-/*! \brief A base class for manufacturing Widgets.
- *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+/*! \brief A handler for the Sampling Bar Plot
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

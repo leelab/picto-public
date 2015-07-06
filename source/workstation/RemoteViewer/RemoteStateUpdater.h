@@ -6,6 +6,7 @@
 
 #include "../../common/network/CommandChannel.h"
 #include "../../common/engine/stateupdater.h"
+#include "../../common/playback/LiveFrameReader.h"
 
 namespace Picto {
 
@@ -30,8 +31,8 @@ public:
 	RemoteStateUpdater(CommandChannel *serverChan);
 	void initForNewSession();
 	virtual bool updateState();
-	/*! \brief Returns an empty pointer since Analaysis Data Readers aren't yet supported in live Experiments.*/
-	virtual QSharedPointer<FrameReader> getFrameReader(){return QSharedPointer<FrameReader>();};
+	/*! \brief Returns an LiveFrameReader.*/
+	virtual QSharedPointer<FrameReader> getFrameReader(){ return QSharedPointer<FrameReader>(new LiveFrameReader()); };
 	/*! \brief Returns an empty pointer since Analaysis Data Readers aren't yet supported in live Experiments.*/
 	virtual QSharedPointer<LfpReader> getLfpReader(){return QSharedPointer<LfpReader>();};
 	/*! \brief Returns an empty pointer since Analaysis Data Readers aren't yet supported in live Experiments.*/

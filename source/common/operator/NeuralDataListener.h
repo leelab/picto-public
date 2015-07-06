@@ -21,10 +21,6 @@ public:
 	virtual ~NeuralDataListener(){};
 
 	virtual void addSpikeData(const NeuralDataUnit &data) = 0;
-	virtual void setBehavioralTime(double time);
-
-protected:
-	double behavTime_;
 };
 
 

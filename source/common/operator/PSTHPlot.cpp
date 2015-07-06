@@ -1,4 +1,5 @@
 #include "PSTHPlot.h"
+#include "PSTHPlotHandler.h"
 
 #include "../memleakdetect.h"
 
@@ -7,7 +8,6 @@ namespace Picto {
 const QString PSTHPlot::type = "PSTH Plot";
 
 PSTHPlot::PSTHPlot()
-	: lastNeuralTime_(0.0)
 {
 	AddDefinableProperty(QVariant::Double, "PreFlagWindow", 400);
 	AddDefinableProperty(QVariant::Double, "PostFlagWindow", 400);
@@ -24,8 +24,7 @@ QSharedPointer<Asset> PSTHPlot::Create()
 
 QSharedPointer<OperatorPlotHandler> PSTHPlot::getNewHandler()
 {
-	//PSTHPlot does not need to add any features to the base class yet
-	return SamplingBarBase::getNewHandler();
+	return QSharedPointer<OperatorPlotHandler>(new PSTHPlotHandler());
 }
 
 void PSTHPlot::receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler)
@@ -40,10 +39,21 @@ void PSTHPlot::receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandle
 	getTaskConfig()->addNeuralDataListener(neuralWeakPointer);
 }
 
-
+//! Trigger an alignEvent, which opens a recording window
 void PSTHPlot::alignEvent()
 {
-	activeScans_.push_back(std::move(ActiveScan(behavTime_, getBinSize(), getPreFlagWindow(), getPostFlagWindow())));
+	double behavTime = 0.0;
+	if (getDesignConfig()->getFrameReader())
+	{
+		behavTime = getDesignConfig()->getFrameReader()->getLatestTime();
+	}
+
+	if (behavTime <= 0.0)
+	{
+		return;
+	}
+
+	activeScans_.push_back(std::move(ActiveScan(behavTime, getBinSize(), getPreFlagWindow(), getPostFlagWindow())));
 	for (int chan = 0; chan < spikeData_.size(); chan++)
 	{
 		for (int unit = 0; unit < spikeData_[chan].size(); unit++)
@@ -56,21 +66,25 @@ void PSTHPlot::alignEvent()
 	}
 }
 
+//! Clear all accumulated data.
 void PSTHPlot::clearAccumulatedData()
 {
 	activeScans_.clear();
 	spikeData_.clear();
 }
 
+//! Add data from the ActiveScan into the histogram
 void PSTHPlot::submitScan(const ActiveScan &scan)
 {
 	const int channel = getChannel();
 	const int unit = getUnit();
+	const double binRate = 1.0 / scan.binSize_;
+
 	if (scan.spikes_.size() > channel && scan.spikes_[channel].size() > unit)
 	{
 		for (int bin = 0; bin < scan.binNum_; bin++)
 		{
-			submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), scan.spikes_[channel][unit][bin]);
+			submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), binRate * scan.spikes_[channel][unit][bin]);
 		}
 	}
 
@@ -100,36 +114,20 @@ int PSTHPlot::getUnit() const
 	return propertyContainer_->getPropertyValue("Unit").toInt();
 }
 
-void PSTHPlot::setBehavioralTime(double time)
-{
-	NeuralDataListener::setBehavioralTime(time);
-
-	static int counter = 0;
-	counter++;
-	if (counter > 10)
-	{
-		counter = 0;
-		qDebug() << "Behavioral Time:\t\t" << time;
-	}
-}
-
 /*! \brief Updates spikeData_ with the new spike and culls data older than the PreFlagWindow.
  *	\note This implementation began as a copy from NeuralDataView::addSpikeData.  
  */
 void PSTHPlot::addSpikeData(const NeuralDataUnit &data)
 {
-	static int counter = 0;
-	counter++;
-	if (counter > 50)
+	double behavTime = 0.0;
+	if (getDesignConfig()->getFrameReader())
 	{
-		counter = 0;
-		qDebug() << "Neural Data Fitted Time:\t" << data.getFittedtime();
+		behavTime = getDesignConfig()->getFrameReader()->getLatestTime();
 	}
 
-	//Update the last Neural time
-	if (data.getFittedtime() > lastNeuralTime_)
+	if (behavTime <= 0.0)
 	{
-		lastNeuralTime_ = data.getFittedtime();
+		return;
 	}
 
 	//If there aren't enough curves slots yet, make the slots
@@ -149,7 +147,7 @@ void PSTHPlot::addSpikeData(const NeuralDataUnit &data)
 	spikeData_[data.getChannel()][data.getUnit()].d.push_back(data.getFittedtime());
 
 	//Find the behavTime_ - preflagwindow(converted to seconds)
-	double retainMin = behavTime_ - 0.001 * getPreFlagWindow();
+	double retainMin = behavTime - 0.001 * getPreFlagWindow();
 
 	QLinkedList<double>::iterator it;
 	for (it = spikeData_[data.getChannel()][data.getUnit()].d.begin();
@@ -179,6 +177,7 @@ void PSTHPlot::addSpikeData(const NeuralDataUnit &data)
 	}
 }
 
+//! Construct a new ActiveScan
 PSTHPlot::ActiveScan::ActiveScan(double flagTime, double binSize, double preWindow, double postWindow)
 	: flagTime_(flagTime), binSize_(binSize), scanEndTime_(0.0), scanStartTime_(0.0), binNum_(0)
 {
@@ -190,6 +189,7 @@ PSTHPlot::ActiveScan::ActiveScan(double flagTime, double binSize, double preWind
 	binNum_ = int((0.001 * (preWindow + postWindow)) / binSize_) + 1;
 }
 
+//! Add a spike to ongoing scans
 void PSTHPlot::ActiveScan::addSpike(int channel, int unit, double time)
 {
 	if (time > scanEndTime_ || time < scanStartTime_)

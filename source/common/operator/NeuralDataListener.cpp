@@ -5,14 +5,8 @@
 namespace Picto {
 
 NeuralDataListener::NeuralDataListener()
-	: behavTime_(0.0)
 {
 
-}
-
-void NeuralDataListener::setBehavioralTime(double time)
-{
-	behavTime_ = time;
 }
 
 }; //namespace Picto

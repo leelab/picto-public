@@ -1,4 +1,5 @@
 #include <QXmlStreamWriter>
+
 #include "virtualdeviceplugin.h"
 #include "simplespikesource.h"
 #include "simplemarksource.h"
@@ -71,8 +72,8 @@ void VirtualDevicePlugin::CreateEventSources()
 
 	//Standard Recording--------------------------------------------------------------------
 	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 1, 0)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
-	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001, 1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
+	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001, 1)));
 	//--------------------------------------------------------------------------------------------
 }
 
@@ -88,7 +89,11 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::startDevice()
 {
 	double currTime = timeStamper_->stampSec();
 	lastEvent_ = QSharedPointer<VirtualEvent>();
-	CreateEventSources();
+	if (sources_.isEmpty())
+	{
+		CreateEventSources();
+	}
+
 	latestEvents_.clear();
 	bool deviceStarted = true;
 	foreach(QSharedPointer<VirtualEventSource> source,sources_)
@@ -174,6 +179,7 @@ QList<QSharedPointer<Picto::DataUnit>> VirtualDevicePlugin::dumpData()
 {
 	dataList_.clear();
 	updateData();
+
 	return dataList_;
 }
 

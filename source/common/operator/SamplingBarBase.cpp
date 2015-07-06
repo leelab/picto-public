@@ -27,6 +27,7 @@ void SamplingBarBase::draw()
 	BarBase::draw();
 }
 
+//! Returns the the average of submitted samples for the indicated bin.
 double SamplingBarBase::_getSampleValue(long bin) const
 {
 	return m_qhdCumulValue[bin] / double(m_qhlCumulNum[bin]);

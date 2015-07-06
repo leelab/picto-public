@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['lastneuraltime_5f',['lastNeuralTime_',['../class_picto_1_1_p_s_t_h_plot.html#ab567a11c2a319de3efce03a0dfa8ffd0',1,'Picto::PSTHPlot']]],
   ['lastrewardperiod',['lastRewardPeriod',['../struct_picto_1_1_reward_controller_1_1_reward_channel.html#a6739217981d922354087f6c7cd68e107',1,'Picto::RewardController::RewardChannel']]],
   ['lastsaveversion_5f',['lastSaveVersion_',['../class_picto_1_1_design_root.html#a09909ceef8a5469eea9f3a623429377f',1,'Picto::DesignRoot']]],
   ['lastsynctimestamp_5f',['lastSyncTimestamp_',['../class_picto_1_1_input_port.html#a4b2781f98f87353df574dce2406b6333',1,'Picto::InputPort']]],

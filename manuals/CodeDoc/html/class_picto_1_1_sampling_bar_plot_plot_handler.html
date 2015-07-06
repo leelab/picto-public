@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A base class for manufacturing Widgets.  
+<p>A handler for the Sampling Bar Plot.  
  <a href="class_picto_1_1_sampling_bar_plot_plot_handler.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html">SamplingBarPlotPlotHandler.h</a>&gt;</code></p>
@@ -108,9 +108,9 @@ Inheritance diagram for Picto::SamplingBarPlotPlotHandler:</div>
  <div class="center">
   <img src="class_picto_1_1_sampling_bar_plot_plot_handler.png" usemap="#Picto::SamplingBarPlotPlotHandler_map" alt=""/>
   <map id="Picto::SamplingBarPlotPlotHandler_map" name="Picto::SamplingBarPlotPlotHandler_map">
-<area href="class_picto_1_1_sampling_bar_base_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::SamplingBarBasePlotHandler" shape="rect" coords="0,168,211,192"/>
-<area href="class_picto_1_1_bar_base_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::BarBasePlotHandler" shape="rect" coords="0,112,211,136"/>
-<area href="class_picto_1_1_operator_plot_handler.html" title="A base class for manufacturing Widgets. " alt="Picto::OperatorPlotHandler" shape="rect" coords="0,56,211,80"/>
+<area href="class_picto_1_1_sampling_bar_base_plot_handler.html" title="A handler for plots derived from the SamplingBarBase. " alt="Picto::SamplingBarBasePlotHandler" shape="rect" coords="0,168,211,192"/>
+<area href="class_picto_1_1_bar_base_plot_handler.html" title="A handler for plots derived from the BarBasePlot. " alt="Picto::BarBasePlotHandler" shape="rect" coords="0,112,211,136"/>
+<area href="class_picto_1_1_operator_plot_handler.html" title="A Handler for plots derived from all OperatorPlots. " alt="Picto::OperatorPlotHandler" shape="rect" coords="0,56,211,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -124,7 +124,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleXLabels
 <tr class="separator:a93601f0bf03e1fb5cd79ea90f310afe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_sampling_bar_base_plot_handler"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_sampling_bar_base_plot_handler')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_sampling_bar_base_plot_handler.html">Picto::SamplingBarBasePlotHandler</a></td></tr>
 <tr class="memitem:a830b3e2d5da5d1262b0798f418e51233 inherit pub_slots_class_picto_1_1_sampling_bar_base_plot_handler"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a830b3e2d5da5d1262b0798f418e51233"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initializeSampling</b> ()</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>initializeSampling</b> ()</td></tr>
 <tr class="separator:a830b3e2d5da5d1262b0798f418e51233 inherit pub_slots_class_picto_1_1_sampling_bar_base_plot_handler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86ee00ea842fc12998772f83b0af2cd4 inherit pub_slots_class_picto_1_1_sampling_bar_base_plot_handler"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86ee00ea842fc12998772f83b0af2cd4"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setErrorSamples</b> (const QVector&lt; QwtIntervalSample &gt; &amp;qvErrorSamples)</td></tr>
@@ -212,12 +212,11 @@ QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>getWidget</b> ()
 <tr class="separator:aeadc6b4e8d07f1622159723367273742 inherit pub_methods_class_picto_1_1_operator_plot_handler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A base class for manufacturing Widgets. </p>
-<dl class="section note"><dt>Note</dt><dd>This exists because Qt requires widgets to be constructed in the UI thread. </dd></dl>
+<div class="textblock"><p>A handler for the Sampling Bar Plot. </p>
 <dl class="section author"><dt>Author</dt><dd>Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2009-2015 </dd></dl>
 
-<p>Definition at line <a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html#l00025">25</a> of file <a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html">SamplingBarPlotPlotHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html#l00024">24</a> of file <a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html">SamplingBarPlotPlotHandler.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>source/common/operator/<a class="el" href="_sampling_bar_plot_plot_handler_8h_source.html">SamplingBarPlotPlotHandler.h</a></li>
 <li>source/common/operator/<a class="el" href="_sampling_bar_plot_plot_handler_8cpp_source.html">SamplingBarPlotPlotHandler.cpp</a></li>

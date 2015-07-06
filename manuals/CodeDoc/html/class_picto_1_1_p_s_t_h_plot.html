@@ -133,6 +133,7 @@ Inheritance diagram for Picto::PSTHPlot:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class to hold onto data for currently-collecting scans.  <a href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_data_list.html">DataList</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct to track accumulated Spike Data.  <a href="struct_picto_1_1_p_s_t_h_plot_1_1_data_list.html#details">More...</a><br /></td></tr>
@@ -141,7 +142,8 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr class="memitem:a1859f6331c1eeb71d28eeace4ed9fbed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1859f6331c1eeb71d28eeace4ed9fbed"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>alignEvent</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a1859f6331c1eeb71d28eeace4ed9fbed">alignEvent</a> ()</td></tr>
+<tr class="memdesc:a1859f6331c1eeb71d28eeace4ed9fbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger an alignEvent, which opens a recording window. <br /></td></tr>
 <tr class="separator:a1859f6331c1eeb71d28eeace4ed9fbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_slots_class_picto_1_1_sampling_histogram_plot"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_picto_1_1_sampling_histogram_plot')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></td></tr>
 <tr class="memitem:a2be4f4b28b583c7e30b3efab645de0af inherit pub_slots_class_picto_1_1_sampling_histogram_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2be4f4b28b583c7e30b3efab645de0af"></a>
@@ -217,9 +219,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>receivePlotHa
 <tr class="memitem:a0688bf18aac413746370f7cad2279b78"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a0688bf18aac413746370f7cad2279b78">addSpikeData</a> (const <a class="el" href="class_picto_1_1_neural_data_unit.html">NeuralDataUnit</a> &amp;data)</td></tr>
 <tr class="memdesc:a0688bf18aac413746370f7cad2279b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates spikeData_ with the new spike and culls data older than the PreFlagWindow.  <a href="#a0688bf18aac413746370f7cad2279b78">More...</a><br /></td></tr>
 <tr class="separator:a0688bf18aac413746370f7cad2279b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fe2eba4dc349981d3daffe429a59afb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fe2eba4dc349981d3daffe429a59afb"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setBehavioralTime</b> (double time)</td></tr>
-<tr class="separator:a7fe2eba4dc349981d3daffe429a59afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_picto_1_1_sampling_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_picto_1_1_sampling_bar_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></td></tr>
 <tr class="memitem:aeea9d356e36fd7448e9d7efdb6c61cb8 inherit pub_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeea9d356e36fd7448e9d7efdb6c61cb8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#aeea9d356e36fd7448e9d7efdb6c61cb8">draw</a> ()</td></tr>
@@ -678,10 +677,12 @@ Protected Member Functions</h2></td></tr>
 virtual QSharedPointer&lt; <a class="el" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getNewHandler</b> ()</td></tr>
 <tr class="separator:ab8b039586dc846662b07d4d7bb38893b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a521219e909f08d2bcb88a564df884cf0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a521219e909f08d2bcb88a564df884cf0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clearAccumulatedData</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a521219e909f08d2bcb88a564df884cf0">clearAccumulatedData</a> ()</td></tr>
+<tr class="memdesc:a521219e909f08d2bcb88a564df884cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all accumulated data. <br /></td></tr>
 <tr class="separator:a521219e909f08d2bcb88a564df884cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1373d52c6a4ea89d3d4e95f69a5d020"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1373d52c6a4ea89d3d4e95f69a5d020"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>submitScan</b> (const <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &amp;scan)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#ae1373d52c6a4ea89d3d4e95f69a5d020">submitScan</a> (const <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &amp;scan)</td></tr>
+<tr class="memdesc:ae1373d52c6a4ea89d3d4e95f69a5d020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data from the <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html" title="A class to hold onto data for currently-collecting scans. ">ActiveScan</a> into the histogram. <br /></td></tr>
 <tr class="separator:ae1373d52c6a4ea89d3d4e95f69a5d020"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_picto_1_1_sampling_histogram_plot"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_picto_1_1_sampling_histogram_plot')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_picto_1_1_sampling_histogram_plot.html">Picto::SamplingHistogramPlot</a></td></tr>
 <tr class="memitem:a5684a33b2cebc72abf123ba64a2c89e8 inherit pro_methods_class_picto_1_1_sampling_histogram_plot"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5684a33b2cebc72abf123ba64a2c89e8"></a>
@@ -703,7 +704,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a2b344e08d4e771dccf012d133500f07e inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93c31b456f4978556d0bae998e478d6f"></a>
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a93c31b456f4978556d0bae998e478d6f">_getSampleValue</a> (long bin) const </td></tr>
-<tr class="memdesc:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the passed-in bin. <br /></td></tr>
+<tr class="memdesc:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the the average of submitted samples for the indicated bin. <br /></td></tr>
 <tr class="separator:a93c31b456f4978556d0bae998e478d6f inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36768e75027e8b2eb63660be2a441569 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#a36768e75027e8b2eb63660be2a441569">_handleErrorInitial</a> (QVector&lt; QwtIntervalSample &gt; &amp;)</td></tr>
 <tr class="memdesc:a36768e75027e8b2eb63660be2a441569 inherit pro_methods_class_picto_1_1_sampling_bar_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional error calculation for future children. Called start of replot.  <a href="#a36768e75027e8b2eb63660be2a441569">More...</a><br /></td></tr>
@@ -894,10 +895,6 @@ QVector&lt; QVector&lt; <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_da
 QList&lt; <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html">ActiveScan</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#a4e46e1591007cd132a5ad9e49fe655fe">activeScans_</a></td></tr>
 <tr class="memdesc:a4e46e1591007cd132a5ad9e49fe655fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all scans in progress. <br /></td></tr>
 <tr class="separator:a4e46e1591007cd132a5ad9e49fe655fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab567a11c2a319de3efce03a0dfa8ffd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab567a11c2a319de3efce03a0dfa8ffd0"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_p_s_t_h_plot.html#ab567a11c2a319de3efce03a0dfa8ffd0">lastNeuralTime_</a></td></tr>
-<tr class="memdesc:ab567a11c2a319de3efce03a0dfa8ffd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The last neural data fitted time stamp. <br /></td></tr>
-<tr class="separator:ab567a11c2a319de3efce03a0dfa8ffd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_picto_1_1_sampling_bar_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_sampling_bar_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_sampling_bar_base.html">Picto::SamplingBarBase</a></td></tr>
 <tr class="memitem:addb16fe891f61d6312118cc77fe92659 inherit pro_attribs_class_picto_1_1_sampling_bar_base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addb16fe891f61d6312118cc77fe92659"></a>
 QHash&lt; long, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_sampling_bar_base.html#addb16fe891f61d6312118cc77fe92659">m_qhdCumulValSq</a></td></tr>
@@ -974,10 +971,6 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_design_config.html">Desig
 QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_asset.html#a2185d556cd79264dd6e409660e78fd9a">taskConfig_</a></td></tr>
 <tr class="memdesc:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task config managing this <a class="el" href="class_picto_1_1_asset.html" title="The base class for all elements of a Picto experiment/analysis design. ">Asset</a> and the <a class="el" href="class_picto_1_1_task.html" title="A Task contains the top level StateMachine that defines the logic for researching an experimental que...">Task</a> containing it. <br /></td></tr>
 <tr class="separator:a2185d556cd79264dd6e409660e78fd9a inherit pro_attribs_class_picto_1_1_asset"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_class_picto_1_1_neural_data_listener"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_picto_1_1_neural_data_listener')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_picto_1_1_neural_data_listener.html">Picto::NeuralDataListener</a></td></tr>
-<tr class="memitem:a8558b808383d94adf943bec758f439c3 inherit pro_attribs_class_picto_1_1_neural_data_listener"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8558b808383d94adf943bec758f439c3"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>behavTime_</b></td></tr>
-<tr class="separator:a8558b808383d94adf943bec758f439c3 inherit pro_attribs_class_picto_1_1_neural_data_listener"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -1113,7 +1106,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Implements <a class="el" href="class_picto_1_1_neural_data_listener.html">Picto::NeuralDataListener</a>.</p>
 
-<p>Definition at line <a class="el" href="_p_s_t_h_plot_8cpp_source.html#l00119">119</a> of file <a class="el" href="_p_s_t_h_plot_8cpp_source.html">PSTHPlot.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_p_s_t_h_plot_8cpp_source.html#l00120">120</a> of file <a class="el" href="_p_s_t_h_plot_8cpp_source.html">PSTHPlot.cpp</a>.</p>
 
 </div>
 </div>

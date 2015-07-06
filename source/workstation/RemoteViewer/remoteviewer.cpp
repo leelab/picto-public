@@ -1061,7 +1061,6 @@ void RemoteViewer::setupUi()
 	//----------Plots---------------
 	neuralDataViewer_ = new NeuralDataViewer(engine_);
 	connect(updater_.data(),SIGNAL(framePresented(double)),neuralDataViewer_,SLOT(setBehavioralTime(double)));
-	connect(updater_.data(), SIGNAL(framePresented(double)), this, SLOT(updateBehavioralTime(double)));
 
 	//--------Run Info--------------
 	currentRunViewer_ = new TaskRunViewer();
@@ -2505,18 +2504,4 @@ void RemoteViewer::notifyAnalysisSelection(const QString&, bool, bool)
 void RemoteViewer::runStarted(QUuid runId)
 {
 	outputWidgetHolder_->newRunStarted(runId);
-}
-
-/*! \brief Slot to distribute BehavioralTime updates to the currently active TaskConfig.
- */
-void RemoteViewer::updateBehavioralTime(double time)
-{
-	if (!activeExperiment_)
-		return;
-
-	QSharedPointer<Task> task = activeExperiment_->getTaskByName(taskListBox_->currentText());
-	if (task && task->getTaskConfig())
-	{
-		task->getTaskConfig()->notifyBehavioralTime(time);
-	}
 }

@@ -14,8 +14,7 @@ namespace Picto {
 
 class TaskConfig;
 
-/*! \brief A base class for manufacturing Widgets.
- *	\note This exists because Qt requires widgets to be constructed in the UI thread.
+/*! \brief A Handler for plots derived from all OperatorPlots
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */

@@ -42,7 +42,6 @@ public:
 	virtual void receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler);
 
 	virtual void addSpikeData(const NeuralDataUnit &data);
-	virtual void setBehavioralTime(double time);
 
 public slots:
 	void alignEvent();
@@ -60,17 +59,24 @@ protected:
 		bool exists;
 	};
 
+	//! A class to hold onto data for currently-collecting scans
 	struct ActiveScan
 	{
 		ActiveScan(double flagTime, double binSize, double preWindow, double postWindow);
 
 		void addSpike(int channel, int unit, double time);
 
+		//! The time that the alignment flag was thrown
 		double flagTime_;
+		//! The size of the histogram bins
 		double binSize_;
+		//! The start time (in seconds) of the recording window
 		double scanStartTime_;
+		//! The end time (in seconds) of the recording window
 		double scanEndTime_;
+		//! The number of bins
 		int binNum_;
+		//! A vector of Channel, Number, then Bin of spike counts
 		QVector<QVector<QVector<int>>> spikes_;
 	};
 
@@ -81,9 +87,6 @@ protected:
 
 	//! List of all scans in progress.
 	QList<ActiveScan> activeScans_;
-
-	//! The last neural data fitted time stamp
-	double lastNeuralTime_;
 
 };
 

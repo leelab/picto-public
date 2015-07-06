@@ -127,7 +127,7 @@ var searchData=
   ['resumeresponsehandler',['ResumeResponseHandler',['../struct_picto_1_1_resume_response_handler.html',1,'Picto']]],
   ['returnplothandler',['returnPlotHandler',['../class_view_selection_frame.html#ae5852632859d55bb477814befb2069ad',1,'ViewSelectionFrame']]],
   ['returntostatus',['returnToStatus',['../class_menu.html#aee30eb0acf3840999bdb5fb6e1eca47a',1,'Menu']]],
-  ['reward',['Reward',['../class_picto_1_1_reward.html#acc1d1c8281f093340b42414957376654',1,'Picto::Reward::Reward()'],['../struct_task_command_handler.html#aca52d5b0a76427f2fd41d6fed1e7de99',1,'TaskCommandHandler::reward()'],['../class_remote_viewer.html#aadf9d8702171b5641e51a673ee90c586',1,'RemoteViewer::reward()']]],
+  ['reward',['reward',['../struct_task_command_handler.html#aca52d5b0a76427f2fd41d6fed1e7de99',1,'TaskCommandHandler::reward()'],['../class_remote_viewer.html#aadf9d8702171b5641e51a673ee90c586',1,'RemoteViewer::reward()'],['../class_picto_1_1_reward.html#acc1d1c8281f093340b42414957376654',1,'Picto::Reward::Reward()']]],
   ['reward',['Reward',['../class_picto_1_1_reward.html',1,'Picto']]],
   ['rewardchannel',['RewardChannel',['../struct_picto_1_1_reward_controller_1_1_reward_channel.html',1,'Picto::RewardController']]],
   ['rewardchannel_5f',['rewardChannel_',['../class_remote_viewer.html#a628aac6c471c656cce3fc92bb4d167f8',1,'RemoteViewer']]],

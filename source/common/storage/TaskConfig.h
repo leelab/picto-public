@@ -77,7 +77,6 @@ public:
 
 	void addNeuralDataListener(QWeakPointer<NeuralDataListener> plot);
 	void notifyNeuralDataListeners(const NeuralDataUnit &neuralData);
-	void notifyBehavioralTime(double time);
 
 signals:
 	//! A signal sent whenever a viewer widget is added to the Task.

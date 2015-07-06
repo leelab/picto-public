@@ -100,7 +100,7 @@ var searchData=
   ['resumeplayback',['resumePlayback',['../class_picto_1_1_playback_state_updater.html#a8f3ed54c6c91f21f64b0863e4a3a05f3',1,'Picto::PlaybackStateUpdater']]],
   ['returnplothandler',['returnPlotHandler',['../class_view_selection_frame.html#ae5852632859d55bb477814befb2069ad',1,'ViewSelectionFrame']]],
   ['returntostatus',['returnToStatus',['../class_menu.html#aee30eb0acf3840999bdb5fb6e1eca47a',1,'Menu']]],
-  ['reward',['Reward',['../class_picto_1_1_reward.html#acc1d1c8281f093340b42414957376654',1,'Picto::Reward::Reward()'],['../struct_task_command_handler.html#aca52d5b0a76427f2fd41d6fed1e7de99',1,'TaskCommandHandler::reward()'],['../class_remote_viewer.html#aadf9d8702171b5641e51a673ee90c586',1,'RemoteViewer::reward()']]],
+  ['reward',['reward',['../struct_task_command_handler.html#aca52d5b0a76427f2fd41d6fed1e7de99',1,'TaskCommandHandler::reward()'],['../class_remote_viewer.html#aadf9d8702171b5641e51a673ee90c586',1,'RemoteViewer::reward()'],['../class_picto_1_1_reward.html#acc1d1c8281f093340b42414957376654',1,'Picto::Reward::Reward()']]],
   ['rewardcontrollermode',['RewardControllerMode',['../class_reward_controller_mode.html#ab8d1a14ee21bb2d44f027c6e9298438e',1,'RewardControllerMode']]],
   ['rewarddataunit',['RewardDataUnit',['../class_picto_1_1_reward_data_unit.html#a023d4f4cd9a13420f24d8735a8b1408b',1,'Picto::RewardDataUnit']]],
   ['rewarddataunithandler',['RewardDataUnitHandler',['../class_picto_1_1_reward_data_unit_handler.html#a22d4d28a9fa3e499cf236c20448847d9',1,'Picto::RewardDataUnitHandler']]],

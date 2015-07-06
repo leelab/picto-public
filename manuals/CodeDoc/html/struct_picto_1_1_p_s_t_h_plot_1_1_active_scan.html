@@ -97,39 +97,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Picto::PSTHPlot::ActiveScan Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to hold onto data for currently-collecting scans.  
+ <a href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8cc9e8efbb20f499541c3e180f2687f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cc9e8efbb20f499541c3e180f2687f5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ActiveScan</b> (double flagTime, double binSize, double preWindow, double postWindow)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a8cc9e8efbb20f499541c3e180f2687f5">ActiveScan</a> (double flagTime, double binSize, double preWindow, double postWindow)</td></tr>
+<tr class="memdesc:a8cc9e8efbb20f499541c3e180f2687f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html" title="A class to hold onto data for currently-collecting scans. ">ActiveScan</a>. <br /></td></tr>
 <tr class="separator:a8cc9e8efbb20f499541c3e180f2687f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e45a4af4365b25efd765e13c234f1ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e45a4af4365b25efd765e13c234f1ca"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addSpike</b> (int channel, int unit, double time)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a1e45a4af4365b25efd765e13c234f1ca">addSpike</a> (int channel, int unit, double time)</td></tr>
+<tr class="memdesc:a1e45a4af4365b25efd765e13c234f1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a spike to ongoing scans. <br /></td></tr>
 <tr class="separator:a1e45a4af4365b25efd765e13c234f1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ac9ea86b33a5001568d3815c9952ce094"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9ea86b33a5001568d3815c9952ce094"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>flagTime_</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#ac9ea86b33a5001568d3815c9952ce094">flagTime_</a></td></tr>
+<tr class="memdesc:ac9ea86b33a5001568d3815c9952ce094"><td class="mdescLeft">&#160;</td><td class="mdescRight">The time that the alignment flag was thrown. <br /></td></tr>
 <tr class="separator:ac9ea86b33a5001568d3815c9952ce094"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab12499ecdbf17f673968e9b3f8bdfc99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab12499ecdbf17f673968e9b3f8bdfc99"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>binSize_</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#ab12499ecdbf17f673968e9b3f8bdfc99">binSize_</a></td></tr>
+<tr class="memdesc:ab12499ecdbf17f673968e9b3f8bdfc99"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the histogram bins. <br /></td></tr>
 <tr class="separator:ab12499ecdbf17f673968e9b3f8bdfc99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04f961e4d11369830315c0452dd39b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04f961e4d11369830315c0452dd39b9c"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>scanStartTime_</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a04f961e4d11369830315c0452dd39b9c">scanStartTime_</a></td></tr>
+<tr class="memdesc:a04f961e4d11369830315c0452dd39b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The start time (in seconds) of the recording window. <br /></td></tr>
 <tr class="separator:a04f961e4d11369830315c0452dd39b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace5ba1beff77a3620533060689fc003b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace5ba1beff77a3620533060689fc003b"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>scanEndTime_</b></td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#ace5ba1beff77a3620533060689fc003b">scanEndTime_</a></td></tr>
+<tr class="memdesc:ace5ba1beff77a3620533060689fc003b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The end time (in seconds) of the recording window. <br /></td></tr>
 <tr class="separator:ace5ba1beff77a3620533060689fc003b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc08916bce38b3e545eab34615ec21e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc08916bce38b3e545eab34615ec21e6"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>binNum_</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#acc08916bce38b3e545eab34615ec21e6">binNum_</a></td></tr>
+<tr class="memdesc:acc08916bce38b3e545eab34615ec21e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of bins. <br /></td></tr>
 <tr class="separator:acc08916bce38b3e545eab34615ec21e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2714fcd202b99fefc734c6f010cfdbd5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2714fcd202b99fefc734c6f010cfdbd5"></a>
-QVector&lt; QVector&lt; QVector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>spikes_</b></td></tr>
+QVector&lt; QVector&lt; QVector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a2714fcd202b99fefc734c6f010cfdbd5">spikes_</a></td></tr>
+<tr class="memdesc:a2714fcd202b99fefc734c6f010cfdbd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A vector of Channel, Number, then Bin of spike counts. <br /></td></tr>
 <tr class="separator:a2714fcd202b99fefc734c6f010cfdbd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
+<div class="textblock"><p>A class to hold onto data for currently-collecting scans. </p>
+
 <p>Definition at line <a class="el" href="_p_s_t_h_plot_8h_source.html#l00063">63</a> of file <a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
 <li>source/common/operator/<a class="el" href="_p_s_t_h_plot_8h_source.html">PSTHPlot.h</a></li>

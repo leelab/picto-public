@@ -266,6 +266,8 @@ HEADERS += $$(PICTO_TREE)/source/common/operator/SamplingBarPlotPlotHandler.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/SamplingBarPlotPlotHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/PSTHPlot.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/PSTHPlot.cpp
+HEADERS += $$(PICTO_TREE)/source/common/operator/PSTHPlotHandler.h
+SOURCES += $$(PICTO_TREE)/source/common/operator/PSTHPlotHandler.cpp
 HEADERS += $$(PICTO_TREE)/source/common/operator/NeuralDataListener.h
 SOURCES += $$(PICTO_TREE)/source/common/operator/NeuralDataListener.cpp
 

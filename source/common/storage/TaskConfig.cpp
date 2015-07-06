@@ -360,36 +360,4 @@ void TaskConfig::notifyNeuralDataListeners(const NeuralDataUnit &neuralData)
 	}
 }
 
-void TaskConfig::notifyBehavioralTime(double time)
-{
-	bool bCleanupRequired = false;
-	foreach(QWeakPointer<NeuralDataListener> listener, neuralDataListeners_)
-	{
-		if (listener.isNull())
-		{
-			bCleanupRequired = true;
-		}
-		else
-		{
-			listener.data()->setBehavioralTime(time);
-		}
-	}
-
-	if (bCleanupRequired)
-	{
-		QList<QWeakPointer<NeuralDataListener>>::iterator it = neuralDataListeners_.begin();
-		while (it != neuralDataListeners_.end())
-		{
-			if (it->isNull())
-			{
-				it = neuralDataListeners_.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
-	}
-}
-
 }
