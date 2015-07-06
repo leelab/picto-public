@@ -72,7 +72,8 @@ void VirtualDevicePlugin::CreateEventSources()
 
 	//Standard Recording--------------------------------------------------------------------
 	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 1, 0)));
-	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.01, 0.001, 1, 1)));
+	sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleSpikeSource(.02, 0.001, 2, 0)));
 	//sources_.push_back(QSharedPointer<VirtualEventSource>(new SimpleLFPSource(.5, 0.001, 1)));
 	//--------------------------------------------------------------------------------------------
 }
@@ -128,6 +129,8 @@ NeuralDataAcqInterface::deviceStatus VirtualDevicePlugin::stopDevice()
 	{
 		source->stop();
 	}
+	sources_.clear();
+
 	status_ = notStarted;
 	return status_;
 }

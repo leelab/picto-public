@@ -49,10 +49,9 @@ public:
 	//! \brief An Asset-identifying string used with AssetFactory::addAssetType
 	static const QString type;
 
-	//! Gets the color of the BarBase.
-	const QColor getColor() const { return propertyContainer_->getPropertyValue("ColumnColor").value<QColor>(); };
-	//! Sets the color of the BarBase.
-	void setColor(QColor color) { propertyContainer_->setPropertyValue("ColumnColor", color); m_bUpdateBrush = true; };
+	const QColor getColor() const;
+
+	void setColor(QColor color);
 	//! Sets the color of the BarBase.
 	void setColor(QVariant color) { setColor(color.value<QColor>()); };
 
@@ -74,45 +73,47 @@ public:
 	void setAlpha(int a){ QColor val = getColor(); val.setAlpha(a); setColor(val); };
 
 public slots:
-	/*! \brief Sets the color of this BarBase.
-	*	\details Inputs are from 0-255.
-	*/
-	void setColor(int r, int g, int b, int a = 255){ setColor(QColor(r, g, b, a)); };
 	//! Clears all of the current plot data.
 	void clearPlot() { reset(); };
 
+	//! Sets the current data set name
+	void setDataset(QString dataset) { currentSetName_ = dataset; };
+
+	/*! \brief Sets the color of this BarBase.
+	 *	\details Inputs are from 0-255.
+	 */
+	void setColor(int r, int g, int b, int a = 255){ setColor(QColor(r, g, b, a)); };
+
 signals:
 	void initializeHistoSig(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType);
-	void updateColumnsSig(const QColor &color, ColumnType::ColumnType eType);
-	void normalizeScaleSig(double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
-	void setSamplesSig(const QVector<QwtIntervalSample> &qvSamples);
-	void setErrorSamplesSig(const QVector<QwtIntervalSample>&);
+	void updateColumnsSig(const QString &dataSet, const QColor &color, ColumnType::ColumnType eType);
+	void normalizeScaleSig(const QString &dataSet, double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
+	void setSamplesSig(const QString &dataSet, const QVector<QwtIntervalSample> &qvSamples);
+	void setErrorSamplesSig(const QString &dataSet, const QVector<QwtIntervalSample>&);
 	void setErrorBarsVisibleSig(bool);
 	void scaleAxisSig(double dBinSize);
 	void handleXLabelsSig(long, long);
-	void callReplot();
+	void callReplot(const QString &dataSet);
 
 protected:
 	virtual void replot();
+
+	virtual void replot(const QString &setName);
 
 	virtual void initView();
 
 	void createNormalizedScale(double dMaxValue, double dTotalValue);
 
-	//! Flag to update the bins
-	bool m_bBinsModified;
-	//! Flag to update the Colors and Brushes
-	bool m_bUpdateBrush;
 	//! Returns the current Bin Size
 	virtual double getBinSize() const = 0;
 	//! Returns the current Bin Spacing
 	virtual double getBinSpacing() const = 0;
 
+	ColumnType::ColumnType getColumnType() const;
+
 	virtual QSharedPointer<OperatorPlotHandler> getNewHandler();
 	virtual void connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler);
-	QSharedPointer<BarBasePlotHandler> getBarBasePlotHandler();
 
-	ColumnType::ColumnType getColumnType() const;
 	//! Sets X Labels for children that change the default behavior.  Accepts Lower and Upper bounds as arguments.
 	virtual void handleXLabels(long, long) {};
 
@@ -121,17 +122,17 @@ protected:
 
 	virtual double _getSampleValue(long bin) const;
 
-	/*! \brief Optional error calculation for future children.  Called start of replot.
+	/*! \brief Optional error calculation for children.  Called start of replot.
 	*	\sa BarBase::replot
 	*/
 	virtual void _handleErrorInitial(QVector<QwtIntervalSample>&) {};
 
-	/*! \brief Optional error calculation for future children.  Called on each bin of replot.
+	/*! \brief Optional error calculation for children.  Called on each bin of replot.
 	*	\sa BarBase::replot
 	*/
 	virtual void _handleErrorValue(long, double&, QVector<QwtIntervalSample>&) {};
 
-	/*! \brief Optional error calculation for future children.  Called at end of replot.
+	/*! \brief Optional error calculation for children.  Called at end of replot.
 	*	\sa BarBase::replot
 	*/
 	virtual void _handleErrorFinal(QVector<QwtIntervalSample>&) {};
@@ -146,10 +147,35 @@ protected:
 	virtual void _createBin(long bin);
 	virtual void _destroyBin(long bin);
 
-	//!	\brief The cumulative binwise values.
-	QHash<long, double> m_qhdCumulValue;
+	virtual void _createSet(const QString &setName);
+
+	//! Flag to update the bins
+	QHash<QString, bool> m_qhBinsModified;
+	//! Flag to update the Colors and Brushes
+	QHash<QString, bool> m_qhUpdateBrush;
+	//! Flag to indicate the data within a set changed
+	QHash<QString, bool> m_qhDataChanged;
+
+	//!	The cumulative binwise values, indexed by dataset name.
+	QHash<QString,QHash<long, double>> m_qhCumulValue;
+	//! The color of each dataset, indexed by dataset name.
+	QHash<QString, QColor> m_qhColor;
 	//! A QStringList of Column Types
 	QStringList columnTypes_;
+
+	//! The current dataset
+	QString currentSetName_;
+
+	//! The cached lowest bin value
+	long m_lCachedXMin;
+	//! The cached highest bin value
+	long m_lCachedXMax;
+
+	//! Flag to indicate a total recalculation of bins is necessary
+	bool m_bTotalBinRecalc;
+
+	//! Used to stagger new colors
+	char m_cUnasignedNum;
 };
 
 

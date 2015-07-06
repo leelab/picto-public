@@ -12,7 +12,7 @@ namespace Picto {
 const QString BarBase::type = "Bar Base";
 
 BarBase::BarBase()
-	: m_bBinsModified(false), m_bUpdateBrush(false)
+	: currentSetName_("Default"), m_lCachedXMin(LONG_MAX), m_lCachedXMax(LONG_MIN), m_bTotalBinRecalc(false), m_cUnasignedNum(0)
 {
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
@@ -28,6 +28,36 @@ BarBase::BarBase()
  */
 void BarBase::replot()
 {
+	bool bBinsModified = false;
+	foreach(QString setName, m_qhCumulValue.keys())
+	{
+		if (m_qhBinsModified[setName])
+		{
+			bBinsModified = true;
+		}
+
+		if (m_qhDataChanged[setName] || m_bTotalBinRecalc)
+		{
+			replot(setName);
+			m_qhDataChanged[setName] = false;
+		}
+	}
+
+	m_bTotalBinRecalc = false;
+
+	if (bBinsModified)
+	{
+		emit scaleAxisSig(getBinSize());
+		emit handleXLabelsSig(m_lCachedXMin, m_lCachedXMax);
+	}
+}
+
+//! Replot the data within individual datasets
+void BarBase::replot(const QString &setName)
+{
+	const QString oldCurrentSet = currentSetName_;
+	currentSetName_ = setName;
+
 	QVector<QwtIntervalSample> qvSamples;
 	QVector<QwtIntervalSample> qvError;
 
@@ -36,9 +66,9 @@ void BarBase::replot()
 
 	_handleErrorInitial(qvError);
 
-	if (m_qhdCumulValue.isEmpty())
+	if (m_qhCumulValue[setName].isEmpty())
 	{
-		emit setSamplesSig(qvSamples);
+		emit setSamplesSig(setName, qvSamples);
 		_handleErrorFinal(qvError);
 
 		if (bNormalized)
@@ -46,16 +76,17 @@ void BarBase::replot()
 			createNormalizedScale(1.0, 1.0);
 		}
 
-		emit callReplot();
+		emit callReplot(setName);
+		currentSetName_ = oldCurrentSet;
 		return;
 	}
 
-	QList<long> keyList = m_qhdCumulValue.keys();
+	QList<long> keyList = m_qhCumulValue[setName].keys();
 	std::sort(keyList.begin(), keyList.end());
 
 	double total = 0.0;
 	double dRangeMax = 0.0;
-	
+
 	foreach(long key, keyList)
 	{
 		const double dSample = _getSampleValue(key);
@@ -77,7 +108,7 @@ void BarBase::replot()
 		_handleErrorValue(key, dRangeMax, qvError);
 	}
 
-	emit setSamplesSig(qvSamples);
+	emit setSamplesSig(setName, qvSamples);
 
 	_handleErrorFinal(qvError);
 
@@ -86,29 +117,69 @@ void BarBase::replot()
 		createNormalizedScale(dRangeMax, total);
 	}
 
-	if (m_bBinsModified)
+	//Stretch out the bins if necessary
+	if (m_qhBinsModified[setName] || m_bTotalBinRecalc)
 	{
-		m_bBinsModified = false;
-		emit scaleAxisSig(dBinSize);
-		emit handleXLabelsSig(*keyList.begin(), *(keyList.end() - 1));
+		m_qhBinsModified[setName] = false;
+		if (*keyList.begin() < m_lCachedXMin)
+		{
+			m_lCachedXMin = *keyList.begin();
+		}
+
+		if (*(keyList.end() - 1) > m_lCachedXMax)
+		{
+			m_lCachedXMax = *(keyList.end() - 1);
+		}
 	}
 
-	if (m_bUpdateBrush)
+	if (m_qhUpdateBrush[setName])
 	{
-		m_bUpdateBrush = false;
-		emit updateColumnsSig(getColor(), getColumnType());
+		m_qhUpdateBrush[setName] = false;
+		emit updateColumnsSig(setName, getColor(), getColumnType());
 	}
 
-	emit callReplot();
+	emit callReplot(setName);
+	currentSetName_ = oldCurrentSet;
 }
 
+//! Sets the color of the BarBase.
+void BarBase::setColor(QColor color)
+{
+	//Set the color to the property so it is used as the default for new datasets.
+	propertyContainer_->setPropertyValue("ColumnColor", color);
+	//CumulValue is the best Hash to use to find out if the dataset has been created yet.
+	if (!m_qhCumulValue.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	m_qhColor[currentSetName_] = color;
+	m_qhUpdateBrush[currentSetName_] = true;
+}
+
+//! Gets the color of the BarBase.
+const QColor BarBase::getColor() const
+{
+	// Return the current set's color if it has been declared
+	if (m_qhColor.contains(currentSetName_))
+	{
+		return m_qhColor[currentSetName_];
+	}
+
+	//Otherwise use the property value
+	return propertyContainer_->getPropertyValue("ColumnColor").value<QColor>();
+}
 
 void BarBase::draw()
 {
 	//Force a replot if you need an update
-	if (m_bUpdateBrush || m_bBinsModified )
+	foreach(QString setName, m_qhCumulValue.keys())
 	{
-		m_bDataChanged = true;
+		if (m_qhUpdateBrush[setName] || m_qhBinsModified[setName])
+		{
+			m_bDataChanged = true;
+			m_qhDataChanged[setName] = true;
+		}
 	}
 
 	//Call parent draw method.
@@ -118,7 +189,12 @@ void BarBase::draw()
 //! Returns the value of the passed-in bin.
 double BarBase::_getSampleValue(long bin) const
 {
-	return m_qhdCumulValue[bin];
+	if (m_qhCumulValue.contains(currentSetName_) && m_qhCumulValue[currentSetName_].contains(bin))
+	{
+		return m_qhCumulValue[currentSetName_][bin];
+	}
+
+	return 0.0;
 }
 
 /*! \brief Uses the passed-in values to generate the ideal normalized plot range.
@@ -157,7 +233,7 @@ void BarBase::createNormalizedScale(double dMaxValue, double dTotalValue)
 		mediumTicks += (i / double(numOfDivs))*dTotalValue*dAxisMax;
 	}
 
-	emit normalizeScaleSig(dAxisMax, dTotalValue, mediumTicks, majorTicks);
+	//emit normalizeScaleSig(currentSetName_, dAxisMax, dTotalValue, mediumTicks, majorTicks);
 }
 
 void BarBase::initView()
@@ -176,9 +252,19 @@ void BarBase::initView()
  */
 void BarBase::reset()
 {
-	m_qhdCumulValue.clear();
+	currentSetName_ = "Default";
+
+	m_lCachedXMin = LONG_MAX;
+	m_lCachedXMax = LONG_MIN;
 
 	m_bDataChanged = true;
+	m_bTotalBinRecalc = true;
+
+	foreach(QString dataset, m_qhDataChanged.keys())
+	{
+		m_qhCumulValue[dataset].clear();
+		m_qhDataChanged[dataset] = true;
+	}
 }
 
 /*!	\brief Modifies the value in the indicated bin by the passed-in value.
@@ -186,13 +272,19 @@ void BarBase::reset()
 void BarBase::_adjustValue(long bin, double value)
 {
 	m_bDataChanged = true;
+	m_qhDataChanged[currentSetName_] = true;
 
-	if (!m_qhdCumulValue.contains(bin))
+	if (!m_qhCumulValue.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	if (!m_qhCumulValue[currentSetName_].contains(bin))
 	{
 		_createBin(bin);
 	}
 
-	m_qhdCumulValue[bin] += value;
+	m_qhCumulValue[currentSetName_][bin] += value;
 }
 
 /*!	\brief Sets the value in indicated bin to the value.
@@ -200,22 +292,29 @@ void BarBase::_adjustValue(long bin, double value)
 void BarBase::_setValue(long bin, double value)
 {
 	m_bDataChanged = true;
+	m_qhDataChanged[currentSetName_] = true;
 
-	if (!m_qhdCumulValue.contains(bin))
+	if (!m_qhCumulValue.contains(currentSetName_))
+	{
+		_createSet(currentSetName_);
+	}
+
+	if (!m_qhCumulValue[currentSetName_].contains(bin))
 	{
 		_createBin(bin);
 	}
 
-	m_qhdCumulValue[bin] = value;
+	m_qhCumulValue[currentSetName_][bin] = value;
 }
 
 /*!	\brief Eliminates the values in indicated bin.
  */
 void BarBase::_dropBin(long bin)
 {
-	if (m_qhdCumulValue.contains(bin))
+	if (m_qhCumulValue.contains(currentSetName_) && m_qhCumulValue[currentSetName_].contains(bin))
 	{
 		m_bDataChanged = true;
+		m_qhDataChanged[currentSetName_] = true;
 		_destroyBin(bin);
 	}
 }
@@ -224,9 +323,9 @@ void BarBase::_dropBin(long bin)
  */
 double BarBase::_getValue(long bin) const
 {
-	if (m_qhdCumulValue.contains(bin))
+	if (m_qhCumulValue.contains(currentSetName_) && m_qhCumulValue[currentSetName_].contains(bin))
 	{
-		return m_qhdCumulValue[bin];
+		return m_qhCumulValue[currentSetName_][bin];
 	}
 
 	return 0.0;
@@ -236,18 +335,45 @@ double BarBase::_getValue(long bin) const
  */
 void BarBase::_createBin(long bin)
 {
-	m_qhdCumulValue[bin] = 0;
+	m_qhCumulValue[currentSetName_][bin] = 0;
+	m_qhBinsModified[currentSetName_] = true;
+}
 
-	m_bBinsModified = true;
+/*!	\brief Virtual function to define behavior when a new set needs to be created.
+*/
+void BarBase::_createSet(const QString &setName)
+{
+	m_qhCumulValue[setName] = QHash<long, double>();
+	m_qhBinsModified[setName] = true;
+
+	if (!m_qhColor.contains(setName))
+	{
+		char myColorNum = m_cUnasignedNum++;
+		// Scramble up the digits in a periodic way
+		myColorNum = ((myColorNum & 0x0F) << 4) | ((myColorNum & 0xF0) >> 4);
+		myColorNum = ((myColorNum & 0x33) << 2) | ((myColorNum & 0xCC) >> 2);
+		myColorNum = ((myColorNum & 0x55) << 1) | ((myColorNum & 0xAA) >> 1);
+
+		int red = char(sin(0.0245 * myColorNum) * 127) + 128;
+		int green = char(sin(0.0245 * myColorNum + 2) * 127) + 128;
+		int blue = char(sin(0.0245 * myColorNum + 4) * 127) + 128;
+
+		m_qhColor[setName] = QColor(red, green, blue);
+	}
+	m_qhUpdateBrush[currentSetName_] = true;
+
 }
 
 /*!	\brief Virtual function to define behavior when a bin needs to be destroyed.
  */
 void BarBase::_destroyBin(long bin)
 {
-	m_qhdCumulValue.remove(bin);
-
-	m_bBinsModified = true;
+	m_qhCumulValue[currentSetName_].remove(bin);
+	m_qhBinsModified[currentSetName_] = true;
+	if (bin == m_lCachedXMin || bin == m_lCachedXMax)
+	{
+		m_bTotalBinRecalc = true;
+	}
 }
 
 //! Returns the current ColumnType parameter
@@ -261,12 +387,6 @@ QSharedPointer<OperatorPlotHandler> BarBase::getNewHandler()
 	return QSharedPointer<OperatorPlotHandler>(new BarBasePlotHandler());
 }
 
-
-QSharedPointer<BarBasePlotHandler> BarBase::getBarBasePlotHandler()
-{
-	return m_pPlotHandler.objectCast<BarBasePlotHandler>();
-}
-
 void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler)
 {
 	OperatorPlot::connectDataSignals(plotHandler);
@@ -277,20 +397,20 @@ void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler
 		barPlotHandler.data(), SLOT(initializeHisto(bool, const QColor&, const QColor&, int)));
 	connect(this, SIGNAL(handleXLabelsSig(long,long)),
 		barPlotHandler.data(), SLOT(handleXLabels(long,long)));
-	connect(this, SIGNAL(updateColumnsSig(const QColor&, ColumnType::ColumnType)),
-		barPlotHandler.data(), SLOT(updateColumns(const QColor&, ColumnType::ColumnType)));
-	connect(this, SIGNAL(normalizeScaleSig(double, double, const QList<double>&, const QList<double>&)),
-		barPlotHandler.data(), SLOT(normalizeScale(double, double, const QList<double>&, const QList<double>&)));
-	connect(this, SIGNAL(setSamplesSig(const QVector<QwtIntervalSample>&)),
-		barPlotHandler.data(), SLOT(setSamples(const QVector<QwtIntervalSample>&)));
-	connect(this, SIGNAL(setErrorSamplesSig(const QVector<QwtIntervalSample>&)),
-		barPlotHandler.data(), SLOT(setErrorSamples(const QVector<QwtIntervalSample>&)));
+	connect(this, SIGNAL(updateColumnsSig(const QString &, const QColor&, ColumnType::ColumnType)),
+		barPlotHandler.data(), SLOT(updateColumns(const QString &, const QColor&, ColumnType::ColumnType)));
+	connect(this, SIGNAL(normalizeScaleSig(const QString &, double, double, const QList<double>&, const QList<double>&)),
+		barPlotHandler.data(), SLOT(normalizeScale(const QString &, double, double, const QList<double>&, const QList<double>&)));
+	connect(this, SIGNAL(setSamplesSig(const QString &, const QVector<QwtIntervalSample>&)),
+		barPlotHandler.data(), SLOT(setSamples(const QString &, const QVector<QwtIntervalSample>&)));
+	connect(this, SIGNAL(setErrorSamplesSig(const QString &, const QVector<QwtIntervalSample>&)),
+		barPlotHandler.data(), SLOT(setErrorSamples(const QString &, const QVector<QwtIntervalSample>&)));
 	connect(this, SIGNAL(setErrorBarsVisibleSig(bool)),
 		barPlotHandler.data(), SLOT(setErrorBarsVisible(bool)));
 	connect(this, SIGNAL(scaleAxisSig(double)),
 		barPlotHandler.data(), SLOT(scaleAxis(double)));
-	connect(this, SIGNAL(callReplot()),
-		barPlotHandler.data(), SLOT(callReplot()));
+	connect(this, SIGNAL(callReplot(const QString &)),
+		barPlotHandler.data(), SLOT(callReplot(const QString &)));
 }
 
 

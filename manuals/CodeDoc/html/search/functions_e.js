@@ -26,6 +26,7 @@ var searchData=
   ['nextpage',['nextPage',['../class_picto_1_1_analysis_file_output_widget.html#af5802ac848cffa0a2749b67ab1e35d1d',1,'Picto::AnalysisFileOutputWidget']]],
   ['nonewversionavailable',['noNewVersionAvailable',['../class_update_downloader.html#ab37de8dabf0ce63b7feba5f149837d09',1,'UpdateDownloader']]],
   ['normalizedscaledraw',['NormalizedScaleDraw',['../class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75',1,'Picto::NormalizedScaleDraw']]],
+  ['normalizescale',['normalizeScale',['../class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315',1,'Picto::BarBasePlotHandler']]],
   ['noteslostfocus',['notesLostFocus',['../class_element_notes_widget.html#a6ece32f759018b5a30c74b581f18ff6e',1,'ElementNotesWidget']]],
   ['noteswereedited',['notesWereEdited',['../class_element_notes_widget.html#a59d183f704d2bee07a789e7803e9e395',1,'ElementNotesWidget']]],
   ['notifyanalysisselection',['notifyAnalysisSelection',['../class_picto_1_1_analysis_selector_widget.html#a7bf6f43e197b19f25258f020b239c654',1,'Picto::AnalysisSelectorWidget::notifyAnalysisSelection()'],['../class_picto_1_1_task_config.html#a8cb2387d1fb34dd3d6d6ddfd39c862b9',1,'Picto::TaskConfig::notifyAnalysisSelection()'],['../class_view_selection_frame.html#ace0ab5b2586ad5956a2fbde30edd56df',1,'ViewSelectionFrame::notifyAnalysisSelection()'],['../class_remote_viewer.html#aed4c13541a7d3976729e430e928f43cf',1,'RemoteViewer::notifyAnalysisSelection()']]],

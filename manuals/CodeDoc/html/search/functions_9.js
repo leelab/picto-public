@@ -17,6 +17,7 @@ var searchData=
   ['initialize',['initialize',['../class_neural_data_viewer.html#ad7a50c38547be5f6bbe9ef68b1622c30',1,'NeuralDataViewer']]],
   ['initialized3ddevice',['initializeD3DDevice',['../class_picto_1_1_d3_d_visual_target.html#a2cd1c21032c8abf0c96cc01d07253de6',1,'Picto::D3DVisualTarget']]],
   ['initializefromxml',['initializeFromXml',['../class_picto_1_1_asset.html#addca39719cf9832ebadbc0dd7083f53e',1,'Picto::Asset']]],
+  ['initializehisto',['initializeHisto',['../class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944',1,'Picto::BarBasePlotHandler']]],
   ['initializepropertiestodefaults',['initializePropertiesToDefaults',['../class_picto_1_1_data_store.html#a5876fddb6f37afd350faed293f549f64',1,'Picto::DataStore']]],
   ['initializerecording',['initializeRecording',['../class_picto_1_1_recording_visual_target_host.html#a4376d5c56b8ff184a8497856dfd40806',1,'Picto::RecordingVisualTargetHost']]],
   ['initializetodefault',['initializeToDefault',['../class_picto_1_1_asset.html#ae39fd27817fd498d9e197b77bb942fe3',1,'Picto::Asset']]],

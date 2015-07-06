@@ -4,6 +4,7 @@ var searchData=
   ['d3dfail',['d3dFail',['../class_picto_1_1_d3_d_compositing_surface.html#a56fa74fbc8863325da2b19641bdcd7a9',1,'Picto::D3DCompositingSurface::d3dFail()'],['../class_picto_1_1_d3_d_visual_target.html#a6561359ff06cb04416873cd6cd5aedbe',1,'Picto::D3DVisualTarget::d3dFail()']]],
   ['d3dvisualtarget',['D3DVisualTarget',['../class_picto_1_1_d3_d_visual_target.html#a6a80056eca2a58d1cca22bec7ec26b70',1,'Picto::D3DVisualTarget']]],
   ['databasefilepath',['dataBaseFilePath',['../class_session_info.html#ac7ff27ee2c53a38f625d9f4c5054999f',1,'SessionInfo']]],
+  ['dataselectionwidget',['dataSelectionWidget',['../class_picto_1_1_bar_base_plot_handler.html#af6c55362910876e77e8f8e907b4ee2a1',1,'Picto::BarBasePlotHandler::dataSelectionWidget()'],['../class_picto_1_1_operator_plot_handler.html#a8614ec16b32266c0020fb01116459941',1,'Picto::OperatorPlotHandler::dataSelectionWidget()']]],
   ['datasourceinfo',['DataSourceInfo',['../class_picto_1_1_data_source_info.html#a3f4033402447a5c8e6c038c3fae230ce',1,'Picto::DataSourceInfo']]],
   ['datavieworganizer',['DataViewOrganizer',['../class_data_view_organizer.html#ad5dfca0d67f7d04c9df6f94c62e49314',1,'DataViewOrganizer']]],
   ['dataviewwidget',['DataViewWidget',['../class_data_view_widget.html#a2f4c828043f2251f2b68328f51d05443',1,'DataViewWidget']]],

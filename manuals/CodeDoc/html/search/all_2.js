@@ -4,6 +4,7 @@ var searchData=
   ['backgroundpatternchanged',['backgroundPatternChanged',['../class_editor_state.html#aff5503b5e634c74bee849b2b9f48ff79',1,'EditorState']]],
   ['baraxishandler',['BarAxisHandler',['../class_picto_1_1_bar_axis_handler.html',1,'Picto']]],
   ['barbase',['BarBase',['../class_picto_1_1_bar_base.html',1,'Picto']]],
+  ['barbaseplothandler',['BarBasePlotHandler',['../class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53',1,'Picto::BarBasePlotHandler']]],
   ['barbaseplothandler',['BarBasePlotHandler',['../class_picto_1_1_bar_base_plot_handler.html',1,'Picto']]],
   ['barplot',['BarPlot',['../class_picto_1_1_bar_plot.html',1,'Picto']]],
   ['barplotplothandler',['BarPlotPlotHandler',['../class_picto_1_1_bar_plot_plot_handler.html',1,'Picto']]],

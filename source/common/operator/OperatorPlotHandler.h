@@ -29,7 +29,8 @@ public:
 	OperatorPlotHandler();
 	virtual ~OperatorPlotHandler();
 
-	QWidget *getWidget() { return m_pPlot; };
+	//! Returns a child-appropriate data-selection widget
+	virtual QWidget *dataSelectionWidget() { return nullptr; };
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
@@ -39,6 +40,7 @@ public slots:
 	void requestExport(ExportType::ExportType type);
 
 protected:
+	QWidget *m_pDataViewWidget;
 	QwtPlot *m_pPlot;
 	QString m_tmpTitle;
 	int index;

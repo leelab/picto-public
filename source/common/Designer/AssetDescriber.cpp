@@ -1104,7 +1104,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("getCumulativeValueSquared(number index)", "Returns the accumulated sample-value-squared for the implied bin.  You generally won't need to use this.");
 	curr->addSFunc("dropBin(number index)", "Eliminates the values in the implied bin.");
 
-	curr = addDescription("PSTH");
+	curr = addDescription("PSTHPlot");
 	curr->setInherits(getAssetDescription("SamplingHistogramPlot"));
 	curr->setOverview("A Peri-Stimulus Time Histogram meant for accumulating presorted neural data and displaying the average firing rate surrounding an AlignEvent.  The bin size is specified by the parameter BinSize, and values are submitted with the time relative to the AlignEvent.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
 	curr->addProp("PreFlagWindow", "The amount of time prior to an AlignEvent that should be displayed.  Setting this value too large can result in large overhead for tracking plots.");

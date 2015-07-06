@@ -32,11 +32,14 @@ public:
 public slots:
 	virtual void initializeSampling();
 
-	virtual void setErrorSamples(const QVector<QwtIntervalSample> &qvErrorSamples);
+	virtual void setErrorSamples(const QString &dataSet, const QVector<QwtIntervalSample> &qvErrorSamples);
 	virtual void setErrorBarsVisible(bool bVisible);
+
 protected:
+	virtual void createErrorBars(const QString &dataSet);
+
 	//! A pointer to the SamplingBarBase's IntervalCurve used to represent error bars
-	QwtPlotIntervalCurve *m_pErrorBars;
+	QHash<QString, QwtPlotIntervalCurve*> m_qhpErrorBars;
 };
 
 }; //namespace Picto

@@ -79,6 +79,7 @@ protected:
 	//! Flag used to identify when the InitializationScript has run for a given Asset
 	bool initialized_;
 
+	//! SharedPointer to the current PlotHandler
 	QSharedPointer<OperatorPlotHandler> m_pPlotHandler;
 };
 

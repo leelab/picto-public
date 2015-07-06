@@ -202,6 +202,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>scaleA
 : <a class="el" href="struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html#acfc7f774e918f07f841a56ff3bb6d43b">Picto::DoubletSignalChannel::scaleFactors</a>
 </li>
+<li>scaleAxis()
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">Picto::BarBasePlotHandler</a>
+</li>
 <li>scaleB
 : <a class="el" href="struct_picto_1_1_doublet_signal_channel_1_1scale_factors.html#a45a48611fd20c2a6821dbba53ca13c71">Picto::DoubletSignalChannel::scaleFactors</a>
 </li>
@@ -355,6 +358,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_designer.html#a8df4966f0713a6e45d6b5fa3c3dffff0">Designer</a>
 , <a class="el" href="class_editor_state.html#acb38bf1c35a2cfd18857f932c211acc9">EditorState</a>
 , <a class="el" href="class_element_notes_widget.html#a58db9d17279d4f70ee594339378841e4">ElementNotesWidget</a>
+</li>
+<li>selectedDataSetChanged()
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">Picto::BarBasePlotHandler</a>
 </li>
 <li>selectedIndexChanged()
 : <a class="el" href="class_picto_1_1_analysis_option_widget.html#af79c8403ee6c912afd28ca44c47941ed">Picto::AnalysisOptionWidget</a>
@@ -711,6 +717,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setDataID()
 : <a class="el" href="class_picto_1_1_data_unit.html#ab26ae35496fca14aeb25d476f1e52e11">Picto::DataUnit</a>
 </li>
+<li>setDataset()
+: <a class="el" href="class_picto_1_1_bar_base.html#a5f60c1a74b2ad9852695ab4f2f9c1324">Picto::BarBase</a>
+</li>
 <li>setDeleted()
 : <a class="el" href="class_picto_1_1_asset.html#a18d0b5155b57ca24254afde1dfb765cd">Picto::Asset</a>
 , <a class="el" href="class_picto_1_1_data_store.html#a114c737439034a916c9ae50c88da27d7">Picto::DataStore</a>
@@ -790,6 +799,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setEngine()
 : <a class="el" href="class_director_status_manager.html#a637aaf1e265f2df5b7fca45335c0468a">DirectorStatusManager</a>
 , <a class="el" href="class_picto_1_1_experiment.html#a567673ce1a500a661712458086612005">Picto::Experiment</a>
+</li>
+<li>setErrorBarsVisible()
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#aa55fceb6a05ce9d9254ee69d41020377">Picto::BarBasePlotHandler</a>
+</li>
+<li>setErrorSamples()
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#a7e4557efd472080dea05eb90f20fea93">Picto::BarBasePlotHandler</a>
 </li>
 <li>setEventCodeGenerator()
 : <a class="el" href="class_picto_1_1_engine_1_1_picto_engine.html#a28e2fcc1ad7a6dccdda9581bf00198bc">Picto::Engine::PictoEngine</a>
@@ -1281,7 +1296,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_picto_1_1_signal_channel.html#a50f252249632b01ab624ae92e5db6c86">Picto::SignalChannel</a>
 </li>
 <li>setSamples()
-: <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a727cb8cec6134c522164d00ffdac87e5">Picto::SamplingBarPlot</a>
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">Picto::BarBasePlotHandler</a>
+, <a class="el" href="class_picto_1_1_sampling_bar_plot.html#a727cb8cec6134c522164d00ffdac87e5">Picto::SamplingBarPlot</a>
 , <a class="el" href="class_picto_1_1_sampling_histogram_plot.html#abd5bb62d49fa6116c91623db47fe788b">Picto::SamplingHistogramPlot</a>
 </li>
 <li>setSaveParameters()
@@ -1382,7 +1398,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>setStatus()
 : <a class="el" href="class_component_info.html#ae94bcd66db14902446f77ec3c90dd6ab">ComponentInfo</a>
-, <a class="el" href="class_component_status_manager.html#a64b7210feeec90b5f7c8494449f60da3">ComponentStatusManager</a>
+, <a class="el" href="class_component_status_manager.html#a6b4219dc5a4105bd24b62d89861ee443">ComponentStatusManager</a>
 , <a class="el" href="class_director_status_manager.html#a9fa585fdad94b511c03380b9a5926fb5">DirectorStatusManager</a>
 , <a class="el" href="class_playback_controller_data.html#aecbf09ff980c7d286476a1d7c843ce42">PlaybackControllerData</a>
 , <a class="el" href="class_remote_viewer.html#a6a429ca46d3038f8666b0e8cb3b0b731">RemoteViewer</a>
@@ -1442,11 +1458,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_operator_plot.html#a7fa85cad563e502bf1febe10eba7ea87">Picto::OperatorPlot</a>
 </li>
 <li>setTokenColor()
-: <a class="el" href="class_picto_1_1_token_factory_graphic.html#a75573001aa81ab14dc8b26c314a95055">Picto::TokenFactoryGraphic</a>
-, <a class="el" href="class_picto_1_1_token_tray_graphic.html#aa5b1a0d10494e88a9d97bbb75792c4be">Picto::TokenTrayGraphic</a>
+: <a class="el" href="class_picto_1_1_token_factory_graphic.html#a2192ff428146627cd30dab0257d0a181">Picto::TokenFactoryGraphic</a>
+, <a class="el" href="class_picto_1_1_token_tray_graphic.html#a63c3e2e677245eefeb2845ece59f76aa">Picto::TokenTrayGraphic</a>
 </li>
 <li>setTokenDimensions()
-: <a class="el" href="class_picto_1_1_token_factory_graphic.html#acddff28a01a369112659a27bf601c70c">Picto::TokenFactoryGraphic</a>
+: <a class="el" href="class_picto_1_1_token_factory_graphic.html#afb7de80802742d3aeeebec59411fe576">Picto::TokenFactoryGraphic</a>
 , <a class="el" href="class_picto_1_1_token_tray_graphic.html#a29294f85131e1375bbf8518cbae60da1">Picto::TokenTrayGraphic</a>
 </li>
 <li>setTokenHeight()
@@ -1474,8 +1490,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a2bac8ea9e18e10ef681ed778f19b2559">Picto::TokenFactoryGraphic</a>
 </li>
 <li>setTokenShape()
-: <a class="el" href="class_picto_1_1_token_factory_graphic.html#a944940fa04afdaed603a51fae1861cc2">Picto::TokenFactoryGraphic</a>
-, <a class="el" href="class_picto_1_1_token_tray_graphic.html#a85db195da8201a4b8afd1c173f041fab">Picto::TokenTrayGraphic</a>
+: <a class="el" href="class_picto_1_1_token_factory_graphic.html#a0f268ec453469be8a8c2517d7074b967">Picto::TokenFactoryGraphic</a>
+, <a class="el" href="class_picto_1_1_token_tray_graphic.html#a3e202918c2deb699bb34735b9f7a1fb8">Picto::TokenTrayGraphic</a>
 </li>
 <li>setTokenSize()
 : <a class="el" href="class_picto_1_1_token_factory_graphic.html#a1e63cc7b4a436dc77a1ea29a5d3875a5">Picto::TokenFactoryGraphic</a>
@@ -1502,7 +1518,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_target_controller.html#a0e375eeabc77feb79c348a1fa92547fe">Picto::TargetController</a>
 </li>
 <li>setTransition()
-: <a class="el" href="class_picto_1_1_state_data_unit.html#a1a415de9c6d48637f1396db82e429b2f">Picto::StateDataUnit</a>
+: <a class="el" href="class_picto_1_1_state_data_unit.html#af4507c50ef7cde2ea05cc58e9507c212">Picto::StateDataUnit</a>
 </li>
 <li>setTrayDimensions()
 : <a class="el" href="class_picto_1_1_token_tray_graphic.html#a9d964f89a1ee1ae63c0e0c5a7de331ea">Picto::TokenTrayGraphic</a>
@@ -1636,7 +1652,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_text_edit_mode.html#a098ed6941771eb88d9d9d02ef16c7cfd">TextEditMode</a>
 </li>
 <li>setVisible()
-: <a class="el" href="class_picto_1_1_property.html#ad55eb788c4d635b92fa5944c78a1d346">Picto::Property</a>
+: <a class="el" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">Picto::BarBasePlotHandler</a>
+, <a class="el" href="class_picto_1_1_property.html#ad55eb788c4d635b92fa5944c78a1d346">Picto::Property</a>
 , <a class="el" href="struct_picto_1_1_visual_element.html#ad109197a3a4da914199b404da058e1ed">Picto::VisualElement</a>
 </li>
 <li>setVisualTarget()
@@ -1763,7 +1780,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_picto_1_1_state_updater.html#affd32e4d69b3b1d2b21c35f1f0159fb0">Picto::StateUpdater</a>
 </li>
 <li>SignalChannel()
-: <a class="el" href="class_picto_1_1_signal_channel.html#a76034e92addacd628ee3d3c7226f5df3">Picto::SignalChannel</a>
+: <a class="el" href="class_picto_1_1_signal_channel.html#afd9b6db73405a692074553032f1ca33c">Picto::SignalChannel</a>
 </li>
 <li>SignalChannelInfo()
 : <a class="el" href="class_picto_1_1_signal_channel_info.html#abdb8dde746e09c8ebbeb4593259e210e">Picto::SignalChannelInfo</a>

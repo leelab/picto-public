@@ -76,18 +76,27 @@ void PSTHPlot::clearAccumulatedData()
 //! Add data from the ActiveScan into the histogram
 void PSTHPlot::submitScan(const ActiveScan &scan)
 {
-	const int channel = getChannel();
-	const int unit = getUnit();
+	const QString originalSetName = currentSetName_;
 	const double binRate = 1.0 / scan.binSize_;
 
-	if (scan.spikes_.size() > channel && scan.spikes_[channel].size() > unit)
+	for (int channel = 0; channel < scan.spikes_.size(); channel++)
 	{
-		for (int bin = 0; bin < scan.binNum_; bin++)
+		if (!scan.spikes_[channel].empty())
 		{
-			submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), binRate * scan.spikes_[channel][unit][bin]);
+			for (int unit = 0; unit < scan.spikes_[channel].size(); unit++)
+			{
+				if (!scan.spikes_[channel][unit].isEmpty())
+				{
+					currentSetName_ = QString("Channel %1 - Unit %2").arg(channel).arg(unit);
+					for (int bin = 0; bin < scan.binNum_; bin++)
+					{
+						submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), binRate * scan.spikes_[channel][unit][bin]);
+					}
+				}
+			}
 		}
 	}
-
+	currentSetName_ = originalSetName;
 }
 
 //! Convenience function to get the preFlagWindow property.

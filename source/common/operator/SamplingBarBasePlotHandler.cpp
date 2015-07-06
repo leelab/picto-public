@@ -15,39 +15,47 @@ using namespace Picto;
 namespace Picto {
 
 SamplingBarBasePlotHandler::SamplingBarBasePlotHandler()
-	: m_pErrorBars(nullptr)
 {
 
 }
 
 void SamplingBarBasePlotHandler::initializeSampling()
 {
-	if (!m_pErrorBars)
-	{
-		QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
-		errorBar->setWidth(8);
-		errorBar->setPen(QColor(Qt::blue));
 
-		m_pErrorBars = new QwtPlotIntervalCurve("Standard Error");
-		m_pErrorBars->setStyle(QwtPlotIntervalCurve::NoCurve);
-		m_pErrorBars->setSymbol(errorBar);
-		m_pErrorBars->setRenderHint(QwtPlotItem::RenderAntialiased, false);
-		m_pErrorBars->setPen(Qt::white);
-		m_pErrorBars->setBrush(QBrush(QColor(Qt::blue)));
-
-		m_pErrorBars->attach(m_pPlot);
-		m_pErrorBars->setZ(m_pHistoPlotItem->z() + 1);
-	}
 }
 
-void SamplingBarBasePlotHandler::setErrorSamples(const QVector<QwtIntervalSample> &qvErrorSamples)
+void SamplingBarBasePlotHandler::setErrorSamples(const QString &setName, const QVector<QwtIntervalSample> &qvErrorSamples)
 {
-	m_pErrorBars->setSamples(new QwtIntervalSeriesData(qvErrorSamples));
+	m_qhpErrorBars[setName]->setSamples(new QwtIntervalSeriesData(qvErrorSamples));
 }
 
 void SamplingBarBasePlotHandler::setErrorBarsVisible(bool bVisible)
 {
-	m_pErrorBars->setVisible(bVisible);
+	//Set the visibility of each errorbar to be equal to that of its corresponding plot
+	foreach(QString setName, m_qhpErrorBars.keys())
+	{
+		m_qhpErrorBars[setName]->setVisible(bVisible && m_qhbHistoPlotVisibility[setName]);
+		m_qhpErrorBars[setName]->setZ(m_qhpHistoPlotItems[setName]->z() + 1);
+	}
+}
+
+void SamplingBarBasePlotHandler::createErrorBars(const QString &dataSet)
+{
+	QwtIntervalSymbol *errorBar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
+	errorBar->setWidth(8);
+	errorBar->setPen(QColor(Qt::blue));
+
+	m_qhpErrorBars[dataSet] = new QwtPlotIntervalCurve(dataSet + " StdErr");
+	m_qhpErrorBars[dataSet]->setStyle(QwtPlotIntervalCurve::NoCurve);
+	m_qhpErrorBars[dataSet]->setSymbol(errorBar);
+	m_qhpErrorBars[dataSet]->setRenderHint(QwtPlotItem::RenderAntialiased, false);
+	m_qhpErrorBars[dataSet]->setPen(Qt::white);
+	m_qhpErrorBars[dataSet]->setBrush(QBrush(QColor(Qt::blue)));
+
+	m_qhpErrorBars[dataSet]->attach(m_pPlot);
+	m_qhpErrorBars[dataSet]->setZ(m_qhpHistoPlotItems[dataSet]->z() + 1);
+
+
 }
 
 }; //namespace Picto
