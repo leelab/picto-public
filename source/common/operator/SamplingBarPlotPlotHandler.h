@@ -2,7 +2,6 @@
 #define _SAMPLING_BAR_PLOT_PLOT_HANDLER_H_
 
 #include "../common.h"
-#include "DataViewSpecs.h"
 #include "SamplingBarBasePlotHandler.h"
 
 #include <QObject>

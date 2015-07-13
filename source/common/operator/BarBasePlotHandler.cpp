@@ -5,8 +5,10 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QLabel>
+#include <QPushButton>
 
 #include "BarBasePlotHandler.h"
+#include "DataViewSpecs.h"
 
 #include "../memleakdetect.h"
 
@@ -17,6 +19,7 @@
 #include <qwt_scale_engine.h>
 #include <qwt_legend.h>
 #include <qwt_legend_label.h>
+#include <qwt_plot_curve.h>
 
 using namespace Picto;
 
@@ -51,13 +54,14 @@ private:
 
 //! Constructs a new BarBasePlotHandler
 BarBasePlotHandler::BarBasePlotHandler()
-	: iLastZ(1), m_pDataSelectionWidget(nullptr), m_pDataSetBox(nullptr), m_pVisibilityBox(nullptr)
+	: iLastZ(1), m_pDataSelectionWidget(nullptr), m_pDataSetBox(nullptr), m_pVisibilityBox(nullptr),
+	m_ePlotColumnType(ColumnType::COLUMN_MAX), m_bDefaultReceivedData(false)
 {
 
 }
 
 //! Creates or returns a widget meant to adjust dataset visibility
-QWidget *BarBasePlotHandler::dataSelectionWidget()
+QWidget *BarBasePlotHandler::plotOptionsWidget()
 {
 	if (!m_pDataSelectionWidget)
 	{
@@ -65,16 +69,28 @@ QWidget *BarBasePlotHandler::dataSelectionWidget()
 		QHBoxLayout *layout = new QHBoxLayout(m_pDataSelectionWidget);
 		m_pDataSelectionWidget->setLayout(layout);
 
+		m_pExportButton = new QPushButton("Export", m_pDataSelectionWidget);
+		layout->addWidget(m_pExportButton, 1);
+		layout->addStretch(3);
+
+		m_pRightControls = new QWidget(m_pDataSelectionWidget);
+		QHBoxLayout *rightLayout = new QHBoxLayout(m_pRightControls);
+		m_pRightControls->setLayout(rightLayout);
+		layout->addWidget(m_pRightControls, 4);
+
 		m_pDataSetBox = new QComboBox(m_pDataSelectionWidget);
 		m_pVisibilityBox = new QCheckBox(m_pDataSelectionWidget);
-		layout->addWidget(m_pDataSetBox);
-		layout->addWidget(new QLabel("Visible:"));
-		layout->addWidget(m_pVisibilityBox);
+		rightLayout->addWidget(m_pDataSetBox, 2);
+
+		QLabel *boxLabel = new QLabel("Visible:", m_pDataSelectionWidget);
+		boxLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+		rightLayout->addWidget(boxLabel, 1);
+		rightLayout->addWidget(m_pVisibilityBox, 1);
 
 		connect(m_pDataSetBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDataSetChanged(int)));
 		connect(m_pVisibilityBox, SIGNAL(clicked(bool)), this, SLOT(checkboxClicked(bool)));
 
-		foreach(QString dataSet, m_qhpHistoPlotItems.keys())
+		foreach(QString dataSet, m_qhpPlotItems.keys())
 		{
 			m_pDataSetBox->addItem(dataSet);
 			m_pDataSetBox->setItemData(m_pDataSetBox->findText(dataSet), m_qhcHistoPlotColor[dataSet], Qt::DecorationRole);
@@ -83,6 +99,14 @@ QWidget *BarBasePlotHandler::dataSelectionWidget()
 	}
 
 	return m_pDataSelectionWidget;
+}
+
+void BarBasePlotHandler::hideDataSelectionWidget(bool hide)
+{
+	if (m_pRightControls)
+	{
+		m_pRightControls->setVisible(!hide);
+	}
 }
 
 //! Slot for changing currently selected dataset
@@ -120,62 +144,149 @@ void BarBasePlotHandler::initializeHisto(bool bDisplayLegend, const QColor &barC
 		m_pPlot->insertLegend(nullptr);
 	}
 
-	// Update the Colors and Bar Types
-	updateColumns("Default", barColor, (ColumnType::ColumnType) eBarType);
+	//Double-check and clear existing data
+
+	if (m_ePlotColumnType != ColumnType::COLUMN_MAX && m_ePlotColumnType != eBarType)
+	{
+		clearPlotItems();
+	}
+
+	m_ePlotColumnType = (ColumnType::ColumnType) eBarType;
+
+	m_qhcHistoPlotColor["Default"] = barColor;
+
 	m_pPlot->canvas()->setPalette(canvasColor);
 }
 
-//! Updates the rendering properties of the columns for the indicated dataset
-void BarBasePlotHandler::updateColumns(const QString &setName, const QColor &color, ColumnType::ColumnType eType)
+//! Clears stored plot data
+void BarBasePlotHandler::resetSlot()
 {
-	if (!m_qhpHistoPlotItems.contains(setName))
+	foreach(QwtPlotItem *plotItem, m_qhpPlotItems)
+	{
+		switch (m_ePlotColumnType)
+		{
+		case ColumnType::COLUMN_OUTLINE:
+		case ColumnType::COLUMN_FLAT_COLUMN:
+		case ColumnType::COLUMN_RAISED_COLUMN:
+		case ColumnType::COLUMN_LINES:
+			((QwtPlotHistogram*)plotItem)->setSamples(new QwtIntervalSeriesData());
+			break;
+		case ColumnType::COLUMN_CURVE:
+		case ColumnType::COLUMN_FILLED_CURVE:
+			((QwtPlotCurve *)plotItem)->setData(new QwtPointSeriesData());
+			break;
+		default:
+			qDebug() << "Undefined PlotColumnType for reset";
+			break;
+		}
+	}
+}
+
+//! Spin through, detatch, and delete all plot items.  Usually for initializing a new PlotItem Type
+void BarBasePlotHandler::clearPlotItems()
+{
+	QHash<QString, QwtPlotItem *>::iterator iter = m_qhpPlotItems.begin();
+	while (iter != m_qhpPlotItems.end())
+	{
+		(*iter)->detach();
+		delete *iter;
+		iter = m_qhpPlotItems.erase(iter);
+	}
+
+	m_qhbHistoPlotVisibility.clear();
+	m_qhcHistoPlotColor.clear();
+	iLastZ = 1;
+	m_pDataSetBox->clear();
+	m_bDefaultReceivedData = false;
+
+	hideDataSelectionWidget(true);
+}
+
+//! Updates the rendering properties of the columns for the indicated dataset
+void BarBasePlotHandler::updateProperties(const QString &setName, const QColor &color)
+{
+	if (!m_qhpPlotItems.contains(setName))
 	{
 		addDataSet(setName);
 	}
 
-	m_qhpHistoPlotItems[setName]->setBrush(QBrush(color));
+	updateColor(setName, color);
+}
+
+void BarBasePlotHandler::updateColor(const QString &setName, const QColor &color)
+{
+	QPen pen(Qt::black, 0);
+	switch (m_ePlotColumnType)
+	{
+	case ColumnType::COLUMN_OUTLINE:
+	{
+		QwtPlotHistogram *histo = (QwtPlotHistogram*)m_qhpPlotItems[setName];
+		histo->setBrush(QBrush(color));
+		histo->setStyle(QwtPlotHistogram::Outline);
+		histo->setSymbol(nullptr);
+		histo->setPen(pen);
+		break;
+	}
+	case ColumnType::COLUMN_FLAT_COLUMN:
+	{
+		QwtPlotHistogram *histo = (QwtPlotHistogram*)m_qhpPlotItems[setName];
+		histo->setBrush(QBrush(color));
+		histo->setStyle(QwtPlotHistogram::Columns);
+		histo->setSymbol(nullptr);
+		histo->setPen(pen);
+		break;
+	}
+	case ColumnType::COLUMN_RAISED_COLUMN:
+	{
+		QwtPlotHistogram *histo = (QwtPlotHistogram*)m_qhpPlotItems[setName];
+		histo->setBrush(QBrush(color));
+		histo->setStyle(QwtPlotHistogram::Columns);
+
+		QwtColumnSymbol *symbol = new QwtColumnSymbol(QwtColumnSymbol::Box);
+		symbol->setFrameStyle(QwtColumnSymbol::Raised);
+		symbol->setLineWidth(2);
+		symbol->setPalette(QPalette(histo->brush().color()));
+
+		histo->setSymbol(symbol);
+		break;
+	}
+	case ColumnType::COLUMN_LINES:
+	{
+		QwtPlotHistogram *histo = (QwtPlotHistogram*)m_qhpPlotItems[setName];
+		histo->setBrush(QBrush(color));
+		histo->setStyle(QwtPlotHistogram::Lines);
+		histo->setSymbol(nullptr);
+		pen.setBrush(QBrush(color));
+		pen.setWidth(2);
+		histo->setPen(pen);
+		break;
+	}
+	case ColumnType::COLUMN_CURVE:
+	{
+		QwtPlotCurve *curve = (QwtPlotCurve*)m_qhpPlotItems[setName];
+		curve->setBrush(QBrush());
+		pen.setBrush(QBrush(color));
+		pen.setWidth(2);
+		curve->setPen(pen);
+		break;
+	}
+	case ColumnType::COLUMN_FILLED_CURVE:
+	{
+		QwtPlotCurve *curve = (QwtPlotCurve*)m_qhpPlotItems[setName];
+		curve->setBrush(QBrush(color));
+		pen.setWidth(2);
+		curve->setPen(pen);
+		break;
+	}
+	default:
+		break;
+	}
+
 	m_qhcHistoPlotColor[setName] = color;
 
 	if (m_pDataSetBox && m_pDataSetBox->findText(setName) != -1)
 	{
 		m_pDataSetBox->setItemData(m_pDataSetBox->findText(setName), color, Qt::DecorationRole);
-	}
-
-
-	QPen pen(Qt::black, 0);
-	QwtColumnSymbol *symbol = nullptr;
-
-	switch (eType)
-	{
-	case ColumnType::COLUMN_OUTLINE:
-		m_qhpHistoPlotItems[setName]->setStyle(QwtPlotHistogram::Outline);
-		m_qhpHistoPlotItems[setName]->setSymbol(nullptr);
-		m_qhpHistoPlotItems[setName]->setPen(pen);
-		break;
-	case ColumnType::COLUMN_FLAT_COLUMN:
-		m_qhpHistoPlotItems[setName]->setStyle(QwtPlotHistogram::Columns);
-		m_qhpHistoPlotItems[setName]->setSymbol(nullptr);
-		m_qhpHistoPlotItems[setName]->setPen(pen);
-		break;
-	case ColumnType::COLUMN_RAISED_COLUMN:
-		m_qhpHistoPlotItems[setName]->setStyle(QwtPlotHistogram::Columns);
-
-		symbol = new QwtColumnSymbol(QwtColumnSymbol::Box);
-		symbol->setFrameStyle(QwtColumnSymbol::Raised);
-		symbol->setLineWidth(2);
-		symbol->setPalette(QPalette(m_qhpHistoPlotItems[setName]->brush().color()));
-
-		m_qhpHistoPlotItems[setName]->setSymbol(symbol);
-		break;
-	case ColumnType::COLUMN_LINES:
-		m_qhpHistoPlotItems[setName]->setStyle(QwtPlotHistogram::Lines);
-		m_qhpHistoPlotItems[setName]->setSymbol(nullptr);
-		pen.setBrush(m_qhpHistoPlotItems[setName]->brush());
-		pen.setWidth(2);
-		m_qhpHistoPlotItems[setName]->setPen(pen);
-		break;
-	default:
-		break;
 	}
 }
 
@@ -193,13 +304,53 @@ void BarBasePlotHandler::normalizeScale(const QString & /*setName*/, double dAxi
 //! Accepts the data for the indicated dataset.
 void BarBasePlotHandler::setSamples(const QString &setName, const QVector<QwtIntervalSample> &qvSamples)
 {
-	if (!m_qhpHistoPlotItems.contains(setName))
+	if (!m_qhpPlotItems.contains(setName))
 	{
 		addDataSet(setName);
 	}
 
-	m_qhpHistoPlotItems[setName]->setSamples(new QwtIntervalSeriesData(qvSamples));
+	switch (m_ePlotColumnType)
+	{
+	case ColumnType::COLUMN_OUTLINE:
+	case ColumnType::COLUMN_FLAT_COLUMN:
+	case ColumnType::COLUMN_RAISED_COLUMN:
+	case ColumnType::COLUMN_LINES:
+		((QwtPlotHistogram*)m_qhpPlotItems[setName])->setSamples(new QwtIntervalSeriesData(qvSamples));
+		break;
+	case ColumnType::COLUMN_CURVE:
+	case ColumnType::COLUMN_FILLED_CURVE:
+	default:
+		qDebug() << "Undefined PlotColumnType";
+		break;
+	}
 }
+
+//! Accepts the data for the indicated dataset for Point plots.
+void BarBasePlotHandler::setPoints(const QString &setName, const QVector<QPointF> &qvPoints)
+{
+	if (!m_qhpPlotItems.contains(setName))
+	{
+		addDataSet(setName);
+	}
+
+	switch (m_ePlotColumnType)
+	{
+	case ColumnType::COLUMN_CURVE:
+	case ColumnType::COLUMN_FILLED_CURVE:
+	{
+		((QwtPlotCurve *)m_qhpPlotItems[setName])->setData(new QwtPointSeriesData(qvPoints));
+		break;
+	}
+	case ColumnType::COLUMN_OUTLINE:
+	case ColumnType::COLUMN_FLAT_COLUMN:
+	case ColumnType::COLUMN_RAISED_COLUMN:
+	case ColumnType::COLUMN_LINES:
+	default:
+		qDebug() << "Undefined PlotColumnType";
+		break;
+	}
+}
+
 
 //! Set the scaling on the X axis
 void BarBasePlotHandler::scaleAxis(double dBinSize)
@@ -220,13 +371,31 @@ void BarBasePlotHandler::callReplot(const QString &setName)
 //! Adds the indicated dataset name to the list of datasets, and spawns a histogram item for it
 void BarBasePlotHandler::addDataSet(const QString &setName)
 {
-	if (!m_qhpHistoPlotItems.contains(setName))
+	if (!m_qhpPlotItems.contains(setName))
 	{
-		m_qhpHistoPlotItems[setName] = new QwtPlotHistogram(setName);
-		m_qhpHistoPlotItems[setName]->attach(m_pPlot);
+		switch (m_ePlotColumnType)
+		{
+		case ColumnType::COLUMN_OUTLINE:
+		case ColumnType::COLUMN_FLAT_COLUMN:
+		case ColumnType::COLUMN_RAISED_COLUMN:
+		case ColumnType::COLUMN_LINES:
+			m_qhpPlotItems[setName] = new QwtPlotHistogram(setName);
+			break;
+		case ColumnType::COLUMN_CURVE:
+		case ColumnType::COLUMN_FILLED_CURVE:
+		{
+			QwtPlotCurve *newPlotCurve = new QwtPlotCurve(setName);
+			m_qhpPlotItems[setName] = newPlotCurve;
+			newPlotCurve->setData(new QwtPointSeriesData(QVector<QPointF>()));
+		}
+			break;
+		default:
+			break;
+		}
+		m_qhpPlotItems[setName]->attach(m_pPlot);
 
 		iLastZ = iLastZ + 2;
-		m_qhpHistoPlotItems[setName]->setZ(iLastZ);
+		m_qhpPlotItems[setName]->setZ(iLastZ);
 		m_qhbHistoPlotVisibility[setName] = true;
 
 		createErrorBars(setName);
@@ -237,9 +406,9 @@ void BarBasePlotHandler::addDataSet(const QString &setName)
 		}
 	}
 
-	if (m_qhpHistoPlotItems.count() > 1)
+	if (m_qhpPlotItems.count() > 1)
 	{
-		dataSelectionWidget()->setVisible(true);
+		hideDataSelectionWidget(false);
 	}
 }
 
@@ -248,17 +417,18 @@ void BarBasePlotHandler::setVisible(const QString &setName, bool visible)
 {
 	if (m_qhbHistoPlotVisibility.contains(setName))
 	{
-		m_qhpHistoPlotItems[setName]->setVisible(visible);
+		m_qhpPlotItems[setName]->setVisible(visible);
+		m_qhpPlotItems[setName]->setItemAttribute(QwtPlotItem::Legend, visible);
+		m_pPlot->updateLegend();
 		m_qhbHistoPlotVisibility[setName] = visible;
 
 		if (visible)
 		{
 			iLastZ = iLastZ + 2;
-			m_qhpHistoPlotItems[setName]->setZ(iLastZ);
-
+			m_qhpPlotItems[setName]->setZ(iLastZ);
 		}
 
-		setErrorBarsVisible(true);
+		setErrorBarsVisible(visible);
 
 		m_pPlot->replot();
 	}

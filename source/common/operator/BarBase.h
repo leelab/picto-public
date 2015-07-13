@@ -86,14 +86,16 @@ public slots:
 
 signals:
 	void initializeHistoSig(bool bDisplayLegend, const QColor &barColor, const QColor &canvasColor, int eBarType);
-	void updateColumnsSig(const QString &dataSet, const QColor &color, ColumnType::ColumnType eType);
+	void updateColumnsSig(const QString &dataSet, const QColor &color);
 	void normalizeScaleSig(const QString &dataSet, double dAxisMax, double dTotalValue, const QList<double> &medium, const QList<double> &major);
 	void setSamplesSig(const QString &dataSet, const QVector<QwtIntervalSample> &qvSamples);
+	void setPointsSig(const QString &dataSet, const QVector<QPointF> &qvPoints);
 	void setErrorSamplesSig(const QString &dataSet, const QVector<QwtIntervalSample>&);
 	void setErrorBarsVisibleSig(bool);
 	void scaleAxisSig(double dBinSize);
 	void handleXLabelsSig(long, long);
 	void callReplot(const QString &dataSet);
+	void resetSig();
 
 protected:
 	virtual void replot();

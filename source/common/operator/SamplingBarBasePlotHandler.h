@@ -2,7 +2,6 @@
 #define _SAMPLING_BAR_BASE_PLOT_HANDLER_H_
 
 #include "../common.h"
-#include "DataViewSpecs.h"
 #include "BarBasePlotHandler.h"
 
 #include <QObject>
@@ -35,11 +34,17 @@ public slots:
 	virtual void setErrorSamples(const QString &dataSet, const QVector<QwtIntervalSample> &qvErrorSamples);
 	virtual void setErrorBarsVisible(bool bVisible);
 
+	virtual void resetSlot();
+
 protected:
 	virtual void createErrorBars(const QString &dataSet);
+	virtual void updateColor(const QString &setName, const QColor &color);
+	virtual void clearPlotItems();
 
 	//! A pointer to the SamplingBarBase's IntervalCurve used to represent error bars
 	QHash<QString, QwtPlotIntervalCurve*> m_qhpErrorBars;
+	//! Cached color of Errorbars, indexed by data set name
+	QHash<QString, QColor> m_qhcErrorBarColor;
 };
 
 }; //namespace Picto

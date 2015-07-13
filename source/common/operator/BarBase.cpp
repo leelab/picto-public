@@ -18,7 +18,7 @@ BarBase::BarBase()
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
 
 	//Indexed by enum ColumnType
-	columnTypes_ << "Outline" << "Flat Columns" << "Raised Columns" << "Lines";
+	columnTypes_ << "Outline" << "Flat Columns" << "Raised Columns" << "Lines" << "Curve" << "Filled Curve";
 	AddDefinableProperty(PropertyContainer::enumTypeId(), "ColumnType", 1, "enumNames", columnTypes_);
 	AddDefinableProperty(QVariant::Color, "ColumnColor", QColor(Qt::red));
 	AddDefinableProperty(QVariant::Color, "CanvasColor", QColor(Qt::lightGray));
@@ -59,6 +59,7 @@ void BarBase::replot(const QString &setName)
 	currentSetName_ = setName;
 
 	QVector<QwtIntervalSample> qvSamples;
+	QVector<QPointF> qvPoints;
 	QVector<QwtIntervalSample> qvError;
 
 	const bool bNormalized = getNormalized();
@@ -68,7 +69,17 @@ void BarBase::replot(const QString &setName)
 
 	if (m_qhCumulValue[setName].isEmpty())
 	{
-		emit setSamplesSig(setName, qvSamples);
+		//Branch point accumulating based on ColumnType
+		if (getColumnType() == ColumnType::COLUMN_CURVE ||
+			getColumnType() == ColumnType::COLUMN_FILLED_CURVE)
+		{
+			emit setPointsSig(setName, qvPoints);
+		}
+		else
+		{
+			emit setSamplesSig(setName, qvSamples);
+		}
+
 		_handleErrorFinal(qvError);
 
 		if (bNormalized)
@@ -87,28 +98,56 @@ void BarBase::replot(const QString &setName)
 	double total = 0.0;
 	double dRangeMax = 0.0;
 
-	foreach(long key, keyList)
+	//Branch point accumulating based on ColumnType
+	if (getColumnType() == ColumnType::COLUMN_CURVE ||
+		getColumnType() == ColumnType::COLUMN_FILLED_CURVE)
 	{
-		const double dSample = _getSampleValue(key);
-		const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
-		const double dMin = (key - dBinWidth) * dBinSize;
-		const double dMax = (key + dBinWidth) * dBinSize;
-		qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));
-
-		if (bNormalized)
+		foreach(long key, keyList)
 		{
-			if (dSample > dRangeMax)
+			const double dSample = _getSampleValue(key);
+			qvPoints.push_back(std::move(QPointF(key*dBinSize, dSample)));
+
+			if (bNormalized)
 			{
-				dRangeMax = dSample;
+				if (dSample > dRangeMax)
+				{
+					dRangeMax = dSample;
+				}
+
+				total += dSample;
 			}
 
-			total += dSample;
+			_handleErrorValue(key, dRangeMax, qvError);
 		}
 
-		_handleErrorValue(key, dRangeMax, qvError);
+		emit setPointsSig(setName, qvPoints);
+	}
+	else
+	{
+		foreach(long key, keyList)
+		{
+			const double dSample = _getSampleValue(key);
+			const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
+			const double dMin = (key - dBinWidth) * dBinSize;
+			const double dMax = (key + dBinWidth) * dBinSize;
+			qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));
+
+			if (bNormalized)
+			{
+				if (dSample > dRangeMax)
+				{
+					dRangeMax = dSample;
+				}
+
+				total += dSample;
+			}
+
+			_handleErrorValue(key, dRangeMax, qvError);
+		}
+
+		emit setSamplesSig(setName, qvSamples);
 	}
 
-	emit setSamplesSig(setName, qvSamples);
 
 	_handleErrorFinal(qvError);
 
@@ -135,7 +174,7 @@ void BarBase::replot(const QString &setName)
 	if (m_qhUpdateBrush[setName])
 	{
 		m_qhUpdateBrush[setName] = false;
-		emit updateColumnsSig(setName, getColor(), getColumnType());
+		emit updateColumnsSig(setName, getColor());
 	}
 
 	emit callReplot(setName);
@@ -245,6 +284,8 @@ void BarBase::initView()
 		getColor(),
 		propertyContainer_->getPropertyValue("CanvasColor").value<QColor>(),
 		getColumnType());
+
+	m_qhColor["Default"] = getColor();
 }
 
 
@@ -265,6 +306,8 @@ void BarBase::reset()
 		m_qhCumulValue[dataset].clear();
 		m_qhDataChanged[dataset] = true;
 	}
+
+	emit resetSig();
 }
 
 /*!	\brief Modifies the value in the indicated bin by the passed-in value.
@@ -357,8 +400,25 @@ void BarBase::_createSet(const QString &setName)
 		int red = char(sin(0.0245 * myColorNum) * 127) + 128;
 		int green = char(sin(0.0245 * myColorNum + 2) * 127) + 128;
 		int blue = char(sin(0.0245 * myColorNum + 4) * 127) + 128;
+		int alpha = 255;
 
-		m_qhColor[setName] = QColor(red, green, blue);
+		switch (getColumnType())
+		{
+		case ColumnType::COLUMN_FLAT_COLUMN:
+		case ColumnType::COLUMN_RAISED_COLUMN:
+		case ColumnType::COLUMN_FILLED_CURVE:
+			alpha = 160;
+			break;
+		case ColumnType::COLUMN_OUTLINE:
+		case ColumnType::COLUMN_LINES:
+		case ColumnType::COLUMN_CURVE:
+			alpha = 255;
+			break;
+		default:
+			break;
+		}
+
+		m_qhColor[setName] = QColor(red, green, blue, alpha);
 	}
 	m_qhUpdateBrush[currentSetName_] = true;
 
@@ -397,12 +457,14 @@ void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler
 		barPlotHandler.data(), SLOT(initializeHisto(bool, const QColor&, const QColor&, int)));
 	connect(this, SIGNAL(handleXLabelsSig(long,long)),
 		barPlotHandler.data(), SLOT(handleXLabels(long,long)));
-	connect(this, SIGNAL(updateColumnsSig(const QString &, const QColor&, ColumnType::ColumnType)),
-		barPlotHandler.data(), SLOT(updateColumns(const QString &, const QColor&, ColumnType::ColumnType)));
+	connect(this, SIGNAL(updateColumnsSig(const QString &, const QColor&)),
+		barPlotHandler.data(), SLOT(updateProperties(const QString &, const QColor&)));
 	connect(this, SIGNAL(normalizeScaleSig(const QString &, double, double, const QList<double>&, const QList<double>&)),
 		barPlotHandler.data(), SLOT(normalizeScale(const QString &, double, double, const QList<double>&, const QList<double>&)));
 	connect(this, SIGNAL(setSamplesSig(const QString &, const QVector<QwtIntervalSample>&)),
 		barPlotHandler.data(), SLOT(setSamples(const QString &, const QVector<QwtIntervalSample>&)));
+	connect(this, SIGNAL(setPointsSig(const QString &, const QVector<QPointF>&)),
+		barPlotHandler.data(), SLOT(setPoints(const QString &, const QVector<QPointF>&)));
 	connect(this, SIGNAL(setErrorSamplesSig(const QString &, const QVector<QwtIntervalSample>&)),
 		barPlotHandler.data(), SLOT(setErrorSamples(const QString &, const QVector<QwtIntervalSample>&)));
 	connect(this, SIGNAL(setErrorBarsVisibleSig(bool)),
@@ -411,6 +473,8 @@ void BarBase::connectDataSignals(QSharedPointer<OperatorPlotHandler> plotHandler
 		barPlotHandler.data(), SLOT(scaleAxis(double)));
 	connect(this, SIGNAL(callReplot(const QString &)),
 		barPlotHandler.data(), SLOT(callReplot(const QString &)));
+	connect(this, SIGNAL(resetSig()),
+		barPlotHandler.data(), SLOT(resetSlot()));
 }
 
 

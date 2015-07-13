@@ -2,7 +2,6 @@
 #define _BAR_PLOT_PLOT_HANDLER_H_
 
 #include "../common.h"
-#include "DataViewSpecs.h"
 #include "BarBasePlotHandler.h"
 
 #include <QObject>

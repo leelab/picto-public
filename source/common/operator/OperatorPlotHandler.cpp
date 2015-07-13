@@ -60,14 +60,14 @@ void OperatorPlotHandler::connectToTaskConfig(QSharedPointer<TaskConfig> pTaskCo
 {
 	DataViewElement *pSender = (DataViewElement*)QObject::sender();
 
-	if (dataSelectionWidget())
+	if (plotOptionsWidget())
 	{
 		m_pDataViewWidget = new QWidget();
 		QVBoxLayout *layout = new QVBoxLayout(m_pDataViewWidget);
 		m_pDataViewWidget->setLayout(layout);
-		layout->addWidget(dataSelectionWidget(), 0);
+		layout->addWidget(plotOptionsWidget(), 0);
 		layout->setContentsMargins(0, 0, 0, 0);
-		dataSelectionWidget()->setVisible(false);
+		hideDataSelectionWidget(true);
 		layout->addWidget(m_pPlot, 1);
 	}
 	else

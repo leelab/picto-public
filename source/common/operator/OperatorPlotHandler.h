@@ -30,7 +30,8 @@ public:
 	virtual ~OperatorPlotHandler();
 
 	//! Returns a child-appropriate data-selection widget
-	virtual QWidget *dataSelectionWidget() { return nullptr; };
+	virtual QWidget *plotOptionsWidget() { return nullptr; };
+	virtual void hideDataSelectionWidget(bool) {};
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
