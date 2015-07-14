@@ -109,9 +109,6 @@ void OperatorPlotHandler::exportPlot(int type, int size, const QString fileName)
 		case ExportType::EXPORT_BMP:
 			typeName = "bmp";
 			break;
-		case ExportType::EXPORT_POSTSCRIPT:
-			typeName = "ps";
-			break;
 		default:
 			qDebug() << "Unexpected Export Type";
 			return;
@@ -142,35 +139,5 @@ void OperatorPlotHandler::exportPlot(int type, int size, const QString fileName)
 
 		QwtPlotRenderer renderer;
 		renderer.renderDocument(m_pPlot, fileName, typeName, renderSize);
-	}
-}
-
-void OperatorPlotHandler::requestExport(ExportType::ExportType type)
-{
-	if (m_pPlot)
-	{
-		QString filename = m_tmpTitle;
-		switch (type)
-		{
-		case ExportType::EXPORT_PDF:
-			filename += ".pdf";
-			break;
-		case ExportType::EXPORT_PNG:
-			filename += ".png";
-			break;
-		case ExportType::EXPORT_BMP:
-			filename += ".bmp";
-			break;
-		case ExportType::EXPORT_POSTSCRIPT:
-			filename += ".ps";
-			break;
-		default:
-			qDebug() << "Unexpected Export Type";
-			return;
-		}
-
-
-		QwtPlotRenderer renderer;
-		renderer.exportTo(m_pPlot, filename);
 	}
 }

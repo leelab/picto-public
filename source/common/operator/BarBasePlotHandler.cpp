@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QFileDialog>
 
 #include "BarBasePlotHandler.h"
 #include "DataViewSpecs.h"
@@ -72,6 +73,8 @@ QWidget *BarBasePlotHandler::plotOptionsWidget()
 		m_pExportButton = new QPushButton("Export", m_pDataSelectionWidget);
 		layout->addWidget(m_pExportButton, 1);
 		layout->addStretch(3);
+
+		connect(m_pExportButton, SIGNAL(clicked()), this, SLOT(exportClicked()));
 
 		m_pRightControls = new QWidget(m_pDataSelectionWidget);
 		QHBoxLayout *rightLayout = new QHBoxLayout(m_pRightControls);
@@ -213,6 +216,7 @@ void BarBasePlotHandler::updateProperties(const QString &setName, const QColor &
 	updateColor(setName, color);
 }
 
+//! Virtual function to update the color of the named dataset
 void BarBasePlotHandler::updateColor(const QString &setName, const QColor &color)
 {
 	QPen pen(Qt::black, 0);
@@ -432,4 +436,64 @@ void BarBasePlotHandler::setVisible(const QString &setName, bool visible)
 
 		m_pPlot->replot();
 	}
+}
+
+//! Slot triggered when the Export button is clicked.
+void BarBasePlotHandler::exportClicked()
+{
+	QString selectedFilter;
+
+	QString fileName = QFileDialog::getSaveFileName(
+		m_pDataSelectionWidget,
+		"Export Plot",
+		m_tmpTitle,
+		"Small (*.png *.pdf *.bmp);;Medium (*.png *.pdf *.bmp);;Large (*.png *.pdf *.bmp);;Huge (*.png *.pdf *.bmp)",
+		&selectedFilter);
+
+	//Return if canceled
+	if (fileName.isEmpty())
+	{
+		return;
+	}
+
+	ExportType::ExportType exportType = ExportType::EXPORT_PNG;
+	DataViewSize::ViewSize exportSize = DataViewSize::VIEW_SIZE_2x2;
+
+	if (selectedFilter == "Small (*.png *.pdf *.bmp)")
+	{
+		exportSize = DataViewSize::VIEW_SIZE_1x1;
+	}
+	else if (selectedFilter == "Medium (*.png *.pdf *.bmp)")
+	{
+		exportSize = DataViewSize::VIEW_SIZE_2x2;
+	}
+	else if (selectedFilter == "Large (*.png *.pdf *.bmp)")
+	{
+		exportSize = DataViewSize::VIEW_SIZE_3x3;
+	}
+	else if (selectedFilter == "Huge (*.png *.pdf *.bmp)")
+	{
+		exportSize = DataViewSize::VIEW_SIZE_4x4;
+	}
+
+	if (fileName.endsWith(".png", Qt::CaseInsensitive))
+	{
+		exportType = ExportType::EXPORT_PNG;
+	}
+	else if (fileName.endsWith(".bmp", Qt::CaseInsensitive))
+	{
+		exportType = ExportType::EXPORT_BMP;
+	}
+	else if (fileName.endsWith(".pdf", Qt::CaseInsensitive))
+	{
+		exportType = ExportType::EXPORT_PDF;
+	}
+	else
+	{
+		exportType = ExportType::EXPORT_PNG;
+		fileName += ".png";
+		qDebug() << "Unrecognized export extension: defaulting to png";
+	}
+
+	exportPlot(exportType, exportSize, fileName);
 }

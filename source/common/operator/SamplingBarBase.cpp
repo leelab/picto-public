@@ -45,8 +45,10 @@ void SamplingBarBase::_handleErrorValue(long bin, double &rdRangeMax, QVector<Qw
 {
 	if (m_bLastErrorBarState)
 	{
+		const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
+
 		const double dAvg = m_qhCumulValue[currentSetName_][bin] / double(m_qhCumulNum[currentSetName_][bin]);
-		const double dValue = bin * getBinSize();
+		const double dValue = m_bBinOffset ? (bin + dBinWidth) * getBinSize() : bin * getBinSize();
 		const double stdErr = (sqrt(m_qhCumulValSq[currentSetName_][bin] - dAvg*m_qhCumulValue[currentSetName_][bin])) / double(m_qhCumulNum[currentSetName_][bin]);
 		const double dMax = dAvg + stdErr;
 

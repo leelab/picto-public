@@ -57,7 +57,6 @@ namespace ExportType{
 	enum ExportType : int
 	{
 		EXPORT_PDF = 0,			//!< Export to PDF
-		EXPORT_POSTSCRIPT,		//!< Export to PostScript
 		EXPORT_PNG,				//!< Export to PNG
 		EXPORT_BMP,				//!< Export to BMP
 		EXPORT_MAX				//!< An invalid value

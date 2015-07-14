@@ -12,7 +12,8 @@ namespace Picto {
 const QString BarBase::type = "Bar Base";
 
 BarBase::BarBase()
-	: currentSetName_("Default"), m_lCachedXMin(LONG_MAX), m_lCachedXMax(LONG_MIN), m_bTotalBinRecalc(false), m_cUnasignedNum(0)
+	: currentSetName_("Default"), m_lCachedXMin(LONG_MAX), m_lCachedXMax(LONG_MIN), m_bTotalBinRecalc(false),
+	m_cUnasignedNum(0), m_bBinOffset(false)
 {
 	AddDefinableProperty(QVariant::Bool, "DisplayLegend", false);
 	AddDefinableProperty(QVariant::Bool, "NormalizedDisplay", false);
@@ -64,6 +65,7 @@ void BarBase::replot(const QString &setName)
 
 	const bool bNormalized = getNormalized();
 	const double dBinSize = getBinSize();
+	const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
 
 	_handleErrorInitial(qvError);
 
@@ -105,7 +107,8 @@ void BarBase::replot(const QString &setName)
 		foreach(long key, keyList)
 		{
 			const double dSample = _getSampleValue(key);
-			qvPoints.push_back(std::move(QPointF(key*dBinSize, dSample)));
+			const double dValue = m_bBinOffset ? (key + dBinWidth) * dBinSize : key * dBinSize;
+			qvPoints.push_back(std::move(QPointF(dValue, dSample)));
 
 			if (bNormalized)
 			{
@@ -124,12 +127,12 @@ void BarBase::replot(const QString &setName)
 	}
 	else
 	{
+
 		foreach(long key, keyList)
 		{
 			const double dSample = _getSampleValue(key);
-			const double dBinWidth = 0.5 / (getBinSpacing() + 1.0);
-			const double dMin = (key - dBinWidth) * dBinSize;
-			const double dMax = (key + dBinWidth) * dBinSize;
+			const double dMin = m_bBinOffset ? key * dBinSize : (key - dBinWidth) * dBinSize;
+			const double dMax = m_bBinOffset ? (key + 2 * dBinWidth) * dBinSize : (key + dBinWidth) * dBinSize;
 			qvSamples.push_back(std::move(QwtIntervalSample(dSample, dMin, dMax)));
 
 			if (bNormalized)

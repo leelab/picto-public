@@ -176,6 +176,9 @@ protected:
 	//! Flag to indicate a total recalculation of bins is necessary
 	bool m_bTotalBinRecalc;
 
+	//! Flag to offset bin reporting.  Used for Histograms and other between-points reporting
+	bool m_bBinOffset;
+
 	//! Used to stagger new colors
 	char m_cUnasignedNum;
 };

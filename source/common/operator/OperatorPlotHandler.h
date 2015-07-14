@@ -31,14 +31,15 @@ public:
 
 	//! Returns a child-appropriate data-selection widget
 	virtual QWidget *plotOptionsWidget() { return nullptr; };
+	//! Virtual function to allow the toggling of the dataSelection part of the Plot Options widget
 	virtual void hideDataSelectionWidget(bool) {};
+
 public slots:
 	void initializePlot(const QString &xTitle, const QString &yTitle);
 	void setTitle(const QString &title);
 	void connectToTaskConfig(QSharedPointer<TaskConfig> pTaskConfig);
 
 	void exportPlot(int type, int size, const QString fileName);
-	void requestExport(ExportType::ExportType type);
 
 protected:
 	QWidget *m_pDataViewWidget;

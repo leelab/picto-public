@@ -575,7 +575,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -607,7 +607,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabEnabled(2,false);
 		mainTabbedFrame_->setTabIcon(2,QIcon());
@@ -639,7 +639,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -670,7 +670,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->initialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -787,7 +787,7 @@ void RemoteViewer::enterState()
 		neuralDataViewer_->deinitialize();
 		renderingTarget_->showSplash();
 		mainTabbedFrame_->setCurrentIndex(0);
-		mainTabbedFrame_->setTabEnabled(0,false);
+		//mainTabbedFrame_->setTabEnabled(0,false);
 		mainTabbedFrame_->setTabEnabled(1,false);
 		mainTabbedFrame_->setTabIcon(1,QIcon());
 		mainTabbedFrame_->setTabEnabled(2,false);
@@ -1116,7 +1116,7 @@ void RemoteViewer::setupUi()
 	mainTabbedFrame_->addTab(stimulusWidget,"Behavioral");
 	mainTabbedFrame_->addTab(neuralDataViewer_,"Neural");
 	mainTabbedFrame_->addTab(currentRunViewer_,"Run Info");
-	mainTabbedFrame_->setTabEnabled(0,false);
+	//mainTabbedFrame_->setTabEnabled(0,false);
 	mainTabbedFrame_->setTabEnabled(1,false);
 	mainTabbedFrame_->layout()->setContentsMargins(0, 0, 0, 0);
 

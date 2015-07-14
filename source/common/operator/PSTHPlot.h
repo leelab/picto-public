@@ -66,6 +66,11 @@ protected:
 
 		void addSpike(int channel, int unit, double time);
 
+		//! The number of bins to track prior to the event
+		int preBins_;
+		//! The number of bins to track after the event
+		int postBins_;
+
 		//! The time that the alignment flag was thrown
 		double flagTime_;
 		//! The size of the histogram bins

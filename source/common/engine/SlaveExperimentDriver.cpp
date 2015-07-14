@@ -10,7 +10,7 @@ using namespace Picto;
  *	from the updater is sent into the exp Experiment and rendered on screen.
  */
 SlaveExperimentDriver::SlaveExperimentDriver(QSharedPointer<Experiment> exp, QSharedPointer<StateUpdater> updater)
-	: paused_(false), initialized_(false)
+	: paused_(false), initialized_(false), finalTransitionID_(0)
 {
 	experiment_ = exp;
 	updater_ = updater;
@@ -103,7 +103,7 @@ void SlaveExperimentDriver::renderFrame()
 void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 {
 	//These conditions should only fulfilled when joining an experiment mid-session
-	if (!initialized_ && !(event.id < 0 && event.type == SlaveEvent::TRANS_ACTIVATED))
+	if (!initialized_ && !(event.id < 0 && event.type == SlaveEvent::TRANS_ACTIVATED) && event.dataId > finalTransitionID_)
 	{
 		QSharedPointer<Asset> asset = designConfig_->getAsset(event.id);
 		while (asset && !asset->inherits("Picto::Task"))
@@ -141,6 +141,7 @@ void SlaveExperimentDriver::handleEvent(SlaveEvent& event)
 				Q_ASSERT(!asset);
 				if (!event.value.isEmpty())
 				{
+					finalTransitionID_ = event.dataId;
 					remoteRunEnding();
 				}
 				return;

@@ -66,6 +66,7 @@ private:
 	QString currTask_;
 
 	bool initialized_;
+	qulonglong finalTransitionID_;
 
 private slots:
 	void masterRunStarting(QString taskName,QString runName);

@@ -90,7 +90,7 @@ void PSTHPlot::submitScan(const ActiveScan &scan)
 					currentSetName_ = QString("Channel %1 - Unit %2").arg(channel).arg(unit);
 					for (int bin = 0; bin < scan.binNum_; bin++)
 					{
-						submitValue((bin + 0.5) * scan.binSize_ - 0.001*getPreFlagWindow(), binRate * scan.spikes_[channel][unit][bin]);
+						_submitValue(bin - scan.preBins_, binRate * scan.spikes_[channel][unit][bin]);
 					}
 				}
 			}
@@ -192,16 +192,19 @@ PSTHPlot::ActiveScan::ActiveScan(double flagTime, double binSize, double preWind
 {
 	if (binSize_ <= 0.0)
 		return;
-	scanStartTime_ = flagTime_ - 0.001 * preWindow;
-	scanEndTime_ = flagTime_ + 0.001 * postWindow;
 
-	binNum_ = int((0.001 * (preWindow + postWindow)) / binSize_) + 1;
+	preBins_ = int(ceil(0.001 * preWindow / binSize_));
+	postBins_ = int(ceil(0.001 * postWindow / binSize_));
+	binNum_ = preBins_ + postBins_;
+
+	scanStartTime_ = flagTime_ - preBins_ * binSize_;
+	scanEndTime_ = flagTime_ + postBins_ * binSize_;
 }
 
 //! Add a spike to ongoing scans
 void PSTHPlot::ActiveScan::addSpike(int channel, int unit, double time)
 {
-	if (time > scanEndTime_ || time < scanStartTime_)
+	if (time >= scanEndTime_ || time < scanStartTime_)
 	{
 		return;
 	}

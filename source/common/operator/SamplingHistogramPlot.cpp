@@ -9,6 +9,8 @@ const QString SamplingHistogramPlot::type = "Sampling Histogram Plot";
 SamplingHistogramPlot::SamplingHistogramPlot()
 {
 	AddDefinableProperty(QVariant::Double, "BinSize", 1.0);
+
+	m_bBinOffset = true;
 }
 
 /*!	\brief Constructs and returns a shared pointer to a new SamplingHistogramPlot

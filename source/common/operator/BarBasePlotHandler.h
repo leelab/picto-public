@@ -67,6 +67,8 @@ public slots:
 
 	virtual void resetSlot();
 
+	void exportClicked();
+
 protected:
 	//! Base function to create errorbars.  To be populated by children who use them.
 	virtual void createErrorBars(const QString &) {};

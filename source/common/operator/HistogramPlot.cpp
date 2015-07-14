@@ -9,6 +9,8 @@ const QString HistogramPlot::type = "Histogram Plot";
 HistogramPlot::HistogramPlot()
 {
 	AddDefinableProperty(QVariant::Double, "BinSize", 1.0);
+
+	m_bBinOffset = true;
 }
 
 /*!	\brief Constructs and returns a shared pointer to a new HistogramPlot
