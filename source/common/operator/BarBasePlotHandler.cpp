@@ -432,7 +432,7 @@ void BarBasePlotHandler::setVisible(const QString &setName, bool visible)
 			m_qhpPlotItems[setName]->setZ(iLastZ);
 		}
 
-		setErrorBarsVisible(visible);
+		setErrorBarsVisible(true);
 
 		m_pPlot->replot();
 	}

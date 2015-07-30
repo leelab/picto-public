@@ -36,9 +36,6 @@ public:
 	double getPreFlagWindow() const;
 	double getPostFlagWindow() const;
 
-	int getChannel() const;
-	int getUnit() const;
-
 	virtual void receivePlotHandler(QSharedPointer<OperatorPlotHandler> plotHandler);
 
 	virtual void addSpikeData(const NeuralDataUnit &data);

@@ -11,8 +11,6 @@ PSTHPlot::PSTHPlot()
 {
 	AddDefinableProperty(QVariant::Double, "PreFlagWindow", 400);
 	AddDefinableProperty(QVariant::Double, "PostFlagWindow", 400);
-	AddDefinableProperty(QVariant::Int, "Channel", 0);
-	AddDefinableProperty(QVariant::Int, "Unit", 0);
 }
 
 /*!	\brief Constructs and returns a shared pointer to a new PSTHPlot
@@ -109,18 +107,6 @@ double PSTHPlot::getPreFlagWindow() const
 double PSTHPlot::getPostFlagWindow() const
 {
 	return propertyContainer_->getPropertyValue("PostFlagWindow").toDouble();
-}
-
-//! Convenience function to get the Channel property.
-int PSTHPlot::getChannel() const
-{
-	return propertyContainer_->getPropertyValue("Channel").toInt();
-}
-
-//! Convenience function to get the Unit property.
-int PSTHPlot::getUnit() const
-{
-	return propertyContainer_->getPropertyValue("Unit").toInt();
 }
 
 /*! \brief Updates spikeData_ with the new spike and culls data older than the PreFlagWindow.
