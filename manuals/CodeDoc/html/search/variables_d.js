@@ -8,6 +8,8 @@ var searchData=
   ['polleddatamap_5f',['polledDataMap_',['../class_picto_1_1_input_port.html#a62015fe27445184f80ce1a8ba2544ad9',1,'Picto::InputPort']]],
   ['port_5f',['port_',['../class_picto_1_1_signal_channel.html#ad01cca890df5462ce285bc013587f128',1,'Picto::SignalChannel']]],
   ['positioncheckboxes_5f',['positionCheckBoxes_',['../class_view_selection_frame.html#a67344ee92675b4d6f615d4bc407b00ce',1,'ViewSelectionFrame']]],
+  ['postbins_5f',['postBins_',['../struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#afbeccb86fe6eaaf119f43b6cee39c8c2',1,'Picto::PSTHPlot::ActiveScan']]],
+  ['prebins_5f',['preBins_',['../struct_picto_1_1_p_s_t_h_plot_1_1_active_scan.html#a84e27ebc56865918349cd6ffccce29ce',1,'Picto::PSTHPlot::ActiveScan']]],
   ['propertycontainer_5f',['propertyContainer_',['../class_picto_1_1_data_store.html#af50c0cd3df239ba86be9edc72ded3ccf',1,'Picto::DataStore']]],
   ['props',['props',['../struct_asset_description.html#a1cf0e32a075f4a1994ceba72b8c6eb84',1,'AssetDescription']]],
   ['propunit_5f',['propUnit_',['../class_picto_1_1_property_data_unit_handler.html#a2493c1ebd444d1c7daeb83d9ea6e0711',1,'Picto::PropertyDataUnitHandler']]],

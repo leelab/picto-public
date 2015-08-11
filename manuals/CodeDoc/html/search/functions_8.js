@@ -26,6 +26,7 @@ var searchData=
   ['hasselectedids',['hasSelectedIds',['../class_picto_1_1_analysis_selector_widget.html#a17a534c12c588843e10ef03c8f99f030',1,'Picto::AnalysisSelectorWidget']]],
   ['hasundo',['hasUndo',['../class_picto_1_1_design_root.html#aed754dcf76ca7ae16f30745f0a895758',1,'Picto::DesignRoot']]],
   ['haswarning',['hasWarning',['../class_picto_1_1_design_root.html#a92b713a874879cc6d6ae3f4f90cd92ac',1,'Picto::DesignRoot']]],
+  ['hidedataselectionwidget',['hideDataSelectionWidget',['../class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad',1,'Picto::BarBasePlotHandler::hideDataSelectionWidget()'],['../class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526',1,'Picto::OperatorPlotHandler::hideDataSelectionWidget()']]],
   ['hidedefaulttitle',['hideDefaultTitle',['../class_data_view_widget.html#ad19fe407b0e8fea7e91723d53ad12e68',1,'DataViewWidget']]],
   ['hidename',['hideName',['../class_picto_1_1_state_machine.html#aa107ce101deecf6031c38c60687aa157',1,'Picto::StateMachine']]],
   ['highlightcurrentline',['highlightCurrentLine',['../class_script_text_edit.html#ab187e49ca14efa8784b2767f09c046c7',1,'ScriptTextEdit']]],

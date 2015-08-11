@@ -118,30 +118,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a>();</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_picto_1_1_operator_plot_handler.html">OperatorPlotHandler</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot_handler.html#a8614ec16b32266c0020fb01116459941">   33</a></span>&#160;    <span class="keyword">virtual</span> QWidget *<a class="code" href="class_picto_1_1_operator_plot_handler.html#a8614ec16b32266c0020fb01116459941">dataSelectionWidget</a>() { <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; };</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> initializePlot(<span class="keyword">const</span> QString &amp;xTitle, <span class="keyword">const</span> QString &amp;yTitle);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> setTitle(<span class="keyword">const</span> QString &amp;title);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> connectToTaskConfig(QSharedPointer&lt;TaskConfig&gt; pTaskConfig);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> exportPlot(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> size, <span class="keyword">const</span> QString fileName);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> requestExport(<a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a> type);</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot_handler.html#aa687f0ff779d3b6eeb21f7798dd8b4a0">   33</a></span>&#160;    <span class="keyword">virtual</span> QWidget *<a class="code" href="class_picto_1_1_operator_plot_handler.html#aa687f0ff779d3b6eeb21f7798dd8b4a0">plotOptionsWidget</a>() { <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; };</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526">   35</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526">hideDataSelectionWidget</a>(<span class="keywordtype">bool</span>) {};</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> initializePlot(<span class="keyword">const</span> QString &amp;xTitle, <span class="keyword">const</span> QString &amp;yTitle);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> setTitle(<span class="keyword">const</span> QString &amp;title);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> connectToTaskConfig(QSharedPointer&lt;TaskConfig&gt; pTaskConfig);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    QWidget *m_pDataViewWidget;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    QwtPlot *m_pPlot;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QString m_tmpTitle;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">int</span> index;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> exportPlot(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> size, <span class="keyword">const</span> QString fileName);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QWidget *m_pDataViewWidget;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    QwtPlot *m_pPlot;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QString m_tmpTitle;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> index;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">Picto::ExportType::ExportType</a></div><div class="ttdeci">ExportType</div><div class="ttdoc">Enumeration of the various formats that are supported by the export function. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00055">DataViewSpecs.h:55</a></div></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}; <span class="comment">//namespace Picto</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="common_8h_html_a2cae29357e9e9871ba22bbfc2a35b0e2"><div class="ttname"><a href="common_8h.html#a2cae29357e9e9871ba22bbfc2a35b0e2">PICTOLIB_API</a></div><div class="ttdeci">#define PICTOLIB_API</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
 <div class="ttc" id="class_picto_1_1_operator_plot_handler_html"><div class="ttname"><a href="class_picto_1_1_operator_plot_handler.html">Picto::OperatorPlotHandler</a></div><div class="ttdoc">A Handler for plots derived from all OperatorPlots. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_handler_8h_source.html#l00024">OperatorPlotHandler.h:24</a></div></div>
-<div class="ttc" id="class_picto_1_1_operator_plot_handler_html_a8614ec16b32266c0020fb01116459941"><div class="ttname"><a href="class_picto_1_1_operator_plot_handler.html#a8614ec16b32266c0020fb01116459941">Picto::OperatorPlotHandler::dataSelectionWidget</a></div><div class="ttdeci">virtual QWidget * dataSelectionWidget()</div><div class="ttdoc">Returns a child-appropriate data-selection widget. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_handler_8h_source.html#l00033">OperatorPlotHandler.h:33</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_handler_html_aa687f0ff779d3b6eeb21f7798dd8b4a0"><div class="ttname"><a href="class_picto_1_1_operator_plot_handler.html#aa687f0ff779d3b6eeb21f7798dd8b4a0">Picto::OperatorPlotHandler::plotOptionsWidget</a></div><div class="ttdeci">virtual QWidget * plotOptionsWidget()</div><div class="ttdoc">Returns a child-appropriate data-selection widget. </div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_handler_8h_source.html#l00033">OperatorPlotHandler.h:33</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
+<div class="ttc" id="class_picto_1_1_operator_plot_handler_html_acbf2bcba5018482181522519cdeed526"><div class="ttname"><a href="class_picto_1_1_operator_plot_handler.html#acbf2bcba5018482181522519cdeed526">Picto::OperatorPlotHandler::hideDataSelectionWidget</a></div><div class="ttdeci">virtual void hideDataSelectionWidget(bool)</div><div class="ttdoc">Virtual function to allow the toggling of the dataSelection part of the Plot Options widget...</div><div class="ttdef"><b>Definition:</b> <a href="_operator_plot_handler_8h_source.html#l00035">OperatorPlotHandler.h:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

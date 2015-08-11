@@ -98,275 +98,523 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QComboBox&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QCheckBox&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;BarBasePlotHandler.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QPushButton&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QFileDialog&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../memleakdetect.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;qwt_column_symbol.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;qwt_plot.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;qwt_plot_histogram.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;qwt_scale_draw.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;qwt_scale_engine.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;qwt_legend.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;qwt_legend_label.h&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html">   27</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a> : <span class="keyword">public</span> QwtScaleDraw</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">   31</a></span>&#160;    <a class="code" href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">NormalizedScaleDraw</a>(<span class="keywordtype">double</span> max)</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        :<a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>(max)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        setTickLength(QwtScaleDiv::MajorTick, 6);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        setTickLength(QwtScaleDiv::MediumTick, 3);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        setTickLength(QwtScaleDiv::MinorTick, 0);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        setSpacing(15);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">   42</a></span>&#160;    <span class="keyword">virtual</span> QwtText <a class="code" href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">label</a>(<span class="keywordtype">double</span> value)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(value / <a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">   48</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;};</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">   53</a></span>&#160;<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">BarBasePlotHandler::BarBasePlotHandler</a>()</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    : iLastZ(1), m_pDataSelectionWidget(nullptr), m_pDataSetBox(nullptr), m_pVisibilityBox(nullptr)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#af6c55362910876e77e8f8e907b4ee2a1">   60</a></span>&#160;QWidget *<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af6c55362910876e77e8f8e907b4ee2a1">BarBasePlotHandler::dataSelectionWidget</a>()</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span> (!m_pDataSelectionWidget)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        m_pDataSelectionWidget = <span class="keyword">new</span> QWidget();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        QHBoxLayout *layout = <span class="keyword">new</span> QHBoxLayout(m_pDataSelectionWidget);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        m_pDataSelectionWidget-&gt;setLayout(layout);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        m_pDataSetBox = <span class="keyword">new</span> QComboBox(m_pDataSelectionWidget);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        m_pVisibilityBox = <span class="keyword">new</span> QCheckBox(m_pDataSelectionWidget);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        layout-&gt;addWidget(m_pDataSetBox);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        layout-&gt;addWidget(<span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Visible:&quot;</span>));</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        layout-&gt;addWidget(m_pVisibilityBox);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        connect(m_pDataSetBox, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">selectedDataSetChanged</a>(<span class="keywordtype">int</span>)));</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        connect(m_pVisibilityBox, SIGNAL(clicked(<span class="keywordtype">bool</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">checkboxClicked</a>(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;BarBasePlotHandler.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;DataViewSpecs.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;../memleakdetect.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;qwt_column_symbol.h&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;qwt_plot.h&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;qwt_plot_histogram.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;qwt_scale_draw.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;qwt_scale_engine.h&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;qwt_legend.h&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;qwt_legend_label.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;qwt_plot_curve.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespace_picto.html">Picto</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_picto.html">Picto</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html">   31</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a> : <span class="keyword">public</span> QwtScaleDraw</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">   35</a></span>&#160;    <a class="code" href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">NormalizedScaleDraw</a>(<span class="keywordtype">double</span> max)</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        :<a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>(max)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        setTickLength(QwtScaleDiv::MajorTick, 6);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        setTickLength(QwtScaleDiv::MediumTick, 3);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        setTickLength(QwtScaleDiv::MinorTick, 0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        setSpacing(15);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">   46</a></span>&#160;    <span class="keyword">virtual</span> QwtText <a class="code" href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">label</a>(<span class="keywordtype">double</span> value)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;%1&quot;</span>).arg(value / <a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">   52</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">max_</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;};</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">   57</a></span>&#160;<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">BarBasePlotHandler::BarBasePlotHandler</a>()</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    : iLastZ(1), m_pDataSelectionWidget(nullptr), m_pDataSetBox(nullptr), m_pVisibilityBox(nullptr),</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    m_ePlotColumnType(ColumnType::COLUMN_MAX), m_bDefaultReceivedData(false)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a36cb1f56dd0423cad53f63a27763c078">   65</a></span>&#160;QWidget *<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a36cb1f56dd0423cad53f63a27763c078">BarBasePlotHandler::plotOptionsWidget</a>()</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span> (!m_pDataSelectionWidget)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        m_pDataSelectionWidget = <span class="keyword">new</span> QWidget();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        QHBoxLayout *layout = <span class="keyword">new</span> QHBoxLayout(m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        m_pDataSelectionWidget-&gt;setLayout(layout);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        m_pExportButton = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;Export&quot;</span>, m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        layout-&gt;addWidget(m_pExportButton, 1);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        layout-&gt;addStretch(3);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">foreach</span>(QString dataSet, <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>.keys())</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            m_pDataSetBox-&gt;addItem(dataSet);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            m_pDataSetBox-&gt;setItemData(m_pDataSetBox-&gt;findText(dataSet), <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>[dataSet], Qt::DecorationRole);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> m_pDataSelectionWidget;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        connect(m_pExportButton, SIGNAL(clicked()), <span class="keyword">this</span>, SLOT(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa49d401e5589e255492d6ef2f703dc5c">exportClicked</a>()));</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        m_pRightControls = <span class="keyword">new</span> QWidget(m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        QHBoxLayout *rightLayout = <span class="keyword">new</span> QHBoxLayout(m_pRightControls);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        m_pRightControls-&gt;setLayout(rightLayout);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        layout-&gt;addWidget(m_pRightControls, 4);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        m_pDataSetBox = <span class="keyword">new</span> QComboBox(m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        m_pVisibilityBox = <span class="keyword">new</span> QCheckBox(m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        rightLayout-&gt;addWidget(m_pDataSetBox, 2);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">   89</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">BarBasePlotHandler::selectedDataSetChanged</a>(<span class="keywordtype">int</span> <span class="comment">/*index*/</span>)</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(m_pDataSetBox-&gt;currentText()))</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        m_pVisibilityBox-&gt;setChecked(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[m_pDataSetBox-&gt;currentText()]);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Selected uninitialized DataSet.&quot;</span>;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">  102</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">BarBasePlotHandler::checkboxClicked</a>(<span class="keywordtype">bool</span> bChecked)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">setVisible</a>(m_pDataSetBox-&gt;currentText(), bChecked);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        QLabel *boxLabel = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Visible:&quot;</span>, m_pDataSelectionWidget);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        boxLabel-&gt;setAlignment(Qt::AlignRight | Qt::AlignVCenter);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        rightLayout-&gt;addWidget(boxLabel, 1);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        rightLayout-&gt;addWidget(m_pVisibilityBox, 1);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        connect(m_pDataSetBox, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">selectedDataSetChanged</a>(<span class="keywordtype">int</span>)));</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        connect(m_pVisibilityBox, SIGNAL(clicked(<span class="keywordtype">bool</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">checkboxClicked</a>(<span class="keywordtype">bool</span>)));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">foreach</span>(QString dataSet, <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.keys())</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            m_pDataSetBox-&gt;addItem(dataSet);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            m_pDataSetBox-&gt;setItemData(m_pDataSetBox-&gt;findText(dataSet), <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>[dataSet], Qt::DecorationRole);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> m_pDataSelectionWidget;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">  108</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">BarBasePlotHandler::initializeHisto</a>(<span class="keywordtype">bool</span> bDisplayLegend, <span class="keyword">const</span> QColor &amp;barColor, <span class="keyword">const</span> QColor &amp;canvasColor, <span class="keywordtype">int</span> eBarType)</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;{</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setAttribute(QwtScaleEngine::Floating, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">if</span> (bDisplayLegend)</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        QwtLegend *legend = <span class="keyword">new</span> QwtLegend;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        legend-&gt;setDefaultItemMode(QwtLegendData::ReadOnly);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        m_pPlot-&gt;insertLegend(legend, QwtPlot::RightLegend);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad">  107</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad">BarBasePlotHandler::hideDataSelectionWidget</a>(<span class="keywordtype">bool</span> hide)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span> (m_pRightControls)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        m_pRightControls-&gt;setVisible(!hide);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">BarBasePlotHandler::selectedDataSetChanged</a>(<span class="keywordtype">int</span> <span class="comment">/*index*/</span>)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(m_pDataSetBox-&gt;currentText()))</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        m_pPlot-&gt;insertLegend(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        m_pVisibilityBox-&gt;setChecked(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[m_pDataSetBox-&gt;currentText()]);</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="comment">// Update the Colors and Bar Types</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a694d8c6b066f88f9df7a1f52fcbe8866">updateColumns</a>(<span class="stringliteral">&quot;Default&quot;</span>, barColor, (<a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33">ColumnType::ColumnType</a>) eBarType);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    m_pPlot-&gt;canvas()-&gt;setPalette(canvasColor);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Selected uninitialized DataSet.&quot;</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a694d8c6b066f88f9df7a1f52fcbe8866">  129</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a694d8c6b066f88f9df7a1f52fcbe8866">BarBasePlotHandler::updateColumns</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QColor &amp;color, <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33">ColumnType::ColumnType</a> eType)</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">  129</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">BarBasePlotHandler::checkboxClicked</a>(<span class="keywordtype">bool</span> bChecked)</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>.contains(setName))</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">addDataSet</a>(setName);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setBrush(QBrush(color));</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>[setName] = color;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">setVisible</a>(m_pDataSetBox-&gt;currentText(), bChecked);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">  135</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">BarBasePlotHandler::initializeHisto</a>(<span class="keywordtype">bool</span> bDisplayLegend, <span class="keyword">const</span> QColor &amp;barColor, <span class="keyword">const</span> QColor &amp;canvasColor, <span class="keywordtype">int</span> eBarType)</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setAttribute(QwtScaleEngine::Floating, <span class="keyword">true</span>);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (m_pDataSetBox &amp;&amp; m_pDataSetBox-&gt;findText(setName) != -1)</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (bDisplayLegend)</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        m_pDataSetBox-&gt;setItemData(m_pDataSetBox-&gt;findText(setName), color, Qt::DecorationRole);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    QPen pen(Qt::black, 0);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    QwtColumnSymbol *symbol = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">switch</span> (eType)</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setStyle(QwtPlotHistogram::Outline);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setPen(pen);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setStyle(QwtPlotHistogram::Columns);</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setPen(pen);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setStyle(QwtPlotHistogram::Columns);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        symbol = <span class="keyword">new</span> QwtColumnSymbol(QwtColumnSymbol::Box);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        symbol-&gt;setFrameStyle(QwtColumnSymbol::Raised);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        symbol-&gt;setLineWidth(2);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        symbol-&gt;setPalette(QPalette(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;brush().color()));</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setSymbol(symbol);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setStyle(QwtPlotHistogram::Lines);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        pen.setBrush(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;brush());</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        pen.setWidth(2);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setPen(pen);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">  183</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">BarBasePlotHandler::normalizeScale</a>(<span class="keyword">const</span> QString &amp; <span class="comment">/*setName*/</span>, <span class="keywordtype">double</span> dAxisMax, <span class="keywordtype">double</span> dTotalValue, <span class="keyword">const</span> QList&lt;double&gt; &amp;medium, <span class="keyword">const</span> QList&lt;double&gt; &amp;major)</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;{</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    QwtScaleDiv scaleDiv(0, dAxisMax*dTotalValue, QList&lt;double&gt;(), medium, major);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    QwtScaleDraw *scaleDraw = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a>(dTotalValue);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    m_pPlot-&gt;setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    m_pPlot-&gt;setAxisScaleDraw(QwtPlot::yLeft, scaleDraw);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">  194</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">BarBasePlotHandler::setSamples</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QVector&lt;QwtIntervalSample&gt; &amp;qvSamples)</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;{</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>.contains(setName))</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    {</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">addDataSet</a>(setName);</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">  205</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">BarBasePlotHandler::scaleAxis</a>(<span class="keywordtype">double</span> dBinSize)</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;{</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setMargins(0.5*dBinSize, 0.5*dBinSize);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">  211</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">BarBasePlotHandler::callReplot</a>(<span class="keyword">const</span> QString &amp;setName)</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;{</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="comment">// Only replot if the submitted setname is visible</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(setName) &amp;&amp; <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName])</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    {</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        m_pPlot-&gt;replot();</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;}</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
-<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">  221</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">BarBasePlotHandler::addDataSet</a>(<span class="keyword">const</span> QString &amp;setName)</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;{</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>.contains(setName))</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        QwtLegend *legend = <span class="keyword">new</span> QwtLegend;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        legend-&gt;setDefaultItemMode(QwtLegendData::ReadOnly);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        m_pPlot-&gt;insertLegend(legend, QwtPlot::RightLegend);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    {</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        m_pPlot-&gt;insertLegend(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="comment">//Double-check and clear existing data</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">if</span> (m_ePlotColumnType != <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224">ColumnType::COLUMN_MAX</a> &amp;&amp; m_ePlotColumnType != eBarType)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab2585359bbc9f8bf37c3c5db0f92df98">clearPlotItems</a>();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    m_ePlotColumnType = (<a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33">ColumnType::ColumnType</a>) eBarType;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>[<span class="stringliteral">&quot;Default&quot;</span>] = barColor;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    m_pPlot-&gt;canvas()-&gt;setPalette(canvasColor);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#abed219006df4c01e9285ea5bd4869d5c">  165</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#abed219006df4c01e9285ea5bd4869d5c">BarBasePlotHandler::resetSlot</a>()</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;{</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordflow">foreach</span>(QwtPlotItem *plotItem, <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>)</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">switch</span> (m_ePlotColumnType)</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            ((QwtPlotHistogram*)plotItem)-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData());</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">ColumnType::COLUMN_CURVE</a>:</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">ColumnType::COLUMN_FILLED_CURVE</a>:</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            ((QwtPlotCurve *)plotItem)-&gt;setData(<span class="keyword">new</span> QwtPointSeriesData());</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            qDebug() &lt;&lt; <span class="stringliteral">&quot;Undefined PlotColumnType for reset&quot;</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    }</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ab2585359bbc9f8bf37c3c5db0f92df98">  189</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab2585359bbc9f8bf37c3c5db0f92df98">BarBasePlotHandler::clearPlotItems</a>()</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;{</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    QHash&lt;QString, QwtPlotItem *&gt;::iterator iter = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.begin();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">while</span> (iter != <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.end())</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        (*iter)-&gt;detach();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keyword">delete</span> *iter;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        iter = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.erase(iter);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    }</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.clear();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>.clear();</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> = 1;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    m_pDataSetBox-&gt;clear();</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    m_bDefaultReceivedData = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad">hideDataSelectionWidget</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#afc1ee81ad5652c0b16dbe5054bbe59f6">  209</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#afc1ee81ad5652c0b16dbe5054bbe59f6">BarBasePlotHandler::updateProperties</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QColor &amp;color)</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;{</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.contains(setName))</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">addDataSet</a>(setName);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    }</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a9028bbcf39f297557d73602cb92d87a7">updateColor</a>(setName, color);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;}</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a9028bbcf39f297557d73602cb92d87a7">  220</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a9028bbcf39f297557d73602cb92d87a7">BarBasePlotHandler::updateColor</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QColor &amp;color)</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;{</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    QPen pen(Qt::black, 0);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">switch</span> (m_ePlotColumnType)</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    {</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName] = <span class="keyword">new</span> QwtPlotHistogram(setName);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;attach(m_pPlot);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> + 2;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setZ(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a>);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName] = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        createErrorBars(setName);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">if</span> (m_pDataSetBox &amp;&amp; m_pDataSetBox-&gt;findText(setName) == -1)</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            m_pDataSetBox-&gt;addItem(setName);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        }</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>.count() &gt; 1)</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    {</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af6c55362910876e77e8f8e907b4ee2a1">dataSelectionWidget</a>()-&gt;setVisible(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    }</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">  247</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">BarBasePlotHandler::setVisible</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keywordtype">bool</span> visible)</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;{</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(setName))</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setVisible(visible);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName] = visible;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    {</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        QwtPlotHistogram *histo = (QwtPlotHistogram*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        histo-&gt;setBrush(QBrush(color));</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        histo-&gt;setStyle(QwtPlotHistogram::Outline);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        histo-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        histo-&gt;setPen(pen);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    {</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        QwtPlotHistogram *histo = (QwtPlotHistogram*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        histo-&gt;setBrush(QBrush(color));</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        histo-&gt;setStyle(QwtPlotHistogram::Columns);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        histo-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        histo-&gt;setPen(pen);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    }</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        QwtPlotHistogram *histo = (QwtPlotHistogram*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        histo-&gt;setBrush(QBrush(color));</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        histo-&gt;setStyle(QwtPlotHistogram::Columns);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        QwtColumnSymbol *symbol = <span class="keyword">new</span> QwtColumnSymbol(QwtColumnSymbol::Box);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        symbol-&gt;setFrameStyle(QwtColumnSymbol::Raised);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        symbol-&gt;setLineWidth(2);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        symbol-&gt;setPalette(QPalette(histo-&gt;brush().color()));</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordflow">if</span> (visible)</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        {</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> + 2;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">m_qhpHistoPlotItems</a>[setName]-&gt;setZ(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a>);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        }</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa55fceb6a05ce9d9254ee69d41020377">setErrorBarsVisible</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        m_pPlot-&gt;replot();</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;}</div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_af23a844a094d2fc5e9c2a2d8b88733d8"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">Picto::BarBasePlotHandler::addDataSet</a></div><div class="ttdeci">virtual void addDataSet(const QString &amp;setName)</div><div class="ttdoc">Adds the indicated dataset name to the list of datasets, and spawns a histogram item for it...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00221">BarBasePlotHandler.cpp:221</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a2f01b2f2029b03878c530bb025542315"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">Picto::BarBasePlotHandler::normalizeScale</a></div><div class="ttdeci">void normalizeScale(const QString &amp;setName, double dAxisMax, double dTotalValue, const QList&lt; double &gt; &amp;medium, const QList&lt; double &gt; &amp;major)</div><div class="ttdoc">Sets the Y-axis scale to be normalized using the input parameters. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00183">BarBasePlotHandler.cpp:183</a></div></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        histo-&gt;setSymbol(symbol);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        QwtPlotHistogram *histo = (QwtPlotHistogram*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        histo-&gt;setBrush(QBrush(color));</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        histo-&gt;setStyle(QwtPlotHistogram::Lines);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        histo-&gt;setSymbol(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        pen.setBrush(QBrush(color));</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        pen.setWidth(2);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        histo-&gt;setPen(pen);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">ColumnType::COLUMN_CURVE</a>:</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        QwtPlotCurve *curve = (QwtPlotCurve*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        curve-&gt;setBrush(QBrush());</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        pen.setBrush(QBrush(color));</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        pen.setWidth(2);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        curve-&gt;setPen(pen);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    }</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">ColumnType::COLUMN_FILLED_CURVE</a>:</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    {</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        QwtPlotCurve *curve = (QwtPlotCurve*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName];</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        curve-&gt;setBrush(QBrush(color));</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        pen.setWidth(2);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        curve-&gt;setPen(pen);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    }</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">m_qhcHistoPlotColor</a>[setName] = color;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keywordflow">if</span> (m_pDataSetBox &amp;&amp; m_pDataSetBox-&gt;findText(setName) != -1)</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        m_pDataSetBox-&gt;setItemData(m_pDataSetBox-&gt;findText(setName), color, Qt::DecorationRole);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">  298</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">BarBasePlotHandler::normalizeScale</a>(<span class="keyword">const</span> QString &amp; <span class="comment">/*setName*/</span>, <span class="keywordtype">double</span> dAxisMax, <span class="keywordtype">double</span> dTotalValue, <span class="keyword">const</span> QList&lt;double&gt; &amp;medium, <span class="keyword">const</span> QList&lt;double&gt; &amp;major)</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;{</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    QwtScaleDiv scaleDiv(0, dAxisMax*dTotalValue, QList&lt;double&gt;(), medium, major);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    QwtScaleDraw *scaleDraw = <span class="keyword">new</span> <a class="code" href="class_picto_1_1_normalized_scale_draw.html">NormalizedScaleDraw</a>(dTotalValue);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    m_pPlot-&gt;setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    m_pPlot-&gt;setAxisScaleDraw(QwtPlot::yLeft, scaleDraw);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;}</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
+<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">  309</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">BarBasePlotHandler::setSamples</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QVector&lt;QwtIntervalSample&gt; &amp;qvSamples)</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;{</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.contains(setName))</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    {</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">addDataSet</a>(setName);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    }</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordflow">switch</span> (m_ePlotColumnType)</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        ((QwtPlotHistogram*)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName])-&gt;setSamples(<span class="keyword">new</span> QwtIntervalSeriesData(qvSamples));</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">ColumnType::COLUMN_CURVE</a>:</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">ColumnType::COLUMN_FILLED_CURVE</a>:</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Undefined PlotColumnType&quot;</span>;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    }</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;}</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a48caa08b81889e592d976f5ec7ccd555">  333</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a48caa08b81889e592d976f5ec7ccd555">BarBasePlotHandler::setPoints</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keyword">const</span> QVector&lt;QPointF&gt; &amp;qvPoints)</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;{</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.contains(setName))</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">addDataSet</a>(setName);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keywordflow">switch</span> (m_ePlotColumnType)</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    {</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">ColumnType::COLUMN_CURVE</a>:</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">ColumnType::COLUMN_FILLED_CURVE</a>:</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    {</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        ((QwtPlotCurve *)<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName])-&gt;setData(<span class="keyword">new</span> QwtPointSeriesData(qvPoints));</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    }</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Undefined PlotColumnType&quot;</span>;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">  360</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">BarBasePlotHandler::scaleAxis</a>(<span class="keywordtype">double</span> dBinSize)</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    m_pPlot-&gt;axisScaleEngine(QwtPlot::xBottom)-&gt;setMargins(0.5*dBinSize, 0.5*dBinSize);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;}</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">  366</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">BarBasePlotHandler::callReplot</a>(<span class="keyword">const</span> QString &amp;setName)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;{</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="comment">// Only replot if the submitted setname is visible</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(setName) &amp;&amp; <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName])</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    {</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        m_pPlot-&gt;replot();</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    }</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
+<div class="line"><a name="l00376"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">  376</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">BarBasePlotHandler::addDataSet</a>(<span class="keyword">const</span> QString &amp;setName)</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;{</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.contains(setName))</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    {</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keywordflow">switch</span> (m_ePlotColumnType)</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        {</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">ColumnType::COLUMN_OUTLINE</a>:</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">ColumnType::COLUMN_FLAT_COLUMN</a>:</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">ColumnType::COLUMN_RAISED_COLUMN</a>:</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">ColumnType::COLUMN_LINES</a>:</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName] = <span class="keyword">new</span> QwtPlotHistogram(setName);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">ColumnType::COLUMN_CURVE</a>:</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">ColumnType::COLUMN_FILLED_CURVE</a>:</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        {</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;            QwtPlotCurve *newPlotCurve = <span class="keyword">new</span> QwtPlotCurve(setName);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName] = newPlotCurve;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            newPlotCurve-&gt;setData(<span class="keyword">new</span> QwtPointSeriesData(QVector&lt;QPointF&gt;()));</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;        }</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        }</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName]-&gt;attach(m_pPlot);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> + 2;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName]-&gt;setZ(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a>);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName] = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a6a1c12fdb2d6c0a3df9295b798d2d29a">createErrorBars</a>(setName);</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keywordflow">if</span> (m_pDataSetBox &amp;&amp; m_pDataSetBox-&gt;findText(setName) == -1)</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        {</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;            m_pDataSetBox-&gt;addItem(setName);</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        }</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    }</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>.count() &gt; 1)</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    {</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad">hideDataSelectionWidget</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    }</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;}</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
+<div class="line"><a name="l00420"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">  420</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">BarBasePlotHandler::setVisible</a>(<span class="keyword">const</span> QString &amp;setName, <span class="keywordtype">bool</span> visible)</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;{</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>.contains(setName))</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    {</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName]-&gt;setVisible(visible);</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName]-&gt;setItemAttribute(QwtPlotItem::Legend, visible);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;        m_pPlot-&gt;updateLegend();</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">m_qhbHistoPlotVisibility</a>[setName] = visible;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;        <span class="keywordflow">if</span> (visible)</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        {</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> = <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a> + 2;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;            <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">m_qhpPlotItems</a>[setName]-&gt;setZ(<a class="code" href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">iLastZ</a>);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;        }</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;        <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa55fceb6a05ce9d9254ee69d41020377">setErrorBarsVisible</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;        m_pPlot-&gt;replot();</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    }</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;}</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;</div>
+<div class="line"><a name="l00442"></a><span class="lineno"><a class="line" href="class_picto_1_1_bar_base_plot_handler.html#aa49d401e5589e255492d6ef2f703dc5c">  442</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_bar_base_plot_handler.html#aa49d401e5589e255492d6ef2f703dc5c">BarBasePlotHandler::exportClicked</a>()</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;{</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    QString selectedFilter;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    QString fileName = QFileDialog::getSaveFileName(</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        m_pDataSelectionWidget,</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        <span class="stringliteral">&quot;Export Plot&quot;</span>,</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;        m_tmpTitle,</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        <span class="stringliteral">&quot;Small (*.png *.pdf *.bmp);;Medium (*.png *.pdf *.bmp);;Large (*.png *.pdf *.bmp);;Huge (*.png *.pdf *.bmp)&quot;</span>,</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        &amp;selectedFilter);</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="comment">//Return if canceled</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keywordflow">if</span> (fileName.isEmpty())</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    {</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    }</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">ExportType::ExportType</a> exportType = <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489a8289f465758e91b5432bf520eae4738c">ExportType::EXPORT_PNG</a>;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089">DataViewSize::ViewSize</a> exportSize = <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a1ae1e9c0981bb1448ecb1014f39ebd95">DataViewSize::VIEW_SIZE_2x2</a>;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    <span class="keywordflow">if</span> (selectedFilter == <span class="stringliteral">&quot;Small (*.png *.pdf *.bmp)&quot;</span>)</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    {</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        exportSize = <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a668f6c86cd02e53c1da548e26b7769f5">DataViewSize::VIEW_SIZE_1x1</a>;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;    }</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (selectedFilter == <span class="stringliteral">&quot;Medium (*.png *.pdf *.bmp)&quot;</span>)</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    {</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;        exportSize = <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a1ae1e9c0981bb1448ecb1014f39ebd95">DataViewSize::VIEW_SIZE_2x2</a>;</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;    }</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (selectedFilter == <span class="stringliteral">&quot;Large (*.png *.pdf *.bmp)&quot;</span>)</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;    {</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        exportSize = <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089ab928acde9aded204e2c504b2639f3777">DataViewSize::VIEW_SIZE_3x3</a>;</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;    }</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (selectedFilter == <span class="stringliteral">&quot;Huge (*.png *.pdf *.bmp)&quot;</span>)</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    {</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        exportSize = <a class="code" href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a472e9de79984811df91d9c9748ece538">DataViewSize::VIEW_SIZE_4x4</a>;</div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    }</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;    <span class="keywordflow">if</span> (fileName.endsWith(<span class="stringliteral">&quot;.png&quot;</span>, Qt::CaseInsensitive))</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;    {</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        exportType = <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489a8289f465758e91b5432bf520eae4738c">ExportType::EXPORT_PNG</a>;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;    }</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fileName.endsWith(<span class="stringliteral">&quot;.bmp&quot;</span>, Qt::CaseInsensitive))</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;    {</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        exportType = <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489ac0e3e2483c9944f2e4dea8d63fb7d167">ExportType::EXPORT_BMP</a>;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    }</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fileName.endsWith(<span class="stringliteral">&quot;.pdf&quot;</span>, Qt::CaseInsensitive))</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    {</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        exportType = <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489affde0cea7d0ce723325e31757f866c00">ExportType::EXPORT_PDF</a>;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    }</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;    {</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        exportType = <a class="code" href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489a8289f465758e91b5432bf520eae4738c">ExportType::EXPORT_PNG</a>;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        fileName += <span class="stringliteral">&quot;.png&quot;</span>;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Unrecognized export extension: defaulting to png&quot;</span>;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;    }</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;    exportPlot(exportType, exportSize, fileName);</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;}</div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_af23a844a094d2fc5e9c2a2d8b88733d8"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#af23a844a094d2fc5e9c2a2d8b88733d8">Picto::BarBasePlotHandler::addDataSet</a></div><div class="ttdeci">virtual void addDataSet(const QString &amp;setName)</div><div class="ttdoc">Adds the indicated dataset name to the list of datasets, and spawns a histogram item for it...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00376">BarBasePlotHandler.cpp:376</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a2f01b2f2029b03878c530bb025542315"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a2f01b2f2029b03878c530bb025542315">Picto::BarBasePlotHandler::normalizeScale</a></div><div class="ttdeci">void normalizeScale(const QString &amp;setName, double dAxisMax, double dTotalValue, const QList&lt; double &gt; &amp;medium, const QList&lt; double &gt; &amp;major)</div><div class="ttdoc">Sets the Y-axis scale to be normalized using the input parameters. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00298">BarBasePlotHandler.cpp:298</a></div></div>
 <div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33">Picto::ColumnType::ColumnType</a></div><div class="ttdeci">ColumnType</div><div class="ttdoc">Enumeration of the various forms columns can have. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00030">DataViewSpecs.h:30</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ada110861336600f895b63555df57f16c"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c">Picto::BarBasePlotHandler::m_qhpHistoPlotItems</a></div><div class="ttdeci">QHash&lt; QString, QwtPlotHistogram * &gt; m_qhpHistoPlotItems</div><div class="ttdoc">A hash of HistogramPlotItem pointers, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00071">BarBasePlotHandler.h:71</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a53a14a80c3b79cdf4137a3cae1394934"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">Picto::BarBasePlotHandler::selectedDataSetChanged</a></div><div class="ttdeci">void selectedDataSetChanged(int index)</div><div class="ttdoc">Slot for changing currently selected dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00089">BarBasePlotHandler.cpp:89</a></div></div>
-<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_af3e1b6bf63c0d7dbb2e127d4cf595e75"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">Picto::NormalizedScaleDraw::NormalizedScaleDraw</a></div><div class="ttdeci">NormalizedScaleDraw(double max)</div><div class="ttdoc">Constructor to set our properties. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00031">BarBasePlotHandler.cpp:31</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ac074791ab84aebff6d5ee956c620aa53"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">Picto::BarBasePlotHandler::BarBasePlotHandler</a></div><div class="ttdeci">BarBasePlotHandler()</div><div class="ttdoc">Constructs a new BarBasePlotHandler. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00053">BarBasePlotHandler.cpp:53</a></div></div>
-<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_afc2e57978b9a71012dde45f7d54ae049"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">Picto::NormalizedScaleDraw::label</a></div><div class="ttdeci">virtual QwtText label(double value) const </div><div class="ttdoc">Overwriting labeling functionality. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00042">BarBasePlotHandler.cpp:42</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_af4d667b1f9596368c37866a6fcf0a184"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">Picto::BarBasePlotHandler::iLastZ</a></div><div class="ttdeci">int iLastZ</div><div class="ttdoc">Retains the last Z value applied to a plot item. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00078">BarBasePlotHandler.h:78</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_data_view_size_html_aac6b266f9044d273d1d042c18ceef089ab928acde9aded204e2c504b2639f3777"><div class="ttname"><a href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089ab928acde9aded204e2c504b2639f3777">Picto::DataViewSize::VIEW_SIZE_3x3</a></div><div class="ttdoc">A 3x3 view. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00021">DataViewSpecs.h:21</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489">Picto::ExportType::ExportType</a></div><div class="ttdeci">ExportType</div><div class="ttdoc">Enumeration of the various formats that are supported by the export function. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00057">DataViewSpecs.h:57</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a232d46a377863d2bad7e24ba256220ad"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a232d46a377863d2bad7e24ba256220ad">Picto::BarBasePlotHandler::hideDataSelectionWidget</a></div><div class="ttdeci">virtual void hideDataSelectionWidget(bool hide)</div><div class="ttdoc">Virtual function to allow the toggling of the dataSelection part of the Plot Options widget...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00107">BarBasePlotHandler.cpp:107</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a9028bbcf39f297557d73602cb92d87a7"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a9028bbcf39f297557d73602cb92d87a7">Picto::BarBasePlotHandler::updateColor</a></div><div class="ttdeci">virtual void updateColor(const QString &amp;setName, const QColor &amp;color)</div><div class="ttdoc">Virtual function to update the color of the named dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00220">BarBasePlotHandler.cpp:220</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a53a14a80c3b79cdf4137a3cae1394934"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a53a14a80c3b79cdf4137a3cae1394934">Picto::BarBasePlotHandler::selectedDataSetChanged</a></div><div class="ttdeci">void selectedDataSetChanged(int index)</div><div class="ttdoc">Slot for changing currently selected dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00116">BarBasePlotHandler.cpp:116</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ab59b92515b719870eb5c6fcf98ac0adc"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc">Picto::BarBasePlotHandler::m_qhpPlotItems</a></div><div class="ttdeci">QHash&lt; QString, QwtPlotItem * &gt; m_qhpPlotItems</div><div class="ttdoc">A hash of PlotItem pointers, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00085">BarBasePlotHandler.h:85</a></div></div>
+<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_af3e1b6bf63c0d7dbb2e127d4cf595e75"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#af3e1b6bf63c0d7dbb2e127d4cf595e75">Picto::NormalizedScaleDraw::NormalizedScaleDraw</a></div><div class="ttdeci">NormalizedScaleDraw(double max)</div><div class="ttdoc">Constructor to set our properties. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00035">BarBasePlotHandler.cpp:35</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ac074791ab84aebff6d5ee956c620aa53"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ac074791ab84aebff6d5ee956c620aa53">Picto::BarBasePlotHandler::BarBasePlotHandler</a></div><div class="ttdeci">BarBasePlotHandler()</div><div class="ttdoc">Constructs a new BarBasePlotHandler. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00057">BarBasePlotHandler.cpp:57</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_data_view_size_html_aac6b266f9044d273d1d042c18ceef089a1ae1e9c0981bb1448ecb1014f39ebd95"><div class="ttname"><a href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a1ae1e9c0981bb1448ecb1014f39ebd95">Picto::DataViewSize::VIEW_SIZE_2x2</a></div><div class="ttdoc">A 2x2 view. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00020">DataViewSpecs.h:20</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224">Picto::ColumnType::COLUMN_MAX</a></div><div class="ttdoc">An invalid value. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00038">DataViewSpecs.h:38</a></div></div>
+<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_afc2e57978b9a71012dde45f7d54ae049"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#afc2e57978b9a71012dde45f7d54ae049">Picto::NormalizedScaleDraw::label</a></div><div class="ttdeci">virtual QwtText label(double value) const </div><div class="ttdoc">Overwriting labeling functionality. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00046">BarBasePlotHandler.cpp:46</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a6a1c12fdb2d6c0a3df9295b798d2d29a"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a6a1c12fdb2d6c0a3df9295b798d2d29a">Picto::BarBasePlotHandler::createErrorBars</a></div><div class="ttdeci">virtual void createErrorBars(const QString &amp;)</div><div class="ttdoc">Base function to create errorbars. To be populated by children who use them. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00074">BarBasePlotHandler.h:74</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_af4d667b1f9596368c37866a6fcf0a184"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#af4d667b1f9596368c37866a6fcf0a184">Picto::BarBasePlotHandler::iLastZ</a></div><div class="ttdeci">int iLastZ</div><div class="ttdoc">Retains the last Z value applied to a plot item. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00092">BarBasePlotHandler.h:92</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489ac0e3e2483c9944f2e4dea8d63fb7d167"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489ac0e3e2483c9944f2e4dea8d63fb7d167">Picto::ExportType::EXPORT_BMP</a></div><div class="ttdoc">Export to BMP. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00061">DataViewSpecs.h:61</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489affde0cea7d0ce723325e31757f866c00"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489affde0cea7d0ce723325e31757f866c00">Picto::ExportType::EXPORT_PDF</a></div><div class="ttdoc">Export to PDF. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00059">DataViewSpecs.h:59</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_export_type_html_ab747bc592411a5873a69e9a8075d5489a8289f465758e91b5432bf520eae4738c"><div class="ttname"><a href="namespace_picto_1_1_export_type.html#ab747bc592411a5873a69e9a8075d5489a8289f465758e91b5432bf520eae4738c">Picto::ExportType::EXPORT_PNG</a></div><div class="ttdoc">Export to PNG. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00060">DataViewSpecs.h:60</a></div></div>
 <div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010">Picto::ColumnType::COLUMN_LINES</a></div><div class="ttdoc">Simple lines at the specified values. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00035">DataViewSpecs.h:35</a></div></div>
-<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_ae934cbc15614aa52c6866a3358cf9b99"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">Picto::NormalizedScaleDraw::max_</a></div><div class="ttdeci">double max_</div><div class="ttdoc">NormalizedScaleDraw holds onto the current total (Normalization quantity). </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00048">BarBasePlotHandler.cpp:48</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_af6c55362910876e77e8f8e907b4ee2a1"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#af6c55362910876e77e8f8e907b4ee2a1">Picto::BarBasePlotHandler::dataSelectionWidget</a></div><div class="ttdeci">virtual QWidget * dataSelectionWidget()</div><div class="ttdoc">Creates or returns a widget meant to adjust dataset visibility. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00060">BarBasePlotHandler.cpp:60</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a2141be78274a65a9382fafde2e3a861f"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">Picto::BarBasePlotHandler::m_qhcHistoPlotColor</a></div><div class="ttdeci">QHash&lt; QString, QColor &gt; m_qhcHistoPlotColor</div><div class="ttdoc">A hash of HistogramPlotItem colors, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00075">BarBasePlotHandler.h:75</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a408ddc82909551be1f5dd25107bdd944"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">Picto::BarBasePlotHandler::initializeHisto</a></div><div class="ttdeci">void initializeHisto(bool bDisplayLegend, const QColor &amp;barColor, const QColor &amp;canvasColor, int eBarType)</div><div class="ttdoc">Initializes the histogram item. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00108">BarBasePlotHandler.cpp:108</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_aa3a7876d796f6111dddac5c875bbd328"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">Picto::BarBasePlotHandler::setVisible</a></div><div class="ttdeci">virtual void setVisible(const QString &amp;setName, bool visible)</div><div class="ttdoc">Sets the visibility of the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00247">BarBasePlotHandler.cpp:247</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a1949eb1882dc3ca6ce75647ca930c278"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">Picto::BarBasePlotHandler::setSamples</a></div><div class="ttdeci">void setSamples(const QString &amp;setName, const QVector&lt; QwtIntervalSample &gt; &amp;qvSamples)</div><div class="ttdoc">Accepts the data for the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00194">BarBasePlotHandler.cpp:194</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_aa55fceb6a05ce9d9254ee69d41020377"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#aa55fceb6a05ce9d9254ee69d41020377">Picto::BarBasePlotHandler::setErrorBarsVisible</a></div><div class="ttdeci">virtual void setErrorBarsVisible(bool)</div><div class="ttdoc">A slot for receiving error bar visibility, implemented by children who use it. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00051">BarBasePlotHandler.h:51</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a0e817a153132aac503a28f6a95f7eaaa"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">Picto::BarBasePlotHandler::m_qhbHistoPlotVisibility</a></div><div class="ttdeci">QHash&lt; QString, bool &gt; m_qhbHistoPlotVisibility</div><div class="ttdoc">A hash of HistogramPlotItem visibility, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00073">BarBasePlotHandler.h:73</a></div></div>
+<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html_ae934cbc15614aa52c6866a3358cf9b99"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html#ae934cbc15614aa52c6866a3358cf9b99">Picto::NormalizedScaleDraw::max_</a></div><div class="ttdeci">double max_</div><div class="ttdoc">NormalizedScaleDraw holds onto the current total (Normalization quantity). </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00052">BarBasePlotHandler.cpp:52</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_data_view_size_html_aac6b266f9044d273d1d042c18ceef089a472e9de79984811df91d9c9748ece538"><div class="ttname"><a href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a472e9de79984811df91d9c9748ece538">Picto::DataViewSize::VIEW_SIZE_4x4</a></div><div class="ttdoc">A 4x4 view. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00022">DataViewSpecs.h:22</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a2141be78274a65a9382fafde2e3a861f"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f">Picto::BarBasePlotHandler::m_qhcHistoPlotColor</a></div><div class="ttdeci">QHash&lt; QString, QColor &gt; m_qhcHistoPlotColor</div><div class="ttdoc">A hash of HistogramPlotItem colors, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00089">BarBasePlotHandler.h:89</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83">Picto::ColumnType::COLUMN_CURVE</a></div><div class="ttdoc">A curve of the values. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00036">DataViewSpecs.h:36</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a408ddc82909551be1f5dd25107bdd944"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a408ddc82909551be1f5dd25107bdd944">Picto::BarBasePlotHandler::initializeHisto</a></div><div class="ttdeci">void initializeHisto(bool bDisplayLegend, const QColor &amp;barColor, const QColor &amp;canvasColor, int eBarType)</div><div class="ttdoc">Initializes the histogram item. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00135">BarBasePlotHandler.cpp:135</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_aa3a7876d796f6111dddac5c875bbd328"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#aa3a7876d796f6111dddac5c875bbd328">Picto::BarBasePlotHandler::setVisible</a></div><div class="ttdeci">virtual void setVisible(const QString &amp;setName, bool visible)</div><div class="ttdoc">Sets the visibility of the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00420">BarBasePlotHandler.cpp:420</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a1949eb1882dc3ca6ce75647ca930c278"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a1949eb1882dc3ca6ce75647ca930c278">Picto::BarBasePlotHandler::setSamples</a></div><div class="ttdeci">void setSamples(const QString &amp;setName, const QVector&lt; QwtIntervalSample &gt; &amp;qvSamples)</div><div class="ttdoc">Accepts the data for the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00309">BarBasePlotHandler.cpp:309</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_aa49d401e5589e255492d6ef2f703dc5c"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#aa49d401e5589e255492d6ef2f703dc5c">Picto::BarBasePlotHandler::exportClicked</a></div><div class="ttdeci">void exportClicked()</div><div class="ttdoc">Slot triggered when the Export button is clicked. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00442">BarBasePlotHandler.cpp:442</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_aa55fceb6a05ce9d9254ee69d41020377"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#aa55fceb6a05ce9d9254ee69d41020377">Picto::BarBasePlotHandler::setErrorBarsVisible</a></div><div class="ttdeci">virtual void setErrorBarsVisible(bool)</div><div class="ttdoc">A slot for receiving error bar visibility, implemented by children who use it. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00054">BarBasePlotHandler.h:54</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_afc1ee81ad5652c0b16dbe5054bbe59f6"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#afc1ee81ad5652c0b16dbe5054bbe59f6">Picto::BarBasePlotHandler::updateProperties</a></div><div class="ttdeci">void updateProperties(const QString &amp;setName, const QColor &amp;color)</div><div class="ttdoc">Updates the rendering properties of the columns for the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00209">BarBasePlotHandler.cpp:209</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a0e817a153132aac503a28f6a95f7eaaa"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa">Picto::BarBasePlotHandler::m_qhbHistoPlotVisibility</a></div><div class="ttdeci">QHash&lt; QString, bool &gt; m_qhbHistoPlotVisibility</div><div class="ttdoc">A hash of HistogramPlotItem visibility, indexed by dataset name. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8h_source.html#l00087">BarBasePlotHandler.h:87</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_data_view_size_html_aac6b266f9044d273d1d042c18ceef089a668f6c86cd02e53c1da548e26b7769f5"><div class="ttname"><a href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089a668f6c86cd02e53c1da548e26b7769f5">Picto::DataViewSize::VIEW_SIZE_1x1</a></div><div class="ttdoc">A 1x1 view. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00019">DataViewSpecs.h:19</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ab2585359bbc9f8bf37c3c5db0f92df98"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ab2585359bbc9f8bf37c3c5db0f92df98">Picto::BarBasePlotHandler::clearPlotItems</a></div><div class="ttdeci">virtual void clearPlotItems()</div><div class="ttdoc">Spin through, detatch, and delete all plot items. Usually for initializing a new PlotItem Type...</div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00189">BarBasePlotHandler.cpp:189</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_data_view_size_html_aac6b266f9044d273d1d042c18ceef089"><div class="ttname"><a href="namespace_picto_1_1_data_view_size.html#aac6b266f9044d273d1d042c18ceef089">Picto::DataViewSize::ViewSize</a></div><div class="ttdeci">ViewSize</div><div class="ttdoc">Enumeration of the various sizes Views can take. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00017">DataViewSpecs.h:17</a></div></div>
 <div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ab795248400dd6384ae8e3f5a936f4b83">Picto::ColumnType::COLUMN_OUTLINE</a></div><div class="ttdoc">Histogram Outline. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00032">DataViewSpecs.h:32</a></div></div>
-<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html">Picto::NormalizedScaleDraw</a></div><div class="ttdoc">This class is used to scale Normalized plots. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00027">BarBasePlotHandler.cpp:27</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a694d8c6b066f88f9df7a1f52fcbe8866"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a694d8c6b066f88f9df7a1f52fcbe8866">Picto::BarBasePlotHandler::updateColumns</a></div><div class="ttdeci">void updateColumns(const QString &amp;setName, const QColor &amp;color, ColumnType::ColumnType eType)</div><div class="ttdoc">Updates the rendering properties of the columns for the indicated dataset. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00129">BarBasePlotHandler.cpp:129</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ac34425f3c6eb03ad98ccbf1753dec2ef"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">Picto::BarBasePlotHandler::scaleAxis</a></div><div class="ttdeci">void scaleAxis(double dBinSize)</div><div class="ttdoc">Set the scaling on the X axis. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00205">BarBasePlotHandler.cpp:205</a></div></div>
+<div class="ttc" id="class_picto_1_1_normalized_scale_draw_html"><div class="ttname"><a href="class_picto_1_1_normalized_scale_draw.html">Picto::NormalizedScaleDraw</a></div><div class="ttdoc">This class is used to scale Normalized plots. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00031">BarBasePlotHandler.cpp:31</a></div></div>
+<div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6">Picto::ColumnType::COLUMN_FILLED_CURVE</a></div><div class="ttdoc">A filled curve of the values. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00037">DataViewSpecs.h:37</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ac34425f3c6eb03ad98ccbf1753dec2ef"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ac34425f3c6eb03ad98ccbf1753dec2ef">Picto::BarBasePlotHandler::scaleAxis</a></div><div class="ttdeci">void scaleAxis(double dBinSize)</div><div class="ttdoc">Set the scaling on the X axis. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00360">BarBasePlotHandler.cpp:360</a></div></div>
 <div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33ac18c6a52395725935a1b2c3395bd58fe">Picto::ColumnType::COLUMN_RAISED_COLUMN</a></div><div class="ttdoc">3D Bar Plot Symbols </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00034">DataViewSpecs.h:34</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a0fe3e75fc735584bdc5fae90b79a10a2"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">Picto::BarBasePlotHandler::callReplot</a></div><div class="ttdeci">void callReplot(const QString &amp;setName)</div><div class="ttdoc">A slot for receiving replot commands. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00211">BarBasePlotHandler.cpp:211</a></div></div>
-<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ab1ef09c77c57393ef30f74573654c584"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">Picto::BarBasePlotHandler::checkboxClicked</a></div><div class="ttdeci">void checkboxClicked(bool bChecked)</div><div class="ttdoc">Slot for changing currently selected dataset visibility. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00102">BarBasePlotHandler.cpp:102</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a0fe3e75fc735584bdc5fae90b79a10a2"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a0fe3e75fc735584bdc5fae90b79a10a2">Picto::BarBasePlotHandler::callReplot</a></div><div class="ttdeci">void callReplot(const QString &amp;setName)</div><div class="ttdoc">A slot for receiving replot commands. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00366">BarBasePlotHandler.cpp:366</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a36cb1f56dd0423cad53f63a27763c078"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a36cb1f56dd0423cad53f63a27763c078">Picto::BarBasePlotHandler::plotOptionsWidget</a></div><div class="ttdeci">virtual QWidget * plotOptionsWidget()</div><div class="ttdoc">Creates or returns a widget meant to adjust dataset visibility. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00065">BarBasePlotHandler.cpp:65</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_a48caa08b81889e592d976f5ec7ccd555"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#a48caa08b81889e592d976f5ec7ccd555">Picto::BarBasePlotHandler::setPoints</a></div><div class="ttdeci">void setPoints(const QString &amp;setName, const QVector&lt; QPointF &gt; &amp;qvPoints)</div><div class="ttdoc">Accepts the data for the indicated dataset for Point plots. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00333">BarBasePlotHandler.cpp:333</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_ab1ef09c77c57393ef30f74573654c584"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#ab1ef09c77c57393ef30f74573654c584">Picto::BarBasePlotHandler::checkboxClicked</a></div><div class="ttdeci">void checkboxClicked(bool bChecked)</div><div class="ttdoc">Slot for changing currently selected dataset visibility. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00129">BarBasePlotHandler.cpp:129</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
 <div class="ttc" id="namespace_picto_1_1_column_type_html_a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471"><div class="ttname"><a href="namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471">Picto::ColumnType::COLUMN_FLAT_COLUMN</a></div><div class="ttdoc">Flat Bar Plot Symbols. </div><div class="ttdef"><b>Definition:</b> <a href="_data_view_specs_8h_source.html#l00033">DataViewSpecs.h:33</a></div></div>
+<div class="ttc" id="class_picto_1_1_bar_base_plot_handler_html_abed219006df4c01e9285ea5bd4869d5c"><div class="ttname"><a href="class_picto_1_1_bar_base_plot_handler.html#abed219006df4c01e9285ea5bd4869d5c">Picto::BarBasePlotHandler::resetSlot</a></div><div class="ttdeci">virtual void resetSlot()</div><div class="ttdoc">Clears stored plot data. </div><div class="ttdef"><b>Definition:</b> <a href="_bar_base_plot_handler_8cpp_source.html#l00165">BarBasePlotHandler.cpp:165</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

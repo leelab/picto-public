@@ -243,6 +243,7 @@ var searchData=
   ['setpinvalue',['setPinValue',['../class_picto_1_1_analog_input.html#a057fdbf71a967d1d49da639e6c0fc5da',1,'Picto::AnalogInput']]],
   ['setplaybackspeed',['setPlaybackSpeed',['../class_picto_1_1_playback_state_updater.html#afdc719aaba777017387d558a64321dad',1,'Picto::PlaybackStateUpdater']]],
   ['setplugin',['setPlugin',['../class_proxy_status_manager.html#a28286636ff4af48e31098cefa8fef498',1,'ProxyStatusManager']]],
+  ['setpoints',['setPoints',['../class_picto_1_1_bar_base_plot_handler.html#a48caa08b81889e592d976f5ec7ccd555',1,'Picto::BarBasePlotHandler']]],
   ['setport',['setPort',['../struct_picto_1_1_output_signal.html#a7996c66ede372d437199adbda75f95a5',1,'Picto::OutputSignal']]],
   ['setpos',['setPos',['../class_picto_1_1_u_i_element.html#ac263c508ca69f3522fa391f40b8f9249',1,'Picto::UIElement::setPos()'],['../class_picto_1_1_u_i_enabled.html#ad73c311e8e6d4489ca69be4508622ff8',1,'Picto::UIEnabled::setPos()'],['../struct_picto_1_1_visual_element.html#ab8d58316a0da7e9704298917d46ca900',1,'Picto::VisualElement::setPos()']]],
   ['setposition',['setPosition',['../struct_picto_1_1_visual_element.html#a454cc96862097e96a0b0f1d2c83e23ed',1,'Picto::VisualElement::setPosition()'],['../class_data_view_widget.html#a7bc3a58271ca0d0e35db8e8e36e7353b',1,'DataViewWidget::setPosition()']]],

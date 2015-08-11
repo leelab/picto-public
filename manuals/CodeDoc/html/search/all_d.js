@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['m_5fbbinoffset',['m_bBinOffset',['../class_picto_1_1_bar_base.html#a5842268b0cc909b0678bfcfa6b5f08ac',1,'Picto::BarBase']]],
   ['m_5fbdatachanged',['m_bDataChanged',['../class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027',1,'Picto::OperatorPlot']]],
   ['m_5fblasterrorbarstate',['m_bLastErrorBarState',['../class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3',1,'Picto::SamplingBarBase']]],
   ['m_5fbtotalbinrecalc',['m_bTotalBinRecalc',['../class_picto_1_1_bar_base.html#a2ff05b84ebcaa1a90c75a53f989cb834',1,'Picto::BarBase']]],
@@ -11,6 +12,7 @@ var searchData=
   ['m_5fpplothandler',['m_pPlotHandler',['../class_picto_1_1_operator_plot.html#ad8c48a33f6f80244cf76bb619d22b286',1,'Picto::OperatorPlot']]],
   ['m_5fqhbhistoplotvisibility',['m_qhbHistoPlotVisibility',['../class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhbinsmodified',['m_qhBinsModified',['../class_picto_1_1_bar_base.html#af7a7bc5a82463361378e023b6cdcf7b7',1,'Picto::BarBase']]],
+  ['m_5fqhcerrorbarcolor',['m_qhcErrorBarColor',['../class_picto_1_1_sampling_bar_base_plot_handler.html#a9940e0d3c1a0af9030f5ae3f0a14812a',1,'Picto::SamplingBarBasePlotHandler']]],
   ['m_5fqhchistoplotcolor',['m_qhcHistoPlotColor',['../class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhcolor',['m_qhColor',['../class_picto_1_1_bar_base.html#a7ee6f9b4008c5140919afb661263e02a',1,'Picto::BarBase']]],
   ['m_5fqhcumulnum',['m_qhCumulNum',['../class_picto_1_1_sampling_bar_base.html#abfecc9e937c598eb4deecb3b5acb5241',1,'Picto::SamplingBarBase']]],
@@ -18,7 +20,7 @@ var searchData=
   ['m_5fqhcumulvalue',['m_qhCumulValue',['../class_picto_1_1_bar_base.html#a5a17e4702d6118c594ec8cf94ce114ef',1,'Picto::BarBase']]],
   ['m_5fqhdatachanged',['m_qhDataChanged',['../class_picto_1_1_bar_base.html#a19a37040b99d81bd0ff63ba3de296f38',1,'Picto::BarBase']]],
   ['m_5fqhperrorbars',['m_qhpErrorBars',['../class_picto_1_1_sampling_bar_base_plot_handler.html#af3b559e72853d30df2d3ad7d57706fbb',1,'Picto::SamplingBarBasePlotHandler']]],
-  ['m_5fqhphistoplotitems',['m_qhpHistoPlotItems',['../class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c',1,'Picto::BarBasePlotHandler']]],
+  ['m_5fqhpplotitems',['m_qhpPlotItems',['../class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhslabels',['m_qhsLabels',['../class_picto_1_1_bar_axis_handler.html#aa87f3e94baddab57f212db8c440144b1',1,'Picto::BarAxisHandler']]],
   ['m_5fqhupdatebrush',['m_qhUpdateBrush',['../class_picto_1_1_bar_base.html#a628c34bb23a1ef4999e3c41793263194',1,'Picto::BarBase']]],
   ['m_5ftitle',['m_title',['../class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766',1,'Picto::OperatorPlot']]],
@@ -85,8 +87,8 @@ var searchData=
   ['mspersample_5f',['msPerSample_',['../class_picto_1_1_signal_channel.html#a021e383cb5e3b4e64ff2085b126ff697',1,'Picto::SignalChannel']]],
   ['mtrand',['MTRand',['../class_picto_1_1_m_t_rand.html',1,'Picto']]],
   ['mtxwaitingassetprotector',['mtxWaitingAssetProtector',['../class_picto_1_1_task_config.html#a50e0bf0bf373239886eca5c3907ba1e9',1,'Picto::TaskConfig']]],
-  ['multiplatformsound',['MultiplatformSound',['../class_picto_1_1_multiplatform_sound.html',1,'Picto']]],
   ['multiplatformsound',['MultiplatformSound',['../class_picto_1_1_multiplatform_sound.html#a8d5d0eb78db8b8aa42ec7dfbb9b87ff0',1,'Picto::MultiplatformSound']]],
+  ['multiplatformsound',['MultiplatformSound',['../class_picto_1_1_multiplatform_sound.html',1,'Picto']]],
   ['mutex_5f',['mutex_',['../class_picto_1_1_scene.html#a510c0eecb02bade884afd69626cd1de7',1,'Picto::Scene::mutex_()'],['../class_connection_manager.html#a020e94af6ebbacc025ad483f425e80d7',1,'ConnectionManager::mutex_()']]],
   ['mylabel_5f',['myLabel_',['../class_data_view_widget.html#abf1daacb5e34d522361a0e8a6bf9d720',1,'DataViewWidget']]],
   ['mymodetype',['myModeType',['../class_change_name_mode.html#a6ca753b944fac4847bee38c8b84857d1',1,'ChangeNameMode::myModeType()'],['../class_display_mode.html#a1e7318ccee20933fbe6e1193aa0a19e7',1,'DisplayMode::myModeType()'],['../class_flush_dur_mode.html#a4d510988b8969a85d6a3ca6a144a4ba3',1,'FlushDurMode::myModeType()'],['../class_menu_mode.html#aaecee7eee391908a83e43d8bac505033',1,'MenuMode::myModeType()'],['../class_reward_controller_mode.html#a933b4465e6414cece6e3232bdb079fa1',1,'RewardControllerMode::myModeType()'],['../class_reward_dur_mode.html#a4c7c7697715d34ce2c6977fffad84ee9',1,'RewardDurMode::myModeType()'],['../class_status_mode.html#aa10144c981b493e0de51cdf5b7ad1d21',1,'StatusMode::myModeType()']]],

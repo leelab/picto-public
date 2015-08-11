@@ -76,6 +76,7 @@ var searchData=
   ['clearoldversionassetflag',['clearOldVersionAssetFlag',['../class_picto_1_1_old_version_asset.html#adcbdfbebb27a4c5d6557dde4ad026b3d',1,'Picto::OldVersionAsset']]],
   ['clearplot',['clearPlot',['../class_picto_1_1_bar_base.html#a53751cace554826adc6839239469b814',1,'Picto::BarBase']]],
   ['clearplothandlers',['clearPlotHandlers',['../class_picto_1_1_task_config.html#a02748808208e643453e73e4d18643b7b',1,'Picto::TaskConfig::clearPlotHandlers()'],['../class_view_selection_frame.html#a0db2b3f9380f8ddc931f8589902b0927',1,'ViewSelectionFrame::clearPlotHandlers()']]],
+  ['clearplotitems',['clearPlotItems',['../class_picto_1_1_bar_base_plot_handler.html#ab2585359bbc9f8bf37c3c5db0f92df98',1,'Picto::BarBasePlotHandler::clearPlotItems()'],['../class_picto_1_1_sampling_bar_base_plot_handler.html#a4261c48bb0770a2774020c6ec5cc0283',1,'Picto::SamplingBarBasePlotHandler::clearPlotItems()']]],
   ['clearselection',['clearSelection',['../class_picto_1_1_run_selector_widget.html#a41780f8fe0264739def3b4f10c1876cc',1,'Picto::RunSelectorWidget']]],
   ['clearsessionid',['clearSessionId',['../class_picto_1_1_command_channel.html#a80e492ff5325ea3c0bbfe22bbe02863f',1,'Picto::CommandChannel']]],
   ['clearsignalreaders',['clearSignalReaders',['../class_picto_1_1_engine_1_1_picto_engine.html#a8dd3b23b45813556253c967d287de88e',1,'Picto::Engine::PictoEngine::clearSignalReaders()'],['../class_picto_1_1_design_config.html#a49706444d1f1c9e0e3d82edc376dad28',1,'Picto::DesignConfig::clearSignalReaders()']]],
@@ -94,6 +95,8 @@ var searchData=
   ['colorparameter',['ColorParameter',['../class_picto_1_1_color_parameter.html#ac015cdd10c854825174c5741ab5c3949',1,'Picto::ColorParameter']]],
   ['colorproperty',['ColorProperty',['../class_picto_1_1_color_property.html',1,'Picto']]],
   ['colorproperty',['ColorProperty',['../class_picto_1_1_color_property.html#a4d51a5ca057cc06d787ae542aff8c930',1,'Picto::ColorProperty']]],
+  ['column_5fcurve',['COLUMN_CURVE',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83',1,'Picto::ColumnType']]],
+  ['column_5ffilled_5fcurve',['COLUMN_FILLED_CURVE',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6',1,'Picto::ColumnType']]],
   ['column_5fflat_5fcolumn',['COLUMN_FLAT_COLUMN',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471',1,'Picto::ColumnType']]],
   ['column_5flines',['COLUMN_LINES',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010',1,'Picto::ColumnType']]],
   ['column_5fmax',['COLUMN_MAX',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224',1,'Picto::ColumnType']]],
@@ -167,6 +170,7 @@ var searchData=
   ['createdassetdestroyed',['createdAssetDestroyed',['../class_picto_1_1_asset_factory.html#a2e08439cd640728828db855b75e67594',1,'Picto::AssetFactory']]],
   ['createdataviewwidget',['createDataViewWidget',['../class_view_selection_frame.html#a3160ebbd917cb53f785661191ebeee5d',1,'ViewSelectionFrame']]],
   ['createeditor',['createEditor',['../class_property_editor_factory.html#af068c58e375e5541762d73f379b657d0',1,'PropertyEditorFactory']]],
+  ['createerrorbars',['createErrorBars',['../class_picto_1_1_bar_base_plot_handler.html#a6a1c12fdb2d6c0a3df9295b798d2d29a',1,'Picto::BarBasePlotHandler::createErrorBars()'],['../class_picto_1_1_sampling_bar_base_plot_handler.html#aac4c557febb4ce069ff1c35157a89fd3',1,'Picto::SamplingBarBasePlotHandler::createErrorBars()']]],
   ['createeventsources',['CreateEventSources',['../class_virtual_device_plugin.html#a4f55eaaa044b28b844df2567d077f9d5',1,'VirtualDevicePlugin']]],
   ['createlayout',['createLayout',['../class_proxy_main_window.html#a2f8adb0ba709ac597c6ca30cbd7bc8ec',1,'ProxyMainWindow']]],
   ['createlineedits',['createLineEdits',['../class_proxy_main_window.html#ac774e75d2a6596e41598bd64933682a5',1,'ProxyMainWindow']]],
@@ -200,7 +204,7 @@ var searchData=
   ['currrunname',['currRunName',['../class_picto_1_1_file_session_loader.html#af6aded906c060e90e0543e5861bcdec1',1,'Picto::FileSessionLoader']]],
   ['currtaskchanged',['currTaskChanged',['../class_remote_viewer.html#af8fbd9bbf8ddebc82789765c2e888925',1,'RemoteViewer']]],
   ['currunit',['currUnit',['../class_neural_data_viewer.html#ad4fb93f4ddb7f2da1774bd9520c50fcd',1,'NeuralDataViewer']]],
-  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
   ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html#ae5fcecf5fb9a0818e71cd87131f205ab',1,'Picto::CursorGraphic']]],
+  ['cursorgraphic',['CursorGraphic',['../class_picto_1_1_cursor_graphic.html',1,'Picto']]],
   ['customvertex',['CUSTOMVERTEX',['../struct_picto_1_1_d3_d_visual_target_1_1_c_u_s_t_o_m_v_e_r_t_e_x.html',1,'Picto::D3DVisualTarget']]]
 ];

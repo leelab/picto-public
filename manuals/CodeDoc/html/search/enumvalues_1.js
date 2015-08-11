@@ -4,6 +4,8 @@ var searchData=
   ['changerun',['ChangeRun',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8ead4f911e26e8aaa47633faeec70925921',1,'PlaybackCommand']]],
   ['changespeed',['ChangeSpeed',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8ea515eed5e72def6d10032f5355c45db7f',1,'PlaybackCommand']]],
   ['changeusertype',['ChangeUserType',['../struct_playback_command.html#a6965fdf688457819423c37d4b7369b8eaf57269e1d9cd5a942965e968b2da03cf',1,'PlaybackCommand']]],
+  ['column_5fcurve',['COLUMN_CURVE',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33acce072af82357a46c15daa099c903f83',1,'Picto::ColumnType']]],
+  ['column_5ffilled_5fcurve',['COLUMN_FILLED_CURVE',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a88300b4495edaf671c75b3909efec7f6',1,'Picto::ColumnType']]],
   ['column_5fflat_5fcolumn',['COLUMN_FLAT_COLUMN',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a240c109aa6d985d382955f50a5538471',1,'Picto::ColumnType']]],
   ['column_5flines',['COLUMN_LINES',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33a9dec1ca6e211f98318cdb277195bd010',1,'Picto::ColumnType']]],
   ['column_5fmax',['COLUMN_MAX',['../namespace_picto_1_1_column_type.html#a9e55eeaa9c12a72d351c8e7a2fd99b33aca93935ed7f2f3c5cc5673ab765f1224',1,'Picto::ColumnType']]],

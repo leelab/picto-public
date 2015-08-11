@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['m_5fbbinoffset',['m_bBinOffset',['../class_picto_1_1_bar_base.html#a5842268b0cc909b0678bfcfa6b5f08ac',1,'Picto::BarBase']]],
   ['m_5fbdatachanged',['m_bDataChanged',['../class_picto_1_1_operator_plot.html#affc1d3936367b03d08d2131ba6a7a027',1,'Picto::OperatorPlot']]],
   ['m_5fblasterrorbarstate',['m_bLastErrorBarState',['../class_picto_1_1_sampling_bar_base.html#a67ead9e952c71222b7fc618169904db3',1,'Picto::SamplingBarBase']]],
   ['m_5fbtotalbinrecalc',['m_bTotalBinRecalc',['../class_picto_1_1_bar_base.html#a2ff05b84ebcaa1a90c75a53f989cb834',1,'Picto::BarBase']]],
@@ -11,6 +12,7 @@ var searchData=
   ['m_5fpplothandler',['m_pPlotHandler',['../class_picto_1_1_operator_plot.html#ad8c48a33f6f80244cf76bb619d22b286',1,'Picto::OperatorPlot']]],
   ['m_5fqhbhistoplotvisibility',['m_qhbHistoPlotVisibility',['../class_picto_1_1_bar_base_plot_handler.html#a0e817a153132aac503a28f6a95f7eaaa',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhbinsmodified',['m_qhBinsModified',['../class_picto_1_1_bar_base.html#af7a7bc5a82463361378e023b6cdcf7b7',1,'Picto::BarBase']]],
+  ['m_5fqhcerrorbarcolor',['m_qhcErrorBarColor',['../class_picto_1_1_sampling_bar_base_plot_handler.html#a9940e0d3c1a0af9030f5ae3f0a14812a',1,'Picto::SamplingBarBasePlotHandler']]],
   ['m_5fqhchistoplotcolor',['m_qhcHistoPlotColor',['../class_picto_1_1_bar_base_plot_handler.html#a2141be78274a65a9382fafde2e3a861f',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhcolor',['m_qhColor',['../class_picto_1_1_bar_base.html#a7ee6f9b4008c5140919afb661263e02a',1,'Picto::BarBase']]],
   ['m_5fqhcumulnum',['m_qhCumulNum',['../class_picto_1_1_sampling_bar_base.html#abfecc9e937c598eb4deecb3b5acb5241',1,'Picto::SamplingBarBase']]],
@@ -18,7 +20,7 @@ var searchData=
   ['m_5fqhcumulvalue',['m_qhCumulValue',['../class_picto_1_1_bar_base.html#a5a17e4702d6118c594ec8cf94ce114ef',1,'Picto::BarBase']]],
   ['m_5fqhdatachanged',['m_qhDataChanged',['../class_picto_1_1_bar_base.html#a19a37040b99d81bd0ff63ba3de296f38',1,'Picto::BarBase']]],
   ['m_5fqhperrorbars',['m_qhpErrorBars',['../class_picto_1_1_sampling_bar_base_plot_handler.html#af3b559e72853d30df2d3ad7d57706fbb',1,'Picto::SamplingBarBasePlotHandler']]],
-  ['m_5fqhphistoplotitems',['m_qhpHistoPlotItems',['../class_picto_1_1_bar_base_plot_handler.html#ada110861336600f895b63555df57f16c',1,'Picto::BarBasePlotHandler']]],
+  ['m_5fqhpplotitems',['m_qhpPlotItems',['../class_picto_1_1_bar_base_plot_handler.html#ab59b92515b719870eb5c6fcf98ac0adc',1,'Picto::BarBasePlotHandler']]],
   ['m_5fqhslabels',['m_qhsLabels',['../class_picto_1_1_bar_axis_handler.html#aa87f3e94baddab57f212db8c440144b1',1,'Picto::BarAxisHandler']]],
   ['m_5fqhupdatebrush',['m_qhUpdateBrush',['../class_picto_1_1_bar_base.html#a628c34bb23a1ef4999e3c41793263194',1,'Picto::BarBase']]],
   ['m_5ftitle',['m_title',['../class_picto_1_1_operator_plot.html#a32e89b6fdaa56f4ccf652c541d0ce766',1,'Picto::OperatorPlot']]],
