@@ -9,12 +9,10 @@
 namespace Picto {
 
 /*!	\brief An AnalysisDataSource for gathering lfp data.
- *	\details This object can be used to query local field potential values as well as
- *	metadata (the channels that were recorded in the current run, the sample period
- *	etc.)
- *	\note For test runs in the testviewer, the data returned from this object will necessarily
- *	be fake sample data.  For consistency's sake, any functions requesting 
- *	future data will return meaningless values.
+ *	\details This object can be used to query local field potential values as well as metadata (the channels that were
+ *	recorded in the current run, the sample period etc.)
+ *	\note For test runs in the testviewer, the data returned from this object will necessarily be fake sample data.
+ *	For consistency's sake, any functions requesting future data will return meaningless values.
  *	\note This class uses a FrameReader object as its main data source.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
@@ -40,6 +38,7 @@ public:
 
 public slots:
 	void zeroLatestFrame();
+	double getZeroTime() const;
 	virtual QVariantList getChannels();
 	double getSamplePeriod();
 	double getLatestTime();

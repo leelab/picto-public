@@ -41,8 +41,8 @@ public:
 	virtual QString getUIGroup(){return "Sensors";};
 
 public slots:
-	
 	void zeroLatestFrame();
+	double getZeroTime() const;
 	double getLatestTime();
 	double getPrevTime();
 	double getNextTime();

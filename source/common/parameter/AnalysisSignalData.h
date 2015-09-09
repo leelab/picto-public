@@ -9,12 +9,10 @@
 namespace Picto {
 
 /*!	\brief An AnalysisDataSource for gathering signal data.
- *	\details This object can be used to query signal data for any input signal as well as
- *	metadata including the sub components of the signal and its sample period.
- *	The signal tracked is set in the SignalName property, where "Position" and "Diameter"
- *	are the standard signal names, but theoretically, there could be any number of signals 
- *	with different names.  They are defined in the Director's HardwareSetup by using 
- *	Engine::addSignalChannel().
+ *	\details This object can be used to query signal data for any input signal as well as metadata including the sub
+ *	components of the signal and its sample period.  The signal tracked is set in the SignalName property, where
+ *	"Position" and "Diameter" are the standard signal names, but theoretically, there could be any number of signals with
+ *	different names.  They are defined in the Director's HardwareSetup by using Engine::addSignalChannel().
  *
  *	\note This class uses a SignalReader as its main data source.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
@@ -42,6 +40,7 @@ public:
 public slots:
 	void zeroLatestFrame();
 	virtual QStringList getComponentNames();
+	double getZeroTime() const;
 	double getSamplePeriod();
 	double getLatestTime();
 	double getLatestValue(QString componentName);
@@ -69,11 +68,7 @@ private:
 	double getLatestRunTime();
 	double zeroTime_;
 	QSharedPointer<SignalReader> signalReader_;
-
-
 };
-
-
 }; //namespace Picto
 
 #endif

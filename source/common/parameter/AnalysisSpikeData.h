@@ -42,6 +42,7 @@ public:
 
 public slots:
 	void zeroLatestFrame();
+	double getZeroTime() const;
 	double getSamplePeriod();
 	double getLatestTime();
 	int getLatestChannel();

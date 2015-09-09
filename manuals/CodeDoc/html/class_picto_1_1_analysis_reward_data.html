@@ -130,6 +130,10 @@ Public Slots</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_reward_data.html#a30d500ea11f3215a73f8bd0188132a9a">zeroLatestFrame</a> ()</td></tr>
 <tr class="memdesc:a30d500ea11f3215a73f8bd0188132a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the time of the latest frame to zero. <a class="el" href="class_picto_1_1_reward.html" title="A StateMachineElement that initiates reward feedback for the test subject. ">Reward</a> times will be returned with respect to this latest frame. <br /></td></tr>
 <tr class="separator:a30d500ea11f3215a73f8bd0188132a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae225449735fc3d6c3fb7db959f104d36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae225449735fc3d6c3fb7db959f104d36"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_reward_data.html#ae225449735fc3d6c3fb7db959f104d36">getZeroTime</a> () const </td></tr>
+<tr class="memdesc:ae225449735fc3d6c3fb7db959f104d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the zero time of this element, represented in global behavioral time. <br /></td></tr>
+<tr class="separator:ae225449735fc3d6c3fb7db959f104d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd3444b576288ac5d91fe588e02e2421"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd3444b576288ac5d91fe588e02e2421"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_picto_1_1_analysis_reward_data.html#acd3444b576288ac5d91fe588e02e2421">getLatestTime</a> ()</td></tr>
 <tr class="memdesc:acd3444b576288ac5d91fe588e02e2421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the time of the latest reward to have been supplied. <br /></td></tr>
@@ -732,7 +736,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns the duration of the next reward to be supplied. </p>
 <dl class="section note"><dt>Note</dt><dd>In a live test, this will not return a valid value. </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00074">74</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00079">79</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>
@@ -761,7 +765,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns a list of reward durations that occured with times &lt;= the input # sec after the latest frame and &gt; the latest frame time. </p>
 <dl class="section note"><dt>Note</dt><dd>In a live test, this will not return a valid value. </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00156">156</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00170">170</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>
@@ -789,7 +793,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns the time of the next reward to be supplied. </p>
 <dl class="section note"><dt>Note</dt><dd>In a live test, this will not return a valid value. </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00052">52</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00057">57</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>
@@ -818,7 +822,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 <p>Returns a list of reward times that occured with times &lt;= the input # sec after the latest frame and &gt; the latest frame time. </p>
 <dl class="section note"><dt>Note</dt><dd>In a live test, this will not return a valid value. </dd></dl>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00103">103</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00112">112</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>
@@ -848,7 +852,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_analysis_data_source.html#a491e202caec7a1d9f9a0c7466f962f18">Picto::AnalysisDataSource</a>.</p>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00185">185</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00203">203</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>
@@ -879,7 +883,7 @@ QSharedPointer&lt; <a class="el" href="class_picto_1_1_task_config.html">TaskCon
 
 <p>Reimplemented from <a class="el" href="class_picto_1_1_analysis_data_source.html#a8d43777d1a7d1b1467c9df205d118bb3">Picto::AnalysisDataSource</a>.</p>
 
-<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00190">190</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_analysis_reward_data_8cpp_source.html#l00208">208</a> of file <a class="el" href="_analysis_reward_data_8cpp_source.html">AnalysisRewardData.cpp</a>.</p>
 
 </div>
 </div>

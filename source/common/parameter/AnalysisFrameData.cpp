@@ -22,9 +22,13 @@ void AnalysisFrameData::enteredScope()
 	zeroLatestFrame();
 }
 
-/*! \brief Sets the time of the latest frame to zero.  Other frame times will be returned with respect to
- *	this latest frame.
- */
+//! Returns the zero time of this element, represented in global behavioral time
+double AnalysisFrameData::getZeroTime() const
+{
+	return zeroTime_;
+}
+
+//! Sets the time of the latest frame to zero.  Other frame times will be returned with respect to this latest frame.
 void AnalysisFrameData::zeroLatestFrame()
 {
 	Q_ASSERT(!getDesignConfig()->getFrameReader().isNull());
@@ -43,6 +47,7 @@ double AnalysisFrameData::getLatestTime()
 		return -1;
 	return getDesignConfig()->getFrameReader()->getLatestTime() - zeroTime_;
 }
+
 /*!	\brief Returns the time of the frame shown before the latest one
  */
 double AnalysisFrameData::getPrevTime()
@@ -52,6 +57,7 @@ double AnalysisFrameData::getPrevTime()
 		return -1;
 	return getDesignConfig()->getFrameReader()->getPrevTime() - zeroTime_;
 }
+
 /*!	\brief Returns the time of the next frame to be shown.
  */
 double AnalysisFrameData::getNextTime()
@@ -61,7 +67,9 @@ double AnalysisFrameData::getNextTime()
 		return -1;
 	return getDesignConfig()->getFrameReader()->getNextTime() - zeroTime_;
 }
-/*!	\brief Returns a list of frame times that occured with times > the input # sec before the latest frame and <= the latest frame time.
+
+/*!	\brief Returns a list of frame times that occured with times > the input # sec before the latest frame and <= the
+ *	latest frame time.
  */
 QVariantList AnalysisFrameData::getPrevTimes(double secsPreceding)
 {
@@ -77,7 +85,9 @@ QVariantList AnalysisFrameData::getPrevTimes(double secsPreceding)
 	}
 	return returnVal;
 }
-/*!	\brief Returns a list of frame times that occured with times <= the input # sec after the latest frame and > the latest frame time.
+
+/*!	\brief Returns a list of frame times that occured with times <= the input # sec after the latest frame and > the
+ *	latest frame time.
  */
 QVariantList AnalysisFrameData::getNextTimes(double secsFollowing)
 {
@@ -93,16 +103,20 @@ QVariantList AnalysisFrameData::getNextTimes(double secsFollowing)
 	}
 	return returnVal;
 }
-/*!	\brief Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
-*/
+
+/*!	\brief Functions like getPrevTimes except that the input time is an absolute time with respect to this element's zero
+ *	time instead of an offset
+ */
 QVariantList AnalysisFrameData::getTimesSince(double beyondTime)
 {
 	double globalTime = beyondTime+zeroTime_;
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevTimes(offsetTime);
 }
-/*!	\brief Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero time instead of an offset
-*/
+
+/*!	\brief Functions like getNextTimes except that the input time is an absolute time with respect to this element's zero
+ *	time instead of an offset
+ */
 QVariantList AnalysisFrameData::getTimesUntil(double upToTime)
 {
 	double globalTime = upToTime+zeroTime_;
@@ -121,8 +135,9 @@ bool AnalysisFrameData::validateObject(QSharedPointer<QXmlStreamReader> xmlStrea
 		return false;
 	return true;
 }
+
 /*!	\brief Returns the latest frame time with respect to the beginning of the run.
-*/
+ */
 double AnalysisFrameData::getLatestRunTime()
 {
 	double latestTime = getDesignConfig()->getFrameReader()->getLatestTime();

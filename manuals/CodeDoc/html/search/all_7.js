@@ -534,11 +534,12 @@ var searchData=
   ['gety',['getY',['../class_picto_1_1_operator_click_parameter.html#a3b86e365bfd0f2e96547846fe10330e4',1,'Picto::OperatorClickParameter::getY()'],['../struct_picto_1_1_visual_element.html#a0636a7d215d0362c1a8eaddabb72edd9',1,'Picto::VisualElement::getY()']]],
   ['getygain',['getYGain',['../class_picto_1_1_experiment.html#ac3fefa3780e97a9cff3e750a27f1f6fa',1,'Picto::Experiment']]],
   ['getyoffset',['getYOffset',['../class_picto_1_1_experiment.html#af5ea54b8d53a4639adcec2994330cc05',1,'Picto::Experiment']]],
+  ['getzerotime',['getZeroTime',['../class_picto_1_1_analysis_frame_data.html#a0d1d9bf6faa1cb134ce69fcb89204cc3',1,'Picto::AnalysisFrameData::getZeroTime()'],['../class_picto_1_1_analysis_lfp_data.html#a21ff33a9377d9f6564a74d81b18f4b3c',1,'Picto::AnalysisLfpData::getZeroTime()'],['../class_picto_1_1_analysis_reward_data.html#ae225449735fc3d6c3fb7db959f104d36',1,'Picto::AnalysisRewardData::getZeroTime()'],['../class_picto_1_1_analysis_signal_data.html#a5f742eb7e94444797d3a440d74332cd6',1,'Picto::AnalysisSignalData::getZeroTime()'],['../class_picto_1_1_analysis_spike_data.html#a2aafc551a8f443d3b0319e832b8139b4',1,'Picto::AnalysisSpikeData::getZeroTime()']]],
   ['givereward',['giveReward',['../class_control_panel_interface.html#a0d304a64b1922ad1439ad9e97bc2e455',1,'ControlPanelInterface::giveReward()'],['../class_picto_1_1_engine_1_1_picto_engine.html#a3a3557d928df88b0132a1f36fbfc78ce',1,'Picto::Engine::PictoEngine::giveReward(int channel, int quantity, int minRewardPeriod)'],['../class_picto_1_1_engine_1_1_picto_engine.html#a55c6bde2e8af2157edf79cef80533b67',1,'Picto::Engine::PictoEngine::giveReward(int channel)']]],
   ['giverewardrequest',['giveRewardRequest',['../class_control_panel_interface.html#aa31c026d69d3e7644c43f16ea25f82f2',1,'ControlPanelInterface']]],
   ['globals_2eh',['globals.h',['../globals_8h.html',1,'']]],
   ['green',['green',['../class_picto_1_1_bar_base.html#a7eb74aff58cd9de1ed95d7512e936746',1,'Picto::BarBase::green()'],['../class_picto_1_1_color_parameter.html#a7cfab3390f7bee887cfa15e2e1cb82e6',1,'Picto::ColorParameter::green()'],['../struct_picto_1_1_visual_element.html#a1c795d02093276be88d7405bd4e42f64',1,'Picto::VisualElement::green()']]],
-  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html',1,'Picto']]],
   ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html#a27af6c6c51429ea1f9ecb326fef9adb6',1,'Picto::GridGraphic']]],
+  ['gridgraphic',['GridGraphic',['../class_picto_1_1_grid_graphic.html',1,'Picto']]],
   ['group',['group',['../struct_search_request.html#af1011ddf957c3617a37d47d08c171a9a',1,'SearchRequest']]]
 ];

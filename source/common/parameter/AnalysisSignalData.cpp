@@ -4,8 +4,7 @@
 namespace Picto
 {
 /*! \brief Creates a new AnalysisSignalData object.
- *	\details Adds a SignalName property for defining which signal this 
- *	object will gather data from.
+ *	\details Adds a SignalName property for defining which signal this object will gather data from.
  */
 AnalysisSignalData::AnalysisSignalData()
 : 
@@ -14,7 +13,9 @@ AnalysisSignalData::AnalysisSignalData()
 	AddDefinableProperty(QVariant::String,"SignalName","Position");
 	zeroTime_ = 0;
 }
-/*! \brief Creates a new AnalysisSignalData object and returns a shared Asset pointer to it.*/
+
+/*! \brief Creates a new AnalysisSignalData object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Asset> AnalysisSignalData::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisSignalData());
@@ -27,8 +28,7 @@ void AnalysisSignalData::enteredScope()
 	signalReader_ = getDesignConfig()->getSignalReader(propertyContainer_->getPropertyValue("SignalName").toString());
 }
 
-/*! \brief Sets the time of the latest frame to zero.  Signal times will be returned with respect to
- *	this latest frame.
+/*! \brief Sets the time of the latest frame to zero.  Signal times will be returned with respect to this latest frame.
  */
 void AnalysisSignalData::zeroLatestFrame()
 {
@@ -37,6 +37,12 @@ void AnalysisSignalData::zeroLatestFrame()
 		return;
 	double latestTime = getLatestRunTime();
 	zeroTime_ = latestTime;
+}
+
+//! Returns the zero time of this element, represented in global behavioral time
+double AnalysisSignalData::getZeroTime() const
+{
+	return zeroTime_;
 }
 
 /*! \brief Returns a list of the signal's sub component names, ie. x,y
@@ -76,7 +82,7 @@ double AnalysisSignalData::getLatestValue(QString componentName)
 	return signalReader_->getLatestValue(componentName);
 }
 
-/*! \brief Returns a list of the latest values ordered according to the sub channel order returned from getComponentNames()
+/*! Returns a list of the latest values ordered according to the sub channel order returned from getComponentNames()
  */
 QVariantList AnalysisSignalData::getLatestValue()
 {
@@ -112,8 +118,8 @@ double AnalysisSignalData::getNextValue(QString componentName)
 	return signalReader_->getNextValue(componentName);
 }
 
-/*! \brief Returns an array of the next values to be read ordered according to 
- *	the sub channel order returned from getComponentNames()
+/*! \brief Returns an array of the next values to be read ordered according to the sub channel order returned from
+ *	getComponentNames()
  *	\note In a live test, this will not return a valid value.
  */
 QVariantList AnalysisSignalData::getNextValue()
@@ -129,7 +135,8 @@ QVariantList AnalysisSignalData::getNextValue()
 	return result;
 }
 
-/*! \brief Returns a list of signal read times that occured with times > the input # sec before the latest frame and <= the latest frame time.
+/*! \brief Returns a list of signal read times that occured with times > the input # sec before the latest frame
+ *	and <= the latest frame time.
  */
 QVariantList AnalysisSignalData::getPrevTimes(double secsPreceding)
 {
@@ -149,7 +156,8 @@ QVariantList AnalysisSignalData::getPrevTimes(double secsPreceding)
 	return returnVal;
 }
 
-/*! \brief Returns a list of signal read times that will occur with times > the latest frame time and <= the input # sec after the latest frame.
+/*! \brief Returns a list of signal read times that will occur with times > the latest frame time and <= the input # sec
+ *	after the latest frame.
  *	\note In a live test, this will not return a valid value.
  */
 QVariantList AnalysisSignalData::getNextTimes(double secsFollowing)
@@ -169,7 +177,9 @@ QVariantList AnalysisSignalData::getNextTimes(double secsFollowing)
 	}
 	return returnVal;
 }
-/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*! \brief Functions like getPrevTimes() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getTimesSince(double beyondTime)
 {
@@ -177,7 +187,9 @@ QVariantList AnalysisSignalData::getTimesSince(double beyondTime)
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevTimes(offsetTime);
 }
-/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*! \brief Functions like getNextTimes() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getTimesUntil(double upToTime)
 {
@@ -186,7 +198,8 @@ QVariantList AnalysisSignalData::getTimesUntil(double upToTime)
 	return getNextTimes(offsetTime);
 }
 
-/*! \brief Returns a list of signal values for the input sub component that occured with times > the input # sec before the latest frame and <= the latest frame time.
+/*! \brief Returns a list of signal values for the input sub component that occured with times > the input # sec before
+ *	the latest frame and <= the latest frame time.
  */
 QVariantList AnalysisSignalData::getPrevValues(QString componentName,double secsPreceding)
 {
@@ -200,7 +213,9 @@ QVariantList AnalysisSignalData::getPrevValues(QString componentName,double secs
 	QVariantList returnVal = signalReader_->getValuesSince(componentName,minRunTime);
 	return returnVal;
 }
-/*! \brief Returns a list of signal values for the input sub component that will occur with times > the latest frame time and <= the input # sec after the latest frame
+
+/*! \brief Returns a list of signal values for the input sub component that will occur with times > the latest frame time
+ *	and <= the input # sec after the latest frame
  *	\note In a live test, this will not return a valid value.
  */
 QVariantList AnalysisSignalData::getNextValues(QString componentName,double secsFollowing)
@@ -215,9 +230,9 @@ QVariantList AnalysisSignalData::getNextValues(QString componentName,double secs
 	QVariantList returnVal = signalReader_->getValuesUntil(componentName,maxRunTime);
 	return returnVal;
 }
-/*! \brief Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames())
- *	that will occur with times > the input # sec before the latest frame time and <= the latest 
- *	frame time. 
+
+/*! \brief Returns a list of signal values for all subcomponents (ordered like the result of getComponentNames()) that
+ *	will occur with times > the input # sec before the latest frame time and <= the latest frame time. 
  *	\details Returned value is a list of lists such that each index of the list contains a list of signal subcomponents
  *	ordered like the result of getComponentNames(). Times should be incremented by one getSamplePeriod() for each index
  *	in the outer list.
@@ -257,6 +272,7 @@ QVariantList AnalysisSignalData::getPrevValues(double secsPreceding)
 	}
 	return result;
 }
+
 /*! \brief Returns a list of signal values for all subcomponents that will occur with times > the latest frame 
  *	time and <= the input # sec after the latest frame. 
  *	\details Returned value is a list of lists such that each index of the list contains a list signal subcomponents 
@@ -298,7 +314,9 @@ QVariantList AnalysisSignalData::getNextValues(double secsFollowing)
 	}
 	return result;
 }
-/*!	\brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*!	\brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getValuesSince(QString componentName,double beyondTime)
 {
@@ -306,7 +324,9 @@ QVariantList AnalysisSignalData::getValuesSince(QString componentName,double bey
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(componentName,offsetTime);
 }
-/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getValuesUntil(QString componentName,double upToTime)
 {
@@ -314,7 +334,9 @@ QVariantList AnalysisSignalData::getValuesUntil(QString componentName,double upT
 	double offsetTime = globalTime - getLatestRunTime();
 	return getNextValues(componentName,offsetTime);
 }
-/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*! \brief Functions like getPrevValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getValuesSince(double beyondTime)
 {
@@ -322,7 +344,9 @@ QVariantList AnalysisSignalData::getValuesSince(double beyondTime)
 	double offsetTime = getLatestRunTime()-globalTime;
 	return getPrevValues(offsetTime);
 }
-/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's zero time instead of an offset.
+
+/*! \brief Functions like getNextValues() except that the input time is an absolute time with respect to this element's
+ *	zero time instead of an offset.
  */
 QVariantList AnalysisSignalData::getValuesUntil(double upToTime)
 {
@@ -342,8 +366,9 @@ bool AnalysisSignalData::validateObject(QSharedPointer<QXmlStreamReader> xmlStre
 		return false;
 	return true;
 }
+
 /*! \brief Returns the latest frame time with respect to the beginning of the run.
-*/
+ */
 double AnalysisSignalData::getLatestRunTime()
 {
 	double latestTime = getDesignConfig()->getFrameReader()->getLatestTime();
