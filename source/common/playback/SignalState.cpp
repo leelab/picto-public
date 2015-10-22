@@ -202,7 +202,7 @@ QVariantList SignalState::getValuesSince(QString channel,double time)
 		iter--;
 	QVariantList returnVal;
 	double sampleTime;
-	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	for (;((iter != data_.end()) && (iter->time_ <= upToGlobalTime)); iter++)
 	{
 		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
 		{
@@ -214,7 +214,7 @@ QVariantList SignalState::getValuesSince(QString channel,double time)
 			returnVal.append(iter->vals_[i+chanIndex]);
 		}
 	}
-	Q_ASSERT(iter != data_.end());
+	//Q_ASSERT(iter != data_.end());
 	return returnVal;
 }
 
@@ -233,7 +233,7 @@ QVariantList SignalState::getValuesUntil(QString channel,double time)
 	QList<PlaybackSignalData>::iterator iter = data_.begin() + curr_;
 	QVariantList returnVal;
 	double sampleTime;
-	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	for (;(iter != data_.end()) && (iter->time_ <= upToGlobalTime); iter++)
 	{
 		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
 		{
@@ -245,7 +245,7 @@ QVariantList SignalState::getValuesUntil(QString channel,double time)
 			returnVal.append(iter->vals_[i+chanIndex]);
 		}
 	}
-	Q_ASSERT(iter != data_.end());
+	//Q_ASSERT(iter != data_.end());
 	return returnVal;
 }
 
@@ -266,7 +266,7 @@ QVariantList SignalState::getTimesSince(double time)
 		iter--;
 	QVariantList returnVal;
 	double sampleTime;
-	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	for (;(iter != data_.end()) && (iter->time_ <= upToGlobalTime); iter++)
 	{
 		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
 		{
@@ -278,7 +278,7 @@ QVariantList SignalState::getTimesSince(double time)
 			returnVal.append(sampleTime-runStart_);
 		}
 	}
-	Q_ASSERT(iter != data_.end());
+	//Q_ASSERT(iter != data_.end());
 	return returnVal;
 }
 
@@ -294,7 +294,7 @@ QVariantList SignalState::getTimesUntil(double time)
 	QList<PlaybackSignalData>::iterator iter = data_.begin() + curr_;
 	QVariantList returnVal;
 	double sampleTime;
-	for(;(iter->time_ <= upToGlobalTime) && (iter != data_.end());iter++)
+	for(;(iter != data_.end()) && (iter->time_ <= upToGlobalTime);iter++)
 	{
 		for(int i=0;i<iter->vals_.size();i+=numSubChans_)
 		{
@@ -306,7 +306,7 @@ QVariantList SignalState::getTimesUntil(double time)
 			returnVal.append(sampleTime-runStart_);
 		}
 	}
-	Q_ASSERT(iter != data_.end());
+	//Q_ASSERT(iter != data_.end());
 	return returnVal;
 }
 

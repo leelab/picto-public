@@ -10,7 +10,8 @@ AnalysisFrameData::AnalysisFrameData()
 	zeroTime_ = 0;
 }
 
-/*! \brief Creates a new AnalysisFrameData object and returns a shared Asset pointer to it.*/
+/*! \brief Creates a new AnalysisFrameData object and returns a shared Asset pointer to it.
+ */
 QSharedPointer<Asset> AnalysisFrameData::Create()
 {
 	return QSharedPointer<Asset>(new AnalysisFrameData());

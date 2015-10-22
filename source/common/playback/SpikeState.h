@@ -7,22 +7,21 @@
 
 namespace Picto {
 struct PlaybackSpikeData;
-/*! \brief Implements the DataState and SpikeReader classes to load a Picto Session database, 
- *	extract neural spike data and implement functions for traversing through that data.
- *	\details The class is fairly simple, a QList of PlaybackSpikeData objects is loaded from the 
- *	session data.  Each PlaybackSpikeData represents a single neural spike and when moveToIndex() 
- *	is called, we just traverse through the list until we reach a PlaybackSpikeData with the appropriate time.
- *	Each time moveToIndex() causes us to pass through a PlaybackSpikeData entry, the spikeEvent() 
- *	signal is called, which tells the rest of the playback system that a neural spike occured.
+/*! \brief Implements the DataState and SpikeReader classes to load a Picto Session database, extract neural spike data
+ *	and implement functions for traversing through that data.
+ *	\details The class is fairly simple, a QList of PlaybackSpikeData objects is loaded from the session data.  Each
+ *	PlaybackSpikeData represents a single neural spike and when moveToIndex() is called, we just traverse through the
+ *	list until we reach a PlaybackSpikeData with the appropriate time.  Each time moveToIndex() causes us to pass through
+ *	a PlaybackSpikeData entry, the spikeEvent() signal is called, which tells the rest of the playback system that a
+ *	neural spike occured.
  *
- *	\note Since the functions here simply implement the SpikeReader and DataState classes for
- *	data read in from a Session Database, there is not much to add in terms of documentation 
- *	beyond what was described above, so we will not be adding function level documentation
- *	for this class.
+ *	\note Since the functions here simply implement the SpikeReader and DataState classes for data read in from a Session
+ *	Database, there is not much to add in terms of documentation beyond what was described above, so we will not be adding
+ *	function level documentation for this class.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
-class SpikeState :public SpikeReader, public DataState
+class SpikeState : public SpikeReader, public DataState
 {
 	Q_OBJECT
 public:
@@ -56,9 +55,9 @@ public:
 
 signals:
 	/*! \brief Emitted whenever a PlaybackSpikeData object is traversed due to a call to moveToIndex().
-	 *	\details time is the time at which the spike occured, channel is the electrode channel on which
-	 *	it occured, unit is the neuron unit within that channel that spiked, and waveform is a vector of
-	 *	floats describing the spike waveform, where the time between each float is getSamplePeriod().
+	 *	\details time is the time at which the spike occured, channel is the electrode channel on which it occured, unit
+	 *	is the neuron unit within that channel that spiked, and waveform is a vector of floats describing the spike
+	 *	waveform, where the time between each float is getSamplePeriod().
 	 */
 	void spikeEvent(double time, int channel, int unit, QVector<float> waveform);
 private:
@@ -76,14 +75,14 @@ private:
 };
 
 /*! \brief A struct used to store data for a single Neural spike.
- *	\details Includes the time at which the spike occured, the channel on which it occured and the unit number
- *	of the spiking neuron within the channel.  Also includes a vector of floats describing the spike waveform.
+ *	\details Includes the time at which the spike occured, the channel on which it occured and the unit number of the
+ *	spiking neuron within the channel.  Also includes a vector of floats describing the spike waveform.
  */
 struct PlaybackSpikeData
 {
 	PlaybackSpikeData(){};
 	PlaybackSpikeData(double time,int channel, int unit, QVector<float> waveform){time_=time;channel_=channel;unit_=unit;waveform_ = waveform;};
-	/*! \brief One PlaybackSpikeData is lower than another if its time_ is lower.*/
+	//! One PlaybackSpikeData is lower than another if its time_ is lower.
 	inline bool operator<(const PlaybackSpikeData& someData) const {
 		return time_ < someData.time_;
 	}

@@ -110,12 +110,6 @@ void SlaveEventQueue::prepareEvents()
 		eventQueue_[getNextAddLoc()] = frozenQueue_[i];
 	}
 
-	if (frozenEndLoc_ > 5)
-	{
-		qDebug() << "Found a good one";
-	}
-
 	//Reset FrozenQueue
 	frozenEndLoc_ = 0;
-
 }

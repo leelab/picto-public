@@ -185,7 +185,8 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("DataViewElement");
 	curr->setInherits(getAssetDescription("ContainerElement"));
 	curr->addProp("ViewTitle", "The title given to the element when it is displayed while a task is running.");
-	curr->addProp("DefaultSize", "The default size given to this View Element in the DataViewer.");
+	curr->addProp("DefaultPosition", "The default position given to this View Element in the DataViewer.  If unavailable, the view is not displayed.");
+	curr->addProp("DefaultSize", "The default size given to this View Element in the DataViewer.  If unavailable, the view is not displayed.");
 
 	curr = addDescription("OutputSignal");
 	curr->setInherits(getAssetDescription("OutputElement"));
@@ -886,7 +887,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Provides frame timing data to be used in analysis.  The latest, previous, and next frame times can all be read out as single numerical values. Alternatively, frame times during a set time period can be read out as a javascript array of times.  All reported times are when the first phosphor appeared on the user display.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.  It should be noted that during tests in the workstation,  the system does not wait for first the phosphor before completing a frame.  For this reason it should not come as a surprise if frame times during testing are much higher than frame times during an experimental session.  High frame rates during testing; however, are a good indication that there will be no skipped frames during experimentation, assuming that the computer running the Picto director has a reasonably comparable processor.");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
-	curr->addSFunc("getZeroTime()", "Returns the absolute behavioral time that the Zero time corresponds to.  Only use this value if you know you need to; it should primarily be used for associating data with external sources.");
+	curr->addSFunc("getZeroTime()", "Returns the time relative to the start of the run that the Zero time corresponds to.  This value generally corresponds to the run time at which the element entered scope.");
 	curr->addSFunc("getLatestTime()","Returns the time at which the first phosphor of the latest presented frame occured.");
 	curr->addSFunc("getPrevTime()","Returns the time at which the first phosphor of one frame before the latest was presented.");
 	curr->addSFunc("getNextTime()","Returns the time at which the first phosphor of the frame following this function call will occur.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
@@ -899,7 +900,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Provides local field potential data to be used in analysis.  The latest, and next lfp values/read times can be read out as numerical values. Latest, Next, Previous and Future ranges of lfp values and their read times can also be read out.  These can be selected according to the lfp channel number or returned in groups of n values in a javascript array where n is the number of lfp channels.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.  Active lfp channels can be read out using the getChannels() function.");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
-	curr->addSFunc("getZeroTime()", "Returns the absolute behavioral time that the Zero time corresponds to.  Only use this value if you know you need to; it should primarily be used for associating data with external sources.");
+	curr->addSFunc("getZeroTime()", "Returns the time relative to the start of the run that the Zero time corresponds to.  This value generally corresponds to the run time at which the element entered scope.");
 	curr->addSFunc("getChannels()", "Returns an array with a list of all active lfp channels in the current session.");
 	curr->addSFunc("getSamplePeriod()","Returns the sample period at which lfp values were sampled in the neural data acquisition system used in this session.");
 	curr->addSFunc("getLatestTime()","Returns the time at which the latest lfp values were read.");
@@ -926,7 +927,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Provides reward timing data to be used in analysis.  The latest, and next reward times/durations can be read out as single numerical values. Alternatively, reward times/durations during a set time period can be read out as a javascript array of times.  All reported times are when the reward solenoid opened.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
-	curr->addSFunc("getZeroTime()", "Returns the absolute behavioral time that the Zero time corresponds to.  Only use this value if you know you need to; it should primarily be used for associating data with external sources.");
+	curr->addSFunc("getZeroTime()", "Returns the time relative to the start of the run that the Zero time corresponds to.  This value generally corresponds to the run time at which the element entered scope.");
 	curr->addSFunc("getLatestTime()", "Returns the time at which the latest reward was supplied.");
 	curr->addSFunc("getNextTime()","Returns the time at which the next reward will be supplied.  Note that this only returns valid data when replaying an experiment.  Picto cannot predict the future.");
 	curr->addSFunc("getLatestDuration()","Returns the durtation of the latest reward was supplied in ms.");
@@ -954,7 +955,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setOverview("Provides input signal data (eye position/diameter) to be used in analysis.  The latest, and next signal values/read times can be read out as numerical values. Latest, Next, Previous and Future ranges of signal values and their read times can also be read out.  These can be selected according to the name of an individual component of the signal or returned in groups of n values in a javascript array where n is the number of components of the signal.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.");
 	curr->addProp("SignalName", "The name of the signal to be accessed using this element.  This value defaults to 'Position'");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
-	curr->addSFunc("getZeroTime()", "Returns the absolute behavioral time that the Zero time corresponds to.  Only use this value if you know you need to; it should primarily be used for associating data with external sources.");
+	curr->addSFunc("getZeroTime()", "Returns the time relative to the start of the run that the Zero time corresponds to.  This value generally corresponds to the run time at which the element entered scope.");
 	curr->addSFunc("getComponentNames()", "Returns an array with a list of all the components of the signal defined in the 'SignalName' property.");
 	curr->addSFunc("getSamplePeriod()","Returns the sample period for this signal in samples per second.");
 	curr->addSFunc("getLatestTime()","Returns the time at which the latest signal values were read.");
@@ -980,7 +981,7 @@ void AssetDescriber::setupDescriptions()
 	curr->setInherits(getAssetDescription("AnalysisDataSource"));
 	curr->setOverview("Provides spike data to be used in analysis.  The latest, and next spike times/channels/units/waveforms can be read out individually. Alternatively, spike times/channels/units/waveforms during a set time period can be read out as javascript arrays.  Time zero is the time of the frame preceding the point at which this element entered scope.  Alternatively, zeroLastFrame() can be called to set time zero to the time of the frame preceding that function call.");
 	curr->addSFunc("zeroLatestFrame()","Sets the first phophor time of the latest frame preceding this function call as time zero.  Note that all times reported from this element that precede the latest frame will be negative.  Also note that this function is called automatically as soon as this element comes into scope.");
-	curr->addSFunc("getZeroTime()", "Returns the absolute behavioral time that the Zero time corresponds to.  Only use this value if you know you need to; it should primarily be used for associating data with external sources.");
+	curr->addSFunc("getZeroTime()", "Returns the time relative to the start of the run that the Zero time corresponds to.  This value generally corresponds to the run time at which the element entered scope.");
 	curr->addSFunc("getSamplePeriod()", "Returns the sample period in seconds used by the running sessions neural data acquisition system.");
 	curr->addSFunc("getLatestTime()","Returns the time at which the latest spike occured.");
 	curr->addSFunc("getLatestChannel()","Returns the channel of the latest spike.");
@@ -1064,6 +1065,7 @@ void AssetDescriber::setupDescriptions()
 	curr->addSFunc("dropBin(int bin)", "Eliminates the values in the indicated bin.");
 	curr->addSFunc("getLabel(int bin)", "Returns the user-assigned label for the indicated bin.");
 	curr->addSFunc("setLabel(int bin, string label)", "Sets the label for the indicated bin.");
+	curr->addSFunc("setDataset(string label)", "Sets the current dataset to the indicated label.  Future data submissions, adjustments, and queries will be with respect to this dataset, until a new dataset is specified.  Calling this function on a new label creates the corresponding dataset.");
 
 	curr = addDescription("HistogramPlot");
 	curr->setInherits(getAssetDescription("BarBase"));
@@ -1112,9 +1114,7 @@ void AssetDescriber::setupDescriptions()
 	curr = addDescription("PSTHPlot");
 	curr->setInherits(getAssetDescription("SamplingHistogramPlot"));
 	curr->setOverview("A Peri-Stimulus Time Histogram meant for accumulating presorted neural data and displaying the average firing rate surrounding an AlignEvent.  The bin size is specified by the parameter BinSize, and values are submitted with the time relative to the AlignEvent.  It can automatically calculate and display the Standard Error for each bin.  The Error is calcualted by retaining only a couple of values for each bin: the sum of all samples, the sum of the squares of all samples, and the number of samples.  This way memory overhead and calculations are minimized.  In order to restore the state of a plot, make sure to use all three of the following: setCumulativeValue, setCumulativeValueSquared, and setSamples.  Otherwise new samples won't accumulate correctly.");
-	curr->addProp("PreFlagWindow", "The amount of time prior to an AlignEvent that should be displayed.  Setting this value too large can result in large overhead for tracking plots.");
-	curr->addProp("PostFlagWindow", "The amount of time following an AlignEvent that should be displayed.");
-	curr->addProp("Channel", "Temporary parameter that decides what channel will be shown.");
-	curr->addProp("Unit", "Temporary parameter that decides what unit will be shown.");
-	curr->addSFunc("alignEvent", "Triggers an AlignEvent and accumulates data over the described window.");
+	curr->addProp("PreFlagWindow", "The size of the window preceeding an AlignEvent over which data is collected and displayed.  Setting this value too large can result in large overhead for tracking plots.");
+	curr->addProp("PostFlagWindow", "The size of the window following an AlignEvent over which data is collected and displayed.");
+	curr->addSFunc("alignEvent()", "Triggers an AlignEvent and accumulates neural data for all open channels over the described window.");
 }

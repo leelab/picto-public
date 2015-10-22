@@ -5,15 +5,14 @@
 
 namespace Picto {
 /*! \brief Implements the SpikeReader class for a live test experiment.
- *	\details Since this is meant to be used with a test experiment, this object just generates fake spike
- *	data.  Every time createVirtualSpike() is called, it creates a fake spike with the input time and a random
- *	channel/unit between 0 and the maxChan/maxUnit input in the constructor.  Waveforms are also virtual with
- *	a simple noisy sine wave shape.  Since this object is filled during run time, Analyses have access to all 
- *	past data but no future data.  Requests for future data from this class will result in meaningless values.
- *	\note Since the functions here simply implement the SpikeReader class for
- *	live session data, there is not much to add in terms of documentation 
- *	beyond what was described above, so we will not be adding additional function level documentation
- *	for many of the functions in this class.
+ *	\details Since this is meant to be used with a test experiment, this object just generates fake spike data.  Every
+ *	time createVirtualSpike() is called, it creates a fake spike with the input time and a random channel/unit between 0
+ *	and the maxChan/maxUnit input in the constructor.  Waveforms are also virtual with a simple noisy sine wave shape.
+ *	Since this object is filled during run time, Analyses have access to all past data but no future data.  Requests for
+ *	future data from this class will result in meaningless values.
+ *	\note Since the functions here simply implement the SpikeReader class for live session data, there is not much to add
+ *	in terms of documentation beyond what was described above, so we will not be adding additional function level
+ *	documentation for many of the functions in this class.
  *	\author Trevor Stavropoulos, Joey Schnurr, Mark Hammond, Matt Gay
  *	\date 2009-2015
  */
@@ -30,7 +29,6 @@ public:
 	void createVirtualSpike(double time);
 	void setRunEnd();
 
-	//Frame Reader Interface
 	//Spike Reader Interface
 	virtual QVariantList getChannels();
 	virtual QVariantList getUnits(int channel);
