@@ -250,7 +250,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Clears all the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects out of this container. </p>
 <dl class="section note"><dt>Note</dt><dd>I don't think that this is actually used in Picto. We should check and if not get rid of it. </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00204">204</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00205">205</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,7 +271,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Copies all Properties from the input <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a> to this one. </p>
 <p>This is a "deep-copy." New <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects are created and initialized with the data of the input <a class="el" href="class_picto_1_1_property_container.html" title="A container that groups together a set of Property objects. ">PropertyContainer</a>'s Properties. We are not copying pointers. </p>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00036">36</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00035">35</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -328,7 +328,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Returns the type Id to be used when creating <a class="el" href="class_picto_1_1_enum_property.html" title="A Property for storing enums. ">EnumProperty</a> objects with <a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a>. </p>
 <p>This is needed specifically for the <a class="el" href="class_picto_1_1_enum_property.html" title="A Property for storing enums. ">EnumProperty</a> since the other <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects Ids are based on the QVariant::type values. </p>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00077">77</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00076">76</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -348,7 +348,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Gets this container's name. </p>
 <dl class="section note"><dt>Note</dt><dd>The containerName is not currently used in Picto, nor is there any foreseeable reason that it would be used. We should probably get rid of it. </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00068">68</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00067">67</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -407,7 +407,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Returns a pointer to the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with the input _identifier name. </p>
 <p>index was used when more than one <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with the same name was allowed. This is not currently used though and so it should really just always be 0. We should remove this option at some point. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00177">177</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00178">178</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +438,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Returns the value of the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with the input _identifier name. </p>
 <p>index was used when more than one <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with the same name was allowed. This is not currently used though and so it should really just always be 0. We should remove this option at some point. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2" title="Returns a pointer to the Property with the input _identifier name. ">getProperty()</a>, <a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00214">214</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00215">215</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -458,7 +458,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Returns a list of the <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects that have been set as RuntimeProperties (ie. Their initValues will be settable during runtime) </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property.html#add3e9d7a904e0b13242a23a78f698e9f" title="Set this property as changeable during runtime. ">Property::setRuntimeEditable()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00158">158</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00159">159</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -516,7 +516,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Sets this container's name. </p>
 <dl class="section note"><dt>Note</dt><dd>The _containerName is not currently used in Picto, nor is there any foreseeable reason that it would be used. We should probably get rid of it. </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00059">59</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00058">58</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -537,7 +537,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Sets all contained <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects as Associate Properties for the purpose of runtime checking for <a class="el" href="class_picto_1_1_analysis.html" title="The top level object that defines Analysis code for extracting useful data from a Picto Session...">Analysis</a> Scripts setting Experimental <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property.html#aca8c34b84eb4b8fcfb4011cf0b8fc359" title="Set this to true if this Property is the child of an AssociateElement. This is used with read-only mo...">Property::setAssociateProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00190">190</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00191">191</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -557,7 +557,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Sets the runValues of all contained <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects to their initValues. </p>
 <p>This is useful for reseting a <a class="el" href="class_picto_1_1_data_store.html" title="A base class for all Asset objects that can have children. ">DataStore</a>'s <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> values when it enters scope. </p>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00269">269</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00270">270</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,7 +596,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 </div><!-- fragment --><p> It does add some functionality though. If no <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> exists with the input _propertyName, it is created automatically according to the type of the _value input. Since <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects are really only created from <a class="el" href="class_picto_1_1_property_factory.html" title="Since Property objects are just another kind of Asset, we pickyback onto the AssetFactory system to c...">PropertyFactory</a> objects at this point though, the auto-addProperty() functionality should really never be used. It would probably be a good idea to look into this and get rid of it. </p><dl class="section note"><dt>Note</dt><dd>index was used when more than one <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> with the same name was allowed. This is not currently used though and so it should really just always be 0. We should remove this option at some point. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2" title="Returns a pointer to the Property with the input _identifier name. ">getProperty()</a>, <a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00251">251</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00252">252</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>
@@ -624,7 +624,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>containerName_</b>
 <p>Returns the type Id to be used when creating <a class="el" href="class_picto_1_1_enum_property.html" title="A Property for storing enums. ">EnumProperty</a> objects with <a class="el" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2" title="Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...">addProperty()</a>. </p>
 <p>This is needed specifically for the <a class="el" href="class_picto_1_1_enum_property.html" title="A Property for storing enums. ">EnumProperty</a> since the other <a class="el" href="class_picto_1_1_property.html" title="Describes the property of a DataStore. ">Property</a> objects Ids are based on the QVariant::type values. </p>
 
-<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00088">88</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_property_container_8cpp_source.html#l00087">87</a> of file <a class="el" href="_property_container_8cpp_source.html">PropertyContainer.cpp</a>.</p>
 
 </div>
 </div>

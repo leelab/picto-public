@@ -114,48 +114,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">return</span> returnVal;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">PropertyContainer::copyProperties</a>(QSharedPointer&lt;PropertyContainer&gt; container2)</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; cont2Props = container2-&gt;getProperties();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    QSharedPointer&lt;Property&gt; newProp;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,cont2Props)</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            newProp = <a class="code" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">addProperty</a>(prop-&gt;type(),prop-&gt;getName(),prop-&gt;value());</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            QStringList attributes = prop-&gt;getAttributes();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">foreach</span>(QString attribute,attributes)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                newProp-&gt;setAttribute(attribute,prop-&gt;attributeValue(attribute));</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            newProp-&gt;setSelfPtr(newProp);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">   59</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">PropertyContainer::setContainerName</a>(QString _containerName)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    containerName_ = _containerName;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">   68</a></span>&#160;QString <a class="code" href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">PropertyContainer::getContainerName</a>()</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">return</span> containerName_;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">   77</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">PropertyContainer::enumTypeId</a>()</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_enum_property.html#a5c03c872e181dce86f51142eae91d086">EnumProperty::typeId</a>();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">   35</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">PropertyContainer::copyProperties</a>(QSharedPointer&lt;PropertyContainer&gt; container2)</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    QHash&lt;QString, QVector&lt;QSharedPointer&lt;Property&gt;&gt;&gt; cont2Props = container2-&gt;getProperties();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    QSharedPointer&lt;Property&gt; newProp;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,cont2Props)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            newProp = <a class="code" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">addProperty</a>(prop-&gt;type(),prop-&gt;getName(),prop-&gt;value());</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            QStringList attributes = prop-&gt;getAttributes();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">foreach</span>(QString attribute,attributes)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                newProp-&gt;setAttribute(attribute,prop-&gt;attributeValue(attribute));</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            newProp-&gt;setSelfPtr(newProp);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">PropertyContainer::setContainerName</a>(QString _containerName)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    containerName_ = _containerName;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">   67</a></span>&#160;QString <a class="code" href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">PropertyContainer::getContainerName</a>()</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> containerName_;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">   76</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">PropertyContainer::enumTypeId</a>()</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_enum_property.html#a5c03c872e181dce86f51142eae91d086">EnumProperty::typeId</a>();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">   88</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">PropertyContainer::viewPropertyTypeId</a>()</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_view_property.html#aeb5af3532f20ffad487feb480611bfa8">ViewProperty::typeId</a>();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">   87</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">PropertyContainer::viewPropertyTypeId</a>()</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;{</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_picto_1_1_view_property.html#aeb5af3532f20ffad487feb480611bfa8">ViewProperty::typeId</a>();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">   96</a></span>&#160;QSharedPointer&lt;Property&gt; <a class="code" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">PropertyContainer::addProperty</a>(<span class="keywordtype">int</span> _type, QString _identifier, QVariant _value)</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    Q_ASSERT_X(!properties_.contains(_identifier),</div>
@@ -213,123 +213,123 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordflow">return</span> list;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">  158</a></span>&#160;QList&lt;QSharedPointer&lt;Property&gt;&gt; <a class="code" href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">PropertyContainer::getRuntimeProperties</a>()</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    QList&lt;QSharedPointer&lt;Property&gt;&gt; runtimeProps;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keywordflow">if</span>(prop-&gt;isRuntimeEnabled())</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                runtimeProps.push_back(prop);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        }</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> runtimeProps;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">  177</a></span>&#160;QSharedPointer&lt;Property&gt; <a class="code" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">PropertyContainer::getProperty</a>(QString _identifier,<span class="keywordtype">int</span> index)</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;{</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">if</span>(!properties_.contains(_identifier))</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;Property&gt;();</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">if</span>(properties_[_identifier].size() &lt;= index)</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;Property&gt;();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordflow">return</span> properties_[_identifier][index];</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
-<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">  190</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">PropertyContainer::setPropertiesAsAssociates</a>(<span class="keywordtype">bool</span> toAssociate)</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;{</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    {</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            prop-&gt;setAssociateProperty(toAssociate);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        }</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">  204</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">PropertyContainer::clear</a>()</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;{</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    properties_.clear();</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00214"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">  214</a></span>&#160;QVariant <a class="code" href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">PropertyContainer::getPropertyValue</a>(QString _identifier, <span class="keywordtype">int</span> index)</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;{</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_identifier) &amp;&amp; (properties_[_identifier].size() &gt; index))</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    {</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">return</span> properties_.value(_identifier)[index]-&gt;value();</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    }</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    {</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordflow">return</span> QVariant(QVariant::Invalid);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    }</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">  229</a></span>&#160;QString <a class="code" href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">PropertyContainer::getPropertyName</a>(QString _identifier, <span class="keywordtype">int</span> index)</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;{</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_identifier) &amp;&amp; (properties_[_identifier].size() &gt; index))</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordflow">return</span> properties_.value(_identifier)[index]-&gt;getName();</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    {</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;}</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">  251</a></span>&#160;QSharedPointer&lt;Property&gt; <a class="code" href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">PropertyContainer::setPropertyValue</a>(QString _propertyName, QVariant _value, <span class="keywordtype">int</span> index)</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_propertyName) &amp;&amp; (properties_[_propertyName].size() &gt; index))</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        properties_[_propertyName][index]-&gt;setValue(_value);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    {</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <a class="code" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">addProperty</a>(_value.type(), _propertyName, _value);</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        index = properties_[_propertyName].size()-1;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        properties_[_propertyName][index]-&gt;setValue(_value);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">return</span> properties_[_propertyName][index];</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">  269</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">PropertyContainer::setPropertiesToInitValues</a>()</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;{</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    {</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        {</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            prop-&gt;setValue(prop-&gt;initValue());</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        }</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
-<div class="ttc" id="class_picto_1_1_property_container_html_afb7a77c6c0803dc4db1566eecc54e045"><div class="ttname"><a href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">Picto::PropertyContainer::setContainerName</a></div><div class="ttdeci">void setContainerName(QString _containerName)</div><div class="ttdoc">Sets this container&#39;s name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00059">PropertyContainer.cpp:59</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_af9d2775a07e882dc28967b0eadabf5c9"><div class="ttname"><a href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">Picto::PropertyContainer::enumTypeId</a></div><div class="ttdeci">static int enumTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00077">PropertyContainer.cpp:77</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a834bdbd56b0c5c250008096ad09af4cd"><div class="ttname"><a href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">Picto::PropertyContainer::setPropertiesToInitValues</a></div><div class="ttdeci">void setPropertiesToInitValues()</div><div class="ttdoc">Sets the runValues of all contained Property objects to their initValues. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00269">PropertyContainer.cpp:269</a></div></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">  159</a></span>&#160;QList&lt;QSharedPointer&lt;Property&gt;&gt; <a class="code" href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">PropertyContainer::getRuntimeProperties</a>()</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;{</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    QList&lt;QSharedPointer&lt;Property&gt;&gt; runtimeProps;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keywordflow">if</span>(prop-&gt;isRuntimeEnabled())</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                runtimeProps.push_back(prop);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    }</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">return</span> runtimeProps;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">  178</a></span>&#160;QSharedPointer&lt;Property&gt; <a class="code" href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">PropertyContainer::getProperty</a>(QString _identifier,<span class="keywordtype">int</span> index)</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;{</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordflow">if</span>(!properties_.contains(_identifier))</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;Property&gt;();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span>(properties_[_identifier].size() &lt;= index)</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordflow">return</span> QSharedPointer&lt;Property&gt;();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">return</span> properties_[_identifier][index];</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">  191</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">PropertyContainer::setPropertiesAsAssociates</a>(<span class="keywordtype">bool</span> toAssociate)</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    {</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            prop-&gt;setAssociateProperty(toAssociate);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        }</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">  205</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">PropertyContainer::clear</a>()</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;{</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    properties_.clear();</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">  215</a></span>&#160;QVariant <a class="code" href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">PropertyContainer::getPropertyValue</a>(QString _identifier, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;{</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_identifier) &amp;&amp; (properties_[_identifier].size() &gt; index))</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    {</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">return</span> properties_.value(_identifier)[index]-&gt;value();</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    {</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keywordflow">return</span> QVariant(QVariant::Invalid);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    }</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;}</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">  230</a></span>&#160;QString <a class="code" href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">PropertyContainer::getPropertyName</a>(QString _identifier, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;{</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_identifier) &amp;&amp; (properties_[_identifier].size() &gt; index))</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    {</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">return</span> properties_.value(_identifier)[index]-&gt;getName();</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    }</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    {</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keywordflow">return</span> QString(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    }</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;}</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">  252</a></span>&#160;QSharedPointer&lt;Property&gt; <a class="code" href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">PropertyContainer::setPropertyValue</a>(QString _propertyName, QVariant _value, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;{</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">if</span>(properties_.contains(_propertyName) &amp;&amp; (properties_[_propertyName].size() &gt; index))</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        properties_[_propertyName][index]-&gt;setValue(_value);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <a class="code" href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">addProperty</a>(_value.type(), _propertyName, _value);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        index = properties_[_propertyName].size()-1;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        properties_[_propertyName][index]-&gt;setValue(_value);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordflow">return</span> properties_[_propertyName][index];</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;}</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">  270</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">PropertyContainer::setPropertiesToInitValues</a>()</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;{</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">foreach</span>(QVector&lt;QSharedPointer&lt;Property&gt;&gt; propVec,properties_)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <span class="keywordflow">foreach</span>(QSharedPointer&lt;Property&gt; prop,propVec)</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        {</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            prop-&gt;setValue(prop-&gt;initValue());</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        }</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
+<div class="ttc" id="class_picto_1_1_property_container_html_afb7a77c6c0803dc4db1566eecc54e045"><div class="ttname"><a href="class_picto_1_1_property_container.html#afb7a77c6c0803dc4db1566eecc54e045">Picto::PropertyContainer::setContainerName</a></div><div class="ttdeci">void setContainerName(QString _containerName)</div><div class="ttdoc">Sets this container&#39;s name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00058">PropertyContainer.cpp:58</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_af9d2775a07e882dc28967b0eadabf5c9"><div class="ttname"><a href="class_picto_1_1_property_container.html#af9d2775a07e882dc28967b0eadabf5c9">Picto::PropertyContainer::enumTypeId</a></div><div class="ttdeci">static int enumTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00076">PropertyContainer.cpp:76</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a834bdbd56b0c5c250008096ad09af4cd"><div class="ttname"><a href="class_picto_1_1_property_container.html#a834bdbd56b0c5c250008096ad09af4cd">Picto::PropertyContainer::setPropertiesToInitValues</a></div><div class="ttdeci">void setPropertiesToInitValues()</div><div class="ttdoc">Sets the runValues of all contained Property objects to their initValues. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00270">PropertyContainer.cpp:270</a></div></div>
 <div class="ttc" id="class_picto_1_1_view_property_html"><div class="ttname"><a href="class_picto_1_1_view_property.html">Picto::ViewProperty</a></div><div class="ttdoc">A Property for storing ViewInformation. </div><div class="ttdef"><b>Definition:</b> <a href="_view_property_8h_source.html#l00014">ViewProperty.h:14</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a6b76b949dbb3fd855a052ecc6335ebb3"><div class="ttname"><a href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">Picto::PropertyContainer::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears all the Property objects out of this container. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00204">PropertyContainer.cpp:204</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a6b76b949dbb3fd855a052ecc6335ebb3"><div class="ttname"><a href="class_picto_1_1_property_container.html#a6b76b949dbb3fd855a052ecc6335ebb3">Picto::PropertyContainer::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears all the Property objects out of this container. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00205">PropertyContainer.cpp:205</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_a748d3fefd195a2fdc07acf4695bdcf04"><div class="ttname"><a href="class_picto_1_1_property_container.html#a748d3fefd195a2fdc07acf4695bdcf04">Picto::PropertyContainer::getPropertyList</a></div><div class="ttdeci">QStringList getPropertyList()</div><div class="ttdoc">Returns a list of the names of the Properties in this PropertyContainer. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00141">PropertyContainer.cpp:141</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_ab049e27e8c837eaacb9f3df6116ad8f4"><div class="ttname"><a href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">Picto::PropertyContainer::viewPropertyTypeId</a></div><div class="ttdeci">static int viewPropertyTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00088">PropertyContainer.cpp:88</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_ab049e27e8c837eaacb9f3df6116ad8f4"><div class="ttname"><a href="class_picto_1_1_property_container.html#ab049e27e8c837eaacb9f3df6116ad8f4">Picto::PropertyContainer::viewPropertyTypeId</a></div><div class="ttdeci">static int viewPropertyTypeId()</div><div class="ttdoc">Returns the type Id to be used when creating EnumProperty objects with addProperty(). </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00087">PropertyContainer.cpp:87</a></div></div>
 <div class="ttc" id="class_picto_1_1_size_property_html"><div class="ttname"><a href="class_picto_1_1_size_property.html">Picto::SizeProperty</a></div><div class="ttdoc">A Property for storing width,height size data. This is useful for storing the size of VisualElements...</div><div class="ttdef"><b>Definition:</b> <a href="_size_property_8h_source.html#l00016">SizeProperty.h:16</a></div></div>
 <div class="ttc" id="class_picto_1_1_enum_property_html_a5c03c872e181dce86f51142eae91d086"><div class="ttname"><a href="class_picto_1_1_enum_property.html#a5c03c872e181dce86f51142eae91d086">Picto::EnumProperty::typeId</a></div><div class="ttdeci">static int typeId()</div><div class="ttdoc">Since there is no QVariant::Enum type, the EnumProperty&#39;s type is from the UserType region (UserType+...</div><div class="ttdef"><b>Definition:</b> <a href="_enum_property_8h_source.html#l00027">EnumProperty.h:27</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_a2aab419913dabde07fb2514404f5f3a1"><div class="ttname"><a href="class_picto_1_1_property_container.html#a2aab419913dabde07fb2514404f5f3a1">Picto::PropertyContainer::PropertyContainer</a></div><div class="ttdeci">PropertyContainer(QString _containerName)</div><div class="ttdoc">Constructs a new PropertyContainer with the input name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00016">PropertyContainer.cpp:16</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_afa4fb4cab5695bb642bb672add5590c7"><div class="ttname"><a href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">Picto::PropertyContainer::getRuntimeProperties</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; Property &gt; &gt; getRuntimeProperties()</div><div class="ttdoc">Returns a list of the Property objects that have been set as RuntimeProperties (ie. Their initValues will be settable during runtime) </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00158">PropertyContainer.cpp:158</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_afa4fb4cab5695bb642bb672add5590c7"><div class="ttname"><a href="class_picto_1_1_property_container.html#afa4fb4cab5695bb642bb672add5590c7">Picto::PropertyContainer::getRuntimeProperties</a></div><div class="ttdeci">QList&lt; QSharedPointer&lt; Property &gt; &gt; getRuntimeProperties()</div><div class="ttdoc">Returns a list of the Property objects that have been set as RuntimeProperties (ie. Their initValues will be settable during runtime) </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00159">PropertyContainer.cpp:159</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_ab4b5c304d864c92b60bd9a7d3c0e34fd"><div class="ttname"><a href="class_picto_1_1_property_container.html#ab4b5c304d864c92b60bd9a7d3c0e34fd">Picto::PropertyContainer::create</a></div><div class="ttdeci">static QSharedPointer&lt; PropertyContainer &gt; create(QString _containerName)</div><div class="ttdoc">Creates a new PropertyContainer with the input name and returns a shared pointer to it...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00025">PropertyContainer.cpp:25</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_af52be20feb3dea784778744090212ea2"><div class="ttname"><a href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">Picto::PropertyContainer::getProperty</a></div><div class="ttdeci">QSharedPointer&lt; Property &gt; getProperty(QString _identifier, int index=0)</div><div class="ttdoc">Returns a pointer to the Property with the input _identifier name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00177">PropertyContainer.cpp:177</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_af52be20feb3dea784778744090212ea2"><div class="ttname"><a href="class_picto_1_1_property_container.html#af52be20feb3dea784778744090212ea2">Picto::PropertyContainer::getProperty</a></div><div class="ttdeci">QSharedPointer&lt; Property &gt; getProperty(QString _identifier, int index=0)</div><div class="ttdoc">Returns a pointer to the Property with the input _identifier name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00178">PropertyContainer.cpp:178</a></div></div>
 <div class="ttc" id="class_picto_1_1_enum_property_html"><div class="ttname"><a href="class_picto_1_1_enum_property.html">Picto::EnumProperty</a></div><div class="ttdoc">A Property for storing enums. </div><div class="ttdef"><b>Definition:</b> <a href="_enum_property_8h_source.html#l00017">EnumProperty.h:17</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_af2850e3e70ac5c5bd7b10ef4d380fa63"><div class="ttname"><a href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">Picto::PropertyContainer::copyProperties</a></div><div class="ttdeci">void copyProperties(QSharedPointer&lt; PropertyContainer &gt; container2)</div><div class="ttdoc">Copies all Properties from the input PropertyContainer to this one. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00036">PropertyContainer.cpp:36</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a1abaeb184a705f0f671115289c1d3912"><div class="ttname"><a href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">Picto::PropertyContainer::setPropertyValue</a></div><div class="ttdeci">QSharedPointer&lt; Property &gt; setPropertyValue(QString _identifier, QVariant _value, int index=0)</div><div class="ttdoc">Sets the value of the Property with the input _propertyName to the input _value. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00251">PropertyContainer.cpp:251</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_ad92483d88f45fd4e83b3bf1af4927050"><div class="ttname"><a href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">Picto::PropertyContainer::getPropertyName</a></div><div class="ttdeci">QString getPropertyName(QString _identifier, int index=0)</div><div class="ttdoc">This is left over from an old version of this class when a Property identifier and name weren&#39;t neces...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00229">PropertyContainer.cpp:229</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a3b68b27d46b130e46386e356f17dd5a9"><div class="ttname"><a href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">Picto::PropertyContainer::setPropertiesAsAssociates</a></div><div class="ttdeci">void setPropertiesAsAssociates(bool toAssociate)</div><div class="ttdoc">Sets all contained Property objects as Associate Properties for the purpose of runtime checking for A...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00190">PropertyContainer.cpp:190</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_af2850e3e70ac5c5bd7b10ef4d380fa63"><div class="ttname"><a href="class_picto_1_1_property_container.html#af2850e3e70ac5c5bd7b10ef4d380fa63">Picto::PropertyContainer::copyProperties</a></div><div class="ttdeci">void copyProperties(QSharedPointer&lt; PropertyContainer &gt; container2)</div><div class="ttdoc">Copies all Properties from the input PropertyContainer to this one. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00035">PropertyContainer.cpp:35</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a1abaeb184a705f0f671115289c1d3912"><div class="ttname"><a href="class_picto_1_1_property_container.html#a1abaeb184a705f0f671115289c1d3912">Picto::PropertyContainer::setPropertyValue</a></div><div class="ttdeci">QSharedPointer&lt; Property &gt; setPropertyValue(QString _identifier, QVariant _value, int index=0)</div><div class="ttdoc">Sets the value of the Property with the input _propertyName to the input _value. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00252">PropertyContainer.cpp:252</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_ad92483d88f45fd4e83b3bf1af4927050"><div class="ttname"><a href="class_picto_1_1_property_container.html#ad92483d88f45fd4e83b3bf1af4927050">Picto::PropertyContainer::getPropertyName</a></div><div class="ttdeci">QString getPropertyName(QString _identifier, int index=0)</div><div class="ttdoc">This is left over from an old version of this class when a Property identifier and name weren&#39;t neces...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00230">PropertyContainer.cpp:230</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a3b68b27d46b130e46386e356f17dd5a9"><div class="ttname"><a href="class_picto_1_1_property_container.html#a3b68b27d46b130e46386e356f17dd5a9">Picto::PropertyContainer::setPropertiesAsAssociates</a></div><div class="ttdeci">void setPropertiesAsAssociates(bool toAssociate)</div><div class="ttdoc">Sets all contained Property objects as Associate Properties for the purpose of runtime checking for A...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00191">PropertyContainer.cpp:191</a></div></div>
 <div class="ttc" id="class_picto_1_1_view_property_html_aeb5af3532f20ffad487feb480611bfa8"><div class="ttname"><a href="class_picto_1_1_view_property.html#aeb5af3532f20ffad487feb480611bfa8">Picto::ViewProperty::typeId</a></div><div class="ttdeci">static int typeId()</div><div class="ttdoc">The ViewProperty&#39;s type is from the UserType region (UserType+2). </div><div class="ttdef"><b>Definition:</b> <a href="_view_property_8h_source.html#l00022">ViewProperty.h:22</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_html"><div class="ttname"><a href="class_picto_1_1_property.html">Picto::Property</a></div><div class="ttdoc">Describes the property of a DataStore. </div><div class="ttdef"><b>Definition:</b> <a href="_property_8h_source.html#l00043">Property.h:43</a></div></div>
 <div class="ttc" id="class_picto_1_1_point_property_html"><div class="ttname"><a href="class_picto_1_1_point_property.html">Picto::PointProperty</a></div><div class="ttdoc">A Property for storing x,y position data. This is useful for storing the x,y positions of VisualEleme...</div><div class="ttdef"><b>Definition:</b> <a href="_point_property_8h_source.html#l00015">PointProperty.h:15</a></div></div>
 <div class="ttc" id="class_picto_1_1_color_property_html"><div class="ttname"><a href="class_picto_1_1_color_property.html">Picto::ColorProperty</a></div><div class="ttdoc">A Property for storing color data. This is useful for storing colors of VisualElements. </div><div class="ttdef"><b>Definition:</b> <a href="_color_property_8h_source.html#l00015">ColorProperty.h:15</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a3a7fb67beedd6a604634fa566417fcf5"><div class="ttname"><a href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">Picto::PropertyContainer::getContainerName</a></div><div class="ttdeci">QString getContainerName()</div><div class="ttdoc">Gets this container&#39;s name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00068">PropertyContainer.cpp:68</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a3a7fb67beedd6a604634fa566417fcf5"><div class="ttname"><a href="class_picto_1_1_property_container.html#a3a7fb67beedd6a604634fa566417fcf5">Picto::PropertyContainer::getContainerName</a></div><div class="ttdeci">QString getContainerName()</div><div class="ttdoc">Gets this container&#39;s name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00067">PropertyContainer.cpp:67</a></div></div>
 <div class="ttc" id="class_picto_1_1_list_property_html"><div class="ttname"><a href="class_picto_1_1_list_property.html">Picto::ListProperty</a></div><div class="ttdoc">A Property for storing List data. This is used for storing lists of strings. A number of DataStore ob...</div><div class="ttdef"><b>Definition:</b> <a href="_list_property_8h_source.html#l00020">ListProperty.h:20</a></div></div>
 <div class="ttc" id="class_picto_1_1_map_property_html"><div class="ttname"><a href="class_picto_1_1_map_property.html">Picto::MapProperty</a></div><div class="ttdoc">A Property for storing Map (lookup table) data. This is used for storing a map of key...</div><div class="ttdef"><b>Definition:</b> <a href="_map_property_8h_source.html#l00020">MapProperty.h:20</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_ad7b120c62f65af257fece912e9294bf2"><div class="ttname"><a href="class_picto_1_1_property_container.html#ad7b120c62f65af257fece912e9294bf2">Picto::PropertyContainer::addProperty</a></div><div class="ttdeci">QSharedPointer&lt; Property &gt; addProperty(int _type, QString _identifier, QVariant _value)</div><div class="ttdoc">Adds a new Property to this PropertyContainer of the input _type, with the name: _identifier and the ...</div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00096">PropertyContainer.cpp:96</a></div></div>
 <div class="ttc" id="namespace_picto_html"><div class="ttname"><a href="namespace_picto.html">Picto</a></div><div class="ttdef"><b>Definition:</b> <a href="_aural_target_8cpp_source.html#l00004">AuralTarget.cpp:4</a></div></div>
-<div class="ttc" id="class_picto_1_1_property_container_html_a6b4c5e9e527156666eb9c39534d5c8e9"><div class="ttname"><a href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">Picto::PropertyContainer::getPropertyValue</a></div><div class="ttdeci">QVariant getPropertyValue(QString _identifier, int index=0)</div><div class="ttdoc">Returns the value of the Property with the input _identifier name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00214">PropertyContainer.cpp:214</a></div></div>
+<div class="ttc" id="class_picto_1_1_property_container_html_a6b4c5e9e527156666eb9c39534d5c8e9"><div class="ttname"><a href="class_picto_1_1_property_container.html#a6b4c5e9e527156666eb9c39534d5c8e9">Picto::PropertyContainer::getPropertyValue</a></div><div class="ttdeci">QVariant getPropertyValue(QString _identifier, int index=0)</div><div class="ttdoc">Returns the value of the Property with the input _identifier name. </div><div class="ttdef"><b>Definition:</b> <a href="_property_container_8cpp_source.html#l00215">PropertyContainer.cpp:215</a></div></div>
 <div class="ttc" id="class_picto_1_1_property_container_html_a1c236aa0e91082351b1636a775d5fe3c"><div class="ttname"><a href="class_picto_1_1_property_container.html#a1c236aa0e91082351b1636a775d5fe3c">Picto::PropertyContainer::propertyValueChanged</a></div><div class="ttdeci">void propertyValueChanged(Property *prop, QVariant)</div><div class="ttdoc">Emitted whenever the input Property&#39;s runValue changes. The QVariant value is the value to which the ...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->

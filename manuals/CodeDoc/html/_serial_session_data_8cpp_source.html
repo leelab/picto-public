@@ -114,29 +114,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_serial_session_data.html#ad996f9694ff85fd04024b3ae4230491c">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_serial_session_data.html#ad996f9694ff85fd04024b3ae4230491c">SerialSessionData::writeData</a>(<span class="keywordtype">int</span>, QVariantList data)</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Q_ASSERT(data.size() == 4);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    serialData_.append(data[3].toString());</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">   40</a></span>&#160;QList&lt;int&gt;<a class="code" href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">SerialSessionData::readDataTypes</a>()</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> QList&lt;int&gt;();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">   48</a></span>&#160;QList&lt;QVariantList&gt; <a class="code" href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">SerialSessionData::readData</a>(<span class="keywordtype">int</span>,QVariant,<span class="keywordtype">bool</span>)</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">//SerialSessionData cant be moved to another SessionData object</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> QList&lt;QVariantList&gt;();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> SerialSessionData::eraseEverything()</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    serialData_.clear();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">if</span> (data.size() == 4)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        serialData_.append(data[3].toString());</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">   43</a></span>&#160;QList&lt;int&gt;<a class="code" href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">SerialSessionData::readDataTypes</a>()</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> QList&lt;int&gt;();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">   51</a></span>&#160;QList&lt;QVariantList&gt; <a class="code" href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">SerialSessionData::readData</a>(<span class="keywordtype">int</span>,QVariant,<span class="keywordtype">bool</span>)</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//SerialSessionData cant be moved to another SessionData object</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> QList&lt;QVariantList&gt;();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> SerialSessionData::eraseEverything()</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    serialData_.clear();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
 <div class="ttc" id="class_serial_session_data_html_adbd0b301805d06377ae635839419698f"><div class="ttname"><a href="class_serial_session_data.html#adbd0b301805d06377ae635839419698f">SerialSessionData::takeSerializedData</a></div><div class="ttdeci">QString takeSerializedData()</div><div class="ttdoc">Once data has been written to this object, takeSerializedData() returns this data in an XML serialize...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00017">SerialSessionData.cpp:17</a></div></div>
-<div class="ttc" id="class_serial_session_data_html_a7d47ce8b0be3b922f74c703d0d010bd0"><div class="ttname"><a href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">SerialSessionData::readDataTypes</a></div><div class="ttdeci">QList&lt; int &gt; readDataTypes()</div><div class="ttdoc">Implements SessionData::readDataTypes() to return an empty list because SerialSessionData can&#39;t be mo...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00040">SerialSessionData.cpp:40</a></div></div>
+<div class="ttc" id="class_serial_session_data_html_a7d47ce8b0be3b922f74c703d0d010bd0"><div class="ttname"><a href="class_serial_session_data.html#a7d47ce8b0be3b922f74c703d0d010bd0">SerialSessionData::readDataTypes</a></div><div class="ttdeci">QList&lt; int &gt; readDataTypes()</div><div class="ttdoc">Implements SessionData::readDataTypes() to return an empty list because SerialSessionData can&#39;t be mo...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00043">SerialSessionData.cpp:43</a></div></div>
 <div class="ttc" id="class_session_data_html_a4f56f91d83e09645d853339fe5067181"><div class="ttname"><a href="class_session_data.html#a4f56f91d83e09645d853339fe5067181">SessionData::readWriteLock_</a></div><div class="ttdeci">QReadWriteLock readWriteLock_</div><div class="ttdoc">A Read/Write mutex for handling reads and write from multiple threads. </div><div class="ttdef"><b>Definition:</b> <a href="_session_data_8h_source.html#l00067">SessionData.h:67</a></div></div>
 <div class="ttc" id="class_serial_session_data_html_ad996f9694ff85fd04024b3ae4230491c"><div class="ttname"><a href="class_serial_session_data.html#ad996f9694ff85fd04024b3ae4230491c">SerialSessionData::writeData</a></div><div class="ttdeci">void writeData(int dataType, QVariantList data)</div><div class="ttdoc">Implements SessionData::writeData() to write the input data to this object. </div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00031">SerialSessionData.cpp:31</a></div></div>
-<div class="ttc" id="class_serial_session_data_html_ae16eba34feb9bfd97dcdfa22c750dedb"><div class="ttname"><a href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">SerialSessionData::readData</a></div><div class="ttdeci">QList&lt; QVariantList &gt; readData(int dataType, QVariant condition, bool cut=false)</div><div class="ttdoc">Implements SessionData::readData() to return an empty list since SerialSessionData cannot be moved to...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00048">SerialSessionData.cpp:48</a></div></div>
+<div class="ttc" id="class_serial_session_data_html_ae16eba34feb9bfd97dcdfa22c750dedb"><div class="ttname"><a href="class_serial_session_data.html#ae16eba34feb9bfd97dcdfa22c750dedb">SerialSessionData::readData</a></div><div class="ttdeci">QList&lt; QVariantList &gt; readData(int dataType, QVariant condition, bool cut=false)</div><div class="ttdoc">Implements SessionData::readData() to return an empty list since SerialSessionData cannot be moved to...</div><div class="ttdef"><b>Definition:</b> <a href="_serial_session_data_8cpp_source.html#l00051">SerialSessionData.cpp:51</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.9.1-->
 <!-- start footer part -->

@@ -186,15 +186,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        eventQueue_[<a class="code" href="class_picto_1_1_slave_event_queue.html#aba3ed8b33dfeb82ec0af99d8af876820">getNextAddLoc</a>()] = frozenQueue_[i];</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">if</span> (frozenEndLoc_ &gt; 5)</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        qDebug() &lt;&lt; <span class="stringliteral">&quot;Found a good one&quot;</span>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment">//Reset FrozenQueue</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    frozenEndLoc_ = 0;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment">//Reset FrozenQueue</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    frozenEndLoc_ = 0;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
 <div class="ttc" id="class_picto_1_1_slave_event_queue_html_aafe56b3edb716d3e4e0f17195f1393ae"><div class="ttname"><a href="class_picto_1_1_slave_event_queue.html#aafe56b3edb716d3e4e0f17195f1393ae">Picto::SlaveEventQueue::addInitPropChange</a></div><div class="ttdeci">void addInitPropChange(const qulonglong &amp;dataId, const int &amp;assetId, const QString &amp;val)</div><div class="ttdoc">Adds a SlaveEvent::INIT_PROP_VAL_CHANGE change event to the SlaveEventQueue indicating that the Prope...</div><div class="ttdef"><b>Definition:</b> <a href="_slave_event_queue_8cpp_source.html#l00038">SlaveEventQueue.cpp:38</a></div></div>
 <div class="ttc" id="class_picto_1_1_slave_event_queue_html_aef57823f47a577d8bb8291815f4ef86b"><div class="ttname"><a href="class_picto_1_1_slave_event_queue.html#aef57823f47a577d8bb8291815f4ef86b">Picto::SlaveEventQueue::takeFirstEvent</a></div><div class="ttdeci">SlaveEvent takeFirstEvent()</div><div class="ttdoc">Removes and returns the first SlaveEvent from the SlaveEventQueue. </div><div class="ttdef"><b>Definition:</b> <a href="_slave_event_queue_8cpp_source.html#l00052">SlaveEventQueue.cpp:52</a></div></div>
 <div class="ttc" id="class_picto_1_1_slave_event_queue_html_a2e71413f40cf7dd76856a6909360641c"><div class="ttname"><a href="class_picto_1_1_slave_event_queue.html#a2e71413f40cf7dd76856a6909360641c">Picto::SlaveEventQueue::getNextFrozenLoc</a></div><div class="ttdeci">int getNextFrozenLoc()</div><div class="ttdoc">Returns the location in the Frozen circular buffer where the next SlaveEvent should be added...</div><div class="ttdef"><b>Definition:</b> <a href="_slave_event_queue_8cpp_source.html#l00089">SlaveEventQueue.cpp:89</a></div></div>
